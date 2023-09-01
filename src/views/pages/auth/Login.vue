@@ -1,16 +1,48 @@
 <script setup>
-import { useLayout } from '@/layout/composables/layout';
-import { ref, computed } from 'vue';
-import AppConfig from '@/layout/AppConfig.vue';
+// ---------
+// imports
+// ---------
+import axios from 'axios'
+import { useRouter } from 'vue-router'
+import { useLayout } from '@/layout/composables/layout'
+import { ref, computed } from 'vue'
+import AppConfig from '@/layout/AppConfig.vue'
 
-const { layoutConfig } = useLayout();
-const email = ref('');
-const password = ref('');
-const checked = ref(false);
+// ----------------
+// refs
+// ----------------
+const { layoutConfig } = useLayout()
+const router = useRouter()
+const email = ref('')
+const password = ref('')
+const checked = ref(false)
+const isAuthenticated = localStorage.getItem('isAuthenticated')
+const validation = ref()
+
+// ------------
+// methods
+// ------------
+const submit = async () => {
+  await axios.post('/login', {
+    email: email.value,
+    password: password.value,
+  }).then((response) => {
+    // isAuthenticated.value = true
+
+    localStorage.setItem('token', response.data.token)
+    localStorage.setItem('isAuthenticated', true)
+    router.push({ path: '/' })
+  }).catch((error) => {
+    if (error) {
+      console.log(error)
+      validation.value = error.response.data
+    }
+  })
+}
 
 const logoUrl = computed(() => {
-    return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
-});
+  return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
+})
 </script>
 
 <template>
@@ -39,7 +71,7 @@ const logoUrl = computed(() => {
                             </div>
                             <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot password?</a>
                         </div>
-                        <Button label="Sign In" class="w-full p-3 text-xl"></Button>
+                        <Button @click="submit()" label="Sign In" class="w-full p-3 text-xl"></Button>
                     </div>
                 </div>
             </div>
