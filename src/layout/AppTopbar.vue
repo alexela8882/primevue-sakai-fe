@@ -15,6 +15,7 @@ const { layoutConfig, onMenuToggle } = useLayout()
 const outsideClickListener = ref(null)
 const topbarMenuActive = ref(false)
 const router = useRouter()
+const isAuthenticated = localStorage.getItem('isAuthenticated')
 
 // -------------
 // methods
@@ -105,7 +106,7 @@ const logout = () => {
             <i class="pi pi-cog"></i>
             <span>Settings</span>
           </button>
-          <button @click="logout()" class="p-link layout-topbar-button">
+          <button v-if="isAuthenticated" @click="logout()" class="p-link layout-topbar-button">
             <i class="pi pi-sign-out"></i>
             <span>SignOut</span>
           </button>
