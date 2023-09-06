@@ -76,11 +76,11 @@ const searchCountry = (event) => {
 };
 </script>
 <template>
-    <div class="grid p-fluid">
+    <div class="grid p-fluid reddot-gutter">
         <div class="col-12 md:col-6">
             <div class="card">
                 <h5>InputText</h5>
-                <div class="grid formgrid">
+                <div class="grid formgrid reddot-gutter">
                     <div class="col-12 mb-2 lg:col-4 lg:mb-0">
                         <InputText type="text" placeholder="Default"></InputText>
                     </div>
@@ -93,7 +93,7 @@ const searchCountry = (event) => {
                 </div>
 
                 <h5>Icons</h5>
-                <div class="grid formgrid">
+                <div class="grid formgrid reddot-gutter">
                     <div class="col-12 mb-2 lg:col-4 lg:mb-0">
                         <span class="p-input-icon-left">
                             <i class="pi pi-user" />
@@ -138,7 +138,7 @@ const searchCountry = (event) => {
             </div>
 
             <div class="card">
-                <div class="grid">
+                <div class="grid reddot-gutter">
                     <div class="col-12">
                         <h5>Slider</h5>
                         <InputText v-model.number="sliderValue" />

@@ -115,12 +115,12 @@ watch(
 </script>
 
 <template>
-    <div class="grid">
+    <div class="grid reddot-gutter">
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
+                <div class="flex justify-content-between">
                     <div>
-                        <span class="block text-500 font-medium mb-3">Orders</span>
+                        <span class="block text-500 font-medium">Orders</span>
                         <div class="text-900 font-medium text-xl">152</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-blue-100 border-round" style="width: 2.5rem; height: 2.5rem">
@@ -133,9 +133,9 @@ watch(
         </div>
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
+                <div class="flex justify-content-between">
                     <div>
-                        <span class="block text-500 font-medium mb-3">Revenue</span>
+                        <span class="block text-500 font-medium">Revenue</span>
                         <div class="text-900 font-medium text-xl">$2.100</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-orange-100 border-round" style="width: 2.5rem; height: 2.5rem">
@@ -148,9 +148,9 @@ watch(
         </div>
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
+                <div class="flex justify-content-between">
                     <div>
-                        <span class="block text-500 font-medium mb-3">Customers</span>
+                        <span class="block text-500 font-medium">Customers</span>
                         <div class="text-900 font-medium text-xl">28441</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-cyan-100 border-round" style="width: 2.5rem; height: 2.5rem">
@@ -163,9 +163,9 @@ watch(
         </div>
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="card mb-0">
-                <div class="flex justify-content-between mb-3">
+                <div class="flex justify-content-between">
                     <div>
-                        <span class="block text-500 font-medium mb-3">Comments</span>
+                        <span class="block text-500 font-medium">Comments</span>
                         <div class="text-900 font-medium text-xl">152 Unread</div>
                     </div>
                     <div class="flex align-items-center justify-content-center bg-purple-100 border-round" style="width: 2.5rem; height: 2.5rem">
@@ -299,7 +299,7 @@ watch(
                     </div>
                 </div>
 
-                <span class="block text-600 font-medium mb-3">TODAY</span>
+                <span class="block text-600 font-medium">TODAY</span>
                 <ul class="p-0 mx-0 mt-0 mb-4 list-none">
                     <li class="flex align-items-center py-2 border-bottom-1 surface-border">
                         <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
@@ -318,7 +318,7 @@ watch(
                     </li>
                 </ul>
 
-                <span class="block text-600 font-medium mb-3">YESTERDAY</span>
+                <span class="block text-600 font-medium">YESTERDAY</span>
                 <ul class="p-0 m-0 list-none">
                     <li class="flex align-items-center py-2 border-bottom-1 surface-border">
                         <div class="w-3rem h-3rem flex align-items-center justify-content-center bg-blue-100 border-circle mr-3 flex-shrink-0">
@@ -341,11 +341,11 @@ watch(
                 </ul>
             </div>
             <div
-                class="px-4 py-5 shadow-2 flex flex-column md:flex-row md:align-items-center justify-content-between mb-3"
+                class="px-4 py-5 shadow-2 flex flex-column md:flex-row md:align-items-center justify-content-between"
                 style="border-radius: 1rem; background: linear-gradient(0deg, rgba(0, 123, 255, 0.5), rgba(0, 123, 255, 0.5)), linear-gradient(92.54deg, #1c80cf 47.88%, #ffffff 100.01%)"
             >
                 <div>
-                    <div class="text-blue-100 font-medium text-xl mt-2 mb-3">TAKE THE NEXT STEP</div>
+                    <div class="text-blue-100 font-medium text-xl mt-2">TAKE THE NEXT STEP</div>
                     <div class="text-white font-medium text-5xl">Try PrimeBlocks</div>
                 </div>
                 <div class="mt-4 mr-auto md:mt-0 md:mr-0">
@@ -355,3 +355,5 @@ watch(
         </div>
     </div>
 </template>
+
+<style scoped></style>

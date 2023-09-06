@@ -25,3 +25,9 @@ a {
 .layout-wrapper {
     min-height: 100vh;
 }
+
+.reddot-gutter {
+    padding: .5rem;
+}
+
+.reddot-gutter [class*=col] { padding: .5rem; }

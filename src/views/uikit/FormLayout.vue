@@ -11,7 +11,7 @@ const dropdownItem = ref(null);
 </script>
 
 <template>
-    <div class="grid">
+    <div class="grid reddot-gutter">
         <div class="col-12 md:col-6">
             <div class="card p-fluid">
                 <h5>Vertical</h5>
