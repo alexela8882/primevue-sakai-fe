@@ -1,7 +1,7 @@
 .layout-topbar {
     position: fixed;
     height: 5rem;
-    z-index: 997;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
@@ -18,7 +18,7 @@
         color: var(--surface-900);
         font-size: 1.5rem;
         font-weight: 500;
-        width: 300px;
+        width: 200px;
         border-radius: 12px;
 
         img {
@@ -63,7 +63,8 @@
     }
 
     .layout-menu-button {
-        margin-left: 2rem;
+        // margin-left: 2rem;
+        margin-left: -2rem;
     }
 
     .layout-topbar-menu-button {
@@ -103,6 +104,10 @@
         .layout-topbar-menu-button {
             display: inline-flex;
             margin-left: 0;
+            order: 4;
+        }
+
+        .layout-search {
             order: 3;
         }
 

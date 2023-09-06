@@ -79,39 +79,50 @@ const logout = () => {
 </script>
 
 <template>
-    <div class="layout-topbar">
-        <router-link to="/" class="layout-topbar-logo">
-          <img :src="logoUrl" alt="logo" />
-          <span>SAKAI</span>
-        </router-link>
-
-        <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
-          <i class="pi pi-bars"></i>
-        </button>
-
-        <button class="p-link layout-topbar-menu-button layout-topbar-button" @click="onTopBarMenuButton()">
-          <i class="pi pi-ellipsis-v"></i>
-        </button>
-
-        <div class="layout-topbar-menu" :class="topbarMenuClasses">
-          <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
-            <i class="pi pi-calendar"></i>
-            <span>Calendar</span>
-          </button>
-          <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
-            <i class="pi pi-user"></i>
-            <span>Profile</span>
-          </button>
-          <button @click="onSettingsClick()" class="p-link layout-topbar-button">
-            <i class="pi pi-cog"></i>
-            <span>Settings</span>
-          </button>
-          <button v-if="isAuthenticated" @click="logout()" class="p-link layout-topbar-button">
-            <i class="pi pi-sign-out"></i>
-            <span>SignOut</span>
-          </button>
+  <div class="layout-topbar">
+    <router-link to="/" class="layout-topbar-logo">
+      <div class="flex flex-column" style="font-size: 15px">
+        <!-- <img :src="logoUrl" alt="logo" /> -->
+        <div>
+          <span class="text-red-600 font-bold">RED</span>
+          <span>dot</span>
         </div>
+        <div style="font-size: 12px;">CRM</div>
+      </div>
+    </router-link>
+    
+    <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
+      <i class="pi pi-bars"></i>
+    </button>
+
+    <span class="layout-search p-input-icon-left ml-3">
+      <i class="pi pi-search" />
+      <InputText class="surface-100" v-model="value1" placeholder="Search" size="small" />
+    </span>
+
+    <button class="p-link layout-topbar-menu-button layout-topbar-button" @click="onTopBarMenuButton()">
+      <i class="pi pi-ellipsis-v"></i>
+    </button>
+
+    <div class="layout-topbar-menu" :class="topbarMenuClasses">
+      <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
+        <i class="pi pi-calendar"></i>
+        <span>Calendar</span>
+      </button>
+      <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
+        <i class="pi pi-user"></i>
+        <span>Profile</span>
+      </button>
+      <button @click="onSettingsClick()" class="p-link layout-topbar-button">
+        <i class="pi pi-cog"></i>
+        <span>Settings</span>
+      </button>
+      <button v-if="isAuthenticated" @click="logout()" class="p-link layout-topbar-button">
+        <i class="pi pi-sign-out"></i>
+        <span>SignOut</span>
+      </button>
     </div>
+  </div>
 </template>
 
 <style lang="scss" scoped></style>

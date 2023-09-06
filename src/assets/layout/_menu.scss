@@ -1,15 +1,19 @@
 .layout-sidebar {
     position: fixed;
-    width: 300px;
-    height: calc(100vh - 9rem);
+    width: 200px;
+    // height: calc(100vh - 9rem);
+    height: 100vh;
     z-index: 999;
     overflow-y: auto;
     user-select: none;
-    top: 7rem;
-    left: 2rem;
+    // top: 7rem;
+    // left: 2rem;
+    top: 5rem;
+    left: 0;
     transition: transform $transitionDuration, left $transitionDuration;
-    background-color: var(--surface-overlay);
-    border-radius: $borderRadius;
+    // background-color: var(--surface-overlay);
+    background-image: linear-gradient(to top, var(--blue-700), var(--blue-300));
+    // border-radius: $borderRadius;
     padding: 0.5rem 1.5rem;
     box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.02), 0px 0px 2px rgba(0, 0, 0, 0.05), 0px 1px 4px rgba(0, 0, 0, 0.08);
 }
@@ -24,7 +28,8 @@
             font-size: 0.857rem;
             text-transform: uppercase;
             font-weight: 700;
-            color: var(--surface-900);
+            // color: var(--surface-900);
+            color: var(--blue-100);
             margin: 0.75rem 0;
         }
 
@@ -61,7 +66,8 @@
             align-items: center;
             position: relative;
             outline: 0 none;
-            color: var(--text-color);
+            // color: var(--text-color);
+            color: var(--blue-200);
             cursor: pointer;
             padding: 0.75rem 1rem;
             border-radius: $borderRadius;
@@ -79,11 +85,13 @@
 
             &.active-route {
                 font-weight: 700;
-                color: var(--primary-color);
+                // color: var(--primary-color);
+                color: var(--surface-overlay);
             }
 
-            &:hover {
-                background-color: var(--surface-hover);
+            &:hover div div.border-circle {
+                // background-color: var(--surface-hover);
+                background-color: var(--blue-700);
             }
 
             &:focus {
