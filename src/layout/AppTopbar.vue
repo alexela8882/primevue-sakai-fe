@@ -16,10 +16,35 @@ const outsideClickListener = ref(null)
 const topbarMenuActive = ref(false)
 const router = useRouter()
 const isAuthenticated = localStorage.getItem('isAuthenticated')
+const menu = ref()
+const items = ref([
+  {
+    label: 'Options',
+    items: [
+      {
+        label: 'Update',
+        icon: 'pi pi-refresh',
+        command: () => {
+          toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
+        }
+      },
+      {
+        label: 'Sign Out',
+        icon: 'pi pi-sign-out',
+        command: () => {
+          logout()
+        }
+      }
+    ]
+  }
+]);
 
 // -------------
 // methods
 // -------------
+const toggle = (event) => {
+  menu.value.toggle(event)
+}
 onMounted(() => {
   bindOutsideClickListener()
 });
@@ -87,7 +112,7 @@ const logout = () => {
           <span class="text-red-600 font-bold">RED</span>
           <span>dot</span>
         </div>
-        <div style="font-size: 12px;">CRM</div>
+        <div class="text-sm font-semibold">CRM</div>
       </div>
     </router-link>
     
@@ -105,24 +130,41 @@ const logout = () => {
     </button>
 
     <div class="layout-topbar-menu" :class="topbarMenuClasses">
-      <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
+      <div class="flex align-items-center">
+        <span>Hello&nbsp;</span>
+        <span class="font-bold">User</span>
+      </div>
+      <!-- <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
         <i class="pi pi-calendar"></i>
         <span>Calendar</span>
       </button>
       <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
         <i class="pi pi-user"></i>
         <span>Profile</span>
-      </button>
+      </button> -->
       <button @click="onSettingsClick()" class="p-link layout-topbar-button">
-        <i class="pi pi-cog"></i>
-        <span>Settings</span>
+        <i class="pi pi-bell"></i>
+        <span>Bell</span>
       </button>
-      <button v-if="isAuthenticated" @click="logout()" class="p-link layout-topbar-button">
-        <i class="pi pi-sign-out"></i>
+      <div class="justify-content-center">
+        <button v-if="isAuthenticated" @click="toggle" class="p-link layout-topbar-button">
+          <i class="pi pi-bars" style="font-size: 1rem;"></i>
+          <span>Menu</span>
+        </button>
+        <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
+      </div>
+      <!-- <button v-if="isAuthenticated" @click="logout()" class="p-link layout-topbar-button">
+        <i class="pi pi-bars" size="small"></i>
         <span>SignOut</span>
-      </button>
+      </button> -->
     </div>
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style scoped>
+
+.layout-topbar a:focus {
+  box-shadow: none !important;
+}
+
+</style>
