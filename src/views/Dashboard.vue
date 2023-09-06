@@ -115,6 +115,22 @@ watch(
 </script>
 
 <template>
+
+    <div class="mb-5 mt-5">
+      <div class="flex justify-content-between">
+        <div class="flex flex-column">
+          <span class="font-semibold text-blue-800 dark:text-blue-100">Dashboard</span>
+          <span class="text-xl font-bold text-blue-800">Analytic Module</span>
+        </div>
+
+        <div>
+          <Button class="reddot-primary border-round-3xl py-2 px-4" size="small">Add reports</Button>
+        </div>
+      </div>
+    </div>
+    
+
+
     <div class="grid reddot-gutter">
         <div class="col-12 lg:col-6 xl:col-3">
             <div class="card mb-0">

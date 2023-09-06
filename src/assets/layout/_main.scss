@@ -31,3 +31,7 @@ a {
 }
 
 .reddot-gutter [class*=col] { padding: .5rem; }
+
+.reddot-primary {
+  background-image: linear-gradient(to left, var(--blue-800), var(--blue-600));
+}
