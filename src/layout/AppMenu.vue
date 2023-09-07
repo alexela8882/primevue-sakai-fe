@@ -8,7 +8,7 @@ const reddotMenus = ref([
     label: '',
     items: [
       { label: 'Dashboard', icon: 'fa-solid fa-gauge-high', to: '/' },
-      { label: 'Country', icon: 'fa-solid fa-earth-asia', to: '/uikit/formlayout' },
+      { label: 'Country', icon: 'fa-solid fa-earth-asia', to: '/countries' },
       { label: 'Campaign', icon: 'fa-solid fa-bullhorn', square: true, to: '/uikit/input' },
       { label: 'Leads', icon: 'fa-solid fa-chart-simple', square: true, to: '/uikit/floatlabel' },
       { label: 'Account', icon: 'fa-solid fa-building', square: true, to: '/uikit/invalidstate' },

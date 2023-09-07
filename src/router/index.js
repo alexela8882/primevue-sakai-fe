@@ -17,6 +17,13 @@ const router = createRouter({
             requiresAuth: true
           }
         }, {
+          path: '/countries',
+          name: 'countries',
+          component: () => import('@/views/pages/countries/index.vue'),
+          meta: {
+            requiresAuth: true
+          }
+        }, {
           path: '/uikit/formlayout',
           name: 'formlayout',
           component: () => import('@/views/uikit/FormLayout.vue'),

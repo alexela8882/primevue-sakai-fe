@@ -88,6 +88,7 @@ const logoUrl = computed(() => {
             <div class="flex flex-column gap-2 mb-5">
               <label for="email1" class="block text-900 text-xl font-medium">Email</label>
               <InputText
+                @keypress.enter="submit()"
                 :disabled="localLoading"
                 type="text"
                 placeholder="Email address"
@@ -101,6 +102,7 @@ const logoUrl = computed(() => {
             <div class="flex flex-column gap-2 mb-5">
               <label for="email1" class="block text-900 text-xl font-medium">Password</label>
               <Password
+                @keypress.enter="submit()"
                 :disabled="localLoading"
                 v-model="form.password.value"
                 placeholder="Password"
