@@ -6,4 +6,4 @@ import AppMenu from './AppMenu.vue';
     <app-menu></app-menu>
 </template>
 
-<style lang="scss" scoped></style>
+<style scoped></style>

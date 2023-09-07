@@ -119,12 +119,12 @@ watch(
     <div class="mb-5 mt-5">
       <div class="flex justify-content-between">
         <div class="flex flex-column">
-          <span class="font-semibold text-blue-800 dark:text-blue-100">Dashboard</span>
-          <span class="text-xl font-bold text-blue-800">Analytic Module</span>
+          <span class="font-semibold" :class="`${isDarkTheme ? 'text-surface-50' : 'text-blue-800'}`">Dashboard</span>
+          <span class="text-xl font-bold" :class="`${isDarkTheme ? 'text-surface-50' : 'text-blue-800'}`">Analytic Module</span>
         </div>
 
         <div>
-          <Button class="reddot-primary border-round-3xl py-2 px-4" size="small">Add reports</Button>
+          <Button class="reddot-primary border-round-3xl py-2 px-4 text-surface-50" size="small">Add reports</Button>
         </div>
       </div>
     </div>

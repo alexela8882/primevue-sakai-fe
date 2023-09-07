@@ -11,6 +11,14 @@ const reddotMenus = ref([
       { label: 'Country', icon: 'pi pi-fw pi-globe', to: '/uikit/formlayout' },
       { label: 'Campaign', icon: 'pi pi-fw pi-volume-up', to: '/uikit/input' },
       { label: 'Leads', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
+      { label: 'Account', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
+      { label: 'Opportunity', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
+      { label: 'Quotation', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
+      { label: 'Reports', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
+      { label: 'Product', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
+      { label: 'Pricelist', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
+      { label: 'Work Order', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
+      { label: 'Service', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
     ]
   }
 ])
