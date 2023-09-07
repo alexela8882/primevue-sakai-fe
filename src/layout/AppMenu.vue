@@ -7,18 +7,18 @@ const reddotMenus = ref([
   {
     label: '',
     items: [
-      { label: 'Dashboard', icon: 'pi pi-fw pi-chart-pie', to: '/' },
-      { label: 'Country', icon: 'pi pi-fw pi-globe', to: '/uikit/formlayout' },
-      { label: 'Campaign', icon: 'pi pi-fw pi-volume-up', to: '/uikit/input' },
-      { label: 'Leads', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
-      { label: 'Account', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
-      { label: 'Opportunity', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
-      { label: 'Quotation', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
-      { label: 'Reports', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
-      { label: 'Product', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
-      { label: 'Pricelist', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
-      { label: 'Work Order', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
-      { label: 'Service', icon: 'pi pi-fw pi-chart-bar', to: '/uikit/floatlabel' },
+      { label: 'Dashboard', icon: 'fa-solid fa-gauge-high', to: '/' },
+      { label: 'Country', icon: 'fa-solid fa-earth-asia', to: '/uikit/formlayout' },
+      { label: 'Campaign', icon: 'fa-solid fa-earth-asia', to: '/uikit/input' },
+      { label: 'Leads', icon: 'fa-solid fa-chart-simple', square: true, to: '/uikit/floatlabel' },
+      { label: 'Account', icon: 'fa-solid fa-building', square: true, to: '/uikit/invalidstate' },
+      { label: 'Opportunity', icon: 'fa-solid fa-magnifying-glass-dollar', square: true, to: '/uikit/button' },
+      { label: 'Quotation', icon: 'fa-solid fa-file', square: true, to: '/uikit/table' },
+      { label: 'Reports', icon: 'fa-solid fa-file-signature', square: true, to: '/uikit/list' },
+      { label: 'Product', icon: 'fa-solid fa-box-open', square: true, to: '/uikit/tree' },
+      { label: 'Pricelist', icon: 'fa-solid fa-tags', square: true, to: '/uikit/panel' },
+      { label: 'Work Order', icon: 'fa-solid fa-file-lines', square: true, to: '/uikit/overlay' },
+      { label: 'Service', icon: 'fa-solid fa-screwdriver-wrench', square: true, to: '/uikit/media' },
     ]
   }
 ])

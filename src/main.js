@@ -3,6 +3,28 @@ import App from './App.vue';
 import router from './router';
 import axios from 'axios'
 
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core';
+
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+/* import specific icons */
+import {
+  faUserSecret,
+  faFile,
+  faFileSignature,
+  faFileLines,
+  faGaugeHigh,
+  faEarthAsia,
+  faChartSimple,
+  faBuilding,
+  faMagnifyingGlassDollar,
+  faBoxOpen,
+  faTags,
+  faScrewdriverWrench
+} from '@fortawesome/free-solid-svg-icons';
+
 axios.defaults.baseURL = 'http://localhost:8000/api/';
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
 
@@ -212,5 +234,22 @@ app.component('TreeSelect', TreeSelect);
 app.component('TreeTable', TreeTable);
 app.component('TriStateCheckbox', TriStateCheckbox);
 app.component('VirtualScroller', VirtualScroller);
+
+/* add icons to the library */
+library.add(
+  faUserSecret,
+  faFile,
+  faFileSignature,
+  faFileLines,
+  faGaugeHigh,
+  faEarthAsia,
+  faChartSimple,
+  faBuilding,
+  faMagnifyingGlassDollar,
+  faBoxOpen,
+  faTags,
+  faScrewdriverWrench
+);
+app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.mount('#app');

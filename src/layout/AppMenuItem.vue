@@ -76,7 +76,10 @@ const checkActiveRoute = (item) => {
     </a>
     <router-link class="flex justify-content-center" v-if="item.to && !item.items && item.visible !== false" @click="itemClick($event, item, index)" :class="[item.class, { 'active-route': checkActiveRoute(item) }]" tabindex="0" :to="item.to">
       <div class="flex flex-column align-items-center">
-        <div class="py-2 px-1 border-circle" :class="`${isActiveMenu && 'bg-blue-800'}`"><i :class="item.icon" style="font-size: 2.5rem;"></i></div>
+        <div class="p-2" :class="`${isActiveMenu && 'bg-blue-800'} ${item.square ? 'border-round-xl' : 'border-circle'}`">
+          <!-- <i :class="item.icon" style="font-size: 2.5rem;"></i> -->
+          <font-awesome-icon :icon="item.icon" size="3x" />
+        </div>
         <div><span class="font-light">{{ item.label }}</span></div>
       </div>
       <i class="pi pi-fw pi-angle-down layout-submenu-toggler" v-if="item.items"></i>
@@ -90,7 +93,8 @@ const checkActiveRoute = (item) => {
 </template>
 
 <style scoped>
-.router-link-exact-active div div.border-circle {
+.router-link-exact-active div div.border-circle,
+.router-link-exact-active div div.border-round-xl {
   background-color: var(--blue-800);
 }
 
