@@ -89,7 +89,8 @@
                 color: var(--surface-overlay);
             }
 
-            &:hover div div.border-circle {
+            &:hover div div.border-circle,
+            &:hover div div.border-round-xl {
                 // background-color: var(--surface-hover);
                 background-color: var(--blue-700);
             }
