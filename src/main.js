@@ -23,7 +23,8 @@ import {
   faBoxOpen,
   faTags,
   faScrewdriverWrench,
-  faBullhorn
+  faBullhorn,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons';
 
 axios.defaults.baseURL = 'http://localhost:8000/api/';
@@ -250,7 +251,8 @@ library.add(
   faBoxOpen,
   faTags,
   faScrewdriverWrench,
-  faBullhorn
+  faBullhorn,
+  faPlus
 );
 app.component('font-awesome-icon', FontAwesomeIcon);
 
