@@ -24,7 +24,8 @@ import {
   faTags,
   faScrewdriverWrench,
   faBullhorn,
-  faPlus
+  faPlus,
+  faGripVertical
 } from '@fortawesome/free-solid-svg-icons';
 
 axios.defaults.baseURL = 'http://localhost:8000/api/';
@@ -252,7 +253,8 @@ library.add(
   faTags,
   faScrewdriverWrench,
   faBullhorn,
-  faPlus
+  faPlus,
+  faGripVertical
 );
 app.component('font-awesome-icon', FontAwesomeIcon);
 
