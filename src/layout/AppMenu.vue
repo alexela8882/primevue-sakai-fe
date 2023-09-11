@@ -10,7 +10,7 @@ const reddotMenus = ref([
       { label: 'Dashboard', icon: 'fa-solid fa-gauge-high', to: '/' },
       { label: 'Country', icon: 'fa-solid fa-earth-asia', to: '/countries' },
       { label: 'Campaign', icon: 'fa-solid fa-bullhorn', square: true, to: '/campaigns' },
-      { label: 'Leads', icon: 'fa-solid fa-chart-simple', square: true, to: '/uikit/floatlabel' },
+      { label: 'Leads', icon: 'fa-solid fa-chart-simple', square: true, to: '/leads' },
       { label: 'Account', icon: 'fa-solid fa-building', square: true, to: '/uikit/invalidstate' },
       { label: 'Opportunity', icon: 'fa-solid fa-magnifying-glass-dollar', square: true, to: '/uikit/button' },
       { label: 'Quotation', icon: 'fa-solid fa-file', square: true, to: '/uikit/table' },
