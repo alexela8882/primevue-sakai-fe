@@ -1,29 +1,29 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 html {
-    height: 100%;
-    font-size: $scale;
+  height: 100%;
+  font-size: $scale;
 }
 
 body {
-    font-family: var(--font-family);
-    color: var(--text-color);
-    background-color: var(--surface-ground);
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background-color: var(--surface-ground);
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .layout-wrapper {
-    min-height: 100vh;
+  min-height: 100vh;
 }
 
 .reddot-gutter {
@@ -34,4 +34,22 @@ a {
 
 .reddot-primary {
   background-image: linear-gradient(to left, var(--blue-800), var(--blue-600));
+}
+
+.reddot-button-primary {
+  border: transparent;
+  background-color: var(--cyan-200);
+  color: var(--surface-800);
+}
+
+.reddot-button-secondary {
+  border: transparent;
+  background-color: var(--surface-300);
+  color: var(--surface-0);
+}
+
+.reddot-button-danger {
+  border: transparent;
+  background-color: var(--red-300);
+  color: var(--surface-0);
 }

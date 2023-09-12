@@ -52,7 +52,7 @@ const products = ref([
         </div>
 
         <div>
-          <Button class="flex border-round-lg py-2 px-4" size="small">
+          <Button class="reddot-button-primary flex border-round-lg py-2 px-4" size="small">
             <font-awesome-icon icon="fa-solid fa-plus" size="xs" />
             &nbsp;Add Country
           </Button>
@@ -111,12 +111,6 @@ const products = ref([
 </template>
 
 <style scoped>
-
-.p-button {
-  border: transparent;
-  background-color: var(--blue-200);
-  color: var(--surface-800);
-}
 
 
 /* .p-dropdown {

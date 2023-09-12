@@ -21,7 +21,7 @@ const { isDarkTheme } = useLayout()
         </div>
 
         <div>
-          <Button class="flex border-round-lg py-2 px-4" size="small">
+          <Button class="reddot-button-primary flex border-round-lg py-2 px-4" size="small">
             <font-awesome-icon icon="fa-solid fa-plus" size="xs" />
             &nbsp;Add Campaign
           </Button>
@@ -53,7 +53,7 @@ const { isDarkTheme } = useLayout()
                     <div class="align-self-center text-500">
                       <font-awesome-icon icon="fa-solid fa-grip-vertical" style="font-size: 1.5rem; cursor: move;" />
                     </div>
-                    <div class="flex flex-column gap-2 col-10">
+                    <div @click="$router.push(`/campaigns/${i + 1}`)" class="flex flex-column gap-2 col-10" style="cursor: pointer;">
                       <div class="font-bold text-blue-800">Contact sales or service</div>
                       <div class="text-400">Contact sales or service</div>
                       <div class="flex gap-2">
@@ -79,7 +79,7 @@ const { isDarkTheme } = useLayout()
                     <div class="align-self-center text-500">
                       <font-awesome-icon icon="fa-solid fa-grip-vertical" style="font-size: 1.5rem; cursor: move;" />
                     </div>
-                    <div class="flex flex-column gap-2 col-10">
+                    <div @click="$router.push(`/campaigns/${i + 1}`)" class="flex flex-column gap-2 col-10" style="cursor: pointer;">
                       <div class="font-bold text-blue-800">Contact sales or service</div>
                       <div class="text-400">Contact sales or service</div>
                       <div class="flex gap-2">
@@ -100,12 +100,6 @@ const { isDarkTheme } = useLayout()
 </template>
 
 <style scoped>
-
-.p-button {
-  border: transparent;
-  background-color: var(--blue-200);
-  color: var(--surface-800);
-}
 
 .custom-gutter [class*=col] { padding: 1px; }
 

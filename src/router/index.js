@@ -33,10 +33,21 @@ const router = createRouter({
         }, {
           path: '/campaigns',
           name: 'campaigns',
-          component: () => import('@/views/pages/campaigns/index.vue'),
+          component: () => import('@/views/pages/campaigns/main.vue'),
           meta: {
             requiresAuth: true
-          }
+          },
+          children: [
+            {
+              path: '',
+              name: 'campaigns.index',
+              component: () => import('@/views/pages/campaigns/index.vue'),
+            }, {
+              path: ':id',
+              name: 'campaigns.view',
+              component: () => import('@/views/pages/campaigns/view.vue')
+            }
+          ]
         }, {
           path: '/uikit/formlayout',
           name: 'formlayout',
