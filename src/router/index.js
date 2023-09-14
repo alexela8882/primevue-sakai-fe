@@ -17,6 +17,24 @@ const router = createRouter({
             requiresAuth: true
           }
         }, {
+          path: '/users',
+          name: 'users',
+          component: () => import('@/views/pages/users/main.vue'),
+          meta: {
+            requiresAuth: true
+          },
+          children: [
+            {
+              path: '',
+              name: 'users.index',
+              component: () => import('@/views/pages/users/index.vue'),
+            }, {
+              path: ':id',
+              name: 'users.view',
+              component: () => import('@/views/pages/users/view.vue')
+            }
+          ]
+        }, {
           path: '/countries',
           name: 'countries',
           component: () => import('@/views/pages/countries/index.vue'),

@@ -22,10 +22,10 @@ const items = ref([
     label: 'Options',
     items: [
       {
-        label: 'Update',
-        icon: 'pi pi-refresh',
+        label: 'Manage Users',
+        icon: 'pi pi-user',
         command: () => {
-          toast.add({ severity: 'success', summary: 'Updated', detail: 'Data Updated', life: 3000 });
+          router.push('/users')
         }
       },
       {
