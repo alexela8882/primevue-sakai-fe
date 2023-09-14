@@ -5,7 +5,15 @@
 import { useLayout } from '@/layout/composables/layout'
 import { ref, onMounted, onBeforeMount } from 'vue'
 import axios from 'axios'
-axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
+
+// -----------
+// stores
+// -----------
+const userStore = useUserStore()
+const { users, getUsers } = storeToRefs(userStore)
+const { setUsers } = userStore
 
 // --------
 // refs
@@ -17,7 +25,7 @@ const countries = ref([
   { name: 'Singapore'},
   { name: 'Indonesia'},
 ])
-const selectedProduct = ref()
+const selectedUsers = ref()
 const products = ref([
   {
     country_name: "Philippines",
@@ -45,8 +53,10 @@ const products = ref([
 
 onMounted(async () => {
   await axios.get('/users').then((response) => {
-    console.log(response)
+    setUsers(response.data)
   })
+
+  console.log(getUsers)
 })
 
 </script>
@@ -97,20 +107,16 @@ onMounted(async () => {
       <Card>
         <template #content>
           <DataTable
-            v-model:selection="selectedProduct"
-            :value="products"
-            dataKey="country_name"
+            v-model:selection="selectedUsers"
+            :value="getUsers"
+            dataKey="_id"
             paginator
             :rows="5"
             :rowsPerPageOptions="[5, 10, 20, 50]"
             tableStyle="min-width: 50rem">
             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-            <Column field="country_name" header="Country Name"></Column>
-            <Column field="region" header="Region"></Column>
-            <Column field="electrical_outlet" header="Electrical Outlet"></Column>
-            <Column field="plug_code" header="Plug Code"></Column>
-            <Column field="power_supply_1" header="Power Supply 1"></Column>
-            <Column field="power_supply_2" header="Power Supply 2"></Column>
+            <Column field="name" header="Name"></Column>
+            <Column field="email" header="Email"></Column>
           </DataTable>
         </template>
       </Card>
