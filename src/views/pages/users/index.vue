@@ -5,58 +5,78 @@
 import { useLayout } from '@/layout/composables/layout'
 import { ref, onMounted, onBeforeMount } from 'vue'
 import axios from 'axios'
-import { useUserStore } from '@/stores/user'
 import { storeToRefs } from 'pinia'
+// stores
+import { useUserStore } from '@/stores/user'
+import { useGeneralStore } from '@/stores/general'
+// components
+import FormDialog from '../../../components/dynamic/FormDialog.vue'
 
 // -----------
 // stores
 // -----------
+// user store
 const userStore = useUserStore()
 const { users, getUsers } = storeToRefs(userStore)
 const { setUsers } = userStore
+// general store
+const generalStore = useGeneralStore()
+const { popUpModalOpen, formModalOpen, pageData } = storeToRefs(generalStore)
+const { popUpModalDataFill, formModalDataFill, pageDataFill, throwError } = generalStore
 
 // --------
 // refs
 // --------
 const { isDarkTheme } = useLayout()
+const selectedUsers = ref()
 const selectedCountry = ref(null)
 const countries = ref([
   { name: 'Philippines'},
   { name: 'Singapore'},
   { name: 'Indonesia'},
 ])
-const selectedUsers = ref()
-const products = ref([
-  {
-    country_name: "Philippines",
-    region: "Africa",
-    electrical_outlet: "Type D",
-    plug_code: "D",
-    power_supply_1: "ZESA",
-    power_supply_2: "ZESA",
-  }, {
-    country_name: "Singapore",
-    region: "Africa",
-    electrical_outlet: "Type D",
-    plug_code: "D",
-    power_supply_1: "ZESA",
-    power_supply_2: "ZESA",
-  }, {
-    country_name: "Indonesia",
-    region: "Africa",
-    electrical_outlet: "Type D",
-    plug_code: "D",
-    power_supply_1: "ZESA",
-    power_supply_2: "ZESA",
+
+// -----------
+// actions
+// -----------
+const addUser = () => {
+  let userObj = {
+    store: {
+      name: 'userStore',
+      action: 'addUser'
+    },
+    api: { uri: `api/users/store`,  method: 'POST'},
+    fields: [{
+      label: 'Name',
+      name: 'name',
+      type: 'text',
+      value: null
+    }, {
+      label: 'Email',
+      name: 'email',
+      type: 'email',
+      value: null
+    }, {
+      label: 'Password',
+      name: 'password',
+      type: 'password',
+      value: null
+    }]
   }
-])
+
+  let obj = {
+    title: `Add User`,
+    type: 'primary',
+    data: Object.assign({}, userObj)
+  }
+
+  formModalDataFill(obj)
+  formModalOpen.value = true
+}
 
 onMounted(async () => {
-  await axios.get('/users').then((response) => {
-    setUsers(response.data)
-  })
-
-  console.log(getUsers)
+  // fetch users
+  await axios.get('/users').then((response) => { setUsers(response.data) })
 })
 
 </script>
@@ -70,7 +90,7 @@ onMounted(async () => {
         </div>
 
         <div>
-          <Button class="reddot-button-primary flex border-round-lg py-2 px-4" size="small">
+          <Button @click="addUser" class="reddot-button-primary flex border-round-lg py-2 px-4" size="small">
             <font-awesome-icon icon="fa-solid fa-plus" size="xs" />
             &nbsp;Add user
           </Button>
@@ -108,6 +128,7 @@ onMounted(async () => {
         <template #content>
           <DataTable
             v-model:selection="selectedUsers"
+            lazy
             :value="getUsers"
             dataKey="_id"
             paginator
@@ -121,6 +142,8 @@ onMounted(async () => {
         </template>
       </Card>
     </div>
+
+    <FormDialog />
   </div>
 </template>
 
