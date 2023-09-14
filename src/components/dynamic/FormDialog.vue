@@ -8,7 +8,7 @@ import { useToast } from "primevue/usetoast"
 import { useGeneralStore } from '../../stores/general'
 import { useUserStore } from '../../stores/user'
 // components
-import LoadingsSimple from '../loading/Simple.vue'
+import axios from 'axios'
 
 const router = useRouter()
 
@@ -20,6 +20,9 @@ const _action = ref()
 const loading = ref(false)
 const urlParams = ref()
 const toast = useToast()
+const statusCode = ref()
+const data = ref()
+const error = ref()
 
 const generalStore = useGeneralStore()
 const { toastTimer, toastOpen, formModalOpen, formModalData } = storeToRefs(generalStore)
@@ -64,15 +67,22 @@ const executeAction = async () => {
     formDataPayload.value.append([f.name], f.value)
   })
 
-  const { data, error } = await useAsyncData(() => $apiFetch(uri.value, { method: apiMethod.value, body: _action.value === 'addPhoto' ? formDataPayload.value : payload.value }))
+  // const { data, error } = await useAsyncData(() => $apiFetch(uri.value, { method: apiMethod.value, body: _action.value === 'addPhoto' ? formDataPayload.value : payload.value }))
+  await axios.post(uri.value, _action.value === 'addPhoto' ? formDataPayload.value : payload.value).then((response) => {
+    statusCode.value = response.status
+    data.value = response.data
+  }).catch((err) => {
+    error.value = err.response
+  })
 
-  if (error.value === null) {
+  if (statusCode.value === 200) {
     // dynamic callback
     if (_store.value === 'roleStore') {
       if (_action.value === 'addRole') router.push(`/roles/edit/${data.value.data._token}`)
       roleStore[_action.value](data.value.data)
     } else if (_store.value === 'userStore') {
-      if (_action.value === 'addUser') router.push(`/users/edit/${data.value.data._token}`)
+      console.log(data.value)
+      // if (_action.value === 'addUser') router.push(`/users/edit/${data.value.data._id}`)
       userStore[_action.value](data.value.data)
     } else if (_store.value === 'galleryStore') {
       if (_action.value === 'addGallery') {
@@ -100,11 +110,12 @@ const executeAction = async () => {
     toast.add({ severity: 'success', summary: 'Success', detail: data.value.message, life: 3000 })
     formModalOpen.value = false
   } else {
+    console.log(error)
     formModalData.value.data.fields.map((f) => {
-      f.error = error.value.data
+      f.error = error.value
     })
 
-    if (error.value.statusCode !== 422) {
+    if (statusCode.value !== 422) {
 
       // reset form
       loading.value = false
@@ -115,9 +126,9 @@ const executeAction = async () => {
       clearTimeout(toastTimer.value)
 
       const obj = {
-        title: `Oops! Error ${error.value.statusCode}`,
+        title: `Oops! Error ${statusCode.value}`,
         type: 'error',
-        message: error.value.data.message
+        message: error.value
       }
 
       toast.add({ severity: 'error', summary: 'Forbidden', detail: obj.message, life: 3000 })

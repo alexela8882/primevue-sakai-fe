@@ -45,7 +45,7 @@ const addUser = () => {
       name: 'userStore',
       action: 'addUser'
     },
-    api: { uri: `api/users/store`,  method: 'POST'},
+    api: { uri: `users/store`,  method: 'POST'},
     fields: [{
       label: 'Name',
       name: 'name',
@@ -128,7 +128,6 @@ onMounted(async () => {
         <template #content>
           <DataTable
             v-model:selection="selectedUsers"
-            lazy
             :value="getUsers"
             dataKey="_id"
             paginator

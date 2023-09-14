@@ -12,14 +12,14 @@ export const useUserStore = defineStore('user', () => {
 
 
   // actions
-  const setUsers = (payload) => {
-    users.value = payload
-  }
+  const setUsers = (payload) => { users.value = payload }
+  const addUser = (payload) => { users.value.push(payload) }
 
   return {
     users,
     getUsers,
     doubleCount,
-    setUsers
+    setUsers,
+    addUser
   }
 })
