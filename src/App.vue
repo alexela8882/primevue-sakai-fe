@@ -1,8 +1,15 @@
-<script setup></script>
+<script setup>
+// imports
+// components
+import FormDialog from './components/dynamic/FormDialog.vue'
+import PopUpDialog from './components/dynamic/PopUpDialog.vue'
+</script>
 
 <template>
   <router-view />
   <Toast class="z-index-900" />
+  <FormDialog />
+  <PopUpDialog />
 </template>
 
 <style>

@@ -9,8 +9,6 @@ import { storeToRefs } from 'pinia'
 // stores
 import { useUserStore } from '@/stores/user'
 import { useGeneralStore } from '@/stores/general'
-// components
-import FormDialog from '../../../components/dynamic/FormDialog.vue'
 /// primevue
 import { FilterMatchMode } from 'primevue/api'
 
@@ -106,6 +104,25 @@ const editUser = (user) => {
 
   formModalDataFill(obj)
   formModalOpen.value = true
+}
+
+const deleteUser = (user) => {
+  console.log(user)
+  let userObj = {
+    store: { name: 'userStore', action: 'deleteUser' },
+    api: { uri: `users/${user._id}/delete`,  method: 'DELETE'},
+  }
+
+  const obj = {
+    title: `Are you sure you want to delete user: "${user.name}"?`,
+    type: 'danger',
+    data: Object.assign({}, userObj)
+  }
+
+  popUpModalDataFill(obj)
+  popUpModalOpen.value = true
+
+  console.log(popUpModalOpen.value)
 }
 
 onMounted(async () => {
@@ -206,8 +223,6 @@ onMounted(async () => {
         </template>
       </Card>
     </div>
-
-    <FormDialog />
   </div>
 </template>
 

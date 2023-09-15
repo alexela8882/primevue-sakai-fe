@@ -19,6 +19,10 @@ export const useUserStore = defineStore('user', () => {
       if (u._id === payload._id) users.value[index] = Object.assign({}, payload)
     })
   }
+  const deleteUser = (payload) => {
+    const index = users.value.findIndex((u) => u._id === payload._id)
+    users.value.splice(index, 1)
+  }
 
   return {
     users,
@@ -26,6 +30,7 @@ export const useUserStore = defineStore('user', () => {
     doubleCount,
     setUsers,
     addUser,
-    updateUser
+    updateUser,
+    deleteUser
   }
 })

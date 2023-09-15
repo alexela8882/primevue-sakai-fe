@@ -132,7 +132,7 @@ const logout = () => {
 
     <span class="layout-search p-input-icon-left ml-3">
       <i class="pi pi-search" />
-      <InputText class="surface-100" v-model="value1" placeholder="Search" size="small" />
+      <InputText class="surface-100" placeholder="Search" size="small" />
     </span>
 
     <button class="p-link layout-topbar-menu-button layout-topbar-button" @click="onTopBarMenuButton()">

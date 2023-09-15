@@ -10,9 +10,8 @@ import { useUserStore } from '../../stores/user'
 // components
 import axios from 'axios'
 
-const router = useRouter()
-
 // refs
+const router = useRouter()
 const uri = ref()
 const apiMethod = ref()
 const _store = ref()
@@ -67,6 +66,7 @@ const executeAction = async () => {
     formDataPayload.value.append([f.name], f.value)
   })
 
+  // axios
   await axios({
     url: uri.value,
     method: apiMethod.value,
