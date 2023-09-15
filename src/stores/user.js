@@ -14,12 +14,18 @@ export const useUserStore = defineStore('user', () => {
   // actions
   const setUsers = (payload) => { users.value = payload }
   const addUser = (payload) => { users.value.push(payload) }
+  const updateUser = (payload) => {
+    getUsers.value.map((u, index) => {
+      if (u._id === payload._id) users.value[index] = Object.assign({}, payload)
+    })
+  }
 
   return {
     users,
     getUsers,
     doubleCount,
     setUsers,
-    addUser
+    addUser,
+    updateUser
   }
 })

@@ -6,10 +6,12 @@ import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useLayout } from '@/layout/composables/layout'
 import { useRouter } from 'vue-router'
 import { useToast } from "primevue/usetoast"
+import axios from 'axios'
 
 // -----------
 // refs
 // -----------
+const authUser = ref()
 const toast = useToast()
 const { layoutConfig, onMenuToggle } = useLayout()
 const outsideClickListener = ref(null)
@@ -45,9 +47,17 @@ const items = ref([
 const toggle = (event) => {
   menu.value.toggle(event)
 }
-onMounted(() => {
+onMounted(async () => {
   bindOutsideClickListener()
-});
+
+  // get auth user
+  console.log(localStorage.getItem('auth_id'))
+
+  await axios.get(`users/${localStorage.getItem('auth_id')}/get`).then((response) => {
+    authUser.value = response.data
+    console.log(authUser.value)
+  })
+})
 
 onBeforeUnmount(() => {
   unbindOutsideClickListener()
@@ -131,8 +141,8 @@ const logout = () => {
 
     <div class="layout-topbar-menu" :class="topbarMenuClasses">
       <div class="flex align-items-center">
-        <span>Hello&nbsp;</span>
-        <span class="font-bold">User</span>
+        <span>Hello!&nbsp;</span>
+        <span class="capitalize font-bold">{{ authUser && authUser.name }}</span>
       </div>
       <!-- <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
         <i class="pi pi-calendar"></i>

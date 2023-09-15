@@ -50,7 +50,10 @@ const submit = async () => {
   }).then((response) => {
     // isAuthenticated.value = true
 
+    console.log(response)
+
     localStorage.setItem('token', response.data.data.token)
+    localStorage.setItem('auth_id', response.data.data._id)
     localStorage.setItem('isAuthenticated', true)
     router.push({ path: '/' })
 

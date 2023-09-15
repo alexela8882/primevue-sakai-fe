@@ -67,8 +67,11 @@ const executeAction = async () => {
     formDataPayload.value.append([f.name], f.value)
   })
 
-  // const { data, error } = await useAsyncData(() => $apiFetch(uri.value, { method: apiMethod.value, body: _action.value === 'addPhoto' ? formDataPayload.value : payload.value }))
-  await axios.post(uri.value, _action.value === 'addPhoto' ? formDataPayload.value : payload.value).then((response) => {
+  await axios({
+    url: uri.value,
+    method: apiMethod.value,
+    data: payload.value
+  }).then((response) => {
     statusCode.value = response.status
     data.value = response.data
   }).catch((err) => {
@@ -81,7 +84,7 @@ const executeAction = async () => {
       if (_action.value === 'addRole') router.push(`/roles/edit/${data.value.data._token}`)
       roleStore[_action.value](data.value.data)
     } else if (_store.value === 'userStore') {
-      console.log(data.value)
+      console.log(_action.value)
       // if (_action.value === 'addUser') router.push(`/users/edit/${data.value.data._id}`)
       userStore[_action.value](data.value.data)
     } else if (_store.value === 'galleryStore') {
@@ -112,26 +115,15 @@ const executeAction = async () => {
   } else {
     console.log(error)
     formModalData.value.data.fields.map((f) => {
-      f.error = error.value
+      f.error = error.value.data
     })
 
-    if (statusCode.value !== 422) {
+    if (error.value.status !== 422) {
 
       // reset form
       loading.value = false
 
-      // -------------------
-      // -------TOAST-------
-      // -------------------
-      clearTimeout(toastTimer.value)
-
-      const obj = {
-        title: `Oops! Error ${statusCode.value}`,
-        type: 'error',
-        message: error.value
-      }
-
-      toast.add({ severity: 'error', summary: 'Forbidden', detail: obj.message, life: 3000 })
+      toast.add({ severity: 'error', summary: 'Forbidden', detail: error.value, life: 3000 })
     }
   }
 

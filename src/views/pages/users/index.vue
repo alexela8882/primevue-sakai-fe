@@ -11,6 +11,8 @@ import { useUserStore } from '@/stores/user'
 import { useGeneralStore } from '@/stores/general'
 // components
 import FormDialog from '../../../components/dynamic/FormDialog.vue'
+/// primevue
+import { FilterMatchMode } from 'primevue/api'
 
 // -----------
 // stores
@@ -27,6 +29,7 @@ const { popUpModalDataFill, formModalDataFill, pageDataFill, throwError } = gene
 // --------
 // refs
 // --------
+const localLoading = ref(false)
 const { isDarkTheme } = useLayout()
 const selectedUsers = ref()
 const selectedCountry = ref(null)
@@ -35,6 +38,11 @@ const countries = ref([
   { name: 'Singapore'},
   { name: 'Indonesia'},
 ])
+const filters = ref({
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  email: { value: null, matchMode: FilterMatchMode.CONTAINS }
+})
 
 // -----------
 // actions
@@ -74,9 +82,39 @@ const addUser = () => {
   formModalOpen.value = true
 }
 
+const editUser = (user) => {
+  let userObj = {
+    store: { name: 'userStore', action: 'updateUser' },
+    api: { uri: `users/${user._id}/update`,  method: 'PUT'},
+    fields: [{
+      name: 'email',
+      type: 'email',
+      value: user.email
+    }, {
+      name: 'password',
+      type: 'password',
+      value: null,
+      instruction: 'Leave this blank to keep unchanged'
+    }]
+  }
+
+  let obj = {
+    title: `Edit "${user.name}" User`,
+    type: 'primary',
+    data: Object.assign({}, userObj)
+  }
+
+  formModalDataFill(obj)
+  formModalOpen.value = true
+}
+
 onMounted(async () => {
+  localLoading.value = true
   // fetch users
-  await axios.get('/users').then((response) => { setUsers(response.data) })
+  await axios.get('/users').then((response) => {
+    setUsers(response.data)
+    localLoading.value = false
+  })
 })
 
 </script>
@@ -118,7 +156,7 @@ onMounted(async () => {
       <div>
         <span class="p-input-icon-left">
           <i class="pi pi-search" />
-          <InputText placeholder="Search" />
+          <InputText v-model="filters['global'].value" placeholder="Keyword search" />
         </span>
       </div>
     </div>
@@ -127,16 +165,43 @@ onMounted(async () => {
       <Card>
         <template #content>
           <DataTable
+            v-model:filters="filters"
             v-model:selection="selectedUsers"
             :value="getUsers"
             dataKey="_id"
+            :loading="localLoading"
+            filterDisplay="row"
+            :globalFilterFields="['name', 'email']"
             paginator
             :rows="5"
             :rowsPerPageOptions="[5, 10, 20, 50]"
             tableStyle="min-width: 50rem">
+            <template #empty> No users found.</template>
+            <template #loading> Loading users data. Please wait.</template>
             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-            <Column field="name" header="Name"></Column>
-            <Column field="email" header="Email"></Column>
+            <Column field="name" header="Name" sortable filterField="name" style="width: 50%">
+              <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by email" />
+              </template>
+              <template #body="slotProps">
+                <a class="">
+                  <div>{{ slotProps.data.name }}</div>
+                </a>
+              </template>
+            </Column>
+            <Column field="email" header="Email" sortable filterField="email" style="width: 50%">
+              <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by email" />
+              </template>
+            </Column>
+            <Column :exportable="false" style="min-width:10rem">
+              <template #body="slotProps">
+                <span class="p-buttonset">
+                  <Button icon="pi pi-pencil" size="small" severity="secondary" @click="editUser(slotProps.data)" />
+                  <Button icon="pi pi-trash" size="small" severity="danger" @click="deleteUser(slotProps.data)" />
+                </span>
+              </template>
+            </Column>
           </DataTable>
         </template>
       </Card>
