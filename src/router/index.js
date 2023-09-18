@@ -217,7 +217,8 @@ router.beforeEach((to, from) => {
 
   const isAuthenticated = localStorage.getItem('isAuthenticated')
 
-  axios.get('/user_configs/get-app-theme').then((response) => {
+  axios.get('/user-configs/get-app-theme').then((response) => {
+    // theme
     const elementId = 'theme-css'
     const linkElement = document.getElementById(elementId)
     const cloneLinkElement = linkElement.cloneNode(true)
@@ -230,6 +231,10 @@ router.beforeEach((to, from) => {
       changeThemeSettings(response.data.app_theme, layoutConfig.darkTheme.value)
     })
     linkElement.parentNode.insertBefore(cloneLinkElement, linkElement.nextSibling)
+
+    // theme scale
+    document.documentElement.style.fontSize = response.data.app_theme_scale + 'px'
+  
     console.log(layoutConfig)
   }).catch((err) => {
     console.log(err)
