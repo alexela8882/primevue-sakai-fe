@@ -1,8 +1,8 @@
 <script setup>
 // imports
-// components
 import FormDialog from './components/dynamic/FormDialog.vue'
 import PopUpDialog from './components/dynamic/PopUpDialog.vue'
+
 </script>
 
 <template>

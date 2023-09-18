@@ -51,8 +51,6 @@ onMounted(async () => {
   bindOutsideClickListener()
 
   // get auth user
-  console.log(localStorage.getItem('auth_id'))
-
   await axios.get(`users/${localStorage.getItem('auth_id')}/get`).then((response) => {
     authUser.value = response.data
     console.log(authUser.value)

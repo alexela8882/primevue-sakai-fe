@@ -194,7 +194,6 @@ onMounted(async () => {
             :rowsPerPageOptions="[5, 10, 20, 50]"
             tableStyle="min-width: 50rem">
             <template #empty> No users found.</template>
-            <template #loading> Loading users data. Please wait.</template>
             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
             <Column field="name" header="Name" sortable filterField="name" style="width: 50%">
               <template #filter="{ filterModel, filterCallback }">

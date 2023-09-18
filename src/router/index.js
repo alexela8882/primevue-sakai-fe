@@ -1,6 +1,11 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import AppLayout from '@/layout/AppLayout.vue'
 import auth from '@/middleware/auth'
+import { useLayout } from '@/layout/composables/layout'
+import axios from 'axios'
+
+// refs
+const { layoutConfig, changeThemeSettings } = useLayout()
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -207,7 +212,28 @@ router.beforeEach((to, from) => {
   // instead of having to check every route record with
   // to.matched.some(record => record.meta.requiresAuth)
 
+  // fix for first time log in
+  axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
+
   const isAuthenticated = localStorage.getItem('isAuthenticated')
+
+  axios.get('/user_configs/get-app-theme').then((response) => {
+    const elementId = 'theme-css'
+    const linkElement = document.getElementById(elementId)
+    const cloneLinkElement = linkElement.cloneNode(true)
+    const newThemeUrl = linkElement.getAttribute('href').replace(layoutConfig.theme.value, response.data.app_theme)
+    cloneLinkElement.setAttribute('id', elementId + '-clone')
+    cloneLinkElement.setAttribute('href', newThemeUrl)
+    cloneLinkElement.addEventListener('load', () => {
+      linkElement.remove()
+      cloneLinkElement.setAttribute('id', elementId)
+      changeThemeSettings(response.data.app_theme, layoutConfig.darkTheme.value)
+    })
+    linkElement.parentNode.insertBefore(cloneLinkElement, linkElement.nextSibling)
+    console.log(layoutConfig)
+  }).catch((err) => {
+    console.log(err)
+  })
 
   if (to.meta.requiresAuth && !isAuthenticated) {
     // this route requires auth, check if logged in
