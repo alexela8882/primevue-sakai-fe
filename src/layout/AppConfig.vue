@@ -37,11 +37,11 @@ const onChangeTheme = async (theme, mode) => {
   cloneLinkElement.addEventListener('load', () => {
     linkElement.remove()
     cloneLinkElement.setAttribute('id', elementId)
-    changeThemeSettings(theme, mode === 'dark')
+    changeThemeSettings(theme, mode)
   })
   linkElement.parentNode.insertBefore(cloneLinkElement, linkElement.nextSibling)
 
-  const obj = { app_theme: theme }
+  const obj = { app_theme: theme, app_theme_dark: mode }
   updateBackend(obj)
 }
 
@@ -93,6 +93,7 @@ onMounted(async () => {
   // fetch user config
   await axios.get('/user-configs/get-app-theme').then((response) => {
     layoutConfig.theme.value = response.data.app_theme ? response.data.app_theme : 'lara-light-indigo'
+    layoutConfig.darkTheme.value = response.data.app_theme_dark ? response.data.app_theme_dark : 'lara-light-indigo'
     layoutConfig.scale.value = response.data.app_theme_scale ? response.data.app_theme_scale : '14'
     layoutConfig.ripple.value = response.data.app_theme_ripple ? response.data.app_theme_ripple : false
     layoutConfig.menuMode.value = response.data.app_theme_menu_type ? response.data.app_theme_menu_type : 'static'
