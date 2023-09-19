@@ -154,7 +154,8 @@ onMounted(async () => {
         <Button
           @click="onChangeTheme('bootstrap4-light-blue', 'light')"
           link
-          :class="`${layoutConfig.theme.value === 'bootstrap4-light-blue' && 'selected-theme'}`"
+          :disabled="layoutConfig.theme.value == 'bootstrap4-light-blue'"
+          :class="`${layoutConfig.theme.value == 'bootstrap4-light-blue' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/bootstrap4-light-blue.svg" class="w-3rem h-3rem" alt="Bootstrap Light Blue" />
         </Button>
@@ -163,6 +164,7 @@ onMounted(async () => {
         <Button
           @click="onChangeTheme('bootstrap4-light-purple', 'light')"
           link
+          :disabled="layoutConfig.theme.value == 'bootstrap4-light-purple'"
           :class="`${layoutConfig.theme.value == 'bootstrap4-light-purple' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/bootstrap4-light-purple.svg" class="w-3rem h-3rem" alt="Bootstrap Light Purple" />
@@ -172,6 +174,7 @@ onMounted(async () => {
         <Button
           @click="onChangeTheme('bootstrap4-dark-blue', 'dark')"
           link
+          :disabled="layoutConfig.theme.value == 'bootstrap4-dark-blue'"
           :class="`${layoutConfig.theme.value == 'bootstrap4-dark-blue' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/bootstrap4-dark-blue.svg" class="w-3rem h-3rem" alt="Bootstrap Dark Blue" />
@@ -181,6 +184,7 @@ onMounted(async () => {
         <Button
           @click="onChangeTheme('bootstrap4-dark-purple', 'dark')"
           link
+          :disabled="layoutConfig.theme.value == 'bootstrap4-dark-purple'"
           :class="`${layoutConfig.theme.value == 'bootstrap4-dark-purple' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/bootstrap4-dark-purple.svg" class="w-3rem h-3rem" alt="Bootstrap Dark Purple" />
@@ -192,8 +196,9 @@ onMounted(async () => {
     <div class="grid">
       <div class="col-3">
         <Button
-          @click="onChangeTheme('md-light-indigo', 'dark')"
+          @click="onChangeTheme('md-light-indigo', 'light')"
           link
+          :disabled="layoutConfig.theme.value == 'md-light-indigo'"
           :class="`${layoutConfig.theme.value == 'md-light-indigo' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/md-light-indigo.svg" class="w-3rem h-3rem" alt="Material Light Indigo" />
@@ -201,8 +206,9 @@ onMounted(async () => {
       </div>
       <div class="col-3">
         <Button
-          @click="onChangeTheme('md-light-deeppurple', 'dark')"
+          @click="onChangeTheme('md-light-deeppurple', 'light')"
           link
+          :disabled="layoutConfig.theme.value == 'md-light-deeppurple'"
           :class="`${layoutConfig.theme.value == 'md-light-deeppurple' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/md-light-deeppurple.svg" class="w-3rem h-3rem" alt="Material Light DeepPurple" />
@@ -212,6 +218,7 @@ onMounted(async () => {
         <Button
           @click="onChangeTheme('md-dark-indigo', 'dark')"
           link
+          :disabled="layoutConfig.theme.value == 'md-dark-indigo'"
           :class="`${layoutConfig.theme.value == 'md-dark-indigo' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/md-dark-indigo.svg" class="w-3rem h-3rem" alt="Material Dark Indigo" />
@@ -221,6 +228,7 @@ onMounted(async () => {
         <Button
           @click="onChangeTheme('md-dark-deeppurple', 'dark')"
           link
+          :disabled="layoutConfig.theme.value == 'md-dark-deeppurple'"
           :class="`${layoutConfig.theme.value == 'md-dark-deeppurple' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/md-dark-deeppurple.svg" class="w-3rem h-3rem" alt="Material Dark DeepPurple" />
@@ -232,8 +240,9 @@ onMounted(async () => {
     <div class="grid">
       <div class="col-3">
         <Button
-          @click="onChangeTheme('mdc-light-indigo', 'dark')"
+          @click="onChangeTheme('mdc-light-indigo', 'light')"
           link
+          :disabled="layoutConfig.theme.value == 'mdc-light-indigo'"
           :class="`${layoutConfig.theme.value == 'mdc-light-indigo' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/md-light-indigo.svg" class="w-3rem h-3rem" alt="Material Light Indigo" />
@@ -241,8 +250,9 @@ onMounted(async () => {
       </div>
       <div class="col-3">
         <Button
-          @click="onChangeTheme('mdc-light-deeppurple', 'dark')"
+          @click="onChangeTheme('mdc-light-deeppurple', 'light')"
           link
+          :disabled="layoutConfig.theme.value == 'mdc-light-deeppurple'"
           :class="`${layoutConfig.theme.value == 'mdc-light-deeppurple' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/md-light-deeppurple.svg" class="w-3rem h-3rem" alt="Material Light Deep Purple" />
@@ -252,6 +262,7 @@ onMounted(async () => {
         <Button
           @click="onChangeTheme('mdc-dark-indigo', 'dark')"
           link
+          :disabled="layoutConfig.theme.value == 'mdc-dark-indigo'"
           :class="`${layoutConfig.theme.value == 'mdc-dark-indigo' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/md-dark-indigo.svg" class="w-3rem h-3rem" alt="Material Dark Indigo" />
@@ -261,6 +272,7 @@ onMounted(async () => {
         <Button
           @click="onChangeTheme('mdc-dark-deeppurple', 'dark')"
           link
+          :disabled="layoutConfig.theme.value == 'mdc-dark-deeppurple'"
           :class="`${layoutConfig.theme.value == 'mdc-dark-deeppurple' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/md-dark-deeppurple.svg" class="w-3rem h-3rem" alt="Material Dark Deep Purple" />
@@ -272,8 +284,9 @@ onMounted(async () => {
     <div class="grid">
       <div class="col-3">
         <Button
-          @click="onChangeTheme('tailwind-light', 'dark')"
+          @click="onChangeTheme('tailwind-light', 'light')"
           link
+          :disabled="layoutConfig.theme.value == 'tailwind-light'"
           :class="`${layoutConfig.theme.value == 'tailwind-light' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/tailwind-light.png" class="w-3rem h-3rem" alt="Tailwind Light" />
@@ -285,8 +298,9 @@ onMounted(async () => {
     <div class="grid">
       <div class="col-3">
         <Button
-          @click="onChangeTheme('fluent-light', 'dark')"
+          @click="onChangeTheme('fluent-light', 'light')"
           link
+          :disabled="layoutConfig.theme.value == 'fluent-light'"
           :class="`${layoutConfig.theme.value == 'fluent-light' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/fluent-light.png" class="w-3rem h-3rem" alt="Fluent Light" />
@@ -298,8 +312,9 @@ onMounted(async () => {
     <div class="grid">
       <div class="col-3">
         <Button
-          @click="onChangeTheme('lara-light-indigo', 'dark')"
+          @click="onChangeTheme('lara-light-indigo', 'light')"
           link
+          :disabled="layoutConfig.theme.value == 'lara-light-indigo'"
           :class="`${layoutConfig.theme.value == 'lara-light-indigo' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/lara-light-indigo.png" class="w-3rem h-3rem" alt="Lara Light Indigo" />
@@ -307,8 +322,9 @@ onMounted(async () => {
       </div>
       <div class="col-3">
         <Button
-          @click="onChangeTheme('lara-light-blue', 'dark')"
+          @click="onChangeTheme('lara-light-blue', 'light')"
           link
+          :disabled="layoutConfig.theme.value == 'lara-light-blue'"
           :class="`${layoutConfig.theme.value == 'lara-light-blue' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/lara-light-blue.png" class="w-3rem h-3rem" alt="Lara Light Blue" />
@@ -316,8 +332,9 @@ onMounted(async () => {
       </div>
       <div class="col-3">
         <Button
-          @click="onChangeTheme('lara-light-purple', 'dark')"
+          @click="onChangeTheme('lara-light-purple', 'light')"
           link
+          :disabled="layoutConfig.theme.value == 'lara-light-purple'"
           :class="`${layoutConfig.theme.value == 'lara-light-purple' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/lara-light-purple.png" class="w-3rem h-3rem" alt="Lara Light Purple" />
@@ -325,96 +342,177 @@ onMounted(async () => {
       </div>
       <div class="col-3">
         <Button
-          @click="onChangeTheme('lara-light-teal', 'dark')"
+          @click="onChangeTheme('lara-light-teal', 'light')"
           link
+          :disabled="layoutConfig.theme.value == 'lara-light-teal'"
           :class="`${layoutConfig.theme.value == 'lara-light-teal' && 'selected-theme'}`"
           class="p-2">
           <img src="/layout/images/themes/lara-light-teal.png" class="w-3rem h-3rem" alt="Lara Light Teal" />
         </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('lara-dark-indigo', 'dark')">
-          <img src="/layout/images/themes/lara-dark-indigo.png" class="w-2rem h-2rem" alt="Lara Dark Indigo" />
-        </button>
+        <Button
+          @click="onChangeTheme('lara-dark-indigo', 'dark')"
+          link
+          :disabled="layoutConfig.theme.value == 'lara-dark-indigo'"
+          :class="`${layoutConfig.theme.value == 'lara-dark-indigo' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/lara-dark-indigo.png" class="w-3rem h-3rem" alt="Lara Dark Indigo" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('lara-dark-blue', 'dark')">
-          <img src="/layout/images/themes/lara-dark-blue.png" class="w-2rem h-2rem" alt="Lara Dark Blue" />
-        </button>
+        <Button
+          @click="onChangeTheme('lara-dark-blue', 'dark')"
+          link
+          :disabled="layoutConfig.theme.value == 'lara-dark-blue'"
+          :class="`${layoutConfig.theme.value == 'lara-dark-blue' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/lara-dark-blue.png" class="w-3rem h-3rem" alt="Lara Dark Blue" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('lara-dark-purple', 'dark')">
-          <img src="/layout/images/themes/lara-dark-purple.png" class="w-2rem h-2rem" alt="Lara Dark Purple" />
-        </button>
+        <Button
+          @click="onChangeTheme('lara-dark-purple', 'dark')"
+          link
+          :disabled="layoutConfig.theme.value == 'lara-dark-purple'"
+          :class="`${layoutConfig.theme.value == 'lara-dark-purple' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/lara-dark-purple.png" class="w-3rem h-3rem" alt="Lara Dark Purple" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('lara-dark-teal', 'dark')">
-          <img src="/layout/images/themes/lara-dark-teal.png" class="w-2rem h-2rem" alt="Lara Dark Teal" />
-        </button>
+        <Button
+          @click="onChangeTheme('lara-dark-teal', 'dark')"
+          link
+          :disabled="layoutConfig.theme.value == 'lara-dark-teal'"
+          :class="`${layoutConfig.theme.value == 'lara-dark-teal' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/lara-dark-teal.png" class="w-3rem h-3rem" alt="Lara Dark Teal" />
+        </Button>
       </div>
     </div>
 
     <h5>PrimeOne Design - 2021</h5>
     <div class="grid">
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('saga-blue', 'light')">
-          <img src="/layout/images/themes/saga-blue.png" class="w-2rem h-2rem" alt="Saga Blue" />
-        </button>
+        <Button
+          @click="onChangeTheme('saga-blue', 'light')"
+          link
+          :disabled="layoutConfig.theme.value == 'saga-blue'"
+          :class="`${layoutConfig.theme.value == 'saga-blue' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/saga-blue.png" class="w-3rem h-3rem" alt="Saga Blue" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('saga-green', 'light')">
-          <img src="/layout/images/themes/saga-green.png" class="w-2rem h-2rem" alt="Saga Green" />
-        </button>
+        <Button
+          @click="onChangeTheme('saga-green', 'light')"
+          link
+          :disabled="layoutConfig.theme.value == 'saga-green'"
+          :class="`${layoutConfig.theme.value == 'saga-green' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/saga-green.png" class="w-3rem h-3rem" alt="Saga Green" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('saga-orange', 'light')">
-          <img src="/layout/images/themes/saga-orange.png" class="w-2rem h-2rem" alt="Saga Orange" />
-        </button>
+        <Button
+          @click="onChangeTheme('saga-orange', 'light')"
+          link
+          :disabled="layoutConfig.theme.value == 'saga-orange'"
+          :class="`${layoutConfig.theme.value == 'saga-orange' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/saga-orange.png" class="w-3rem h-3rem" alt="Saga Orange" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('saga-purple', 'light')">
-          <img src="/layout/images/themes/saga-purple.png" class="w-2rem h-2rem" alt="Saga Purple" />
-        </button>
+        <Button
+          @click="onChangeTheme('saga-purple', 'light')"
+          link
+          :disabled="layoutConfig.theme.value == 'saga-purple'"
+          :class="`${layoutConfig.theme.value == 'saga-purple' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/saga-purple.png" class="w-3rem h-3rem" alt="Saga Purple" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('vela-blue', 'dark')">
-        <img src="/layout/images/themes/vela-blue.png" class="w-2rem h-2rem" alt="Vela Blue" />
-        </button>
+        <Button
+          @click="onChangeTheme('vela-blue', 'dark')"
+          link
+          :disabled="layoutConfig.theme.value == 'vela-blue'"
+          :class="`${layoutConfig.theme.value == 'vela-blue' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/vela-blue.png" class="w-3rem h-3rem" alt="Vela Blue" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('vela-green', 'dark')">
-          <img src="/layout/images/themes/vela-green.png" class="w-2rem h-2rem" alt="Vela Green" />
-        </button>
+        <Button
+          @click="onChangeTheme('vela-green', 'dark')"
+          link
+          :disabled="layoutConfig.theme.value == 'vela-green'"
+          :class="`${layoutConfig.theme.value == 'vela-green' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/vela-green.png" class="w-3rem h-3rem" alt="Vela Green" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('vela-orange', 'dark')">
-          <img src="/layout/images/themes/vela-orange.png" class="w-2rem h-2rem" alt="Vela Orange" />
-        </button>
+        <Button
+          @click="onChangeTheme('vela-orange', 'dark')"
+          link
+          :disabled="layoutConfig.theme.value == 'vela-orange'"
+          :class="`${layoutConfig.theme.value == 'vela-orange' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/vela-orange.png" class="w-3rem h-3rem" alt="Vela Orange" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('vela-purple', 'dark')">
-          <img src="/layout/images/themes/vela-purple.png" class="w-2rem h-2rem" alt="Vela Purple" />
-        </button>
+        <Button
+          @click="onChangeTheme('vela-purple', 'dark')"
+          link
+          :disabled="layoutConfig.theme.value == 'vela-purple'"
+          :class="`${layoutConfig.theme.value == 'vela-purple' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/vela-purple.png" class="w-3rem h-3rem" alt="Vela Purple" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('arya-blue', 'dark')">
-          <img src="/layout/images/themes/arya-blue.png" class="w-2rem h-2rem" alt="Arya Blue" />
-        </button>
+        <Button
+          @click="onChangeTheme('arya-blue', 'dark')"
+          link
+          :disabled="layoutConfig.theme.value == 'arya-blue'"
+          :class="`${layoutConfig.theme.value == 'arya-blue' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/arya-blue.png" class="w-3rem h-3rem" alt="Arya Blue" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('arya-green', 'dark')">
-          <img src="/layout/images/themes/arya-green.png" class="w-2rem h-2rem" alt="Arya Green" />
-        </button>
+        <Button
+          @click="onChangeTheme('arya-green', 'dark')"
+          link
+          :disabled="layoutConfig.theme.value == 'arya-green'"
+          :class="`${layoutConfig.theme.value == 'arya-green' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/arya-green.png" class="w-3rem h-3rem" alt="Arya Green" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('arya-orange', 'dark')">
-          <img src="/layout/images/themes/arya-orange.png" class="w-2rem h-2rem" alt="Arya Orange" />
-        </button>
+        <Button
+          @click="onChangeTheme('arya-orange', 'dark')"
+          link
+          :disabled="layoutConfig.theme.value == 'arya-orange'"
+          :class="`${layoutConfig.theme.value == 'arya-orange' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/arya-orange.png" class="w-3rem h-3rem" alt="Arya Orange" />
+        </Button>
       </div>
       <div class="col-3">
-        <button class="p-link w-2rem h-2rem" @click="onChangeTheme('arya-purple', 'dark')">
-          <img src="/layout/images/themes/arya-purple.png" class="w-2rem h-2rem" alt="Arya Purple" />
-        </button>
+        <Button
+          @click="onChangeTheme('arya-purple', 'dark')"
+          link
+          :disabled="layoutConfig.theme.value == 'arya-purple'"
+          :class="`${layoutConfig.theme.value == 'arya-purple' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/arya-purple.png" class="w-3rem h-3rem" alt="Arya Purple" />
+        </Button>
       </div>
     </div>
   </Sidebar>
@@ -423,7 +521,8 @@ onMounted(async () => {
 <style scoped>
 
 .selected-theme {
-  background-color: var(--surface-ground);
+  border: 1px solid #000;
+  background-color: #fff;
   cursor: pointer;
 }
 
