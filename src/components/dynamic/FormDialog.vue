@@ -63,7 +63,8 @@ const executeAction = async () => {
   formModalData.value.data.fields.map((f) => {
     payload.value[f.name] = f.value
     formDataPayload.value[f.name] = f.value
-    formDataPayload.value.append([f.name], f.value)
+    formDataPayload.value.append([f.name], f.value),
+    f.error = null // clear error messages
   })
 
   // axios
@@ -75,10 +76,12 @@ const executeAction = async () => {
     statusCode.value = response.status
     data.value = response.data
   }).catch((err) => {
+    statusCode.value = err.response.status
     error.value = err.response
   })
 
   if (statusCode.value === 200) {
+    console.log(statusCode.value)
     // dynamic callback
     if (_store.value === 'roleStore') {
       if (_action.value === 'addRole') router.push(`/roles/edit/${data.value.data._token}`)
@@ -111,7 +114,6 @@ const executeAction = async () => {
     formModalOpen.value = false
 
     toast.add({ severity: 'success', summary: 'Success', detail: data.value.message, life: 3000 })
-    formModalOpen.value = false
   } else {
     console.log(error)
     formModalData.value.data.fields.map((f) => {
