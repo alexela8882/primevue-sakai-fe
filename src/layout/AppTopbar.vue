@@ -104,7 +104,10 @@ const isOutsideClicked = (event) => {
 }
 
 const logout = () => {
-  localStorage.clear()
+  // localStorage.clear()
+  localStorage.removeItem("token")
+  localStorage.removeItem("auth_id")
+  localStorage.removeItem("isAuthenticated")
 
   router.push({name: 'login'})
   toast.add({ severity: 'success', summary: 'Success', detail: 'Logged out successfully', life: 3000 })

@@ -234,10 +234,51 @@ router.beforeEach((to, from) => {
 
     // theme scale
     document.documentElement.style.fontSize = response.data.app_theme_scale + 'px'
-  
+
+    // theme ripple
+    layoutConfig.ripple.value = response.data.app_theme_ripple
+
+    // theme menu type
+    layoutConfig.menuMode.value = response.data.app_theme_menu_type
+
+    // theme input style
+    layoutConfig.inputStyle.value = response.data.app_theme_input_stype
+
     console.log(layoutConfig)
   }).catch((err) => {
     console.log(err)
+
+    layoutConfig.theme.value = localStorage.getItem('layoutConfig.theme')
+    layoutConfig.darkTheme.value = localStorage.getItem('layoutConfig.darkTheme')
+    layoutConfig.scale.value = localStorage.getItem('layoutConfig.scale')
+    layoutConfig.ripple.value = localStorage.getItem('layoutConfig.ripple')
+    layoutConfig.menuMode.value = localStorage.getItem('layoutConfig.menuMode')
+    layoutConfig.inputStyle.value = localStorage.getItem('layoutConfig.inputStyle')
+
+    const elementId = 'theme-css'
+    const linkElement = document.getElementById(elementId)
+    const cloneLinkElement = linkElement.cloneNode(true)
+    const newThemeUrl = linkElement.getAttribute('href').replace('lara-light-indigo', layoutConfig.theme.value)
+    cloneLinkElement.setAttribute('id', elementId + '-clone')
+    cloneLinkElement.setAttribute('href', newThemeUrl)
+    cloneLinkElement.addEventListener('load', () => {
+      linkElement.remove()
+      cloneLinkElement.setAttribute('id', elementId)
+      changeThemeSettings(layoutConfig.theme.value, layoutConfig.darkTheme.value === 'dark')
+    })
+    linkElement.parentNode.insertBefore(cloneLinkElement, linkElement.nextSibling)
+
+    // theme scale
+    document.documentElement.style.fontSize = layoutConfig.scale.value + 'px'
+
+    // theme ripple
+    layoutConfig.ripple.value = layoutConfig.ripple.value
+
+    // theme menu type
+    layoutConfig.menuMode.value = layoutConfig.menuMode.value
+
+    // theme input style
+    layoutConfig.inputStyle.value = layoutConfig.inputStyle.value
   })
 
   if (to.meta.requiresAuth && !isAuthenticated) {

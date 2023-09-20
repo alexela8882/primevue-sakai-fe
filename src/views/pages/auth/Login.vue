@@ -50,6 +50,8 @@ const submit = async () => {
   }).then((response) => {
     // isAuthenticated.value = true
 
+    localStorage.clear() // clear
+
     localStorage.setItem('token', response.data.data.token)
     localStorage.setItem('auth_id', response.data.data._id)
     localStorage.setItem('isAuthenticated', true)
@@ -132,7 +134,7 @@ const logoUrl = computed(() => {
       </div>
     </div>
   </div>
-  <AppConfig simple />
+  <!-- <AppConfig simple /> -->
 </template>
 
 <style scoped>

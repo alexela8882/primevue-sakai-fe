@@ -37,9 +37,15 @@ const onChangeTheme = async (theme, mode) => {
   cloneLinkElement.addEventListener('load', () => {
     linkElement.remove()
     cloneLinkElement.setAttribute('id', elementId)
-    changeThemeSettings(theme, mode)
+    changeThemeSettings(theme, mode === 'dark')
   })
   linkElement.parentNode.insertBefore(cloneLinkElement, linkElement.nextSibling)
+
+  // store to localstorage
+  localStorage.setItem('layoutConfig.theme', theme)
+  localStorage.setItem('layoutConfig.darkTheme', mode)
+
+  console.log(localStorage.getItem('layoutConfig.theme'))
 
   const obj = { app_theme: theme, app_theme_dark: mode }
   updateBackend(obj)
@@ -57,12 +63,18 @@ const incrementScale = () => {
 const applyScale = () => {
   document.documentElement.style.fontSize = layoutConfig.scale.value + 'px'
 
+  // store to localstorage
+  localStorage.setItem('layoutConfig.scale', layoutConfig.scale.value)
+
   const obj = { app_theme_scale: layoutConfig.scale.value }
   updateBackend(obj)
 }
 
 const onChangeRipple = () => {
   console.log(layoutConfig.ripple.value)
+
+  // store to localstorage
+  localStorage.setItem('layoutConfig.ripple', layoutConfig.ripple.value)
 
   const obj = { app_theme_ripple: layoutConfig.ripple.value }
   updateBackend(obj)
@@ -71,12 +83,18 @@ const onChangeRipple = () => {
 const onChangeMenuType = () => {
   console.log(layoutConfig.menuMode.value)
 
+  // store to localstorage
+  localStorage.setItem('layoutConfig.menuMode', layoutConfig.menuMode.value)
+
   const obj = { app_theme_menu_type: layoutConfig.menuMode.value }
   updateBackend(obj)
 }
 
 const onChangeInputStyle = () => {
   console.log(layoutConfig.inputStyle.value)
+
+  // store to localstorage
+  localStorage.setItem('layoutConfig.inputStyle', layoutConfig.inputStyle.value)
 
   const obj = { app_theme_input_style: layoutConfig.inputStyle.value }
   updateBackend(obj)
@@ -93,12 +111,56 @@ onMounted(async () => {
   // fetch user config
   await axios.get('/user-configs/get-app-theme').then((response) => {
     layoutConfig.theme.value = response.data.app_theme ? response.data.app_theme : 'lara-light-indigo'
-    layoutConfig.darkTheme.value = response.data.app_theme_dark ? response.data.app_theme_dark : 'lara-light-indigo'
+    layoutConfig.darkTheme.value = response.data.app_theme_dark ? response.data.app_theme_dark : false
     layoutConfig.scale.value = response.data.app_theme_scale ? response.data.app_theme_scale : '14'
     layoutConfig.ripple.value = response.data.app_theme_ripple ? response.data.app_theme_ripple : false
     layoutConfig.menuMode.value = response.data.app_theme_menu_type ? response.data.app_theme_menu_type : 'static'
     layoutConfig.inputStyle.value = response.data.app_theme_input_style ? response.data.app_theme_input_style : 'outlined'
-  }).catch((err) => { console.log(err) })
+
+    // store in localstorage
+    localStorage.setItem('layoutConfig.theme', layoutConfig.theme.value)
+    localStorage.setItem('layoutConfig.darkTheme', layoutConfig.darkTheme.value)
+    localStorage.setItem('layoutConfig.scale', layoutConfig.scale.value)
+    localStorage.setItem('layoutConfig.ripple', layoutConfig.ripple.value)
+    localStorage.setItem('layoutConfig.menuMode', layoutConfig.menuMode.value)
+    localStorage.setItem('layoutConfig.inputStyle', layoutConfig.inputStyle.value)
+  }).catch((err) => {
+    console.log(err)
+
+    layoutConfig.theme.value = localStorage.getItem('layoutConfig.theme')
+    layoutConfig.darkTheme.value = localStorage.getItem('layoutConfig.darkTheme')
+    layoutConfig.scale.value = localStorage.getItem('layoutConfig.scale')
+    layoutConfig.ripple.value = localStorage.getItem('layoutConfig.ripple')
+    layoutConfig.menuMode.value = localStorage.getItem('layoutConfig.menuMode')
+    layoutConfig.inputStyle.value = localStorage.getItem('layoutConfig.inputStyle')
+
+    const elementId = 'theme-css'
+    const linkElement = document.getElementById(elementId)
+    const cloneLinkElement = linkElement.cloneNode(true)
+    const newThemeUrl = linkElement.getAttribute('href').replace('lara-light-indigo', layoutConfig.theme.value)
+    cloneLinkElement.setAttribute('id', elementId + '-clone')
+    cloneLinkElement.setAttribute('href', newThemeUrl)
+    cloneLinkElement.addEventListener('load', () => {
+      linkElement.remove()
+      cloneLinkElement.setAttribute('id', elementId)
+      changeThemeSettings(layoutConfig.theme.value, layoutConfig.darkTheme.value === 'dark')
+    })
+    linkElement.parentNode.insertBefore(cloneLinkElement, linkElement.nextSibling)
+
+    // theme scale
+    document.documentElement.style.fontSize = layoutConfig.scale.value + 'px'
+
+    // theme ripple
+    layoutConfig.ripple.value = layoutConfig.ripple.value
+
+    // theme menu type
+    layoutConfig.menuMode.value = layoutConfig.menuMode.value
+
+    // theme input style
+    layoutConfig.inputStyle.value = layoutConfig.inputStyle.value
+
+    console.log(localStorage.getItem('layoutConfig.theme'))
+  })
 })
 </script>
 
