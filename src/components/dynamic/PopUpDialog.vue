@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router'
 // stores
 import { useGeneralStore } from '../../stores/general'
 import { useUserStore } from '../../stores/user'
+import { useBranchStore } from '../../stores/branch'
 // components
 import axios from 'axios'
 
@@ -15,6 +16,7 @@ const router = useRouter()
 const toast = useToast()
 const generalStore = useGeneralStore()
 const userStore = useUserStore()
+const branchStore = useBranchStore()
 const statusCode = ref()
 const data = ref()
 const error = ref()
@@ -60,6 +62,7 @@ const executeAction = async () => {
     if (_store.value === 'tagStore') tagStore[_action.value](data.value.data)
     if (_store.value === 'roleStore') roleStore[_action.value](data.value.data)
     if (_store.value === 'userStore') userStore[_action.value](data.value.data)
+    if (_store.value === 'branchStore') branchStore[_action.value](data.value.data)
     if (_store.value === 'galleryStore') {
       // to update sidebar
       removeUGallery(data.value.data._token)

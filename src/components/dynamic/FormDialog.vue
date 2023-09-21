@@ -7,6 +7,7 @@ import { useToast } from "primevue/usetoast"
 // stores
 import { useGeneralStore } from '../../stores/general'
 import { useUserStore } from '../../stores/user'
+import { useBranchStore } from '../../stores/branch'
 // components
 import axios from 'axios'
 
@@ -28,6 +29,7 @@ const { toastTimer, toastOpen, formModalOpen, formModalData } = storeToRefs(gene
 const { toastDataFill } = generalStore
 
 const userStore = useUserStore()
+const branchStore = useBranchStore()
 
 // for uploading image use formdata
 const formDataPayload = ref({})
@@ -87,18 +89,10 @@ const executeAction = async () => {
       if (_action.value === 'addRole') router.push(`/roles/edit/${data.value.data._token}`)
       roleStore[_action.value](data.value.data)
     } else if (_store.value === 'userStore') {
-      console.log(_action.value)
       // if (_action.value === 'addUser') router.push(`/users/edit/${data.value.data._id}`)
       userStore[_action.value](data.value.data)
-    } else if (_store.value === 'galleryStore') {
-      if (_action.value === 'addGallery') {
-        // to update sidebar
-        pushUGallery(data.value.data)
-
-        // redirect to edit page
-        router.push(`/galleries/edit/${data.value.data._token}`)
-      }
-      galleryStore[_action.value](data.value.data)
+    } else if (_store.value === 'branchStore') {
+      branchStore[_action.value](data.value.data)
     } else if (_store.value === 'albumStore') {
       if (_action.value === 'addPhoto') {
         // get current page uri params
@@ -155,7 +149,7 @@ const executeAction = async () => {
                 showClear
                 :options="field.items"
                 optionLabel="name"
-                optionValue="id"
+                optionValue="_id"
                 class="w-full text-sm" />
               <InputText
                 v-else

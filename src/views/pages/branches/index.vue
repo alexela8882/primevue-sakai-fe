@@ -7,7 +7,7 @@ import { ref, onMounted, onBeforeMount } from 'vue'
 import axios from 'axios'
 import { storeToRefs } from 'pinia'
 // stores
-import { useUserStore } from '@/stores/user'
+import { useBranchStore } from '@/stores/branch'
 import { useGeneralStore } from '@/stores/general'
 /// primevue
 import { FilterMatchMode } from 'primevue/api'
@@ -15,10 +15,10 @@ import { FilterMatchMode } from 'primevue/api'
 // -----------
 // stores
 // -----------
-// user store
-const userStore = useUserStore()
-const { users, getUsers } = storeToRefs(userStore)
-const { setUsers } = userStore
+// branch store
+const branchStore = useBranchStore()
+const { branches, getBranches } = storeToRefs(branchStore)
+const { setBranches } = branchStore
 // general store
 const generalStore = useGeneralStore()
 const { popUpModalOpen, formModalOpen, pageData } = storeToRefs(generalStore)
@@ -29,94 +29,98 @@ const { popUpModalDataFill, formModalDataFill, pageDataFill, throwError } = gene
 // --------
 const localLoading = ref(false)
 const { isDarkTheme } = useLayout()
-const selectedUsers = ref()
+const selectedBranches = ref()
 const selectedCountry = ref(null)
-const countries = ref([
-  { name: 'Philippines'},
-  { name: 'Singapore'},
-  { name: 'Indonesia'},
-])
+const countries = ref([])
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  email: { value: null, matchMode: FilterMatchMode.CONTAINS }
+  address: { value: null, matchMode: FilterMatchMode.CONTAINS }
 })
 
 // -----------
 // actions
 // -----------
-const addUser = () => {
-  let userObj = {
+const addBranch = () => {
+  let branchObj = {
     store: {
-      name: 'userStore',
-      action: 'addUser'
+      name: 'branchStore',
+      action: 'addBranch'
     },
-    api: { uri: `users/store`,  method: 'POST'},
+    api: { uri: `branches/store`,  method: 'POST'},
     fields: [{
       label: 'Name',
       name: 'name',
       type: 'text',
       value: null
     }, {
-      label: 'Email',
-      name: 'email',
-      type: 'email',
+      label: 'Address',
+      name: 'address',
+      type: 'text',
       value: null
     }, {
-      label: 'Password',
-      name: 'password',
-      type: 'password',
-      value: null
-    }]
-  }
-
-  let obj = {
-    title: `Add User`,
-    type: 'primary',
-    data: Object.assign({}, userObj)
-  }
-
-  formModalDataFill(obj)
-  formModalOpen.value = true
-}
-
-const editUser = (user) => {
-  let userObj = {
-    store: { name: 'userStore', action: 'updateUser' },
-    api: { uri: `users/${user._id}/update`,  method: 'PUT'},
-    fields: [{
-      name: 'email',
-      type: 'email',
-      value: user.email
-    }, {
-      name: 'password',
-      type: 'password',
+      label: 'Country',
+      name: 'country_id',
+      type: 'select',
       value: null,
-      instruction: 'Leave this blank to keep unchanged'
+      items: countries.value
     }]
   }
 
   let obj = {
-    title: `Edit "${user.name}" User`,
+    title: `Add Branch`,
     type: 'primary',
-    data: Object.assign({}, userObj)
+    data: Object.assign({}, branchObj)
   }
 
   formModalDataFill(obj)
   formModalOpen.value = true
 }
 
-const deleteUser = (user) => {
-  console.log(user)
-  let userObj = {
-    store: { name: 'userStore', action: 'deleteUser' },
-    api: { uri: `users/${user._id}/delete`,  method: 'DELETE'},
+const editBranch = (branch) => {
+  let branchObj = {
+    store: { name: 'branchStore', action: 'updateBranch' },
+    api: { uri: `branches/${branch._id}/update`,  method: 'PUT'},
+    fields: [{
+      label: 'Name',
+      name: 'name',
+      type: 'text',
+      value: branch.name
+    }, {
+      label: 'Address',
+      name: 'address',
+      type: 'text',
+      value: branch.address
+    }, {
+      label: 'Country',
+      name: 'country_id',
+      type: 'select',
+      value: branch.country_id,
+      items: countries.value
+    }]
+  }
+
+  let obj = {
+    title: `Edit "${branch.name}" Branch`,
+    type: 'primary',
+    data: Object.assign({}, branchObj)
+  }
+
+  formModalDataFill(obj)
+  formModalOpen.value = true
+}
+
+const deleteBranch = (branch) => {
+  console.log(branch)
+  let branchObj = {
+    store: { name: 'branchStore', action: 'deleteBranch' },
+    api: { uri: `branches/${branch._id}/delete`,  method: 'DELETE'},
   }
 
   const obj = {
-    title: `Are you sure you want to delete user: "${user.name}"?`,
+    title: `Are you sure you want to delete branch: "${branch.name}"?`,
     type: 'danger',
-    data: Object.assign({}, userObj)
+    data: Object.assign({}, branchObj)
   }
 
   popUpModalDataFill(obj)
@@ -127,9 +131,15 @@ const deleteUser = (user) => {
 
 onMounted(async () => {
   localLoading.value = true
-  // fetch users
-  await axios.get('/users').then((response) => {
-    setUsers(response.data)
+  // fetch branches
+  await axios.get('/branches').then((response) => {
+    setBranches(response.data)
+    localLoading.value = false
+  })
+
+  // fetch countries
+  await axios.get('/countries').then((response) => {
+    countries.value = response.data
     localLoading.value = false
   })
 })
@@ -141,13 +151,13 @@ onMounted(async () => {
     <div>
       <div class="flex justify-content-between">
         <div class="flex flex-column">
-          <span class="capitalize text-xl font-bold" :class="`${isDarkTheme ? 'text-surface-50' : 'text-blue-800'}`">Manage user</span>
+          <span class="capitalize text-xl font-bold" :class="`${isDarkTheme ? 'text-surface-50' : 'text-blue-800'}`">Manage branch</span>
         </div>
 
         <div>
-          <Button @click="addUser" class="reddot-button-primary flex border-round-lg py-2 px-4" size="small">
+          <Button @click="addBranch" class="reddot-button-primary flex border-round-lg py-2 px-4" size="small">
             <font-awesome-icon icon="fa-solid fa-plus" size="xs" />
-            &nbsp;Add user
+            &nbsp;Add branch
           </Button>
         </div>
       </div>
@@ -183,17 +193,17 @@ onMounted(async () => {
         <template #content>
           <DataTable
             v-model:filters="filters"
-            v-model:selection="selectedUsers"
-            :value="getUsers"
+            v-model:selection="selectedBranches"
+            :value="getBranches"
             dataKey="_id"
             :loading="localLoading"
             filterDisplay="row"
-            :globalFilterFields="['name', 'email']"
+            :globalFilterFields="['name', 'address']"
             paginator
             :rows="5"
             :rowsPerPageOptions="[5, 10, 20, 50]"
             tableStyle="min-width: 50rem">
-            <template #empty> No users found.</template>
+            <template #empty> No branches found.</template>
             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
             <Column field="name" header="Name" sortable filterField="name" style="width: 50%">
               <template #filter="{ filterModel, filterCallback }">
@@ -205,16 +215,16 @@ onMounted(async () => {
                 </a>
               </template>
             </Column>
-            <Column field="email" header="Email" sortable filterField="email" style="width: 50%">
+            <Column field="address" header="Address" sortable filterField="address" style="width: 50%">
               <template #filter="{ filterModel, filterCallback }">
-                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by email" />
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by address" />
               </template>
             </Column>
             <Column :exportable="false" style="min-width:10rem">
               <template #body="slotProps">
                 <span class="p-buttonset">
-                  <Button icon="pi pi-pencil" size="small" severity="secondary" @click="editUser(slotProps.data)" />
-                  <Button icon="pi pi-trash" size="small" severity="danger" @click="deleteUser(slotProps.data)" />
+                  <Button icon="pi pi-pencil" size="small" severity="secondary" @click="editBranch(slotProps.data)" />
+                  <Button icon="pi pi-trash" size="small" severity="danger" @click="deleteBranch(slotProps.data)" />
                 </span>
               </template>
             </Column>

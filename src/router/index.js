@@ -40,6 +40,24 @@ const router = createRouter({
             }
           ]
         }, {
+          path: '/branches',
+          name: 'branches',
+          component: () => import('@/views/pages/branches/main.vue'),
+          meta: {
+            requiresAuth: true
+          },
+          children: [
+            {
+              path: '',
+              name: 'branches.index',
+              component: () => import('@/views/pages/branches/index.vue'),
+            }, {
+              path: ':id',
+              name: 'branches.view',
+              component: () => import('@/views/pages/branches/view.vue')
+            }
+          ]
+        }, {
           path: '/countries',
           name: 'countries',
           component: () => import('@/views/pages/countries/index.vue'),
