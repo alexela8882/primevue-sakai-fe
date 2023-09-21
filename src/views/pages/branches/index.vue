@@ -226,9 +226,7 @@ onMounted(async () => {
                 <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by country" />
               </template>
               <template #body="slotProps">
-                <a class="">
-                  <div>{{ slotProps.data.country.name }}</div>
-                </a>
+                <div>{{ slotProps.data.country.name }}</div>
               </template>
             </Column>
             <Column :exportable="false" style="min-width:10rem">
