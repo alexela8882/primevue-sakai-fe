@@ -29,7 +29,7 @@ const items = ref([
         command: () => {
           router.push('/users')
         }
-      },{
+      }, {
         label: 'Branches',
         icon: 'pi pi-building',
         command: () => {

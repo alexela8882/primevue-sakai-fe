@@ -35,7 +35,8 @@ const countries = ref([])
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS },
   name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  address: { value: null, matchMode: FilterMatchMode.CONTAINS }
+  address: { value: null, matchMode: FilterMatchMode.CONTAINS },
+  'country.name': { value: null, matchMode: FilterMatchMode.CONTAINS }
 })
 
 // -----------
@@ -198,14 +199,14 @@ onMounted(async () => {
             dataKey="_id"
             :loading="localLoading"
             filterDisplay="row"
-            :globalFilterFields="['name', 'address']"
+            :globalFilterFields="['name', 'address', 'country.name']"
             paginator
             :rows="5"
             :rowsPerPageOptions="[5, 10, 20, 50]"
             tableStyle="min-width: 50rem">
             <template #empty> No branches found.</template>
             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-            <Column field="name" header="Name" sortable filterField="name" style="width: 50%">
+            <Column field="name" header="Name" sortable filterField="name" style="width: 30%">
               <template #filter="{ filterModel, filterCallback }">
                 <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name" />
               </template>
@@ -215,9 +216,19 @@ onMounted(async () => {
                 </a>
               </template>
             </Column>
-            <Column field="address" header="Address" sortable filterField="address" style="width: 50%">
+            <Column field="address" header="Address" sortable filterField="address" style="width: 30%">
               <template #filter="{ filterModel, filterCallback }">
                 <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by address" />
+              </template>
+            </Column>
+            <Column field="country.name" header="Country" sortable filterField="country.name" style="width: 30%">
+              <template #filter="{ filterModel, filterCallback }">
+                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by country" />
+              </template>
+              <template #body="slotProps">
+                <a class="">
+                  <div>{{ slotProps.data.country.name }}</div>
+                </a>
               </template>
             </Column>
             <Column :exportable="false" style="min-width:10rem">
