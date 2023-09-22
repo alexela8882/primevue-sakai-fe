@@ -30,29 +30,16 @@ const { popUpModalDataFill, formModalDataFill, pageDataFill, throwError } = gene
 const localLoading = ref(false)
 const { isDarkTheme } = useLayout()
 const selectedUsers = ref()
-const selectedCountry = ref(null)
 const selectedFields = ref([])
 const branches = ref([])
 const fields = ref([])
-const countries = ref([
-  { name: 'Philippines'},
-  { name: 'Singapore'},
-  { name: 'Indonesia'},
-])
 const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  email: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  'branch.name': { value: null, matchMode: FilterMatchMode.CONTAINS }
+  global: { value: null, matchMode: FilterMatchMode.CONTAINS }
 })
 
 // -----------
 // actions
 // -----------
-// const updateFields = (event) => {
-//   console.log(event)
-// }
-
 const addUser = () => {
   let userObj = {
     store: {
@@ -179,6 +166,14 @@ onMounted(async () => {
 
     fields.value.map(f => {
       if (f.default) selectedFields.value.push(f)
+
+      let fieldName = f.related ? f.field+'.name' : f.field
+      filters.value[fieldName] = Object.assign({}, {
+        'value': null,
+        'matchMode': FilterMatchMode.CONTAINS
+      })
+
+      console.log(filters.value)
     })
     localLoading.value = false
   })
