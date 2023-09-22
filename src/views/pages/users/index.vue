@@ -3,21 +3,28 @@
 // imports
 // --------
 import { useLayout } from '@/layout/composables/layout'
-import { ref, onMounted, onBeforeMount } from 'vue'
+import { ref, onMounted, defineAsyncComponent } from 'vue'
 import axios from 'axios'
 import { storeToRefs } from 'pinia'
 // stores
 import { useUserStore } from '@/stores/user'
 import { useGeneralStore } from '@/stores/general'
-/// primevue
+// primevue
 import { FilterMatchMode } from 'primevue/api'
+// components
+import DataTable from '../../../components/dynamic/DataTable.vue'
+
+// dynamic components
+// const DataTable = defineAsyncComponent(() =>
+//   import('../../../components/dynamic/DataTable.vue')
+// )
 
 // -----------
 // stores
 // -----------
 // user store
 const userStore = useUserStore()
-const { users, getUsers } = storeToRefs(userStore)
+const { getUsers } = storeToRefs(userStore)
 const { setUsers } = userStore
 // general store
 const generalStore = useGeneralStore()
@@ -31,6 +38,7 @@ const localLoading = ref(false)
 const { isDarkTheme } = useLayout()
 const selectedUsers = ref()
 const selectedFields = ref([])
+const data = ref({})
 const branches = ref([])
 const fields = ref([])
 const filters = ref({
@@ -162,18 +170,11 @@ onMounted(async () => {
   // fetch users
   await axios.get('/users').then((response) => {
     setUsers(response.data.table)
+    data.value = response.data
     fields.value = response.data.fields
 
     fields.value.map(f => {
       if (f.default) selectedFields.value.push(f)
-
-      let fieldName = f.related ? f.field+'.name' : f.field
-      filters.value[fieldName] = Object.assign({}, {
-        'value': null,
-        'matchMode': FilterMatchMode.CONTAINS
-      })
-
-      console.log(filters.value)
     })
     localLoading.value = false
   })
@@ -204,76 +205,12 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div class="flex justify-content-between">
-      <div class="flex gap-3">
-        <Button @click="addUser">
-          <font-awesome-icon icon="fa-solid fa-plus" />
-          &nbsp;Add
-        </Button>
-        <span class="p-input-icon-left">
-          <i class="pi pi-search" />
-          <InputText class="w-full md:w-24rem" v-model="filters['global'].value" placeholder="Keyword search" />
-        </span>
-      </div>
-      <div>
-        <span class="p-float-label">
-          <MultiSelect
-            v-model="selectedFields"
-            :options="fields"
-            optionDisabled
-            optionLabel="field"
-            size="small"
-            showClear
-            class="w-full md:w-14rem" />
-          <label>Selected fields</label>
-        </span>
-      </div>
-    </div>
-
-    <div>
-      <Card>
-        <template #content>
-          <DataTable
-            v-model:filters="filters"
-            v-model:selection="selectedUsers"
-            :value="getUsers"
-            dataKey="_id"
-            :loading="localLoading"
-            filterDisplay="row"
-            :globalFilterFields="['name', 'email', 'branch.name']"
-            paginator
-            :rows="5"
-            :rowsPerPageOptions="[5, 10, 20, 50]"
-            tableStyle="min-width: 50rem">
-            <template #empty> No users found.</template>
-            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-            <Column
-              v-for="field in selectedFields"
-              sortable
-              :header="field.label"
-              :field="field.related ? field.field + '.name' : field.field"
-              :filterField="field.related ? field.field + '.name' : field.field">
-              <template #filter="{ filterModel, filterCallback }">
-                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" :placeholder="`Search by ${field.field}`" />
-              </template>
-              <template #body="slotProps">
-                <div>{{ typeof slotProps.data[field.field] === 'object' ? slotProps.data[field.field].name : slotProps.data[field.field] }}</div>
-                <!-- <div>{{ field.related ? field.field + '.name' : field.field }}</div> -->
-              </template>
-            </Column>
-            <Column :exportable="false" style="min-width:10rem">
-              <template #body="slotProps">
-                <span class="p-buttonset">
-                  <Button icon="pi pi-eye" size="small" severity="primary" />
-                  <Button icon="pi pi-pencil" size="small" severity="secondary" @click="editUser(slotProps.data)" />
-                  <Button icon="pi pi-trash" size="small" severity="danger" @click="deleteUser(slotProps.data)" />
-                </span>
-              </template>
-            </Column>
-          </DataTable>
-        </template>
-      </Card>
-    </div>
+    <DataTable
+      @add-item="addUser"
+      @edit-item="editUser"
+      @delete-item="deleteUser"
+      :localLoading="localLoading"
+      :data="data" />
   </div>
 </template>
 
