@@ -169,7 +169,7 @@ onMounted(async () => {
 
   // fetch branches
   await axios.get('/branches').then((response) => {
-    branches.value = response.data
+    branches.value = response.data.table
     localLoading.value = false
   })
 })
