@@ -9,8 +9,8 @@ import { storeToRefs } from 'pinia'
 // stores
 import { useBranchStore } from '@/stores/branch'
 import { useGeneralStore } from '@/stores/general'
-/// primevue
-import { FilterMatchMode } from 'primevue/api'
+// components
+import DataTable from '../../../components/dynamic/DataTable.vue'
 
 // -----------
 // stores
@@ -29,15 +29,8 @@ const { popUpModalDataFill, formModalDataFill, pageDataFill, throwError } = gene
 // --------
 const localLoading = ref(false)
 const { isDarkTheme } = useLayout()
-const selectedBranches = ref()
-const selectedCountry = ref(null)
 const countries = ref([])
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  name: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  address: { value: null, matchMode: FilterMatchMode.CONTAINS },
-  'country.name': { value: null, matchMode: FilterMatchMode.CONTAINS }
-})
+const data = ref({})
 
 // -----------
 // actions
@@ -134,8 +127,11 @@ onMounted(async () => {
   localLoading.value = true
   // fetch branches
   await axios.get('/branches').then((response) => {
-    setBranches(response.data)
+    setBranches(response.data.table)
+    data.value = response.data
     localLoading.value = false
+
+    console.log(response.data)
   })
 
   // fetch countries
@@ -156,91 +152,20 @@ onMounted(async () => {
         </div>
 
         <div>
-          <Button @click="addBranch" class="reddot-button-primary flex border-round-lg py-2 px-4" size="small">
+          <!-- <Button @click="addBranch" class="reddot-button-primary flex border-round-lg py-2 px-4" size="small">
             <font-awesome-icon icon="fa-solid fa-plus" size="xs" />
             &nbsp;Add branch
-          </Button>
+          </Button> -->
         </div>
       </div>
     </div>
 
-    <div class="flex justify-content-between">
-      <div class="flex gap-3">
-        <Dropdown
-          v-model="selectedCountry"
-          :options="countries"
-          optionLabel="name"
-          placeholder="All countries"
-          size="small"
-          showClear
-          class="w-full md:w-14rem" />
-        <Dropdown
-          optionLabel="name"
-          placeholder="Select fields"
-          size="small"
-          showClear
-          class="w-full md:w-14rem" />
-      </div>
-      <div>
-        <span class="p-input-icon-left">
-          <i class="pi pi-search" />
-          <InputText v-model="filters['global'].value" placeholder="Keyword search" />
-        </span>
-      </div>
-    </div>
-
-    <div>
-      <Card>
-        <template #content>
-          <DataTable
-            v-model:filters="filters"
-            v-model:selection="selectedBranches"
-            :value="getBranches"
-            dataKey="_id"
-            :loading="localLoading"
-            filterDisplay="row"
-            :globalFilterFields="['name', 'address', 'country.name']"
-            paginator
-            :rows="5"
-            :rowsPerPageOptions="[5, 10, 20, 50]"
-            tableStyle="min-width: 50rem">
-            <template #empty> No branches found.</template>
-            <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
-            <Column field="name" header="Name" sortable filterField="name" style="width: 30%">
-              <template #filter="{ filterModel, filterCallback }">
-                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by name" />
-              </template>
-              <template #body="slotProps">
-                <a class="">
-                  <div>{{ slotProps.data.name }}</div>
-                </a>
-              </template>
-            </Column>
-            <Column field="address" header="Address" sortable filterField="address" style="width: 30%">
-              <template #filter="{ filterModel, filterCallback }">
-                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by address" />
-              </template>
-            </Column>
-            <Column field="country.name" header="Country" sortable filterField="country.name" style="width: 30%">
-              <template #filter="{ filterModel, filterCallback }">
-                <InputText v-model="filterModel.value" type="text" @input="filterCallback()" class="p-column-filter" placeholder="Search by country" />
-              </template>
-              <template #body="slotProps">
-                <div>{{ slotProps.data.country.name }}</div>
-              </template>
-            </Column>
-            <Column :exportable="false" style="min-width:10rem">
-              <template #body="slotProps">
-                <span class="p-buttonset">
-                  <Button icon="pi pi-pencil" size="small" severity="secondary" @click="editBranch(slotProps.data)" />
-                  <Button icon="pi pi-trash" size="small" severity="danger" @click="deleteBranch(slotProps.data)" />
-                </span>
-              </template>
-            </Column>
-          </DataTable>
-        </template>
-      </Card>
-    </div>
+    <DataTable
+      @add-item="addBranch"
+      @edit-item="editBranch"
+      @delete-item="deleteBranch"
+      :localLoading="localLoading"
+      :data="data" />
   </div>
 </template>
 

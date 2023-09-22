@@ -1,6 +1,6 @@
 <script setup>
 // imports
-import { ref, onBeforeUpdate, watch } from 'vue'
+import { ref, watch } from 'vue'
 // primevue
 import { FilterMatchMode } from 'primevue/api'
 
@@ -13,23 +13,31 @@ const props = defineProps({
 // refs
 const fields = ref([])
 const selectedFields = ref([])
+const selectedItems = ref([])
+const globalFilterFields = ref([])
 const filters = ref({
   global: { value: null, matchMode: FilterMatchMode.CONTAINS }
 })
 
-onBeforeUpdate(() => {
-  fields.value = props.data.fields
-})
-
 watch(() => props.data.fields, (current, previous) => {
+  // populate fields
+  fields.value = current
+
   current.map(f => {
+    // set default selected fields
     if (f.default) selectedFields.value.push(f)
 
+    // generate dynamic field name
     let fieldName = f.related ? f.field+'.name' : f.field
+
+    // generate filter fields
     filters.value[fieldName] = Object.assign({}, {
       'value': null,
       'matchMode': FilterMatchMode.CONTAINS
     })
+
+    // push field names into global filter fields
+    globalFilterFields.value.push(fieldName)
   })
 })
 
@@ -69,11 +77,12 @@ watch(() => props.data.fields, (current, previous) => {
         <template #content>
           <DataTable
             v-model:filters="filters"
+            v-model:selection="selectedItems"
             :value="data.table"
             dataKey="_id"
             :loading="localLoading"
             filterDisplay="row"
-            :globalFilterFields="['name', 'email', 'branch.name', 'middle_name', 'first_name', 'last_name', 'full_name']"
+            :globalFilterFields="globalFilterFields"
             paginator
             :rows="5"
             :rowsPerPageOptions="[5, 10, 20, 50]"

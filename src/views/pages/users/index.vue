@@ -36,14 +36,8 @@ const { popUpModalDataFill, formModalDataFill, pageDataFill, throwError } = gene
 // --------
 const localLoading = ref(false)
 const { isDarkTheme } = useLayout()
-const selectedUsers = ref()
-const selectedFields = ref([])
 const data = ref({})
 const branches = ref([])
-const fields = ref([])
-const filters = ref({
-  global: { value: null, matchMode: FilterMatchMode.CONTAINS }
-})
 
 // -----------
 // actions
@@ -171,12 +165,6 @@ onMounted(async () => {
   await axios.get('/users').then((response) => {
     setUsers(response.data.table)
     data.value = response.data
-    fields.value = response.data.fields
-
-    fields.value.map(f => {
-      if (f.default) selectedFields.value.push(f)
-    })
-    localLoading.value = false
   })
 
   // fetch branches
