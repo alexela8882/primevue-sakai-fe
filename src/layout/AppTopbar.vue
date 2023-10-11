@@ -35,8 +35,13 @@ const items = ref([
         command: () => {
           router.push('/branches')
         }
-      },
-      {
+      }, {
+        label: 'Modules',
+        icon: 'pi pi-building',
+        command: () => {
+          router.push('/modules')
+        }
+      }, {
         label: 'Sign Out',
         icon: 'pi pi-sign-out',
         command: () => {

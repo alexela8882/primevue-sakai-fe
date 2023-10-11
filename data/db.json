@@ -1,116 +1,117 @@
 {
-  "top": {
-    "folders": [
-      {
-        "icon": "hub",
-        "label": "Core",
-        "name": "cores",
-        "order": 0,
-        "folders": [],
-        "modules": [
-          "640fe3c6a6ebc7053d281b02"
-        ]
-      },
-      {
-        "icon": "business",
-        "label": "Accounts",
-        "name": "accounts",
-        "order": 3,
-        "folders": [
-          {
-            "icon": "fiber_manual_record",
-            "label": "Esco Ventures",
-            "name": "escoventures",
-            "order": 5,
-            "folders": [],
-            "modules": [
-              "5ec66b78a6ebc72fee671153",
-              "5ec66b78a6ebc72fee671159",
-              "5ec66b78a6ebc72fee67115f"
-            ]
-          },
-          {
-            "icon": "fiber_manual_record",
-            "label": "Esco Aster",
-            "name": "escoaster",
-            "order": 6,
-            "folders": [],
-            "modules": [
-              "5ef33d45a6ebc76dc849e09f",
-              "5f695ca7a6ebc721f01a7914",
-              "5f881daca6ebc7d1bf792902",
-              "60ff64a9a6ebc7f482057db3"
-            ]
-          }
-        ],
-        "modules": [
-          "5c906a1ba6ebc7193110f8bd",
-          "5c906a1ba6ebc7193110f8c5",
-          "5c906a1ba6ebc7193110f8cd",
-          "5c906a1ba6ebc7193110f926"
-        ]
-      },
-      {
-        "icon": "subtitles",
-        "label": "Work Orders",
-        "name": "workorder",
-        "order": 9,
-        "folders": [],
-        "modules": [
-          "5c906a1ba6ebc7193110f906",
-          "5c906a1ba6ebc7193110f91e",
-          "64900dfba6ebc7103a473c13"
-        ]
-      },
-      {
-        "icon": "local_car_wash",
-        "label": "Services",
-        "name": "services",
-        "order": 10,
-        "folders": [],
-        "modules": [
-          "5c906a1ba6ebc7193110f92c",
-          "5c906a1ba6ebc7193110f932",
-          "5c906a1ba6ebc7193110f93b",
-          "5c906a1ba6ebc7193110f941",
-          "5fe2ab68a6ebc7130d02921c"
-        ]
-      },
-      {
-        "icon": "kitchen",
-        "label": "Products",
-        "name": "products",
-        "order": 7,
-        "folders": [],
-        "modules": [
-          "5c906a1ba6ebc7193110f8f9",
-          "5c906a1ba6ebc7193110f8ff",
-          "64265f51a6ebc722f15baca4",
-          "64265f51a6ebc722f15bacaa"
-        ]
-      },
-      {
-        "icon": "price_change",
-        "label": "Pricelists",
-        "name": "pricelists",
-        "order": 8,
-        "folders": [],
-        "modules": [
-          "64265f51a6ebc722f15bacb0",
-          "64265f51a6ebc722f15bacb6"
-        ]
-      }
-    ],
-    "modules": [
-      "5c906a1ba6ebc7193110f8ac",
-      "5c906a1ba6ebc7193110f8b4",
-      "5c906a1ba6ebc7193110f8d3",
-      "5c906a1ba6ebc7193110f8e3",
-      "5c906a1ba6ebc7193110f8f3"
-    ]
+  "menu": {
+    "top": {
+      "folders": [
+        {
+          "icon": "hub",
+          "label": "Core",
+          "name": "cores",
+          "order": 0,
+          "folders": [],
+          "modules": [
+            "640fe3c6a6ebc7053d281b02"
+          ]
+        },
+        {
+          "icon": "business",
+          "label": "Accounts",
+          "name": "accounts",
+          "order": 3,
+          "folders": [
+            {
+              "icon": "fiber_manual_record",
+              "label": "Esco Ventures",
+              "name": "escoventures",
+              "order": 5,
+              "folders": [],
+              "modules": [
+                "5ec66b78a6ebc72fee671153",
+                "5ec66b78a6ebc72fee671159",
+                "5ec66b78a6ebc72fee67115f"
+              ]
+            },
+            {
+              "icon": "fiber_manual_record",
+              "label": "Esco Aster",
+              "name": "escoaster",
+              "order": 6,
+              "folders": [],
+              "modules": [
+                "5ef33d45a6ebc76dc849e09f",
+                "5f695ca7a6ebc721f01a7914",
+                "5f881daca6ebc7d1bf792902",
+                "60ff64a9a6ebc7f482057db3"
+              ]
+            }
+          ],
+          "modules": [
+            "5c906a1ba6ebc7193110f8bd",
+            "5c906a1ba6ebc7193110f8c5",
+            "5c906a1ba6ebc7193110f8cd",
+            "5c906a1ba6ebc7193110f926"
+          ]
+        },
+        {
+          "icon": "subtitles",
+          "label": "Work Orders",
+          "name": "workorder",
+          "order": 9,
+          "folders": [],
+          "modules": [
+            "5c906a1ba6ebc7193110f906",
+            "5c906a1ba6ebc7193110f91e",
+            "64900dfba6ebc7103a473c13"
+          ]
+        },
+        {
+          "icon": "local_car_wash",
+          "label": "Services",
+          "name": "services",
+          "order": 10,
+          "folders": [],
+          "modules": [
+            "5c906a1ba6ebc7193110f92c",
+            "5c906a1ba6ebc7193110f932",
+            "5c906a1ba6ebc7193110f93b",
+            "5c906a1ba6ebc7193110f941",
+            "5fe2ab68a6ebc7130d02921c"
+          ]
+        },
+        {
+          "icon": "kitchen",
+          "label": "Products",
+          "name": "products",
+          "order": 7,
+          "folders": [],
+          "modules": [
+            "5c906a1ba6ebc7193110f8f9",
+            "5c906a1ba6ebc7193110f8ff",
+            "64265f51a6ebc722f15baca4",
+            "64265f51a6ebc722f15bacaa"
+          ]
+        },
+        {
+          "icon": "price_change",
+          "label": "Pricelists",
+          "name": "pricelists",
+          "order": 8,
+          "folders": [],
+          "modules": [
+            "64265f51a6ebc722f15bacb0",
+            "64265f51a6ebc722f15bacb6"
+          ]
+        }
+      ],
+      "modules": [
+        "5c906a1ba6ebc7193110f8ac",
+        "5c906a1ba6ebc7193110f8b4",
+        "5c906a1ba6ebc7193110f8d3",
+        "5c906a1ba6ebc7193110f8e3",
+        "5c906a1ba6ebc7193110f8f3"
+      ]
+    }
   },
-
-  "modules":   [
+  "modules": [
     {
       "_id": "5c906a1ba6ebc7193110f8ac",
       "name": "campaigns",
@@ -123,1256 +124,1287 @@
       "folder_id": "5c906a1ba6ebc7193110f893",
       "mainEntity": "Campaign",
       "fields": [
-            {
-            "_id": "5c906a11a6ebc7193110ea95",
-            "name": "name",
-            "label": "Campaign Name",
-            "uniqueName": "campaign_name",
-            "quick": true,
-            "title": true,
-            "rules": {
-                "required": true,
-                "between":{
-                    "min": 0,
-                    "max": 155
-                },
-                "string": true
-            },
-            "searchKey": true,
-            "field_type": {
-                "name": "text",
-                "_id": "5c906a0ea6ebc7193110e73b"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110ea99",
-            "name": "parent_id",
-            "label": "Parent Campaign",
-            "uniqueName": "campaign_parent_id",
-            "fieldGlue": " ",
-            "rules": {
-                "ss_pop_up":true
-            },
-            "field_type": {
-                "name": "lookupModel",
-                "_id": "5c906a0ea6ebc7193110e738"
-            },
-            "relation": {
-                "_id": "5c906a11a6ebc7193110ea9b",
-                "displayFieldName": [
-                "name"
-                ],
-                "foreign_key": "parent_id",
-                "local_key": "_id",
-                "entity_id": {
-                "_id": "5c906a0fa6ebc7193110e7d7",
-                "name": "Campaign"
-                }
-            }
-            },
-            {
-            "_id": "5c906a11a6ebc7193110ea9c",
-            "name": "country_id",
-            "label": "Country",
-            "uniqueName": "campaign_country_id",
-            "fieldGlue": " ",
-            "tooltip": [
-                "Country or Region where the exhibition will take place",
-                "helper"
-            ],
-            "searchKey": false,
-            "rules": {
-                "ss_pop_up":true
-            },
-            "field_type": {
-                "name": "lookupModel",
-                "_id": "5c906a0ea6ebc7193110e738"
-            },
-            "relation": {
-                "_id": "5c906a11a6ebc7193110ea9e",
-                "displayFieldName": [
-                "name"
-                ],
-                "foreign_key": "country_id",
-                "local_key": "_id",
-                "entity_id": {
-                "_id": "5c906a0fa6ebc7193110e7bd",
-                "name": "Country"
-                }
-            }
-            },
-            {
-            "_id": "5c906a11a6ebc7193110ea9f",
-            "name": "venue",
-            "label": "Venue",
-            "uniqueName": "campaign_venue",
-            "searchKey": false,
-            "field_type": {
-                "name": "longText",
-                "_id": "5c906a0ea6ebc7193110e73c"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaa0",
-            "name": "freqExhibition",
-            "label": "Frequency of Exhibition",
-            "uniqueName": "campaign_freq_exhibition",
-            "searchKey": false,
-            "field_type": {
-                "name": "longText",
-                "_id": "5c906a0ea6ebc7193110e73c"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaa1",
-            "name": "noOfRegistrants",
-            "label": "No. of Registrants",
-            "uniqueName": "campaign_no_of_registrants",
-            "rules": {
-                "digits_between" :{
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaa3",
-            "name": "noOfAttendees",
-            "label": "No. of Attendees",
-            "uniqueName": "campaign_no_of_attendees",
-            "rules": {
-                "digits_between" :{
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaa5",
-            "name": "boothSize",
-            "label": "Booth Size (sqm)",
-            "uniqueName": "campaign_booth_size",
-            "rules": {
-                "decimal":2,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-                
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaa8",
-            "name": "description",
-            "label": "Description",
-            "uniqueName": "campaign_description",
-            "searchKey": false,
-            "field_type": {
-                "name": "longText",
-                "_id": "5c906a0ea6ebc7193110e73c"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaa9",
-            "name": "active",
-            "label": "Active",
-            "uniqueName": "campaign_active",
-            "rules": {
-                "default_value" : false,
-                "checkbox": true
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "boolean",
-                "_id": "5c906a0ea6ebc7193110e733"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaac",
-            "name": "currency_id",
-            "label": "Currency",
-            "uniqueName": "campaign_currency_id",
-            "fieldGlue": " ",
-            "quick": true,
-            "rules": {
-                "ss_dropdown": true,
-                "required" : true
-            },
-            "field_type": {
-                "name": "lookupModel",
-                "_id": "5c906a0ea6ebc7193110e738"
-            },
-            "relation": {
-                "_id": "5c906a11a6ebc7193110eaaf",
-                "displayFieldName": [
-                "name"
-                ],
-                "foreign_key": "currency_id",
-                "local_key": "_id",
-                "entity_id": {
-                "_id": "5c906a0fa6ebc7193110e7bc",
-                "name": "Currency"
-                }
-            }
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eab0",
-            "name": "owner_id",
-            "label": "Campaign Owner",
-            "uniqueName": "campaign_owner_id",
-            "fieldGlue": " ",
-            "filterQuery": "where(\"Employee::_id\", \"=\", \"Role::user_id\")->where(\"Role::name\", \"in\", [\"crm_admin\", \"crm_sales_admin\", \"crm_sales_coordinator\", \"sales_person\"])",
-            "rules": {
-                "ss_pop_up": true
-            },
-            "searchKey": true,
-            "field_type": {
-                "name": "lookupModel",
-                "_id": "5c906a0ea6ebc7193110e738"
-            },
-            "relation": {
-                "_id": "5c906a11a6ebc7193110eab2",
-                "displayFieldName": [
-                "firstName",
-                "lastName"
-                ],
-                "foreign_key": "owner_id",
-                "local_key": "_id",
-                "entity_id": {
-                "_id": "5c906a0fa6ebc7193110e7b3",
-                "name": "Employee"
-                },
-                "popupDisplayFieldName": [
-                "firstName",
-                "lastName",
-                "email"
-                ]
-            }
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eab3",
-            "name": "status_id",
-            "label": "Status",
-            "uniqueName": "campaign_status_id",
-            "listName": "campaign_status",
-            "header": true,
-            "rules": {
-                "ss_dropdown": true
-            },
-            "field_type": {
-                "name": "picklist",
-                "_id": "5c906a0ea6ebc7193110e737"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eab5",
-            "name": "type_id",
-            "label": "Type",
-            "uniqueName": "campaign_type_id",
-            "listName": "campaign_type",
-            "header": true,
-            "rules": {
-                "ss_dropdown": true
-            },
-            "field_type": {
-                "name": "picklist",
-                "_id": "5c906a0ea6ebc7193110e737"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eab7",
-            "name": "startDate",
-            "label": "Start Date",
-            "uniqueName": "campaign_start_date",
-            "header": true,
-            "rules": {
-                "date_format":"m/d/Y",
-                "date_only": true
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "date",
-                "_id": "5c906a0ea6ebc7193110e732"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaba",
-            "name": "endDate",
-            "label": "End Date",
-            "uniqueName": "campaign_end_date",
-            "header": true,
-            "rules": {
-                "set_min_date": "startDate",
-                "date_format" : "m/d/Y",
-                "date_only": true
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "date",
-                "_id": "5c906a0ea6ebc7193110e732"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eabe",
-            "name": "boothRentalB",
-            "label": "Booth Rental (Budget)",
-            "uniqueName": "campaign_booth_rental_b",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eac2",
-            "name": "boothConstuctionB",
-            "label": "Boot Construction (Budget)",
-            "uniqueName": "campaign_booth_constuction_b",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eac6",
-            "name": "untFrtLbrSrvcsB",
-            "label": "Unit Freight and Labor Services (Budget)",
-            "uniqueName": "campaign_unt_frt_lbr_srvcs_b",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaca",
-            "name": "foodTrvlHtlB",
-            "label": "Food, Travel, Hotel (Budget)",
-            "uniqueName": "campaign_food_trvl_htl_b",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eace",
-            "name": "promMatB",
-            "label": "Food, Travel, Hotel (Budget)",
-            "uniqueName": "campaign_prom_mat_b",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110ead2",
-            "name": "boothRentalA",
-            "label": "Booth Rental (Actual)",
-            "uniqueName": "campaign_booth_rental_a",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110ead6",
-            "name": "boothConstuctionA",
-            "label": "Boot Construction (Actual)",
-            "uniqueName": "campaign_booth_constuction_a",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eada",
-            "name": "untFrtLbrSrvcsA",
-            "label": "Unit Freight and Labor Services (Actual)",
-            "uniqueName": "campaign_unt_frt_lbr_srvcs_a",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eade",
-            "name": "foodTrvlHtlA",
-            "label": "Food, Travel, Hotel (Actual)",
-            "uniqueName": "campaign_food_trvl_htl_a",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eae2",
-            "name": "promMatA",
-            "label": "Food, Travel, Hotel (Actual)",
-            "uniqueName": "campaign_prom_mat_a",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eae6",
-            "name": "expectedRevenue",
-            "label": "Expected Revenue in Campaign",
-            "uniqueName": "campaign_expected_revenue",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaea",
-            "name": "numSent",
-            "label": "Number Sent in Campaign",
-            "uniqueName": "campaign_num_sent",
-            "rules": {
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaec",
-            "name": "expectedResponse",
-            "label": "Expected Response (%)",
-            "uniqueName": "campaign_expected_response",
-            "searchKey": false,
-            "field_type": {
-                "name": "percentage",
-                "_id": "5c906a0ea6ebc7193110e743"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaed",
-            "name": "budgetCost",
-            "label": "Budgeted Cost in Campaign",
-            "uniqueName": "campaign_budget_cost",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaf1",
-            "name": "actualCost",
-            "label": "Actual Cost in Campaign",
-            "uniqueName": "campaign_actual_cost",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaf5",
-            "name": "response",
-            "label": "Responses in Campaign",
-            "uniqueName": "campaign_response",
-            "rules": {
-                "hide_in":["create"],
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eaf8",
-            "name": "numSentH",
-            "label": "Number Sent in Hierarchy",
-            "uniqueName": "campaign_num_sent_h",
-            "rules": {
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eafa",
-            "name": "totalLeadsH",
-            "label": "Leads in Hierarchy",
-            "uniqueName": "campaign_total_leads_h",
-            "rules": {
-                "hide_in":["create"],
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eafd",
-            "name": "totalOpportunityH",
-            "label": "Opportunity in Hierarchy",
-            "uniqueName": "campaign_total_opportunity_h",
-            "rules": {
-                "hide_in":["create"],
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eb00",
-            "name": "responseH",
-            "label": "Responses in Hierarchy",
-            "uniqueName": "campaign_response_h",
-            "rules": {
-                "hide_in":["create"],
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eb03",
-            "name": "totalWonH",
-            "label": "Won Opprtunity in Hierarchy",
-            "uniqueName": "campaign_total_won_h",
-            "rules": {
-                "hide_in":["create"],
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eb06",
-            "name": "opportunityValueH",
-            "label": "Value of Opprtunity in Hierarchy",
-            "uniqueName": "campaign_opportunity_value_h",
-            "currencySource": {
-                "type": "lookupModel",
-                "concat": "code",
-                "field": "currency_id"
-            },
-            "rules": {
-                "decimal":2,
-                "comma_seprated":true,
-                "hide_in":["create"],
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eb0b",
-            "name": "wonValueH",
-            "label": "Value of Won Opprtunity in Hierarchy",
-            "uniqueName": "campaign_won_value_h",
-            "currencySource": {
-                "type": "lookupModel",
-                "concat": "code",
-                "field": "currency_id"
-            },
-            "rules": {
-                "decimal":2,
-                "comma_seprated":true,
-                "hide_in":["create"],
-                "digits_between": {
-                    "min": 0,
-                    "max": 15
-                }
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "currency",
-                "_id": "5c906a0ea6ebc7193110e73e"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eb10",
-            "name": "updated_at",
-            "label": "Last Modified Date",
-            "uniqueName": "campaign_updated_at",
-            "rules": {
-                "date_only":true,
-                "date_format":"m/d/Y",
-                "hide_in":["create","update"]
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "date",
-                "_id": "5c906a0ea6ebc7193110e732"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eb14",
-            "name": "created_at",
-            "label": "Created Date",
-            "uniqueName": "campaign_created_at",
-            "rules": {
-                "date_only":true,
-                "date_format":"m/d/Y",
-                "hide_in":["create","update"]
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "date",
-                "_id": "5c906a0ea6ebc7193110e732"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eb18",
-            "name": "updated_by",
-            "label": "Last Modified By",
-            "uniqueName": "campaign_updated_by",
-            "fieldGlue": " ",
-            "rules": {
-                "ss_pop_up":true,
-                "hide_in":["create","update"]
-            },
-            "field_type": {
-                "name": "lookupModel",
-                "_id": "5c906a0ea6ebc7193110e738"
-            },
-            "relation": {
-                "_id": "5c906a11a6ebc7193110eb1b",
-                "displayFieldName": [
-                "firstName",
-                "lastName"
-                ],
-                "foreign_key": "updated_by",
-                "local_key": "_id",
-                "entity_id": {
-                "_id": "5c906a0fa6ebc7193110e7b4",
-                "name": "User"
-                }
-            }
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eb1c",
-            "name": "created_by",
-            "label": "Created By",
-            "uniqueName": "campaign_created_by",
-            "fieldGlue": " ",
-            "rules": {
-                "ss_pop_up":true,
-                "hide_in":["create","update"]
-            },
-            "field_type": {
-                "name": "lookupModel",
-                "_id": "5c906a0ea6ebc7193110e738"
-            },
-            "relation": {
-                "_id": "5c906a11a6ebc7193110eb1f",
-                "displayFieldName": [
-                "firstName",
-                "lastName"
-                ],
-                "foreign_key": "created_by",
-                "local_key": "_id",
-                "entity_id": {
-                "_id": "5c906a0fa6ebc7193110e7b4",
-                "name": "User"
-                }
-            }
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eb20",
-            "name": "deleted_at",
-            "label": "Deleted At",
-            "uniqueName": "campaign_deleted_at",
-            "rules": {
-                "date_only":true,
-                "date_format":"m/d/Y",
-                "hide_in":["create","update"]
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "date",
-                "_id": "5c906a0ea6ebc7193110e732"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a11a6ebc7193110eb24",
-            "name": "deleted_by",
-            "label": "Deleted By",
-            "uniqueName": "campaign_deleted_by",
-            "fieldGlue": " ",
-            "rules": {
-                "ss_pop_up":true,
-                "hide_in":["create","update"]
-            },
-            "field_type": {
-                "name": "lookupModel",
-                "_id": "5c906a0ea6ebc7193110e738"
-            },
-            "relation": {
-                "_id": "5c906a11a6ebc7193110eb27",
-                "displayFieldName": [
-                "firstName",
-                "lastName"
-                ],
-                "foreign_key": "deleted_by",
-                "local_key": "_id",
-                "entity_id": {
-                "_id": "5c906a0fa6ebc7193110e7b4",
-                "name": "User"
-                }
-            }
-            },
-            {
-            "_id": "5c906a13a6ebc7193110ede5",
-            "name": "totalOpportunity",
-            "label": "Opportunity in Campaign",
-            "uniqueName": "campaign_total_opportunity",
-            "filters": null,
-            "filterLogic": null,
-            "rules": {
-                "disable":true
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a13a6ebc7193110ede7",
-            "name": "totalWon",
-            "label": "Won Opportunity in Campaign",
-            "uniqueName": "campaign_total_won",
-            "filters": [
-                [
-                "stage_id",
-                "=",
-                "Closed Won"
-                ]
-            ],
-            "filterLogic": null,
-            "rules": {
-                "disable":true
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a13a6ebc7193110ede9",
-            "name": "opportunityValue",
-            "label": "Value of Opportunity",
-            "uniqueName": "campaign_opportunity_value",
-            "filters": null,
-            "filterLogic": null,
-            "aggregateField": "amount",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "disable":true
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a13a6ebc7193110eded",
-            "name": "wonValue",
-            "label": "Value of Won Opportunity",
-            "uniqueName": "campaign_won_value",
-            "filters": [
-                [
-                "stage_id",
-                "=",
-                "Closed Won"
-                ]
-            ],
-            "filterLogic": null,
-            "aggregateField": "amount",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "disable":true
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "number",
-                "_id": "5c906a0ea6ebc7193110e73d"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a14a6ebc7193110ef49",
-            "name": "totalSalesOpportunity",
-            "label": "Sales Opportunity in Campaign",
-            "uniqueName": "campaign_total_sales_opportunity",
-            "connectingField": "campaign_id",
-            "rusEntity": "SalesOpportunity",
-            "rusType": "count",
-            "filters": null,
-            "filterLogic": null,
-            "rules": {
-                "disable":true
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "rollUpSummary",
-                "_id": "5c906a0ea6ebc7193110e742"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a14a6ebc7193110ef4b",
-            "name": "totalSalesWon",
-            "label": "Won Sales Opportunity in Campaign",
-            "uniqueName": "campaign_total_sales_won",
-            "connectingField": "campaign_id",
-            "rusEntity": "SalesOpportunity",
-            "rusType": "count",
-            "filters": [
-                [
-                "stage_id",
-                "=",
-                "Closed Won"
-                ]
-            ],
-            "filterLogic": null,
-            "rules": {
-                "disable":true
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "rollUpSummary",
-                "_id": "5c906a0ea6ebc7193110e742"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a14a6ebc7193110ef4d",
-            "name": "salesOpportunityValue",
-            "label": "Value of Sales Opportunity",
-            "uniqueName": "campaign_sales_opportunity_value",
-            "connectingField": "campaign_id",
-            "rusEntity": "SalesOpportunity",
-            "rusType": "sum",
-            "filters": null,
-            "filterLogic": null,
-            "aggregateField": "amount",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "disable":true
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "rollUpSummary",
-                "_id": "5c906a0ea6ebc7193110e742"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a14a6ebc7193110ef51",
-            "name": "wonSalesValue",
-            "label": "Value of Won Sales Opportunity",
-            "uniqueName": "campaign_won_sales_value",
-            "connectingField": "campaign_id",
-            "rusEntity": "SalesOpportunity",
-            "rusType": "sum",
-            "filters": [
-                [
-                "stage_id",
-                "=",
-                "Closed Won"
-                ]
-            ],
-            "filterLogic": null,
-            "aggregateField": "amount",
-            "rules": {
-                "decimal":2,
-                "comma_separated":true,
-                "disable":true
-            },
-            "searchKey": false,
-            "field_type": {
-                "name": "rollUpSummary",
-                "_id": "5c906a0ea6ebc7193110e742"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a15a6ebc7193110f010",
-            "name": "totalLeads",
-            "label": "Leads in Campaign",
-            "uniqueName": "campaign_total_leads",
-            "rusEntity": "Lead",
-            "rusType": "count",
-            "filters": null,
-            "filterLogic": null,
-            "rules": {
-                "disable":true
-            },
-            "connectingField": "campaign_id",
-            "searchKey": false,
-            "field_type": {
-                "name": "rollUpSummary",
-                "_id": "5c906a0ea6ebc7193110e742"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5c906a15a6ebc7193110f012",
-            "name": "totalConvertedLeads",
-            "label": "Converted Leads in Campaign",
-            "uniqueName": "campaign_total_converted_leads",
-            "rusEntity": "Lead",
-            "rusType": "count",
-            "filters": [
-                [
-                "converted",
-                "=",
-                true
-                ]
-            ],
-            "filterLogic": null,
-            "rules": {
-                "disable":true
-            },
-            "connectingField": "campaign_id",
-            "searchKey": false,
-            "field_type": {
-                "name": "rollUpSummary",
-                "_id": "5c906a0ea6ebc7193110e742"
-            },
-            "relation": null
-            },
-            {
-            "_id": "5cf885d5a6ebc75bfe22feb2",
-            "name": "rfqCode",
-            "label": "RFQCODE",
-            "uniqueName": "campaign_rfq_code",
-            "format": "{0}",
-            "searchKey": true,
-            "field_type": {
-                "name": "autonumber",
-                "_id": "5c906a0ea6ebc7193110e741"
-            },
-            "relation": null
-            }
-      ],
-      "panels":[
         {
-            "_id": "5c906a1da6ebc7193110fa28",
-            "panelName": "campaign-panel-1",
-            "entityName": "Campaign",
-            "controllerMethod": "campaigns@index",
-            "label": null,
-            "tabKey": "N",
-            "mutable": true,
-            "highlight": null,
-            "sections": [
-              {
-                "sectionLabel": "Campaign Information",
-                "row": 1,
-                "field_ids": [
-                  [
-                    "5c906a11a6ebc7193110ea95",
-                    "5c906a11a6ebc7193110ea99",
-                    "5c906a11a6ebc7193110ea9c",
-                    "5c906a11a6ebc7193110ea9f",
-                    "5c906a11a6ebc7193110eaa0",
-                    "5c906a11a6ebc7193110eaa1",
-                    "5c906a11a6ebc7193110eaa3",
-                    "5c906a11a6ebc7193110eaa5"
-                  ],
-                  [
-                    "5c906a11a6ebc7193110eaa9",
-                    "5c906a11a6ebc7193110eaac",
-                    "5c906a11a6ebc7193110eab0",
-                    "5c906a11a6ebc7193110eab3",
-                    "5c906a11a6ebc7193110eab5",
-                    "5c906a11a6ebc7193110eaa8"
-                  ]
-                ]
-              },
-              {
-                "sectionLabel": "Planning",
-                "row": 2,
-                "field_ids": [
-                  [
-                    "5c906a11a6ebc7193110eab7",
-                    "5c906a11a6ebc7193110eabe",
-                    "5c906a11a6ebc7193110eac2",
-                    "5c906a11a6ebc7193110eac6",
-                    "5c906a11a6ebc7193110eaca",
-                    "5c906a11a6ebc7193110eace"
-                  ],
-                  [
-                    "5c906a11a6ebc7193110eaba",
-                    "5c906a11a6ebc7193110ead2",
-                    "5c906a11a6ebc7193110ead6",
-                    "5c906a11a6ebc7193110eada",
-                    "5c906a11a6ebc7193110eade",
-                    "5c906a11a6ebc7193110eae2"
-                  ]
-                ]
-              }
-            ]
+          "_id": "5c906a11a6ebc7193110ea95",
+          "name": "name",
+          "label": "Campaign Name",
+          "uniqueName": "campaign_name",
+          "quick": true,
+          "title": true,
+          "rules": {
+            "required": true,
+            "between": {
+              "min": 0,
+              "max": 155
+            },
+            "string": true
           },
-          {
-            "_id": "5c906a1da6ebc7193110fa2b",
-            "panelName": "campaign-panel-2",
-            "entityName": "Campaign",
-            "controllerMethod": "campaigns@index",
-            "label": null,
-            "tabKey": "N",
-            "mutable": true,
-            "highlight": null,
-            "sections": [
-              {
-                "sectionLabel": "Campaign Statistics",
-                "row": 1,
-                "field_ids": [
-                  [
-                    "5c906a11a6ebc7193110eae6",
-                    "5c906a11a6ebc7193110eaea",
-                    "5c906a11a6ebc7193110eaec"
-                  ],
-                  [
-                    "5c906a11a6ebc7193110eaed",
-                    "5c906a11a6ebc7193110eaf1"
-                  ]
-                ]
-              },
-              {
-                "sectionLabel": null,
-                "row": 2,
-                "field_ids": [
-                  [
-                    "5c906a11a6ebc7193110eb1c",
-                    "5c906a11a6ebc7193110eb14"
-                  ],
-                  [
-                    "5c906a11a6ebc7193110eb18",
-                    "5c906a11a6ebc7193110eb10"
-                  ]
-                ]
-              }
+          "searchKey": true,
+          "field_type": {
+            "name": "text",
+            "_id": "5c906a0ea6ebc7193110e73b"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110ea99",
+          "name": "parent_id",
+          "label": "Parent Campaign",
+          "uniqueName": "campaign_parent_id",
+          "fieldGlue": " ",
+          "rules": {
+            "ss_pop_up": true
+          },
+          "field_type": {
+            "name": "lookupModel",
+            "_id": "5c906a0ea6ebc7193110e738"
+          },
+          "relation": {
+            "_id": "5c906a11a6ebc7193110ea9b",
+            "displayFieldName": [
+              "name"
+            ],
+            "foreign_key": "parent_id",
+            "local_key": "_id",
+            "entity_id": {
+              "_id": "5c906a0fa6ebc7193110e7d7",
+              "name": "Campaign"
+            }
+          }
+        },
+        {
+          "_id": "5c906a11a6ebc7193110ea9c",
+          "name": "country_id",
+          "label": "Country",
+          "uniqueName": "campaign_country_id",
+          "fieldGlue": " ",
+          "tooltip": [
+            "Country or Region where the exhibition will take place",
+            "helper"
+          ],
+          "searchKey": false,
+          "rules": {
+            "ss_pop_up": true
+          },
+          "field_type": {
+            "name": "lookupModel",
+            "_id": "5c906a0ea6ebc7193110e738"
+          },
+          "relation": {
+            "_id": "5c906a11a6ebc7193110ea9e",
+            "displayFieldName": [
+              "name"
+            ],
+            "foreign_key": "country_id",
+            "local_key": "_id",
+            "entity_id": {
+              "_id": "5c906a0fa6ebc7193110e7bd",
+              "name": "Country"
+            }
+          }
+        },
+        {
+          "_id": "5c906a11a6ebc7193110ea9f",
+          "name": "venue",
+          "label": "Venue",
+          "uniqueName": "campaign_venue",
+          "searchKey": false,
+          "field_type": {
+            "name": "longText",
+            "_id": "5c906a0ea6ebc7193110e73c"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaa0",
+          "name": "freqExhibition",
+          "label": "Frequency of Exhibition",
+          "uniqueName": "campaign_freq_exhibition",
+          "searchKey": false,
+          "field_type": {
+            "name": "longText",
+            "_id": "5c906a0ea6ebc7193110e73c"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaa1",
+          "name": "noOfRegistrants",
+          "label": "No. of Registrants",
+          "uniqueName": "campaign_no_of_registrants",
+          "rules": {
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaa3",
+          "name": "noOfAttendees",
+          "label": "No. of Attendees",
+          "uniqueName": "campaign_no_of_attendees",
+          "rules": {
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaa5",
+          "name": "boothSize",
+          "label": "Booth Size (sqm)",
+          "uniqueName": "campaign_booth_size",
+          "rules": {
+            "decimal": 2,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaa8",
+          "name": "description",
+          "label": "Description",
+          "uniqueName": "campaign_description",
+          "searchKey": false,
+          "field_type": {
+            "name": "longText",
+            "_id": "5c906a0ea6ebc7193110e73c"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaa9",
+          "name": "active",
+          "label": "Active",
+          "uniqueName": "campaign_active",
+          "rules": {
+            "default_value": false,
+            "checkbox": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "boolean",
+            "_id": "5c906a0ea6ebc7193110e733"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaac",
+          "name": "currency_id",
+          "label": "Currency",
+          "uniqueName": "campaign_currency_id",
+          "fieldGlue": " ",
+          "quick": true,
+          "rules": {
+            "ss_dropdown": true,
+            "required": true
+          },
+          "field_type": {
+            "name": "lookupModel",
+            "_id": "5c906a0ea6ebc7193110e738"
+          },
+          "relation": {
+            "_id": "5c906a11a6ebc7193110eaaf",
+            "displayFieldName": [
+              "name"
+            ],
+            "foreign_key": "currency_id",
+            "local_key": "_id",
+            "entity_id": {
+              "_id": "5c906a0fa6ebc7193110e7bc",
+              "name": "Currency"
+            }
+          }
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eab0",
+          "name": "owner_id",
+          "label": "Campaign Owner",
+          "uniqueName": "campaign_owner_id",
+          "fieldGlue": " ",
+          "filterQuery": "where(\"Employee::_id\", \"=\", \"Role::user_id\")->where(\"Role::name\", \"in\", [\"crm_admin\", \"crm_sales_admin\", \"crm_sales_coordinator\", \"sales_person\"])",
+          "rules": {
+            "ss_pop_up": true
+          },
+          "searchKey": true,
+          "field_type": {
+            "name": "lookupModel",
+            "_id": "5c906a0ea6ebc7193110e738"
+          },
+          "relation": {
+            "_id": "5c906a11a6ebc7193110eab2",
+            "displayFieldName": [
+              "firstName",
+              "lastName"
+            ],
+            "foreign_key": "owner_id",
+            "local_key": "_id",
+            "entity_id": {
+              "_id": "5c906a0fa6ebc7193110e7b3",
+              "name": "Employee"
+            },
+            "popupDisplayFieldName": [
+              "firstName",
+              "lastName",
+              "email"
             ]
           }
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eab3",
+          "name": "status_id",
+          "label": "Status",
+          "uniqueName": "campaign_status_id",
+          "listName": "campaign_status",
+          "header": true,
+          "rules": {
+            "ss_dropdown": true
+          },
+          "field_type": {
+            "name": "picklist",
+            "_id": "5c906a0ea6ebc7193110e737"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eab5",
+          "name": "type_id",
+          "label": "Type",
+          "uniqueName": "campaign_type_id",
+          "listName": "campaign_type",
+          "header": true,
+          "rules": {
+            "ss_dropdown": true
+          },
+          "field_type": {
+            "name": "picklist",
+            "_id": "5c906a0ea6ebc7193110e737"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eab7",
+          "name": "startDate",
+          "label": "Start Date",
+          "uniqueName": "campaign_start_date",
+          "header": true,
+          "rules": {
+            "date_format": "m/d/Y",
+            "date_only": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "date",
+            "_id": "5c906a0ea6ebc7193110e732"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaba",
+          "name": "endDate",
+          "label": "End Date",
+          "uniqueName": "campaign_end_date",
+          "header": true,
+          "rules": {
+            "set_min_date": "startDate",
+            "date_format": "m/d/Y",
+            "date_only": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "date",
+            "_id": "5c906a0ea6ebc7193110e732"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eabe",
+          "name": "boothRentalB",
+          "label": "Booth Rental (Budget)",
+          "uniqueName": "campaign_booth_rental_b",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eac2",
+          "name": "boothConstuctionB",
+          "label": "Boot Construction (Budget)",
+          "uniqueName": "campaign_booth_constuction_b",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eac6",
+          "name": "untFrtLbrSrvcsB",
+          "label": "Unit Freight and Labor Services (Budget)",
+          "uniqueName": "campaign_unt_frt_lbr_srvcs_b",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaca",
+          "name": "foodTrvlHtlB",
+          "label": "Food, Travel, Hotel (Budget)",
+          "uniqueName": "campaign_food_trvl_htl_b",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eace",
+          "name": "promMatB",
+          "label": "Food, Travel, Hotel (Budget)",
+          "uniqueName": "campaign_prom_mat_b",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110ead2",
+          "name": "boothRentalA",
+          "label": "Booth Rental (Actual)",
+          "uniqueName": "campaign_booth_rental_a",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110ead6",
+          "name": "boothConstuctionA",
+          "label": "Boot Construction (Actual)",
+          "uniqueName": "campaign_booth_constuction_a",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eada",
+          "name": "untFrtLbrSrvcsA",
+          "label": "Unit Freight and Labor Services (Actual)",
+          "uniqueName": "campaign_unt_frt_lbr_srvcs_a",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eade",
+          "name": "foodTrvlHtlA",
+          "label": "Food, Travel, Hotel (Actual)",
+          "uniqueName": "campaign_food_trvl_htl_a",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eae2",
+          "name": "promMatA",
+          "label": "Food, Travel, Hotel (Actual)",
+          "uniqueName": "campaign_prom_mat_a",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eae6",
+          "name": "expectedRevenue",
+          "label": "Expected Revenue in Campaign",
+          "uniqueName": "campaign_expected_revenue",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaea",
+          "name": "numSent",
+          "label": "Number Sent in Campaign",
+          "uniqueName": "campaign_num_sent",
+          "rules": {
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaec",
+          "name": "expectedResponse",
+          "label": "Expected Response (%)",
+          "uniqueName": "campaign_expected_response",
+          "searchKey": false,
+          "field_type": {
+            "name": "percentage",
+            "_id": "5c906a0ea6ebc7193110e743"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaed",
+          "name": "budgetCost",
+          "label": "Budgeted Cost in Campaign",
+          "uniqueName": "campaign_budget_cost",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaf1",
+          "name": "actualCost",
+          "label": "Actual Cost in Campaign",
+          "uniqueName": "campaign_actual_cost",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaf5",
+          "name": "response",
+          "label": "Responses in Campaign",
+          "uniqueName": "campaign_response",
+          "rules": {
+            "hide_in": [
+              "create"
+            ],
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eaf8",
+          "name": "numSentH",
+          "label": "Number Sent in Hierarchy",
+          "uniqueName": "campaign_num_sent_h",
+          "rules": {
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eafa",
+          "name": "totalLeadsH",
+          "label": "Leads in Hierarchy",
+          "uniqueName": "campaign_total_leads_h",
+          "rules": {
+            "hide_in": [
+              "create"
+            ],
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eafd",
+          "name": "totalOpportunityH",
+          "label": "Opportunity in Hierarchy",
+          "uniqueName": "campaign_total_opportunity_h",
+          "rules": {
+            "hide_in": [
+              "create"
+            ],
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eb00",
+          "name": "responseH",
+          "label": "Responses in Hierarchy",
+          "uniqueName": "campaign_response_h",
+          "rules": {
+            "hide_in": [
+              "create"
+            ],
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eb03",
+          "name": "totalWonH",
+          "label": "Won Opprtunity in Hierarchy",
+          "uniqueName": "campaign_total_won_h",
+          "rules": {
+            "hide_in": [
+              "create"
+            ],
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eb06",
+          "name": "opportunityValueH",
+          "label": "Value of Opprtunity in Hierarchy",
+          "uniqueName": "campaign_opportunity_value_h",
+          "currencySource": {
+            "type": "lookupModel",
+            "concat": "code",
+            "field": "currency_id"
+          },
+          "rules": {
+            "decimal": 2,
+            "comma_seprated": true,
+            "hide_in": [
+              "create"
+            ],
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eb0b",
+          "name": "wonValueH",
+          "label": "Value of Won Opprtunity in Hierarchy",
+          "uniqueName": "campaign_won_value_h",
+          "currencySource": {
+            "type": "lookupModel",
+            "concat": "code",
+            "field": "currency_id"
+          },
+          "rules": {
+            "decimal": 2,
+            "comma_seprated": true,
+            "hide_in": [
+              "create"
+            ],
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "currency",
+            "_id": "5c906a0ea6ebc7193110e73e"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eb10",
+          "name": "updated_at",
+          "label": "Last Modified Date",
+          "uniqueName": "campaign_updated_at",
+          "rules": {
+            "date_only": true,
+            "date_format": "m/d/Y",
+            "hide_in": [
+              "create",
+              "update"
+            ]
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "date",
+            "_id": "5c906a0ea6ebc7193110e732"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eb14",
+          "name": "created_at",
+          "label": "Created Date",
+          "uniqueName": "campaign_created_at",
+          "rules": {
+            "date_only": true,
+            "date_format": "m/d/Y",
+            "hide_in": [
+              "create",
+              "update"
+            ]
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "date",
+            "_id": "5c906a0ea6ebc7193110e732"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eb18",
+          "name": "updated_by",
+          "label": "Last Modified By",
+          "uniqueName": "campaign_updated_by",
+          "fieldGlue": " ",
+          "rules": {
+            "ss_pop_up": true,
+            "hide_in": [
+              "create",
+              "update"
+            ]
+          },
+          "field_type": {
+            "name": "lookupModel",
+            "_id": "5c906a0ea6ebc7193110e738"
+          },
+          "relation": {
+            "_id": "5c906a11a6ebc7193110eb1b",
+            "displayFieldName": [
+              "firstName",
+              "lastName"
+            ],
+            "foreign_key": "updated_by",
+            "local_key": "_id",
+            "entity_id": {
+              "_id": "5c906a0fa6ebc7193110e7b4",
+              "name": "User"
+            }
+          }
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eb1c",
+          "name": "created_by",
+          "label": "Created By",
+          "uniqueName": "campaign_created_by",
+          "fieldGlue": " ",
+          "rules": {
+            "ss_pop_up": true,
+            "hide_in": [
+              "create",
+              "update"
+            ]
+          },
+          "field_type": {
+            "name": "lookupModel",
+            "_id": "5c906a0ea6ebc7193110e738"
+          },
+          "relation": {
+            "_id": "5c906a11a6ebc7193110eb1f",
+            "displayFieldName": [
+              "firstName",
+              "lastName"
+            ],
+            "foreign_key": "created_by",
+            "local_key": "_id",
+            "entity_id": {
+              "_id": "5c906a0fa6ebc7193110e7b4",
+              "name": "User"
+            }
+          }
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eb20",
+          "name": "deleted_at",
+          "label": "Deleted At",
+          "uniqueName": "campaign_deleted_at",
+          "rules": {
+            "date_only": true,
+            "date_format": "m/d/Y",
+            "hide_in": [
+              "create",
+              "update"
+            ]
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "date",
+            "_id": "5c906a0ea6ebc7193110e732"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a11a6ebc7193110eb24",
+          "name": "deleted_by",
+          "label": "Deleted By",
+          "uniqueName": "campaign_deleted_by",
+          "fieldGlue": " ",
+          "rules": {
+            "ss_pop_up": true,
+            "hide_in": [
+              "create",
+              "update"
+            ]
+          },
+          "field_type": {
+            "name": "lookupModel",
+            "_id": "5c906a0ea6ebc7193110e738"
+          },
+          "relation": {
+            "_id": "5c906a11a6ebc7193110eb27",
+            "displayFieldName": [
+              "firstName",
+              "lastName"
+            ],
+            "foreign_key": "deleted_by",
+            "local_key": "_id",
+            "entity_id": {
+              "_id": "5c906a0fa6ebc7193110e7b4",
+              "name": "User"
+            }
+          }
+        },
+        {
+          "_id": "5c906a13a6ebc7193110ede5",
+          "name": "totalOpportunity",
+          "label": "Opportunity in Campaign",
+          "uniqueName": "campaign_total_opportunity",
+          "filters": null,
+          "filterLogic": null,
+          "rules": {
+            "disable": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a13a6ebc7193110ede7",
+          "name": "totalWon",
+          "label": "Won Opportunity in Campaign",
+          "uniqueName": "campaign_total_won",
+          "filters": [
+            [
+              "stage_id",
+              "=",
+              "Closed Won"
+            ]
+          ],
+          "filterLogic": null,
+          "rules": {
+            "disable": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a13a6ebc7193110ede9",
+          "name": "opportunityValue",
+          "label": "Value of Opportunity",
+          "uniqueName": "campaign_opportunity_value",
+          "filters": null,
+          "filterLogic": null,
+          "aggregateField": "amount",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "disable": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a13a6ebc7193110eded",
+          "name": "wonValue",
+          "label": "Value of Won Opportunity",
+          "uniqueName": "campaign_won_value",
+          "filters": [
+            [
+              "stage_id",
+              "=",
+              "Closed Won"
+            ]
+          ],
+          "filterLogic": null,
+          "aggregateField": "amount",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "disable": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "number",
+            "_id": "5c906a0ea6ebc7193110e73d"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a14a6ebc7193110ef49",
+          "name": "totalSalesOpportunity",
+          "label": "Sales Opportunity in Campaign",
+          "uniqueName": "campaign_total_sales_opportunity",
+          "connectingField": "campaign_id",
+          "rusEntity": "SalesOpportunity",
+          "rusType": "count",
+          "filters": null,
+          "filterLogic": null,
+          "rules": {
+            "disable": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "rollUpSummary",
+            "_id": "5c906a0ea6ebc7193110e742"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a14a6ebc7193110ef4b",
+          "name": "totalSalesWon",
+          "label": "Won Sales Opportunity in Campaign",
+          "uniqueName": "campaign_total_sales_won",
+          "connectingField": "campaign_id",
+          "rusEntity": "SalesOpportunity",
+          "rusType": "count",
+          "filters": [
+            [
+              "stage_id",
+              "=",
+              "Closed Won"
+            ]
+          ],
+          "filterLogic": null,
+          "rules": {
+            "disable": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "rollUpSummary",
+            "_id": "5c906a0ea6ebc7193110e742"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a14a6ebc7193110ef4d",
+          "name": "salesOpportunityValue",
+          "label": "Value of Sales Opportunity",
+          "uniqueName": "campaign_sales_opportunity_value",
+          "connectingField": "campaign_id",
+          "rusEntity": "SalesOpportunity",
+          "rusType": "sum",
+          "filters": null,
+          "filterLogic": null,
+          "aggregateField": "amount",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "disable": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "rollUpSummary",
+            "_id": "5c906a0ea6ebc7193110e742"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a14a6ebc7193110ef51",
+          "name": "wonSalesValue",
+          "label": "Value of Won Sales Opportunity",
+          "uniqueName": "campaign_won_sales_value",
+          "connectingField": "campaign_id",
+          "rusEntity": "SalesOpportunity",
+          "rusType": "sum",
+          "filters": [
+            [
+              "stage_id",
+              "=",
+              "Closed Won"
+            ]
+          ],
+          "filterLogic": null,
+          "aggregateField": "amount",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "disable": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "name": "rollUpSummary",
+            "_id": "5c906a0ea6ebc7193110e742"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a15a6ebc7193110f010",
+          "name": "totalLeads",
+          "label": "Leads in Campaign",
+          "uniqueName": "campaign_total_leads",
+          "rusEntity": "Lead",
+          "rusType": "count",
+          "filters": null,
+          "filterLogic": null,
+          "rules": {
+            "disable": true
+          },
+          "connectingField": "campaign_id",
+          "searchKey": false,
+          "field_type": {
+            "name": "rollUpSummary",
+            "_id": "5c906a0ea6ebc7193110e742"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a15a6ebc7193110f012",
+          "name": "totalConvertedLeads",
+          "label": "Converted Leads in Campaign",
+          "uniqueName": "campaign_total_converted_leads",
+          "rusEntity": "Lead",
+          "rusType": "count",
+          "filters": [
+            [
+              "converted",
+              "=",
+              true
+            ]
+          ],
+          "filterLogic": null,
+          "rules": {
+            "disable": true
+          },
+          "connectingField": "campaign_id",
+          "searchKey": false,
+          "field_type": {
+            "name": "rollUpSummary",
+            "_id": "5c906a0ea6ebc7193110e742"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5cf885d5a6ebc75bfe22feb2",
+          "name": "rfqCode",
+          "label": "RFQCODE",
+          "uniqueName": "campaign_rfq_code",
+          "format": "{0}",
+          "searchKey": true,
+          "field_type": {
+            "name": "autonumber",
+            "_id": "5c906a0ea6ebc7193110e741"
+          },
+          "relation": null
+        }
+      ],
+      "panels": [
+        {
+          "_id": "5c906a1da6ebc7193110fa28",
+          "panelName": "campaign-panel-1",
+          "entityName": "Campaign",
+          "controllerMethod": "campaigns@index",
+          "label": null,
+          "tabKey": "N",
+          "mutable": true,
+          "highlight": null,
+          "sections": [
+            {
+              "sectionLabel": "Campaign Information",
+              "row": 1,
+              "field_ids": [
+                [
+                  "5c906a11a6ebc7193110ea95",
+                  "5c906a11a6ebc7193110ea99",
+                  "5c906a11a6ebc7193110ea9c",
+                  "5c906a11a6ebc7193110ea9f",
+                  "5c906a11a6ebc7193110eaa0",
+                  "5c906a11a6ebc7193110eaa1",
+                  "5c906a11a6ebc7193110eaa3",
+                  "5c906a11a6ebc7193110eaa5"
+                ],
+                [
+                  "5c906a11a6ebc7193110eaa9",
+                  "5c906a11a6ebc7193110eaac",
+                  "5c906a11a6ebc7193110eab0",
+                  "5c906a11a6ebc7193110eab3",
+                  "5c906a11a6ebc7193110eab5",
+                  "5c906a11a6ebc7193110eaa8"
+                ]
+              ]
+            },
+            {
+              "sectionLabel": "Planning",
+              "row": 2,
+              "field_ids": [
+                [
+                  "5c906a11a6ebc7193110eab7",
+                  "5c906a11a6ebc7193110eabe",
+                  "5c906a11a6ebc7193110eac2",
+                  "5c906a11a6ebc7193110eac6",
+                  "5c906a11a6ebc7193110eaca",
+                  "5c906a11a6ebc7193110eace"
+                ],
+                [
+                  "5c906a11a6ebc7193110eaba",
+                  "5c906a11a6ebc7193110ead2",
+                  "5c906a11a6ebc7193110ead6",
+                  "5c906a11a6ebc7193110eada",
+                  "5c906a11a6ebc7193110eade",
+                  "5c906a11a6ebc7193110eae2"
+                ]
+              ]
+            }
+          ]
+        },
+        {
+          "_id": "5c906a1da6ebc7193110fa2b",
+          "panelName": "campaign-panel-2",
+          "entityName": "Campaign",
+          "controllerMethod": "campaigns@index",
+          "label": null,
+          "tabKey": "N",
+          "mutable": true,
+          "highlight": null,
+          "sections": [
+            {
+              "sectionLabel": "Campaign Statistics",
+              "row": 1,
+              "field_ids": [
+                [
+                  "5c906a11a6ebc7193110eae6",
+                  "5c906a11a6ebc7193110eaea",
+                  "5c906a11a6ebc7193110eaec"
+                ],
+                [
+                  "5c906a11a6ebc7193110eaed",
+                  "5c906a11a6ebc7193110eaf1"
+                ]
+              ]
+            },
+            {
+              "sectionLabel": null,
+              "row": 2,
+              "field_ids": [
+                [
+                  "5c906a11a6ebc7193110eb1c",
+                  "5c906a11a6ebc7193110eb14"
+                ],
+                [
+                  "5c906a11a6ebc7193110eb18",
+                  "5c906a11a6ebc7193110eb10"
+                ]
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -1402,7 +1434,9 @@
           "groupLabel": "Name",
           "group": "name",
           "rules": {
-            "required_with":["lastName"]
+            "required_with": [
+              "lastName"
+            ]
           },
           "title": true,
           "searchKey": false,
@@ -1419,7 +1453,9 @@
           "uniqueName": "lead_last_name",
           "group": "name",
           "rules": {
-            "required_with":["firstName"]
+            "required_with": [
+              "firstName"
+            ]
           },
           "title": true,
           "searchKey": false,
@@ -1468,10 +1504,10 @@
           "header": true,
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
-              },
-            "string":true
+              "min": 0,
+              "max": 155
+            },
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -1488,12 +1524,12 @@
           "quick": true,
           "header": true,
           "rules": {
-            "required":true,
+            "required": true,
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
-            "string":true
+            "string": true
           },
           "searchKey": true,
           "field_type": {
@@ -1509,10 +1545,10 @@
           "uniqueName": "lead_department",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
-            "string":true
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -1529,10 +1565,10 @@
           "header": true,
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
-            "email":true
+            "email": true
           },
           "searchKey": true,
           "field_type": {
@@ -1548,10 +1584,10 @@
           "uniqueName": "lead_email2",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
-            "email":true
+            "email": true
           },
           "searchKey": false,
           "field_type": {
@@ -1567,10 +1603,10 @@
           "uniqueName": "lead_email3",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
-            "email":true
+            "email": true
           },
           "searchKey": false,
           "field_type": {
@@ -1592,11 +1628,11 @@
           "header": true,
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
-            "phone":true,
-            "required":true
+            "phone": true,
+            "required": true
           },
           "searchKey": false,
           "field_type": {
@@ -1616,10 +1652,10 @@
           ],
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
-            "fax":true
+            "fax": true
           },
           "searchKey": false,
           "field_type": {
@@ -1639,10 +1675,10 @@
           ],
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
-            "phone":true
+            "phone": true
           },
           "searchKey": false,
           "field_type": {
@@ -1658,8 +1694,8 @@
           "uniqueName": "lead_status_id",
           "listName": "lead_status",
           "rules": {
-            "ss_dropdown":true,
-            "required":true
+            "ss_dropdown": true,
+            "required": true
           },
           "searchKey": false,
           "field_type": {
@@ -1676,8 +1712,8 @@
           "listName": "lead_source",
           "quick": true,
           "rules": {
-            "ss_dropdown":true,
-            "required":true
+            "ss_dropdown": true,
+            "required": true
           },
           "searchKey": false,
           "field_type": {
@@ -1694,8 +1730,8 @@
           "listName": "lead_type",
           "quick": true,
           "rules": {
-            "ss_dropdown":true,
-            "required":true
+            "ss_dropdown": true,
+            "required": true
           },
           "searchKey": false,
           "field_type": {
@@ -1715,7 +1751,7 @@
           ],
           "filterQuery": "where(\"Account::type_id\", \"in\", picklist(\"account_type\",[\"Dealer\", \"Distributor\"]))",
           "rules": {
-            "ss_pop_up":true
+            "ss_pop_up": true
           },
           "addable": {
             "moduleName": "accounts",
@@ -1767,7 +1803,7 @@
             "helper"
           ],
           "rules": {
-            "ss_pop_up":true
+            "ss_pop_up": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -1800,7 +1836,7 @@
           "level": "level",
           "quick": true,
           "rules": {
-            "required":true
+            "required": true
           },
           "controls": "product_of_interest_ids",
           "searchKey": false,
@@ -1838,7 +1874,7 @@
             "helper"
           ],
           "rules": {
-            "ss_pop_up":true
+            "ss_pop_up": true
           },
           "searchKey": false,
           "field_type": {
@@ -1871,7 +1907,7 @@
           "uniqueName": "lead_rating_id",
           "listName": "lead_rating",
           "rules": {
-            "ss_dropdown":true
+            "ss_dropdown": true
           },
           "field_type": {
             "name": "picklist",
@@ -1888,16 +1924,16 @@
           "noRoleFilter": true,
           "filterQuery": "where(\"Employee::_id\", \"=\", \"Role::user_id\")->where(\"Role::name\", \"not_in\", [\"crm_admin\", \"service_engineer\"])",
           "rules": {
-            "required_unless":{
-                "anotherField": "assignUsingActive",
-                "values": true
-              },
-            "ss_pop_up":true,
+            "required_unless": {
+              "anotherField": "assignUsingActive",
+              "values": true
+            },
+            "ss_pop_up": true,
             "set_val_disable_if": {
-                "expression": "{assignUsingActive} == true",
-                "value": null,
-                "field": "_id"
-              }
+              "expression": "{assignUsingActive} == true",
+              "value": null,
+              "field": "_id"
+            }
           },
           "searchKey": true,
           "field_type": {
@@ -1930,7 +1966,7 @@
           "uniqueName": "lead_campaign_id",
           "fieldGlue": " ",
           "rules": {
-            "ss_pop_up":true
+            "ss_pop_up": true
           },
           "searchKey": false,
           "field_type": {
@@ -1967,11 +2003,11 @@
           "groupLabel": "Address",
           "group": "address",
           "rules": {
-            "between":{
-                "min": 0,
-                "max": 155
-              },
-            "string":true
+            "between": {
+              "min": 0,
+              "max": 155
+            },
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -1987,11 +2023,11 @@
           "uniqueName": "lead_zipcode",
           "group": "address",
           "rules": {
-            "between":{
-                "min": 0,
-                "max": 155
-              },
-            "string":true
+            "between": {
+              "min": 0,
+              "max": 155
+            },
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -2007,11 +2043,11 @@
           "uniqueName": "lead_city",
           "group": "address",
           "rules": {
-            "between":{
-                "min": 0,
-                "max": 155
-              },
-            "string":true
+            "between": {
+              "min": 0,
+              "max": 155
+            },
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -2027,11 +2063,11 @@
           "uniqueName": "lead_state",
           "group": "address",
           "rules": {
-            "between":{
-                "min": 0,
-                "max": 155
-              },
-            "string":true
+            "between": {
+              "min": 0,
+              "max": 155
+            },
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -2051,8 +2087,8 @@
           ],
           "group": "address",
           "rules": {
-            "ss_dropdown":true,
-            "required":true
+            "ss_dropdown": true,
+            "required": true
           },
           "quick": true,
           "field_type": {
@@ -2078,12 +2114,12 @@
           "label": "Website",
           "uniqueName": "lead_website",
           "rules": {
-            "url":true,
-            "hide":true,
-            "between":{
-                "min": 0,
-                "max": 155
-              }
+            "url": true,
+            "hide": true,
+            "between": {
+              "min": 0,
+              "max": 155
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -2099,7 +2135,7 @@
           "uniqueName": "lead_industry_major_segment_id",
           "listName": "industry_major_segment",
           "rules": {
-            "ss_dropdown":true
+            "ss_dropdown": true
           },
           "field_type": {
             "name": "picklist",
@@ -2114,7 +2150,7 @@
           "uniqueName": "lead_industry_minor_segment_id",
           "listName": "industry_minor_segment",
           "rules": {
-            "ss_dropdown":true
+            "ss_dropdown": true
           },
           "field_type": {
             "name": "picklist",
@@ -2129,7 +2165,7 @@
           "uniqueName": "lead_application_ids",
           "fieldGlue": " ",
           "rules": {
-            "ms_dropdown":true
+            "ms_dropdown": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -2159,8 +2195,8 @@
           ],
           "filterSourceField": "business_unit_ids",
           "rules": {
-            "filtered_by":"business_unit_ids",
-            "tab_multi_select":true
+            "filtered_by": "business_unit_ids",
+            "tab_multi_select": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -2198,9 +2234,9 @@
           "uniqueName": "lead_quantity",
           "rules": {
             "digits_between": {
-                "min": 0,
-                "max": 15
-              }
+              "min": 0,
+              "max": 15
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -2216,7 +2252,7 @@
           "uniqueName": "lead_timeframe_id",
           "listName": "lead_timeframe",
           "rules": {
-            "ss_dropdown":true
+            "ss_dropdown": true
           },
           "field_type": {
             "name": "picklist",
@@ -2230,8 +2266,8 @@
           "label": "Requesting Sales Contract",
           "uniqueName": "lead_req_sales_contract",
           "rules": {
-            "default_value":false,
-            "checkbox":true
+            "default_value": false,
+            "checkbox": true
           },
           "searchKey": false,
           "field_type": {
@@ -2246,8 +2282,8 @@
           "label": "Requesting Product Info",
           "uniqueName": "lead_req_product_info",
           "rules": {
-            "default_value":false,
-            "checkbox":true
+            "default_value": false,
+            "checkbox": true
           },
           "searchKey": false,
           "field_type": {
@@ -2262,8 +2298,8 @@
           "label": "Requesting Product Quote",
           "uniqueName": "lead_req_product_quote",
           "rules": {
-            "default_value":false,
-            "checkbox":true
+            "default_value": false,
+            "checkbox": true
           },
           "searchKey": false,
           "field_type": {
@@ -2278,8 +2314,8 @@
           "label": "Requesting Service",
           "uniqueName": "lead_req_product_service",
           "rules": {
-            "default_value":false,
-            "checkbox":true
+            "default_value": false,
+            "checkbox": true
           },
           "searchKey": false,
           "field_type": {
@@ -2294,8 +2330,8 @@
           "label": "Requesting Replacement Parts",
           "uniqueName": "lead_req_replacement_parts",
           "rules": {
-            "default_value":false,
-            "checkbox":true
+            "default_value": false,
+            "checkbox": true
           },
           "searchKey": false,
           "field_type": {
@@ -2334,8 +2370,8 @@
           "label": "Assign Using Active Assignment Rule",
           "uniqueName": "lead_assign_using_active",
           "rules": {
-            "default_value":true,
-            "checkbox":true
+            "default_value": true,
+            "checkbox": true
           },
           "searchKey": false,
           "field_type": {
@@ -2350,8 +2386,8 @@
           "label": "Do Not Call",
           "uniqueName": "lead_do_not_call",
           "rules": {
-            "default_value":false,
-            "checkbox":true
+            "default_value": false,
+            "checkbox": true
           },
           "searchKey": false,
           "field_type": {
@@ -2366,8 +2402,8 @@
           "label": "Email Opt Out",
           "uniqueName": "lead_do_not_email",
           "rules": {
-            "default_value":false,
-            "checkbox":true
+            "default_value": false,
+            "checkbox": true
           },
           "searchKey": false,
           "field_type": {
@@ -2382,8 +2418,8 @@
           "label": "Fax Opt Out",
           "uniqueName": "lead_do_not_fax",
           "rules": {
-            "default_value":false,
-            "checkbox":true
+            "default_value": false,
+            "checkbox": true
           },
           "searchKey": false,
           "field_type": {
@@ -2410,7 +2446,7 @@
             "info"
           ],
           "rules": {
-            "ss_pop_up":true
+            "ss_pop_up": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -2447,7 +2483,7 @@
           "filterQueryParams": [],
           "filterQuery": "where(\"Contact::account_ids\", \"in\", \"%Lead::account_id%\")",
           "rules": {
-            "ss_pop_up":true
+            "ss_pop_up": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -2479,9 +2515,9 @@
           "label": "Converted",
           "uniqueName": "lead_converted",
           "rules": {
-            "hide":true,
-            "default_value":false,
-            "checkbox":true
+            "hide": true,
+            "default_value": false,
+            "checkbox": true
           },
           "searchKey": false,
           "field_type": {
@@ -2496,9 +2532,12 @@
           "label": "Last Modified Date",
           "uniqueName": "lead_updated_at",
           "rules": {
-            "hide_in":["create","update"],
+            "hide_in": [
+              "create",
+              "update"
+            ],
             "date_format": "m/d/Y",
-            "date_only":true
+            "date_only": true
           },
           "searchKey": false,
           "field_type": {
@@ -2513,9 +2552,12 @@
           "label": "Created Date",
           "uniqueName": "lead_created_at",
           "rules": {
-            "hide_in":["create","update"],
+            "hide_in": [
+              "create",
+              "update"
+            ],
             "date_format": "m/d/Y",
-            "date_only":true
+            "date_only": true
           },
           "searchKey": false,
           "field_type": {
@@ -2531,8 +2573,11 @@
           "uniqueName": "lead_updated_by",
           "fieldGlue": " ",
           "rules": {
-            "hide_in":["create","update"],
-            "ss_pop_up":true
+            "hide_in": [
+              "create",
+              "update"
+            ],
+            "ss_pop_up": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -2559,8 +2604,11 @@
           "uniqueName": "lead_created_by",
           "fieldGlue": " ",
           "rules": {
-            "hide_in":["create","update"],
-            "ss_pop_up":true
+            "hide_in": [
+              "create",
+              "update"
+            ],
+            "ss_pop_up": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -2587,9 +2635,12 @@
           "label": "Deleted At",
           "uniqueName": "lead_deleted_at",
           "rules": {
-            "hide_in":["create","update"],
+            "hide_in": [
+              "create",
+              "update"
+            ],
             "date_format": "m/d/Y",
-            "date_only":true
+            "date_only": true
           },
           "searchKey": false,
           "field_type": {
@@ -2605,8 +2656,11 @@
           "uniqueName": "lead_deleted_by",
           "fieldGlue": " ",
           "rules": {
-            "hide_in":["create","update"],
-            "ss_pop_up":true
+            "hide_in": [
+              "create",
+              "update"
+            ],
+            "ss_pop_up": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -2633,7 +2687,7 @@
           "uniqueName": "lead_state_province_us_id",
           "listName": "lead_us_state",
           "rules": {
-            "ss_dropdown":true,
+            "ss_dropdown": true,
             "hide_if": "{country_id.name} != \"United States of America\""
           },
           "field_type": {
@@ -2649,8 +2703,8 @@
           "uniqueName": "lead_state_province_cn_id",
           "listName": "lead_cn_state",
           "rules": {
-            "ss_dropdown":true,
-            "hide_if":  "{country_i.name} != \"China\""
+            "ss_dropdown": true,
+            "hide_if": "{country_i.name} != \"China\""
           },
           "field_type": {
             "name": "picklist",
@@ -2665,7 +2719,7 @@
           "uniqueName": "lead_rfqproduct_of_interest_ids",
           "listName": "lead_rfq_poi",
           "rules": {
-            "ms_dropdown":true
+            "ms_dropdown": true
           },
           "field_type": {
             "name": "picklist",
@@ -2680,7 +2734,7 @@
           "uniqueName": "lead_product_category_ids",
           "fieldGlue": " ",
           "rules": {
-            "ms_dropdown":true
+            "ms_dropdown": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -2706,7 +2760,7 @@
           "uniqueName": "lead_inquiry_type_id",
           "listName": "lead_inquiry_types",
           "rules": {
-            "ss_dropdown":true
+            "ss_dropdown": true
           },
           "field_type": {
             "name": "picklist",
@@ -2721,7 +2775,7 @@
           "uniqueName": "lead_email_recipient_ids",
           "fieldGlue": " ",
           "rules": {
-            "ss_pop_up":true
+            "ss_pop_up": true
           },
           "cloak": true,
           "field_type": {
@@ -2755,7 +2809,7 @@
           "listName": "lead_medical_survey",
           "cloak": true,
           "rules": {
-            "ss_dropdown":true
+            "ss_dropdown": true
           },
           "field_type": {
             "name": "picklist",
@@ -2769,8 +2823,8 @@
           "label": "Where did you learn about our products?",
           "uniqueName": "lead_where_learn_product_id",
           "listName": "lead_learn_products",
-           "rules": {
-            "ss_dropdown":true
+          "rules": {
+            "ss_dropdown": true
           },
           "field_type": {
             "name": "picklist",
@@ -2784,12 +2838,12 @@
           "label": "Which one: ",
           "uniqueName": "lead_where_learn_product",
           "rules": {
-            "string":true,
+            "string": true,
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
-            "visible_if":: "{where_learn_product_id.value} == \"Other Website\" || {where_learn_product_id.value} == \"Other email blast\" || {where_learn_product_id.value} == \"Other search\" || {where_learn_product_id.value} == \"Trade Show\" || {where_learn_product_id.value} == \"Another Esco user\" || {where_learn_product_id.value} == \"Field Certifier\" || {where_learn_product_id.value} == \"Esco Distributor / Rep\""
+            "visible_if": "{where_learn_product_id.value} == \"Other Website\" || {where_learn_product_id.value} == \"Other email blast\" || {where_learn_product_id.value} == \"Other search\" || {where_learn_product_id.value} == \"Trade Show\" || {where_learn_product_id.value} == \"Another Esco user\" || {where_learn_product_id.value} == \"Field Certifier\" || {where_learn_product_id.value} == \"Esco Distributor / Rep\""
           },
           "field_type": {
             "name": "text",
@@ -2805,7 +2859,7 @@
           "fieldGlue": " ",
           "filterQuery": "where(\"Employee::_id\", \"=\", \"Role::user_id\")->where(\"Role::name\", \"=\", \"service_engineer\")",
           "rules": {
-            "ss_pop_up":true
+            "ss_pop_up": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -2837,10 +2891,10 @@
           "uniqueName": "lead_plan_to_purchase",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
-            "string":true
+            "string": true
           },
           "field_type": {
             "name": "text",
@@ -2854,8 +2908,8 @@
           "label": "Are you an existing Esco user?",
           "uniqueName": "lead_existing_user",
           "rules": {
-            "default_value":false,
-            "checkbox":true
+            "default_value": false,
+            "checkbox": true
           },
           "field_type": {
             "name": "boolean",
@@ -2869,11 +2923,11 @@
           "label": "Title",
           "uniqueName": "lead_title",
           "rules": {
-            "between":{
-                "min": 0,
-                "max": 155
+            "between": {
+              "min": 0,
+              "max": 155
             },
-            "string":true
+            "string": true
           },
           "field_type": {
             "name": "text",
@@ -2882,7 +2936,7 @@
           "relation": null
         }
       ],
-      "panels":[
+      "panels": [
         {
           "_id": "5cfa070aa6ebc76edb3fa2f2",
           "panelName": "lead-panel-1",
@@ -3035,7 +3089,7 @@
           ]
         }
       ],
-      "viewFilters":[
+      "viewFilters": [
         {
           "_id": "618f00cea6ebc7f57c21c482",
           "query_id": "5c906a1ba6ebc7193110f8bb",
@@ -3176,8 +3230,8 @@
           ],
           "header": true,
           "rules": {
-            "ss_pop_up":true,
-            "required":true
+            "ss_pop_up": true,
+            "required": true
           },
           "searchKey": true,
           "field_type": {
@@ -3216,7 +3270,7 @@
             "parentField": "account_id"
           },
           "rules": {
-            "ss_pop_up":true
+            "ss_pop_up": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -3248,10 +3302,10 @@
           "label": "Decision Maker (Text)",
           "uniqueName": "salesopportunity_decision_maker",
           "rules": {
-            "between":{
-                "min": 0,
-                "max": 150
-              },
+            "between": {
+              "min": 0,
+              "max": 150
+            },
             "hide": true,
             "string": true
           },
@@ -3274,7 +3328,7 @@
           "listName": "customer_location",
           "rules": {
             "visible_if": "{branch_id.name} == \"Esco Vietnam\"",
-            "ss_dropdown" :true
+            "ss_dropdown": true
           },
           "field_type": {
             "name": "picklist",
@@ -3329,10 +3383,10 @@
           "rules": {
             "required": true,
             "between": {
-                "min": 0,
-                "max": 150
-              },
-          "string": true
+              "min": 0,
+              "max": 150
+            },
+            "string": true
           },
           "searchKey": true,
           "field_type": {
@@ -3451,9 +3505,9 @@
           "rules": {
             "visible_if": "{sales_type_id.value} == \"Distributor\" || {sales_type_id.value} == \"Distributor's Opportunity\"",
             "required_if": {
-                "anotherField": "sales_type_id",
-                "values": "Distributor, Distributor\\'s Opportunity"
-              },
+              "anotherField": "sales_type_id",
+              "values": "Distributor, Distributor\\'s Opportunity"
+            },
             "ss_pop_up": true
           },
           "quick": true,
@@ -3492,11 +3546,11 @@
           },
           "rules": {
             "required_if": {
-                "anotherField": "sales_type_id",
-                "values": [
-                  "Dealer"
-                ]
-              },
+              "anotherField": "sales_type_id",
+              "values": [
+                "Dealer"
+              ]
+            },
             "ss_pop_up": true
           },
           "quick": true,
@@ -3535,12 +3589,12 @@
           "rules": {
             "ss_pop_up": true,
             "required_if": {
-                "anotherField": "sales_type_id",
-                "values": [
-                  "Distributor",
-                  "Dealer"
-                ]
-              }
+              "anotherField": "sales_type_id",
+              "values": [
+                "Distributor",
+                "Dealer"
+              ]
+            }
           },
           "addable": {
             "moduleName": "contacts",
@@ -3578,9 +3632,9 @@
           "uniqueName": "salesopportunity_dd_sales_rep",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 150
-              },
+              "min": 0,
+              "max": 150
+            },
             "hide": true,
             "string": true
           },
@@ -3645,11 +3699,11 @@
           "rules": {
             "ss_pop_up": true,
             "auto_fill": [
-                [
-                  "localName",
-                  "endUserLocalName"
-                ]
+              [
+                "localName",
+                "endUserLocalName"
               ]
+            ]
           },
           "searchKey": false,
           "field_type": {
@@ -3721,9 +3775,9 @@
           "uniqueName": "salesopportunity_end_user_name",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 150
-              },
+              "min": 0,
+              "max": 150
+            },
             "string": true
           },
           "searchKey": false,
@@ -3740,10 +3794,10 @@
           "uniqueName": "salesopportunity_end_user_address",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
-              },
-            "string": true,
+              "min": 0,
+              "max": 155
+            },
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -3759,9 +3813,9 @@
           "uniqueName": "salesopportunity_end_user_phone",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
-              },
+              "min": 0,
+              "max": 155
+            },
             "string": true
           },
           "searchKey": false,
@@ -3778,7 +3832,7 @@
           "uniqueName": "salesopportunity_rep_commission_id",
           "listName": "rep_commission",
           "rules": {
-            "ss_dropdown": true,
+            "ss_dropdown": true
           },
           "field_type": {
             "name": "picklist",
@@ -3883,9 +3937,9 @@
           "uniqueName": "salesopportunity_last_stage_update_date",
           "rules": {
             "hide_in": [
-                "create",
-                "update"
-             ],
+              "create",
+              "update"
+            ],
             "date_format": "m/d/Y",
             "date_only": true
           },
@@ -3978,9 +4032,9 @@
           "uniqueName": "salesopportunity_salesperson_in_charge",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 150
-              },
+              "min": 0,
+              "max": 150
+            },
             "hide": true,
             "string": true
           },
@@ -4031,9 +4085,9 @@
           "rules": {
             "decimal": 2,
             "digits_between": {
-                "min": 0,
-                "max": 15
-              },
+              "min": 0,
+              "max": 15
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -4054,9 +4108,9 @@
           "rules": {
             "decimal": 2,
             "digits_between": {
-                "min": 0,
-                "max": 15
-              },
+              "min": 0,
+              "max": 15
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -4077,9 +4131,9 @@
           "rules": {
             "decimal": 2,
             "digits_between": {
-                "min": 0,
-                "max": 15
-              },
+              "min": 0,
+              "max": 15
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -4195,14 +4249,14 @@
           "uniqueName": "salesopportunity__p_o_no",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
-              },
+              "min": 0,
+              "max": 155
+            },
             "string": true,
             "required_if": {
-                "anotherField": "stage_id",
-                "values": "Closed Won"
-              }
+              "anotherField": "stage_id",
+              "values": "Closed Won"
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -4224,9 +4278,9 @@
           "rules": {
             "decimal": 2,
             "digits_between": {
-                "min": 0,
-                "max": 100
-              },
+              "min": 0,
+              "max": 100
+            },
             "required": true
           },
           "searchKey": false,
@@ -4248,18 +4302,18 @@
           ],
           "rules": {
             "select_between": {
-                "min": 0,
-                "max": 1
-              },
+              "min": 0,
+              "max": 1
+            },
             "ms_dropdown": true,
             "set_val_disable_if": "{stage_id.value} != \"Closed Lost\" && {stage_id.value} != \"Cancelled\"",
             "required_if": {
-                "anotherField": "stage_id",
-                "values": [
-                  "Closed Lost",
-                  "Cancelled"
-                ]
-              }
+              "anotherField": "stage_id",
+              "values": [
+                "Closed Lost",
+                "Cancelled"
+              ]
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -4276,12 +4330,12 @@
           "searchKey": false,
           "rules": {
             "required_unless": {
-                "anotherField": "stage_id",
-                "values": [
-                  "Closed Won",
-                  "Closed Lost"
-                ]
-              }
+              "anotherField": "stage_id",
+              "values": [
+                "Closed Won",
+                "Closed Lost"
+              ]
+            }
           },
           "quick": true,
           "field_type": {
@@ -4301,9 +4355,9 @@
           ],
           "rules": {
             "required_unless": {
-                "anotherField": "stage_id",
-                "values": "Closed Won"
-              }
+              "anotherField": "stage_id",
+              "values": "Closed Won"
+            }
           },
           "searchKey": false,
           "quick": true,
@@ -4337,9 +4391,9 @@
           "rules": {
             "decimal": 2,
             "digits_between": {
-                "min": 0,
-                "max": 100
-              }
+              "min": 0,
+              "max": 100
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -4355,7 +4409,9 @@
           "uniqueName": "salesopportunity_csc",
           "rules": {
             "disable": true,
-            "hide_in": ["create"]
+            "hide_in": [
+              "create"
+            ]
           },
           "searchKey": false,
           "field_type": {
@@ -4374,7 +4430,7 @@
             "helper"
           ],
           "rules": {
-            "date_format":: "m/d/Y",
+            "date_format": "m/d/Y",
             "date_only": true
           },
           "searchKey": false,
@@ -4395,7 +4451,7 @@
           ],
           "rules": {
             "date_format": "m/d/Y",
-            "date_only":true
+            "date_only": true
           },
           "searchKey": false,
           "field_type": {
@@ -4427,9 +4483,9 @@
           "rules": {
             "email": true,
             "between": {
-                "min": 0,
-                "max": 155
-              }
+              "min": 0,
+              "max": 155
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -4449,11 +4505,11 @@
           "rules": {
             "ss_pop_up": true,
             "auto_fill": [
-                [
-                  "email",
-                  "custChiefEmail"
-                ]
+              [
+                "email",
+                "custChiefEmail"
               ]
+            ]
           },
           "field_type": {
             "name": "lookupModel",
@@ -4486,9 +4542,9 @@
           "uniqueName": "salesopportunity_cust_chief_sci",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 150
-              },
+              "min": 0,
+              "max": 150
+            },
             "hide": true,
             "string": true
           },
@@ -4505,10 +4561,10 @@
           "label": "Esco Technical Person In-Charge",
           "uniqueName": "salesopportunity_tech_person_in_chrge",
           "rules": {
-            "between":{
-                "min": 0,
-                "max": 155
-              },
+            "between": {
+              "min": 0,
+              "max": 155
+            },
             "string": true
           },
           "searchKey": false,
@@ -4526,9 +4582,9 @@
           "rules": {
             "email": true,
             "between": {
-                "min": 0,
-                "max": 155
-              }
+              "min": 0,
+              "max": 155
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -4544,9 +4600,9 @@
           "uniqueName": "salesopportunity_tech_person_phone",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
-              },
+              "min": 0,
+              "max": 155
+            },
             "string": true
           },
           "searchKey": false,
@@ -4612,9 +4668,9 @@
           "label": "Quantity",
           "uniqueName": "salesopportunity_quantity",
           "rules": {
-            "between":{
-                "min": 0,
-                "max": 155
+            "between": {
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -4633,8 +4689,8 @@
           "rules": {
             "hide": true,
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -4820,8 +4876,8 @@
           "uniqueName": "salesopportunity_updated_at",
           "rules": {
             "hide_in": [
-                "create",
-                "update"
+              "create",
+              "update"
             ],
             "date_format": "m/d/Y",
             "date_only": true
@@ -4840,8 +4896,8 @@
           "uniqueName": "salesopportunity_created_at",
           "rules": {
             "hide_in": [
-                "create",
-                "update"
+              "create",
+              "update"
             ],
             "date_format": "m/d/Y",
             "date_only": true
@@ -4862,9 +4918,9 @@
           "rules": {
             "ss_pop_up": true,
             "hide_in": [
-                "create",
-                "update"
-            ],
+              "create",
+              "update"
+            ]
           },
           "field_type": {
             "name": "lookupModel",
@@ -4893,9 +4949,9 @@
           "rules": {
             "ss_pop_up": true,
             "hide_in": [
-                "create",
-                "update"
-            ],
+              "create",
+              "update"
+            ]
           },
           "field_type": {
             "name": "lookupModel",
@@ -4921,9 +4977,9 @@
           "label": "Deleted At",
           "uniqueName": "salesopportunity_deleted_at",
           "rules": {
-            "hide_in":[
-                "create",
-                "update"
+            "hide_in": [
+              "create",
+              "update"
             ],
             "date_format": "m/d/Y",
             "date_only": true
@@ -4944,9 +5000,9 @@
           "rules": {
             "ss_pop_up": true,
             "hide_in": [
-                "create",
-                "update"
-              ]
+              "create",
+              "update"
+            ]
           },
           "field_type": {
             "name": "lookupModel",
@@ -5045,7 +5101,10 @@
           "filterLogic": null,
           "aggregateField": "quantity",
           "rules": {
-            "hide_in": ["create","update"],
+            "hide_in": [
+              "create",
+              "update"
+            ],
             "disable": true
           },
           "searchKey": false,
@@ -5096,7 +5155,7 @@
           "uniqueName": "salesopportunity_date_converted",
           "rules": {
             "hide": true,
-            "date_format":  "m/d/Y",
+            "date_format": "m/d/Y",
             "date_only": true
           },
           "searchKey": false,
@@ -5132,7 +5191,7 @@
           "rules": {
             "decimal": 2,
             "comma_separated": true,
-            "visible_if":"{branch_id.name} == \"Esco US\" || {branch_id.name} == \"Esco Taiwan\"",
+            "visible_if": "{branch_id.name} == \"Esco US\" || {branch_id.name} == \"Esco Taiwan\"",
             "disable": true
           },
           "hierarchy": 3,
@@ -5176,11 +5235,11 @@
           ],
           "rules": {
             "required_unless": {
-                "anotherField": "stage_id",
-                "values": [
-                  "Closed Lost",
-                  "Future Needs"
-                ]
+              "anotherField": "stage_id",
+              "values": [
+                "Closed Lost",
+                "Future Needs"
+              ]
             },
             "ss_dropdown": true
           },
@@ -5258,7 +5317,7 @@
           "quick": true,
           "listName": "payment_status",
           "rules": {
-            "hide_if":"{stage_id.value} != \"Closed Won\"",
+            "hide_if": "{stage_id.value} != \"Closed Won\"",
             "ss_dropdown": true
           },
           "field_type": {
@@ -5276,7 +5335,7 @@
           "listName": "delivery_status",
           "rules": {
             "hide_if": "{stage_id.value} != \"Closed Won\"",
-            "ss_dropdown"; true
+            "ss_dropdown": true
           },
           "field_type": {
             "name": "picklist",
@@ -5292,8 +5351,8 @@
           "rules": {
             "hide_if": "{stage_id.value} != \"Closed Won\"",
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -5311,8 +5370,8 @@
           "cloak": true,
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -5370,14 +5429,14 @@
           "rules": {
             "ss_dropdown": true,
             "required_unless": {
-                "anotherField": "type_id",
-                "values": [
-                  "Equipment",
-                  "Consumables",
-                  "Rental Units",
-                  "Tender (Equipment)"
-                ]
-              }
+              "anotherField": "type_id",
+              "values": [
+                "Equipment",
+                "Consumables",
+                "Rental Units",
+                "Tender (Equipment)"
+              ]
+            }
           },
           "field_type": {
             "name": "picklist",
@@ -5394,8 +5453,7 @@
           "rules": {
             "date_selection": "month",
             "required": true,
-            "date_format": "m/d/Y",
-            
+            "date_format": "m/d/Y"
           },
           "field_type": {
             "name": "date",
@@ -5412,8 +5470,7 @@
           "rules": {
             "date_selection": "week",
             "required": true,
-            "date_format": "m/d/Y",
-            
+            "date_format": "m/d/Y"
           },
           "field_type": {
             "name": "date",
@@ -5430,9 +5487,9 @@
           "rules": {
             "ss_dropdown": true,
             "required_if": {
-                "anotherField": "branch_id",
-                "values": "Esco South Africa"
-              }
+              "anotherField": "branch_id",
+              "values": "Esco South Africa"
+            }
           },
           "field_type": {
             "name": "lookupModel",
@@ -5452,7 +5509,7 @@
           }
         }
       ],
-      "panels":[
+      "panels": [
         {
           "_id": "5cadf20da6ebc747db0ce8b2",
           "panelName": "salesopportunity-panel-1",
@@ -9319,7 +9376,7 @@
           ]
         }
       ],
-      "viewFilters":[
+      "viewFilters": [
         {
           "_id": "5c906ac2a6ebc718e15dd996",
           "query_id": "5c906a1ba6ebc7193110f8d9",
@@ -9370,7 +9427,6 @@
           "entity_id": "5c906a0fa6ebc7193110e7cb"
         }
       ]
-      
     },
     {
       "_id": "5c906a1ba6ebc7193110f8e3",
@@ -9392,9 +9448,9 @@
           "quick": true,
           "title": false,
           "rules": {
-            "between":{
-                "min": 0,
-                "max": 230
+            "between": {
+              "min": 0,
+              "max": 230
             }
           },
           "searchKey": false,
@@ -9429,9 +9485,9 @@
           "uniqueName": "salesquote_sf_i_d",
           "rules": {
             "hide": true,
-            "between":{
-                "min": 0,
-                "max": 155
+            "between": {
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -9479,8 +9535,8 @@
           "uniqueName": "salesquote_quotation_no_text",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -9501,7 +9557,7 @@
           "rules": {
             "required": true,
             "ss_dropdown": true,
-            "default_value":"5bb104db678f71061f6447d3",
+            "default_value": "5bb104db678f71061f6447d3"
           },
           "searchKey": false,
           "field_type": {
@@ -9558,10 +9614,10 @@
           "rules": {
             "decimal": 2,
             "disable": true,
-            "digits_between":  {
-                "min": 0,
-                "max": 15
-              }
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -9580,10 +9636,10 @@
           "rules": {
             "disable": true,
             "auto_fill": [
-                [
-                  "rate",
-                  "exchangeRate"
-                ]
+              [
+                "rate",
+                "exchangeRate"
+              ]
             ],
             "ss_pop_up": true
           },
@@ -9672,11 +9728,11 @@
             "disable": true,
             "ss_pop_up": true,
             "auto_fill": [
-                [
-                  "country_id",
-                  "country_id"
-                ]
+              [
+                "country_id",
+                "country_id"
               ]
+            ]
           },
           "field_type": {
             "name": "lookupModel",
@@ -9735,10 +9791,10 @@
           "uniqueName": "salesquote_salesperson_in_charge",
           "cloak": true,
           "rules": {
-            "between":{
-                "min": 0,
-                "max": 150
-              },
+            "between": {
+              "min": 0,
+              "max": 150
+            },
             "string": true
           },
           "searchKey": false,
@@ -9758,9 +9814,9 @@
             "email": true,
             "required": true,
             "between": {
-                "min": 0,
-                "max": 155
-              }
+              "min": 0,
+              "max": 155
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -9779,8 +9835,8 @@
           "rules": {
             "required": true,
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -9801,18 +9857,18 @@
           "filterQuery": "\n                where(\"Contact::_id\", \"in\", \"Account::contact_ids\")\n                ->where(\"Contact::active\", \"=\", true)\n                ->where(\"Account::isEscoBranch\", \"=\", true)\n                ->where(\"Branch::name\", \"=\", \"Account::name\")\n                ->where(\"Branch::_id\", \"in\", \"%SalesQuote::branch_id%\")",
           "rules": {
             "auto_fill": [
-                [
-                  "email",
-                  "email"
-                ],
-                [
-                  "phoneNo",
-                  "phoneNo"
-                ]
+              [
+                "email",
+                "email"
+              ],
+              [
+                "phoneNo",
+                "phoneNo"
+              ]
             ],
             "show_in": [
-                "create",
-                "update"
+              "create",
+              "update"
             ],
             "ss_pop_up": true
           },
@@ -9848,8 +9904,8 @@
           "cloak": true,
           "rules": {
             "between": {
-                "min": 0,
-                "max": 150
+              "min": 0,
+              "max": 150
             },
             "string": true
           },
@@ -9870,9 +9926,9 @@
             "email": true,
             "required": true,
             "between": {
-                "min": 0,
-                "max": 155
-              }
+              "min": 0,
+              "max": 155
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -9889,9 +9945,9 @@
           "quick": true,
           "rules": {
             "required": true,
-            "between":  {
-                "min": 0,
-                "max": 155
+            "between": {
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -9918,20 +9974,23 @@
           "rules": {
             "ss_pop_up": true,
             "auto_fill": [
-                [
-                  "firstName",
-                  "quoteToName"
-                ],
-                [
-                  "email",
-                  "quoteToEmail"
-                ],
-                [
-                  "phoneNo",
-                  "quoteToPhoneNo"
-                ]
+              [
+                "firstName",
+                "quoteToName"
+              ],
+              [
+                "email",
+                "quoteToEmail"
+              ],
+              [
+                "phoneNo",
+                "quoteToPhoneNo"
+              ]
             ],
-            "show_in": ["create","update"],
+            "show_in": [
+              "create",
+              "update"
+            ],
             "required": true
           },
           "field_type": {
@@ -10004,26 +10063,26 @@
           "rules": {
             "disable": true,
             "auto_fill": [
-                [
-                  "branch_id",
-                  "branch_id"
-                ],
-                [
-                  "account_id",
-                  "account_id"
-                ],
-                [
-                  "pricebook_id",
-                  "pricebook_id"
-                ],
-                [
-                  "currency_id",
-                  "currency_id"
-                ],
-                [
-                  "salesperson_in_charge_id",
-                  "salesperson_in_charge_id"
-                ]
+              [
+                "branch_id",
+                "branch_id"
+              ],
+              [
+                "account_id",
+                "account_id"
+              ],
+              [
+                "pricebook_id",
+                "pricebook_id"
+              ],
+              [
+                "currency_id",
+                "currency_id"
+              ],
+              [
+                "salesperson_in_charge_id",
+                "salesperson_in_charge_id"
+              ]
             ],
             "ss_pop_up": true
           },
@@ -10063,9 +10122,9 @@
           "group": "address",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 1000
-              }
+              "min": 0,
+              "max": 1000
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -10082,9 +10141,9 @@
           "group": "address",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
-              },
+              "min": 0,
+              "max": 155
+            },
             "string": true
           },
           "searchKey": false,
@@ -10102,9 +10161,9 @@
           "group": "address",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
-              },
+              "min": 0,
+              "max": 155
+            },
             "string": true
           },
           "searchKey": false,
@@ -10122,9 +10181,9 @@
           "group": "address",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
-              },
+              "min": 0,
+              "max": 155
+            },
             "string": true
           },
           "searchKey": false,
@@ -10171,9 +10230,9 @@
           "uniqueName": "salesquote_bill_to_name",
           "cloak": true,
           "rules": {
-            "between":  {
-                "min": 0,
-                "max": 150
+            "between": {
+              "min": 0,
+              "max": 150
             },
             "string": true
           },
@@ -10191,10 +10250,10 @@
           "uniqueName": "salesquote_bill_email",
           "rules": {
             "email": true,
-            "between":  {
-                "min": 0,
-                "max": 155
-            },
+            "between": {
+              "min": 0,
+              "max": 155
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -10210,10 +10269,10 @@
           "uniqueName": "salesquote_bill_phone_no",
           "rules": {
             "string": true,
-            "between":  {
-                "min": 0,
-                "max": 155
-            },
+            "between": {
+              "min": 0,
+              "max": 155
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -10231,40 +10290,43 @@
           "rules": {
             "ss_pop_up": true,
             "auto_fill": [
-                [
-                  "name",
-                  "billToName"
-                ],
-                [
-                  "billing_country_id",
-                  "billing_country_id"
-                ],
-                [
-                  "billingCity",
-                  "billingCity"
-                ],
-                [
-                  "billingState",
-                  "billingState"
-                ],
-                [
-                  "billingStreet",
-                  "billingStreet"
-                ],
-                [
-                  "billingZipCode",
-                  "billingZipCode"
-                ],
-                [
-                  "email",
-                  "billEmail"
-                ],
-                [
-                  "phoneNo",
-                  "billPhoneNo"
-                ]
+              [
+                "name",
+                "billToName"
+              ],
+              [
+                "billing_country_id",
+                "billing_country_id"
+              ],
+              [
+                "billingCity",
+                "billingCity"
+              ],
+              [
+                "billingState",
+                "billingState"
+              ],
+              [
+                "billingStreet",
+                "billingStreet"
+              ],
+              [
+                "billingZipCode",
+                "billingZipCode"
+              ],
+              [
+                "email",
+                "billEmail"
+              ],
+              [
+                "phoneNo",
+                "billPhoneNo"
+              ]
             ],
-            "show_in": ["create","update"]
+            "show_in": [
+              "create",
+              "update"
+            ]
           },
           "addable": {
             "moduleName": "accounts",
@@ -10312,9 +10374,9 @@
           "group": "address",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 1000
-              }
+              "min": 0,
+              "max": 1000
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -10331,8 +10393,8 @@
           "group": "address",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -10351,8 +10413,8 @@
           "group": "address",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -10371,8 +10433,8 @@
           "group": "address",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -10421,9 +10483,9 @@
           "cloak": true,
           "rules": {
             "between": {
-                "min": 0,
-                "max": 150
-              },
+              "min": 0,
+              "max": 150
+            },
             "string": true
           },
           "searchKey": false,
@@ -10441,9 +10503,9 @@
           "rules": {
             "email": true,
             "between": {
-                "min": 0,
-                "max": 155
-              }
+              "min": 0,
+              "max": 155
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -10456,13 +10518,13 @@
           "_id": "5c906a16a6ebc7193110f1fe",
           "name": "shipPhoneNo",
           "label": "Ship to Phone No",
-          "uniqueName": "salesquote_ship_phone_no",\
+          "uniqueName": "salesquote_ship_phone_no",
           "rules": {
             "string": true,
             "between": {
-                "min": 0,
-                "max": 155
-              }
+              "min": 0,
+              "max": 155
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -10479,41 +10541,44 @@
           "fieldGlue": " ",
           "rules": {
             "ss_pop_up": true,
-            "auto_fill":[
-                [
-                  "name",
-                  "shipToName"
-                ],
-                [
-                  "shipping_country_id",
-                  "shipping_country_id"
-                ],
-                [
-                  "shippingCity",
-                  "shippingCity"
-                ],
-                [
-                  "shippingState",
-                  "shippingState"
-                ],
-                [
-                  "shippingStreet",
-                  "shippingStreet"
-                ],
-                [
-                  "shippingZipCode",
-                  "shippingZipCode"
-                ],
-                [
-                  "email",
-                  "shipEmail"
-                ],
-                [
-                  "phoneNo",
-                  "shipPhoneNo"
-                ]
+            "auto_fill": [
+              [
+                "name",
+                "shipToName"
               ],
-            "show_in": ["create","update"]
+              [
+                "shipping_country_id",
+                "shipping_country_id"
+              ],
+              [
+                "shippingCity",
+                "shippingCity"
+              ],
+              [
+                "shippingState",
+                "shippingState"
+              ],
+              [
+                "shippingStreet",
+                "shippingStreet"
+              ],
+              [
+                "shippingZipCode",
+                "shippingZipCode"
+              ],
+              [
+                "email",
+                "shipEmail"
+              ],
+              [
+                "phoneNo",
+                "shipPhoneNo"
+              ]
+            ],
+            "show_in": [
+              "create",
+              "update"
+            ]
           },
           "addable": {
             "moduleName": "accounts",
@@ -10562,8 +10627,8 @@
           "uniqueName": "salesquote_vnd_phone_no",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -10581,8 +10646,8 @@
           "uniqueName": "salesquote_vnd_contact",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -10600,8 +10665,8 @@
           "uniqueName": "salesquote_vnd_dispatch_box",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 500
+              "min": 0,
+              "max": 500
             },
             "string": true
           },
@@ -10666,8 +10731,8 @@
           "uniqueName": "salesquote_contact_name",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -10700,8 +10765,8 @@
           "uniqueName": "salesquote_sales_rep",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 150
+              "min": 0,
+              "max": 150
             },
             "string": true
           },
@@ -10719,8 +10784,8 @@
           "uniqueName": "salesquote_bill_to_i_n_d_o",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -10738,8 +10803,8 @@
           "uniqueName": "salesquote_bill_to_fax_i_n_d_o",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "fax": true
           },
@@ -10757,8 +10822,8 @@
           "uniqueName": "salesquote_bill_to_email_i_n_d_o",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "email": true
           },
@@ -10776,8 +10841,8 @@
           "uniqueName": "salesquote_bill_to_phone_no_i_n_d_o",
           "rules": {
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -10795,7 +10860,7 @@
           "uniqueName": "salesquote_inside_delivery_id",
           "listName": "inside_delivery",
           "rules": {
-            "ss_dropdown"
+            "ss_dropdown": null
           },
           "field_type": {
             "name": "picklist",
@@ -10979,11 +11044,11 @@
           },
           "rules": {
             "decimal": 2,
-            "digits_between":{
-                "min": 0,
-                "max": 15
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
-            "comma_separated":true
+            "comma_separated": true
           },
           "searchKey": false,
           "field_type": {
@@ -11022,12 +11087,11 @@
           },
           "rules": {
             "decimal": 2,
-            "digits_between":{
-                "min": 0,
-                "max": 15
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
-            "comma_separated":true
-            
+            "comma_separated": true
           },
           "searchKey": false,
           "field_type": {
@@ -11066,12 +11130,11 @@
           },
           "rules": {
             "decimal": 2,
-            "digits_between":{
-                "min": 0,
-                "max": 15
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
-            "comma_separated":true
-            
+            "comma_separated": true
           },
           "searchKey": false,
           "field_type": {
@@ -11106,7 +11169,7 @@
           "rules": {
             "ss_dropdown": true,
             "visible_if": "{currency_picklist_id.value} == \"IDR\" || {currency_picklist_id.value} == \"ZAR\" || {branch_id.name} == \"Esco UAE\"",
-            "default_value": "5bb104dc678f71061f6448f9",
+            "default_value": "5bb104dc678f71061f6448f9"
           },
           "field_type": {
             "name": "picklist",
@@ -11127,12 +11190,11 @@
           },
           "rules": {
             "digits_between": {
-                "min": 0,
-                "max": 15
-              },
+              "min": 0,
+              "max": 15
+            },
             "decimal": 2,
             "comma_separated": true
-            
           },
           "searchKey": false,
           "field_type": {
@@ -11168,9 +11230,9 @@
             "visible_if": "{branch_id.name} == \"Esco Vietnam\" || {branch_id.name} == \"Esco Aster\"",
             "ss_dropdown": true,
             "required_if": {
-                "anotherField": "currency_picklist_id",
-                "values": "VND"
-              }
+              "anotherField": "currency_picklist_id",
+              "values": "VND"
+            }
           },
           "field_type": {
             "name": "picklist",
@@ -11225,8 +11287,8 @@
           "rules": {
             "visible_if": "{currency_picklist_id.value} == \"MYR\"",
             "between": {
-                "min": 0,
-                "max": 155
+              "min": 0,
+              "max": 155
             },
             "string": true
           },
@@ -11280,9 +11342,9 @@
           },
           "rules": {
             "decimal": true,
-            "digits_between":: {
-                "min": 0,
-                "max": 15
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
             "comma_separated": true
           },
@@ -11323,9 +11385,9 @@
           },
           "rules": {
             "decimal": 2,
-            "digits_between": : {
-                "min": 0,
-                "max": 15
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
             "comma_separated": true
           },
@@ -11366,10 +11428,10 @@
           },
           "rules": {
             "decimal": 2,
-            "digits_between":  {
-                "min": 0,
-                "max": 15
-              },
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            },
             "comma_separated": true
           },
           "searchKey": false,
@@ -11410,10 +11472,10 @@
           "rules": {
             "visible_if": "{currency_picklist_id.value} == \"Euro\"",
             "decimal": 2,
-            "digits_between":  {
-                "min": 0,
-                "max": 15
-              },
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            },
             "comma_separated": true
           },
           "searchKey": false,
@@ -11534,10 +11596,10 @@
           "rules": {
             "visible_if": "{branch_id.name} == \"Esco US\"",
             "decimal": 2,
-            "digits_between":  {
-                "min": 0,
-                "max": 15
-              },
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            },
             "comma_separated": true
           },
           "searchKey": false,
@@ -11655,7 +11717,10 @@
           "label": "Last Modified Date",
           "uniqueName": "salesquote_updated_at",
           "rules": {
-            "hide_in": ["create","update"],
+            "hide_in": [
+              "create",
+              "update"
+            ],
             "date_format": "m/d/Y",
             "date_only": true
           },
@@ -11672,10 +11737,13 @@
           "label": "Created Date",
           "uniqueName": "salesquote_created_at",
           "rules": {
-            "hide_in": ["create","update"],
+            "hide_in": [
+              "create",
+              "update"
+            ],
             "date_format": "m/d/Y",
             "date_only": true
-           },
+          },
           "searchKey": false,
           "field_type": {
             "name": "date",
@@ -11691,7 +11759,10 @@
           "fieldGlue": " ",
           "rules": {
             "ss_pop_up": true,
-            "hide_in": ["create","update"]
+            "hide_in": [
+              "create",
+              "update"
+            ]
           },
           "field_type": {
             "name": "lookupModel",
@@ -11719,7 +11790,10 @@
           "fieldGlue": " ",
           "rules": {
             "ss_pop_up": true,
-            "hide_in": ["create","update"]
+            "hide_in": [
+              "create",
+              "update"
+            ]
           },
           "field_type": {
             "name": "lookupModel",
@@ -11747,7 +11821,10 @@
           "rules": {
             "date_format": "m/d/Y",
             "date_only": true,
-            "hide_in": ["create","update"]
+            "hide_in": [
+              "create",
+              "update"
+            ]
           },
           "searchKey": false,
           "field_type": {
@@ -11765,8 +11842,8 @@
           "rules": {
             "ss_pop_up": true,
             "hide_in": [
-                "create",
-                "update"
+              "create",
+              "update"
             ]
           },
           "field_type": {
@@ -11906,9 +11983,6 @@
           "hierarchy": 5,
           "convertedField": "grandTotal_rounded_converted",
           "rules": {
-            
-          }
-          "rules":{
             "decimal": 2,
             "comma_separated": true
           },
@@ -12044,9 +12118,9 @@
           "uniqueName": "salesquote_shipping_charge",
           "rules": {
             "decimal": 2,
-            "digits_between":  {
-                "min": 0,
-                "max": 15
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
             "comma_separated": true
           },
@@ -12070,8 +12144,8 @@
           "rules": {
             "decimal": 2,
             "digits_between": {
-                "min": 0,
-                "max": 15
+              "min": 0,
+              "max": 15
             },
             "comma_separated": true
           },
@@ -12110,9 +12184,9 @@
           },
           "rules": {
             "decimal": 2,
-            "digits_between":  {
-                "min": 0,
-                "max": 15
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
             "comma_separated": true
           },
@@ -12151,9 +12225,9 @@
           },
           "rules": {
             "decimal": 2,
-            "digits_between":  {
-                "min": 0,
-                "max": 15
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
             "comma_separated": true
           },
@@ -12195,9 +12269,9 @@
           },
           "rules": {
             "decimal": 2,
-            "digits_between":  {
-                "min": 0,
-                "max": 15
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
             "comma_separated": true
           },
@@ -12239,9 +12313,9 @@
           },
           "rules": {
             "decimal": 2,
-            "digits_between":  {
-                "min": 0,
-                "max": 15
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
             "comma_separated": true
           },
@@ -12284,7 +12358,7 @@
           "cloak": true,
           "rules": {
             "decimal": 2,
-            "disable":true,
+            "disable": true,
             "comma_separated": true
           },
           "field_type": {
@@ -12600,9 +12674,9 @@
           "cloak": true,
           "rules": {
             "decimal": 2,
-            "digits_between":  {
-                "min": 0,
-                "max": 15
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
             "comma_separated": true
           },
@@ -12645,9 +12719,9 @@
           "cloak": true,
           "rules": {
             "decimal": 2,
-            "digits_between":  {
-                "min": 0,
-                "max": 15
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
             "comma_separated": true
           },
@@ -12683,7 +12757,7 @@
           "formulaExpression": "((totalCommisionPDistributor * 100) / totalQty) + ((totalCommisionPSalesAgent * 100)/ totalQty)",
           "cloak": true,
           "rules": {
-            "disable": true,
+            "disable": true
           },
           "field_type": {
             "name": "formula",
@@ -12697,7 +12771,7 @@
           "label": "Discount (%)",
           "uniqueName": "salesquote_discount_percentage",
           "rules": {
-            "visible_if": "{branch_id.name} == \"Esco Singapore\"",
+            "visible_if": "{branch_id.name} == \"Esco Singapore\""
           },
           "field_type": {
             "name": "percentage",
@@ -12719,8 +12793,8 @@
           "rules": {
             "decimal": 2,
             "digits_between": {
-                "min": 0,
-                "max": 15
+              "min": 0,
+              "max": 15
             },
             "comma_separated": true
           },
@@ -12739,7 +12813,7 @@
           "formulaType": "currency",
           "formulaExpression": "transportCost / currency_id.rate",
           "cloak": true,
-           "rules": {
+          "rules": {
             "decimal": 2,
             "disable": true,
             "comma_separated": true
@@ -12757,7 +12831,7 @@
           "uniqueName": "salesquote_sales_type_id",
           "listName": "sales_type",
           "cloak": true,
-           "rules": {
+          "rules": {
             "ss_dropdown": true
           },
           "field_type": {
@@ -12771,7 +12845,7 @@
           "name": "notesPdf",
           "label": "Note : (Will appear on PDF)",
           "uniqueName": "salesquote_notes_pdf",
-          "rules":{
+          "rules": {
             "visible_if": "{branch_id.name} == \"Esco Bangladesh\""
           },
           "field_type": {
@@ -12827,8 +12901,8 @@
           "rules": {
             "decimal": 2,
             "digits_between": {
-                "min": 0,
-                "max": 15
+              "min": 0,
+              "max": 15
             },
             "comma_separated": true
           },
@@ -12865,8 +12939,11 @@
           "uniqueName": "salesquote_payment_procedure_text",
           "cloak": true,
           "rules": {
-            "hide_in": ["create","update"],
-            "default_value":"<p>Account Name: ESCO LIFESCIENCES (BANGLADESH) PVT. LTD.<br/>Account No.: 1509380001148<br/>Bank Name: Woori Bank<br/>Branch: WOORI BANK MIRPUR BRANCH<br/>Routing No.:  255262985</p>",
+            "hide_in": [
+              "create",
+              "update"
+            ],
+            "default_value": "<p>Account Name: ESCO LIFESCIENCES (BANGLADESH) PVT. LTD.<br/>Account No.: 1509380001148<br/>Bank Name: Woori Bank<br/>Branch: WOORI BANK MIRPUR BRANCH<br/>Routing No.:  255262985</p>"
           },
           "field_type": {
             "name": "longText",
@@ -12886,12 +12963,12 @@
             "field": "currency_id"
           },
           "rules": {
-            "decimal":  2,
-            "digits_between":  {
-                "min": 0,
-                "max": 15
+            "decimal": 2,
+            "digits_between": {
+              "min": 0,
+              "max": 15
             },
-            "comma_separated": true,
+            "comma_separated": true
           },
           "field_type": {
             "name": "currency",
@@ -12909,9 +12986,9 @@
           "formulaExpression": "liftGateCharge / currency_id.rate",
           "cloak": true,
           "rules": {
-            "decimal":  2,
+            "decimal": 2,
             "disable": true,
-            "comma_separated": true,
+            "comma_separated": true
           },
           "field_type": {
             "name": "formula",
@@ -12948,7 +13025,7 @@
             "field": "currency_id"
           },
           "rules": {
-            "decimal":  2,
+            "decimal": 2,
             "disable": true,
             "comma_separated": true,
             "visible_if": "{branch_id.name} == \"Esco Vietnam\" || {branch_id.name} == \"Esco Bangladesh\""
@@ -12968,7 +13045,7 @@
           "formulaExpression": "vatAmountTotal / currency_id.rate",
           "cloak": true,
           "rules": {
-            "decimal":  2,
+            "decimal": 2,
             "disable": true,
             "comma_separated": true
           },
@@ -13028,7 +13105,7 @@
           "label": "Payment Terms (Text)",
           "uniqueName": "salesquote_payment_terms_text",
           "rules": {
-            "visible_if": "{branch_id.name} == \"Esco Vietnam\"",
+            "visible_if": "{branch_id.name} == \"Esco Vietnam\""
           },
           "field_type": {
             "name": "longText",
@@ -13042,7 +13119,7 @@
           "label": "General Terms and Condition (Text)",
           "uniqueName": "salesquote_general_terms_condition_text",
           "rules": {
-            "visible_if": "{branch_id.name} == \"Esco Vietnam\"",
+            "visible_if": "{branch_id.name} == \"Esco Vietnam\""
           },
           "field_type": {
             "name": "longText",
@@ -13056,7 +13133,7 @@
           "label": "Ship From (Text)",
           "uniqueName": "salesquote_ship_from_text",
           "rules": {
-            "visible_if": "{branch_id.name} == \"Esco Vietnam\"",
+            "visible_if": "{branch_id.name} == \"Esco Vietnam\""
           },
           "field_type": {
             "name": "longText",
@@ -13070,7 +13147,7 @@
           "label": "Validity (Text)",
           "uniqueName": "salesquote_validity_text",
           "rules": {
-            "visible_if": "{branch_id.name} == \"Esco Vietnam\"",
+            "visible_if": "{branch_id.name} == \"Esco Vietnam\""
           },
           "field_type": {
             "name": "longText",
@@ -13079,7 +13156,7 @@
           "relation": null
         }
       ],
-      "panels":[
+      "panels": [
         {
           "_id": "5cadf210a6ebc747e22cb012",
           "panelName": "salesquote-panel-1",
@@ -16482,7 +16559,7 @@
           ]
         }
       ],
-      "viewFilters":[
+      "viewFilters": [
         {
           "_id": "5c906d2ca6ebc71ada570285",
           "query_id": "5c906a1ba6ebc7193110f8e9",
@@ -16543,9 +16620,9 @@
       "folder_id": "5c906a1ba6ebc7193110f893",
       "mainEntity": "Report",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
-      {
+    {
       "_id": "5c906a1ba6ebc7193110f8bd",
       "name": "accounts",
       "label": "Account List",
@@ -16557,7 +16634,7 @@
       "folder_id": "5c906a1ba6ebc7193110f895",
       "mainEntity": "Account",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "5c906a1ba6ebc7193110f8c5",
@@ -16570,8 +16647,8 @@
       "order": 1,
       "folder_id": "5c906a1ba6ebc7193110f895",
       "mainEntity": "Contact",
-      "fields":[],
-      "panels":[]
+      "fields": [],
+      "panels": []
     },
     {
       "_id": "5c906a1ba6ebc7193110f8cd",
@@ -16585,7 +16662,7 @@
       "folder_id": "5c906a1ba6ebc7193110f895",
       "mainEntity": "AccountGroup",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "5c906a1ba6ebc7193110f926",
@@ -16599,9 +16676,9 @@
       "folder_id": "5c906a1ba6ebc7193110f895",
       "mainEntity": "Unit",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
-      {
+    {
       "_id": "5c906a1ba6ebc7193110f906",
       "name": "defectreports",
       "label": "Defect Reports",
@@ -16613,7 +16690,7 @@
       "folder_id": "5c906a1ba6ebc7193110f896",
       "mainEntity": "DefectReport",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "5c906a1ba6ebc7193110f91e",
@@ -16627,7 +16704,7 @@
       "folder_id": "5c906a1ba6ebc7193110f896",
       "mainEntity": "RPWorkOrder",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "64900dfba6ebc7103a473c13",
@@ -16641,9 +16718,9 @@
       "folder_id": "5c906a1ba6ebc7193110f896",
       "mainEntity": "CalibrationServiceRequest",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
-      {
+    {
       "_id": "5c906a1ba6ebc7193110f92c",
       "name": "services",
       "label": "Service List",
@@ -16656,7 +16733,7 @@
       "mainEntity": "Service",
       "submodules": [],
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "5c906a1ba6ebc7193110f932",
@@ -16670,7 +16747,7 @@
       "folder_id": "5c906a1ba6ebc7193110f897",
       "mainEntity": "ServiceReport",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "5c906a1ba6ebc7193110f93b",
@@ -16684,7 +16761,7 @@
       "folder_id": "5c906a1ba6ebc7193110f897",
       "mainEntity": "ServiceSchedule",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "5c906a1ba6ebc7193110f941",
@@ -16698,7 +16775,7 @@
       "folder_id": "5c906a1ba6ebc7193110f897",
       "mainEntity": "ServiceJob",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "5fe2ab68a6ebc7130d02921c",
@@ -16712,7 +16789,7 @@
       "folder_id": "5c906a1ba6ebc7193110f897",
       "mainEntity": "BreakdownLog",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "5c906a1ba6ebc7193110f8f9",
@@ -16726,7 +16803,7 @@
       "folder_id": "640fe384a6ebc704e269b043",
       "mainEntity": "Product",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "5c906a1ba6ebc7193110f8ff",
@@ -16740,7 +16817,7 @@
       "folder_id": "640fe384a6ebc704e269b043",
       "mainEntity": "Pricebook",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "64265f51a6ebc722f15baca4",
@@ -16754,7 +16831,7 @@
       "folder_id": "640fe384a6ebc704e269b043",
       "mainEntity": "ProductGroup",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "64265f51a6ebc722f15bacaa",
@@ -16768,9 +16845,9 @@
       "folder_id": "640fe384a6ebc704e269b043",
       "mainEntity": "AccessoryGroup",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
-      {
+    {
       "_id": "64265f51a6ebc722f15bacb0",
       "name": "pricelists",
       "label": "Pricelists",
@@ -16782,7 +16859,7 @@
       "folder_id": "640fe384a6ebc704e269b044",
       "mainEntity": "Pricelist",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
     {
       "_id": "64265f51a6ebc722f15bacb6",
@@ -16796,9 +16873,9 @@
       "folder_id": "640fe384a6ebc704e269b044",
       "mainEntity": "PricelistMiscellaneous",
       "fields": [],
-      "panels":[]
+      "panels": []
     },
-      {
+    {
       "_id": "640fe3c6a6ebc7053d281b02",
       "name": "countries",
       "label": "Countries",
@@ -16810,7 +16887,7 @@
       "folder_id": "640fe384a6ebc704e269b045",
       "mainEntity": "Country",
       "fields": [],
-      "panels":[]
+      "panels": []
     }
   ]
 }

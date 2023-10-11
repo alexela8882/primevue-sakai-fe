@@ -40,6 +40,24 @@ const router = createRouter({
             }
           ]
         }, {
+          path: '/modules',
+          name: 'modules',
+          component: () => import('@/views/pages/modules/main.vue'),
+          meta: {
+            requiresAuth: true
+          },
+          children: [
+            {
+              path: '',
+              name: 'modules.index',
+              component: () => import('@/views/pages/modules/index.vue'),
+            }, {
+              path: ':id',
+              name: 'modules.view',
+              component: () => import('@/views/pages/modules/view.vue')
+            }
+          ]
+        }, {
           path: '/branches',
           name: 'branches',
           component: () => import('@/views/pages/branches/main.vue'),
