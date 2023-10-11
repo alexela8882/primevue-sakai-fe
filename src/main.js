@@ -3,6 +3,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
+import 'material-icons/iconfont/material-icons.css'
 
 
 /* import the fontawesome core */
@@ -138,9 +139,19 @@ import '@/assets/styles.scss'
 const pinia = createPinia()
 const app = createApp(App)
 
+const pt = {
+  global: {
+    css: `
+      .bg-esco-blue {
+        background-color: #00467F;
+      }
+    ` 
+  }
+}
+
 app.use(pinia)
 app.use(router)
-app.use(PrimeVue, { ripple: true })
+app.use(PrimeVue, { pt })
 app.use(ToastService)
 app.use(DialogService)
 app.use(ConfirmationService)

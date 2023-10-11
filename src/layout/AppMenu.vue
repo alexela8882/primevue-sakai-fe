@@ -1,7 +1,24 @@
 <script setup>
-import { ref } from 'vue';
+// imports
+import { ref } from 'vue'
+import AppMenuItem from './AppMenuItem.vue'
+import { storeToRefs } from 'pinia'
+// stores
+import { useBaseStore } from '@/stores/base'
 
-import AppMenuItem from './AppMenuItem.vue';
+// refs
+// stores
+const baseStore = useBaseStore()
+const {
+  menuLoading,
+  getMenu,
+  sidebarMenu
+} = storeToRefs(baseStore)
+const { fetchMenu, fetchModules } = baseStore
+
+// fetches
+fetchMenu()
+fetchModules()
 
 const reddotMenus = ref([
   {
@@ -185,7 +202,38 @@ const model = ref([
 </script>
 
 <template>
-  <ul class="layout-menu text-center">
+  <div>
+    <div v-if="menuLoading">
+      <div class="">
+        <ul class="m-0 p-0 list-none">
+          <li v-for="(skel, sk) in 5" :key="sk" class="my-3">
+            <div class="flex">
+              <Skeleton shape="circle" size="4rem" class="mr-2"></Skeleton>
+              <div class="align-self-center" style="flex: 1">
+                <Skeleton width="100%" class="mb-2"></Skeleton>
+                <Skeleton width="75%"></Skeleton>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div v-else>
+      <PanelMenu :model="sidebarMenu" />
+      <!-- <ul class="layout-menu text-center">
+        <template v-for="(folder, fl) in getMenu.top.folders" :key="fl">
+          <li class="py-2 text-white my-2 cursor-pointer">
+            <div
+              class="custom-menu material-icons border-circle p-2"
+              style="font-size: 2rem;">
+              <div class="item">{{ folder.icon }}</div>
+            </div>
+          </li>
+        </template>
+      </ul> -->
+    </div>
+  </div>
+  <!-- <ul class="layout-menu text-center">
     <template v-for="(item, i) in reddotMenus" :key="item">
       <app-menu-item v-if="!item.separator" :item="item" :index="i"></app-menu-item>
       <li v-if="item.separator" class="menu-separator"></li>
@@ -195,7 +243,16 @@ const model = ref([
         <img src="/layout/images/banner-primeblocks.png" alt="Prime Blocks" class="w-full mt-3" />
       </a>
     </li>
-  </ul>
+  </ul> -->
 </template>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.custom-menu .item {
+  opacity: .5;
+  transition: opacity .2s;
+}
+.custom-menu:hover .item {
+  opacity: 1;
+  transition: opacity .2s;
+}
+</style>

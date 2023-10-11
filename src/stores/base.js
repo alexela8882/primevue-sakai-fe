@@ -1,3 +1,4 @@
+// imports
 import { defineStore } from 'pinia'
 import { useToast } from "primevue/usetoast"
 import { useRouter } from 'vue-router'
@@ -20,6 +21,43 @@ export const useBaseStore = defineStore('baseStore', () => {
 
   // getters
   const getMenu = computed(() => menu.value)
+  const sidebarMenu = computed(() => {
+    const item = menu.value && menu.value
+    const folders = item.top && item.top.folders
+    const newFolders = folders && folders.map(folder => {
+      let obj = Object.assign({}, {
+        label: folder.label,
+        name: folder.name,
+        icon: folder.icon,
+        order: folder.order,
+        folders: folder.folders
+      })
+
+      // get & insert modules
+      if (modules.value) {
+        const filteredModule = modules.value.filter(module => folder.modules.includes(module._id))
+        if (filteredModule.length > 0) obj.items = filteredModule
+
+        // include nested items in folders array
+        folder.folders.map(folder2 => {
+          let obj2 = Object.assign({}, {
+            label: folder2.label,
+            name: folder2.name,
+            icon: folder2.icon,
+            order: folder2.order,
+            folders: folder2.folders
+          })
+
+          const filteredModule2 = modules.value.filter(module => folder2.modules.includes(module._id))
+          if (filteredModule2.length > 0) obj2.items = filteredModule2
+
+          obj.items.push(obj2)
+        })
+      }
+      return obj
+    })
+    return newFolders
+  })
   const getModules = computed(() => modules.value)
 
   // actions
@@ -32,7 +70,7 @@ export const useBaseStore = defineStore('baseStore', () => {
 
     if (res.status === 200) {
       menu.value = res.data
-      console.log(res.data)
+      // console.log(res.data)
     }
     menuLoading.value = false
   }
@@ -46,7 +84,7 @@ export const useBaseStore = defineStore('baseStore', () => {
 
     if (res.status === 200) {
       modules.value = res.data
-      console.log(res.data)
+      // console.log(res.data)
     }
     modulesLoading.value = false
   }
@@ -55,6 +93,7 @@ export const useBaseStore = defineStore('baseStore', () => {
     jsonDbUrl,
     backendUrl,
     getMenu,
+    sidebarMenu,
     getModules,
     menuLoading,
     modulesLoading,
