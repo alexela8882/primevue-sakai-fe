@@ -30,7 +30,8 @@ export const useBaseStore = defineStore('baseStore', () => {
         name: folder.name,
         icon: folder.icon,
         order: folder.order,
-        folders: folder.folders
+        folders: folder.folders,
+        items: []
       })
 
       // get & insert modules
@@ -45,7 +46,8 @@ export const useBaseStore = defineStore('baseStore', () => {
             name: folder2.name,
             icon: folder2.icon,
             order: folder2.order,
-            folders: folder2.folders
+            folders: folder2.folders,
+            items: []
           })
 
           const filteredModule2 = modules.value.filter(module => folder2.modules.includes(module._id))

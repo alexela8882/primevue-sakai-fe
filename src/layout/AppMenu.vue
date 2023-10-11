@@ -218,8 +218,21 @@ const model = ref([
         </ul>
       </div>
     </div>
-    <div v-else>
-      <PanelMenu :model="sidebarMenu" />
+    <div v-else class="">
+      <el-menu class="custom-menu" :collapse="true" background-color="transparent">
+        <el-sub-menu v-for="(menu, mn) in sidebarMenu" :index="mn" :key="mn">
+          <template #title>
+            <div class="material-icons text-white">{{ menu.icon }}</div>
+            <span>{{ menu.label }}</span>
+          </template>
+          <el-menu-item
+            v-if="menu.items.length > 0"
+            v-for="(submenu, sm) in menu.items"
+            @click="$router.push(`/modules/${submenu._id}`)"
+            :key="sm"
+            :index="`${mn}${sm}`">{{ submenu.label }}</el-menu-item>
+        </el-sub-menu>
+      </el-menu>
       <!-- <ul class="layout-menu text-center">
         <template v-for="(folder, fl) in getMenu.top.folders" :key="fl">
           <li class="py-2 text-white my-2 cursor-pointer">
@@ -247,12 +260,18 @@ const model = ref([
 </template>
 
 <style scoped>
-.custom-menu .item {
-  opacity: .5;
+.custom-menu {
+  border: transparent !important;
+  margin: 0 auto;
+}
+
+.custom-menu .material-icons {
+  opacity: .7 !important;
   transition: opacity .2s;
 }
-.custom-menu:hover .item {
-  opacity: 1;
+
+.custom-menu .el-sub-menu:hover .material-icons {
+  opacity: 1 !important;
   transition: opacity .2s;
 }
 </style>
