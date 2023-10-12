@@ -24,6 +24,7 @@ export const useBaseStore = defineStore('baseStore', () => {
   const sidebarMenu = computed(() => {
     const item = menu.value && menu.value
     const folders = item.top && item.top.folders
+    let testNewFolders = []
     const newFolders = folders && folders.map(folder => {
       let obj = Object.assign({}, {
         label: folder.label,
@@ -56,9 +57,50 @@ export const useBaseStore = defineStore('baseStore', () => {
           obj.items.push(obj2)
         })
       }
+      testNewFolders.push(obj)
       return obj
     })
-    return newFolders
+
+    let menuModules = []
+    // re-structure modules into menu
+    modules.value.map(module => {
+      let newModule = Object.assign({}, {
+        _id: module._id,
+        label: module.label,
+        name: module.name,
+        icon: module.icon,
+        order: module.order,
+        folders: module.folders,
+        items: [{
+          _id: module._id,
+          label: module.label,
+          name: module.name,
+          icon: module.icon,
+          route: module.route,
+          color: module.color
+        }]
+      })
+      menuModules.push(newModule)
+    })
+
+    let childItemIds = []
+    testNewFolders.map((testNewFolder) => {
+      testNewFolder.items.map(item => {
+        const id = item._id !== undefined && item._id
+        if (id) childItemIds.push(id)
+      })
+    })
+
+    // filter out matching ids from menuModules
+    const filteredModule = menuModules.filter(item => !childItemIds.includes(item._id));
+
+    // merge menu & filtered modules
+    Array.prototype.push.apply(testNewFolders, filteredModule)
+
+    // sort by order
+    let finalMenus = testNewFolders.sort((a, b) => a.order - b.order)
+
+    return finalMenus
   })
   const getModules = computed(() => modules.value)
 

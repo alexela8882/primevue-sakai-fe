@@ -42,7 +42,7 @@ fetchModules()
         class="custom-menu"
         :collapse="true"
         background-color="transparent">
-        <el-sub-menu v-for="(menu, mn) in sidebarMenu" :index="mn" :key="mn">
+        <el-sub-menu v-for="(menu, mn) in sidebarMenu" :index="`${mn}`" :key="mn">
           <template #title>
             <div class="material-icons text-white">{{ menu.icon }}</div>
             <span>{{ menu.label }}</span>

@@ -12,10 +12,11 @@ const moduleStore = useModuleStore()
 const { moduleLoading, getModule } = storeToRefs(moduleStore)
 const { fetchModule } = moduleStore
 
-// fetches
-fetchModule(route.params.id)
-
 watch(route, () => {
+  fetchModule(route.params.id)
+})
+
+onMounted(() => {
   fetchModule(route.params.id)
 })
 
