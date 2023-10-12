@@ -18,17 +18,8 @@
         color: var(--surface-900);
         font-size: 1.5rem;
         font-weight: 500;
-        width: 140px;
+        width: 100px;
         border-radius: 12px;
-
-        img {
-            height: 2.5rem;
-            margin-right: .5rem;
-        }
-
-        &:focus {
-            @include focused();
-        }
     }
 
     .layout-topbar-button {
@@ -93,12 +84,12 @@
 
         .layout-topbar-logo {
             width: auto;
-            order: 2;
+            order: 1;
         }
 
         .layout-menu-button {
             margin-left: 0;
-            order: 1;
+            order: 2;
         }
 
         .layout-topbar-menu-button {

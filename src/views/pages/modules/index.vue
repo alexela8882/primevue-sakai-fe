@@ -9,28 +9,28 @@ import { useBaseStore } from '@/stores/base'
 // stores
 const baseStore = useBaseStore()
 const {
-  menuLoading,
   modulesLoading,
-  getMenu,
-  sidebarMenu,
   getModules
 } = storeToRefs(baseStore)
-const { fetchMenu, fetchModules } = baseStore
+const { fetchModules } = baseStore
 
 // fetches
-fetchMenu()
 fetchModules()
 
 </script>
 
 <template>
   <div>
-    <div>
-      <h4>Modules</h4>
-      <div v-if="modulesLoading">Loading modules...</div>
-      <div v-else>
-        <pre>{{ getModules }}</pre>
-      </div>
+    <h4>Modules</h4>
+    <div v-if="modulesLoading">Loading modules...</div>
+    <div v-else>
+      <ol>
+        <li v-for="(module, mod) in getModules" :key="mod">
+          <a
+            href="javascript: void(0);"
+            @click="$router.push(`/modules/${module._id}`)">{{ module.label }}</a>
+        </li>
+      </ol>
     </div>
   </div>
 </template>

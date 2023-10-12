@@ -24,20 +24,8 @@ const items = ref([
     label: 'Options',
     items: [
       {
-        label: 'Manage Users',
-        icon: 'pi pi-user',
-        command: () => {
-          router.push('/users')
-        }
-      }, {
-        label: 'Branches',
-        icon: 'pi pi-building',
-        command: () => {
-          router.push('/branches')
-        }
-      }, {
         label: 'Modules',
-        icon: 'pi pi-building',
+        icon: 'pi pi-book',
         command: () => {
           router.push('/modules')
         }
@@ -127,6 +115,7 @@ const logout = () => {
 
 <template>
   <div class="layout-topbar">
+    <div class="layout-menu-button layout-topbar-button" style="width: 100px;"></div>
     <router-link to="/" class="layout-topbar-logo">
       <div class="flex flex-column" style="font-size: 15px">
         <!-- <img :src="logoUrl" alt="logo" /> -->
@@ -138,24 +127,23 @@ const logout = () => {
       </div>
     </router-link>
     
-    <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
+    <!-- <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">
       <i class="pi pi-bars"></i>
-    </button>
-
-    <span class="layout-search p-input-icon-left ml-3">
-      <i class="pi pi-search" />
-      <InputText class="surface-100" placeholder="Search" size="small" />
-    </span>
+    </button> -->
 
     <button class="p-link layout-topbar-menu-button layout-topbar-button" @click="onTopBarMenuButton()">
       <i class="pi pi-ellipsis-v"></i>
     </button>
 
     <div class="layout-topbar-menu" :class="topbarMenuClasses">
-      <div class="flex align-items-center">
+      <span class="flex align-items-center layout-search p-input-icon-left ml-3">
+        <i class="pi pi-search" />
+        <InputText class="surface-100" placeholder="Quick search..." size="small" />
+      </span>
+      <!-- <div class="flex align-items-center">
         <span>Hello!&nbsp;</span>
         <span class="capitalize font-bold">{{ authUser && authUser.name }}</span>
-      </div>
+      </div> -->
       <!-- <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
         <i class="pi pi-calendar"></i>
         <span>Calendar</span>
