@@ -46,7 +46,7 @@ fetchModules()
         <el-sub-menu v-for="(menu, mn) in sidebarMenu2" :index="`${mn}`" :key="mn">
           <template #title>
             <div class="material-icons text-white">{{ menu.icon }}</div>
-            <span>{{ menu.label }}</span>
+            <!-- <span>{{ menu.label }}</span> -->
           </template>
           <el-menu-item
             v-if="menu.modules && menu.modules.length > 0"
@@ -98,7 +98,7 @@ fetchModules()
 <style scoped>
 .custom-menu {
   border: transparent !important;
-  margin: 0 auto;
+  margin: 0 auto !important;
 }
 
 .custom-menu .material-icons {
@@ -114,4 +114,18 @@ fetchModules()
 .custom-menu .el-sub-menu.is-active .material-icons {
   opacity: 1 !important;
 }
+
+
+</style>
+
+<style>
+
+/* .el-popper.is-pure {
+  margin-left: 15px !important;
+}
+
+.el-menu .el-menu--popup .el-menu--popup-right-start {
+  margin-left: 0 !important;
+} */
+
 </style>
