@@ -15,6 +15,7 @@ export const useBaseStore = defineStore('baseStore', () => {
   const jsonDbUrl = ref('http://localhost:3000')
   const backendUrl = ref('http://localhost:8000')
   const menu = ref({})
+  const menu2 = ref([])
   const menuLoading = ref(false)
   const modules = ref([])
   const modulesLoading = ref(false)
@@ -92,7 +93,7 @@ export const useBaseStore = defineStore('baseStore', () => {
     })
 
     // filter out matching ids from menuModules
-    const filteredModule = menuModules.filter(item => !childItemIds.includes(item._id));
+    const filteredModule = menuModules.filter(item => !childItemIds.includes(item._id))
 
     // merge menu & filtered modules
     Array.prototype.push.apply(testNewFolders, filteredModule)
@@ -102,18 +103,47 @@ export const useBaseStore = defineStore('baseStore', () => {
 
     return finalMenus
   })
+  const sidebarMenu2 = computed(() => {
+    let childItemNames = []
+    let menus = []
+    menu2.value.map((men) => {
+      men.modules && men.modules.map(item => {
+        const name = item.name !== undefined && item.name
+        if (name) childItemNames.push(name)
+      })
+
+      menus.push(men)
+    })
+
+    // filter out matching names from modules
+    const filteredModule = modules.value.filter(module => !childItemNames.includes(module.name))
+
+    // merge menu & filtered modules
+    Array.prototype.push.apply(menus, filteredModule)
+
+    // sort by order
+    let sortedMenus = menus.sort((a, b) => a.order - b.order)
+
+    // unique items
+    const uniqueMenus = sortedMenus.filter((item, index, self) =>
+      self.findIndex(obj => obj.name === item.name) === index
+    )
+
+    return uniqueMenus
+  })
   const getModules = computed(() => modules.value)
 
   // actions
   const fetchMenu = async () => {
     menuLoading.value = true
-    const res = await axios(`${jsonDbUrl.value}/menu`, {
+    const res = await axios(`${jsonDbUrl.value}/folders`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
       menu.value = res.data
+      menu2.value = res.data
       // console.log(res.data)
     }
     menuLoading.value = false
@@ -138,6 +168,7 @@ export const useBaseStore = defineStore('baseStore', () => {
     backendUrl,
     getMenu,
     sidebarMenu,
+    sidebarMenu2,
     getModules,
     menuLoading,
     modulesLoading,

@@ -11,7 +11,8 @@ const baseStore = useBaseStore()
 const {
   menuLoading,
   getMenu,
-  sidebarMenu
+  sidebarMenu,
+  sidebarMenu2
 } = storeToRefs(baseStore)
 const { fetchMenu, fetchModules } = baseStore
 
@@ -42,6 +43,41 @@ fetchModules()
         class="custom-menu"
         :collapse="true"
         background-color="transparent">
+        <el-sub-menu v-for="(menu, mn) in sidebarMenu2" :index="`${mn}`" :key="mn">
+          <template #title>
+            <div class="material-icons text-white">{{ menu.icon }}</div>
+            <span>{{ menu.label }}</span>
+          </template>
+          <el-menu-item
+            v-if="menu.modules && menu.modules.length > 0"
+            v-for="(submodule, sm) in menu.modules"
+            @click="$router.push(`/modules/${submodule._id}`)"
+            :key="`${mn}${sm}`"
+            :index="`${mn}${sm}`">{{ submodule.label }}</el-menu-item>
+          <el-menu-item
+            v-else
+            @click="$router.push(`/modules/${menu._id}`)"
+            :index="`${mn}`">{{ menu.label }}</el-menu-item>
+          <el-sub-menu
+            v-if="menu.folders && menu.folders.length > 0"
+            v-for="(subfolder, sm) in menu.folders"
+            :key="`${mn}${sm}`"
+            :index="`${mn}${sm}`">
+            <template #title>{{ subfolder.label }}</template>
+            <el-menu-item
+              v-for="(foldermodule, fm) in subfolder.modules"
+              :key="`${mn}${sm}${fm}`"
+              :index="`${mn}${sm}${fm}`"
+              @click="$router.push(`/modules/${foldermodule._id}`)">
+              {{ foldermodule.label }}
+            </el-menu-item>
+          </el-sub-menu>
+        </el-sub-menu>
+      </el-menu>
+      <!-- <el-menu
+        class="custom-menu"
+        :collapse="true"
+        background-color="transparent">
         <el-sub-menu v-for="(menu, mn) in sidebarMenu" :index="`${mn}`" :key="mn">
           <template #title>
             <div class="material-icons text-white">{{ menu.icon }}</div>
@@ -54,7 +90,7 @@ fetchModules()
             :key="sm"
             :index="`${mn}${sm}`">{{ submenu.label }}</el-menu-item>
         </el-sub-menu>
-      </el-menu>
+      </el-menu> -->
     </div>
   </div>
 </template>
