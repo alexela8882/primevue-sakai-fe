@@ -28,8 +28,8 @@ const { getUsers } = storeToRefs(userStore)
 const { setUsers } = userStore
 // general store
 const generalStore = useGeneralStore()
-const { popUpModalOpen, formModalOpen, pageData } = storeToRefs(generalStore)
-const { popUpModalDataFill, formModalDataFill, pageDataFill, throwError } = generalStore
+const { popUpModalOpen, formModalOpen, formModalTrigger, popUpModalTrigger } = storeToRefs(generalStore)
+const { popUpModalDataFill, formModalDataFill } = generalStore
 
 // --------
 // refs
@@ -91,6 +91,7 @@ const addUser = () => {
 
   formModalDataFill(obj)
   formModalOpen.value = true
+  formModalTrigger.value = true
 }
 
 const editUser = (user) => {
@@ -138,6 +139,7 @@ const editUser = (user) => {
 
   formModalDataFill(obj)
   formModalOpen.value = true
+  formModalTrigger.value = true
 }
 
 const deleteUser = (user) => {
@@ -155,8 +157,7 @@ const deleteUser = (user) => {
 
   popUpModalDataFill(obj)
   popUpModalOpen.value = true
-
-  console.log(popUpModalOpen.value)
+  popUpModalTrigger.value = true
 }
 
 onMounted(async () => {

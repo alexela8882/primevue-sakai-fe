@@ -12,6 +12,8 @@ export const useGeneralStore = defineStore('general', () => {
   // states
   const popUpModalOpen = ref()
   const formModalOpen = ref()
+  const formModalTrigger = ref()
+  const popUpModalTrigger = ref()
   const toastOpen = ref()
 
   const popUpModalData = ref({})
@@ -58,6 +60,8 @@ export const useGeneralStore = defineStore('general', () => {
     popUpModalOpen,
     popUpModalData,
     formModalOpen,
+    formModalTrigger,
+    popUpModalTrigger,
     formModalData,
     pageData,
     toastOpen,

@@ -4,12 +4,11 @@ import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter, routerKey } from 'vue-router'
 import { useToast } from "primevue/usetoast"
+import axios from 'axios'
 // stores
 import { useGeneralStore } from '../../stores/general'
 import { useUserStore } from '../../stores/user'
 import { useBranchStore } from '../../stores/branch'
-// components
-import axios from 'axios'
 
 // refs
 const router = useRouter()

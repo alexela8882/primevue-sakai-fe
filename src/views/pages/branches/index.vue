@@ -21,8 +21,8 @@ const { branches, getBranches } = storeToRefs(branchStore)
 const { setBranches } = branchStore
 // general store
 const generalStore = useGeneralStore()
-const { popUpModalOpen, formModalOpen, pageData } = storeToRefs(generalStore)
-const { popUpModalDataFill, formModalDataFill, pageDataFill, throwError } = generalStore
+const { popUpModalOpen, formModalOpen, formModalTrigger, popUpModalTrigger } = storeToRefs(generalStore)
+const { popUpModalDataFill, formModalDataFill } = generalStore
 
 // --------
 // refs
@@ -69,6 +69,7 @@ const addBranch = () => {
 
   formModalDataFill(obj)
   formModalOpen.value = true
+  formModalTrigger.value = true
 }
 
 const editBranch = (branch) => {
@@ -102,6 +103,7 @@ const editBranch = (branch) => {
 
   formModalDataFill(obj)
   formModalOpen.value = true
+  formModalTrigger.value = true
 }
 
 const deleteBranch = (branch) => {
@@ -119,6 +121,7 @@ const deleteBranch = (branch) => {
 
   popUpModalDataFill(obj)
   popUpModalOpen.value = true
+  popUpModalTrigger.value = true
 
   console.log(popUpModalOpen.value)
 }
