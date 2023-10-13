@@ -1,24 +1,28 @@
 <script setup>
 // imports
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
-import { useBaseStore } from '@/stores/base'
+import { useModuleStore } from '@/stores/modules/index'
+import { useMenuStore } from '@/stores/menu'
 
 // refs
 // stores
-const baseStore = useBaseStore()
+const moduleStore = useModuleStore()
+const menuStore = useMenuStore()
 const {
   menuLoading,
   getMenu,
   sidebarMenu,
   sidebarMenu2
-} = storeToRefs(baseStore)
-const { fetchMenu, fetchModules } = baseStore
+} = storeToRefs(menuStore)
+const { fetchModules } = moduleStore
+const { fetchMenu } = menuStore
 
-// fetches
-fetchMenu()
-fetchModules()
+onMounted(() => {
+  fetchMenu()
+  fetchModules()
+})
 </script>
 
 <template>

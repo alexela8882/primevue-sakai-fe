@@ -90,7 +90,8 @@ watch(() => props.data.fields, (current, previous) => {
             <template #empty> No items found.</template>
             <Column selectionMode="multiple" headerStyle="width: 3rem"></Column>
             <Column
-              v-for="field in selectedFields"
+              v-for="(field, fd) in selectedFields"
+              :key="fd"
               sortable
               :header="field.label"
               :field="field.related ? field.field + '.name' : field.field"
@@ -119,5 +120,11 @@ watch(() => props.data.fields, (current, previous) => {
 </template>
 
 <style scoped>
+
+/* ensure leaving items are taken out of layout flow so that moving
+   animations can be calculated correctly. */
+.list-leave-active {
+  position: absolute;
+}
 
 </style>

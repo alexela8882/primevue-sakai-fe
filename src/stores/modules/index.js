@@ -9,15 +9,19 @@ import { useBaseStore } from '@/stores/base'
 export const useModuleStore = defineStore('moduleStore', () => {
 
   // refs
+  // stores
   const baseStore = useBaseStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
   const moduleLoading = ref(false)
   
   // states
+  const modules = ref([])
+  const modulesLoading = ref(false)
   const module = ref({})
 
   // getters
   const getModule = computed(() => module.value)
+  const getModules = computed(() => modules.value)
 
   // actions
   const fetchModule = async (id) => {
@@ -33,11 +37,26 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
     moduleLoading.value = false
   }
+  const fetchModules = async () => {
+    modulesLoading.value = true
+    const res = await axios(`${jsonDbUrl.value}/modules`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (res.status === 200) {
+      modules.value = res.data
+      // console.log(res.data)
+    }
+    modulesLoading.value = false
+  }
 
   return {
     moduleLoading,
-    module,
+    modulesLoading,
     getModule,
-    fetchModule
+    getModules,
+    fetchModule,
+    fetchModules
   }
 })
