@@ -1,10 +1,18 @@
 <script setup>
-import { computed, watch, ref } from 'vue';
-import AppTopbar from './AppTopbar.vue';
-import AppFooter from './AppFooter.vue';
-import AppSidebar from './AppSidebar.vue';
-import AppConfig from './AppConfig.vue';
-import { useLayout } from '@/layout/composables/layout';
+import { computed, watch, ref } from 'vue'
+import { useLayout } from '@/layout/composables/layout'
+import { storeToRefs } from 'pinia'
+// components
+import AppTopbar from './AppTopbar.vue'
+import AppFooter from './AppFooter.vue'
+import AppSidebar from './AppSidebar.vue'
+import AppConfig from './AppConfig.vue'
+// stores
+import { useMenuStore } from '../stores/menu'
+
+// refs
+const menuStore = useMenuStore()
+const { isCollapse } = storeToRefs(menuStore)
 
 const { layoutConfig, layoutState, isSidebarActive } = useLayout();
 
@@ -63,7 +71,9 @@ const isOutsideClicked = (event) => {
     <div class="layout-sidebar">
       <app-sidebar></app-sidebar>
     </div>
-    <div class="layout-main-container">
+    <div
+      class="layout-main-container"
+      :style="`padding-left: ${!isCollapse ? '13rem !important;' : '2rem !important;'}`">
       <div class="layout-main">
         <router-view></router-view>
       </div>

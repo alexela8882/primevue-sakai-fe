@@ -138,7 +138,6 @@ import TriStateCheckbox from 'primevue/tristatecheckbox'
 import VirtualScroller from 'primevue/virtualscroller'
 import BlockViewer from '@/components/BlockViewer.vue'
 import '@/assets/styles.scss'
-import '@/assets/main.css'
 
 const pinia = createPinia()
 const app = createApp(App)

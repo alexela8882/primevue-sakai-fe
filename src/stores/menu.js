@@ -16,6 +16,7 @@ export const useMenuStore = defineStore('menuStore', () => {
   const { getModules } = storeToRefs(moduleStore)
 
   // states
+  const isCollapse = ref(true)
   const menu = ref({})
   const menu2 = ref([])
   const menuLoading = ref(false)
@@ -162,6 +163,7 @@ export const useMenuStore = defineStore('menuStore', () => {
   }
 
   return {
+    isCollapse,
     getMenu,
     sidebarMenu,
     sidebarMenu2,

@@ -11,6 +11,7 @@ import { useMenuStore } from '@/stores/menu'
 const moduleStore = useModuleStore()
 const menuStore = useMenuStore()
 const {
+  isCollapse,
   menuLoading,
   getMenu,
   sidebarMenu,
@@ -44,13 +45,17 @@ onMounted(() => {
       </div>
     </div>
     <div v-else>
+      <div @click="isCollapse = !isCollapse" class="cursor-pointer my-3 w-100 flex justify-content-center">
+        <div class="material-icons text-white">menu</div>
+      </div>
       <el-menu
         class="custom-menu"
-        :collapse="true"
+        :collapse="isCollapse"
         background-color="transparent">
         <el-sub-menu v-for="(menu, mn) in sidebarMenu2" :index="`${mn}`" :key="mn">
           <template #title>
             <div class="material-icons text-white">{{ menu.icon }}</div>
+            <div v-if="!isCollapse" class="ml-3 text-white">{{ menu.label }}</div>
           </template>
           <el-menu-item
             v-if="menu.modules && menu.modules.length > 0"
@@ -119,17 +124,18 @@ onMounted(() => {
   opacity: 1 !important;
 }
 
-
-</style>
-
-<style>
-
-/* .el-popper.is-pure {
-  margin-left: 15px !important;
+.custom-menu:not(.el-menu--collapse) {
+  width: 250px;
 }
 
-.el-menu .el-menu--popup .el-menu--popup-right-start {
-  margin-left: 0 !important;
+.custom-menu .el-menu.el-menu--inline .el-menu-item{
+  color: white !important;
+  padding-left: 4rem !important;
+  font-size: 12px !important;
+}
+
+/* .el-sub-menu__title {
+
 } */
 
 </style>

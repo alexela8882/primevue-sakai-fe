@@ -13,7 +13,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const baseStore = useBaseStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
   const moduleLoading = ref(false)
-  
+
   // states
   const modules = ref([])
   const modulesLoading = ref(false)
