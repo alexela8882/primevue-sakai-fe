@@ -135,13 +135,26 @@ export const useMenuStore = defineStore('menuStore', () => {
   // actions
   const fetchMenu = async () => {
     menuLoading.value = true
-    const res = await axios(`${jsonDbUrl.value}/folders`, {
+    const res = await axios(`${jsonDbUrl.value}/menu`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
       menu.value = res.data
+      // console.log(res.data)
+    }
+    menuLoading.value = false
+  }
+
+  const fetchMenu2 = async () => {
+    menuLoading.value = true
+    const res = await axios(`${jsonDbUrl.value}/folders`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (res.status === 200) {
       menu2.value = res.data
       // console.log(res.data)
     }
@@ -153,6 +166,7 @@ export const useMenuStore = defineStore('menuStore', () => {
     sidebarMenu,
     sidebarMenu2,
     menuLoading,
-    fetchMenu
+    fetchMenu,
+    fetchMenu2
   }
 })

@@ -17,10 +17,11 @@ const {
   sidebarMenu2
 } = storeToRefs(menuStore)
 const { fetchModules } = moduleStore
-const { fetchMenu } = menuStore
+const { fetchMenu, fetchMenu2 } = menuStore
 
 onMounted(() => {
   fetchMenu()
+  fetchMenu2()
   fetchModules()
 })
 </script>
@@ -50,7 +51,6 @@ onMounted(() => {
         <el-sub-menu v-for="(menu, mn) in sidebarMenu2" :index="`${mn}`" :key="mn">
           <template #title>
             <div class="material-icons text-white">{{ menu.icon }}</div>
-            <!-- <span>{{ menu.label }}</span> -->
           </template>
           <el-menu-item
             v-if="menu.modules && menu.modules.length > 0"
