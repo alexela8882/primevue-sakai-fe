@@ -1,20 +1,32 @@
 <script setup>
-import { onMounted, reactive, ref, watch } from 'vue';
+import { onMounted, reactive, ref, watch, defineAsyncComponent } from 'vue';
 import ProductService from '@/service/ProductService';
 import { useLayout } from '@/layout/composables/layout';
-import DataViewModules from '../components/modules/DataViewModules.vue';
 import { storeToRefs } from 'pinia'
 // stores
-import { useBaseStore } from '@/stores/base'
+import { useModuleStore } from '@/stores/modules/index'
 
-const baseStore = useBaseStore()
-const {
-  modulesLoading,
-  getModules
-} = storeToRefs(baseStore)
-const { fetchModules } = baseStore
+// refs
+// stores
+const moduleStore = useModuleStore()
+const { modulesLoading, getModules } = storeToRefs(moduleStore)
+const { fetchModules } = moduleStore
+// components
+const DataViewModules = defineAsyncComponent({
+  loader: () => import('../components/modules/DataViewModules.vue'),
+  // A component to use while the async component is loading
+  // loadingComponent: LoadingComponent,
+  // Delay before showing the loading component. Default: 200ms.
+  delay: 200,
 
-const { isDarkTheme } = useLayout();
+  // A component to use if the load fails
+  // errorComponent: ErrorComponent,
+  // The error component will be displayed if a timeout is
+  // provided and exceeded. Default: Infinity.
+  timeout: 3000
+})
+
+const { isDarkTheme } = useLayout()
 
 const products = ref(null);
 const lineData = reactive({
@@ -205,11 +217,13 @@ watch(
       </div>
 
       <div class="col-12 xl:col-6">
-        <DataViewModules
-          :data="getModules"
-          :loading="modulesLoading"
-          :paginator="true"
-          :rows="5" />
+        <Suspense>
+          <DataViewModules
+            :data="getModules"
+            :loading="modulesLoading"
+            :paginator="true"
+            :rows="5" />
+        </Suspense>
       </div>
       <div class="col-12 xl:col-6">
           <div class="card">
