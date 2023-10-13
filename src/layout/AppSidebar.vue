@@ -1,9 +1,18 @@
 <script setup>
-import AppMenu from './AppMenu.vue';
+// imports
+import { defineAsyncComponent } from 'vue'
+
+// refs
+// components
+const AppMenu = defineAsyncComponent(() => 
+  import('./AppMenu.vue')
+)
 </script>
 
 <template>
-    <app-menu></app-menu>
+  <Suspense>
+    <AppMenu />
+  </Suspense>
 </template>
 
 <style scoped></style>

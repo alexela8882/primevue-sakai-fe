@@ -17,8 +17,10 @@ const PopUpDialog = defineAsyncComponent(() => import('./components/dynamic/PopU
 </script>
 
 <template>
-  <router-view />
+  <router-view></router-view>
+
   <Toast class="z-index-900" />
+
   <Suspense v-if="formModalTrigger">
     <FormDialog />
   </Suspense>

@@ -26,12 +26,12 @@ onMounted(() => {
 
 <template>
   <div>
-    <div>
+    <div class="mt-5">
       <div v-if="moduleLoading" class="flex align-items-center justify-content-center h-screen">
         <ProgressSpinner />
       </div>
       <div v-else>
-        <h4>{{ getModule.label }}</h4>
+        <h4 class="text-blue">{{ getModule.label }}</h4>
         <DynamicDataTable :fields="getModule.fields" />
         <pre>{{ getModule }}</pre>
       </div>
