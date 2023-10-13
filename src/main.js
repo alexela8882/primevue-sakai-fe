@@ -138,24 +138,15 @@ import TriStateCheckbox from 'primevue/tristatecheckbox'
 import VirtualScroller from 'primevue/virtualscroller'
 import BlockViewer from '@/components/BlockViewer.vue'
 import '@/assets/styles.scss'
+import '@/assets/main.css'
 
 const pinia = createPinia()
 const app = createApp(App)
 
-const pt = {
-  global: {
-    css: `
-      .bg-esco-blue {
-        background-color: #00467F;
-      }
-    ` 
-  }
-}
-
 app.use(pinia)
 app.use(router)
+app.use(PrimeVue)
 app.use(ElementPlus)
-app.use(PrimeVue, { pt })
 app.use(ToastService)
 app.use(DialogService)
 app.use(ConfirmationService)

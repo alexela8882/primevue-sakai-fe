@@ -16,11 +16,11 @@ const props = defineProps({
 </script>
 
 <template>
-  <DataTable :value="data" tableStyle="min-width: 50rem">
+  <DataTable :value="data"
+    tableStyle="min-width: 50rem">
     <Column v-for="col of fields" :key="col._id" :field="col.name" :header="col.label"></Column>
   </DataTable>
 </template>
 
-<style scoped>
-
+<style>
 </style>

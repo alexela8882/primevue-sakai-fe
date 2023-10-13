@@ -31,7 +31,7 @@ onMounted(() => {
         <ProgressSpinner />
       </div>
       <div v-else>
-        <h4 class="text-blue">{{ getModule.label }}</h4>
+        <h4 class="text-esco-blue">{{ getModule.label }}</h4>
         <DynamicDataTable :fields="getModule.fields" />
         <pre>{{ getModule }}</pre>
       </div>
@@ -40,5 +40,4 @@ onMounted(() => {
 </template>
 
 <style scoped>
-
 </style>
