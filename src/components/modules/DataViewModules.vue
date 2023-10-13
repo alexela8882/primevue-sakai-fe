@@ -2,7 +2,7 @@
 // ---------
 // imports
 // ---------
-import { defineProps, onMounted, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 
 // ------
 // refs
@@ -38,7 +38,7 @@ onMounted(() => {
     <template #list="slotProps">
       <div v-if="!loading" class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
         <div
-          @click="$router.push(`/modules/${slotProps.data._id}`)"
+          @click="$router.push(`/${slotProps.data.name}/${slotProps.data._id}`)"
           class="p-4 border-1 surface-border surface-card border-round cursor-pointer">
           <div class="flex flex-column align-items-center gap-3 py-5">
             <div class="material-icons" style="font-size: 5rem;">{{ slotProps.data.icon }}</div>
@@ -60,7 +60,7 @@ onMounted(() => {
     <template #grid="slotProps">
       <div v-if="!loading" class="col-12 sm:col-6 lg:col-12 xl:col-4 p-2">
         <div
-          @click="$router.push(`/modules/${slotProps.data._id}`)"
+          @click="$router.push(`/${slotProps.data.name}/${slotProps.data._id}`)"
           class="p-4 border-1 surface-border surface-card border-round cursor-pointer">
           <div class="flex flex-column align-items-center gap-3 py-5">
             <div class="material-icons" style="font-size: 5rem;">{{ slotProps.data.icon }}</div>

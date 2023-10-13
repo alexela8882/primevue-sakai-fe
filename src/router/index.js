@@ -85,10 +85,21 @@ const router = createRouter({
         }, {
           path: '/leads',
           name: 'leads',
-          component: () => import('@/views/pages/leads/index.vue'),
+          component: () => import('@/views/pages/leads/main.vue'),
           meta: {
             requiresAuth: true
-          }
+          },
+          children: [
+            {
+              path: '',
+              name: 'leads.index',
+              component: () => import('@/views/pages/leads/index.vue'),
+            }, {
+              path: ':id',
+              name: 'leads.show',
+              component: () => import('@/views/pages/leads/show.vue')
+            }
+          ]
         }, {
           path: '/campaigns',
           name: 'campaigns',
@@ -103,8 +114,8 @@ const router = createRouter({
               component: () => import('@/views/pages/campaigns/index.vue'),
             }, {
               path: ':id',
-              name: 'campaigns.view',
-              component: () => import('@/views/pages/campaigns/view.vue')
+              name: 'campaigns.show',
+              component: () => import('@/views/pages/campaigns/show.vue')
             }
           ]
         }, {
