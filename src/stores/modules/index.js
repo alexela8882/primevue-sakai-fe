@@ -28,8 +28,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
 
     if (res.status === 200) {
-      module.value = res.data
-      console.log(res.data)
+      module.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
+      console.log(module.value)
     }
     moduleLoading.value = false
   }

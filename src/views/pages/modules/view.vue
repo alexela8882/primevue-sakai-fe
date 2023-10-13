@@ -5,6 +5,8 @@ import { onMounted, watch } from 'vue';
 import { useRouter, useRoute } from 'vue-router'
 // stores
 import { useModuleStore } from '@/stores/modules/index'
+// components
+import DynamicDataTable from '../../../components/modules/DynamicDataTable.vue'
 
 // refs
 const route = useRoute()
@@ -24,14 +26,15 @@ onMounted(() => {
 
 <template>
   <div>
-    <h4>Module</h4>
     <div>
-      <div v-if="moduleLoading">
-        Loading module...
+      <div v-if="moduleLoading" class="flex align-items-center justify-content-center h-screen">
+        <ProgressSpinner />
       </div>
-      <pre v-else>
-        {{ getModule }}
-      </pre>
+      <div v-else>
+        <h4>{{ getModule.label }}</h4>
+        <DynamicDataTable :fields="getModule.fields" />
+        <pre>{{ getModule }}</pre>
+      </div>
     </div>
   </div>
 </template>
