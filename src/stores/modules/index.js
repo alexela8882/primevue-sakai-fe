@@ -13,15 +13,68 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const baseStore = useBaseStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
   const moduleLoading = ref(false)
+  const collectionLoading = ref(false)
 
   // states
   const modules = ref([])
   const modulesLoading = ref(false)
   const module = ref({})
+  const collection = ref({})
 
   // getters
   const getModule = computed(() => module.value)
   const getModules = computed(() => modules.value)
+  const getCollection = computed(() => collection.value)
+  const getViewFilters = computed(() => {
+    const viewFilters = module.value.viewFilters
+    return viewFilters
+  })
+  const getDefaultViewFilter = computed(() => {
+    const moduleFields = module.value && module.value.fields
+    const viewFilters = module.value && module.value.viewFilters
+    const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter.isDefault)
+
+    const filteredFields = moduleFields && moduleFields.filter(field => viewFilter.fields.includes(field._id))
+
+    const finalViewFilter = Object.assign({}, {
+      _id: viewFilter && viewFilter._id,
+      filterLogic: viewFilter && viewFilter.filterLogic,
+      filterName: viewFilter && viewFilter.filterName,
+      filters: viewFilter && viewFilter.filters,
+      isDefault: viewFilter && viewFilter.isDefault,
+      moduleName: viewFilter && viewFilter.moduleName,
+      query_id: viewFilter && viewFilter.query_id,
+      sortField: viewFilter && viewFilter.sortField,
+      sortOrder: viewFilter && viewFilter.sortOrder,
+      fields: filteredFields
+    })
+
+    return finalViewFilter
+  })
+  const getViewFilter = computed(() => {
+    return (payload) => {
+      const moduleFields = module.value && module.value.fields
+      const viewFilters = module.value && module.value.viewFilters
+      const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload)
+
+      const filteredFields = moduleFields && moduleFields.filter(field => viewFilter.fields.includes(field._id))
+
+      const finalViewFilter = Object.assign({}, {
+        _id: viewFilter && viewFilter._id,
+        filterLogic: viewFilter && viewFilter.filterLogic,
+        filterName: viewFilter && viewFilter.filterName,
+        filters: viewFilter && viewFilter.filters,
+        isDefault: viewFilter && viewFilter.isDefault,
+        moduleName: viewFilter && viewFilter.moduleName,
+        query_id: viewFilter && viewFilter.query_id,
+        sortField: viewFilter && viewFilter.sortField,
+        sortOrder: viewFilter && viewFilter.sortOrder,
+        fields: filteredFields
+      })
+
+      return finalViewFilter
+    }
+  })
 
   // actions
   const fetchModule = async (id) => {
@@ -50,13 +103,32 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
     modulesLoading.value = false
   }
+  const fetchCollection = async (id) => {
+    collectionLoading.value = true
+    const res = await axios(`${jsonDbUrl.value}/collection-leads`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (res.status === 200) {
+      collection.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
+      console.log(collection.value)
+    }
+    collectionLoading.value = false
+  }
 
   return {
     moduleLoading,
+    collectionLoading,
     modulesLoading,
     getModule,
     getModules,
+    getCollection,
+    getViewFilters,
+    getDefaultViewFilter,
+    getViewFilter,
     fetchModule,
-    fetchModules
+    fetchModules,
+    fetchCollection
   }
 })

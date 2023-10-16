@@ -22,7 +22,7 @@ const { fetchMenu, fetchMenu2 } = menuStore
 
 onMounted(() => {
   fetchMenu()
-  fetchMenu2()
+  // fetchMenu2()
   fetchModules()
 })
 </script>
