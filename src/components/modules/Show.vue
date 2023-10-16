@@ -11,6 +11,8 @@ import DynamicDataTable from '../../components/modules/DynamicDataTable.vue'
 // refs
 const viewFilter = ref([])
 const selectedViewFilter = ref()
+const selectedFields = ref()
+const selectedSearchKeyIds = ref()
 const route = useRoute()
 const moduleStore = useModuleStore()
 const {
@@ -20,7 +22,9 @@ const {
   getCollection,
   getViewFilters,
   getDefaultViewFilter,
-  getViewFilter } = storeToRefs(moduleStore)
+  getViewFilterIds,
+  getViewFilter,
+  getSearchKeyFieldIds } = storeToRefs(moduleStore)
 const { fetchModule, fetchCollection } = moduleStore
 
 watch(selectedViewFilter, (newVal, oldVal) => {
@@ -39,6 +43,8 @@ onMounted(async () => {
   // pre-assignments
   viewFilter.value = getDefaultViewFilter.value
   selectedViewFilter.value = viewFilter.value._id
+  selectedFields.value = getViewFilterIds.value
+  selectedSearchKeyIds.value = getSearchKeyFieldIds.value
 })
 
 </script>
@@ -53,16 +59,41 @@ onMounted(async () => {
         <h4 class="text-esco-blue">{{ getModule.label }}</h4>
 
         <!-- view filters -->
-        <div class="my-2">
-          <Dropdown
-            v-model="selectedViewFilter"
-            :options="getViewFilters"
-            optionLabel="filterName"
-            optionValue="_id"
-            placeholder="Select view filters"
-            class="w-full md:w-12rem"
-            inputStyle="padding: 5px 15px !important;"
-            inputClass="text-sm" />
+        <div class="mt-2 mb-4">
+          <div class="flex justify-content-between">
+            <div>
+              <Dropdown
+                v-model="selectedViewFilter"
+                :options="getViewFilters"
+                optionLabel="filterName"
+                optionValue="_id"
+                placeholder="Select View Filters"
+                class="w-full md:w-12rem mr-2"
+                :inputStyle="{
+                  padding: '5px 15px !important'
+                }"
+                inputClass="text-sm" />
+              <MultiSelect
+                v-model="selectedSearchKeyIds"
+                :options="getModule.fields"
+                filter
+                :showToggleAll="false"
+                optionLabel="label"
+                optionValue="_id"
+                placeholder="Select Fields"
+                class="w-full md:w-12rem text-sm pa-0" />
+            </div>
+            <div>
+              <span class="p-input-icon-left">
+                <i class="pi pi-search" />
+                <InputText
+                  v-model="value1"
+                  type="text"
+                  class="text-sm"
+                  placeholder="Search The List..." />
+              </span>
+            </div>
+          </div>
         </div>
 
         <!-- datatable -->
@@ -81,5 +112,22 @@ onMounted(async () => {
 .p-dropdown {
   border: 1px solid #0091d0 !important;
   border-radius: 10px !important;
+}
+
+.p-inputtext {
+  border: 1px solid #0091d0 !important;
+  border-radius: 10px !important;
+  padding: 5px 15px 5px 35px !important;
+}
+.p-multiselect {
+  border: 1px solid #0091d0 !important;
+  border-radius: 10px !important;
+}
+</style>
+
+<style>
+.p-multiselect .p-multiselect-label,
+.p-multiselect .p-multiselect-trigger {
+  padding: 5px 5px 5px 15px !important;
 }
 </style>

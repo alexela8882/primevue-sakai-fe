@@ -75,6 +75,24 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return finalViewFilter
     }
   })
+  const getViewFilterIds = computed(() => {
+    const fieldIds = []
+    const viewFilters = module.value && module.value.viewFilters
+    viewFilters && viewFilters.map(viewFilter => {
+      viewFilter.fields.map(field => {
+        fieldIds.push(field)
+      })
+    })
+    return fieldIds
+  })
+  const getSearchKeyFieldIds = computed(() => {
+    const fieldIds = []
+    const fields = module.value && module.value.fields
+    fields && fields.map(field => {
+      if (field.searchKey) fieldIds.push(field._id)
+    })
+    return fieldIds
+  })
 
   // actions
   const fetchModule = async (id) => {
@@ -103,7 +121,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
     modulesLoading.value = false
   }
-  const fetchCollection = async (id) => {
+  const fetchCollection = async () => {
     collectionLoading.value = true
     const res = await axios(`${jsonDbUrl.value}/collection-leads`, {
       method: 'GET',
@@ -127,6 +145,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getViewFilters,
     getDefaultViewFilter,
     getViewFilter,
+    getViewFilterIds,
+    getSearchKeyFieldIds,
     fetchModule,
     fetchModules,
     fetchCollection

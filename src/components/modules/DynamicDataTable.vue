@@ -2,7 +2,7 @@
 // -----------
 // imports
 // -----------
-import { defineProps, onMounted } from 'vue'
+import { defineProps, onMounted, ref } from 'vue'
 
 // refs
 const props = defineProps({
@@ -14,21 +14,29 @@ const props = defineProps({
   fields: Array,
   collectionLoading: Boolean
 })
+const selectedData = ref([])
 
 </script>
 
 <template>
   <DataTable
+    v-model:selection="selectedData"
     :value="data"
     :loading="collectionLoading"
     paginator
+    stripedRows
     stateStorage="local"
     :stateKey="`dt-state-${name}`"
     resizableColumns
     columnResizeMode="fit"
+    sortMode="multiple"
+    removableSort
     :rows="pagination && pagination.per_page"
     :rowsPerPageOptions="[5, 10, 25, 50]"
     tableClass="border-circle">
+    <Column
+      headerClass="bg-esco-blue1-light-active text-color-secondary"
+      selectionMode="multiple"></Column>
     <!-- <Column
       v-for="col of fields"
       :key="col._id"
@@ -39,6 +47,7 @@ const props = defineProps({
       :key="col._id"
       :field="col.name"
       :header="col.label"
+      sortable
       style="min-width: 200px !important;"
       bodyClass="text-color-secondary"
       headerClass="bg-esco-blue1-light-active text-color-secondary">
