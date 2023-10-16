@@ -121,9 +121,10 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
     modulesLoading.value = false
   }
-  const fetchCollection = async () => {
+  const fetchCollection = async (page) => {
     collectionLoading.value = true
-    const res = await axios(`${jsonDbUrl.value}/collection-leads`, {
+    const uri = page ? `collection-leads-page${page}` : 'collection-leads'
+    const res = await axios(`${jsonDbUrl.value}/${uri}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })

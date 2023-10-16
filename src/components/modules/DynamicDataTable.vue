@@ -3,8 +3,14 @@
 // imports
 // -----------
 import { defineProps, onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+// stores
+import { useModuleStore } from '../../stores/modules/index'
 
 // refs
+const moduleStore = useModuleStore()
+const { getCollection } = storeToRefs(moduleStore)
+const { fetchCollection } = moduleStore
 const props = defineProps({
   name: String,
   data: Array,
@@ -16,6 +22,17 @@ const props = defineProps({
 })
 const selectedData = ref([])
 
+const paginate = async (event) => {
+  console.log(event.page + 1)
+
+  // re-fetch collection
+  await fetchCollection(event.page + 1)
+}
+
+onMounted(async () => {
+  
+})
+
 </script>
 
 <template>
@@ -23,7 +40,6 @@ const selectedData = ref([])
     v-model:selection="selectedData"
     :value="data"
     :loading="collectionLoading"
-    paginator
     stripedRows
     stateStorage="local"
     :stateKey="`dt-state-${name}`"
@@ -31,8 +47,6 @@ const selectedData = ref([])
     columnResizeMode="fit"
     sortMode="multiple"
     removableSort
-    :rows="pagination && pagination.per_page"
-    :rowsPerPageOptions="[5, 10, 25, 50]"
     tableClass="border-circle">
     <Column
       headerClass="bg-esco-blue1-light-active text-color-secondary"
@@ -64,6 +78,13 @@ const selectedData = ref([])
         </span>
       </template>
     </Column>
+    <template #footer>
+      <Paginator
+        @page="paginate"
+        :rows="pagination && pagination.per_page"
+        :totalRecords="pagination && pagination.total"
+        :rowsPerPageOptions="[5, 10, 15, 20, 25, 30]"></Paginator>
+    </template>
   </DataTable>
 </template>
 
