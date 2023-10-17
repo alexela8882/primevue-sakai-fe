@@ -51,7 +51,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <div class="mt-5">
+    <div class="mt-3">
       <div v-if="moduleLoading" class="flex align-items-center justify-content-center h-screen">
         <ProgressSpinner />
       </div>

@@ -84,7 +84,7 @@ onMounted(async () => {
     sortMode="multiple"
     removableSort
     scrollable
-    scrollHeight="50vh"
+    scrollHeight="55vh"
     tableClass="border-circle"
     class="dynamic-tbl">
     <Column
