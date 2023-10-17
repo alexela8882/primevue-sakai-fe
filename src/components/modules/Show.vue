@@ -38,7 +38,7 @@ watch(selectedViewFilter, (newVal, oldVal) => {
 
 onMounted(async () => {
   await fetchModule(route.params.id)
-  await fetchCollection(1)
+  await fetchCollection(getModule.value.name, 1)
 
   // pre-assignments
   viewFilter.value = getDefaultViewFilter.value
@@ -93,25 +93,29 @@ onMounted(async () => {
                   placeholder="Search The List..." />
               </div>
               <Button
-                icon="pi pi-chart-bar"
                 aria-label="Submit"
-                class="bg-esco-blue1-normal text-sm mr-2" />
+                class="custom-btn2 bg-esco-blue1-normal text-sm mr-2">
+                <template #icon>
+                  <div class="material-icons" style="padding: 0 !important;">calendar_view_month</div>
+                </template>
+              </Button>
               <Button
                 icon="pi pi-cog"
                 aria-label="Submit"
-                class="bg-esco-blue1-normal text-sm mr-2" />
+                class="custom-btn bg-esco-blue1-normal text-sm mr-2" />
               <Button
                 icon="pi pi-filter"
                 aria-label="Submit"
-                class="bg-esco-blue1-normal text-sm mr-2" />
-              <Button class="bg-esco-blue1-normal text-sm" icon="pi pi-plus" label="Add Country" />
+                class="custom-btn bg-esco-blue1-normal text-sm mr-2" />
+              <Button class="custom-btn bg-esco-blue1-normal text-sm" icon="pi pi-plus" :label="`New ${getModule.label}`" />
             </div>
           </div>
         </div>
 
         <!-- datatable -->
         <DynamicDataTable
-          :name="getModule.label"
+          :moduleName="getModule.name"
+          :moduleLabel="getModule.label"
           :fields="viewFilter.fields"
           :data="getCollection.data"
           :pagination="getCollection.meta && getCollection.meta.pagination"
@@ -137,8 +141,12 @@ onMounted(async () => {
   border-radius: 10px !important;
 }
 
-.p-button {
+.custom-btn {
   padding: 6px 15px 6px 15px !important;
+}
+
+.custom-btn2 {
+  padding: 1px 0px !important;
 }
 </style>
 

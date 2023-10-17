@@ -12,7 +12,8 @@ const moduleStore = useModuleStore()
 const { getCollection } = storeToRefs(moduleStore)
 const { fetchCollection } = moduleStore
 const props = defineProps({
-  name: String,
+  moduleName: String,
+  moduleLabel: String,
   data: Array,
   pagination: Object,
   rows: Number,
@@ -20,13 +21,23 @@ const props = defineProps({
   fields: Array,
   collectionLoading: Boolean
 })
-const selectedData = ref([])
+const cm = ref()
+const selectedData = ref()
+const selectedContextData = ref()
+const menuModel = ref([
+  {label: 'View', icon: 'pi pi-fw pi-search', command: () => viewProduct(selectedProduct)},
+  {label: 'Delete', icon: 'pi pi-fw pi-times', command: () => deleteProduct(selectedProduct)}
+])
 
+// actions
 const paginate = async (event) => {
   console.log(event.page + 1)
 
   // re-fetch collection
-  await fetchCollection(event.page + 1)
+  await fetchCollection(props.moduleName, event.page + 1)
+}
+const onRowContextMenu = (event) => {
+  cm.value.show(event.originalEvent)
 }
 
 onMounted(async () => {
@@ -38,11 +49,13 @@ onMounted(async () => {
 <template>
   <DataTable
     v-model:selection="selectedData"
+    v-model:contextMenuSelection="selectedContextData"
+    @rowContextmenu="onRowContextMenu"
     :value="data"
     :loading="collectionLoading"
     stripedRows
     stateStorage="local"
-    :stateKey="`dt-state-${name}`"
+    :stateKey="`dt-state-${moduleLabel}`"
     resizableColumns
     columnResizeMode="fit"
     sortMode="multiple"
@@ -62,6 +75,7 @@ onMounted(async () => {
       :field="col.name"
       :header="col.label"
       sortable
+      sorticon="check"
       style="min-width: 200px !important;"
       bodyClass="text-color-secondary"
       headerClass="bg-esco-blue1-light-active text-color-secondary">
@@ -71,7 +85,7 @@ onMounted(async () => {
             <span
               v-for="(diplayFieldName, dfn) in col.relation.displayFieldName"
               :key="dfn">
-              <span class="mr-1">{{ slotProps.data[col.name][diplayFieldName] }}</span>
+              <span v-if="col.rules.ss_pop_up" class="mr-1">{{ slotProps.data[col.name][diplayFieldName] }}</span>
             </span>
           </span>
           <span v-else>{{ slotProps.data[col.name] }}</span>
@@ -86,6 +100,7 @@ onMounted(async () => {
         :rowsPerPageOptions="[5, 10, 15, 20, 25, 30]"></Paginator>
     </template>
   </DataTable>
+  <ContextMenu ref="cm" :model="menuModel" />
 </template>
 
 <style scoped>
