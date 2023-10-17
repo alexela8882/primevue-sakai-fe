@@ -21,12 +21,31 @@ const props = defineProps({
   fields: Array,
   collectionLoading: Boolean
 })
+const menu = ref()
 const cm = ref()
 const selectedData = ref()
 const selectedContextData = ref()
+const menuSelectedData = ref()
 const menuModel = ref([
-  {label: 'View', icon: 'pi pi-fw pi-search', command: () => viewProduct(selectedProduct)},
-  {label: 'Delete', icon: 'pi pi-fw pi-times', command: () => deleteProduct(selectedProduct)}
+  {label: 'View', icon: 'pi pi-fw pi-search', command: () => console.log(selectedContextData.value)},
+  {label: 'Delete', icon: 'pi pi-fw pi-times', command: () => console.log(selectedContextData.value)}
+])
+const menuItems = ref([
+    {
+      label: 'Update',
+      icon: 'pi pi-refresh',
+      command: (event) => {
+        console.log(event)
+        console.log(menuSelectedData.value)
+      }
+    }, {
+      label: 'Delete',
+      icon: 'pi pi-times',
+      command: (event) => {
+        console.log(event)
+        console.log(menuSelectedData.value)
+      }
+    }
 ])
 
 // actions
@@ -38,6 +57,10 @@ const paginate = async (event) => {
 }
 const onRowContextMenu = (event) => {
   cm.value.show(event.originalEvent)
+}
+const menuToggle = (event, data) => {
+  menu.value.toggle(event)
+  menuSelectedData.value = data
 }
 
 onMounted(async () => {
@@ -60,9 +83,12 @@ onMounted(async () => {
     columnResizeMode="fit"
     sortMode="multiple"
     removableSort
+    scrollable
     tableClass="border-circle">
     <Column
+      frozen
       headerClass="bg-esco-blue1-light-active text-color-secondary"
+      style="background-color: white; border-right: 1px solid #b0ddf0;"
       selectionMode="multiple"></Column>
     <!-- <Column
       v-for="col of fields"
@@ -90,6 +116,24 @@ onMounted(async () => {
           </span>
           <span v-else>{{ slotProps.data[col.name] }}</span>
         </span>
+      </template>
+    </Column>
+    <Column
+      frozen
+      alignFrozen="right"
+      :exportable="false"
+      style="background-color: white; border-left: 1px solid #b0ddf0"
+      bodyClass="text-color-secondary"
+      headerClass="bg-esco-blue1-light-active text-color-secondary">
+      <template #body="slotProps">
+        <Button
+          icon="pi pi-ellipsis-v"
+          text
+          @click="menuToggle($event, slotProps.data)"
+          aria-haspopup="true"
+          aria-controls="overlay_menu"
+          style="font-size: .5rem; padding: 5px 0; margin: 0; background-color: transparent;" />
+        <Menu ref="menu" id="overlay_menu" :data-value="slotProps" :model="menuItems" :popup="true" />
       </template>
     </Column>
     <template #footer>

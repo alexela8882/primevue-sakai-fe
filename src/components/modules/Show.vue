@@ -87,7 +87,6 @@ onMounted(async () => {
               <div class="p-input-icon-left mr-2">
                 <i class="pi pi-search" />
                 <InputText
-                  v-model="value1"
                   type="text"
                   class="text-sm"
                   placeholder="Search The List..." />
