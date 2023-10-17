@@ -68,9 +68,15 @@ a {
 // background
 // blue 1
 .bg-esco-blue1-light { background-color: #e6f4fa !important; }
+.bg-esco-blue1-light:hover { background-color: #d9eff8 !important; }
+.bg-esco-blue1-light:active { background-color: #b0ddf0 !important; }
 .bg-esco-blue1-light-hover { background-color: #d9eff8 !important; }
 .bg-esco-blue1-light-active { background-color: #b0ddf0 !important; }
+
 .bg-esco-blue1-normal { background-color: #0091d0 !important; }
+.bg-esco-blue1-normal:hover { background-color: #0083bb !important; }
+.bg-esco-blue1-normal:active { background-color: #0074a6 !important; }
+
 .bg-esco-blue1-normal-hover { background-color: #0083bb !important; }
 .bg-esco-blue1-normal-active { background-color: #0074a6 !important; }
 .bg-esco-blue1-dark { background-color: #006d9c !important; }

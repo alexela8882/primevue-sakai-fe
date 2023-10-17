@@ -83,15 +83,28 @@ onMounted(async () => {
                 placeholder="Select Fields"
                 class="w-full md:w-12rem text-sm pa-0" />
             </div>
-            <div>
-              <span class="p-input-icon-left">
+            <div class="flex align-items-center">
+              <div class="p-input-icon-left mr-2">
                 <i class="pi pi-search" />
                 <InputText
                   v-model="value1"
                   type="text"
                   class="text-sm"
                   placeholder="Search The List..." />
-              </span>
+              </div>
+              <Button
+                icon="pi pi-chart-bar"
+                aria-label="Submit"
+                class="bg-esco-blue1-normal text-sm mr-2" />
+              <Button
+                icon="pi pi-cog"
+                aria-label="Submit"
+                class="bg-esco-blue1-normal text-sm mr-2" />
+              <Button
+                icon="pi pi-filter"
+                aria-label="Submit"
+                class="bg-esco-blue1-normal text-sm mr-2" />
+              <Button class="bg-esco-blue1-normal text-sm" icon="pi pi-plus" label="Add Country" />
             </div>
           </div>
         </div>
@@ -122,6 +135,10 @@ onMounted(async () => {
 .p-multiselect {
   border: 1px solid #0091d0 !important;
   border-radius: 10px !important;
+}
+
+.p-button {
+  padding: 6px 15px 6px 15px !important;
 }
 </style>
 

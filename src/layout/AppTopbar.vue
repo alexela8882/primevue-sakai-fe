@@ -176,5 +176,9 @@ const logout = () => {
 .layout-topbar a:focus {
   box-shadow: none !important;
 }
-
+.p-inputtext {
+  border: 1px solid lightgray !important;
+  border-radius: 10px !important;
+  padding: 7px 15px 7px 35px !important;
+}
 </style>
