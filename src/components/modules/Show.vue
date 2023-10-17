@@ -60,7 +60,7 @@ onMounted(async () => {
 
         <!-- view filters -->
         <div class="mt-2 mb-4">
-          <div class="flex justify-content-between">
+          <div class="md:flex justify-content-between">
             <div>
               <Dropdown
                 v-model="selectedViewFilter"
@@ -83,7 +83,7 @@ onMounted(async () => {
                 placeholder="Select Fields"
                 class="w-full md:w-12rem text-sm pa-0" />
             </div>
-            <div class="flex align-items-center">
+            <div class="md:flex align-items-center">
               <div class="p-input-icon-left mr-2">
                 <i class="pi pi-search" />
                 <InputText
@@ -95,7 +95,7 @@ onMounted(async () => {
                 aria-label="Submit"
                 class="custom-btn2 bg-esco-blue1-normal text-sm mr-2">
                 <template #icon>
-                  <div class="material-icons" style="padding: 0 !important;">calendar_view_month</div>
+                  <div class="material-icons" style="padding: .5px !important;">calendar_view_month</div>
                 </template>
               </Button>
               <Button

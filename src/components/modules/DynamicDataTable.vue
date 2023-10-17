@@ -84,7 +84,9 @@ onMounted(async () => {
     sortMode="multiple"
     removableSort
     scrollable
-    tableClass="border-circle">
+    scrollHeight="50vh"
+    tableClass="border-circle"
+    class="dynamic-tbl">
     <Column
       frozen
       headerClass="bg-esco-blue1-light-active text-color-secondary"
@@ -139,13 +141,47 @@ onMounted(async () => {
     <template #footer>
       <Paginator
         @page="paginate"
+        template="CurrentPageReport PrevPageLink NextPageLink"
         :rows="pagination && pagination.per_page"
         :totalRecords="pagination && pagination.total"
-        :rowsPerPageOptions="[5, 10, 15, 20, 25, 30]"></Paginator>
+        :rowsPerPageOptions="[5, 10, 15, 20, 25, 30]"
+        class="custom-paginator">
+        <template #start="slotProps">
+          <div class="flex align-items-center">
+            <div class="text-sm text-color-secondary">Items per page: {{ slotProps.state.rows }}</div>
+            <Divider type="solid" layout="vertical" />
+            <div v-if="pagination" class="text-sm text-color-secondary">
+              {{ pagination.current_page }} - {{ pagination.total_pages }} of {{ pagination.total }} items
+            </div>
+          </div>
+        </template>
+      </Paginator>
     </template>
   </DataTable>
-  <ContextMenu ref="cm" :model="menuModel" />
+  <!-- <ContextMenu ref="cm" :model="menuModel" /> -->
 </template>
 
 <style scoped>
+
+</style>
+
+<style>
+.dynamic-tbl.p-datatable .p-datatable-footer {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: rgb(233, 233, 233);
+}
+.custom-paginator .p-paginator {
+  background-color: transparent !important;
+  font-size: 11px !important;
+  padding: 0 1rem !important;
+  margin: 0 !important;
+}
+.custom-paginator .p-paginator .p-paginator-first,
+.custom-paginator .p-paginator .p-paginator-prev,
+.custom-paginator .p-paginator .p-paginator-next,
+.custom-paginator .p-paginator .p-paginator-last {
+  min-width: 1.5rem;
+  height: 1.5rem;
+}
 </style>
