@@ -69,9 +69,6 @@ onMounted(async () => {
                 optionValue="_id"
                 placeholder="Select View Filters"
                 class="w-full md:w-12rem mr-2"
-                :inputStyle="{
-                  padding: '5px 15px !important'
-                }"
                 inputClass="text-sm" />
               <MultiSelect
                 v-model="selectedSearchKeyIds"
@@ -81,7 +78,7 @@ onMounted(async () => {
                 optionLabel="label"
                 optionValue="_id"
                 placeholder="Select Fields"
-                class="w-full md:w-12rem text-sm pa-0" />
+                class="w-full md:w-12rem text-sm" />
             </div>
             <div class="md:flex align-items-center">
               <div class="p-input-icon-left mr-2">
@@ -93,20 +90,20 @@ onMounted(async () => {
               </div>
               <Button
                 aria-label="Submit"
-                class="custom-btn2 bg-primary text-sm mr-2">
+                class="material-icon text-sm mr-2">
                 <template #icon>
-                  <div class="material-icons" style="padding: .5px !important;">calendar_view_month</div>
+                  <div class="material-icons">calendar_view_month</div>
                 </template>
               </Button>
               <Button
                 icon="pi pi-cog"
                 aria-label="Submit"
-                class="custom-btn bg-primary text-sm mr-2" />
+                class="text-sm mr-2" />
               <Button
                 icon="pi pi-filter"
                 aria-label="Submit"
-                class="custom-btn bg-primary text-sm mr-2" />
-              <Button class="custom-btn bg-primary text-sm" icon="pi pi-plus" :label="`New ${getModule.label}`" />
+                class="text-sm mr-2" />
+              <Button class="text-sm" icon="pi pi-plus" :label="`New ${getModule.label}`" />
             </div>
           </div>
         </div>
@@ -125,30 +122,11 @@ onMounted(async () => {
 </template>
 
 <style scoped>
-.p-dropdown {
-  border-radius: 10px !important;
-}
-
-.p-inputtext {
-  border-radius: 10px !important;
-  padding: 5px 15px 5px 35px !important;
-}
-.p-multiselect {
-  border-radius: 10px !important;
-}
-
-.custom-btn {
-  padding: 6px 15px 6px 15px !important;
-}
-
-.custom-btn2 {
-  padding: 1px 0px !important;
-}
 </style>
 
 <style>
-.p-multiselect .p-multiselect-label,
+/* .p-multiselect .p-multiselect-label,
 .p-multiselect .p-multiselect-trigger {
   padding: 5px 5px 5px 15px !important;
-}
+} */
 </style>

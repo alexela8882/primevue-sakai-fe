@@ -89,14 +89,10 @@ onMounted(async () => {
     class="dynamic-tbl">
     <Column
       frozen
-      headerClass="bg-primary-100 text-color-secondary"
-      style="background-color: white; border-right: 1px solid #b0ddf0;"
+      headerClass="custom-header bg-primary-100 text-color-secondary"
+      style="background-color: white; border-right: 1px solid var(--primary-50); min-width: 60px;"
+      bodyClass="text-center"
       selectionMode="multiple"></Column>
-    <!-- <Column
-      v-for="col of fields"
-      :key="col._id"
-      :field="col.name"
-      :header="col.label"></Column> -->
     <Column
       v-for="col of fields"
       :key="col._id"
@@ -124,17 +120,18 @@ onMounted(async () => {
       frozen
       alignFrozen="right"
       :exportable="false"
-      style="background-color: white; border-left: 1px solid #b0ddf0"
-      bodyClass="text-color-secondary"
+      style="background-color: white; border-left: 1px solid var(--primary-50); min-width: 60px;"
+      bodyClass="text-color-secondary text-center"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
         <Button
+          class="menu-btn"
           icon="pi pi-ellipsis-v"
           text
           @click="menuToggle($event, slotProps.data)"
           aria-haspopup="true"
           aria-controls="overlay_menu"
-          style="font-size: .5rem; padding: 5px 0; margin: 0; background-color: transparent;" />
+          style="font-size: .5rem; padding: 5px 0; background-color: transparent;" />
         <Menu ref="menu" id="overlay_menu" :data-value="slotProps" :model="menuItems" :popup="true" />
       </template>
     </Column>
@@ -183,5 +180,13 @@ onMounted(async () => {
 .custom-paginator .p-paginator .p-paginator-last {
   min-width: 1.5rem;
   height: 1.5rem;
+  background-color: transparent !important;
+}
+.custom-paginator .p-paginator-current {
+  background-color: transparent !important;
+}
+.custom-header .p-column-header-content {
+  text-align: center;
+  display: block !important;
 }
 </style>
