@@ -90,7 +90,10 @@ onMounted(async () => {
     <Column
       frozen
       headerClass="custom-header bg-primary-100 text-color-secondary"
-      style="background-color: white; border-right: 1px solid var(--primary-50); min-width: 60px;"
+      style="background-color: white; 
+            box-shadow: 0 0 5px 2px rgba(0,0,0,0.5);
+            clip-path: inset(0px -15px 0px 0px);
+            min-width: 60px;"
       bodyClass="text-center"
       selectionMode="multiple"></Column>
     <Column
@@ -120,7 +123,10 @@ onMounted(async () => {
       frozen
       alignFrozen="right"
       :exportable="false"
-      style="background-color: white; border-left: 1px solid var(--primary-50); min-width: 60px;"
+      style="background-color: white;
+            box-shadow: 0 0 5px 2px rgba(0,0,0,0.5);
+            clip-path: inset(0px 0 0px -15px);
+            min-width: 60px;"
       bodyClass="text-color-secondary text-center"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
