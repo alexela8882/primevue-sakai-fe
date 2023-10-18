@@ -1,4 +1,33 @@
 /* General */
 $scale:14px;                    /* main font size */ 
 $borderRadius:12px;             /* border radius of layout element e.g. card, sidebar */ 
-$transitionDuration:.2s;        /* transition duration of layout elements e.g. sidebar, overlay menus */ 
+$transitionDuration:.2s;        /* transition duration of layout elements e.g. sidebar, overlay menus */
+
+// Esco custom
+// light blue colors
+$lightblue: #e6f4fa;
+$lightblue-hover: #d9eff8;
+$lightblue-active: #b0ddf0;
+
+$lightblue-normal: #0091d0;
+$lightblue-normal-hover: #0083bb;
+$lightblue-normal-active: #0074a6;
+
+$lightblue-dark: #006d9c;
+$lightblue-dark-hover: #00577d;
+$lightblue-dark-active: #00415e;
+$lightblue-darker: #003349;
+
+// primary esco colors
+$esco-primary: #e6edf2;
+$esco-primary-hover: #d9e3ec;
+$esco-primary-active: #b0c6d7;
+
+$esco-normal: #00467f;
+$esco-normal-hover: #003f72;
+$esco-normal-active: #003866;
+
+$esco-dark: #00355f;
+$esco-dark-hover: #002a4c;
+$esco-dark-active: #001f39;
+$esco-darker: #00192c;

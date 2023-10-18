@@ -56,7 +56,7 @@ onMounted(async () => {
         <ProgressSpinner />
       </div>
       <div v-else>
-        <h4 class="text-esco-blue">{{ getModule.label }}</h4>
+        <h4 class="">{{ getModule.label }}</h4>
 
         <!-- view filters -->
         <div class="mt-2 mb-4">
@@ -93,7 +93,7 @@ onMounted(async () => {
               </div>
               <Button
                 aria-label="Submit"
-                class="custom-btn2 bg-esco-blue1-normal text-sm mr-2">
+                class="custom-btn2 bg-primary text-sm mr-2">
                 <template #icon>
                   <div class="material-icons" style="padding: .5px !important;">calendar_view_month</div>
                 </template>
@@ -101,12 +101,12 @@ onMounted(async () => {
               <Button
                 icon="pi pi-cog"
                 aria-label="Submit"
-                class="custom-btn bg-esco-blue1-normal text-sm mr-2" />
+                class="custom-btn bg-primary text-sm mr-2" />
               <Button
                 icon="pi pi-filter"
                 aria-label="Submit"
-                class="custom-btn bg-esco-blue1-normal text-sm mr-2" />
-              <Button class="custom-btn bg-esco-blue1-normal text-sm" icon="pi pi-plus" :label="`New ${getModule.label}`" />
+                class="custom-btn bg-primary text-sm mr-2" />
+              <Button class="custom-btn bg-primary text-sm" icon="pi pi-plus" :label="`New ${getModule.label}`" />
             </div>
           </div>
         </div>
@@ -126,17 +126,14 @@ onMounted(async () => {
 
 <style scoped>
 .p-dropdown {
-  border: 1px solid #0091d0 !important;
   border-radius: 10px !important;
 }
 
 .p-inputtext {
-  border: 1px solid #0091d0 !important;
   border-radius: 10px !important;
   padding: 5px 15px 5px 35px !important;
 }
 .p-multiselect {
-  border: 1px solid #0091d0 !important;
   border-radius: 10px !important;
 }
 

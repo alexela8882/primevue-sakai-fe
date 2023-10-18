@@ -211,6 +211,20 @@ onMounted(async () => {
       <InputSwitch @change="onChangeRipple()" v-model="layoutConfig.ripple.value"></InputSwitch>
     </template>
 
+    <h5>Esco Theme</h5>
+    <div class="grid">
+      <div class="col-3">
+        <Button
+          @click="onChangeTheme('esco', 'light')"
+          link
+          :disabled="layoutConfig.theme.value == 'esco'"
+          :class="`${layoutConfig.theme.value == 'esco' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/bootstrap4-light-blue.svg" class="w-3rem h-3rem" alt="Bootstrap Light Blue" />
+        </Button>
+      </div>
+    </div>
+
     <h5>Bootstrap</h5>
     <div class="grid">
       <div class="col-3">

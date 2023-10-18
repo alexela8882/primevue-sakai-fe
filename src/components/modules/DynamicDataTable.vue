@@ -89,7 +89,7 @@ onMounted(async () => {
     class="dynamic-tbl">
     <Column
       frozen
-      headerClass="bg-esco-blue1-light-active text-color-secondary"
+      headerClass="bg-primary-100 text-color-secondary"
       style="background-color: white; border-right: 1px solid #b0ddf0;"
       selectionMode="multiple"></Column>
     <!-- <Column
@@ -106,7 +106,7 @@ onMounted(async () => {
       sorticon="check"
       style="min-width: 200px !important;"
       bodyClass="text-color-secondary"
-      headerClass="bg-esco-blue1-light-active text-color-secondary">
+      headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
         <span v-if="slotProps.data[col.name]">
           <span v-if="col.relation">
@@ -126,7 +126,7 @@ onMounted(async () => {
       :exportable="false"
       style="background-color: white; border-left: 1px solid #b0ddf0"
       bodyClass="text-color-secondary"
-      headerClass="bg-esco-blue1-light-active text-color-secondary">
+      headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
         <Button
           icon="pi pi-ellipsis-v"
