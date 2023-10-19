@@ -1,3 +1,8 @@
+/*
+search for this keywords for reference:
+1. ui bug fixed
+2. additional ui fix
+*/
 :root {
   --surface-a:#ffffff;
   --surface-b:#fafafa;
@@ -1893,6 +1898,8 @@
 .p-button.p-button-loading-label-only .p-button-loading-icon {
   margin-right: 0;
 }
+
+/* additional ui fix */
 .p-button.material-icon {
   padding: .16rem .5rem !important;
 }
@@ -2821,6 +2828,7 @@
   border-width: 0 1px 0 1px;
 }
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
+  /* ui bug fixed */
   background: var(--surface-50);
 }
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even).p-highlight {
@@ -6636,6 +6644,7 @@
   outline: 0 none;
 }
 .p-datatable .p-datatable-tbody > tr:not(.p-highlight):focus {
+  /* ui bug fixed */
   background-color: var(--surface-100);
 }
 
