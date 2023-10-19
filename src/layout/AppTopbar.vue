@@ -61,7 +61,7 @@ onBeforeUnmount(() => {
 });
 
 const logoUrl = computed(() => {
-  return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`
+  return `layout/${layoutConfig.darkTheme.value ? 'reddot-logo' : 'reddot-logo'}.png`
 });
 
 const onTopBarMenuButton = () => {
@@ -117,14 +117,16 @@ const logout = () => {
   <div class="layout-topbar">
     <div class="layout-menu-button layout-topbar-button" style="width: 100px;"></div>
     <router-link to="/" class="layout-topbar-logo">
-      <div class="flex flex-column" style="font-size: 15px">
-        <!-- <img :src="logoUrl" alt="logo" /> -->
+      <div>
+        <img :src="logoUrl" width="110" alt="logo" />
+      </div>
+      <!-- <div class="flex flex-column" style="font-size: 15px">
         <div>
           <span class="text-red-600 font-bold">RED</span>
           <span>dot</span>
         </div>
         <div class="text-sm font-semibold">CRM</div>
-      </div>
+      </div> -->
     </router-link>
     
     <!-- <button class="p-link layout-menu-button layout-topbar-button" @click="onMenuToggle()">

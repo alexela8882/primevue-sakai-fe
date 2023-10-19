@@ -220,7 +220,7 @@ onMounted(async () => {
           :disabled="layoutConfig.theme.value == 'esco'"
           :class="`${layoutConfig.theme.value == 'esco' && 'selected-theme'}`"
           class="p-2">
-          <img src="/layout/images/themes/bootstrap4-light-blue.svg" class="w-3rem h-3rem" alt="Bootstrap Light Blue" />
+          <img src="/layout/images/themes/esco.png" class="w-3rem h-3rem" alt="Bootstrap Light Blue" />
         </Button>
       </div>
     </div>

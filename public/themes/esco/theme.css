@@ -1309,7 +1309,7 @@
 .p-multiselect:not(.p-disabled).p-focus {
   outline: 0 none;
   outline-offset: 0;
-  box-shadow: none;
+  box-shadow: none !important;
   border-color: #3F51B5;
 }
 .p-multiselect .p-multiselect-label {
@@ -2821,7 +2821,7 @@
   border-width: 0 1px 0 1px;
 }
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
-  background: rgba(0, 0, 0, 0.02);
+  background: var(--surface-50);
 }
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even).p-highlight {
   background: rgba(63, 81, 181, 0.12);
@@ -3358,7 +3358,7 @@
   background: rgba(63, 81, 181, 0.24);
 }
 .p-orderlist.p-orderlist-striped .p-orderlist-list .p-orderlist-item:nth-child(even) {
-  background: rgba(0, 0, 0, 0.02);
+  background: var(--surface-50);
 }
 .p-orderlist.p-orderlist-striped .p-orderlist-list .p-orderlist-item:nth-child(even):hover {
   background: rgba(0, 0, 0, 0.04);
@@ -3534,7 +3534,7 @@
   background: rgba(63, 81, 181, 0.24);
 }
 .p-picklist.p-picklist-striped .p-picklist-list .p-picklist-item:nth-child(even) {
-  background: rgba(0, 0, 0, 0.02);
+  background: var(--surface-50);
 }
 .p-picklist.p-picklist-striped .p-picklist-list .p-picklist-item:nth-child(even):hover {
   background: rgba(0, 0, 0, 0.04);
@@ -6636,7 +6636,7 @@
   outline: 0 none;
 }
 .p-datatable .p-datatable-tbody > tr:not(.p-highlight):focus {
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: var(--surface-100);
 }
 
 .p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-top > td {
@@ -6767,10 +6767,12 @@
 }
 
 .p-inputtext:enabled:focus {
-  box-shadow: inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5;
+  box-shadow: none !important;
+  /* box-shadow: inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5; */
 }
 .p-inputtext:enabled:focus.p-invalid {
-  box-shadow: inset 0 0 0 1px #B00020, inset 0 0 0 1px #B00020, inset 0 0 0 1px #B00020, inset 0 0 0 1px #B00020;
+  box-shadow: none !important;
+  /* box-shadow: inset 0 0 0 1px #B00020, inset 0 0 0 1px #B00020, inset 0 0 0 1px #B00020, inset 0 0 0 1px #B00020; */
 }
 
 .p-input-filled .p-inputtext {

@@ -2,7 +2,7 @@
 // -----------
 // imports
 // -----------
-import { defineProps, onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
 import { useModuleStore } from '../../stores/modules/index'
@@ -21,6 +21,8 @@ const props = defineProps({
   fields: Array,
   collectionLoading: Boolean
 })
+const rightShadowStyle = ref()
+const leftShadowStyle = ref()
 const menu = ref()
 const cm = ref()
 const selectedData = ref()
@@ -56,15 +58,30 @@ const paginate = async (event) => {
   await fetchCollection(props.moduleName, event.page + 1)
 }
 const onRowContextMenu = (event) => {
-  cm.value.show(event.originalEvent)
+  // cm.value.show(event.originalEvent)
 }
 const menuToggle = (event, data) => {
   menu.value.toggle(event)
   menuSelectedData.value = data
 }
+const handleHoverIn = (event) => {
+  const sameStyles = `background-color: white;
+                      box-shadow: 0 0 5px 2px rgba(0,0,0,0.5);`
+  rightShadowStyle.value = `${sameStyles} clip-path: inset(0px -15px 0px 0px);`
+  leftShadowStyle.value = `${sameStyles} clip-path: inset(0px 0px 0px -15px);`
+}
 
+const handleHoverOut = (event) => {
+  rightShadowStyle.value = null
+  leftShadowStyle.value = null
+}
+
+// life cycles
 onMounted(async () => {
-  
+  // const dynamicTbl = document.getElementsByClassName('p-datatable-tbody')[0]
+  // dynamicTbl.addEventListener('onmouseover', handleScroll)
+
+  // console.log(dynamicTbl)
 })
 
 </script>
@@ -85,15 +102,11 @@ onMounted(async () => {
     removableSort
     scrollable
     scrollHeight="55vh"
-    tableClass="border-circle"
     class="dynamic-tbl">
     <Column
       frozen
       headerClass="custom-header bg-primary-100 text-color-secondary"
-      style="background-color: white; 
-            box-shadow: 0 0 5px 2px rgba(0,0,0,0.5);
-            clip-path: inset(0px -15px 0px 0px);
-            min-width: 60px;"
+      :style="`min-width: 60px; ${rightShadowStyle}`"
       bodyClass="text-center"
       selectionMode="multiple"></Column>
     <Column
@@ -123,10 +136,7 @@ onMounted(async () => {
       frozen
       alignFrozen="right"
       :exportable="false"
-      style="background-color: white;
-            box-shadow: 0 0 5px 2px rgba(0,0,0,0.5);
-            clip-path: inset(0px 0 0px -15px);
-            min-width: 60px;"
+      :style="`min-width: 60px; ${leftShadowStyle}`"
       bodyClass="text-color-secondary text-center"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
