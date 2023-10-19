@@ -2,6 +2,7 @@ import { toRef } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import auth from '@/middleware/auth'
 import axios from 'axios'
+import NProgress from 'nprogress'
 // components
 import AppLayout from '@/layout/AppLayout.vue'
 // stores & composables
@@ -266,6 +267,7 @@ router.beforeEach((to, from) => {
   // to.matched.some(record => record.meta.requiresAuth)
   console.log('router loading...')
   routerLoading.value = true
+  NProgress.start()
 
   // fix for first time log in
   axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
@@ -350,6 +352,7 @@ router.beforeEach((to, from) => {
 router.afterEach((to, from) => {
   console.log('router loaded!')
   routerLoading.value = false
+  NProgress.done()
 });
 
 export default router;

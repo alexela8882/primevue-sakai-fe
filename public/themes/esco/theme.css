@@ -2742,7 +2742,7 @@ search for this keywords for reference:
 }
 .p-datatable .p-datatable-tbody > tr.p-highlight {
   /* ui bug fixed */
-  background: var(--primary-100);
+  background: var(--primary-50);
   color: #3F51B5;
 }
 .p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-top > td {
@@ -2834,7 +2834,7 @@ search for this keywords for reference:
 }
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even).p-highlight {
   /* ui bug fixed */
-  background: var(--primary-100);
+  background: var(--primary-50);
   color: #3F51B5;
 }
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even).p-highlight .p-row-toggler {

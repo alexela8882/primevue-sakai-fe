@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import 'material-icons/iconfont/material-icons.css'
+import '../node_modules/nprogress/nprogress.css'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
