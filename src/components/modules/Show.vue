@@ -56,7 +56,7 @@ onMounted(async () => {
         <ProgressSpinner />
       </div>
       <div v-else>
-        <h4 class="">{{ getModule.label }}</h4>
+        <h4 class="text-primary-700">{{ getModule.label }}</h4>
 
         <!-- view filters -->
         <div class="mt-2 mb-4">

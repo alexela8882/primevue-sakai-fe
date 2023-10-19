@@ -1,13 +1,12 @@
 <script setup>
 // imports
 import { storeToRefs } from 'pinia'
-import { defineAsyncComponent, watch } from 'vue'
-// import FormDialog from './components/dynamic/FormDialog.vue'
-// import PopUpDialog from './components/dynamic/PopUpDialog.vue'
-// stores
+import { defineAsyncComponent, onMounted, watch } from 'vue'
+// stores & composables
 import { useGeneralStore } from './stores/general'
 
 // refs
+// stores & composables
 const generalStore = useGeneralStore()
 const { formModalTrigger, popUpModalTrigger } = storeToRefs(generalStore)
 

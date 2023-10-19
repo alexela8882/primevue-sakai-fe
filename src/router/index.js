@@ -1,11 +1,17 @@
+import { toRef } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
-import AppLayout from '@/layout/AppLayout.vue'
 import auth from '@/middleware/auth'
-import { useLayout } from '@/layout/composables/layout'
 import axios from 'axios'
+// components
+import AppLayout from '@/layout/AppLayout.vue'
+// stores & composables
+import { useLayout } from '@/layout/composables/layout'
+import { useBaseComposables } from '@/composables/base'
 
 // refs
+// stores & components
 const { layoutConfig, changeThemeSettings } = useLayout()
+const { routerLoading } = useBaseComposables()
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -258,6 +264,8 @@ const router = createRouter({
 router.beforeEach((to, from) => {
   // instead of having to check every route record with
   // to.matched.some(record => record.meta.requiresAuth)
+  console.log('router loading...')
+  routerLoading.value = true
 
   // fix for first time log in
   axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
@@ -337,6 +345,11 @@ router.beforeEach((to, from) => {
       query: { redirect: to.fullPath },
     }
   }
-})
+});
+
+router.afterEach((to, from) => {
+  console.log('router loaded!')
+  routerLoading.value = false
+});
 
 export default router;

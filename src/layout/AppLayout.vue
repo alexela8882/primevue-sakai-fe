@@ -7,10 +7,11 @@ import AppTopbar from './AppTopbar.vue'
 import AppFooter from './AppFooter.vue'
 import AppSidebar from './AppSidebar.vue'
 import AppConfig from './AppConfig.vue'
-// stores
+// stores & composables
 import { useMenuStore } from '../stores/menu'
 
 // refs
+// stores & composables
 const menuStore = useMenuStore()
 const { isCollapse } = storeToRefs(menuStore)
 

@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createPinia, storeToRefs } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import axios from 'axios'
@@ -7,7 +7,6 @@ import 'material-icons/iconfont/material-icons.css'
 
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-
 
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
