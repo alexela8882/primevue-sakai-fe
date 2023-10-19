@@ -18,10 +18,12 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // states
   const modules = ref([])
   const modulesLoading = ref(false)
+  const baseModule = ref({})
   const module = ref({})
   const collection = ref({})
 
   // getters
+  const getBaseModule = computed(() => baseModule.value)
   const getModule = computed(() => module.value)
   const getModules = computed(() => modules.value)
   const getCollection = computed(() => collection.value)
@@ -95,7 +97,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   })
 
   // actions
-  const fetchModule = async (id) => {
+  const fetchBaseModule = async (id) => {
     moduleLoading.value = true
     const res = await axios(`${jsonDbUrl.value}/modules?_id=${id}`, {
       method: 'GET',
@@ -103,8 +105,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
 
     if (res.status === 200) {
-      module.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
-      console.log(module.value)
+      baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
+      console.log(baseModule.value)
     }
     moduleLoading.value = false
   }
@@ -121,16 +123,19 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
     modulesLoading.value = false
   }
-  const fetchCollection = async (module, page) => {
+  const fetchModule = async (moduleName, page) => {
     collectionLoading.value = true
-    const uri = page ? `collection-${module}-page${page}` : `collection-${module}`
+    const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
     const res = await axios(`${jsonDbUrl.value}/${uri}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
-      collection.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
+      let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
+      module.value = fetchedModule // insert module
+      collection.value = fetchedModule.collection // insert collection
+      console.log(module.value)
       console.log(collection.value)
     }
     collectionLoading.value = false
@@ -140,6 +145,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     moduleLoading,
     collectionLoading,
     modulesLoading,
+    getBaseModule,
     getModule,
     getModules,
     getCollection,
@@ -149,7 +155,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getViewFilterIds,
     getSearchKeyFieldIds,
     fetchModule,
-    fetchModules,
-    fetchCollection
+    fetchBaseModule,
+    fetchModules
+    // fetchCollection
   }
 })

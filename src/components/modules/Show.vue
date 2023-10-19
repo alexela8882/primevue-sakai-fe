@@ -18,6 +18,7 @@ const moduleStore = useModuleStore()
 const {
   moduleLoading,
   collectionLoading,
+  getBaseModule,
   getModule,
   getCollection,
   getViewFilters,
@@ -25,7 +26,7 @@ const {
   getViewFilterIds,
   getViewFilter,
   getSearchKeyFieldIds } = storeToRefs(moduleStore)
-const { fetchModule, fetchCollection } = moduleStore
+const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 
 watch(selectedViewFilter, (newVal, oldVal) => {
   console.log(oldVal)
@@ -37,8 +38,9 @@ watch(selectedViewFilter, (newVal, oldVal) => {
 })
 
 onMounted(async () => {
-  await fetchModule(route.params.id)
-  await fetchCollection(getModule.value.name, 1)
+  // await fetchCollection(route.name.split('.')[0], 1)
+  await fetchBaseModule(route.params.id)
+  await fetchModule(getBaseModule.value.name, 1)
 
   // pre-assignments
   viewFilter.value = getDefaultViewFilter.value
@@ -56,7 +58,7 @@ onMounted(async () => {
         <ProgressSpinner />
       </div>
       <div v-else>
-        <h4 class="text-primary-700">{{ getModule.label }}</h4>
+        <h4 class="text-primary-700">{{ getBaseModule.label }}</h4>
 
         <!-- view filters -->
         <div class="mt-2 mb-4">
@@ -72,7 +74,8 @@ onMounted(async () => {
                 inputClass="text-sm" />
               <MultiSelect
                 v-model="selectedSearchKeyIds"
-                :options="getModule.fields"
+                :options="getBaseModule.fields"
+                track-by="_id"
                 filter
                 :showToggleAll="false"
                 optionLabel="label"
@@ -103,15 +106,15 @@ onMounted(async () => {
                 icon="pi pi-filter"
                 aria-label="Submit"
                 class="text-sm mr-2" />
-              <Button class="text-sm" icon="pi pi-plus" :label="`New ${getModule.label}`" />
+              <Button class="text-sm" icon="pi pi-plus" :label="`New ${getBaseModule.label}`" />
             </div>
           </div>
         </div>
 
         <!-- datatable -->
         <DynamicDataTable
-          :moduleName="getModule.name"
-          :moduleLabel="getModule.label"
+          :moduleName="getBaseModule.name"
+          :moduleLabel="getBaseModule.label"
           :fields="viewFilter.fields"
           :data="getCollection.data"
           :pagination="getCollection.meta && getCollection.meta.pagination"

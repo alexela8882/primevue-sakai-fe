@@ -4,13 +4,15 @@
 // -----------
 import { onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useRoute } from 'vue-router'
 // stores
 import { useModuleStore } from '../../stores/modules/index'
 
 // refs
+const route = useRoute()
 const moduleStore = useModuleStore()
 const { getCollection } = storeToRefs(moduleStore)
-const { fetchCollection } = moduleStore
+const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 const props = defineProps({
   moduleName: String,
   moduleLabel: String,
@@ -54,8 +56,8 @@ const menuItems = ref([
 const paginate = async (event) => {
   console.log(event.page + 1)
 
-  // re-fetch collection
-  await fetchCollection(props.moduleName, event.page + 1)
+  // re-fetch module & collection
+  await fetchModule(props.moduleName, event.page + 1)
 }
 const onRowContextMenu = (event) => {
   // cm.value.show(event.originalEvent)
@@ -82,6 +84,7 @@ onMounted(async () => {
   // dynamicTbl.addEventListener('onmouseover', handleScroll)
 
   // console.log(dynamicTbl)
+  console.log(props)
 })
 
 </script>
