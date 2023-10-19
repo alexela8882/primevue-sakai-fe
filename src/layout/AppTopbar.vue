@@ -124,7 +124,7 @@ const logout = () => {
 
 <template>
   <div class="layout-topbar">
-    <div class="layout-menu-button layout-topbar-button" style="width: 100px;"></div>
+    <div class="layout-menu-button" style="width: 100px;"></div>
     <router-link to="/" class="layout-topbar-logo">
       <div>
         <img :src="logoUrl" width="110" alt="logo" />
