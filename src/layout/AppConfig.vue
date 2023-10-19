@@ -6,8 +6,11 @@ import InputSwitch from 'primevue/inputswitch'
 import Sidebar from 'primevue/sidebar'
 import { useToast } from "primevue/usetoast"
 import { ref, onMounted } from 'vue'
+// stores & composables
 import { useLayout } from '@/layout/composables/layout'
+import { useBaseStore } from '../stores/base'
 import axios from 'axios'
+import { storeToRefs } from 'pinia'
 
 defineProps({
   simple: {
@@ -20,7 +23,10 @@ defineProps({
 const toast = useToast()
 const scales = ref([12, 13, 14, 15, 16])
 const visible = ref(false)
+// stores & composables
 const { changeThemeSettings, setScale, layoutConfig } = useLayout()
+const baseStore = useBaseStore()
+const { configBar } = storeToRefs(baseStore)
 
 // actions
 const onConfigButtonClick = () => {
@@ -165,11 +171,11 @@ onMounted(async () => {
 </script>
 
 <template>
-  <button class="layout-config-button p-link" type="button" @click="onConfigButtonClick()">
+  <!-- <button class="layout-config-button p-link" type="button" @click="configBar = !configBar">
     <i class="pi pi-cog"></i>
-  </button>
+  </button> -->
 
-  <Sidebar v-model:visible="visible" position="right" :transitionOptions="'.3s cubic-bezier(0, 0, 0.2, 1)'" class="layout-config-sidebar w-22rem">
+  <Sidebar v-model:visible="configBar" position="right" :transitionOptions="'.3s cubic-bezier(0, 0, 0.2, 1)'" class="layout-config-sidebar w-22rem">
     <h5>Scale</h5>
     <div class="flex align-items-center">
       <Button icon="pi pi-minus" type="button" @click="decrementScale()" class="p-button-text p-button-rounded w-2rem h-2rem mr-2" :disabled="layoutConfig.scale.value === scales[0]"></Button>
@@ -225,7 +231,7 @@ onMounted(async () => {
       </div>
     </div>
 
-    <h5>Bootstrap</h5>
+    <!-- <h5>Bootstrap</h5>
     <div class="grid">
       <div class="col-3">
         <Button
@@ -267,7 +273,7 @@ onMounted(async () => {
           <img src="/layout/images/themes/bootstrap4-dark-purple.svg" class="w-3rem h-3rem" alt="Bootstrap Dark Purple" />
         </Button>
       </div>
-    </div>
+    </div> -->
 
     <h5>Material Design</h5>
     <div class="grid">

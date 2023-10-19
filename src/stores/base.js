@@ -6,6 +6,7 @@ export const useBaseStore = defineStore('baseStore', () => {
   // states
   const jsonDbUrl = ref('http://localhost:3000')
   const backendUrl = ref('http://localhost:8000')
+  const configBar = ref(false)
 
   // getters
 
@@ -13,6 +14,7 @@ export const useBaseStore = defineStore('baseStore', () => {
 
   return {
     jsonDbUrl,
-    backendUrl
+    backendUrl,
+    configBar
   }
 })

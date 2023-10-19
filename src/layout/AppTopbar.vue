@@ -3,42 +3,51 @@
 // imports
 // --------------
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { useLayout } from '@/layout/composables/layout'
 import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 import { useToast } from "primevue/usetoast"
 import axios from 'axios'
+// stores & composables
+import { useBaseStore } from '../stores/base'
+import { useLayout } from '@/layout/composables/layout'
 
 // -----------
 // refs
 // -----------
+// stores & composables
+const baseStore = useBaseStore()
+const { layoutConfig, onMenuToggle } = useLayout()
 const authUser = ref()
 const toast = useToast()
-const { layoutConfig, onMenuToggle } = useLayout()
 const outsideClickListener = ref(null)
 const topbarMenuActive = ref(false)
 const router = useRouter()
 const isAuthenticated = localStorage.getItem('isAuthenticated')
 const menu = ref()
+const { configBar } = storeToRefs(baseStore)
 const items = ref([
   {
-    label: 'Options',
-    items: [
-      {
-        label: 'Modules',
-        icon: 'pi pi-book',
-        command: () => {
-          router.push('/modules')
-        }
-      }, {
-        label: 'Sign Out',
-        icon: 'pi pi-sign-out',
-        command: () => {
-          logout()
-        }
+    label: 'Themes',
+      icon: 'pi pi-palette',
+      command: () => {
+        configBar.value = true
       }
-    ]
-  }
-]);
+    }, {
+      label: 'Modules',
+      icon: 'pi pi-book',
+      command: () => {
+        router.push('/modules')
+      }
+    }, {
+      separator: true
+    }, {
+      label: 'Sign Out',
+      icon: 'pi pi-sign-out',
+      command: () => {
+        logout()
+      }
+    }
+])
 
 // -------------
 // methods
