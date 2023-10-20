@@ -57,9 +57,10 @@ const menuItems = ref([
 // actions
 const paginate = async (event) => {
   console.log(event.page + 1)
+  const page = event.page + 1
 
   // re-fetch module & collection
-  await fetchModule(props.moduleName, event.page + 1)
+  await fetchModule(props.moduleName, page > 1 ? page : null)
 }
 const onRowContextMenu = (event) => {
   // cm.value.show(event.originalEvent)
@@ -167,7 +168,7 @@ onMounted(async () => {
       headerClass="bg-primary-100 text-color-secondary"
       :rowEditor="true"
       bodyStyle="text-align:center"
-      style="min-width: 4rem;"></Column>
+      style="min-width: 6rem;"></Column>
     <Column
       frozen
       alignFrozen="right"

@@ -40,7 +40,7 @@ watch(selectedViewFilter, (newVal, oldVal) => {
 onMounted(async () => {
   // await fetchCollection(route.name.split('.')[0], 1)
   await fetchBaseModule(route.params.id)
-  await fetchModule(getBaseModule.value.name, 1)
+  await fetchModule(getBaseModule.value.name)
 
   // pre-assignments
   viewFilter.value = getDefaultViewFilter.value

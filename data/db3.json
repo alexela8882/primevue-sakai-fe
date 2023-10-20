@@ -16890,7 +16890,7 @@
       "panels": []
     }
   ],
-  "campaigns-page-1": {
+  "campaigns": {
     "collection": {
       "data": [
         {
@@ -20651,7 +20651,7 @@
       }
     ]
   },
-  "leads-page-1": {
+  "leads": {
     "collection" :{
       "data": [
         {
@@ -25548,7 +25548,7 @@
       }
     ]
   },
-  "salesopportunities-page-1": {
+  "salesopportunities": {
     "collection": {
       "data": [
         {
