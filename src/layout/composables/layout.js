@@ -5,7 +5,7 @@ const layoutConfig = reactive({
   darkTheme: false,
   inputStyle: 'outlined',
   menuMode: 'static',
-  theme: 'lara-light-indigo',
+  theme: 'esco',
   scale: 14,
   activeMenuItem: null
 });
@@ -34,7 +34,7 @@ export function useLayout() {
   };
 
   const onMenuToggle = () => {
-    if (layoutConfig.menuMode === 'overlay') {
+    if (layoutConfig.menuMode === 'static') {
       layoutState.overlayMenuActive = !layoutState.overlayMenuActive;
     }
 

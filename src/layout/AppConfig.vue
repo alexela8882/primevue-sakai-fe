@@ -58,11 +58,13 @@ const onChangeTheme = async (theme, mode) => {
 }
 
 const decrementScale = () => {
-  setScale(layoutConfig.scale.value - 1)
+  const scale = parseInt(layoutConfig.scale.value) - 1
+  setScale(scale)
   applyScale()
 }
 const incrementScale = () => {
-  setScale(layoutConfig.scale.value + 1)
+  const scale = parseInt(layoutConfig.scale.value) + 1
+  setScale(scale)
   applyScale()
 }
 
@@ -70,7 +72,9 @@ const applyScale = () => {
   document.documentElement.style.fontSize = layoutConfig.scale.value + 'px'
 
   // store to localstorage
-  localStorage.setItem('layoutConfig.scale', layoutConfig.scale.value)
+  localStorage.setItem('layoutConfig.scale', layoutConfig.scale.value + 'px')
+
+  console.log(localStorage.getItem('layoutConfig.scale'))
 
   const obj = { app_theme_scale: layoutConfig.scale.value }
   updateBackend(obj)
