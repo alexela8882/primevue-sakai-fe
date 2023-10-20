@@ -126,6 +126,24 @@ const router = createRouter({
             }
           ]
         }, {
+          path: '/salesopportunities',
+          name: 'salesopportunities',
+          component: () => import('@/views/pages/salesopportunities/main.vue'),
+          meta: {
+            requiresAuth: true
+          },
+          children: [
+            {
+              path: '',
+              name: 'salesopportunities.index',
+              component: () => import('@/views/pages/salesopportunities/index.vue'),
+            }, {
+              path: ':id',
+              name: 'salesopportunities.show',
+              component: () => import('@/views/pages/salesopportunities/show.vue')
+            }
+          ]
+        }, {
           path: '/uikit/formlayout',
           name: 'formlayout',
           component: () => import('@/views/uikit/FormLayout.vue'),
