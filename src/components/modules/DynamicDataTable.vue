@@ -38,6 +38,13 @@ const menuModel = ref([
 ])
 const menuItems = ref([
     {
+      label: 'Change Owner',
+      icon: 'pi pi-user',
+      command: (event) => {
+        console.log(event)
+        console.log(menuSelectedData.value)
+      }
+    }, {
       label: 'Update',
       icon: 'pi pi-refresh',
       command: (event) => {
@@ -140,6 +147,12 @@ onMounted(async () => {
               v-for="(diplayFieldName, dfn) in col.relation.displayFieldName"
               :key="dfn">
               <span v-if="col.rules.ss_pop_up" class="mr-1">{{ slotProps.data[col.name][diplayFieldName] }}</span>
+              <span v-else-if="col.rules.ss_dropdown" class="mr-1">
+                <a href="javascript:void(0);" style="color: red;">{{ slotProps.data[col.name][diplayFieldName] }}</a>
+              </span>
+              <span v-else class="mr-1">
+                <a href="javascript:void(0);">{{ slotProps.data[col.name][diplayFieldName] }}</a>
+              </span>
             </span>
           </span>
           <span v-else>{{ slotProps.data[col.name] }}</span>

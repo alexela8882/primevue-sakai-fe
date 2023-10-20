@@ -59,7 +59,7 @@ const router = createRouter({
               name: 'modules.index',
               component: () => import('@/views/pages/modules/index.vue'),
             }, {
-              path: ':id',
+              path: ':name/:id',
               name: 'modules.view',
               component: () => import('@/views/pages/modules/view.vue')
             }
@@ -89,60 +89,6 @@ const router = createRouter({
           meta: {
             requiresAuth: true
           }
-        }, {
-          path: '/leads',
-          name: 'leads',
-          component: () => import('@/views/pages/leads/main.vue'),
-          meta: {
-            requiresAuth: true
-          },
-          children: [
-            {
-              path: '',
-              name: 'leads.index',
-              component: () => import('@/views/pages/leads/index.vue'),
-            }, {
-              path: ':id',
-              name: 'leads.show',
-              component: () => import('@/views/pages/leads/show.vue')
-            }
-          ]
-        }, {
-          path: '/campaigns',
-          name: 'campaigns',
-          component: () => import('@/views/pages/campaigns/main.vue'),
-          meta: {
-            requiresAuth: true
-          },
-          children: [
-            {
-              path: '',
-              name: 'campaigns.index',
-              component: () => import('@/views/pages/campaigns/index.vue'),
-            }, {
-              path: ':id',
-              name: 'campaigns.show',
-              component: () => import('@/views/pages/campaigns/show.vue')
-            }
-          ]
-        }, {
-          path: '/salesopportunities',
-          name: 'salesopportunities',
-          component: () => import('@/views/pages/salesopportunities/main.vue'),
-          meta: {
-            requiresAuth: true
-          },
-          children: [
-            {
-              path: '',
-              name: 'salesopportunities.index',
-              component: () => import('@/views/pages/salesopportunities/index.vue'),
-            }, {
-              path: ':id',
-              name: 'salesopportunities.show',
-              component: () => import('@/views/pages/salesopportunities/show.vue')
-            }
-          ]
         }, {
           path: '/uikit/formlayout',
           name: 'formlayout',

@@ -1,5 +1,6 @@
 <script setup>
 import { computed, watch, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { useLayout } from '@/layout/composables/layout'
 import { storeToRefs } from 'pinia'
 // components
@@ -11,6 +12,7 @@ import AppConfig from './AppConfig.vue'
 import { useMenuStore } from '../stores/menu'
 
 // refs
+const route = useRoute()
 // stores & composables
 const menuStore = useMenuStore()
 const { isCollapse } = storeToRefs(menuStore)
@@ -76,7 +78,7 @@ const isOutsideClicked = (event) => {
       class="layout-main-container"
       :style="`padding-left: ${!isCollapse ? '13rem !important;' : '2rem !important;'}`">
       <div class="layout-main">
-        <router-view></router-view>
+        <router-view :key="route.fullPath"></router-view>
       </div>
       <app-footer></app-footer>
     </div>

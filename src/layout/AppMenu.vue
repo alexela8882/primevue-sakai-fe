@@ -95,7 +95,7 @@ onMounted(() => {
           <el-menu-item
             v-if="menu.items.length > 0"
             v-for="(submenu, sm) in menu.items"
-            @click="$router.push(`/${submenu.name}/${submenu._id}`)"
+            @click="$router.push(`/modules/${submenu.name}/${submenu._id}`)"
             :key="sm"
             :index="`${mn}${sm}`">{{ submenu.label }}</el-menu-item>
         </el-sub-menu>
