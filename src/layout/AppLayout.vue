@@ -78,7 +78,7 @@ const isOutsideClicked = (event) => {
       class="layout-main-container"
       :style="`padding-left: ${!isCollapse ? '13rem !important;' : '2rem !important;'}`">
       <div class="layout-main">
-        <router-view :key="route.fullPath"></router-view>
+        <router-view></router-view>
       </div>
       <app-footer></app-footer>
     </div>
