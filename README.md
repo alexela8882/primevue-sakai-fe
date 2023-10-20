@@ -2,12 +2,13 @@
 
 1. `git clone https://github.com/alexela8882/primevue-sakai-fe.git <project_name>`
 2. `cd <project_name>`
-3. `npm install`
+3. `git checkout <your_designated_branch>`
+4. `npm install`
 
 ## Project Setup
 1. `cd <project_name>`
-2. Run `json-server data/db3.json` to start json-server database
-3. Run `npm run dev` to run the project
+2. Run `json-server data/db3.json` to start json-server database.
+3. Open another terminal the run `npm run dev` to start the project.
 4. Make sure to also run your backend project via `php artisan serve` or your linux nginx/apache setup. Go to https://github.com/alexela8882/primevue-sakai-be/blob/master/README.md for more details how to setup the backend.
 5. Go to `src/stores/base.js` and edit the following states to your working development:
     - jsonDbUrl (json-server database)
