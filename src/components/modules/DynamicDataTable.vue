@@ -9,6 +9,7 @@ import { useRoute } from 'vue-router'
 import { useModuleStore } from '../../stores/modules/index'
 
 // refs
+const editingRows = ref([])
 const route = useRoute()
 const moduleStore = useModuleStore()
 const { getCollection } = storeToRefs(moduleStore)
@@ -27,6 +28,7 @@ const rightShadowStyle = ref()
 const leftShadowStyle = ref()
 const menu = ref()
 const cm = ref()
+const updateRows = ref()
 const selectedData = ref()
 const selectedContextData = ref()
 const menuSelectedData = ref()
@@ -61,7 +63,12 @@ const paginate = async (event) => {
 }
 const onRowContextMenu = (event) => {
   // cm.value.show(event.originalEvent)
+  console.log(event)
 }
+const onRowEditSave = (event) => {
+  let { newData, index } = event
+  props.data[index] = newData
+};
 const menuToggle = (event, data) => {
   menu.value.toggle(event)
   menuSelectedData.value = data
@@ -93,6 +100,9 @@ onMounted(async () => {
   <DataTable
     v-model:selection="selectedData"
     v-model:contextMenuSelection="selectedContextData"
+    v-model:editingRows="editingRows"
+    editMode="row"
+    @row-edit-save="onRowEditSave"
     @rowContextmenu="onRowContextMenu"
     :value="data"
     :loading="collectionLoading"
@@ -134,7 +144,30 @@ onMounted(async () => {
           <span v-else>{{ slotProps.data[col.name] }}</span>
         </span>
       </template>
+      <template #editor="{ data, field }">
+        <span v-if="data[col.name]">
+          <span v-if="col.relation">
+            <span
+              v-for="(diplayFieldName, dfn) in col.relation.displayFieldName"
+              :key="dfn">
+              <div v-if="col.rules.ss_pop_up" class="my-1">
+                <inputText v-model="data[col.name][diplayFieldName]" />
+              </div>
+            </span>
+          </span>
+          <span v-else>
+            <inputText v-model="data[col.name]" />
+          </span>
+        </span>
+      </template>
     </Column>
+    <Column
+      frozen
+      alignFrozen="right"
+      headerClass="bg-primary-100 text-color-secondary"
+      :rowEditor="true"
+      bodyStyle="text-align:center"
+      style="min-width: 4rem;"></Column>
     <Column
       frozen
       alignFrozen="right"
