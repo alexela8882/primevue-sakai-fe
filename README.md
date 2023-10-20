@@ -3,7 +3,8 @@
 1. `git clone https://github.com/alexela8882/primevue-sakai-fe.git <project_name>`
 2. `cd <project_name>`
 3. `git checkout <your_designated_branch>`
-4. `npm install`
+4. `git merge master`
+5. `npm install`
 
 ## Project Setup
 1. `cd <project_name>`
