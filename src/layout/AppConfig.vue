@@ -147,7 +147,7 @@ onMounted(async () => {
     const elementId = 'theme-css'
     const linkElement = document.getElementById(elementId)
     const cloneLinkElement = linkElement.cloneNode(true)
-    const newThemeUrl = linkElement.getAttribute('href').replace('lara-light-indigo', layoutConfig.theme.value)
+    const newThemeUrl = linkElement.getAttribute('href').replace('esco', layoutConfig.theme.value)
     cloneLinkElement.setAttribute('id', elementId + '-clone')
     cloneLinkElement.setAttribute('href', newThemeUrl)
     cloneLinkElement.addEventListener('load', () => {

@@ -19,6 +19,7 @@ const props = defineProps({
   moduleLabel: String,
   data: Array,
   pagination: Object,
+  pageItems: Array,
   rows: Number,
   pages: Number,
   fields: Array,
@@ -37,34 +38,48 @@ const menuModel = ref([
   {label: 'Delete', icon: 'pi pi-fw pi-times', command: () => console.log(selectedContextData.value)}
 ])
 const menuItems = ref([
-    {
-      label: 'Change Owner',
-      icon: 'pi pi-user',
-      command: (event) => {
-        console.log(event)
-        console.log(menuSelectedData.value)
-      }
-    }, {
-      label: 'Update',
-      icon: 'pi pi-refresh',
-      command: (event) => {
-        console.log(event)
-        console.log(menuSelectedData.value)
-      }
-    }, {
-      label: 'Delete',
-      icon: 'pi pi-times',
-      command: (event) => {
-        console.log(event)
-        console.log(menuSelectedData.value)
-      }
+  {
+    label: 'Change Owner',
+    icon: 'pi pi-user',
+    command: (event) => {
+      console.log(event)
+      console.log(menuSelectedData.value)
     }
+  }, {
+    label: 'Update',
+    icon: 'pi pi-refresh',
+    command: (event) => {
+      console.log(event)
+      console.log(menuSelectedData.value)
+    }
+  }, {
+    label: 'Delete',
+    icon: 'pi pi-times',
+    command: (event) => {
+      console.log(event)
+      console.log(menuSelectedData.value)
+    }
+  }
+])
+const perPageItems = ref([
+  { label: '10', value: 10 },
+  { label: '15', value: 15 },
+  { label: '20', value: 20 },
+  { label: '25', value: 25 },
+  { label: '30', value: 30 },
+  { label: '35', value: 35 },
+  { label: '40', value: 40 },
+  { label: '45', value: 45 },
+  { label: '50', value: 50 }
 ])
 
 // actions
-const paginate = async (event) => {
-  console.log(event.page + 1)
-  const page = event.page + 1
+const paginate = async (event, jump) => {
+  let page = 1
+  if (!jump) {
+    console.log(event.page + 1)
+    page = event.page + 1
+  } else page = props.pagination.current_page
 
   // re-fetch module & collection
   await fetchModule(props.moduleName, page > 1 ? page : null)
@@ -88,23 +103,16 @@ const handleHoverIn = (event) => {
   leftShadowStyle.value = `${sameStyles} clip-path: inset(0px 0px 0px -15px);`
 }
 
-const handleHoverOut = (event) => {
-  rightShadowStyle.value = null
-  leftShadowStyle.value = null
-}
 
 // life cycles
 onMounted(async () => {
-  // const dynamicTbl = document.getElementsByClassName('p-datatable-tbody')[0]
-  // dynamicTbl.addEventListener('onmouseover', handleScroll)
-
-  // console.log(dynamicTbl)
   console.log(props)
 })
 
 </script>
 
 <template>
+  <!-- <pre>{{ pageItems }}</pre> -->
   <DataTable
     v-model:selection="selectedData"
     v-model:contextMenuSelection="selectedContextData"
@@ -202,30 +210,44 @@ onMounted(async () => {
       </template>
     </Column>
     <template #footer>
-      <Paginator
-        @page="paginate"
-        template="CurrentPageReport PrevPageLink NextPageLink"
-        :rows="pagination && pagination.per_page"
-        :totalRecords="pagination && pagination.total"
-        :rowsPerPageOptions="[5, 10, 15, 20, 25, 30]"
-        class="custom-paginator">
-        <template #start="slotProps">
-          <div class="flex align-items-center">
-            <div class="text-sm text-color-secondary">Items per page: {{ slotProps.state.rows }}</div>
-            <Divider type="solid" layout="vertical" />
-            <div v-if="pagination" class="text-sm text-color-secondary">
-              {{ pagination.current_page }} - {{ pagination.total_pages }} of {{ pagination.total }} items
-            </div>
+      <div v-if="pagination" class="md:flex justify-content-between font-light">
+        <div class="flex align-items-center px-3">
+          <div class="text-sm text-color-secondary">
+            Items per page:
+            <Dropdown
+              v-model="pagination.per_page"
+              :options="perPageItems"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Select a page"
+              class="filled-dropdown" />
           </div>
-        </template>
-      </Paginator>
+          <Divider type="solid" layout="vertical" />
+          <div class="text-sm text-color-secondary">
+            {{ pagination.current_page }} - {{ pagination.total_pages }} of {{ pagination.total }} items
+          </div>
+        </div>
+        <div class="flex align-items-center px-3">
+          <Paginator
+            @page="paginate($event, false)"
+            template="JumpToPageDropdown PrevPageLink NextPageLink"
+            :rows="pagination && pagination.per_page"
+            :totalRecords="pagination && pagination.total"
+            :rowsPerPageOptions="[5, 10, 15, 20, 25, 30]"
+            class="custom-paginator">
+          </Paginator>
+        </div>
+      </div>
     </template>
   </DataTable>
   <!-- <ContextMenu ref="cm" :model="menuModel" /> -->
 </template>
 
 <style scoped>
-
+.filled-dropdown {
+  border: transparent !important;
+  background-color: transparent !important;
+}
 </style>
 
 <style>
@@ -254,5 +276,12 @@ onMounted(async () => {
 .custom-header .p-column-header-content {
   text-align: center;
   display: block !important;
+}
+.custom-paginator .p-paginator .p-dropdown {
+  border: transparent !important;
+  background-color: transparent !important;
+  height: 32px;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 </style>
