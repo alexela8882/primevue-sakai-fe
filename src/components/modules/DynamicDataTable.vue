@@ -200,6 +200,9 @@ onMounted(async () => {
               <div v-if="col.rules.ss_dropdown" class="my-1">
                 Dropdown edit here...
               </div>
+              <div v-else class="my-1">
+                Other edits here...
+              </div>
             </div>
           </div>
           <div v-else>
@@ -316,12 +319,12 @@ onMounted(async () => {
 }
 .edit-icon {
   opacity: 0;
-  transform: translateX(-10px);
-  transition: all ease-out .2s;
+  /* transform: translateX(-10px);
+  transition: all ease-out .2s; */
 }
 .p-editable-column:hover .edit-icon {
   opacity: 1 !important;
-  transform: translateX(0);
-  transition: transform ease-in .2s;
+  /* transform: translateX(0);
+  transition: transform ease-in .2s; */
 }
 </style>

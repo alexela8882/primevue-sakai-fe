@@ -30,14 +30,11 @@ onMounted(() => {
 <template>
   <div>
     <div v-if="menuLoading">
-      <div class="">
+      <div>
         <ul class="m-0 p-0 list-none">
-          <li v-for="(skel, sk) in 5" :key="sk" class="my-3">
-            <div class="flex">
-              <Skeleton shape="circle" size="4rem" class="mr-2"></Skeleton>
-              <div class="align-self-center" style="flex: 1">
-                <Skeleton width="100%" class="mb-2"></Skeleton>
-              </div>
+          <li v-for="(skel, sk) in 6" :key="sk" class="my-3">
+            <div class="flex justify-content-center">
+              <Skeleton shape="circle" size="4rem"></Skeleton>
             </div>
           </li>
         </ul>

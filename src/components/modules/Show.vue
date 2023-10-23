@@ -33,19 +33,19 @@ const tblMenu = ref(false)
 const tblSettings = ref([
   {
     label: 'New',
-    icon: 'pi pi-plus',
+    icon: 'add',
     command: (event) => {
       console.log(event)
     }
   }, {
     label: 'Edit table settings',
-    icon: 'pi pi-table',
+    icon: 'table_chart',
     command: (event) => {
       console.log(event)
     }
   }, {
     label: 'Edit kanban settings',
-    icon: 'pi pi-cog',
+    icon: 'view_kanban',
     command: (event) => {
       console.log(event)
     }
@@ -145,8 +145,9 @@ onMounted(async () => {
                       <div class="text-color-secondary p-2">LIST VIEW CONTROLS</div>
                     </template>
                     <template #item="{ item, label, props }">
-                      <div class="text-color-secondary p-2 cursor-pointer">
-                        {{ item.label }}
+                      <div class="flex align-items-center text-color-secondary p-2 cursor-pointer">
+                        <div class="material-icons mr-2">{{ item.icon }}</div>
+                        <div>{{ item.label }}</div>
                       </div>
                     </template>
                   </Menu>
