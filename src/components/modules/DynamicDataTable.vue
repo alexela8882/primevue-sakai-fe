@@ -283,5 +283,11 @@ onMounted(async () => {
   background-color: transparent !important;
   padding: 0 !important;
   margin: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+.filled-dropdown.p-dropdown {
+  box-shadow: none !important;
+  outline: none !important;
 }
 </style>

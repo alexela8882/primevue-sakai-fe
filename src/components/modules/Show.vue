@@ -74,8 +74,7 @@ onMounted(async () => {
                 optionLabel="filterName"
                 optionValue="_id"
                 placeholder="Select View Filters"
-                class="border-round-lg border-primary w-full md:w-12rem mr-2"
-                inputClass="text-sm" />
+                class="border-round-xl border-primary w-full md:w-12rem mr-2"/>
               <MultiSelect
                 v-model="selectedSearchKeyIds"
                 :options="getBaseModule.fields"
@@ -85,14 +84,14 @@ onMounted(async () => {
                 optionLabel="label"
                 optionValue="_id"
                 placeholder="Select Fields"
-                class="border-round-lg border-primary w-full md:w-12rem text-sm" />
+                class="border-round-xl border-primary w-full md:w-12rem" />
             </div>
             <div class="md:flex align-items-center">
               <div class="p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText
                   type="text"
-                  class="text-sm border-round-lg border-primary mr-2"
+                  class="border-round-xl border-primary mr-2"
                   placeholder="Search The List..." />
               </div>
               <div class="p-inputgroup flex-1">
