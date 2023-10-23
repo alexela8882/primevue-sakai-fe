@@ -88,23 +88,19 @@ onMounted(async () => {
                 class="border-round-lg w-full md:w-12rem text-sm" />
             </div>
             <div class="md:flex align-items-center">
-              <div class="p-inputgroup flex-1">
-                <!-- <div class="p-input-icon-left">
-                  <i class="pi pi-search" />
-                  <InputText
-                    type="text"
-                    class="text-sm"
-                    placeholder="Search The List..." />
-                </div> -->
+              <div class="p-input-icon-left">
+                <i class="pi pi-search" />
                 <InputText
-                    type="text"
-                    class="text-sm border-round-lg mr-2"
-                    placeholder="Search The List..." />
+                  type="text"
+                  class="text-sm border-round-lg mr-2"
+                  placeholder="Search The List..." />
+              </div>
+              <div class="p-inputgroup flex-1">
                 <Button
                   aria-label="Submit"
                   class="material-icon border-round-lg text-sm mr-2">
                   <template #icon>
-                    <div class="material-icons">calendar_view_month</div>
+                    <div class="material-icons">view_kanban</div>
                   </template>
                 </Button>
                 <Button

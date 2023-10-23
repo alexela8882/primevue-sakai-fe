@@ -87,9 +87,12 @@ onMounted(() => {
         class="custom-menu"
         :collapse="isCollapse"
         background-color="transparent">
-        <el-sub-menu v-for="(menu, mn) in sidebarMenu" :index="`${mn}`" :key="mn">
+        <el-sub-menu v-for="(menu, mn) in sidebarMenu" :index="`${mn}`" :key="mn" >
           <template #title>
-            <div class="material-icons text-white">{{ menu.icon }}</div>
+            <div
+              @click="menu.items.length === 1 && $router.push(`/modules/${menu.name}/${menu._id}`)"
+              class="material-icons text-white">
+              {{ menu.icon }}</div>
             <div v-if="!isCollapse" class="ml-3 text-white">{{ menu.label }}</div>
           </template>
           <el-menu-item
