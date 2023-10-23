@@ -74,7 +74,7 @@ onMounted(async () => {
                 optionLabel="filterName"
                 optionValue="_id"
                 placeholder="Select View Filters"
-                class="border-round-lg w-full md:w-12rem mr-2"
+                class="border-round-lg border-primary w-full md:w-12rem mr-2"
                 inputClass="text-sm" />
               <MultiSelect
                 v-model="selectedSearchKeyIds"
@@ -85,20 +85,20 @@ onMounted(async () => {
                 optionLabel="label"
                 optionValue="_id"
                 placeholder="Select Fields"
-                class="border-round-lg w-full md:w-12rem text-sm" />
+                class="border-round-lg border-primary w-full md:w-12rem text-sm" />
             </div>
             <div class="md:flex align-items-center">
               <div class="p-input-icon-left">
                 <i class="pi pi-search" />
                 <InputText
                   type="text"
-                  class="text-sm border-round-lg mr-2"
+                  class="text-sm border-round-lg border-primary mr-2"
                   placeholder="Search The List..." />
               </div>
               <div class="p-inputgroup flex-1">
                 <Button
                   aria-label="Submit"
-                  class="material-icon border-round-lg text-sm mr-2">
+                  class="material-icon border-round-lg mr-2">
                   <template #icon>
                     <div class="material-icons">view_kanban</div>
                   </template>
@@ -106,12 +106,12 @@ onMounted(async () => {
                 <Button
                   icon="pi pi-cog"
                   aria-label="Submit"
-                  class="text-sm border-round-lg mr-2" />
+                  class="border-round-lg mr-2" />
                 <Button
                   icon="pi pi-filter"
                   aria-label="Submit"
-                  class="text-sm border-round-lg mr-2" />
-                <Button class="text-sm border-round-lg mr-2" icon="pi pi-plus" :label="`New ${getBaseModule.label}`" />
+                  class="border-round-lg mr-2" />
+                <Button class="border-round-lg mr-2" icon="pi pi-plus" :label="`New ${getBaseModule.label}`" />
               </div>
             </div>
           </div>

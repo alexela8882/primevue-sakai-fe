@@ -230,16 +230,14 @@ onMounted(async () => {
             {{ pagination.current_page }} - {{ pagination.total_pages }} of {{ pagination.total }} items
           </div>
         </div>
-        <div class="flex align-items-center px-3">
-          <Paginator
-            @page="paginate($event, false)"
-            template="JumpToPageDropdown PrevPageLink NextPageLink"
-            :rows="pagination && pagination.per_page"
-            :totalRecords="pagination && pagination.total"
-            :rowsPerPageOptions="[5, 10, 15, 20, 25, 30]"
-            class="custom-paginator">
-          </Paginator>
-        </div>
+        <Paginator
+          @page="paginate($event, false)"
+          template="JumpToPageDropdown PrevPageLink NextPageLink"
+          :rows="pagination && pagination.per_page"
+          :totalRecords="pagination && pagination.total"
+          :rowsPerPageOptions="[5, 10, 15, 20, 25, 30]"
+          class="custom-paginator">
+        </Paginator>
       </div>
     </template>
   </DataTable>
