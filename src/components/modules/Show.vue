@@ -3,12 +3,16 @@
 import { storeToRefs } from 'pinia'
 import { onMounted, watch, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import axios from 'axios'
 // stores
 import { useModuleStore } from '@/stores/modules/index'
 // components
 import DynamicDataTable from '../../components/modules/DynamicDataTable.vue'
 
 // refs
+const pickListTblFields = ref(null)
+const products = ref(null)
+const tblSettingsDialog = ref(false)
 const viewFilter = ref([])
 const selectedViewFilter = ref()
 const selectedFields = ref()
@@ -36,6 +40,7 @@ const tblSettings = ref([
     icon: 'add',
     command: (event) => {
       console.log(event)
+      tblSettingsDialog.value = true
     }
   }, {
     label: 'Edit table settings',
@@ -74,6 +79,16 @@ onMounted(async () => {
   selectedViewFilter.value = viewFilter.value._id
   selectedFields.value = getViewFilterIds.value
   selectedSearchKeyIds.value = getSearchKeyFieldIds.value
+
+  const res = await axios(`http://localhost:3000/products`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  })
+  products.value = [res.data, []]
+
+  console.log(getBaseModule.value.fields)
+
+  if (getBaseModule.value) pickListTblFields.value = [getBaseModule.value.fields, []]
 })
 
 </script>
@@ -172,6 +187,70 @@ onMounted(async () => {
           :collectionLoading="collectionLoading" />
       </div>
     </div>
+
+    <Dialog v-model:visible="tblSettingsDialog" modal :style="{ width: '70vw' }">
+      <template #header>
+        <div class="flex align-items-center text-2xl">
+          <div class="material-icons mr-2">table_chart</div>
+          <div>Table Settings</div>
+        </div>
+      </template>
+      <div class="flex flex-column gap-2">
+        <div class="flex align-items-center justify-content-between">
+          <div class="flex align-items-center gap-2">
+            <div>Order by</div>
+            <Dropdown
+              v-model="selectedViewFilter"
+              :options="getViewFilters"
+              optionLabel="filterName"
+              optionValue="_id"
+              placeholder="Select View Filters"
+              class="border-primary w-full md:w-12rem mr-2"/>
+            <Dropdown
+              v-model="selectedViewFilter"
+              :options="getViewFilters"
+              optionLabel="filterName"
+              optionValue="_id"
+              placeholder="Select View Filters"
+              class="border-primary w-full md:w-12rem mr-2"/>
+          </div>
+          <div class="flex align-items-center gap-2">
+            <div>Items per page</div>
+            <Dropdown
+              v-model="selectedViewFilter"
+              :options="getViewFilters"
+              optionLabel="filterName"
+              optionValue="_id"
+              placeholder="Select View Filters"
+              class="border-primary w-full md:w-12rem mr-2"/>
+          </div>
+        </div>
+        <div>
+          <PickList v-model="pickListTblFields" listStyle="height:342px" dataKey="id" breakpoint="400px">
+            <template #sourceheader> Available </template>
+            <template #targetheader> Selected </template>
+            <template #item="slotProps">
+              <div class="flex flex-wrap p-2 align-items-center gap-3">
+                <div class="flex-1 flex flex-column gap-2">
+                  <span class="font-bold">{{ slotProps.item.name }}</span>
+                </div>
+              </div>
+            </template>
+          </PickList>
+        </div>
+      </div>
+      <template #footer>
+        <div class="flex align-items-center justify-content-end my-2">
+          <Button
+            @click="tblSettingsDialog = false"
+            outlined
+            label="Cancel"
+            class="border-round-3xl py-2 px-4 border-color-primary"
+            size="small" />
+          <Button class="reddot-primary border-round-3xl py-2 px-4 text-surface-50">Save</Button>
+        </div>
+      </template>
+    </Dialog>
   </div>
 </template>
 
