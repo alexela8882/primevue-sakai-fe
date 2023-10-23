@@ -794,7 +794,7 @@ search for this keywords for reference:
   background: #ffffff;
   border: 1px solid var(--primary-color);
   transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
-  border-radius: 10px !important;
+  border-radius: 4px;
   outline: none !important;
   padding: 0;
 }
@@ -1137,7 +1137,7 @@ search for this keywords for reference:
   border: 1px solid var(--primary-color);
   transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
   appearance: none;
-  border-radius: 10px !important;
+  border-radius: 4px;
 }
 .p-inputtext:enabled:hover {
   border-color: var(--primary-600);
@@ -1306,7 +1306,7 @@ search for this keywords for reference:
   background: #ffffff;
   border: 1px solid var(--primary-color);
   transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
-  border-radius: 10px !important;
+  border-radius: 4px;
 }
 .p-multiselect:not(.p-disabled):hover {
   border-color: var(--primary-600);

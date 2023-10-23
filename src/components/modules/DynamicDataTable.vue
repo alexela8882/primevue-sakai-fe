@@ -280,7 +280,6 @@ onMounted(async () => {
 .custom-paginator .p-paginator .p-dropdown {
   border: transparent !important;
   background-color: transparent !important;
-  height: 32px;
   padding: 0 !important;
   margin: 0 !important;
 }

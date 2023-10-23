@@ -1,3 +1,8 @@
+/*
+search for this keywords for reference:
+1. ui bug fixed
+2. additional ui fix
+*/
 :root {
   --surface-a:#ffffff;
   --surface-b:#fafafa;
@@ -1881,6 +1886,12 @@
   margin-right: 0;
 }
 
+/* additional ui fix */
+.p-button.material-icon {
+  padding: .3rem .5rem !important;
+}
+
+
 .p-fluid .p-button {
   width: 100%;
 }
@@ -2718,7 +2729,8 @@
   outline-offset: -0.15rem;
 }
 .p-datatable .p-datatable-tbody > tr.p-highlight {
-  background: rgba(63, 81, 181, 0.12);
+  /* ui bug fixed */
+  background: var(--primary-50);
   color: #3F51B5;
 }
 .p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-top > td {
@@ -2805,10 +2817,12 @@
   border-width: 0 1px 0 1px;
 }
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even) {
-  background: rgba(0, 0, 0, 0.02);
+  /* ui bug fixed */
+  background: var(--surface-50);
 }
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even).p-highlight {
-  background: rgba(63, 81, 181, 0.12);
+  /* ui bug fixed */
+  background: var(--primary-50);
   color: #3F51B5;
 }
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr:nth-child(even).p-highlight .p-row-toggler {
@@ -6620,7 +6634,8 @@
   outline: 0 none;
 }
 .p-datatable .p-datatable-tbody > tr:not(.p-highlight):focus {
-  background-color: rgba(0, 0, 0, 0.03);
+  /* ui bug fixed */
+  background-color: var(--surface-100);
 }
 
 .p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-top > td {

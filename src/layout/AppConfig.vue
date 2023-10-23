@@ -301,7 +301,7 @@ onMounted(async () => {
           <img src="/layout/images/themes/md-light-deeppurple.svg" class="w-3rem h-3rem" alt="Material Light DeepPurple" />
         </Button>
       </div>
-      <div class="col-3">
+      <!-- <div class="col-3">
         <Button
           @click="onChangeTheme('md-dark-indigo', 'dark')"
           link
@@ -320,7 +320,7 @@ onMounted(async () => {
           class="p-2">
           <img src="/layout/images/themes/md-dark-deeppurple.svg" class="w-3rem h-3rem" alt="Material Dark DeepPurple" />
         </Button>
-      </div>
+      </div> -->
     </div>
 
     <h5>Material Design Compact</h5>
@@ -345,7 +345,7 @@ onMounted(async () => {
           <img src="/layout/images/themes/md-light-deeppurple.svg" class="w-3rem h-3rem" alt="Material Light Deep Purple" />
         </Button>
       </div>
-      <div class="col-3">
+      <!-- <div class="col-3">
         <Button
           @click="onChangeTheme('mdc-dark-indigo', 'dark')"
           link
@@ -364,7 +364,7 @@ onMounted(async () => {
           class="p-2">
           <img src="/layout/images/themes/md-dark-deeppurple.svg" class="w-3rem h-3rem" alt="Material Dark Deep Purple" />
         </Button>
-      </div>
+      </div> -->
     </div>
 
     <h5>Tailwind</h5>
@@ -437,7 +437,7 @@ onMounted(async () => {
           <img src="/layout/images/themes/lara-light-teal.png" class="w-3rem h-3rem" alt="Lara Light Teal" />
         </Button>
       </div>
-      <div class="col-3">
+      <!-- <div class="col-3">
         <Button
           @click="onChangeTheme('lara-dark-indigo', 'dark')"
           link
@@ -476,7 +476,7 @@ onMounted(async () => {
           class="p-2">
           <img src="/layout/images/themes/lara-dark-teal.png" class="w-3rem h-3rem" alt="Lara Dark Teal" />
         </Button>
-      </div>
+      </div> -->
     </div>
 
     <h5>PrimeOne Design - 2021</h5>
@@ -521,7 +521,7 @@ onMounted(async () => {
           <img src="/layout/images/themes/saga-purple.png" class="w-3rem h-3rem" alt="Saga Purple" />
         </Button>
       </div>
-      <div class="col-3">
+      <!-- <div class="col-3">
         <Button
           @click="onChangeTheme('vela-blue', 'dark')"
           link
@@ -600,7 +600,7 @@ onMounted(async () => {
           class="p-2">
           <img src="/layout/images/themes/arya-purple.png" class="w-3rem h-3rem" alt="Arya Purple" />
         </Button>
-      </div>
+      </div> -->
     </div>
   </Sidebar>
 </template>

@@ -74,7 +74,7 @@ onMounted(async () => {
                 optionLabel="filterName"
                 optionValue="_id"
                 placeholder="Select View Filters"
-                class="w-full md:w-12rem mr-2"
+                class="border-round-lg w-full md:w-12rem mr-2"
                 inputClass="text-sm" />
               <MultiSelect
                 v-model="selectedSearchKeyIds"
@@ -85,32 +85,38 @@ onMounted(async () => {
                 optionLabel="label"
                 optionValue="_id"
                 placeholder="Select Fields"
-                class="w-full md:w-12rem text-sm" />
+                class="border-round-lg w-full md:w-12rem text-sm" />
             </div>
             <div class="md:flex align-items-center">
-              <div class="p-input-icon-left mr-2">
-                <i class="pi pi-search" />
+              <div class="p-inputgroup flex-1">
+                <!-- <div class="p-input-icon-left">
+                  <i class="pi pi-search" />
+                  <InputText
+                    type="text"
+                    class="text-sm"
+                    placeholder="Search The List..." />
+                </div> -->
                 <InputText
-                  type="text"
-                  class="text-sm"
-                  placeholder="Search The List..." />
+                    type="text"
+                    class="text-sm border-round-lg mr-2"
+                    placeholder="Search The List..." />
+                <Button
+                  aria-label="Submit"
+                  class="material-icon border-round-lg text-sm mr-2">
+                  <template #icon>
+                    <div class="material-icons">calendar_view_month</div>
+                  </template>
+                </Button>
+                <Button
+                  icon="pi pi-cog"
+                  aria-label="Submit"
+                  class="text-sm border-round-lg mr-2" />
+                <Button
+                  icon="pi pi-filter"
+                  aria-label="Submit"
+                  class="text-sm border-round-lg mr-2" />
+                <Button class="text-sm border-round-lg mr-2" icon="pi pi-plus" :label="`New ${getBaseModule.label}`" />
               </div>
-              <Button
-                aria-label="Submit"
-                class="material-icon text-sm mr-2">
-                <template #icon>
-                  <div class="material-icons">calendar_view_month</div>
-                </template>
-              </Button>
-              <Button
-                icon="pi pi-cog"
-                aria-label="Submit"
-                class="text-sm mr-2" />
-              <Button
-                icon="pi pi-filter"
-                aria-label="Submit"
-                class="text-sm mr-2" />
-              <Button class="text-sm" icon="pi pi-plus" :label="`New ${getBaseModule.label}`" />
             </div>
           </div>
         </div>
