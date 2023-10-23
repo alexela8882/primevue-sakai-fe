@@ -9,6 +9,7 @@ import { useRoute } from 'vue-router'
 import { useModuleStore } from '../../stores/modules/index'
 
 // refs
+const cellEdit = ref(false)
 const editingRows = ref([])
 const route = useRoute()
 const moduleStore = useModuleStore()
@@ -102,6 +103,11 @@ const handleHoverIn = (event) => {
   rightShadowStyle.value = `${sameStyles} clip-path: inset(0px -15px 0px 0px);`
   leftShadowStyle.value = `${sameStyles} clip-path: inset(0px 0px 0px -15px);`
 }
+const onCellEditComplete = (event) => {
+  cellEdit.value = false
+  let { data, newValue, field } = event
+  data[field] = newValue
+}
 
 
 // life cycles
@@ -117,9 +123,11 @@ onMounted(async () => {
     v-model:selection="selectedData"
     v-model:contextMenuSelection="selectedContextData"
     v-model:editingRows="editingRows"
-    editMode="row"
+    :editMode="cellEdit ? 'cell' : null"
+    @cell-edit-complete="onCellEditComplete"
     @row-edit-save="onRowEditSave"
     @rowContextmenu="onRowContextMenu"
+    tableClass="editable-cells-table"
     :value="data"
     :loading="collectionLoading"
     stripedRows
@@ -130,7 +138,7 @@ onMounted(async () => {
     sortMode="multiple"
     removableSort
     scrollable
-    scrollHeight="55vh"
+    scrollHeight="60vh"
     class="dynamic-tbl">
     <Column
       frozen
@@ -149,50 +157,66 @@ onMounted(async () => {
       bodyClass="text-color-secondary"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
-        <span v-if="slotProps.data[col.name]">
-          <span v-if="col.relation">
-            <span
-              v-for="(diplayFieldName, dfn) in col.relation.displayFieldName"
-              :key="dfn">
-              <span v-if="col.rules.ss_pop_up" class="mr-1">{{ slotProps.data[col.name][diplayFieldName] }}</span>
-              <span v-else-if="col.rules.ss_dropdown" class="mr-1">
-                <a href="javascript:void(0);" style="color: red;">{{ slotProps.data[col.name][diplayFieldName] }}</a>
-                <!-- <pre>
-                  {{ col.relation }}
-                </pre> -->
+        <div v-if="slotProps.data[col.name]">
+          <div class="flex align-items-center justify-content-between">
+            <div>
+              <span v-if="col.relation">
+                <span
+                  v-for="(diplayFieldName, dfn) in col.relation.displayFieldName"
+                  :key="dfn">
+                  <span v-if="col.rules.ss_pop_up" class="mr-1">{{ slotProps.data[col.name][diplayFieldName] }}</span>
+                  <span v-else-if="col.rules.ss_dropdown" class="mr-1">
+                    <a href="javascript:void(0);" style="color: red;">{{ slotProps.data[col.name][diplayFieldName] }}</a>
+                    <!-- <pre>
+                      {{ col.relation }}
+                    </pre> -->
+                  </span>
+                  <span v-else class="mr-1">
+                    <a href="javascript:void(0);">{{ slotProps.data[col.name][diplayFieldName] }}</a>
+                  </span>
+                </span>
               </span>
-              <span v-else class="mr-1">
-                <a href="javascript:void(0);">{{ slotProps.data[col.name][diplayFieldName] }}</a>
-              </span>
-            </span>
-          </span>
-          <span v-else>{{ slotProps.data[col.name] }}</span>
-        </span>
+              <span v-else>{{ slotProps.data[col.name] }}</span>
+            </div>
+            <div>
+              <i @click="cellEdit = true" class="edit-icon cursor-pointer pi pi-pencil ml-3"></i>
+            </div>
+          </div>
+        </div>
       </template>
       <template #editor="{ data, field }">
-        <span v-if="data[col.name]">
-          <span v-if="col.relation">
-            <span
+        <div v-if="data[col.name]" style="overflow: scroll;">
+          <div v-if="col.relation">
+            <div
               v-for="(diplayFieldName, dfn) in col.relation.displayFieldName"
               :key="dfn">
-              <div v-if="col.rules.ss_pop_up" class="my-1">
-                <inputText v-model="data[col.name][diplayFieldName]" />
+              <div v-if="col.rules.ss_pop_up" class="flex align-items-center justify-content-center">
+                <div>
+                  <inputText
+                    v-model="data[col.name][diplayFieldName]"
+                    style="box-sizing: border-box; max-width: 100%;" />
+                </div>
               </div>
-            </span>
-          </span>
-          <span v-else>
-            <inputText v-model="data[col.name]" />
-          </span>
-        </span>
+              <div v-if="col.rules.ss_dropdown" class="my-1">
+                Dropdown edit here...
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            <inputText
+              v-model="data[col.name]"
+              style="box-sizing: border-box; max-width: 100%;" />
+          </div>
+        </div>
       </template>
     </Column>
-    <Column
+    <!-- <Column
       frozen
       alignFrozen="right"
       headerClass="bg-primary-100 text-color-secondary"
       :rowEditor="true"
       bodyStyle="text-align:center"
-      style="min-width: 6rem;"></Column>
+      style="min-width: 6rem;"></Column> -->
     <Column
       frozen
       alignFrozen="right"
@@ -289,5 +313,15 @@ onMounted(async () => {
 .filled-dropdown.p-dropdown {
   box-shadow: none !important;
   outline: none !important;
+}
+.edit-icon {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all ease-out .2s;
+}
+.p-editable-column:hover .edit-icon {
+  opacity: 1 !important;
+  transform: translateX(0);
+  transition: transform ease-in .2s;
 }
 </style>

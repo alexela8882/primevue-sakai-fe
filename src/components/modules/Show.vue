@@ -28,7 +28,33 @@ const {
   getViewFilter,
   getSearchKeyFieldIds } = storeToRefs(moduleStore)
 const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
+// presets
+const tblMenu = ref(false)
+const tblSettings = ref([
+  {
+    label: 'New',
+    icon: 'pi pi-plus',
+    command: (event) => {
+      console.log(event)
+    }
+  }, {
+    label: 'Edit table settings',
+    icon: 'pi pi-table',
+    command: (event) => {
+      console.log(event)
+    }
+  }, {
+    label: 'Edit kanban settings',
+    icon: 'pi pi-cog',
+    command: (event) => {
+      console.log(event)
+    }
+  }
+])
 
+// actions
+
+// lifescycles
 watch(selectedViewFilter, (newVal, oldVal) => {
   console.log(oldVal)
   console.log(newVal)
@@ -97,20 +123,39 @@ onMounted(async () => {
               <div class="p-inputgroup flex-1">
                 <Button
                   aria-label="Submit"
-                  class="material-icon border-round-lg mr-2">
+                  class="material-icon border-round-md mr-2">
                   <template #icon>
                     <div class="material-icons">view_kanban</div>
                   </template>
                 </Button>
-                <Button
-                  icon="pi pi-cog"
-                  aria-label="Submit"
-                  class="border-round-lg mr-2" />
+                <div class="mr-2">
+                  <Button
+                    @click="tblMenu.toggle($event)"
+                    type="button"
+                    icon="pi pi-cog"
+                    aria-haspopup="true"
+                    aria-controls="tbl_overlay_menu" />
+                  <Menu
+                    ref="tblMenu"
+                    id="tbl_overlay_menu"
+                    class="mt-2"
+                    :model="tblSettings"
+                    :popup="true">
+                    <template #start>
+                      <div class="text-color-secondary p-2">LIST VIEW CONTROLS</div>
+                    </template>
+                    <template #item="{ item, label, props }">
+                      <div class="text-color-secondary p-2 cursor-pointer">
+                        {{ item.label }}
+                      </div>
+                    </template>
+                  </Menu>
+                </div>
                 <Button
                   icon="pi pi-filter"
                   aria-label="Submit"
-                  class="border-round-lg mr-2" />
-                <Button class="border-round-lg mr-2" icon="pi pi-plus" :label="`New ${getBaseModule.label}`" />
+                  class="border-round-md mr-2" />
+                <Button class="border-round-md mr-2" icon="pi pi-plus" :label="`New ${getBaseModule.label}`" />
               </div>
             </div>
           </div>

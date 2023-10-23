@@ -37,7 +37,6 @@ onMounted(() => {
               <Skeleton shape="circle" size="4rem" class="mr-2"></Skeleton>
               <div class="align-self-center" style="flex: 1">
                 <Skeleton width="100%" class="mb-2"></Skeleton>
-                <Skeleton width="75%"></Skeleton>
               </div>
             </div>
           </li>
