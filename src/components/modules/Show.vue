@@ -32,7 +32,7 @@ const {
   getViewFilterIds,
   getViewFilter,
   getSearchKeyFieldIds } = storeToRefs(moduleStore)
-const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
+const { fetchModule, fetchBaseModule, addViewFilter } = moduleStore
 // presets
 const tblMenu = ref(false)
 const tblSettings = ref([
@@ -102,38 +102,22 @@ const saveNewViewFilter = () => {
   ) {
     tblSettingsDialog.value = false
 
+    // insert to backend
+    addViewFilter(newViewFilter.value.data)
+
     // reset to default
     newViewFilter.value.error = false
     newViewFilter.value.data = Object.assign({}, newViewFilter.value.default)
     pickListTblFields.value = [getBaseModule.value.fields, []]
-
-    // toast
-    toast.add({
-      severity: 'success',
-      summary: 'Success Message',
-      detail: 'New view filters successfully added',
-      life: 3000
-    })
   } else newViewFilter.value.error = true
-  console.log(newViewFilter.value)
 }
 
 // lifescycles
 watch(selectedViewFilter, (newVal, oldVal) => {
-  console.log(oldVal)
-  console.log(newVal)
-
   if (newVal) viewFilter.value = getViewFilter.value(newVal)
-
-  console.log(viewFilter.value)
 })
 
 watch(pickListTblFields, (newVal, oldVal) => {
-  console.log(oldVal)
-  console.log(newVal)
-
-  console.log(newVal[1].map(nv => nv._id))
-
   // update new view filters
   newViewFilter.value.data.fields = newVal[1].map(nv => nv._id)
 })
@@ -298,7 +282,11 @@ onMounted(async () => {
           </div>
         </div>
         <div>
-          <PickList v-model="pickListTblFields" listStyle="height:342px" dataKey="_id" breakpoint="400px">
+          <PickList
+            v-model="pickListTblFields"
+            responsive
+            listStyle="height:342px"
+            dataKey="_id">
             <template #sourceheader> Available </template>
             <template #targetheader> Selected </template>
             <template #item="slotProps">

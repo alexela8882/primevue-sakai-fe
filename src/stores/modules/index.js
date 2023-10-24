@@ -2,6 +2,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import axios from 'axios'
+import { useToast } from 'primevue/usetoast'
 import { storeToRefs } from 'pinia'
 // stores
 import { useBaseStore } from '@/stores/base'
@@ -9,6 +10,7 @@ import { useBaseStore } from '@/stores/base'
 export const useModuleStore = defineStore('moduleStore', () => {
 
   // refs
+  const toast = useToast()
   // stores
   const baseStore = useBaseStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
@@ -106,7 +108,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
     if (res.status === 200) {
       baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
-      console.log(baseModule.value)
     }
     moduleLoading.value = false
   }
@@ -119,7 +120,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
     if (res.status === 200) {
       modules.value = res.data
-      // console.log(res.data)
     }
     modulesLoading.value = false
   }
@@ -135,10 +135,21 @@ export const useModuleStore = defineStore('moduleStore', () => {
       let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
       module.value = fetchedModule // insert module
       collection.value = fetchedModule.collection // insert collection
-      console.log(module.value)
-      console.log(collection.value)
     }
     collectionLoading.value = false
+  }
+  const addViewFilter = async (payload) => {
+    console.log(JSON.stringify(payload))
+
+    // do backend codes here
+
+    // toast
+    toast.add({
+      severity: 'success',
+      summary: 'Success Message',
+      detail: 'New view filters successfully added',
+      life: 3000
+    })
   }
 
   return {
@@ -156,7 +167,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getSearchKeyFieldIds,
     fetchModule,
     fetchBaseModule,
-    fetchModules
-    // fetchCollection
+    fetchModules,
+    addViewFilter
   }
 })

@@ -78,7 +78,6 @@ const perPageItems = ref([
 const paginate = async (event, jump) => {
   let page = 1
   if (!jump) {
-    console.log(event.page + 1)
     page = event.page + 1
   } else page = props.pagination.current_page
 
@@ -87,7 +86,6 @@ const paginate = async (event, jump) => {
 }
 const onRowContextMenu = (event) => {
   // cm.value.show(event.originalEvent)
-  console.log(event)
 }
 const onRowEditSave = (event) => {
   let { newData, index } = event
@@ -112,7 +110,7 @@ const onCellEditComplete = (event) => {
 
 // life cycles
 onMounted(async () => {
-  console.log(props)
+  // console.log(props)
 })
 
 </script>
