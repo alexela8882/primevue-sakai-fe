@@ -10,12 +10,47 @@ import { useBaseStore } from '@/stores/base'
 export const useModuleStore = defineStore('moduleStore', () => {
 
   // refs
+  const tblSettingsDialogSwitch = ref(false)
+  const tblSettingsDialog = ref(false)
   const toast = useToast()
   // stores
   const baseStore = useBaseStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
   const moduleLoading = ref(false)
   const collectionLoading = ref(false)
+  // presets
+  const perPageItems = ref([
+    { label: '10', value: 10 },
+    { label: '15', value: 15 },
+    { label: '20', value: 20 },
+    { label: '25', value: 25 },
+    { label: '30', value: 30 },
+    { label: '35', value: 35 },
+    { label: '40', value: 40 },
+    { label: '45', value: 45 },
+    { label: '50', value: 50 }
+  ])
+  const newViewFilter = ref({
+    error: false,
+    data: {
+      filterName: null,
+      sortField: null,
+      sortOrder: null,
+      perPage: null,
+      fields: [],
+      moduleName: null,
+      isDefault: false
+    },
+    default: {
+      filterName: null,
+      sortField: null,
+      sortOrder: null,
+      perPage: null,
+      fields: [],
+      moduleName: null,
+      isDefault: false
+    }
+  })
 
   // states
   const modules = ref([])
@@ -153,6 +188,10 @@ export const useModuleStore = defineStore('moduleStore', () => {
   }
 
   return {
+    perPageItems,
+    newViewFilter,
+    tblSettingsDialogSwitch,
+    tblSettingsDialog,
     moduleLoading,
     collectionLoading,
     modulesLoading,
