@@ -10,7 +10,7 @@ import DynamicDataTable from '../modules/DynamicDataTable.vue'
 const ViewFiltersDialog = defineAsyncComponent(() => import('../modules/ViewFiltersDialog.vue'))
 
 // refs
-const tblSettingsDialogComponentKey = ref(0)
+const viewFiltersDialogComponentKey = ref(0)
 const route = useRoute()
 const viewFilter = ref([])
 const selectedViewFilter = ref()
@@ -19,8 +19,8 @@ const selectedSearchKeyIds = ref()
 // stores
 const moduleStore = useModuleStore()
 const {
-  tblSettingsDialogSwitch,
-  tblSettingsDialog,
+  viewFiltersDialogSwitch,
+  viewFiltersDialog,
   moduleLoading,
   collectionLoading,
   getBaseModule,
@@ -40,8 +40,8 @@ const tblSettings = ref([
     command: (event) => {
       console.log(event)
       forceRender()
-      tblSettingsDialogSwitch.value = true
-      tblSettingsDialog.value = true
+      viewFiltersDialogSwitch.value = true
+      viewFiltersDialog.value = true
     }
   }, {
     label: 'Edit table settings',
@@ -60,7 +60,7 @@ const tblSettings = ref([
 
 // actions
 const forceRender = () => {
-  tblSettingsDialogComponentKey.value += 1
+  viewFiltersDialogComponentKey.value += 1
 }
 
 // lifescycles
@@ -175,7 +175,7 @@ onMounted(async () => {
     </div>
   </div>
 
-  <ViewFiltersDialog :key="tblSettingsDialogComponentKey" v-if="tblSettingsDialogSwitch" />
+  <ViewFiltersDialog :key="viewFiltersDialogComponentKey" v-if="viewFiltersDialogSwitch" />
 </template>
 
 <style scoped>

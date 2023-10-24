@@ -10,7 +10,7 @@ const pickListTblFields = ref(null)
 // stores
 const moduleStore = useModuleStore()
 const {
-  tblSettingsDialog,
+  viewFiltersDialog,
   newViewFilter,
   perPageItems,
   getBaseModule
@@ -27,7 +27,7 @@ const saveNewViewFilter = () => {
     newViewFilter.value.data.perPage &&
     newViewFilter.value.data.fields.length >= 1
   ) {
-    tblSettingsDialog.value = false
+    viewFiltersDialog.value = false
 
     // insert to backend
     addViewFilter(newViewFilter.value.data)
@@ -53,7 +53,7 @@ onMounted(() => {
 
 <template>
   <Dialog
-    v-model:visible="tblSettingsDialog"
+    v-model:visible="viewFiltersDialog"
     modal
     maximizable
     :style="{ width: '70vw' }"
@@ -130,7 +130,7 @@ onMounted(() => {
     <template #footer>
       <div class="flex align-items-center justify-content-end my-2">
         <Button
-          @click="tblSettingsDialog = false"
+          @click="viewFiltersDialog = false"
           outlined
           label="Cancel"
           class="border-round-3xl py-2 px-4 border-color-primary"
