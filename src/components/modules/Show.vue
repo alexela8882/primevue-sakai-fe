@@ -4,20 +4,21 @@ import { storeToRefs } from 'pinia'
 import { onMounted, watch, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from 'axios'
+import { useToast } from 'primevue/usetoast'
 // stores
 import { useModuleStore } from '@/stores/modules/index'
 // components
 import DynamicDataTable from '../../components/modules/DynamicDataTable.vue'
 
 // refs
+const route = useRoute()
+const toast = useToast()
 const pickListTblFields = ref(null)
-const products = ref(null)
 const tblSettingsDialog = ref(false)
 const viewFilter = ref([])
 const selectedViewFilter = ref()
 const selectedFields = ref()
 const selectedSearchKeyIds = ref()
-const route = useRoute()
 // stores
 const moduleStore = useModuleStore()
 const {
@@ -56,8 +57,66 @@ const tblSettings = ref([
     }
   }
 ])
+const newViewFilter = ref({
+  error: false,
+  data: {
+    filterName: null,
+    sortField: null,
+    sortOrder: null,
+    perPage: null,
+    fields: [],
+    moduleName: route.params.name,
+    isDefault: false
+  },
+  default: {
+    filterName: null,
+    sortField: null,
+    sortOrder: null,
+    perPage: null,
+    fields: [],
+    moduleName: route.params.name,
+    isDefault: false
+  }
+})
+const perPageItems = ref([
+  { label: '10', value: 10 },
+  { label: '15', value: 15 },
+  { label: '20', value: 20 },
+  { label: '25', value: 25 },
+  { label: '30', value: 30 },
+  { label: '35', value: 35 },
+  { label: '40', value: 40 },
+  { label: '45', value: 45 },
+  { label: '50', value: 50 }
+])
 
 // actions
+const saveNewViewFilter = () => {
+  newViewFilter.value.error = false // reset validation
+  if (
+    newViewFilter.value.data.filterName &&
+    newViewFilter.value.data.sortField &&
+    newViewFilter.value.data.sortOrder &&
+    newViewFilter.value.data.perPage &&
+    newViewFilter.value.data.fields.length >= 1
+  ) {
+    tblSettingsDialog.value = false
+
+    // reset to default
+    newViewFilter.value.error = false
+    newViewFilter.value.data = Object.assign({}, newViewFilter.value.default)
+    pickListTblFields.value = [getBaseModule.value.fields, []]
+
+    // toast
+    toast.add({
+      severity: 'success',
+      summary: 'Success Message',
+      detail: 'New view filters successfully added',
+      life: 3000
+    })
+  } else newViewFilter.value.error = true
+  console.log(newViewFilter.value)
+}
 
 // lifescycles
 watch(selectedViewFilter, (newVal, oldVal) => {
@@ -67,6 +126,16 @@ watch(selectedViewFilter, (newVal, oldVal) => {
   if (newVal) viewFilter.value = getViewFilter.value(newVal)
 
   console.log(viewFilter.value)
+})
+
+watch(pickListTblFields, (newVal, oldVal) => {
+  console.log(oldVal)
+  console.log(newVal)
+
+  console.log(newVal[1].map(nv => nv._id))
+
+  // update new view filters
+  newViewFilter.value.data.fields = newVal[1].map(nv => nv._id)
 })
 
 onMounted(async () => {
@@ -79,16 +148,7 @@ onMounted(async () => {
   selectedViewFilter.value = viewFilter.value._id
   selectedFields.value = getViewFilterIds.value
   selectedSearchKeyIds.value = getSearchKeyFieldIds.value
-
-  const res = await axios(`http://localhost:3000/products`, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' }
-  })
-  products.value = [res.data, []]
-
-  console.log(getBaseModule.value.fields)
-
-  if (getBaseModule.value) pickListTblFields.value = [getBaseModule.value.fields, []]
+  pickListTblFields.value = [getBaseModule.value.fields, []]
 })
 
 </script>
@@ -195,38 +255,50 @@ onMounted(async () => {
           <div>Table Settings</div>
         </div>
       </template>
-      <div class="flex flex-column gap-2">
+      <div class="flex flex-column gap-2 my-2">
+        <InlineMessage
+          v-if="newViewFilter.error"
+          severity="error">
+          Please fill all the required fields
+        </InlineMessage>
+        <span class="p-float-label my-3">
+          <InputText
+            v-model="newViewFilter.data.filterName"
+            class="border-primary"
+            style="min-width: 50vh;" />
+          <label>Filter name *</label>
+        </span>
         <div class="flex align-items-center justify-content-between">
           <div class="flex align-items-center gap-2">
             <div>Order by</div>
             <Dropdown
-              v-model="selectedViewFilter"
-              :options="getViewFilters"
-              optionLabel="filterName"
+              v-model="newViewFilter.data.sortField"
+              :options="getBaseModule.fields"
+              optionLabel="name"
               optionValue="_id"
-              placeholder="Select View Filters"
+              placeholder="Select Field *"
               class="border-primary w-full md:w-12rem mr-2"/>
             <Dropdown
-              v-model="selectedViewFilter"
-              :options="getViewFilters"
-              optionLabel="filterName"
-              optionValue="_id"
-              placeholder="Select View Filters"
+              v-model="newViewFilter.data.sortOrder"
+              :options="[{ label: 'Ascending', value: 'asc' }, { label: 'Descending', value: 'desc' }]"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Select Order *"
               class="border-primary w-full md:w-12rem mr-2"/>
           </div>
           <div class="flex align-items-center gap-2">
             <div>Items per page</div>
             <Dropdown
-              v-model="selectedViewFilter"
-              :options="getViewFilters"
-              optionLabel="filterName"
-              optionValue="_id"
-              placeholder="Select View Filters"
+              v-model="newViewFilter.data.perPage"
+              :options="perPageItems"
+              optionLabel="label"
+              optionValue="value"
+              placeholder="Per Page *"
               class="border-primary w-full md:w-12rem mr-2"/>
           </div>
         </div>
         <div>
-          <PickList v-model="pickListTblFields" listStyle="height:342px" dataKey="id" breakpoint="400px">
+          <PickList v-model="pickListTblFields" listStyle="height:342px" dataKey="_id" breakpoint="400px">
             <template #sourceheader> Available </template>
             <template #targetheader> Selected </template>
             <template #item="slotProps">
@@ -247,7 +319,9 @@ onMounted(async () => {
             label="Cancel"
             class="border-round-3xl py-2 px-4 border-color-primary"
             size="small" />
-          <Button class="reddot-primary border-round-3xl py-2 px-4 text-surface-50">Save</Button>
+          <Button
+            @click="saveNewViewFilter"
+            class="reddot-primary border-round-3xl py-2 px-4 text-surface-50">Save</Button>
         </div>
       </template>
     </Dialog>
