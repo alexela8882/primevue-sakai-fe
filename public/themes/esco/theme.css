@@ -699,7 +699,7 @@ search for this keywords for reference:
 }
 .p-checkbox .p-checkbox-box.p-highlight {
   border-color: #3F51B5;
-  background: #3F51B5;
+  background: var(--primary-color);
 }
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
   border-color: rgba(0, 0, 0, 0.87);
@@ -712,7 +712,7 @@ search for this keywords for reference:
 }
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
   border-color: #3F51B5;
-  background: #3F51B5;
+  background: var(--primary-color);
   color: #ffffff;
 }
 .p-checkbox.p-invalid > .p-checkbox-box {
@@ -723,13 +723,13 @@ search for this keywords for reference:
   background-color: #f5f5f5;
 }
 .p-input-filled .p-checkbox .p-checkbox-box.p-highlight {
-  background: #3F51B5;
+  background: var(--primary-color);
 }
 .p-input-filled .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
   background-color: #ececec;
 }
 .p-input-filled .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
-  background: #3F51B5;
+  background: var(--primary-color);
 }
 
 .p-chips:not(.p-disabled):hover .p-chips-multiple-container {
@@ -1117,7 +1117,7 @@ search for this keywords for reference:
   background: rgba(63, 81, 181, 0.5);
 }
 .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider:before {
-  background: #3F51B5;
+  background: var(--primary-color);
 }
 .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
   background: rgba(63, 81, 181, 0.5);
@@ -1623,7 +1623,7 @@ search for this keywords for reference:
 .p-slider .p-slider-handle {
   height: 20px;
   width: 20px;
-  background: #3F51B5;
+  background: var(--primary-color);
   border: 0 none;
   border-radius: 50%;
   transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
@@ -1634,10 +1634,10 @@ search for this keywords for reference:
   box-shadow: none;
 }
 .p-slider .p-slider-range {
-  background: #3F51B5;
+  background: var(--primary-color);
 }
 .p-slider:not(.p-disabled) .p-slider-handle:hover {
-  background: #3F51B5;
+  background: var(--primary-color);
   border-color: 0 none;
 }
 
@@ -1760,7 +1760,7 @@ search for this keywords for reference:
 
 .p-button {
   color: #ffffff;
-  background: #3F51B5;
+  background: var(--primary-color);
   border: 0 none;
   padding: 0.571rem 0.75rem;
   font-size: 1rem;
@@ -1768,12 +1768,12 @@ search for this keywords for reference:
   border-radius: 4px;
 }
 .p-button:enabled:hover {
-  background: rgba(63, 81, 181, 0.92);
+  background: var(--primary-400);
   color: #ffffff;
   border-color: transparent;
 }
 .p-button:enabled:active {
-  background: rgba(63, 81, 181, 0.68);
+  background: var(--primary-500);
   color: #ffffff;
   border-color: transparent;
 }
@@ -2755,7 +2755,7 @@ search for this keywords for reference:
   color: rgba(0, 0, 0, 0.87);
 }
 .p-datatable .p-column-resizer-helper {
-  background: #3F51B5;
+  background: var(--primary-color);
 }
 .p-datatable .p-datatable-scrollable-header,
 .p-datatable .p-datatable-scrollable-footer {
@@ -3063,7 +3063,7 @@ search for this keywords for reference:
 }
 .fc.fc-unthemed .fc-toolbar .fc-button {
   color: #ffffff;
-  background: #3F51B5;
+  background: var(--primary-color);
   border: 0 none;
   font-size: 1rem;
   transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
@@ -3072,12 +3072,12 @@ search for this keywords for reference:
   align-items: center;
 }
 .fc.fc-unthemed .fc-toolbar .fc-button:enabled:hover {
-  background: rgba(63, 81, 181, 0.92);
+  background: var(--primary-400);
   color: #ffffff;
   border-color: transparent;
 }
 .fc.fc-unthemed .fc-toolbar .fc-button:enabled:active {
-  background: rgba(63, 81, 181, 0.68);
+  background: var(--primary-500);
   color: #ffffff;
   border-color: transparent;
 }
@@ -3227,19 +3227,19 @@ search for this keywords for reference:
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button {
   color: #ffffff;
-  background: #3F51B5;
+  background: var(--primary-color);
   border: 0 none;
   font-size: 1rem;
   transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s, background-size 0.2s cubic-bezier(0.64, 0.09, 0.08, 1);
   border-radius: 4px;
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button:enabled:hover {
-  background: rgba(63, 81, 181, 0.92);
+  background: var(--primary-400);
   color: #ffffff;
   border-color: transparent;
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button:enabled:active {
-  background: rgba(63, 81, 181, 0.68);
+  background: var(--primary-500);
   color: #ffffff;
   border-color: transparent;
 }
@@ -3251,7 +3251,7 @@ search for this keywords for reference:
 .fc.fc-theme-standard .fc-toolbar .fc-button:disabled {
   opacity: 0.38;
   color: #ffffff;
-  background: #3F51B5;
+  background: var(--primary-color);
   border: 0 none;
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button .fc-icon-chevron-left {
@@ -3795,7 +3795,7 @@ search for this keywords for reference:
   color: rgba(0, 0, 0, 0.87);
 }
 .p-treetable .p-column-resizer-helper {
-  background: #3F51B5;
+  background: var(--primary-color);
 }
 .p-treetable .p-treetable-scrollable-header,
 .p-treetable .p-treetable-scrollable-footer {
@@ -4312,7 +4312,7 @@ search for this keywords for reference:
   padding: 0.75rem;
 }
 .p-overlaypanel .p-overlaypanel-close {
-  background: #3F51B5;
+  background: var(--primary-color);
   color: #ffffff;
   width: 2rem;
   height: 2rem;
@@ -4323,7 +4323,7 @@ search for this keywords for reference:
   right: -1rem;
 }
 .p-overlaypanel .p-overlaypanel-close:enabled:hover {
-  background: rgba(63, 81, 181, 0.92);
+  background: var(--primary-400);
   color: #ffffff;
 }
 .p-overlaypanel:after {
@@ -4451,12 +4451,12 @@ search for this keywords for reference:
 }
 
 .p-fileupload-choose:not(.p-disabled):hover {
-  background: rgba(63, 81, 181, 0.92);
+  background: var(--primary-400);
   color: #ffffff;
   border-color: transparent;
 }
 .p-fileupload-choose:not(.p-disabled):active {
-  background: rgba(63, 81, 181, 0.68);
+  background: var(--primary-500);
   color: #ffffff;
   border-color: transparent;
 }
@@ -5766,7 +5766,7 @@ search for this keywords for reference:
 }
 
 .p-badge {
-  background: #3F51B5;
+  background: var(--primary-color);
   color: #ffffff;
   font-size: 0.75rem;
   font-weight: 700;
@@ -5862,7 +5862,7 @@ search for this keywords for reference:
 .p-progressbar .p-progressbar-value {
   border: 0 none;
   margin: 0;
-  background: #3F51B5;
+  background: var(--primary-color);
 }
 .p-progressbar .p-progressbar-label {
   color: #ffffff;
@@ -5945,7 +5945,7 @@ search for this keywords for reference:
 }
 
 .p-tag {
-  background: #3F51B5;
+  background: var(--primary-color);
   color: #ffffff;
   font-size: 0.75rem;
   font-weight: 700;
@@ -6124,7 +6124,7 @@ search for this keywords for reference:
   background: rgba(63, 81, 181, 0.76);
 }
 .p-button:enabled:active {
-  background: rgba(63, 81, 181, 0.68);
+  background: var(--primary-500);
 }
 .p-button .p-ink {
   background-color: rgba(255, 255, 255, 0.32);
@@ -6727,13 +6727,13 @@ search for this keywords for reference:
   background: rgba(63, 81, 181, 0.76);
 }
 .fc.fc-unthemed .fc-toolbar .fc-button:active {
-  background: rgba(63, 81, 181, 0.68);
+  background: var(--primary-500);
 }
 .fc.fc-unthemed .fc-toolbar .fc-button-group .fc-button:focus {
   background: rgba(63, 81, 181, 0.76);
 }
 .fc.fc-unthemed .fc-toolbar .fc-button-group .fc-button:active {
-  background: rgba(63, 81, 181, 0.68);
+  background: var(--primary-500);
 }
 .fc.fc-unthemed .fc-toolbar .fc-button-group .fc-button.fc-dayGridMonth-button:focus, .fc.fc-unthemed .fc-toolbar .fc-button-group .fc-button.fc-timeGridWeek-button:focus, .fc.fc-unthemed .fc-toolbar .fc-button-group .fc-button.fc-timeGridDay-button:focus {
   background: #e0e0e1;
@@ -6747,13 +6747,13 @@ search for this keywords for reference:
   background: rgba(63, 81, 181, 0.76);
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button:active {
-  background: rgba(63, 81, 181, 0.68);
+  background: var(--primary-500);
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button-group .fc-button:focus {
   background: rgba(63, 81, 181, 0.76);
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button-group .fc-button:active {
-  background: rgba(63, 81, 181, 0.68);
+  background: var(--primary-500);
 }
 .fc.fc-theme-standard .fc-toolbar .fc-button-group .fc-button.fc-dayGridMonth-button:focus, .fc.fc-theme-standard .fc-toolbar .fc-button-group .fc-button.fc-timeGridWeek-button:focus, .fc.fc-theme-standard .fc-toolbar .fc-button-group .fc-button.fc-timeGridDay-button:focus {
   background: #e0e0e1;
