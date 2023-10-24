@@ -10,6 +10,7 @@ const pickListTblFields = ref(null)
 // stores
 const moduleStore = useModuleStore()
 const {
+  viewFiltersDialogLoading,
   viewFiltersDialog,
   newViewFilter,
   perPageItems,
@@ -47,6 +48,7 @@ watch(pickListTblFields, (newVal, oldVal) => {
 
 onMounted(() => {
   pickListTblFields.value = [getBaseModule.value.fields, []]
+  viewFiltersDialogLoading.value = false
 })
 
 </script>

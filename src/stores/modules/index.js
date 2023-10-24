@@ -10,6 +10,7 @@ import { useBaseStore } from '@/stores/base'
 export const useModuleStore = defineStore('moduleStore', () => {
 
   // refs
+  const viewFiltersDialogLoading = ref(false)
   const viewFiltersDialogSwitch = ref(false)
   const viewFiltersDialog = ref(false)
   const toast = useToast()
@@ -190,6 +191,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   return {
     perPageItems,
     newViewFilter,
+    viewFiltersDialogLoading,
     viewFiltersDialogSwitch,
     viewFiltersDialog,
     moduleLoading,

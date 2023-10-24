@@ -19,6 +19,7 @@ const selectedSearchKeyIds = ref()
 // stores
 const moduleStore = useModuleStore()
 const {
+  viewFiltersDialogLoading,
   viewFiltersDialogSwitch,
   viewFiltersDialog,
   moduleLoading,
@@ -39,6 +40,7 @@ const tblSettings = ref([
     icon: 'add',
     command: (event) => {
       console.log(event)
+      viewFiltersDialogLoading.value = true
       forceRender()
       viewFiltersDialogSwitch.value = true
       viewFiltersDialog.value = true
@@ -133,6 +135,7 @@ onMounted(async () => {
               </Button>
               <Button
                 @click="tblMenu.toggle($event)"
+                :loading="viewFiltersDialogLoading"
                 type="button"
                 icon="pi pi-cog"
                 aria-haspopup="true"
