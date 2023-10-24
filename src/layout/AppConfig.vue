@@ -230,7 +230,17 @@ onMounted(async () => {
           :disabled="layoutConfig.theme.value == 'esco'"
           :class="`${layoutConfig.theme.value == 'esco' && 'selected-theme'}`"
           class="p-2">
-          <img src="/layout/images/themes/esco.png" class="w-3rem h-3rem" alt="Bootstrap Light Blue" />
+          <img src="/layout/images/themes/esco.png" class="w-3rem h-3rem" alt="Esco Bright" />
+        </Button>
+      </div>
+      <div class="col-3">
+        <Button
+          @click="onChangeTheme('esco2', 'light')"
+          link
+          :disabled="layoutConfig.theme.value == 'esco2'"
+          :class="`${layoutConfig.theme.value == 'esco2' && 'selected-theme'}`"
+          class="p-2">
+          <img src="/layout/images/themes/esco.png" class="w-3rem h-3rem" alt="Esco Default" />
         </Button>
       </div>
     </div>

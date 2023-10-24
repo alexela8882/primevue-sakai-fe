@@ -159,7 +159,7 @@ onMounted(async () => {
                 optionLabel="filterName"
                 optionValue="_id"
                 placeholder="Select View Filters"
-                class="border-round-xl border-primary w-full md:w-12rem mr-2"/>
+                class="border-round-xl border-primary w-full md:w-12rem mr-2 mb-2 md:mb-0"/>
               <MultiSelect
                 v-model="selectedSearchKeyIds"
                 :options="getBaseModule.fields"
@@ -169,17 +169,17 @@ onMounted(async () => {
                 optionLabel="label"
                 optionValue="_id"
                 placeholder="Select Fields"
-                class="border-round-xl border-primary w-full md:w-12rem" />
+                class="border-round-xl border-primary w-full md:w-12rem mb-2 md:mb-0" />
             </div>
             <div class="md:flex align-items-center">
-              <div class="p-input-icon-left">
+              <div class="p-input-icon-left mr-2 w-full md:w-auto">
                 <i class="pi pi-search" />
                 <InputText
                   type="text"
-                  class="border-round-xl border-primary mr-2"
+                  class="border-round-xl border-primary w-full mb-2 md:mb-0"
                   placeholder="Search The List..." />
               </div>
-              <div class="p-inputgroup flex-1">
+              <div class="p-inputgroup flex-1 mb-2 md:mb-0">
                 <Button
                   aria-label="Submit"
                   class="material-icon border-round-md mr-2">
@@ -187,30 +187,29 @@ onMounted(async () => {
                     <div class="material-icons">view_kanban</div>
                   </template>
                 </Button>
-                <div class="mr-2">
-                  <Button
-                    @click="tblMenu.toggle($event)"
-                    type="button"
-                    icon="pi pi-cog"
-                    aria-haspopup="true"
-                    aria-controls="tbl_overlay_menu" />
-                  <Menu
-                    ref="tblMenu"
-                    id="tbl_overlay_menu"
-                    class="mt-2"
-                    :model="tblSettings"
-                    :popup="true">
-                    <template #start>
-                      <div class="text-color-secondary p-2">LIST VIEW CONTROLS</div>
-                    </template>
-                    <template #item="{ item, label, props }">
-                      <div class="flex align-items-center text-color-secondary p-2 cursor-pointer">
-                        <div class="material-icons mr-2">{{ item.icon }}</div>
-                        <div>{{ item.label }}</div>
-                      </div>
-                    </template>
-                  </Menu>
-                </div>
+                <Button
+                  @click="tblMenu.toggle($event)"
+                  type="button"
+                  icon="pi pi-cog"
+                  aria-haspopup="true"
+                  aria-controls="tbl_overlay_menu"
+                  class="border-round-md mr-2" />
+                <Menu
+                  ref="tblMenu"
+                  id="tbl_overlay_menu"
+                  class="mt-2"
+                  :model="tblSettings"
+                  :popup="true">
+                  <template #start>
+                    <div class="text-color-secondary p-2">LIST VIEW CONTROLS</div>
+                  </template>
+                  <template #item="{ item, label, props }">
+                    <div class="flex align-items-center text-color-secondary p-2 cursor-pointer">
+                      <div class="material-icons mr-2">{{ item.icon }}</div>
+                      <div>{{ item.label }}</div>
+                    </div>
+                  </template>
+                </Menu>
                 <Button
                   icon="pi pi-filter"
                   aria-label="Submit"
@@ -232,7 +231,12 @@ onMounted(async () => {
       </div>
     </div>
 
-    <Dialog v-model:visible="tblSettingsDialog" modal :style="{ width: '70vw' }">
+    <Dialog
+      v-model:visible="tblSettingsDialog"
+      modal
+      maximizable
+      :style="{ width: '70vw' }"
+      class="view-filter-dialog">
       <template #header>
         <div class="flex align-items-center text-2xl">
           <div class="material-icons mr-2">table_chart</div>
@@ -240,11 +244,14 @@ onMounted(async () => {
         </div>
       </template>
       <div class="flex flex-column gap-2 my-2">
-        <InlineMessage
-          v-if="newViewFilter.error"
-          severity="error">
-          Please fill all the required fields
-        </InlineMessage>
+        <div>
+          <InlineMessage
+            v-if="newViewFilter.error"
+            severity="error"
+            class="mt-3">
+            Please fill all the required fields
+          </InlineMessage>
+        </div>
         <span class="p-float-label my-3">
           <InputText
             v-model="newViewFilter.data.filterName"
@@ -316,12 +323,12 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped>
-</style>
-
 <style>
-/* .p-multiselect .p-multiselect-label,
-.p-multiselect .p-multiselect-trigger {
-  padding: 5px 5px 5px 15px !important;
-} */
+.view-filter-dialog .p-dialog-header {
+  background-color: var(--primary-color);
+  color: var(--surface-a);
+}
+.view-filter-dialog.p-dialog .p-dialog-header .p-dialog-header-icon {
+  color: var(--surface-a);
+}
 </style>

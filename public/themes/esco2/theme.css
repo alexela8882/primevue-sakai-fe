@@ -12,7 +12,7 @@ search for this keywords for reference:
   --surface-f:#ffffff;
   --text-color:rgba(0, 0, 0, 0.87);
   --text-color-secondary:rgba(0, 0, 0, 0.6);
-  --primary-color:#0091d0;
+  --primary-color:#00467f;
   --primary-color-text:#ffffff;
   --font-family:Roboto, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
   --surface-0: #ffffff;
@@ -259,16 +259,16 @@ search for this keywords for reference:
   --red-700:#ab2f26;
   --red-800:#86251e;
   --red-900:#621b16;
-  --primary-50:#e6f4fa;
-  --primary-100:#d9eff8;
-  --primary-200:#b0ddf0;
-  --primary-300:#0091d0;
-  --primary-400:#0083bb;
-  --primary-500:#0074a6;
-  --primary-600:#006d9c;
-  --primary-700:#00577d;
-  --primary-800:#00415e;
-  --primary-900:#003349;
+  --primary-50:#e6edf2;
+  --primary-100:#d9e3ec;
+  --primary-200:#b0c6d7;
+  --primary-300:#00467f;
+  --primary-400:#003f72;
+  --primary-500:#003866;
+  --primary-600:#00355f;
+  --primary-700:#002a4c;
+  --primary-800:#001f39;
+  --primary-900:#00192c;
 }
 
 .p-autocomplete .p-autocomplete-loader {
