@@ -10,6 +10,7 @@ import { useBaseStore } from '@/stores/base'
 export const useModuleStore = defineStore('moduleStore', () => {
 
   // refs
+  const listViewFilterOverlay = ref(false)
   const viewFiltersDialogLoading = ref(false)
   const viewFiltersDialogSwitch = ref(false)
   const viewFiltersDialog = ref(false)
@@ -191,6 +192,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   return {
     perPageItems,
     newViewFilter,
+    listViewFilterOverlay,
     viewFiltersDialogLoading,
     viewFiltersDialogSwitch,
     viewFiltersDialog,
