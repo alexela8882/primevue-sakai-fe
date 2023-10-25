@@ -8,6 +8,7 @@ import * as yup from 'yup'
 import { useModuleStore } from '@/stores/modules/index'
 
 // refs
+const pickListTrigger = ref(false)
 const pickListTblFields = ref(null)
 const {
   values,
@@ -60,7 +61,7 @@ watch(pickListTblFields, (newVal, oldVal) => {
   newViewFilter.value.data.fields = newVal[1].map(nv => nv._id)
 
   // bind values programmatically
-  setFieldValue('pickList', newVal[1].map(nv => nv._id))
+  if (pickListTrigger.value) setFieldValue('pickList', newVal[1].map(nv => nv._id))
 })
 
 </script>
@@ -143,14 +144,20 @@ watch(pickListTblFields, (newVal, oldVal) => {
           <div class="p-error text-sm my-2">{{ errors.perPage || '&nbsp;' }}</div>
         </div>
       </div>
-      <div :class="`${errors.pickList && 'border-1 border-round-md border-red-600 p-4'}`">
+      <div
+        class="border-1 border-round-md p-4"
+        :class="`${errors.pickList ? 'border-red-600' : 'border-primary'}`">
+        <div class="text-sm mb-4" :class="{ 'p-error': errors.pickList }">
+          {{ errors.pickList || 'View filter fields' }}
+        </div>
         <PickList
           v-model="pickListTblFields"
+          @selection-change="pickListTrigger = true"
           responsive
           listStyle="height:342px"
           dataKey="_id">
-          <template #sourceheader> Available </template>
-          <template #targetheader> Selected </template>
+          <template #sourceheader> Available Fields </template>
+          <template #targetheader> Visible Fields </template>
           <template #item="slotProps">
             <div class="flex flex-wrap p-2 align-items-center gap-3">
               <div class="flex-1 flex flex-column gap-2">
@@ -160,7 +167,6 @@ watch(pickListTblFields, (newVal, oldVal) => {
           </template>
         </PickList>
       </div>
-      <div class="p-error text-sm">{{ errors.pickList || '&nbsp;' }}</div>
     </form>
     <template #footer>
       <div class="flex align-items-center justify-content-end my-2">
