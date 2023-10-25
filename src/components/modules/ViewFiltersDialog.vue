@@ -2,11 +2,33 @@
 // import
 import { storeToRefs } from 'pinia'
 import { onMounted, watch, ref } from 'vue'
+import { useForm } from 'vee-validate'
+import * as yup from 'yup'
 // stores
 import { useModuleStore } from '@/stores/modules/index'
 
 // refs
 const pickListTblFields = ref(null)
+const {
+  values,
+  errors,
+  defineComponentBinds,
+  setFieldValue,
+  handleSubmit
+} = useForm({
+  validationSchema: yup.object({
+    filterName: yup.string().label('Filter name').required(),
+    sortField: yup.string().label('Sort field').required(),
+    sortOrder: yup.string().label('Sort order').required(),
+    perPage: yup.string().label('Items per page').required(),
+    pickList: yup.array().label('Pick list fields').min(1, 'Please add at least 1 field').required()
+  })
+})
+const filterName = defineComponentBinds('filterName')
+const sortField = defineComponentBinds('sortField')
+const sortOrder = defineComponentBinds('sortOrder')
+const perPage = defineComponentBinds('perPage')
+const pickList = defineComponentBinds('pickList')
 // stores
 const moduleStore = useModuleStore()
 const {
@@ -19,31 +41,18 @@ const {
 const { addViewFilter } = moduleStore
 
 // actions
-const saveNewViewFilter = () => {
-  newViewFilter.value.error = false // reset validation
-  if (
-    newViewFilter.value.data.filterName &&
-    newViewFilter.value.data.sortField &&
-    newViewFilter.value.data.sortOrder &&
-    newViewFilter.value.data.perPage &&
-    newViewFilter.value.data.fields.length >= 1
-  ) {
-    viewFiltersDialog.value = false
-
-    // insert to backend
-    addViewFilter(newViewFilter.value.data)
-
-    // reset to default
-    newViewFilter.value.error = false
-    newViewFilter.value.data = Object.assign({}, newViewFilter.value.default)
-    pickListTblFields.value = [getBaseModule.value.fields, []]
-  } else newViewFilter.value.error = true
-}
+const saveNewViewFilter = handleSubmit(values => {
+  // alert(JSON.stringify(values, null, 2))
+  console.log(values)
+  viewFiltersDialog.value = false
+  addViewFilter(values)
+})
 
 // lifecycles
 watch(pickListTblFields, (newVal, oldVal) => {
   // update new view filters
   newViewFilter.value.data.fields = newVal[1].map(nv => nv._id)
+  setFieldValue('pickList', newVal[1].map(nv => nv._id))
 })
 
 onMounted(() => {
@@ -66,7 +75,9 @@ onMounted(() => {
         <div>Table Settings &mdash; {{ getBaseModule.label }}</div>
       </div>
     </template>
-    <div class="flex flex-column gap-4">
+    <form @submit.prevent="saveNewViewFilter" class="flex flex-column gap-4">
+      <!-- <pre>{{ values }}</pre>
+      <pre>{{ errors }}</pre> -->
       <div>
         <InlineMessage
           v-if="newViewFilter.error"
@@ -75,43 +86,61 @@ onMounted(() => {
           Please fill all the required fields
         </InlineMessage>
       </div>
-      <span class="p-float-label">
-        <InputText
-          v-model="newViewFilter.data.filterName"
-          class="border-primary"
-          style="min-width: 50vh;" />
-        <label>Filter name *</label>
-      </span>
+      <div>
+        <span class="p-float-label">
+          <InputText
+            v-bind="filterName"
+            :class="`${errors.filterName ? 'p-invalid' : 'border-primary'}`"
+            style="min-width: 50vh;" />
+          <label>Filter name *</label>
+        </span>
+        <div class="p-error text-sm my-2">{{ errors.filterName || '&nbsp;' }}</div>
+      </div>
       <div class="flex align-items-center justify-content-between">
         <div class="flex align-items-center gap-2">
-          <div>Order by</div>
-          <Dropdown
-            v-model="newViewFilter.data.sortField"
-            :options="getBaseModule.fields"
-            optionLabel="label"
-            optionValue="_id"
-            placeholder="Select Field *"
-            class="border-primary w-full md:w-12rem mr-2"/>
-          <Dropdown
-            v-model="newViewFilter.data.sortOrder"
-            :options="[{ label: 'Ascending', value: 'asc' }, { label: 'Descending', value: 'desc' }]"
-            optionLabel="label"
-            optionValue="value"
-            placeholder="Select Order *"
-            class="border-primary w-full md:w-12rem mr-2"/>
+          <div>
+            <span class="p-float-label">
+              <Dropdown
+                v-bind="sortField"
+                :options="getBaseModule.fields"
+                optionLabel="label"
+                optionValue="_id"
+                placeholder="Select Field *"
+                class="w-full md:w-12rem mr-2"
+                :class="`${errors.sortField ? 'p-invalid' : 'border-primary'}`" />
+              <label>Sort field *</label>
+            </span>
+            <div class="p-error text-sm my-2">{{ errors.sortField || '&nbsp;' }}</div>
+          </div>
+          <div>
+            <span class="p-float-label">
+              <Dropdown
+                v-bind="sortOrder"
+                :options="[{ label: 'Ascending', value: 'asc' }, { label: 'Descending', value: 'desc' }]"
+                optionLabel="label"
+                optionValue="value"
+                class="w-full md:w-12rem mr-2"
+                :class="`${errors.sortOrder ? 'p-invalid' : 'border-primary'}`" />
+              <label>Sort order *</label>
+            </span>
+            <div class="p-error text-sm my-2">{{ errors.sortOrder || '&nbsp;' }}</div>
+          </div>
         </div>
-        <div class="flex align-items-center gap-2">
-          <div>Items per page</div>
-          <Dropdown
-            v-model="newViewFilter.data.perPage"
-            :options="perPageItems"
-            optionLabel="label"
-            optionValue="value"
-            placeholder="Per Page *"
-            class="border-primary w-full md:w-12rem mr-2"/>
+        <div>
+          <span class="p-float-label">
+            <Dropdown
+              v-bind="perPage"
+              :options="perPageItems"
+              optionLabel="label"
+              optionValue="value"
+              class="w-full md:w-12rem mr-2"
+              :class="`${errors.perPage ? 'p-invalid' : 'border-primary'}`" />
+            <label>Items per page *</label>
+          </span>
+          <div class="p-error text-sm my-2">{{ errors.perPage || '&nbsp;' }}</div>
         </div>
       </div>
-      <div>
+      <div :class="`${errors.pickList && 'border-1 border-round-md border-red-600 p-4'}`">
         <PickList
           v-model="pickListTblFields"
           responsive
@@ -128,7 +157,8 @@ onMounted(() => {
           </template>
         </PickList>
       </div>
-    </div>
+      <div class="p-error text-sm">{{ errors.pickList || '&nbsp;' }}</div>
+    </form>
     <template #footer>
       <div class="flex align-items-center justify-content-end my-2">
         <Button
@@ -137,9 +167,7 @@ onMounted(() => {
           label="Cancel"
           class="border-round-3xl py-2 px-4 border-color-primary"
           size="small" />
-        <Button
-          @click="saveNewViewFilter"
-          class="reddot-primary border-round-3xl py-2 px-4 text-surface-50">Save</Button>
+        <Button @click="saveNewViewFilter" class="reddot-primary border-round-3xl py-2 px-4 text-surface-50">Save</Button>
       </div>
     </template>
   </Dialog>
