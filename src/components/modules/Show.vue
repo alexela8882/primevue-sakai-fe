@@ -10,7 +10,6 @@ import DynamicDataTable from '../modules/DynamicDataTable.vue'
 const ViewFiltersDialog = defineAsyncComponent(() => import('../modules/ViewFiltersDialog.vue'))
 
 // refs
-const filterByOwner = ref({ name: null, filters: [{ field: null, operator: null, value: null }] })
 const filterByOwnerOverlay = ref(false)
 const filterByOwnerOverlay2 = ref(false)
 const viewFiltersDialogComponentKey = ref(0)
@@ -63,8 +62,18 @@ const tblSettings = ref([
     }
   }
 ])
+const filterByOwner = ref({
+  name: null,
+  filters: [],
+  default: { field: null, operator: null, value: null }
+})
 
 // actions
+const saveFilterByOwner = (event) => {
+  filterByOwnerOverlay2.value.toggle(event)
+  filterByOwner.value.filters.push(filterByOwner.value.default)
+  filterByOwner.value.default = Object.assign({}, {})
+}
 
 // lifescycles
 watch(selectedViewFilter, (newVal, oldVal) => {
@@ -200,7 +209,7 @@ onMounted(async () => {
 
   <ViewFiltersDialog :key="viewFiltersDialogComponentKey" v-if="viewFiltersDialogSwitch" />
 
-  <OverlayPanel ref="listViewFilterOverlay" class="lvf-overlay-panel">
+  <OverlayPanel ref="listViewFilterOverlay" class="lvf-overlay-panel" :dismissable="false">
     <div style="width: 30vw;">
       <div class="p-3">
         <div class="text-3xl text-color-secondary">Filters</div>
@@ -218,9 +227,9 @@ onMounted(async () => {
           v-if="filterByOwner.filters.length >= 1"
           v-for="(filter, fx) in filterByOwner.filters"
           :key="fx"
-          class="flex flex-column gap-2 p-3 border-1 border-400 hover:border-600 hover:surface-100 border-round-md">
-          <div>{{ filter.field }}</div>
-          <div class="text-lg text-800">{{ filter.operator }} {{ filter.value }}</div>
+          class="flex flex-column gap-2 p-3 border-1 border-400 hover:border-600 bg-orange-100 hover:bg-orange-200 border-round-md">
+          <div>{{ filter.field.label }}</div>
+          <div class="text-lg text-800">{{ filter.operator.label }} "{{ filter.value }}"</div>
         </div>
 
         <div class="flex justify-content-between">
@@ -252,18 +261,29 @@ onMounted(async () => {
       </div>
     </OverlayPanel>
 
-    <OverlayPanel ref="filterByOwnerOverlay2" class="lvf-overlay-panel">
+    <OverlayPanel ref="filterByOwnerOverlay2" class="lvf-overlay-panel" :dismissable="false">
       <div style="width: 30vw;">
         <div class="flex flex-column p-3 text-600 gap-3">
           <div class="text-xl text-color-secondary">Filter by Owner</div>
           <div class="flex flex-column gap-3">
             <Dropdown
-              v-model="filterByOwner.filters[0].field"
+              v-model="filterByOwner.default.field"
               :options="getBaseModule.fields"
               optionLabel="label"
-              optionValue="_id"
               placeholder="Select a field"
               class="w-full" />
+
+            <Dropdown
+              v-model="filterByOwner.default.operator"
+              :options="[{ label: 'equals', value: '=' }]"
+              optionLabel="label"
+              placeholder="Select an operator"
+              class="w-full" />
+
+            <inputText v-model="filterByOwner.default.value" />
+          </div>
+          <div class="flex justify-content-end">
+            <Button @click="saveFilterByOwner" outlined label="Done" size="large" />
           </div>
         </div>
       </div>
