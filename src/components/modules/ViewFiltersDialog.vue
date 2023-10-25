@@ -13,6 +13,7 @@ const {
   values,
   errors,
   defineComponentBinds,
+  isSubmitting,
   setFieldValue,
   handleSubmit
 } = useForm({
@@ -49,15 +50,17 @@ const saveNewViewFilter = handleSubmit(values => {
 })
 
 // lifecycles
-watch(pickListTblFields, (newVal, oldVal) => {
-  // update new view filters
-  newViewFilter.value.data.fields = newVal[1].map(nv => nv._id)
-  setFieldValue('pickList', newVal[1].map(nv => nv._id))
-})
-
 onMounted(() => {
   pickListTblFields.value = [getBaseModule.value.fields, []]
   viewFiltersDialogLoading.value = false
+})
+
+watch(pickListTblFields, (newVal, oldVal) => {
+  // update new view filters
+  newViewFilter.value.data.fields = newVal[1].map(nv => nv._id)
+
+  // bind values programmatically
+  setFieldValue('pickList', newVal[1].map(nv => nv._id))
 })
 
 </script>
@@ -164,10 +167,15 @@ onMounted(() => {
         <Button
           @click="viewFiltersDialog = false"
           outlined
+          :disabled="isSubmitting"
           label="Cancel"
           class="border-round-3xl py-2 px-4 border-color-primary"
           size="small" />
-        <Button @click="saveNewViewFilter" class="reddot-primary border-round-3xl py-2 px-4 text-surface-50">Save</Button>
+        <Button
+          @click="saveNewViewFilter"
+          :loading="isSubmitting"
+          label="Save"
+          class="reddot-primary border-round-3xl py-2 px-4 text-surface-50" />
       </div>
     </template>
   </Dialog>
