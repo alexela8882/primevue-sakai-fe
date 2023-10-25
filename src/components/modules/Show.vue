@@ -95,73 +95,90 @@ onMounted(async () => {
     <div v-else>
       <h4 class="text-primary-700">{{ getBaseModule.label }}</h4>
 
-      <!-- view filters -->
-      <div class="mt-2 mb-4">
-        <div class="md:flex justify-content-between">
-          <div>
-            <Dropdown
-              v-model="selectedViewFilter"
-              :options="getViewFilters"
-              optionLabel="filterName"
-              optionValue="_id"
-              placeholder="Select View Filters"
-              class="border-round-xl border-primary w-full md:w-12rem mr-2 mb-2 md:mb-0"/>
-            <MultiSelect
-              v-model="selectedSearchKeyIds"
-              :options="getBaseModule.fields"
-              track-by="_id"
-              filter
-              :showToggleAll="false"
-              optionLabel="label"
-              optionValue="_id"
-              placeholder="Select Fields"
-              class="border-round-xl border-primary w-full md:w-12rem mb-2 md:mb-0" />
-          </div>
-          <div class="md:flex align-items-center">
-            <div class="p-input-icon-left mr-2 w-full md:w-auto">
-              <i class="pi pi-search" />
-              <InputText
-                type="text"
-                class="border-round-xl border-primary w-full mb-2 md:mb-0"
-                placeholder="Search The List..." />
+      <div>
+        <div v-if="collectionLoading" class="my-4">
+          <div class="flex flex-column md:flex-row justify-content-between mt-3 gap-2">
+            <div class="flex align-items-center gap-2">
+              <Skeleton width="10rem" height="2.5rem"></Skeleton>
+              <Skeleton width="10rem" height="2.5rem"></Skeleton>
             </div>
-            <div class="p-inputgroup flex-1 mb-2 md:mb-0">
-              <Button
-                aria-label="Submit"
-                class="material-icon border-round-md mr-2">
-                <template #icon>
-                  <div class="material-icons">view_kanban</div>
-                </template>
-              </Button>
-              <Button
-                @click="tblMenu.toggle($event)"
-                :loading="viewFiltersDialogLoading"
-                type="button"
-                icon="pi pi-cog"
-                aria-haspopup="true"
-                aria-controls="tbl_overlay_menu"
-                class="border-round-md mr-2" />
-              <Menu
-                ref="tblMenu"
-                id="tbl_overlay_menu"
-                class="mt-2"
-                :model="tblSettings"
-                :popup="true">
-                <template #start>
-                  <div class="text-color-secondary p-2">LIST VIEW CONTROLS</div>
-                </template>
-                <template #item="{ item, label, props }">
-                  <div class="flex align-items-center text-color-secondary p-2 cursor-pointer">
-                    <div class="material-icons mr-2">{{ item.icon }}</div>
-                    <div>{{ item.label }}</div>
-                  </div>
-                </template>
-              </Menu>
-              <Button
-                icon="pi pi-filter"
-                aria-label="Submit"
-                class="border-round-md mr-2" />
-              <Button class="border-round-md mr-2" icon="pi pi-plus" :label="`New ${getBaseModule.label}`" />
+            <div class="flex align-items-center gap-2">
+              <Skeleton width="10rem" height="2.5rem"></Skeleton>
+              <Skeleton width="3rem" height="2.5rem"></Skeleton>
+              <Skeleton width="3rem" height="2.5rem"></Skeleton>
+              <Skeleton width="3rem" height="2.5rem"></Skeleton>
+              <Skeleton width="8rem" height="2.5rem"></Skeleton>
+            </div>
+          </div>
+        </div>
+
+        <div v-else class="mt-2 mb-4">
+          <div class="md:flex justify-content-between">
+            <div>
+              <Dropdown
+                v-model="selectedViewFilter"
+                :options="getViewFilters"
+                optionLabel="filterName"
+                optionValue="_id"
+                placeholder="Select View Filters"
+                class="border-round-xl border-primary w-full md:w-12rem mr-2 mb-2 md:mb-0"/>
+              <MultiSelect
+                v-model="selectedSearchKeyIds"
+                :options="getBaseModule.fields"
+                track-by="_id"
+                filter
+                :showToggleAll="false"
+                optionLabel="label"
+                optionValue="_id"
+                placeholder="Select Fields"
+                class="border-round-xl border-primary w-full md:w-12rem mb-2 md:mb-0" />
+            </div>
+            <div class="md:flex align-items-center">
+              <div class="p-input-icon-left mr-2 w-full md:w-auto">
+                <i class="pi pi-search" />
+                <InputText
+                  type="text"
+                  class="border-round-xl border-primary w-full mb-2 md:mb-0"
+                  placeholder="Search The List..." />
+              </div>
+              <div class="p-inputgroup flex-1 mb-2 md:mb-0">
+                <Button
+                  aria-label="Submit"
+                  class="material-icon border-round-md mr-2">
+                  <template #icon>
+                    <div class="material-icons">view_kanban</div>
+                  </template>
+                </Button>
+                <Button
+                  @click="tblMenu.toggle($event)"
+                  :loading="viewFiltersDialogLoading"
+                  type="button"
+                  icon="pi pi-cog"
+                  aria-haspopup="true"
+                  aria-controls="tbl_overlay_menu"
+                  class="border-round-md mr-2" />
+                <Menu
+                  ref="tblMenu"
+                  id="tbl_overlay_menu"
+                  class="mt-2"
+                  :model="tblSettings"
+                  :popup="true">
+                  <template #start>
+                    <div class="text-color-secondary p-2">LIST VIEW CONTROLS</div>
+                  </template>
+                  <template #item="{ item, label, props }">
+                    <div class="flex align-items-center text-color-secondary p-2 cursor-pointer">
+                      <div class="material-icons mr-2">{{ item.icon }}</div>
+                      <div>{{ item.label }}</div>
+                    </div>
+                  </template>
+                </Menu>
+                <Button
+                  icon="pi pi-filter"
+                  aria-label="Submit"
+                  class="border-round-md mr-2" />
+                <Button class="border-round-md mr-2" icon="pi pi-plus" :label="`New ${getBaseModule.label}`" />
+              </div>
             </div>
           </div>
         </div>
