@@ -195,7 +195,12 @@ onMounted(async () => {
         :collectionLoading="collectionLoading"
         :sidebar="listViewFilterBar">
         <template #list-view-filter>
-          <listViewFilterContent :baseModule="getBaseModule" />
+          <Suspense>
+            <listViewFilterContent :baseModule="getBaseModule" />
+            <template #fallback>
+              Loading...
+            </template>
+          </Suspense>
         </template>
       </DynamicDataTable>
     </div>
@@ -203,26 +208,7 @@ onMounted(async () => {
 
   <!-- VIEW FILTER -->
   <ViewFiltersDialog :key="viewFiltersDialogComponentKey" v-if="viewFiltersDialogSwitch" />
-
-  <!-- LIST VIEW FILTER -->
-  <OverlayPanel
-    ref="listViewFilterOverlay"
-    class="lvf-overlay-panel"
-    :dismissable="false">
-    <div style="width: 30vw; max-height: 65vh; overflow: scroll;">
-      <Suspense>
-        <listViewFilterContent :baseModule="getBaseModule" />
-        <template #fallback>
-          Loading...
-        </template>
-      </Suspense>
-    </div>
-  </OverlayPanel>
 </template>
 
 <style>
-.lvf-overlay-panel.p-overlaypanel .p-overlaypanel-content {
-  padding: 0 !important;
-  right: 0 !important;
-}
 </style>
