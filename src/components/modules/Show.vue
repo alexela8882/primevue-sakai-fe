@@ -65,14 +65,29 @@ const tblSettings = ref([
 const filterByOwner = ref({
   name: null,
   filters: [],
+  fields: { mode: 'new', field: null, operator: null, value: null },
   default: { field: null, operator: null, value: null }
 })
 
 // actions
+const addFilterByOwner = (event) => {
+  filterByOwner.value.fields = Object.assign({}, filterByOwner.value.default)
+  filterByOwner.value.fields.mode = 'new'
+  filterByOwnerOverlay2.value.toggle(event)
+}
+const editFilterByOwner = (event, filter, fx) => {
+  filterByOwner.value.fields = Object.assign({}, filter)
+  filterByOwner.value.fields.index = fx // dummy replacement for id
+  filterByOwner.value.fields.mode = 'edit'
+  filterByOwnerOverlay2.value.toggle(event)
+}
 const saveFilterByOwner = (event) => {
   filterByOwnerOverlay2.value.toggle(event)
-  filterByOwner.value.filters.push(filterByOwner.value.default)
-  filterByOwner.value.default = Object.assign({}, {})
+  filterByOwner.value.filters.push(filterByOwner.value.fields)
+}
+const updateFilterByOwner = (event, filter) => {
+  filterByOwnerOverlay2.value.toggle(event)
+  filterByOwner.value.filters[filter.index] = Object.assign({}, filter)
 }
 
 // lifescycles
@@ -226,6 +241,7 @@ onMounted(async () => {
         <div
           v-if="filterByOwner.filters.length >= 1"
           v-for="(filter, fx) in filterByOwner.filters"
+          @click="editFilterByOwner($event, filter, fx)"
           :key="fx"
           class="flex flex-column gap-2 p-3 border-1 border-400 hover:border-600 bg-orange-100 hover:bg-orange-200 border-round-md">
           <div>{{ filter.field.label }}</div>
@@ -233,7 +249,7 @@ onMounted(async () => {
         </div>
 
         <div class="flex justify-content-between">
-          <a @click="filterByOwnerOverlay2.toggle($event)" href="javascript:void(0);">add filter</a>
+          <a @click="addFilterByOwner($event)" href="javascript:void(0);">add filter</a>
           <a href="javascript:void(0);">remove all</a>
         </div>
       </div>
@@ -267,23 +283,42 @@ onMounted(async () => {
           <div class="text-xl text-color-secondary">Filter by Owner</div>
           <div class="flex flex-column gap-3">
             <Dropdown
-              v-model="filterByOwner.default.field"
+              v-model="filterByOwner.fields.field"
               :options="getBaseModule.fields"
               optionLabel="label"
               placeholder="Select a field"
               class="w-full" />
 
             <Dropdown
-              v-model="filterByOwner.default.operator"
-              :options="[{ label: 'equals', value: '=' }]"
+              v-model="filterByOwner.fields.operator"
+              :options="[
+                { label: 'equals', value: '=' },
+                { label: 'greater than', value: '>' },
+                { label: 'less than', value: '<' },
+                { label: 'contains', value: 'contains' },
+                { label: 'not contains', value: 'not_contains' }]"
               optionLabel="label"
               placeholder="Select an operator"
               class="w-full" />
 
-            <inputText v-model="filterByOwner.default.value" />
+            <inputText v-model="filterByOwner.fields.value" />
           </div>
-          <div class="flex justify-content-end">
-            <Button @click="saveFilterByOwner" outlined label="Done" size="large" />
+          <div class="flex justify-content-end gap-2">
+            <Button @click="filterByOwnerOverlay2.toggle($event)" outlined label="Cancel" severity="secondary" size="large" />
+            <Button
+              v-if="filterByOwner.fields.mode === 'new'"
+              @click="saveFilterByOwner"
+              :disabled="!filterByOwner.fields.field || !filterByOwner.fields.operator || !filterByOwner.fields.value"
+              outlined
+              label="Done"
+              size="large" />
+            <Button
+              v-else
+              @click="updateFilterByOwner($event, filterByOwner.fields)"
+              :disabled="!filterByOwner.fields.field || !filterByOwner.fields.operator || !filterByOwner.fields.value"
+              outlined
+              label="Update"
+              size="large" />
           </div>
         </div>
       </div>
