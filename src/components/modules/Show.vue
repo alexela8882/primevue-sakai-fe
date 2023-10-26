@@ -174,10 +174,11 @@ onMounted(async () => {
                   </template>
                 </Menu>
                 <Button
-                  @click="listViewFilterBar = !listViewFilterBar"
+                  @click="listViewFilterBar = true"
+                  :disabled="listViewFilterBar"
                   icon="pi pi-filter"
                   aria-label="Submit"
-                  class="border-round-md mr-2" />
+                  class="list-view-filter-btn border-round-md mr-2" />
                 <Button class="border-round-md mr-2" icon="pi pi-plus" :label="`New ${getBaseModule.label}`" />
               </div>
             </div>
