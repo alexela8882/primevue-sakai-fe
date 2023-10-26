@@ -210,7 +210,12 @@ onMounted(async () => {
     class="lvf-overlay-panel"
     :dismissable="false">
     <div style="width: 30vw; max-height: 65vh; overflow: scroll;">
-      <listViewFilterContent :baseModule="getBaseModule" />
+      <Suspense>
+        <listViewFilterContent :baseModule="getBaseModule" />
+        <template #fallback>
+          Loading...
+        </template>
+      </Suspense>
     </div>
   </OverlayPanel>
 </template>

@@ -31,12 +31,10 @@ const editFilterByOwner = (filter, fx) => {
   filterByOwnerOverlay2.value = true
 }
 const saveFilterByOwner = () => {
-  filterByOwnerOverlay.value = true
   filterByOwnerOverlay2.value = !filterByOwnerOverlay2.value
   filterByOwner.value.filters.push(filterByOwner.value.fields)
 }
 const updateFilterByOwner = (filter) => {
-  filterByOwnerOverlay.value = true
   filterByOwnerOverlay2.value = !filterByOwnerOverlay2.value
   filterByOwner.value.filters[filter.index] = Object.assign({}, filter)
 }
@@ -48,7 +46,6 @@ const filterByOwnerOverlayAction = () => {
 // lifecycles
 onMounted(() => {
   filterByOwner.value.name = `All ${props.baseModule.name}`
-  filterByOwnerOverlayAction()
 })
 
 </script>
@@ -101,6 +98,9 @@ onMounted(() => {
             <RadioButton v-model="filterByOwner.name" :inputId="`My team's ${baseModule.name}`" :value="`My team's ${baseModule.name}`" />
             <label :for="`My team's ${baseModule.name}`" class="ml-2">My team's {{ baseModule.name }}</label>
           </div>
+          <div class="flex align-items-center justify-content-end">
+            <Button @click="filterByOwnerOverlay = false" label="DONE" outlined size="large"></Button>
+          </div>
         </div>
       </div>
     </Teleport>
@@ -133,7 +133,7 @@ onMounted(() => {
           <inputText v-model="filterByOwner.fields.value" />
         </div>
         <div class="flex justify-content-end gap-2">
-          <Button @click="filterByOwnerOverlayAction" outlined label="Cancel" severity="secondary" size="large" />
+          <Button @click="filterByOwnerOverlay2 = false" outlined label="Cancel" severity="secondary" size="large" />
           <Button
             v-if="filterByOwner.fields.mode === 'new'"
             @click="saveFilterByOwner"

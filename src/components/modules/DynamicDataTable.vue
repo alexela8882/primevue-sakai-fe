@@ -261,7 +261,9 @@ onMounted(async () => {
     </template>
     <Transition name="slide-fade">
       <div v-if="sidebar" class="ddt-slot-1 shadow-4 bg-white">
-        <slot name="list-view-filter"></slot>
+        <div style="overflow: scroll; max-height: 100%;">
+          <slot name="list-view-filter"></slot>
+        </div>
         <div class="ddt-div-1 shadow-4 bg-white"></div>
       </div>
     </Transition>
@@ -280,11 +282,19 @@ onMounted(async () => {
   z-index: 2;
 }
 .ddt-div-1 {
+  visibility: visible;
+  opacity: 1;
   position: absolute !important;
   top: 0;
   width: 80%;
   height: 100%;
   margin-left: -80%;
+  transition: all .3s;
+}
+.ddt-div-1:empty {
+  visibility: hidden;
+  opacity: 0;
+  transition: all .3s;
 }
 .filled-dropdown {
   border: transparent !important;
