@@ -294,6 +294,7 @@ onMounted(async () => {
 .ddt-div-1:empty {
   visibility: hidden;
   opacity: 0;
+  transform: translateX(30px);
   transition: all .3s;
 }
 .filled-dropdown {

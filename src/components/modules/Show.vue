@@ -2,6 +2,7 @@
 // imports
 import { storeToRefs } from 'pinia'
 import { onMounted, watch, ref, defineAsyncComponent } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import { useRoute } from 'vue-router'
 // stores
 import { useModuleStore } from '@/stores/modules/index'
@@ -198,7 +199,9 @@ onMounted(async () => {
           <Suspense>
             <listViewFilterContent :baseModule="getBaseModule" />
             <template #fallback>
-              Loading...
+              <div style="height: 100%;" class="flex align-items-center justify-content-center" >
+                <ProgressSpinner />
+              </div>
             </template>
           </Suspense>
         </template>
