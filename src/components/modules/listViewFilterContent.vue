@@ -71,7 +71,7 @@ onMounted(() => {
         <div
           v-if="filterByOwner.filters.length >= 1"
           v-for="(filter, fx) in filterByOwner.filters"
-          @click="editFilterByOwner($event, filter, fx)"
+          @click="editFilterByOwner(filter, fx)"
           :key="fx"
           class="flex flex-column gap-2 p-3 border-1 border-400 hover:border-600 bg-orange-100 hover:bg-orange-200 border-round-md">
           <div>{{ filter.field.label }}</div>
@@ -79,7 +79,7 @@ onMounted(() => {
         </div>
 
         <div class="flex justify-content-between">
-          <a @click="addFilterByOwner($event)" href="javascript:void(0);">add filter</a>
+          <a @click="addFilterByOwner" href="javascript:void(0);">add filter</a>
           <a @click="filterByOwner.filters = []" href="javascript:void(0);">remove all</a>
         </div>
       </div>
@@ -143,7 +143,7 @@ onMounted(() => {
             size="large" />
           <Button
             v-else
-            @click="updateFilterByOwner($event, filterByOwner.fields)"
+            @click="updateFilterByOwner(filterByOwner.fields)"
             :disabled="!filterByOwner.fields.field || !filterByOwner.fields.operator || !filterByOwner.fields.value"
             outlined
             label="Update"

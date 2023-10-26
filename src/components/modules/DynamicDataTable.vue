@@ -274,7 +274,7 @@ onMounted(async () => {
   position: absolute;
   top: 0;
   right: 0;
-  width: 30vw;
+  width: 25vw;
   height: 100%;
   overflow: visible;
   z-index: 2;
