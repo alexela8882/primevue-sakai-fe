@@ -16,6 +16,7 @@ const moduleStore = useModuleStore()
 const { getCollection } = storeToRefs(moduleStore)
 const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 const props = defineProps({
+  sidebar: Boolean,
   moduleName: String,
   moduleLabel: String,
   data: Array,
@@ -211,13 +212,6 @@ onMounted(async () => {
         </div>
       </template>
     </Column>
-    <!-- <Column
-      frozen
-      alignFrozen="right"
-      headerClass="bg-primary-100 text-color-secondary"
-      :rowEditor="true"
-      bodyStyle="text-align:center"
-      style="min-width: 6rem;"></Column> -->
     <Column
       frozen
       alignFrozen="right"
@@ -265,11 +259,33 @@ onMounted(async () => {
         </Paginator>
       </div>
     </template>
+    <Transition name="slide-fade">
+      <div v-if="sidebar" class="ddt-slot-1 shadow-4 bg-white">
+        <slot name="list-view-filter"></slot>
+        <div class="ddt-div-1 shadow-4 bg-white"></div>
+      </div>
+    </Transition>
   </DataTable>
   <!-- <ContextMenu ref="cm" :model="menuModel" /> -->
 </template>
 
 <style scoped>
+.ddt-slot-1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30vw;
+  height: 100%;
+  overflow: visible;
+  z-index: 2;
+}
+.ddt-div-1 {
+  position: absolute !important;
+  top: 0;
+  width: 80%;
+  height: 100%;
+  margin-left: -80%;
+}
 .filled-dropdown {
   border: transparent !important;
   background-color: transparent !important;
@@ -324,5 +340,20 @@ onMounted(async () => {
   opacity: 1 !important;
   /* transform: translateX(0);
   transition: transform ease-in .2s; */
+}
+
+/* transitions */
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+  transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(50px);
+  opacity: 0;
 }
 </style>

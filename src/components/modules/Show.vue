@@ -11,6 +11,7 @@ const ViewFiltersDialog = defineAsyncComponent(() => import('../modules/ViewFilt
 const listViewFilterContent = defineAsyncComponent(() => import('../modules/listViewFilterContent.vue'))
 
 // refs
+const listViewFilterBar = ref(false)
 const viewFiltersDialogComponentKey = ref(0)
 const route = useRoute()
 const viewFilter = ref([])
@@ -173,7 +174,7 @@ onMounted(async () => {
                   </template>
                 </Menu>
                 <Button
-                  @click="listViewFilterOverlay.toggle($event)"
+                  @click="listViewFilterBar = !listViewFilterBar"
                   icon="pi pi-filter"
                   aria-label="Submit"
                   class="border-round-md mr-2" />
@@ -191,7 +192,12 @@ onMounted(async () => {
         :fields="viewFilter.fields"
         :data="getCollection.data"
         :pagination="getCollection.meta && getCollection.meta.pagination"
-        :collectionLoading="collectionLoading" />
+        :collectionLoading="collectionLoading"
+        :sidebar="listViewFilterBar">
+        <template #list-view-filter>
+          <listViewFilterContent :baseModule="getBaseModule" />
+        </template>
+      </DynamicDataTable>
     </div>
   </div>
 
@@ -199,7 +205,10 @@ onMounted(async () => {
   <ViewFiltersDialog :key="viewFiltersDialogComponentKey" v-if="viewFiltersDialogSwitch" />
 
   <!-- LIST VIEW FILTER -->
-  <OverlayPanel ref="listViewFilterOverlay" class="lvf-overlay-panel" :dismissable="false">
+  <OverlayPanel
+    ref="listViewFilterOverlay"
+    class="lvf-overlay-panel"
+    :dismissable="false">
     <div style="width: 30vw; max-height: 65vh; overflow: scroll;">
       <listViewFilterContent :baseModule="getBaseModule" />
     </div>

@@ -26,6 +26,8 @@ const PopUpDialog = defineAsyncComponent(() => import('./components/dynamic/PopU
   <Suspense v-if="popUpModalTrigger">
     <PopUpDialog />
   </Suspense>
+
+  <div class="hidden-div hidden"></div>
 </template>
 
 <style>
