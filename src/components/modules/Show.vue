@@ -8,10 +8,9 @@ import { useModuleStore } from '@/stores/modules/index'
 // components
 import DynamicDataTable from '../modules/DynamicDataTable.vue'
 const ViewFiltersDialog = defineAsyncComponent(() => import('../modules/ViewFiltersDialog.vue'))
+const listViewFilterContent = defineAsyncComponent(() => import('../modules/listViewFilterContent.vue'))
 
 // refs
-const filterByOwnerOverlay = ref(false)
-const filterByOwnerOverlay2 = ref(false)
 const viewFiltersDialogComponentKey = ref(0)
 const route = useRoute()
 const viewFilter = ref([])
@@ -62,33 +61,8 @@ const tblSettings = ref([
     }
   }
 ])
-const filterByOwner = ref({
-  name: null,
-  filters: [],
-  fields: { mode: 'new', field: null, operator: null, value: null },
-  default: { field: null, operator: null, value: null }
-})
 
 // actions
-const addFilterByOwner = (event) => {
-  filterByOwner.value.fields = Object.assign({}, filterByOwner.value.default)
-  filterByOwner.value.fields.mode = 'new'
-  filterByOwnerOverlay2.value.toggle(event)
-}
-const editFilterByOwner = (event, filter, fx) => {
-  filterByOwner.value.fields = Object.assign({}, filter)
-  filterByOwner.value.fields.index = fx // dummy replacement for id
-  filterByOwner.value.fields.mode = 'edit'
-  filterByOwnerOverlay2.value.toggle(event)
-}
-const saveFilterByOwner = (event) => {
-  filterByOwnerOverlay2.value.toggle(event)
-  filterByOwner.value.filters.push(filterByOwner.value.fields)
-}
-const updateFilterByOwner = (event, filter) => {
-  filterByOwnerOverlay2.value.toggle(event)
-  filterByOwner.value.filters[filter.index] = Object.assign({}, filter)
-}
 
 // lifescycles
 watch(selectedViewFilter, (newVal, oldVal) => {
@@ -101,7 +75,6 @@ onMounted(async () => {
   await fetchModule(getBaseModule.value.name)
 
   // pre-assignments
-  filterByOwner.value.name = `All ${getBaseModule.value.name}`
   viewFilter.value = getDefaultViewFilter.value
   selectedViewFilter.value = viewFilter.value._id
   selectedFields.value = getViewFilterIds.value
@@ -211,7 +184,7 @@ onMounted(async () => {
         </div>
       </div>
 
-      <!-- datatable -->
+      <!-- DATATABLE -->
       <DynamicDataTable
         :moduleName="getBaseModule.name"
         :moduleLabel="getBaseModule.label"
@@ -222,127 +195,20 @@ onMounted(async () => {
     </div>
   </div>
 
+  <!-- VIEW FILTER -->
   <ViewFiltersDialog :key="viewFiltersDialogComponentKey" v-if="viewFiltersDialogSwitch" />
 
+  <!-- LIST VIEW FILTER -->
   <OverlayPanel ref="listViewFilterOverlay" class="lvf-overlay-panel" :dismissable="false">
-    <div style="width: 30vw;">
-      <div class="p-3">
-        <div class="text-3xl text-color-secondary">Filters</div>
-      </div>
-      <divider class="py-0 my-0" />
-      <div class="flex flex-column gap-4 p-3 text-600 cursor-pointer">
-        <div
-          @click="filterByOwnerOverlay.toggle($event)"
-          class="flex flex-column gap-2 p-3 border-1 border-400 hover:border-600 hover:surface-100 border-round-md">
-          <div>Filter by Owner</div>
-          <div class="text-lg text-800">{{ filterByOwner.name }}</div>
-        </div>
-
-        <div
-          v-if="filterByOwner.filters.length >= 1"
-          v-for="(filter, fx) in filterByOwner.filters"
-          @click="editFilterByOwner($event, filter, fx)"
-          :key="fx"
-          class="flex flex-column gap-2 p-3 border-1 border-400 hover:border-600 bg-orange-100 hover:bg-orange-200 border-round-md">
-          <div>{{ filter.field.label }}</div>
-          <div class="text-lg text-800">{{ filter.operator.label }} "{{ filter.value }}"</div>
-        </div>
-
-        <div class="flex justify-content-between">
-          <a @click="addFilterByOwner($event)" href="javascript:void(0);">add filter</a>
-          <a href="javascript:void(0);">remove all</a>
-        </div>
-      </div>
+    <div style="width: 30vw; max-height: 65vh; overflow: scroll;">
+      <listViewFilterContent :baseModule="getBaseModule" />
     </div>
-
-    <OverlayPanel ref="filterByOwnerOverlay" class="lvf-overlay-panel">
-      <div style="width: 30vw;">
-        <div class="flex flex-column p-3 text-600 gap-3">
-          <div class="text-xl text-color-secondary">Filter by Owner</div>
-          <div class="flex flex-column gap-3">
-            <div class="flex align-items-center">
-              <RadioButton v-model="filterByOwner.name" :inputId="`All ${getBaseModule.name}`" :value="`All ${getBaseModule.name}`" />
-              <label :for="`All ${getBaseModule.name}`" class="ml-2">All {{ getBaseModule.name }}</label>
-            </div>
-            <div class="flex align-items-center">
-              <RadioButton v-model="filterByOwner.name" :inputId="`My ${getBaseModule.name}`" :value="`My ${getBaseModule.name}`" />
-              <label :for="`My ${getBaseModule.name}`" class="ml-2">My {{ getBaseModule.name }}</label>
-            </div>
-            <div class="flex align-items-center">
-              <RadioButton v-model="filterByOwner.name" :inputId="`My team's ${getBaseModule.name}`" :value="`My team's ${getBaseModule.name}`" />
-              <label :for="`My team's ${getBaseModule.name}`" class="ml-2">My team's {{ getBaseModule.name }}</label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </OverlayPanel>
-
-    <OverlayPanel ref="filterByOwnerOverlay2" class="lvf-overlay-panel" :dismissable="false">
-      <div style="width: 30vw;">
-        <div class="flex flex-column p-3 text-600 gap-3">
-          <div class="text-xl text-color-secondary">Filter by Owner</div>
-          <div class="flex flex-column gap-3">
-            <Dropdown
-              v-model="filterByOwner.fields.field"
-              :options="getBaseModule.fields"
-              optionLabel="label"
-              placeholder="Select a field"
-              class="w-full" />
-
-            <Dropdown
-              v-model="filterByOwner.fields.operator"
-              :options="[
-                { label: 'equals', value: '=' },
-                { label: 'greater than', value: '>' },
-                { label: 'less than', value: '<' },
-                { label: 'contains', value: 'contains' },
-                { label: 'not contains', value: 'not_contains' }]"
-              optionLabel="label"
-              placeholder="Select an operator"
-              class="w-full" />
-
-            <inputText v-model="filterByOwner.fields.value" />
-          </div>
-          <div class="flex justify-content-end gap-2">
-            <Button @click="filterByOwnerOverlay2.toggle($event)" outlined label="Cancel" severity="secondary" size="large" />
-            <Button
-              v-if="filterByOwner.fields.mode === 'new'"
-              @click="saveFilterByOwner"
-              :disabled="!filterByOwner.fields.field || !filterByOwner.fields.operator || !filterByOwner.fields.value"
-              outlined
-              label="Done"
-              size="large" />
-            <Button
-              v-else
-              @click="updateFilterByOwner($event, filterByOwner.fields)"
-              :disabled="!filterByOwner.fields.field || !filterByOwner.fields.operator || !filterByOwner.fields.value"
-              outlined
-              label="Update"
-              size="large" />
-          </div>
-        </div>
-      </div>
-    </OverlayPanel>
   </OverlayPanel>
-
-  <!-- <Sidebar v-model:visible="listViewFilterOverlay" position="right">
-    <h2>Sidebar</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    <template #header>
-      <div class="flex">
-        <button class="p-sidebar-icon p-link mr-2">
-          <span class="pi pi-print" />
-        </button>
-        <button class="p-sidebar-icon p-link mr-2">
-          <span class="pi pi-search" />
-        </button>
-      </div>
-    </template>
-  </Sidebar> -->
 </template>
 
 <style>
 .lvf-overlay-panel.p-overlaypanel .p-overlaypanel-content {
   padding: 0 !important;
+  right: 0 !important;
 }
 </style>
