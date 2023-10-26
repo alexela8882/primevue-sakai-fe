@@ -2,10 +2,6 @@
 // imports
 import { onMounted, ref } from 'vue'
 
-const props = defineProps({
-  baseModule: Object
-})
-
 // refs
 const filterByOwnerOverlay = ref(false)
 const filterByOwnerOverlay2 = ref(false)
@@ -14,6 +10,11 @@ const filterByOwner = ref({
   filters: [],
   fields: { mode: 'new', field: null, operator: null, value: null },
   default: { field: null, operator: null, value: null }
+})
+
+// defines
+const props = defineProps({
+  baseModule: Object
 })
 
 // actions

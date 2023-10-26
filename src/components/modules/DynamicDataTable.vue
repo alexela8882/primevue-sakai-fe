@@ -3,18 +3,13 @@
 // imports
 // -----------
 import { onMounted, ref, watch } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 // stores
 import { useModuleStore } from '../../stores/modules/index'
 
-// refs
-const cellEdit = ref(false)
-const editingRows = ref([])
-const route = useRoute()
-const moduleStore = useModuleStore()
-const { getCollection } = storeToRefs(moduleStore)
-const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
+// defines
 const props = defineProps({
   sidebar: Boolean,
   moduleName: String,
@@ -27,6 +22,16 @@ const props = defineProps({
   fields: Array,
   collectionLoading: Boolean
 })
+const emit = defineEmits(['toggle-sidebar'])
+
+// refs
+const listViewFilterRef = ref(null)
+const cellEdit = ref(false)
+const editingRows = ref([])
+const route = useRoute()
+const moduleStore = useModuleStore()
+const { getCollection } = storeToRefs(moduleStore)
+const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 const rightShadowStyle = ref()
 const leftShadowStyle = ref()
 const menu = ref()
@@ -112,6 +117,12 @@ const onCellEditComplete = (event) => {
 // life cycles
 onMounted(async () => {
   // console.log(props)
+})
+
+onClickOutside(listViewFilterRef, (event) => {
+  if (event.target && event.target.attributes.class.value !== 'p-dropdown-item') {
+    emit('toggle-sidebar', false)
+  }
 })
 
 </script>
@@ -260,7 +271,7 @@ onMounted(async () => {
       </div>
     </template>
     <Transition name="slide-fade">
-      <div v-if="sidebar" class="ddt-slot-1 shadow-4 bg-white">
+      <div v-if="sidebar" ref="listViewFilterRef" class="ddt-slot-1 shadow-4 bg-white">
         <div style="overflow: scroll; max-height: 100%;">
           <slot name="list-view-filter"></slot>
         </div>

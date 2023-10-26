@@ -2,7 +2,6 @@
 // imports
 import { storeToRefs } from 'pinia'
 import { onMounted, watch, ref, defineAsyncComponent } from 'vue'
-import { onClickOutside } from '@vueuse/core'
 import { useRoute } from 'vue-router'
 // stores
 import { useModuleStore } from '@/stores/modules/index'
@@ -194,10 +193,12 @@ onMounted(async () => {
         :data="getCollection.data"
         :pagination="getCollection.meta && getCollection.meta.pagination"
         :collectionLoading="collectionLoading"
-        :sidebar="listViewFilterBar">
+        :sidebar="listViewFilterBar"
+        @toggle-sidebar="listViewFilterBar = !listViewFilterBar">
         <template #list-view-filter>
           <Suspense>
             <listViewFilterContent :baseModule="getBaseModule" />
+
             <template #fallback>
               <div style="height: 100%;" class="flex align-items-center justify-content-center" >
                 <ProgressSpinner />
