@@ -178,9 +178,7 @@ onMounted(async () => {
                   aria-controls="tbl_overlay_menu2"
                   class="material-icon border-round-md mr-2">
                   <template #icon>
-                    <div class="material-icons">
-                      {{ viewFilter.currentDisplay === 'table' ? 'table_chart' : 'view_kanban' }}
-                    </div>
+                    <div class="material-icons">{{ viewFilter.currentDisplay === 'table' ? 'table_chart' : 'view_kanban' }}</div>
                   </template>
                 </Button>
                   <Menu

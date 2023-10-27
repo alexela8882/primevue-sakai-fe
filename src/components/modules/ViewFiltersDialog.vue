@@ -64,6 +64,7 @@ const tblSettingsAutoFill = (viewFilter) => {
   setFieldValue('sortOrder', viewFilter.sortOrder)
   const filteredFields = getBaseModule.value.fields.filter(item => !viewFilter.fields.some(removeItem => removeItem._id === item._id))
   pickListTblFields.value = [filteredFields, viewFilter.fields]
+  setFieldValue('pickList', viewFilter.fields)
 }
 
 // lifecycles
@@ -121,7 +122,7 @@ watch(localSelectedViewFilter, (newVal, oldVal) => {
           </span>
           <div class="p-error text-sm my-2">{{ errors.filterName || '&nbsp;' }}</div>
         </div>
-        <div v-if="mode === 'edit'">
+        <div class="hidden" v-if="mode === 'edit'">
           <span class="p-float-label">
             <Dropdown
               v-model="localSelectedViewFilter"
