@@ -110,7 +110,7 @@ watch(localSelectedViewFilter, (newVal, oldVal) => {
     <form @submit.prevent="saveViewFilterData" class="flex flex-column gap-4">
       <!-- <pre>{{ values }}</pre>
       <pre>{{ errors }}</pre> -->
-      <div class="mt-6 flex justify-content-between">
+      <div class="mt-4 flex justify-content-between">
         <div>
           <span class="p-float-label">
             <InputText

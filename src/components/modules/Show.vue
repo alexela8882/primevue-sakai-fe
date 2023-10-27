@@ -38,6 +38,7 @@ const {
 const { fetchModule, fetchBaseModule } = moduleStore
 // presets
 const tblMenu = ref(false)
+const tblMenu2 = ref(false)
 const tblSettings = ref([
   {
     label: 'New',
@@ -64,6 +65,27 @@ const tblSettings = ref([
   }, {
     label: 'Edit kanban settings',
     icon: 'view_kanban',
+    command: (event) => {
+      console.log(event)
+    }
+  }
+])
+const tblSettingsBtn = ref([
+  {
+    label: 'Table view',
+    icon: 'table_chart',
+    command: (event) => {
+      console.log(event)
+    }
+  }, {
+    label: 'Kanban view',
+    icon: 'view_kanban',
+    command: (event) => {
+      console.log(event)
+    }
+  }, {
+    label: 'Split view',
+    icon: 'vertical_split',
     command: (event) => {
       console.log(event)
     }
@@ -150,12 +172,33 @@ onMounted(async () => {
               </div>
               <div class="p-inputgroup flex-1 mb-2 md:mb-0">
                 <Button
-                  aria-label="Submit"
+                  @click="tblMenu2.toggle($event)"
+                  type="button"
+                  aria-haspopup="true"
+                  aria-controls="tbl_overlay_menu2"
                   class="material-icon border-round-md mr-2">
                   <template #icon>
-                    <div class="material-icons">view_kanban</div>
+                    <div class="material-icons">
+                      {{ viewFilter.currentDisplay === 'table' ? 'table_chart' : 'view_kanban' }}
+                    </div>
                   </template>
                 </Button>
+                  <Menu
+                    ref="tblMenu2"
+                    id="tbl_overlay_menu2"
+                    class="mt-2"
+                    :model="tblSettingsBtn"
+                    :popup="true">
+                    <template #start>
+                      <div class="text-color-secondary p-2">VIEW SETTINGS</div>
+                    </template>
+                    <template #item="{ item, label, props }">
+                      <div class="flex align-items-center text-color-secondary p-2 cursor-pointer">
+                        <div class="material-icons mr-2">{{ item.icon }}</div>
+                        <div>{{ item.label }}</div>
+                      </div>
+                    </template>
+                  </Menu>
                 <Button
                   @click="tblMenu.toggle($event)"
                   :loading="viewFiltersDialogLoading"
@@ -164,22 +207,22 @@ onMounted(async () => {
                   aria-haspopup="true"
                   aria-controls="tbl_overlay_menu"
                   class="border-round-md mr-2" />
-                <Menu
-                  ref="tblMenu"
-                  id="tbl_overlay_menu"
-                  class="mt-2"
-                  :model="tblSettings"
-                  :popup="true">
-                  <template #start>
-                    <div class="text-color-secondary p-2">LIST VIEW CONTROLS</div>
-                  </template>
-                  <template #item="{ item, label, props }">
-                    <div class="flex align-items-center text-color-secondary p-2 cursor-pointer">
-                      <div class="material-icons mr-2">{{ item.icon }}</div>
-                      <div>{{ item.label }}</div>
-                    </div>
-                  </template>
-                </Menu>
+                  <Menu
+                    ref="tblMenu"
+                    id="tbl_overlay_menu"
+                    class="mt-2"
+                    :model="tblSettings"
+                    :popup="true">
+                    <template #start>
+                      <div class="text-color-secondary p-2">LIST VIEW CONTROLS</div>
+                    </template>
+                    <template #item="{ item, label, props }">
+                      <div class="flex align-items-center text-color-secondary p-2 cursor-pointer">
+                        <div class="material-icons mr-2">{{ item.icon }}</div>
+                        <div>{{ item.label }}</div>
+                      </div>
+                    </template>
+                  </Menu>
                 <Button
                   @click="listViewFilterBar = true"
                   :disabled="listViewFilterBar"

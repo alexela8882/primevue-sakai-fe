@@ -20622,7 +20622,10 @@
         "updated_by": "64c1f340a6ebc75ebb6cd792",
         "updated_at": "2023-10-19 06:41:28",
         "created_at": "2023-09-26 02:56:37",
-        "entity_id": "5c906a0fa6ebc7193110e7d7"
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a11a6ebc7193110eaf1"
       },
       {
         "_id": "651248653d39cc7c91574a74",
@@ -20647,7 +20650,10 @@
         "updated_by": "64c1f340a6ebc75ebb6cd792",
         "updated_at": "2023-10-19 06:41:28",
         "created_at": "2023-09-26 02:56:37",
-        "entity_id": "5c906a0fa6ebc7193110e7d7"
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a11a6ebc7193110eab5"
       }
     ]
   },
@@ -22991,7 +22997,10 @@
           "5c906a14a6ebc7193110efa6",
           "5c906a15a6ebc7193110effc"
         ],
-        "isDefault": true
+        "isDefault": true,
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a14a6ebc7193110ef8e"
       },
       {
         "_id": "618f00cea6ebc7f57c21c483",
@@ -23018,7 +23027,10 @@
           "5c906a14a6ebc7193110efa6",
           "5c906a15a6ebc7193110effc"
         ],
-        "isDefault": false
+        "isDefault": false,
+        "currentDisplay": "kanban",
+        "summarize_by": null,
+        "group_by": "5c906a14a6ebc7193110ef8e"
       },
       {
         "_id": "618f00cea6ebc7f57c21c484",
@@ -23047,7 +23059,10 @@
           "5c906a14a6ebc7193110efa6",
           "5c906a15a6ebc7193110effc"
         ],
-        "isDefault": false
+        "isDefault": false,
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a14a6ebc7193110ef8e"
       }
     ]
   },
@@ -25488,7 +25503,10 @@
           "5c906a14a6ebc7193110efa6",
           "5c906a15a6ebc7193110effc"
         ],
-        "isDefault": true
+        "isDefault": true,
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a14a6ebc7193110ef8e"
       },
       {
         "_id": "618f00cea6ebc7f57c21c483",
@@ -25515,7 +25533,10 @@
           "5c906a14a6ebc7193110efa6",
           "5c906a15a6ebc7193110effc"
         ],
-        "isDefault": false
+        "isDefault": false,
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a14a6ebc7193110ef8e"
       },
       {
         "_id": "618f00cea6ebc7f57c21c484",
@@ -25544,7 +25565,10 @@
           "5c906a14a6ebc7193110efa6",
           "5c906a15a6ebc7193110effc"
         ],
-        "isDefault": false
+        "isDefault": false,
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a14a6ebc7193110ef8e"
       }
     ]
   },
@@ -36093,7 +36117,10 @@
         "updated_by": "64c1f340a6ebc75ebb6cd792",
         "updated_at": "2023-10-20 01:59:05",
         "created_at": "2023-09-26 02:56:37",
-        "entity_id": "5c906a0fa6ebc7193110e7cb"
+        "entity_id": "5c906a0fa6ebc7193110e7cb",
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a14a6ebc7193110ee53"
       },
       {
         "_id": "651248653d39cc7c91574a79",
@@ -36117,7 +36144,10 @@
         "updated_by": "64c1f340a6ebc75ebb6cd792",
         "updated_at": "2023-10-20 01:59:05",
         "created_at": "2023-09-26 02:56:37",
-        "entity_id": "5c906a0fa6ebc7193110e7cb"
+        "entity_id": "5c906a0fa6ebc7193110e7cb",
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a14a6ebc7193110ee53"
       }
     ]
   },
