@@ -32,7 +32,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     { label: '45', value: 45 },
     { label: '50', value: 50 }
   ])
-  const newViewFilter = ref({
+  const viewFilterData = ref({
     error: false,
     data: {
       filterName: null,
@@ -75,28 +75,56 @@ export const useModuleStore = defineStore('moduleStore', () => {
     const viewFilters = module.value && module.value.viewFilters
     const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter.isDefault)
 
-    const filteredFields = moduleFields && moduleFields.filter(field => viewFilter.fields.includes(field._id))
+    return getReconstructedViewFilter.value(viewFilter)
 
-    const finalViewFilter = Object.assign({}, {
-      _id: viewFilter && viewFilter._id,
-      filterLogic: viewFilter && viewFilter.filterLogic,
-      filterName: viewFilter && viewFilter.filterName,
-      filters: viewFilter && viewFilter.filters,
-      isDefault: viewFilter && viewFilter.isDefault,
-      moduleName: viewFilter && viewFilter.moduleName,
-      query_id: viewFilter && viewFilter.query_id,
-      sortField: viewFilter && viewFilter.sortField,
-      sortOrder: viewFilter && viewFilter.sortOrder,
-      fields: filteredFields
-    })
+    // const filteredFields = moduleFields && moduleFields.filter(field => viewFilter.fields.includes(field._id))
 
-    return finalViewFilter
+    // const finalViewFilter = Object.assign({}, {
+    //   _id: viewFilter && viewFilter._id,
+    //   filterLogic: viewFilter && viewFilter.filterLogic,
+    //   filterName: viewFilter && viewFilter.filterName,
+    //   filters: viewFilter && viewFilter.filters,
+    //   isDefault: viewFilter && viewFilter.isDefault,
+    //   moduleName: viewFilter && viewFilter.moduleName,
+    //   query_id: viewFilter && viewFilter.query_id,
+    //   sortField: viewFilter && viewFilter.sortField,
+    //   sortOrder: viewFilter && viewFilter.sortOrder,
+    //   fields: filteredFields
+    // })
+
+    // return finalViewFilter
   })
   const getViewFilter = computed(() => {
     return (payload) => {
       const moduleFields = module.value && module.value.fields
       const viewFilters = module.value && module.value.viewFilters
       const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload)
+
+      return getReconstructedViewFilter.value(viewFilter)
+
+      // const filteredFields = moduleFields && moduleFields.filter(field => viewFilter.fields.includes(field._id))
+
+      // const finalViewFilter = Object.assign({}, {
+      //   _id: viewFilter && viewFilter._id,
+      //   filterLogic: viewFilter && viewFilter.filterLogic,
+      //   filterName: viewFilter && viewFilter.filterName,
+      //   filters: viewFilter && viewFilter.filters,
+      //   isDefault: viewFilter && viewFilter.isDefault,
+      //   moduleName: viewFilter && viewFilter.moduleName,
+      //   query_id: viewFilter && viewFilter.query_id,
+      //   sortField: viewFilter && viewFilter.sortField,
+      //   sortOrder: viewFilter && viewFilter.sortOrder,
+      //   fields: filteredFields
+      // })
+
+      // return finalViewFilter
+    }
+  })
+  
+  const getReconstructedViewFilter = computed(() => {
+    return (payload) => {
+      const moduleFields = module.value && module.value.fields
+      const viewFilter = payload
 
       const filteredFields = moduleFields && moduleFields.filter(field => viewFilter.fields.includes(field._id))
 
@@ -191,7 +219,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
   return {
     perPageItems,
-    newViewFilter,
+    viewFilterData,
+    getReconstructedViewFilter,
     listViewFilterOverlay,
     viewFiltersDialogLoading,
     viewFiltersDialogSwitch,

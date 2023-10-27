@@ -11,6 +11,7 @@ const ViewFiltersDialog = defineAsyncComponent(() => import('../modules/ViewFilt
 const listViewFilterContent = defineAsyncComponent(() => import('../modules/listViewFilterContent.vue'))
 
 // refs
+const viewFiltersDialogMode = ref('new')
 const listViewFilterBar = ref(false)
 const viewFiltersDialogComponentKey = ref(0)
 const route = useRoute()
@@ -43,6 +44,7 @@ const tblSettings = ref([
     icon: 'add',
     command: (event) => {
       console.log(event)
+      viewFiltersDialogMode.value = 'new'
       viewFiltersDialogComponentKey.value += 1
       viewFiltersDialogLoading.value = true
       viewFiltersDialogSwitch.value = true
@@ -53,6 +55,11 @@ const tblSettings = ref([
     icon: 'table_chart',
     command: (event) => {
       console.log(event)
+      viewFiltersDialogMode.value = 'edit'
+      viewFiltersDialogComponentKey.value += 1
+      viewFiltersDialogLoading.value = true
+      viewFiltersDialogSwitch.value = true
+      viewFiltersDialog.value = true
     }
   }, {
     label: 'Edit kanban settings',
@@ -220,7 +227,11 @@ onMounted(async () => {
   </div>
 
   <!-- VIEW FILTER -->
-  <ViewFiltersDialog :key="viewFiltersDialogComponentKey" v-if="viewFiltersDialogSwitch" />
+  <ViewFiltersDialog
+    :key="viewFiltersDialogComponentKey"
+    v-if="viewFiltersDialogSwitch"
+    :mode="viewFiltersDialogMode"
+    :selectedViewFilter="selectedViewFilter" />
 </template>
 
 <style>

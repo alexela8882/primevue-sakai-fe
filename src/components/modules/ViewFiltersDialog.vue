@@ -26,6 +26,7 @@ const {
     pickList: yup.array().label('Pick list fields').min(1, 'Please add at least 1 field').required()
   })
 })
+const localSelectedViewFilter = ref(null)
 const filterName = defineComponentBinds('filterName')
 const sortField = defineComponentBinds('sortField')
 const sortOrder = defineComponentBinds('sortOrder')
@@ -36,32 +37,59 @@ const moduleStore = useModuleStore()
 const {
   viewFiltersDialogLoading,
   viewFiltersDialog,
-  newViewFilter,
+  viewFilterData,
   perPageItems,
-  getBaseModule
+  getBaseModule,
+  getDefaultViewFilter,
+  getViewFilters,
+  getReconstructedViewFilter
 } = storeToRefs(moduleStore)
 const { addViewFilter } = moduleStore
+// defines
+const props = defineProps({
+  mode: String,
+  selectedViewFilter: String
+})
 
 // actions
-const saveNewViewFilter = handleSubmit(values => {
+const saveViewFilterData = handleSubmit(values => {
   // alert(JSON.stringify(values, null, 2))
   console.log(values)
   viewFiltersDialog.value = false
   addViewFilter(values)
 })
+const tblSettingsAutoFill = (viewFilter) => {
+  setFieldValue('filterName', viewFilter.filterName)
+  setFieldValue('sortField', viewFilter.sortField)
+  setFieldValue('sortOrder', viewFilter.sortOrder)
+  const filteredFields = getBaseModule.value.fields.filter(item => !viewFilter.fields.some(removeItem => removeItem._id === item._id))
+  pickListTblFields.value = [filteredFields, viewFilter.fields]
+}
 
 // lifecycles
 onMounted(() => {
-  pickListTblFields.value = [getBaseModule.value.fields, []]
   viewFiltersDialogLoading.value = false
+  console.log(getViewFilters.value)
+  localSelectedViewFilter.value = props.selectedViewFilter
+
+  if (props.mode === 'new') {
+    pickListTblFields.value = [getBaseModule.value.fields, []]
+  } else if (props.mode === 'edit') tblSettingsAutoFill(getDefaultViewFilter.value)
 })
 
 watch(pickListTblFields, (newVal, oldVal) => {
   // update new view filters
-  newViewFilter.value.data.fields = newVal[1].map(nv => nv._id)
+  viewFilterData.value.data.fields = newVal[1].map(nv => nv._id)
 
   // bind values programmatically
   if (pickListTrigger.value) setFieldValue('pickList', newVal[1].map(nv => nv._id))
+})
+
+watch(localSelectedViewFilter, (newVal, oldVal) => {
+  if (props.mode === 'edit') {
+    const viewFilter = getViewFilters.value.find(vf => vf._id === newVal)
+    tblSettingsAutoFill(getReconstructedViewFilter.value(viewFilter))
+  }
 })
 
 </script>
@@ -79,26 +107,31 @@ watch(pickListTblFields, (newVal, oldVal) => {
         <div>Table Settings &mdash; {{ getBaseModule.label }}</div>
       </div>
     </template>
-    <form @submit.prevent="saveNewViewFilter" class="flex flex-column gap-4">
+    <form @submit.prevent="saveViewFilterData" class="flex flex-column gap-4">
       <!-- <pre>{{ values }}</pre>
       <pre>{{ errors }}</pre> -->
-      <div>
-        <InlineMessage
-          v-if="newViewFilter.error"
-          severity="error"
-          class="mt-3">
-          Please fill all the required fields
-        </InlineMessage>
-      </div>
-      <div>
-        <span class="p-float-label">
-          <InputText
-            v-bind="filterName"
-            :class="`${errors.filterName ? 'p-invalid' : 'border-primary'}`"
-            style="min-width: 50vh;" />
-          <label>Filter name *</label>
-        </span>
-        <div class="p-error text-sm my-2">{{ errors.filterName || '&nbsp;' }}</div>
+      <div class="mt-6 flex justify-content-between">
+        <div>
+          <span class="p-float-label">
+            <InputText
+              v-bind="filterName"
+              :class="`${errors.filterName ? 'p-invalid' : 'border-primary'}`"
+              style="min-width: 50vh;" />
+            <label>Filter name *</label>
+          </span>
+          <div class="p-error text-sm my-2">{{ errors.filterName || '&nbsp;' }}</div>
+        </div>
+        <div v-if="mode === 'edit'">
+          <span class="p-float-label">
+            <Dropdown
+              v-model="localSelectedViewFilter"
+              :options="getViewFilters"
+              optionLabel="filterName"
+              optionValue="_id"
+              class="w-full md:w-16rem mr-2" />
+            <label>View filters</label>
+          </span>
+        </div>
       </div>
       <div class="flex align-items-center justify-content-between">
         <div class="flex align-items-center gap-2">
@@ -108,7 +141,7 @@ watch(pickListTblFields, (newVal, oldVal) => {
                 v-bind="sortField"
                 :options="getBaseModule.fields"
                 optionLabel="label"
-                optionValue="_id"
+                optionValue="name"
                 placeholder="Select Field *"
                 class="w-full md:w-12rem mr-2"
                 :class="`${errors.sortField ? 'p-invalid' : 'border-primary'}`" />
@@ -120,7 +153,7 @@ watch(pickListTblFields, (newVal, oldVal) => {
             <span class="p-float-label">
               <Dropdown
                 v-bind="sortOrder"
-                :options="[{ label: 'Ascending', value: 'asc' }, { label: 'Descending', value: 'desc' }]"
+                :options="[{ label: 'Ascending', value: 'ASC' }, { label: 'Descending', value: 'DESC' }]"
                 optionLabel="label"
                 optionValue="value"
                 class="w-full md:w-12rem mr-2"
@@ -178,7 +211,7 @@ watch(pickListTblFields, (newVal, oldVal) => {
           class="border-round-3xl py-2 px-4 border-color-primary"
           size="small" />
         <Button
-          @click="saveNewViewFilter"
+          @click="saveViewFilterData"
           :loading="isSubmitting"
           label="Save"
           class="reddot-primary border-round-3xl py-2 px-4 text-surface-50" />
