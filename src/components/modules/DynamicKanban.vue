@@ -54,7 +54,7 @@ onMounted(() => {
         itemKey="_id"
         class="cursor-move h-full">
         <template #item="{ element, index }">
-          <div class="p-4 m-4 border-1 border-primary-300 border-round-xl bg-white shadow-2">
+          <div class="p-4 m-4 border-1 border-primary-300 border-round-xl bg-white hover:shadow-3">
             <!-- Loop through the first 4 key-value pairs in the object -->
             <div v-for="(value, key) in Object.entries(element).slice(0, 4)" :key="key" class="my-2">
               <strong>{{ value[0] }}:</strong> {{ value[1] }}
