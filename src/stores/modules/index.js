@@ -165,6 +165,36 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
     return fieldIds
   })
+  const getKanbanData = computed(() => {
+    return (payload) => {
+      const finalData = []
+      const fields = module.value && module.value.fields
+      const collectionData = module.value && module.value.collection.data
+      const viewFilter = module.value && module.value.viewFilters.find(vFilter => vFilter._id === payload)
+      const groupByField = module.value && module.value.fields.find(f => f._id === viewFilter.group_by)
+
+      const groupByColumns = collectionData.map((cdata, idx) => cdata[groupByField.name])
+      const uniqueGroupByColumns = [...new Set(groupByColumns)]
+      const test2 = uniqueGroupByColumns.map(col => {
+        let obj = Object.assign({}, {
+          _id: viewFilter.group_by,
+          name: groupByField.name,
+          label: col,
+          data: []
+        })
+
+        const _data = collectionData.filter(cdatax => {
+          if (cdatax[groupByField.name] === col) return cdatax
+        })
+
+        obj.data = _data
+
+        return obj
+      })
+
+      return test2
+    }
+  })
 
   // actions
   const fetchBaseModule = async (id) => {
@@ -240,6 +270,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getViewFilter,
     getViewFilterIds,
     getSearchKeyFieldIds,
+    getKanbanData,
     fetchModule,
     fetchBaseModule,
     fetchModules,

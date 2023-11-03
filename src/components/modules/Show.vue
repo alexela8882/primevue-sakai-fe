@@ -6,9 +6,10 @@ import { useRoute } from 'vue-router'
 // stores
 import { useModuleStore } from '@/stores/modules/index'
 // components
-import DynamicDataTable from '../modules/DynamicDataTable.vue'
 const ViewFiltersDialog = defineAsyncComponent(() => import('../modules/ViewFiltersDialog.vue'))
 const listViewFilterContent = defineAsyncComponent(() => import('../modules/listViewFilterContent.vue'))
+const DynamicDataTable = defineAsyncComponent(() => import('../modules/DynamicDataTable.vue'))
+const DynamicKanban = defineAsyncComponent(() => import('../modules/DynamicKanban.vue'))
 
 // refs
 const viewFiltersDialogMode = ref('new')
@@ -235,35 +236,71 @@ onMounted(async () => {
       </div>
 
       <!-- DATATABLE -->
-      <DynamicDataTable
-        :moduleName="getBaseModule.name"
-        :moduleLabel="getBaseModule.label"
-        :fields="viewFilter.fields"
-        :data="getCollection.data"
-        :pagination="getCollection.meta && getCollection.meta.pagination"
-        :collectionLoading="collectionLoading"
-        :sidebar="listViewFilterBar"
-        @toggle-sidebar="listViewFilterBar = !listViewFilterBar">
-        <template #list-view-filter>
-          <Suspense>
-            <listViewFilterContent :baseModule="getBaseModule" />
+      <Suspense v-if="viewFilter.currentDisplay === 'table'">
+        <DynamicDataTable
+          :moduleName="getBaseModule.name"
+          :moduleLabel="getBaseModule.label"
+          :fields="viewFilter.fields"
+          :data="getCollection.data"
+          :pagination="getCollection.meta && getCollection.meta.pagination"
+          :collectionLoading="collectionLoading"
+          :sidebar="listViewFilterBar"
+          @toggle-sidebar="listViewFilterBar = !listViewFilterBar">
+          <template #list-view-filter>
+            <Suspense>
+              <listViewFilterContent :baseModule="getBaseModule" />
 
-            <template #fallback>
-              <div class="p-4">
-                <div class="flex flex-column gap-6">
-                  <div v-for="(skel, skx) in 2" :key="skx">
-                    <Skeleton class="mb-2" borderRadius="16px"></Skeleton>
-                    <Skeleton width="10rem" class="mb-2" borderRadius="16px"></Skeleton>
-                    <Skeleton width="5rem" borderRadius="16px" class="mb-2"></Skeleton>
-                    <Skeleton height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
-                    <Skeleton width="10rem" height="4rem" borderRadius="16px"></Skeleton>
+              <template #fallback>
+                <div class="p-4">
+                  <div class="flex flex-column gap-6">
+                    <div v-for="(skel, skx) in 2" :key="skx">
+                      <Skeleton class="mb-2" borderRadius="16px"></Skeleton>
+                      <Skeleton width="10rem" class="mb-2" borderRadius="16px"></Skeleton>
+                      <Skeleton width="5rem" borderRadius="16px" class="mb-2"></Skeleton>
+                      <Skeleton height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
+                      <Skeleton width="10rem" height="4rem" borderRadius="16px"></Skeleton>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </template>
-          </Suspense>
+              </template>
+            </Suspense>
+          </template>
+        </DynamicDataTable>
+        <template #fallback>
+          <DataTable :value="[1, 2, 3, 4, 5]">
+            <Column field="code" header="">
+              <template #body>
+                <Skeleton class="m-1 my-2"></Skeleton>
+              </template>
+            </Column>
+            <Column field="code" header="">
+              <template #body>
+                <Skeleton></Skeleton>
+              </template>
+            </Column>
+            <Column field="code" header="">
+              <template #body>
+                <Skeleton></Skeleton>
+              </template>
+            </Column>
+          </DataTable>
         </template>
-      </DynamicDataTable>
+      </Suspense>
+
+      <Suspense v-else-if="viewFilter.currentDisplay === 'kanban'">
+        <template #fallback>
+          loading...
+        </template>
+        <DynamicKanban
+          :viewFilterId="viewFilter._id"
+          :groupBy="viewFilter.group_by"
+          :summarizeBy="viewFilter.summarize_by"
+          :moduleName="getBaseModule.name"
+          :moduleLabel="getBaseModule.label"
+          :fields="viewFilter.fields"
+          :data="getCollection.data"
+          :collectionLoading="collectionLoading" />
+      </Suspense>
     </div>
   </div>
 
