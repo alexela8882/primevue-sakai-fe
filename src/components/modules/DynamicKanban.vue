@@ -37,7 +37,7 @@ const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
       class="col">
       <div class="bg-white py-4 px-4 text-primary font-bold text-xl">{{ field.label }}</div>
       <div
-        class="p-4 m-4 border-2 border-primary-300 border-round-xl bg-white"
+        class="p-4 m-4 border-1 border-primary-300 border-round-xl bg-white shadow-2"
         v-for="(data, dx) in field.data"
         :key="dx">
         <!-- Loop through the first 4 key-value pairs in the object -->
