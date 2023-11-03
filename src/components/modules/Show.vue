@@ -223,6 +223,7 @@ onMounted(async () => {
                     </template>
                   </Menu>
                 <Button
+                  v-if="viewFilter.currentDisplay === 'table'"
                   @click="listViewFilterBar = true"
                   :disabled="listViewFilterBar"
                   icon="pi pi-filter"
@@ -288,9 +289,6 @@ onMounted(async () => {
       </Suspense>
 
       <Suspense v-else-if="viewFilter.currentDisplay === 'kanban'">
-        <template #fallback>
-          loading...
-        </template>
         <DynamicKanban
           :viewFilterId="viewFilter._id"
           :groupBy="viewFilter.group_by"
@@ -300,6 +298,35 @@ onMounted(async () => {
           :fields="viewFilter.fields"
           :data="getCollection.data"
           :collectionLoading="collectionLoading" />
+        <template #fallback>
+          <div>
+            <Skeleton height="3rem" class="mb-2"></Skeleton>
+            <div class="flex gap-2">
+              <div class="flex flex-column gap-2 w-full">
+                <Skeleton height="10rem"></Skeleton>
+                <Skeleton height="10rem"></Skeleton>
+                <Skeleton height="10rem"></Skeleton>
+              </div>
+              <div class="flex flex-column gap-2 w-full">
+                <Skeleton height="10rem"></Skeleton>
+              </div>
+              <div class="flex flex-column gap-2 w-full">
+                <Skeleton height="10rem"></Skeleton>
+                <Skeleton height="10rem"></Skeleton>
+              </div>
+              <div class="flex flex-column gap-2 w-full">
+                <Skeleton height="10rem"></Skeleton>
+                <Skeleton height="10rem"></Skeleton>
+                <Skeleton height="10rem"></Skeleton>
+                <Skeleton height="10rem"></Skeleton>
+              </div>
+              <div class="flex flex-column gap-2 w-full">
+                <Skeleton height="10rem"></Skeleton>
+                <Skeleton height="10rem"></Skeleton>
+              </div>
+            </div>
+          </div>
+        </template>
       </Suspense>
     </div>
   </div>

@@ -44,6 +44,10 @@ const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
         <div v-for="(value, key) in Object.entries(data).slice(0, 4)" :key="key" class="my-2">
           <strong>{{ value[0] }}:</strong> {{ value[1] }}
         </div>
+
+        <div class="flex justify-content-end">
+          <Button class="bg-green" label="Manage" severity="success" />
+        </div>
       </div>
     </div>
   </div>

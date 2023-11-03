@@ -22997,7 +22997,7 @@
           "5c906a14a6ebc7193110efa6",
           "5c906a15a6ebc7193110effc"
         ],
-        "isDefault": true,
+        "isDefault": false,
         "currentDisplay": "table",
         "summarize_by": null,
         "group_by": "5c906a14a6ebc7193110ef8e"
@@ -23027,7 +23027,7 @@
           "5c906a14a6ebc7193110efa6",
           "5c906a15a6ebc7193110effc"
         ],
-        "isDefault": false,
+        "isDefault": true,
         "currentDisplay": "kanban",
         "summarize_by": null,
         "group_by": "5c906a14a6ebc7193110ef8e"
