@@ -6,9 +6,9 @@ import { useRoute } from 'vue-router'
 // stores
 import { useModuleStore } from '@/stores/modules/index'
 // components
-const ViewFiltersDialog = defineAsyncComponent(() => import('../modules/ViewFiltersDialog.vue'))
-const listViewFilterContent = defineAsyncComponent(() => import('../modules/listViewFilterContent.vue'))
-const DynamicDataTable = defineAsyncComponent(() => import('../modules/DynamicDataTable.vue'))
+const ViewFiltersDialog = defineAsyncComponent(() => import('../modules/ViewFiltersDialog/ViewFiltersDialogMain.vue'))
+const listViewFilterContent = defineAsyncComponent(() => import('../modules/DynamicDataTable/ListViewFilterContent.vue'))
+const DynamicDataTable = defineAsyncComponent(() => import('../modules/DynamicDataTable/DynamicDataTableMain.vue'))
 const DynamicKanban = defineAsyncComponent(() => import('../modules/DynamicKanban.vue'))
 
 // refs
@@ -57,7 +57,7 @@ const tblSettings = ref([
     icon: 'table_chart',
     command: (event) => {
       console.log(event)
-      viewFiltersDialogMode.value = 'edit'
+      viewFiltersDialogMode.value = 'edit-table'
       viewFiltersDialogComponentKey.value += 1
       viewFiltersDialogLoading.value = true
       viewFiltersDialogSwitch.value = true
@@ -68,6 +68,11 @@ const tblSettings = ref([
     icon: 'view_kanban',
     command: (event) => {
       console.log(event)
+      viewFiltersDialogMode.value = 'edit-kanban'
+      viewFiltersDialogComponentKey.value += 1
+      viewFiltersDialogLoading.value = true
+      viewFiltersDialogSwitch.value = true
+      viewFiltersDialog.value = true
     }
   }
 ])
@@ -271,17 +276,17 @@ onMounted(async () => {
         </DynamicDataTable>
         <template #fallback>
           <DataTable :value="[1, 2, 3, 4, 5]">
-            <Column field="code" header="">
+            <Column field="code 1" header="">
               <template #body>
                 <Skeleton class="m-1 my-2"></Skeleton>
               </template>
             </Column>
-            <Column field="code" header="">
+            <Column field="code 2" header="">
               <template #body>
                 <Skeleton></Skeleton>
               </template>
             </Column>
-            <Column field="code" header="">
+            <Column field="code 3" header="">
               <template #body>
                 <Skeleton></Skeleton>
               </template>

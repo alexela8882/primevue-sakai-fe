@@ -7,7 +7,7 @@ import { onClickOutside } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 // stores
-import { useModuleStore } from '../../stores/modules/index'
+import { useModuleStore } from '../../../stores/modules/index'
 
 // defines
 const props = defineProps({
@@ -177,9 +177,6 @@ onClickOutside(listViewFilterRef, (event) => {
                   <span v-if="col.rules.ss_pop_up" class="mr-1">{{ slotProps.data[col.name][diplayFieldName] }}</span>
                   <span v-else-if="col.rules.ss_dropdown" class="mr-1">
                     <a href="javascript:void(0);" style="color: red;">{{ slotProps.data[col.name][diplayFieldName] }}</a>
-                    <!-- <pre>
-                      {{ col.relation }}
-                    </pre> -->
                   </span>
                   <span v-else class="mr-1">
                     <a href="javascript:void(0);">{{ slotProps.data[col.name][diplayFieldName] }}</a>
