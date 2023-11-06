@@ -57,7 +57,7 @@ const saveTableSettings = handleSubmit(values => {
   // alert(JSON.stringify(values, null, 2))
   console.log(values)
   viewFiltersDialog.value = false
-  addViewFilter(values)
+  addViewFilter(values) // dummy store save
 })
 const tblSettingsAutoFill = (viewFilter) => {
   setFieldValue('filterName', viewFilter.filterName)
@@ -76,7 +76,7 @@ onMounted(() => {
 
   if (props.mode === 'new') {
     pickListTblFields.value = [getBaseModule.value.fields, []]
-  } else if (props.mode === 'edit-table' || props.mode === 'edit-kanban') tblSettingsAutoFill(getDefaultViewFilter.value)
+  } else if (props.mode === 'edit-table') tblSettingsAutoFill(getDefaultViewFilter.value)
 })
 
 watch(pickListTblFields, (newVal, oldVal) => {
@@ -88,7 +88,7 @@ watch(pickListTblFields, (newVal, oldVal) => {
 })
 
 watch(localSelectedViewFilter, (newVal, oldVal) => {
-  if (props.mode === 'edit-table' || props.mode === 'edit-kanban') {
+  if (props.mode === 'edit-table') {
     const viewFilter = getViewFilters.value.find(vf => vf._id === newVal)
     tblSettingsAutoFill(getReconstructedViewFilter.value(viewFilter))
   }
@@ -112,7 +112,7 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
         </span>
         <div class="p-error text-sm my-2">{{ errors.filterName || '&nbsp;' }}</div>
       </div>
-      <div class="hidden" v-if="mode === 'edit'">
+      <div class="hidden" v-if="mode === 'edit-table'">
         <span class="p-float-label">
           <Dropdown
             v-model="localSelectedViewFilter"
@@ -133,6 +133,7 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
               :options="getBaseModule.fields"
               optionLabel="label"
               optionValue="name"
+              filter
               placeholder="Select Field *"
               class="w-full md:w-12rem mr-2"
               :class="`${errors.sortField ? 'p-invalid' : 'border-primary'}`" />

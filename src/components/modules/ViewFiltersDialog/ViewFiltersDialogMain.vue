@@ -28,7 +28,7 @@ const props = defineProps({
 // actions
 const saveViewFilterData = () => {
   if (props.mode === 'new' || props.mode === 'edit-table') saveTableSettings.value++
-  else if (props.mode === 'edit-table') saveKanbanSettings.value++
+  else if (props.mode === 'edit-kanban') saveKanbanSettings.value++
 }
 
 // lifecycles
