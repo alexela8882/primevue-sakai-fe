@@ -77,12 +77,14 @@ const tblSettingsBtn = ref([
     icon: 'table_chart',
     command: (event) => {
       console.log(event)
+      viewFilter.value.currentDisplay = 'table'
     }
   }, {
     label: 'Kanban view',
     icon: 'view_kanban',
     command: (event) => {
       console.log(event)
+      viewFilter.value.currentDisplay = 'kanban'
     }
   }, {
     label: 'Split view',

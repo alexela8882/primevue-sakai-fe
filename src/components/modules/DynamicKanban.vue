@@ -24,7 +24,7 @@ const props = defineProps({
 // refs
 const kanbanData = ref([])
 const moduleStore = useModuleStore()
-const { getCollection, getKanbanData } = storeToRefs(moduleStore)
+const { getCollection, getKanbanData, getFieldDetails } = storeToRefs(moduleStore)
 const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 
 // actions
@@ -34,6 +34,7 @@ const log = (evt) => {
 
 onMounted(() => {
   kanbanData.value = getKanbanData.value(props.viewFilterId)
+  console.log(getKanbanData.value(props.viewFilterId))
 })
 
 </script>
@@ -57,7 +58,7 @@ onMounted(() => {
           <div class="p-4 m-4 border-1 border-primary-300 border-round-xl bg-white hover:shadow-4">
             <!-- Loop through the first 4 key-value pairs in the object -->
             <div v-for="(value, key) in Object.entries(element).slice(0, 4)" :key="key" class="my-2">
-              <strong>{{ value[0] }}:</strong> {{ value[1] }}
+              <strong v-if="getFieldDetails(value[0])">{{ getFieldDetails(value[0]).label }}:</strong> {{ value[1] }}
             </div>
             <div class="flex justify-content-end">
               <Button class="bg-green" label="Manage" severity="success" />
@@ -65,18 +66,6 @@ onMounted(() => {
           </div>
         </template>
       </draggable>
-      <!-- <div
-        class="p-4 m-4 border-1 border-primary-300 border-round-xl bg-white shadow-2"
-        v-for="(data, dx) in field.data"
-        :key="dx">
-        <div v-for="(value, key) in Object.entries(data).slice(0, 4)" :key="key" class="my-2">
-          <strong>{{ value[0] }}:</strong> {{ value[1] }}
-        </div>
-
-        <div class="flex justify-content-end">
-          <Button class="bg-green" label="Manage" severity="success" />
-        </div>
-      </div> -->
     </div>
   </div>
 </template>

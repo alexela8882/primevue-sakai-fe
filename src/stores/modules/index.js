@@ -167,20 +167,19 @@ export const useModuleStore = defineStore('moduleStore', () => {
   })
   const getKanbanData = computed(() => {
     return (payload) => {
-      const finalData = []
-      const fields = module.value && module.value.fields
       const collectionData = module.value && module.value.collection.data
       const viewFilter = module.value && module.value.viewFilters.find(vFilter => vFilter._id === payload)
       const groupByField = module.value && module.value.fields.find(f => f._id === viewFilter.group_by)
 
       const groupByColumns = collectionData.map((cdata, idx) => cdata[groupByField.name])
       const uniqueGroupByColumns = [...new Set(groupByColumns)]
-      const test2 = uniqueGroupByColumns.map(col => {
+      const finalData = uniqueGroupByColumns.map(col => {
         let obj = Object.assign({}, {
           _id: viewFilter.group_by,
           name: groupByField.name,
           label: col,
-          data: []
+          data: [],
+          fields: []
         })
 
         const _data = collectionData.filter(cdatax => {
@@ -192,7 +191,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
         return obj
       })
 
-      return test2
+      return finalData
+    }
+  })
+  const getFieldDetails = computed(() => {
+    return (payload) => { // supply `name` column from `fields` collection
+      const fields = module.value && module.value.fields
+      const field = fields.find(fx => fx.name === payload)
+      return field
     }
   })
 
@@ -271,6 +277,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getViewFilterIds,
     getSearchKeyFieldIds,
     getKanbanData,
+    getFieldDetails,
     fetchModule,
     fetchBaseModule,
     fetchModules,
