@@ -275,7 +275,7 @@ onMounted(async () => {
           </template>
         </DynamicDataTable>
         <template #fallback>
-          <DataTable :value="[1, 2, 3, 4, 5]">
+          <DataTable :value="[{ 'col1': 1 }, { 'col2': 2 }, { 'col3': 3 }, { 'col4': 4 }, { 'col5': 5 }]">
             <Column field="code 1" header="">
               <template #body>
                 <Skeleton class="m-1 my-2"></Skeleton>
