@@ -53,9 +53,13 @@ onMounted(() => {
         :group="viewFilterId"
         @change="log"
         itemKey="_id"
-        class="cursor-move h-full">
+        handle=".handle"
+        class="h-full">
         <template #item="{ element, index }">
-          <div class="p-4 m-4 border-1 border-primary-300 border-round-xl bg-white hover:shadow-4">
+          <div class="draggable-div p-4 m-4 border-1 border-primary-300 border-round-xl bg-white hover:shadow-4">
+            <div class="text-right handle">
+              <i class="pi pi-arrows-alt cursor-move" style="font-size: 1rem"></i>
+            </div>
             <!-- Loop through the first 4 key-value pairs in the object -->
             <div v-for="(value, key) in Object.entries(element).slice(0, 4)" :key="key" class="my-2">
               <strong v-if="getFieldDetails(value[0])">{{ getFieldDetails(value[0]).label }}:</strong> {{ value[1] }}
@@ -71,5 +75,12 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.handle {
+  opacity: 0;
+}
+
+.draggable-div:hover .handle {
+  opacity: 1;
+}
 
 </style>
