@@ -22,6 +22,7 @@ const props = defineProps({
 })
 
 // refs
+const drag = ref(false)
 const kanbanData = ref([])
 const moduleStore = useModuleStore()
 const { getCollection, getKanbanData, getFieldDetails } = storeToRefs(moduleStore)
@@ -52,12 +53,14 @@ onMounted(() => {
         :list="field.data"
         :group="viewFilterId"
         @change="log"
+        @start="drag = true"
+        @end="drag = false"
         itemKey="_id"
         handle=".handle"
         class="h-full">
         <template #item="{ element, index }">
           <div class="draggable-div p-4 m-4 border-1 border-primary-300 border-round-xl bg-white hover:shadow-4">
-            <div class="text-right handle">
+            <div class="handle">
               <i class="pi pi-arrows-alt cursor-move" style="font-size: 1rem"></i>
             </div>
             <!-- Loop through the first 4 key-value pairs in the object -->
@@ -76,7 +79,14 @@ onMounted(() => {
 
 <style scoped>
 .handle {
+  position: absolute;
   opacity: 0;
+  right: 15px;
+  top: 15px;
+}
+
+.draggable-div {
+  position: relative;
 }
 
 .draggable-div:hover .handle {
