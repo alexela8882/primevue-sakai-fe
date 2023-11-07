@@ -10,6 +10,10 @@ const ViewFiltersDialog = defineAsyncComponent(() => import('../modules/ViewFilt
 const listViewFilterContent = defineAsyncComponent(() => import('../modules/DynamicDataTable/ListViewFilterContent.vue'))
 const DynamicDataTable = defineAsyncComponent(() => import('../modules/DynamicDataTable/DynamicDataTableMain.vue'))
 const DynamicKanban = defineAsyncComponent(() => import('../modules/DynamicKanban.vue'))
+// loaders
+import ListViewLoader from '../modules/DynamicDataTable/Loaders/ListViewLoader.vue'
+import DataTableLoader from '../modules/DynamicDataTable/Loaders/DataTableLoader.vue'
+import KanbanLoader from '../modules/DynamicDataTable/Loaders/KanbanLoader.vue'
 
 // refs
 const viewFiltersDialogMode = ref('new')
@@ -257,41 +261,14 @@ onMounted(async () => {
           <template #list-view-filter>
             <Suspense>
               <listViewFilterContent :baseModule="getBaseModule" />
-
               <template #fallback>
-                <div class="p-4">
-                  <div class="flex flex-column gap-6">
-                    <div v-for="(skel, skx) in 2" :key="skx">
-                      <Skeleton class="mb-2" borderRadius="16px"></Skeleton>
-                      <Skeleton width="10rem" class="mb-2" borderRadius="16px"></Skeleton>
-                      <Skeleton width="5rem" borderRadius="16px" class="mb-2"></Skeleton>
-                      <Skeleton height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
-                      <Skeleton width="10rem" height="4rem" borderRadius="16px"></Skeleton>
-                    </div>
-                  </div>
-                </div>
+                <ListViewLoader />
               </template>
             </Suspense>
           </template>
         </DynamicDataTable>
         <template #fallback>
-          <DataTable :value="[{ 'col1': 1 }, { 'col2': 2 }, { 'col3': 3 }, { 'col4': 4 }, { 'col5': 5 }]">
-            <Column field="code 1" header="">
-              <template #body>
-                <Skeleton class="m-1 my-2"></Skeleton>
-              </template>
-            </Column>
-            <Column field="code 2" header="">
-              <template #body>
-                <Skeleton></Skeleton>
-              </template>
-            </Column>
-            <Column field="code 3" header="">
-              <template #body>
-                <Skeleton></Skeleton>
-              </template>
-            </Column>
-          </DataTable>
+          <DataTableLoader />
         </template>
       </Suspense>
 
@@ -306,33 +283,7 @@ onMounted(async () => {
           :data="getCollection.data"
           :collectionLoading="collectionLoading" />
         <template #fallback>
-          <div>
-            <Skeleton height="3rem" class="mb-2"></Skeleton>
-            <div class="flex gap-2">
-              <div class="flex flex-column gap-2 w-full">
-                <Skeleton height="10rem"></Skeleton>
-                <Skeleton height="10rem"></Skeleton>
-                <Skeleton height="10rem"></Skeleton>
-              </div>
-              <div class="flex flex-column gap-2 w-full">
-                <Skeleton height="10rem"></Skeleton>
-              </div>
-              <div class="flex flex-column gap-2 w-full">
-                <Skeleton height="10rem"></Skeleton>
-                <Skeleton height="10rem"></Skeleton>
-              </div>
-              <div class="flex flex-column gap-2 w-full">
-                <Skeleton height="10rem"></Skeleton>
-                <Skeleton height="10rem"></Skeleton>
-                <Skeleton height="10rem"></Skeleton>
-                <Skeleton height="10rem"></Skeleton>
-              </div>
-              <div class="flex flex-column gap-2 w-full">
-                <Skeleton height="10rem"></Skeleton>
-                <Skeleton height="10rem"></Skeleton>
-              </div>
-            </div>
-          </div>
+          <KanbanLoader />
         </template>
       </Suspense>
     </div>
