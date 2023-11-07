@@ -162,11 +162,11 @@ onMounted(async () => {
               <MultiSelect
                 v-model="selectedSearchKeyIds"
                 :options="getBaseModule.fields"
-                track-by="_id"
                 filter
                 :showToggleAll="false"
                 optionLabel="label"
                 optionValue="_id"
+                dataKey="_id"
                 placeholder="Select Fields"
                 class="border-round-xl border-primary w-full md:w-12rem mb-2 md:mb-0" />
             </div>

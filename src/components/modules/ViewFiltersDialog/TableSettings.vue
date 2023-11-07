@@ -133,6 +133,7 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
               :options="getBaseModule.fields"
               optionLabel="label"
               optionValue="name"
+              dataKey="_id"
               filter
               placeholder="Select Field *"
               class="w-full md:w-12rem mr-2"
