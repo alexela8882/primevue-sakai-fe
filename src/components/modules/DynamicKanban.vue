@@ -52,9 +52,15 @@ onMounted(() => {
       <draggable
         :list="field.data"
         :group="viewFilterId"
+        :animation="300"
         @change="log"
         @start="drag = true"
         @end="drag = false"
+        :component-data="{
+          tag: 'div',
+          type: 'transition-group',
+          name: !drag ? 'flip-list' : null
+        }"
         itemKey="_id"
         handle=".handle"
         class="h-full">
@@ -91,6 +97,14 @@ onMounted(() => {
 
 .draggable-div:hover .handle {
   opacity: 1;
+}
+
+.flip-list-move {
+  transition: transform 0.5s;
+}
+
+.no-move {
+  transition: transform 0s;
 }
 
 </style>
