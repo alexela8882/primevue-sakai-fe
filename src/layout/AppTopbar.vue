@@ -149,7 +149,7 @@ const logout = () => {
     <div class="layout-topbar-menu" :class="topbarMenuClasses">
       <span class="flex align-items-center layout-search p-input-icon-left ml-3">
         <i class="pi pi-search" />
-        <InputText class="surface-100" placeholder="Quick search..." size="small" />
+        <InputText placeholder="Quick search..." size="large" />
       </span>
       <!-- <div class="flex align-items-center">
         <span>Hello!&nbsp;</span>
@@ -167,6 +167,7 @@ const logout = () => {
         <i class="pi pi-bell"></i>
         <span>Bell</span>
       </button>
+      <!-- <Button icon="pi pi-bell" rounded aria-label="Filter" /> -->
       <div class="justify-content-center">
         <button v-if="isAuthenticated" @click="toggle" class="p-link layout-topbar-button">
           <i class="pi pi-bars" style="font-size: 1rem;"></i>

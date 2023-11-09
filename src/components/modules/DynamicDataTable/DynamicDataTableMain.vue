@@ -8,6 +8,7 @@ import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 // stores
 import { useModuleStore } from '../../../stores/modules/index'
+import router from '../../../router'
 
 // defines
 const props = defineProps({
@@ -46,6 +47,25 @@ const menuModel = ref([
 ])
 const menuItems = ref([
   {
+    label: 'View',
+    icon: 'pi pi-reply',
+    command: (event) => {
+      console.log(event)
+      console.log(menuSelectedData.value)
+      // redirect to detail page
+      const routerObj = Object.assign({},
+        {
+          name: 'modules.detail_page',
+          params: {
+            name: route.params.name,
+            id: route.params.id,
+            pageid: menuSelectedData.value._id
+          }
+        }
+      )
+      router.push(routerObj)
+    }
+  }, {
     label: 'Change Owner',
     icon: 'pi pi-user',
     command: (event) => {

@@ -24,7 +24,10 @@ const home = ref({
         <span class="font-bold text-blue-800">/</span>
       </template>
       <template #item="{item}">
-        <a :class="item.class" @click="item.to && $router.push(`${item.to}`)" style="cursor: pointer;">
+        <a
+          :class="item.class"
+          @click="item.to && $router.push(`${item.to}`)"
+          :style="`cursor: ${item.to !== null && 'pointer'}`">
           <span :class="`${item.to && 'font-bold'}`">{{ item.label }}</span>
         </a>
       </template>

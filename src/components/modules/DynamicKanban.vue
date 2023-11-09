@@ -5,7 +5,7 @@
 import draggable from 'vuedraggable'
 import { onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 // stores
 import { useModuleStore } from '../../stores/modules/index'
 
@@ -22,6 +22,8 @@ const props = defineProps({
 })
 
 // refs
+const route = useRoute()
+const router = useRouter()
 const drag = ref(false)
 const kanbanData = ref([])
 const moduleStore = useModuleStore()
@@ -31,6 +33,19 @@ const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 // actions
 const log = (evt) => {
   window.console.log(evt)
+}
+const navigateDetailPage = (data) => {
+  const routerObj = Object.assign({},
+    {
+      name: 'modules.detail_page',
+      params: {
+        name: route.params.name,
+        id: route.params.id,
+        pageid: data._id
+      }
+    }
+  )
+  router.push(routerObj)
 }
 
 onMounted(() => {
@@ -66,8 +81,9 @@ onMounted(() => {
         class="h-full">
         <template #item="{ element, index }">
           <div class="draggable-div p-4 m-4 border-1 border-primary-300 border-round-xl bg-white hover:shadow-4">
-            <div class="handle">
-              <i class="pi pi-arrows-alt cursor-move" style="font-size: 1rem"></i>
+            <div class="flex gap-3 card-icons">
+              <i @click="navigateDetailPage(element)" class="pi pi-eye cursor-pointer" style="font-size: 1rem"></i>
+              <i class="handle pi pi-arrows-alt cursor-move" style="font-size: 1rem"></i>
             </div>
             <!-- Loop through the first 4 key-value pairs in the object -->
             <div v-for="(value, key) in Object.entries(element).slice(0, 4)" :key="key" class="my-2">
@@ -84,7 +100,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.handle {
+.card-icons {
   position: absolute;
   opacity: 0;
   right: 15px;
@@ -95,7 +111,7 @@ onMounted(() => {
   position: relative;
 }
 
-.draggable-div:hover .handle {
+.draggable-div:hover .card-icons {
   opacity: 1;
 }
 

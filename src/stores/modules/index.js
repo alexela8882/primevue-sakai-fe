@@ -10,6 +10,8 @@ import { useBaseStore } from '@/stores/base'
 export const useModuleStore = defineStore('moduleStore', () => {
 
   // refs
+  const moduleLoading = ref(false)
+  const collectionLoading = ref(false)
   const listViewFilterOverlay = ref(false)
   const viewFiltersDialogLoading = ref(false)
   const viewFiltersDialogSwitch = ref(false)
@@ -18,8 +20,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // stores
   const baseStore = useBaseStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
-  const moduleLoading = ref(false)
-  const collectionLoading = ref(false)
   // presets
   const perPageItems = ref([
     { label: '10', value: 10 },
@@ -201,6 +201,13 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return field
     }
   })
+  const getFieldDetailsById = computed(() => {
+    return (payload) => { // supply `name` column from `fields` collection
+      const fields = getModule.value.fields
+      const field = fields && fields.find(fx => fx._id === payload)
+      return field
+    }
+  })
 
   // actions
   const fetchBaseModule = async (id) => {
@@ -278,6 +285,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getSearchKeyFieldIds,
     getKanbanData,
     getFieldDetails,
+    getFieldDetailsById,
     fetchModule,
     fetchBaseModule,
     fetchModules,

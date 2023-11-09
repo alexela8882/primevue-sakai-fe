@@ -33,6 +33,7 @@ const {
   viewFiltersDialog,
   moduleLoading,
   collectionLoading,
+  getModule,
   getBaseModule,
   getCollection,
   getViewFilters,
@@ -165,7 +166,7 @@ onMounted(async () => {
                 class="border-round-xl border-primary w-full md:w-12rem mr-2 mb-2 md:mb-0"/>
               <MultiSelect
                 v-model="selectedSearchKeyIds"
-                :options="getBaseModule.fields"
+                :options="getModule.fields"
                 filter
                 :showToggleAll="false"
                 optionLabel="label"

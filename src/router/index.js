@@ -62,6 +62,10 @@ const router = createRouter({
               path: ':name/:id',
               name: 'modules.view',
               component: () => import('@/views/pages/modules/view.vue')
+            }, {
+              path: ':name/:id/detail-page/:pageid',
+              name: 'modules.detail_page',
+              component: () => import('@/views/pages/modules/pages/detail.vue')
             }
           ]
         }, {
