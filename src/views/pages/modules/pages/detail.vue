@@ -56,18 +56,30 @@ onMounted(async() => {
             </template>
             <div v-for="(section, sx) in panel.sections" :key="sx" class="pt-4">
               <div class="flex flex-column gap-4">
-                <div class="text-lg">{{ section.sectionLabel }}</div>
+                <div class="text-lg text-primary font-bold">{{ section.sectionLabel }}</div>
                 <div class="grid">
                   <div v-for="(field, fx) in section.field_ids" :key="fx" class="col">
                     <div v-for="(id, idx) in field">
-                      <div v-if="getFieldDetailsById(id)">
-                        <!-- <div v-if="getFieldDetailsById(id).relation">
-                          <div v-for="(displayField, dfx) in getFieldDetailsById(id).relation.displayFieldName" :key="dfx">
-                            {{ displayField }}
+                      <div v-if="getFieldDetailsById(id)" class="flex gap-4">
+                        <div>{{ getFieldDetailsById(id).label }}</div>
+                        <div v-if="getFieldDetailsById(id).relation" class="flex gap-2">
+                          <div v-for="(displayField, dfx) in getFieldDetailsById(id).relation.displayFieldName" :key="dfx" class="font-bold">
+                            <div v-if="getItemByName(getFieldDetailsById(id).name)">
+                              <div v-if="typeof getItemByName(getFieldDetailsById(id).name) === 'object' &&
+                                          !Array.isArray(getItemByName(getFieldDetailsById(id).name)) &&
+                                          getItemByName(getFieldDetailsById(id).name) !== null">
+                                {{ getItemByName(getFieldDetailsById(id).name)[displayField] }}
+                              </div>
+                              <div v-else-if="Array.isArray(getItemByName(getFieldDetailsById(id).name))">
+                                <div v-for="(relationArr, rax) in getItemByName(getFieldDetailsById(id).name)" :key="rax">
+                                  {{ relationArr[displayField] }}
+                                </div>
+                              </div>
+                            </div>
+                            <div v-else>None</div>
                           </div>
-                        </div> -->
-                        <div class="flex gap-4">
-                          <div>{{ getFieldDetailsById(id).label }}</div>
+                        </div>
+                        <div v-else class="flex gap-4">
                           <div class="font-bold">{{ getItemByName(getFieldDetailsById(id).name) ? getItemByName(getFieldDetailsById(id).name) : 'None' }}</div>
                         </div>
                       </div>
