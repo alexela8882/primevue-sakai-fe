@@ -15,7 +15,7 @@ const router = useRouter()
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
 const { fetchModule, fetchBaseModule } = moduleStore
-const { getFieldDetailsById } = storeToRefs(moduleStore)
+const { getModule, getFieldDetailsById } = storeToRefs(moduleStore)
 const { getItem, getItemPanels, getItemByName } = storeToRefs(moduleDetailStore)
 const { fetchItem } = moduleDetailStore
 // presets
@@ -42,6 +42,10 @@ onMounted(async() => {
   <div>
     <RdBreadCrumbs :bcrumbs="bcrumbs" />
 
+    <div class="bg-white p-5 mb-5 border-round-xl">
+      <!-- <pre>{{ getModule.fields }}</pre> -->
+    </div>
+
     <div class="grid">
       <div class="col flex flex-column gap-3">
         <div v-for="(panel, px) in getItemPanels" :key="px" class="flex flex-column gap-4">
@@ -58,10 +62,13 @@ onMounted(async() => {
               <div class="flex flex-column gap-4">
                 <div class="text-lg text-primary font-bold">{{ section.sectionLabel }}</div>
                 <div class="grid">
-                  <div v-for="(field, fx) in section.field_ids" :key="fx" class="col">
+                  <div
+                    v-for="(field, fx) in section.field_ids"
+                    :key="fx"
+                    class="col flex flex-column gap-4">
                     <div v-for="(id, idx) in field">
-                      <div v-if="getFieldDetailsById(id)" class="flex gap-4">
-                        <div>{{ getFieldDetailsById(id).label }}</div>
+                      <div v-if="getFieldDetailsById(id)" class="flex align-items-center gap-4">
+                        <div class="white-space-nowrap">{{ getFieldDetailsById(id).label }}</div>
                         <div v-if="getFieldDetailsById(id).relation" class="flex gap-2">
                           <div v-for="(displayField, dfx) in getFieldDetailsById(id).relation.displayFieldName" :key="dfx" class="font-bold">
                             <div v-if="getItemByName(getFieldDetailsById(id).name)">
@@ -71,16 +78,29 @@ onMounted(async() => {
                                 {{ getItemByName(getFieldDetailsById(id).name)[displayField] }}
                               </div>
                               <div v-else-if="Array.isArray(getItemByName(getFieldDetailsById(id).name))">
-                                <div v-for="(relationArr, rax) in getItemByName(getFieldDetailsById(id).name)" :key="rax">
-                                  {{ relationArr[displayField] }}
-                                </div>
+                                <Tag
+                                  v-for="(relationArr, rax) in getItemByName(getFieldDetailsById(id).name)"
+                                  :key="rax"
+                                  rounded
+                                  :value="relationArr[displayField]"
+                                  class="white-space-nowrap px-3 m-1 cursor-pointer" severity="info"></Tag>
                               </div>
                             </div>
-                            <div v-else>None</div>
+                            <div v-else></div>
                           </div>
                         </div>
-                        <div v-else class="flex gap-4">
-                          <div class="font-bold">{{ getItemByName(getFieldDetailsById(id).name) ? getItemByName(getFieldDetailsById(id).name) : 'None' }}</div>
+                        <div v-else class="flex gap-4 font-bold">
+                          <div v-if="Array.isArray(getItemByName(getFieldDetailsById(id).name))">
+                            <Tag
+                              v-for="(item, itx) in getItemByName(getFieldDetailsById(id).name)"
+                              :key="itx"
+                              rounded
+                              :value="item"
+                              class="white-space-nowrap px-3 m-1 cursor-pointer my-1" severity="info"></Tag>
+                          </div>
+                          <div v-else>
+                            {{ getItemByName(getFieldDetailsById(id).name) ? getItemByName(getFieldDetailsById(id).name) : '' }}
+                          </div>
                         </div>
                       </div>
                     </div>

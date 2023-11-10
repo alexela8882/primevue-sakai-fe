@@ -41394,7 +41394,7 @@
   ],
   "accounts-item": [
     {
-      "_id": "651a5be93d39cc7713401932",
+      "_id": "5bb19faf306947718ca470a5",
       "isEscoBranch": false,
       "business_unit_ids": [
         {
@@ -41496,16 +41496,8 @@
       },
       "products_handled_id": [],
       "description": null,
-      "updated_at": {
-        "date": "2023-10-02 05:58:01.000000",
-        "timezone_type": 3,
-        "timezone": "UTC"
-      },
-      "created_at": {
-        "date": "2023-10-02 05:58:01.000000",
-        "timezone_type": 3,
-        "timezone": "UTC"
-      },
+      "updated_at": "2023-10-02 05:58:01.000000",
+      "created_at": "2023-10-02 05:58:01.000000",
       "updated_by": {
         "_id": "5bb104ed678f71061f645215",
         "firstName": "Christia",
