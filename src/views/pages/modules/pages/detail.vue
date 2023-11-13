@@ -49,8 +49,33 @@ onMounted(async() => {
       <ProgressSpinner />
     </div>
     <div v-else>
-      <div class="bg-white p-5 mb-5 border-round-xl">
+      <div class="bg-white p-5 mb-5 border-round-xl flex">
         <!-- <pre>{{ getModule.fields }}</pre> -->
+        <div v-for="(field, fx) in getModule.fields" :key="fx">
+          <div :class="`${getModule.fields.length === fx + 1 && 'mr-8'}`">
+            <div v-if="field.title" class="flex flex-column gap-2 text-xl mr-4">
+              <div v-if="field.groupWith">
+                <div>{{ field.groupLabel }}</div>
+                <div class="flex">
+                  <div v-for="(groupField, gfx) in field.groupWith" :key="gfx">
+                    <div class="font-bold">{{ getItemByName(groupField) }}{{ field.fieldGlue === ' ' ? '&nbsp;' : field.fieldGlue }}</div>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <div>{{ field.label }}</div>
+                <div class="font-bold">{{ getItemByName(field.name) }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div v-for="(field, fx) in getModule.fields" :key="fx">
+          <div v-if="field.header" class="flex flex-column gap-2 text-xl mx-4">
+            <div>{{ field.label }}</div>
+            <div class="font-bold">{{ getItemByName(field.name) ? getItemByName(field.name) : null }}</div>
+          </div>
+        </div>
       </div>
 
       <div class="grid">
