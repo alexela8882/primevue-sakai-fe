@@ -55,10 +55,10 @@ const menuItems = ref([
       // redirect to detail page
       const routerObj = Object.assign({},
         {
-          name: 'modules.detail_page',
+          name: 'modules.page.detail',
           params: {
-            name: route.params.name,
-            id: route.params.id,
+            name: props.moduleName,
+            id: props.moduleId,
             pageid: menuSelectedData.value._id
           }
         }

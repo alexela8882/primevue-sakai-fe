@@ -251,6 +251,7 @@ onMounted(async () => {
       <!-- DATATABLE -->
       <Suspense v-if="viewFilter.currentDisplay === 'table'">
         <DynamicDataTable
+          :moduleId="getBaseModule._id"
           :moduleName="getBaseModule.name"
           :moduleLabel="getBaseModule.label"
           :fields="viewFilter.fields"

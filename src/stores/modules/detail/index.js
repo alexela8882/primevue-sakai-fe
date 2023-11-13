@@ -11,7 +11,8 @@ import { useModuleStore } from '@/stores/modules'
 export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   // refs
   const toast = useToast()
-  const itemLoading = ref(false)
+  const itemLoading = ref(true)
+  const relatedListLoading = ref(true)
   // stores
   const baseStore = useBaseStore()
   const moduleStore = useModuleStore()
@@ -20,6 +21,7 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
 
   // states
   const item = ref({})
+  const relatedLists = ref([])
 
   // getters
   const getItem = computed(() => item.value)
@@ -27,9 +29,16 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     const panels = getModule.value.panels
     return panels
   })
-  const getItemByName = computed(() => {
+  const getItemValueByName = computed(() => {
     return (payload) => {
       return item.value[payload]
+    }
+  })
+  const getRelatedLists = computed(() => relatedLists.value)
+  const getRelatedListsByCname = computed(() => {
+    return (payload) => {
+      const relatedList = getRelatedLists.value.find(rl => rl.cname === payload)
+      return relatedList
     }
   })
 
@@ -47,13 +56,30 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     }
     itemLoading.value = false
   }
+  const fetchItemRelatedList = async (payload) => {
+    relatedListLoading.value = true
+
+    const res = await axios(`${jsonDbUrl.value}/${payload.name}-related`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (res.status === 200) {
+      relatedLists.value = (res.data && res.data.length > 0) ? res.data[0] : res.data.connected
+    }
+    relatedListLoading.value = false
+  }
 
   return {
     itemLoading,
+    relatedListLoading,
     item,
     getItem,
+    getRelatedLists,
+    getRelatedListsByCname,
     getItemPanels,
-    getItemByName,
-    fetchItem
+    getItemValueByName,
+    fetchItem,
+    fetchItemRelatedList
   }
 })

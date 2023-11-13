@@ -47,7 +47,7 @@ const router = createRouter({
             }
           ]
         }, {
-          path: '/modules',
+          path: 'modules',
           name: 'modules',
           component: () => import('@/views/pages/modules/main.vue'),
           meta: {
@@ -63,9 +63,16 @@ const router = createRouter({
               name: 'modules.view',
               component: () => import('@/views/pages/modules/view.vue')
             }, {
-              path: ':name/:id/detail-page/:pageid',
-              name: 'modules.detail_page',
-              component: () => import('@/views/pages/modules/pages/detail.vue')
+              path: 'page',
+              name: 'modules.page',
+              component: () => import('@/views/pages/modules/pages/main.vue'),
+              children: [
+                {
+                  path: ':name/:id/detail-page/:pageid',
+                  name: 'modules.page.detail',
+                  component: () => import('@/views/pages/modules/pages/detail.vue'),
+                }
+              ]
             }
           ]
         }, {
