@@ -69,7 +69,7 @@ const router = createRouter({
               children: [
                 {
                   path: ':name/:id/detail-page/:pageid',
-                  name: 'modules.page.detail',
+                  name: 'modules.pages.detail',
                   component: () => import('@/views/pages/modules/pages/detail.vue'),
                 }
               ]

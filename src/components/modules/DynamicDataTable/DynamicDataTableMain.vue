@@ -55,7 +55,7 @@ const menuItems = ref([
       // redirect to detail page
       const routerObj = Object.assign({},
         {
-          name: 'modules.page.detail',
+          name: 'modules.pages.detail',
           params: {
             name: props.moduleName,
             id: props.moduleId,

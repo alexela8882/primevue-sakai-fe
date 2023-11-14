@@ -37,7 +37,7 @@ const log = (evt) => {
 const navigateDetailPage = (data) => {
   const routerObj = Object.assign({},
     {
-      name: 'modules.page.detail',
+      name: 'modules.pages.detail',
       params: {
         name: route.params.name,
         id: route.params.id,

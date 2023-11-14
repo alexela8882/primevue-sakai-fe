@@ -62,9 +62,11 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     const res = await axios(`${jsonDbUrl.value}/${payload.name}-related`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
+    }).catch((err) => {
+      console.log(err)
     })
 
-    if (res.status === 200) {
+    if (res && res.status === 200) {
       relatedLists.value = (res.data && res.data.length > 0) ? res.data[0] : res.data.connected
     }
     relatedListLoading.value = false
