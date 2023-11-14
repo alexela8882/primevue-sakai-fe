@@ -1,7 +1,7 @@
 <script setup>
 // imports
 import { storeToRefs } from 'pinia'
-import { onMounted, ref, defineAsyncComponent } from 'vue'
+import { onMounted, ref, watch, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 // components
 import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
@@ -19,6 +19,7 @@ const localItemLoading = ref(true)
 const localBaseModule = ref()
 const localModule = ref('test')
 const localItemPanels = ref()
+const localRelatedList = ref()
 const localRelatedLists = ref()
 // stores
 const moduleStore = useModuleStore()
@@ -33,7 +34,7 @@ const {
     getRelatedListsByCname,
     getItemPanels,
     getItemValueByName } = storeToRefs(moduleDetailStore)
-const { fetchItem, fetchItemRelatedList } = moduleDetailStore
+const { fetchItem, fetchItemRelatedList, fetchItemRelatedLists } = moduleDetailStore
 // presets
 const bcrumbs = ref([
   {
@@ -44,13 +45,26 @@ const bcrumbs = ref([
     to: null
   }
 ])
+const pullRelatedList = async (payload) => {
+  const params = {
+    moduleName: route.params.name,
+    panelName: payload.panelName
+  }
+  await fetchItemRelatedList(params)
+}
+
+// lifecycles
+watch(getRelatedLists, (newVal, oldVal) => {
+  console.log(newVal)
+  if (newVal) localRelatedLists.value = newVal
+})
 
 onMounted(async() => {
   // fetches
   await fetchBaseModule(route.params.id)
   await fetchModule(route.params.name)
   await fetchItem(route.params)
-  await fetchItemRelatedList(route.params)
+  // await fetchItemRelatedLists(route.params)
 
   // pre-assignments
   localItemLoading.value = itemLoading.value
@@ -118,21 +132,28 @@ onMounted(async() => {
                         </div>
                       </template>
                         <div class="flex flex-column gap-4 mt-4">
-                          <div v-if="getRelatedListsByCname(panel.panelName)">
-                            <Suspense v-if="getRelatedListsByCname(panel.panelName)">
-                              <DynamicDataTable
-                                :moduleId="panel._id"
-                                :moduleName="getRelatedListsByCname(panel.panelName).link"
-                                :moduleLabel="getRelatedListsByCname(panel.panelName).label"
-                                :fields="getRelatedListsByCname(panel.panelName).fields.data"
-                                :data="getRelatedListsByCname(panel.panelName).collection.data"
-                                :pagination="getRelatedListsByCname(panel.panelName).collection.meta"
-                                :collectionLoading="false">
-                              </DynamicDataTable>
-                              <template #fallback>
-                                <DataTableLoader />
-                              </template>
-                            </Suspense>
+                          <div v-if="panel.controllerMethod.indexOf('@show') > -1">
+                            <div v-if="getRelatedListsByCname(panel.panelName)">
+                              <Suspense v-if="getRelatedListsByCname(panel.panelName)">
+                                <DynamicDataTable
+                                  :moduleId="panel._id"
+                                  :moduleName="getRelatedListsByCname(panel.panelName).link"
+                                  :moduleLabel="getRelatedListsByCname(panel.panelName).label"
+                                  :fields="getRelatedListsByCname(panel.panelName).fields.data"
+                                  :data="getRelatedListsByCname(panel.panelName).collection.data"
+                                  :pagination="getRelatedListsByCname(panel.panelName).collection.meta"
+                                  :collectionLoading="false">
+                                </DynamicDataTable>
+                                <template #fallback>
+                                  <DataTableLoader />
+                                </template>
+                              </Suspense>
+                            </div>
+                            <div v-else>
+                              <div @click="pullRelatedList(panel)" class="flex align-items-center gap-2 cursor-pointer text-700">
+                                <i class="pi pi-eye"></i> View data
+                              </div>
+                            </div>
                           </div>
                           <div v-else class="grid">
                             <div

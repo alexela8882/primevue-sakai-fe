@@ -57,6 +57,18 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     itemLoading.value = false
   }
   const fetchItemRelatedList = async (payload) => {
+    const res = await axios(`${jsonDbUrl.value}/${payload.moduleName}-related?cname=${payload.panelName}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    }).catch((err) => {
+      console.log(err)
+    })
+
+    if (res && res.status === 200) {
+      if (res.data) relatedLists.value.push(res.data[0])
+    }
+  }
+  const fetchItemRelatedLists = async (payload) => {
     relatedListLoading.value = true
 
     const res = await axios(`${jsonDbUrl.value}/${payload.name}-related`, {
@@ -82,6 +94,7 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     getItemPanels,
     getItemValueByName,
     fetchItem,
-    fetchItemRelatedList
+    fetchItemRelatedList,
+    fetchItemRelatedLists
   }
 })
