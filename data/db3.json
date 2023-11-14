@@ -40220,7 +40220,7 @@
         "panelName": "contact-panel-2",
         "entityName": "Contact",
         "controllerMethod": "accounts@show",
-        "label": null,
+        "label": "Contact",
         "tabKey": "N",
         "mutable": true,
         "selectionField": null,
