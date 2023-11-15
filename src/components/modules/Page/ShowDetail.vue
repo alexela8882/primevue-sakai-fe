@@ -46,11 +46,35 @@ const bcrumbs = ref([
   }
 ])
 const pullRelatedList = async (payload) => {
+  console.log(document.getElementById(`rl-panel-${payload._id}`))
   const params = {
     moduleName: route.params.name,
     panelName: payload.panelName
   }
   await fetchItemRelatedList(params)
+}
+const isElVisible = (el) => {
+  if (el) {
+    const rect = el.getBoundingClientRect()
+    return (
+      rect.top >= 0 &&
+      rect.left >= 0 &&
+      rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+    )
+  }
+}
+const checkElVisibility = () => {
+  // console.log(document.getElementById('rl-panel-5cfa27c4a6ebc787575ff2a2'))
+  getItemPanels.value.map(panel => {
+    const yourElement = document.getElementById(`rl-panel-${panel._id}`)
+    // console.log(yourElement)
+    if (isElVisible(yourElement)) {
+      // Element is visible, do something
+      console.log(`Element with ${panel._id} id is visible`)
+      pullRelatedList(panel)
+    }
+  })
 }
 
 // lifecycles
@@ -72,6 +96,12 @@ onMounted(async() => {
   localModule.value = getModule.value
   localItemPanels.value = getItemPanels.value
   localRelatedLists.value = getRelatedLists.value
+
+  // Attach the scroll event listener to the window or container
+  window.addEventListener('scroll', checkElVisibility)
+
+  // Optionally, you can also call the function on initial load in case the element is already visible.
+  checkElVisibility()
 })
 
 </script>
@@ -149,7 +179,7 @@ onMounted(async() => {
                                 </template>
                               </Suspense>
                             </div>
-                            <div v-else>
+                            <div v-else :id="`rl-panel-${panel._id}`">
                               <div @click="pullRelatedList(panel)" class="flex align-items-center gap-2 cursor-pointer text-700">
                                 <i class="pi pi-eye"></i> View data
                               </div>
