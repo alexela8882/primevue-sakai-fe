@@ -6,21 +6,28 @@ import { useRoute, useRouter } from 'vue-router'
 // components
 import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
 const DynamicDataTable = defineAsyncComponent(() => import('../../modules/DynamicDataTable/dynamicdatatablemain.vue'))
+const SalesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/SalesTab.vue'))
+const ServicesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/ServicesTab.vue'))
+const RelatedListPanel = defineAsyncComponent(() => import('../../modules/Page/Tabs/RelatedListPanel.vue'))
 // loaders
 import DataTableLoader from '../../modules/DynamicDataTable/Loaders/DataTableLoader.vue'
+import SimpleLoader from '../../loading/Simple2.vue'
 // stores
 import { useModuleStore } from '../../../stores/modules'
 import { useModuleDetailStore } from '../../../stores/modules/detail'
 
 // refs
+const tabIndex = ref(0)
 const route = useRoute()
 const router = useRouter()
 const localItemLoading = ref(true)
 const localBaseModule = ref()
-const localModule = ref('test')
+const localModule = ref()
 const localItemPanels = ref()
 const localRelatedList = ref()
 const localRelatedLists = ref()
+const atIndexRelatedLists = ref()
+const atShowRelatedLists = ref()
 // stores
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
@@ -31,6 +38,7 @@ const {
     relatedListLoading,
     getItem,
     getRelatedLists,
+    _getRelatedOrderedLists,
     getRelatedListsByCname,
     getItemPanels,
     getItemValueByName } = storeToRefs(moduleDetailStore)
@@ -45,8 +53,13 @@ const bcrumbs = ref([
     to: null
   }
 ])
+
+// actions
+const tabChanged = (e) => {
+  tabIndex.value = e.index
+}
 const pullRelatedList = async (payload) => {
-  console.log(document.getElementById(`rl-panel-${payload._id}`))
+  // console.log(document.getElementById(`rl-panel-${payload._id}`))
   const params = {
     moduleName: route.params.name,
     panelName: payload.panelName
@@ -79,7 +92,7 @@ const checkElVisibility = () => {
 
 // lifecycles
 watch(getRelatedLists, (newVal, oldVal) => {
-  console.log(newVal)
+  // console.log(newVal)
   if (newVal) localRelatedLists.value = newVal
 })
 
@@ -88,7 +101,8 @@ onMounted(async() => {
   await fetchBaseModule(route.params.id)
   await fetchModule(route.params.name)
   await fetchItem(route.params)
-  // await fetchItemRelatedLists(route.params)
+  await fetchItem(route.params)
+  await fetchItemRelatedLists(route.params)
 
   // pre-assignments
   localItemLoading.value = itemLoading.value
@@ -96,7 +110,10 @@ onMounted(async() => {
   localModule.value = getModule.value
   localItemPanels.value = getItemPanels.value
   localRelatedLists.value = getRelatedLists.value
+  atIndexRelatedLists.value = getItemPanels.value.filter(ip => ip.controllerMethod.includes('@index'))
+  atShowRelatedLists.value = _getRelatedOrderedLists.value.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))
 
+  // other logics
   // Attach the scroll event listener to the window or container
   window.addEventListener('scroll', checkElVisibility)
 
@@ -146,11 +163,11 @@ onMounted(async() => {
       </div>
 
       <div class="p-5 pt-4 bg-white border-round-xl">
-        <TabView>
+        <TabView @tab-change="tabChanged">
           <TabPanel header="Details">
             <div>
               <div class="flex flex-column gap-3">
-                <div v-for="(panel, px) in localItemPanels" :key="px" class="flex flex-column gap-4">
+                <div v-for="(panel, px) in atIndexRelatedLists" :key="px" class="flex flex-column gap-4">
                   <div v-for="(section, sx) in panel.sections" :key="sx" class="pt-4">
                     <Panel class="detail-page-panel">
                       <template #header>
@@ -161,90 +178,102 @@ onMounted(async() => {
                           </div>
                         </div>
                       </template>
-                        <div class="flex flex-column gap-4 mt-4">
-                          <div v-if="panel.controllerMethod.indexOf('@show') > -1">
-                            <div v-if="getRelatedListsByCname(panel.panelName)">
-                              <Suspense v-if="getRelatedListsByCname(panel.panelName)">
-                                <DynamicDataTable
-                                  :moduleId="panel._id"
-                                  :moduleName="getRelatedListsByCname(panel.panelName).link"
-                                  :moduleLabel="getRelatedListsByCname(panel.panelName).label"
-                                  :fields="getRelatedListsByCname(panel.panelName).fields.data"
-                                  :data="getRelatedListsByCname(panel.panelName).collection.data"
-                                  :pagination="getRelatedListsByCname(panel.panelName).collection.meta"
-                                  :collectionLoading="false">
-                                </DynamicDataTable>
-                                <template #fallback>
-                                  <DataTableLoader />
-                                </template>
-                              </Suspense>
-                            </div>
-                            <div v-else :id="`rl-panel-${panel._id}`">
-                              <div @click="pullRelatedList(panel)" class="flex align-items-center gap-2 cursor-pointer text-700">
-                                <i class="pi pi-eye"></i> View data
-                              </div>
+                      <div class="flex flex-column gap-4 mt-4">
+                        <div v-if="panel.controllerMethod.indexOf('@show') > -1">
+                          <div v-if="getRelatedListsByCname(panel.panelName)">
+                            <Suspense v-if="getRelatedListsByCname(panel.panelName)">
+                              <DynamicDataTable
+                                :moduleId="panel._id"
+                                :moduleName="getRelatedListsByCname(panel.panelName).link"
+                                :moduleLabel="getRelatedListsByCname(panel.panelName).label"
+                                :fields="getRelatedListsByCname(panel.panelName).fields.data"
+                                :data="getRelatedListsByCname(panel.panelName).collection.data"
+                                :pagination="getRelatedListsByCname(panel.panelName).collection.meta"
+                                :collectionLoading="false">
+                              </DynamicDataTable>
+                              <template #fallback>
+                                <DataTableLoader />
+                              </template>
+                            </Suspense>
+                          </div>
+                          <div v-else :id="`rl-panel-${panel._id}`">
+                            <div @click="pullRelatedList(panel)" class="flex align-items-center gap-2 cursor-pointer text-700">
+                              <i class="pi pi-eye"></i> View data
                             </div>
                           </div>
-                          <div v-else class="grid">
-                            <div
-                              v-for="(field, fx) in section.field_ids"
-                              :key="fx"
-                              class="col flex flex-column gap-4">
-                              <div v-for="(id, idx) in field">
-                                <div v-if="getFieldDetailsById(id)" class="flex align-items-start gap-4 border-bottom-1 border-200">
-                                  <div class="white-space-nowrap">{{ getFieldDetailsById(id).label }}</div>
-                                  <div v-if="getFieldDetailsById(id).relation" class="flex gap-2">
-                                    <div v-for="(displayField, dfx) in getFieldDetailsById(id).relation.displayFieldName" :key="dfx" class="font-bold">
-                                      <div v-if="getItemValueByName(getFieldDetailsById(id).name)">
-                                        <div v-if="typeof getItemValueByName(getFieldDetailsById(id).name) === 'object' &&
-                                                    !Array.isArray(getItemValueByName(getFieldDetailsById(id).name)) &&
-                                                    getItemValueByName(getFieldDetailsById(id).name) !== null">
-                                          {{ getItemValueByName(getFieldDetailsById(id).name)[displayField] }}
-                                        </div>
-                                        <div v-else-if="Array.isArray(getItemValueByName(getFieldDetailsById(id).name))">
-                                          <Tag
-                                            v-for="(relationArr, rax) in getItemValueByName(getFieldDetailsById(id).name)"
-                                            :key="rax"
-                                            rounded
-                                            :value="relationArr[displayField]"
-                                            class="white-space-nowrap px-3 m-1 cursor-pointer" severity="info"></Tag>
-                                        </div>
+                        </div>
+                        <div v-else class="grid">
+                          <div
+                            v-for="(field, fx) in section.field_ids"
+                            :key="fx"
+                            class="col flex flex-column gap-4">
+                            <div v-for="(id, idx) in field">
+                              <div v-if="getFieldDetailsById(id)" class="flex align-items-start gap-4 border-bottom-1 border-200">
+                                <div class="white-space-nowrap">{{ getFieldDetailsById(id).label }}</div>
+                                <div v-if="getFieldDetailsById(id).relation" class="flex gap-2">
+                                  <div v-for="(displayField, dfx) in getFieldDetailsById(id).relation.displayFieldName" :key="dfx" class="font-bold">
+                                    <div v-if="getItemValueByName(getFieldDetailsById(id).name)">
+                                      <div v-if="typeof getItemValueByName(getFieldDetailsById(id).name) === 'object' &&
+                                                  !Array.isArray(getItemValueByName(getFieldDetailsById(id).name)) &&
+                                                  getItemValueByName(getFieldDetailsById(id).name) !== null">
+                                        {{ getItemValueByName(getFieldDetailsById(id).name)[displayField] }}
                                       </div>
-                                      <div v-else></div>
+                                      <div v-else-if="Array.isArray(getItemValueByName(getFieldDetailsById(id).name))">
+                                        <Tag
+                                          v-for="(relationArr, rax) in getItemValueByName(getFieldDetailsById(id).name)"
+                                          :key="rax"
+                                          rounded
+                                          :value="relationArr[displayField]"
+                                          class="white-space-nowrap px-3 m-1 cursor-pointer" severity="info"></Tag>
+                                      </div>
                                     </div>
+                                    <div v-else></div>
                                   </div>
-                                  <div v-else class="flex gap-4 font-bold">
-                                    <div v-if="Array.isArray(getItemValueByName(getFieldDetailsById(id).name))">
-                                      <Tag
-                                        v-for="(item, itx) in getItemValueByName(getFieldDetailsById(id).name)"
-                                        :key="itx"
-                                        rounded
-                                        :value="item"
-                                        class="white-space-nowrap px-3 m-1 cursor-pointer my-1" severity="info"></Tag>
-                                    </div>
-                                    <div v-else>
-                                      {{ getItemValueByName(getFieldDetailsById(id).name) ? getItemValueByName(getFieldDetailsById(id).name) : '' }}
-                                    </div>
+                                </div>
+                                <div v-else class="flex gap-4 font-bold">
+                                  <div v-if="Array.isArray(getItemValueByName(getFieldDetailsById(id).name))">
+                                    <Tag
+                                      v-for="(item, itx) in getItemValueByName(getFieldDetailsById(id).name)"
+                                      :key="itx"
+                                      rounded
+                                      :value="item"
+                                      class="white-space-nowrap px-3 m-1 cursor-pointer my-1" severity="info"></Tag>
+                                  </div>
+                                  <div v-else>
+                                    {{ getItemValueByName(getFieldDetailsById(id).name) ? getItemValueByName(getFieldDetailsById(id).name) : '' }}
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
+                      </div>
                     </Panel>
                   </div>
                 </div>
+
+                <RelatedListPanel :relatedLists="atShowRelatedLists" />
               </div>
             </div>
           </TabPanel>
           <TabPanel v-if="localBaseModule && localBaseModule.name === 'accounts'" header="Sales">
             <div>
-              Sales tab
+              <Suspense v-if="tabIndex === 1">
+                <SalesTab />
+                <template #fallback>
+                  <SimpleLoader class="mt-4" />
+                </template>
+              </Suspense>
             </div>
           </TabPanel>
           <TabPanel v-if="localBaseModule && localBaseModule.name === 'accounts'" header="Services">
             <div>
-              Services tab
+              <Suspense v-if="tabIndex === 2">
+                <ServicesTab />
+                <template #fallback>
+                  <SimpleLoader class="mt-4" />
+                </template>
+              </Suspense>
             </div>
           </TabPanel>
         </TabView>

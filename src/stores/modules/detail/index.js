@@ -21,6 +21,7 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
 
   // states
   const item = ref({})
+  const _relatedLists = ref([])
   const relatedLists = ref([])
 
   // getters
@@ -34,7 +35,22 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
       return item.value[payload]
     }
   })
+  const _getRelatedLists = computed(() => _relatedLists.value)
+  const _getRelatedOrderedLists = computed(() => {
+    const sorted = _relatedLists.value.sort((a, b) => a.panelOrder - b.panelOrder)
+    return sorted
+  })
+  const _getRelatedListsByCname = computed(() => {
+    return (payload) => {
+      const relatedList = _getRelatedLists.value.find(rl => rl.cname === payload)
+      return relatedList
+    }
+  })
   const getRelatedLists = computed(() => relatedLists.value)
+  const getRelatedOrderedLists = computed(() => {
+    const sorted = relatedLists.value.sort((a, b) => a.panelOrder - b.panelOrder)
+    return sorted
+  })
   const getRelatedListsByCname = computed(() => {
     return (payload) => {
       const relatedList = getRelatedLists.value.find(rl => rl.cname === payload)
@@ -79,8 +95,9 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     })
 
     if (res && res.status === 200) {
-      relatedLists.value = (res.data && res.data.length > 0) ? res.data[0] : res.data.connected
+      _relatedLists.value = res.data
     }
+    console.log(_relatedLists.value)
     relatedListLoading.value = false
   }
 
@@ -89,7 +106,11 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     relatedListLoading,
     item,
     getItem,
+    _getRelatedLists,
+    _getRelatedOrderedLists,
+    _getRelatedListsByCname,
     getRelatedLists,
+    getRelatedOrderedLists,
     getRelatedListsByCname,
     getItemPanels,
     getItemValueByName,
