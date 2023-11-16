@@ -35,7 +35,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <RelatedListPanel :relatedLists="servicesRelatedLists" />
+  <RelatedListPanel :fromTab="true" :relatedLists="servicesRelatedLists" />
 </template>
 
 <style scoped>

@@ -18,6 +18,7 @@ const { _getRelatedListsByCname } = storeToRefs(moduleDetailStore)
 
 // defines
 const props = defineProps({
+  fromTab: { type: Boolean, required: false, default: false },
   relatedLists: Array
 })
 </script>
@@ -55,7 +56,7 @@ const props = defineProps({
       </div>
     </div>
     <div v-else>
-      <div class="mt-4 text-700">No data</div>
+      <div v-if="fromTab" class="mt-4 text-700">No data</div>
     </div>
   </div>
 </template>

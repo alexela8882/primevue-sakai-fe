@@ -82,7 +82,7 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
 
     if (res && res.status === 200) {
       if (res.data) relatedLists.value.push(res.data[0])
-    }
+    } else relatedLists.value = [] // reset
   }
   const fetchItemRelatedLists = async (payload) => {
     relatedListLoading.value = true
@@ -96,6 +96,9 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
 
     if (res && res.status === 200) {
       _relatedLists.value = res.data
+    } else {
+      console.log('err')
+      _relatedLists.value = [] // reset
     }
     console.log(_relatedLists.value)
     relatedListLoading.value = false
