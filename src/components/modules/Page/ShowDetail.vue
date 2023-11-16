@@ -167,18 +167,16 @@ onMounted(async() => {
           <TabPanel header="Details">
             <div>
               <div class="flex flex-column gap-3">
-                <div v-for="(panel, px) in atIndexRelatedLists" :key="px" class="flex flex-column gap-4">
-                  <div v-for="(section, sx) in panel.sections" :key="sx" class="pt-4">
-                    <Panel class="detail-page-panel">
-                      <template #header>
-                        <div class="flex align-items-center justify-content-between w-full">
-                          <div class="text-2xl font-bold">{{ section.sectionLabel }}</div>
-                          <div v-if="getRelatedListsByCname(panel.panelName)">
-                            <div class="material-icons cursor-pointer">playlist_add</div>
-                          </div>
+                <div v-for="(panel, px) in atIndexRelatedLists" :key="px" class="flex flex-column gap-1 shadow-2 mt-4">
+                  <div v-for="(section, sx) in panel.sections" :key="sx">
+                    <div>
+                      <div v-if="section.sectionLabel" class="flex align-items-center justify-content-between w-full bg-primary p-3 border-primary border-round-top-md mb-3">
+                        <div class="text-2xl font-bold">{{ section.sectionLabel }}</div>
+                        <div v-if="getRelatedListsByCname(panel.panelName)">
+                          <div class="material-icons cursor-pointer">playlist_add</div>
                         </div>
-                      </template>
-                      <div class="flex flex-column gap-4 mt-4">
+                      </div>
+                      <div class="flex flex-column px-3">
                         <div v-if="panel.controllerMethod.indexOf('@show') > -1">
                           <div v-if="getRelatedListsByCname(panel.panelName)">
                             <Suspense v-if="getRelatedListsByCname(panel.panelName)">
@@ -248,7 +246,7 @@ onMounted(async() => {
                           </div>
                         </div>
                       </div>
-                    </Panel>
+                    </div>
                   </div>
                 </div>
 
