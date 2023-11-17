@@ -310,6 +310,7 @@ onMounted(async() => {
                   v-for="(dummy, dmx) in ['October 2023', 'November 2023', 'December 2023']"
                   :key="dmx"
                   toggleable
+                  collapsed
                   class="activity-panel">
                   <template #header>
                     <div class="text-sm text-900">{{ dummy }}</div>
