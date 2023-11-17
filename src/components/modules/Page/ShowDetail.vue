@@ -134,7 +134,9 @@ onMounted(async() => {
       <ProgressSpinner />
     </div>
     <div v-else>
-      <div class="bg-white p-5 mb-5 border-round-xl flex">
+      <div
+        style="position: sticky !important; top: 70px; z-index: 99 !important;"
+        class="bg-white p-5 mb-5 border-round-xl flex shadow-2 justify-content-between">
         <div v-for="(field, fx) in localModule.fields" :key="fx">
           <div :class="`${localModule.fields.length === fx + 1 && 'mr-8'}`">
             <div v-if="field.title" class="flex flex-column gap-2 text-xl mr-4">
@@ -159,6 +161,10 @@ onMounted(async() => {
             <div>{{ field.label }}</div>
             <div class="font-bold">{{ getItemValueByName(field.name) ? getItemValueByName(field.name) : null }}</div>
           </div>
+        </div>
+
+        <div>
+          <Button label="Edit"></Button>
         </div>
       </div>
 

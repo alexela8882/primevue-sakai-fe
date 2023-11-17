@@ -26,7 +26,7 @@ onMounted(async () => {
     if (
       orl.entityName === 'DefectReport' ||
       orl.entityName === 'ServiceJob' ||
-      orl.entityName === 'Schedule' ||
+      orl.entityName === 'ServiceSchedule' ||
       orl.entityName === 'BreakdownLog' ||
       orl.entityName === 'ServiceReport'
     ) return orl

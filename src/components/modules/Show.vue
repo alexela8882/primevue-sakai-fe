@@ -251,6 +251,7 @@ onMounted(async () => {
       <!-- DATATABLE -->
       <Suspense v-if="viewFilter.currentDisplay === 'table'">
         <DynamicDataTable
+          mode="edit"
           :moduleId="getBaseModule._id"
           :moduleName="getBaseModule.name"
           :moduleLabel="getBaseModule.label"
@@ -262,7 +263,7 @@ onMounted(async () => {
           @toggle-sidebar="listViewFilterBar = !listViewFilterBar">
           <template #list-view-filter>
             <Suspense>
-              <listViewFilterContent :baseModule="getBaseModule" />
+              <listViewFilterContent :baseModule="getBaseModule" :module="getModule" />
               <template #fallback>
                 <ListViewLoader />
               </template>

@@ -38,6 +38,7 @@ const props = defineProps({
             <div v-if="_getRelatedListsByCname(panel.cname)">
               <Suspense v-if="_getRelatedListsByCname(panel.cname)">
                 <DynamicDataTable
+                  mode="view"
                   :moduleId="panel._id"
                   :moduleName="_getRelatedListsByCname(panel.cname).link"
                   :moduleLabel="_getRelatedListsByCname(panel.cname).label"

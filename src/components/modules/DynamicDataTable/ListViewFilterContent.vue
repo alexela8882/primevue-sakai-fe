@@ -14,7 +14,8 @@ const filterByOwner = ref({
 
 // defines
 const props = defineProps({
-  baseModule: Object
+  baseModule: Object,
+  module: Object
 })
 
 // actions
@@ -114,7 +115,7 @@ onMounted(() => {
         <div class="flex flex-column gap-3">
           <Dropdown
             v-model="filterByOwner.fields.field"
-            :options="baseModule.fields"
+            :options="module.fields"
             optionLabel="label"
             placeholder="Select a field"
             class="w-full" />

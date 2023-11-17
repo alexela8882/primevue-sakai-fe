@@ -12,6 +12,7 @@ import router from '../../../router'
 
 // defines
 const props = defineProps({
+  mode: String,
   sidebar: Boolean,
   moduleName: String,
   moduleLabel: String,
@@ -171,10 +172,11 @@ onClickOutside(listViewFilterRef, (event) => {
     scrollHeight="60vh"
     class="dynamic-tbl">
     <Column
+      v-if="mode === 'edit'"
       frozen
       headerClass="custom-header bg-primary-100 text-color-secondary"
       :style="`min-width: 60px; ${rightShadowStyle}`"
-      bodyClass="text-center"
+      bodyClass="text-center py-0"
       selectionMode="multiple"></Column>
     <Column
       v-for="col of fields"
@@ -184,7 +186,7 @@ onClickOutside(listViewFilterRef, (event) => {
       sortable
       sorticon="check"
       style="min-width: 200px !important;"
-      bodyClass="text-color-secondary"
+      bodyClass="text-color-secondary py-0"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
         <div v-if="slotProps.data[col.name]">
@@ -205,7 +207,7 @@ onClickOutside(listViewFilterRef, (event) => {
               </span>
               <span v-else>{{ slotProps.data[col.name] }}</span>
             </div>
-            <div>
+            <div v-if="mode === 'edit'">
               <i @click="cellEdit = true" class="edit-icon cursor-pointer pi pi-pencil ml-3"></i>
             </div>
           </div>
@@ -245,17 +247,18 @@ onClickOutside(listViewFilterRef, (event) => {
       alignFrozen="right"
       :exportable="false"
       :style="`min-width: 60px; ${leftShadowStyle}`"
-      bodyClass="text-color-secondary text-center"
+      bodyClass="text-color-secondary text-center py-1"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
         <Button
           class="menu-btn"
-          icon="pi pi-ellipsis-v"
+          icon="pi pi-caret-down"
           text
+          size="small"
           @click="menuToggle($event, slotProps.data)"
           aria-haspopup="true"
           aria-controls="overlay_menu"
-          style="font-size: .5rem; padding: 5px 0; background-color: transparent;" />
+          style="font-size: .3rem; padding: 0 0; background-color: transparent;" />
         <Menu ref="menu" id="overlay_menu" :data-value="slotProps" :model="menuItems" :popup="true" />
       </template>
     </Column>
