@@ -4,6 +4,7 @@
 // -----------
 import draggable from 'vuedraggable'
 import { onMounted, ref, watch } from 'vue'
+import { onClickOutside } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
 // stores
@@ -11,6 +12,7 @@ import { useModuleStore } from '../../stores/modules/index'
 
 // defines
 const props = defineProps({
+  sidebar: Boolean,
   viewFilterId: String,
   moduleName: String,
   moduleLabel: String,
@@ -20,8 +22,10 @@ const props = defineProps({
   summarizeBy: String,
   collectionLoading: Boolean
 })
+const emit = defineEmits(['toggle-sidebar'])
 
 // refs
+const listViewFilterRef = ref(null)
 const route = useRoute()
 const router = useRouter()
 const drag = ref(false)
@@ -53,10 +57,24 @@ onMounted(() => {
   console.log(getKanbanData.value(props.viewFilterId))
 })
 
+onClickOutside(listViewFilterRef, (event) => {
+  if (event.target && event.target.attributes.class.value !== 'p-dropdown-item') {
+    emit('toggle-sidebar', false)
+  }
+})
+
 </script>
 
 <template>
-  <div class="grid grid-nogutter">
+  <div class="grid grid-nogutter" style="position: relative;">
+    <Transition name="lvf-slide-fade">
+      <div v-if="sidebar" ref="listViewFilterRef" class="ddt-slot-1 shadow-4 bg-white">
+        <div style="overflow: scroll; max-height: 100%;">
+          <slot name="list-view-filter"></slot>
+        </div>
+        <div class="ddt-div-1 shadow-4 bg-white"></div>
+      </div>
+    </Transition>
     <div
       v-for="(field, fx) in kanbanData"
       :key="fx"
@@ -121,6 +139,10 @@ onMounted(() => {
 
 .no-move {
   transition: transform 0s;
+}
+
+.ddt-slot-1 {
+  top: 55px;
 }
 
 </style>

@@ -235,7 +235,6 @@ onMounted(async () => {
                     </template>
                   </Menu>
                 <Button
-                  v-if="viewFilter.currentDisplay === 'table'"
                   @click="listViewFilterBar = true"
                   :disabled="listViewFilterBar"
                   icon="pi pi-filter"
@@ -284,7 +283,18 @@ onMounted(async () => {
           :moduleLabel="getBaseModule.label"
           :fields="viewFilter.fields"
           :data="getCollection.data"
-          :collectionLoading="collectionLoading" />
+          :collectionLoading="collectionLoading"
+          :sidebar="listViewFilterBar"
+          @toggle-sidebar="listViewFilterBar = !listViewFilterBar">
+          <template #list-view-filter>
+            <Suspense>
+              <listViewFilterContent :baseModule="getBaseModule" :module="getModule" />
+              <template #fallback>
+                <ListViewLoader />
+              </template>
+            </Suspense>
+          </template>
+        </DynamicKanban>
         <template #fallback>
           <KanbanLoader />
         </template>

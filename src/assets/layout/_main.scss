@@ -94,3 +94,49 @@ a {
 .bg-esco-blue2-dark-hover { background-color: #002a4c !important; }
 .bg-esco-blue2-dark-active { background-color: #001f39 !important; }
 .bg-esco-blue2-darker { background-color: #00192c !important; }
+
+// customs
+.ddt-slot-1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25vw;
+  height: 100%;
+  overflow: visible;
+  z-index: 2;
+}
+.ddt-div-1 {
+  visibility: visible;
+  opacity: 1;
+  position: absolute !important;
+  top: 0;
+  width: 80%;
+  height: 100%;
+  margin-left: -80%;
+  transition: all .3s;
+}
+.ddt-div-1:empty {
+  visibility: hidden;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all .3s;
+}
+.filled-dropdown {
+  border: transparent !important;
+  background-color: transparent !important;
+}
+
+/* transitions */
+.lvf-slide-fade-enter-active {
+  transition: all 0.2s ease-out;
+}
+
+.lvf-slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.lvf-slide-fade-enter-from,
+.lvf-slide-fade-leave-to {
+  transform: translateX(50px);
+  opacity: 0;
+}

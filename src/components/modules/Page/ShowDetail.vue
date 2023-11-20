@@ -359,7 +359,7 @@ onMounted(async() => {
   border-radius: none !important;
 }
 .activity-panel.p-panel.p-panel-toggleable .p-panel-header {
-  background-color: var(--primary0-200);
+  background-color: var(--primary-200);
 }
 .activity-panel.p-panel.p-panel-toggleable .p-panel-header .p-panel-icons button {
   color: var(--cyan-900);

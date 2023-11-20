@@ -290,7 +290,7 @@ onClickOutside(listViewFilterRef, (event) => {
         </Paginator>
       </div>
     </template>
-    <Transition name="slide-fade">
+    <Transition name="lvf-slide-fade">
       <div v-if="sidebar" ref="listViewFilterRef" class="ddt-slot-1 shadow-4 bg-white">
         <div style="overflow: scroll; max-height: 100%;">
           <slot name="list-view-filter"></slot>
@@ -303,35 +303,6 @@ onClickOutside(listViewFilterRef, (event) => {
 </template>
 
 <style scoped>
-.ddt-slot-1 {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 25vw;
-  height: 100%;
-  overflow: visible;
-  z-index: 2;
-}
-.ddt-div-1 {
-  visibility: visible;
-  opacity: 1;
-  position: absolute !important;
-  top: 0;
-  width: 80%;
-  height: 100%;
-  margin-left: -80%;
-  transition: all .3s;
-}
-.ddt-div-1:empty {
-  visibility: hidden;
-  opacity: 0;
-  transform: translateX(30px);
-  transition: all .3s;
-}
-.filled-dropdown {
-  border: transparent !important;
-  background-color: transparent !important;
-}
 </style>
 
 <style>
@@ -382,20 +353,5 @@ onClickOutside(listViewFilterRef, (event) => {
   opacity: 1 !important;
   /* transform: translateX(0);
   transition: transform ease-in .2s; */
-}
-
-/* transitions */
-.slide-fade-enter-active {
-  transition: all 0.2s ease-out;
-}
-
-.slide-fade-leave-active {
-  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1);
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
-  transform: translateX(50px);
-  opacity: 0;
 }
 </style>
