@@ -9,6 +9,7 @@ const DynamicDataTable = defineAsyncComponent(() => import('../../modules/Dynami
 const SalesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/SalesTab.vue'))
 const ServicesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/ServicesTab.vue'))
 const RelatedListPanel = defineAsyncComponent(() => import('../../modules/Page/Tabs/RelatedListPanel.vue'))
+const SectionFields = defineAsyncComponent(() => import('../../modules/Page/SectionFields.vue'))
 // loaders
 import DataTableLoader from '../../modules/DynamicDataTable/Loaders/DataTableLoader.vue'
 import SimpleLoader from '../../loading/Simple2.vue'
@@ -136,7 +137,7 @@ onMounted(async() => {
     <div v-else>
       <div
         style="position: sticky !important; top: 72px; z-index: 2 !important;"
-        class="bg-white px-5 py-3 mb-5 border-round-xl flex align-items-center justify-content-between shadow-2">
+        class="bg-white px-5 py-3 mb-5 border-round-xl flex align-items-center justify-content-between">
         <div class="flex">
           <div v-for="(field, fx) in localModule.fields" :key="fx">
             <div :class="`${localModule.fields.length === fx + 1 && 'mr-8'}`">
@@ -177,16 +178,18 @@ onMounted(async() => {
               <TabPanel header="Details">
                 <div>
                   <div class="flex flex-column gap-3">
-                    <div v-for="(panel, px) in atIndexRelatedLists" :key="px" class="flex flex-column gap-1 shadow-2 mt-4">
-                      <div v-for="(section, sx) in panel.sections" :key="sx">
-                        <div>
-                          <div v-if="section.sectionLabel" class="flex align-items-center justify-content-between w-full bg-primary p-3 border-primary border-round-top-md mb-3">
-                            <div class="text-2xl font-bold">{{ section.sectionLabel }}</div>
-                            <div v-if="getRelatedListsByCname(panel.panelName)">
-                              <div class="material-icons cursor-pointer">playlist_add</div>
+                    <div v-for="(panel, px) in atIndexRelatedLists" :key="px" class="flex flex-column gap-1">
+                      <div v-for="(section, sx) in panel.sections" :key="sx" class="shadow-1 mt-4">
+                        <Panel class="detail-page-panel">
+                          <template #header>
+                            <div v-if="section.sectionLabel">
+                              <div class="text-2xl font-bold">{{ section.sectionLabel }}</div>
+                              <div v-if="getRelatedListsByCname(panel.panelName)">
+                                <div class="material-icons cursor-pointer">playlist_add</div>
+                              </div>
                             </div>
-                          </div>
-                          <div class="flex flex-column px-3">
+                          </template>
+                          <div class="flex flex-column px-3 mt-4">
                             <div v-if="panel.controllerMethod.indexOf('@show') > -1">
                               <div v-if="getRelatedListsByCname(panel.panelName)">
                                 <Suspense v-if="getRelatedListsByCname(panel.panelName)">
@@ -210,53 +213,26 @@ onMounted(async() => {
                                 </div>
                               </div>
                             </div>
-                            <div v-else class="grid">
-                              <div
-                                v-for="(field, fx) in section.field_ids"
-                                :key="fx"
-                                class="col flex flex-column gap-4">
-                                <div v-for="(id, idx) in field">
-                                  <div v-if="getFieldDetailsById(id)" class="flex align-items-start gap-4 border-bottom-1 border-200">
-                                    <div class="white-space-nowrap">{{ getFieldDetailsById(id).label }}</div>
-                                    <div v-if="getFieldDetailsById(id).relation" class="flex gap-2">
-                                      <div v-for="(displayField, dfx) in getFieldDetailsById(id).relation.displayFieldName" :key="dfx" class="font-bold">
-                                        <div v-if="getItemValueByName(getFieldDetailsById(id).name)">
-                                          <div v-if="typeof getItemValueByName(getFieldDetailsById(id).name) === 'object' &&
-                                                      !Array.isArray(getItemValueByName(getFieldDetailsById(id).name)) &&
-                                                      getItemValueByName(getFieldDetailsById(id).name) !== null">
-                                            {{ getItemValueByName(getFieldDetailsById(id).name)[displayField] }}
-                                          </div>
-                                          <div v-else-if="Array.isArray(getItemValueByName(getFieldDetailsById(id).name))">
-                                            <Tag
-                                              v-for="(relationArr, rax) in getItemValueByName(getFieldDetailsById(id).name)"
-                                              :key="rax"
-                                              rounded
-                                              :value="relationArr[displayField]"
-                                              class="white-space-nowrap px-3 m-1 cursor-pointer" severity="info"></Tag>
-                                          </div>
-                                        </div>
-                                        <div v-else></div>
-                                      </div>
-                                    </div>
-                                    <div v-else class="flex gap-4 font-bold">
-                                      <div v-if="Array.isArray(getItemValueByName(getFieldDetailsById(id).name))">
-                                        <Tag
-                                          v-for="(item, itx) in getItemValueByName(getFieldDetailsById(id).name)"
-                                          :key="itx"
-                                          rounded
-                                          :value="item"
-                                          class="white-space-nowrap px-3 m-1 cursor-pointer my-1" severity="info"></Tag>
-                                      </div>
-                                      <div v-else>
-                                        {{ getItemValueByName(getFieldDetailsById(id).name) ? getItemValueByName(getFieldDetailsById(id).name) : '' }}
-                                      </div>
-                                    </div>
-                                  </div>
+                            <div v-else>
+                              <Suspense v-if="section.field_ids.length > 0">
+                                <SectionFields :fieldIds="section.field_ids" />
+                                <template #fallback>
+                                  <SimpleLoader class="my-4" />
+                                </template>
+                              </Suspense>
+                              <div v-if="section.additional_fields.length > 0">
+                                <div v-for="(addition_field, afx) in section.additional_fields" :key="afx">
+                                  <Suspense v-if="addition_field.ids.length > 0">
+                                    <SectionFields :fieldIds="addition_field.ids" />
+                                    <template #fallback>
+                                      <SimpleLoader class="my-4" />
+                                    </template>
+                                  </Suspense>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </Panel>
                       </div>
                     </div>
 

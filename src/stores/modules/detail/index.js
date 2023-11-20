@@ -28,7 +28,47 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   const getItem = computed(() => item.value)
   const getItemPanels = computed(() => {
     const panels = getModule.value.panels
-    return panels
+
+    // re-construct panels
+    const reconstructedPanels = panels.map((panel, px) => {
+      let panelObj = Object.assign({}, {
+        _id: panel._id,
+        controllerMethod: panel.controllerMethod,
+        entityName: panel.entityName,
+        highlight: panel.highlight,
+        label: panel.label,
+        mutable: panel.mutable,
+        panelName: panel.panelName,
+        sections: [],
+        tabKey: panel.tabKey
+      })
+
+      return panelObj
+    })
+
+    // re-construct sections
+    panels.map((panel, px) => {
+      panel.sections.filter((section, sx) => {
+        if (section.sectionLabel) {
+          let secObj = Object.assign({}, {
+            sectionLabel: section.sectionLabel,
+            row: section.row,
+            field_ids: section.field_ids,
+            additional_fields: []
+          })
+          reconstructedPanels[px].sections.push(secObj)
+        }
+        else {
+          const lastSection = reconstructedPanels[px].sections.slice(-1).pop()
+          let additionalField = Object.assign({}, { ids: section.field_ids })
+          lastSection.additional_fields.push(additionalField)
+        }
+      })
+    })
+
+    // console.log(panels)
+    console.log(reconstructedPanels)
+    return reconstructedPanels
   })
   const getItemValueByName = computed(() => {
     return (payload) => {
