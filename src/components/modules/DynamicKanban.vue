@@ -66,53 +66,57 @@ onClickOutside(listViewFilterRef, (event) => {
 </script>
 
 <template>
-  <div class="grid grid-nogutter" style="position: relative;">
-    <Transition name="lvf-slide-fade">
-      <div v-if="sidebar" ref="listViewFilterRef" class="ddt-slot-1 shadow-4 bg-white">
-        <div style="overflow: scroll; max-height: 100%;">
-          <slot name="list-view-filter"></slot>
-        </div>
-        <div class="ddt-div-1 shadow-4 bg-white"></div>
-      </div>
-    </Transition>
-    <div
-      v-for="(field, fx) in kanbanData"
-      :key="fx"
-      class="col">
-      <div
-        style="position: sticky; top: 70px; z-index: 99;"
-        class="bg-white py-4 px-4 text-primary font-bold text-xl shadow-1">{{ field.label }}</div>
-      <draggable
-        :list="field.data"
-        :group="viewFilterId"
-        :animation="300"
-        @change="log"
-        @start="drag = true"
-        @end="drag = false"
-        :component-data="{
-          tag: 'div',
-          type: 'transition-group',
-          name: !drag ? 'flip-list' : null
-        }"
-        itemKey="_id"
-        handle=".handle"
-        class="h-full">
-        <template #item="{ element, index }">
-          <div class="draggable-div p-4 m-4 border-1 border-primary-300 border-round-xl bg-white hover:shadow-4">
-            <div class="flex gap-3 card-icons">
-              <i @click="navigateDetailPage(element)" class="pi pi-eye cursor-pointer" style="font-size: 1rem"></i>
-              <i class="handle pi pi-arrows-alt cursor-move" style="font-size: 1rem"></i>
-            </div>
-            <!-- Loop through the first 4 key-value pairs in the object -->
-            <div v-for="(value, key) in Object.entries(element).slice(0, 4)" :key="key" class="my-2">
-              <strong v-if="getFieldDetails(value[0])">{{ getFieldDetails(value[0]).label }}:</strong> {{ value[1] }}
-            </div>
-            <div class="flex justify-content-end">
-              <Button class="bg-green" label="Manage" severity="success" />
-            </div>
+  <div style="position: relative;">
+    <div class="ddt-slot-1-parent">
+      <Transition name="lvf-slide-fade">
+        <div v-if="sidebar" ref="listViewFilterRef" class="ddt-slot-1 shadow-4 bg-white">
+          <div style="overflow: scroll; max-height: 100%;">
+            <slot name="list-view-filter"></slot>
           </div>
-        </template>
-      </draggable>
+          <div class="ddt-div-1 shadow-4 bg-white"></div>
+        </div>
+      </Transition>
+    </div>
+    <div class="grid grid-nogutter">
+      <div
+        v-for="(field, fx) in kanbanData"
+        :key="fx"
+        class="col">
+        <div
+          style="position: sticky; top: 70px; z-index: 2;"
+          class="bg-white py-4 px-4 text-primary font-bold text-xl shadow-1">{{ field.label }}</div>
+        <draggable
+          :list="field.data"
+          :group="viewFilterId"
+          :animation="300"
+          @change="log"
+          @start="drag = true"
+          @end="drag = false"
+          :component-data="{
+            tag: 'div',
+            type: 'transition-group',
+            name: !drag ? 'flip-list' : null
+          }"
+          itemKey="_id"
+          handle=".handle"
+          class="h-full">
+          <template #item="{ element, index }">
+            <div class="draggable-div p-4 m-4 border-1 border-primary-300 border-round-xl bg-white hover:shadow-4">
+              <div class="flex gap-3 card-icons">
+                <i @click="navigateDetailPage(element)" class="pi pi-eye cursor-pointer" style="font-size: 1rem"></i>
+                <i class="handle pi pi-arrows-alt cursor-move" style="font-size: 1rem"></i>
+              </div>
+              <!-- Loop through the first 4 key-value pairs in the object -->
+              <div v-for="(value, key) in Object.entries(element).slice(0, 4)" :key="key" class="my-2">
+                <strong v-if="getFieldDetails(value[0])">{{ getFieldDetails(value[0]).label }}:</strong> {{ value[1] }}
+              </div>
+              <div class="flex justify-content-end">
+                <Button class="bg-green" label="Manage" severity="success" />
+              </div>
+            </div>
+          </template>
+        </draggable>
+      </div>
     </div>
   </div>
 </template>
@@ -141,8 +145,21 @@ onClickOutside(listViewFilterRef, (event) => {
   transition: transform 0s;
 }
 
+.ddt-slot-1-parent {
+  position: absolute !important;
+  right: 0 !important;
+  height: 100%;
+}
+
 .ddt-slot-1 {
-  top: 55px;
+  position: sticky;
+  top: 73px;
+  height: 85vh !important;
+  z-index: 3 !important;
+}
+
+.grid-nogutter {
+  transition: all .3s;
 }
 
 </style>

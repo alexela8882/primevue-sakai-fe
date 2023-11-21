@@ -13,6 +13,7 @@ const SectionFields = defineAsyncComponent(() => import('../../modules/Page/Sect
 // loaders
 import DataTableLoader from '../../modules/DynamicDataTable/Loaders/DataTableLoader.vue'
 import SimpleLoader from '../../loading/Simple2.vue'
+import TwoColumnList from '../../loading/TwoColumnList.vue'
 // stores
 import { useModuleStore } from '../../../stores/modules'
 import { useModuleDetailStore } from '../../../stores/modules/detail'
@@ -137,7 +138,7 @@ onMounted(async() => {
     <div v-else>
       <div
         style="position: sticky !important; top: 72px; z-index: 2 !important;"
-        class="bg-white px-5 py-3 mb-5 border-round-xl flex align-items-center justify-content-between">
+        class="bg-white px-5 py-3 mb-5 border-round-xl flex align-items-center justify-content-between shadow-2">
         <div class="flex">
           <div v-for="(field, fx) in localModule.fields" :key="fx">
             <div :class="`${localModule.fields.length === fx + 1 && 'mr-8'}`">
@@ -217,7 +218,7 @@ onMounted(async() => {
                               <Suspense v-if="section.field_ids.length > 0">
                                 <SectionFields :fieldIds="section.field_ids" />
                                 <template #fallback>
-                                  <SimpleLoader class="my-4" />
+                                  <TwoColumnList />
                                 </template>
                               </Suspense>
                               <div v-if="section.additional_fields.length > 0">
@@ -225,7 +226,7 @@ onMounted(async() => {
                                   <Suspense v-if="addition_field.ids.length > 0">
                                     <SectionFields :fieldIds="addition_field.ids" />
                                     <template #fallback>
-                                      <SimpleLoader class="my-4" />
+                                      <TwoColumnList />
                                     </template>
                                   </Suspense>
                                 </div>
