@@ -33,7 +33,8 @@ import {
   faPlus,
   faGripVertical,
   faPen,
-  faTrash
+  faTrash,
+  faCaretDown
 } from '@fortawesome/free-solid-svg-icons'
 
 axios.defaults.baseURL = 'http://localhost:8000/api/'
@@ -265,7 +266,8 @@ library.add(
   faPlus,
   faGripVertical,
   faPen,
-  faTrash
+  faTrash,
+  faCaretDown
 )
 app.component('font-awesome-icon', FontAwesomeIcon)
 

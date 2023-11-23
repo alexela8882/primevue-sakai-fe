@@ -176,7 +176,7 @@ onClickOutside(listViewFilterRef, (event) => {
       frozen
       headerClass="custom-header bg-primary-100 text-color-secondary"
       :style="`min-width: 60px; ${rightShadowStyle}`"
-      bodyClass="text-center py-0"
+      bodyClass="text-center py-1"
       selectionMode="multiple"></Column>
     <Column
       v-for="col of fields"
@@ -186,7 +186,7 @@ onClickOutside(listViewFilterRef, (event) => {
       sortable
       sorticon="check"
       style="min-width: 200px !important;"
-      bodyClass="text-color-secondary py-0"
+      :bodyClass="`text-color-secondary ${mode === 'edit' ? 'py-1' : 'py-2'}`"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
         <div v-if="slotProps.data[col.name]">
@@ -247,18 +247,18 @@ onClickOutside(listViewFilterRef, (event) => {
       alignFrozen="right"
       :exportable="false"
       :style="`min-width: 60px; ${leftShadowStyle}`"
-      bodyClass="text-color-secondary text-center py-1"
+      :bodyClass="`text-color-secondary text-center py-1`"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
         <Button
           class="menu-btn"
-          icon="pi pi-caret-down"
+          icon="pi pi-ellipsis-v"
           text
           size="small"
           @click="menuToggle($event, slotProps.data)"
           aria-haspopup="true"
           aria-controls="overlay_menu"
-          style="font-size: .3rem; padding: 0 0; background-color: transparent;" />
+          style="font-size: .3rem; padding: 2px 0; background-color: transparent;" />
         <Menu ref="menu" id="overlay_menu" :data-value="slotProps" :model="menuItems" :popup="true" />
       </template>
     </Column>
@@ -310,6 +310,12 @@ onClickOutside(listViewFilterRef, (event) => {
   padding: 0 !important;
   margin: 0 !important;
   background-color: rgb(233, 233, 233);
+}
+.dynamic-tbl.p-datatable .p-checkbox .p-checkbox-box {
+  border: 1px solid var(--surface-700) !important;
+  height: 14px !important;
+  width: 14px !important;
+  margin: auto;
 }
 .custom-paginator .p-paginator {
   background-color: transparent !important;

@@ -3,6 +3,7 @@
 import { storeToRefs } from 'pinia'
 import { onMounted, ref, watch, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useToast } from "primevue/usetoast"
 // components
 import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
 const DynamicDataTable = defineAsyncComponent(() => import('../../modules/DynamicDataTable/dynamicdatatablemain.vue'))
@@ -19,6 +20,7 @@ import { useModuleStore } from '../../../stores/modules'
 import { useModuleDetailStore } from '../../../stores/modules/detail'
 
 // refs
+const toast = useToast()
 const tabIndex = ref(0)
 const route = useRoute()
 const router = useRouter()
@@ -90,6 +92,10 @@ const checkElVisibility = () => {
       pullRelatedList(panel)
     }
   })
+}
+const onAdvancedUpload = () => {
+  console.log(onAdvancedUpload)
+  toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 })
 }
 
 // lifecycles
@@ -174,7 +180,7 @@ onMounted(async() => {
 
       <div class="grid">
         <div class="col-7">
-          <div class="p-3 bg-white border-round-xl">
+          <div class="p-3 bg-white border-round-xl shadow-2">
             <TabView @tab-change="tabChanged">
               <TabPanel header="Details">
                 <div>
@@ -267,8 +273,8 @@ onMounted(async() => {
         <div class="col-5">
           <div
             style="position: sticky !important; top: 145px !important; height: 75vh !important;"
-            class="flex flex-column gap-4 overflow-scroll">
-            <div class="bg-white border-round-xl">
+            class="flex flex-column gap-4 overflow-scroll p-1">
+            <div class="bg-white border-round-xl shadow-2">
               <div class="p-3">
                 <div class="flex align-items-center justify-content-between">
                   <div class="text-xl font-bold text-primary">Activity</div>
@@ -290,9 +296,17 @@ onMounted(async() => {
                   collapsed
                   class="activity-panel">
                   <template #header>
-                    <div class="text-sm text-900">{{ dummy }}</div>
+                    <div class="text-sm text-900">
+                      <span v-if="dmx === 0">This months</span>
+                    </div>
                   </template>
-                  <p class="m-0">
+                  <template #togglericon>
+                    <font-awesome-icon icon="fa-solid fa-caret-down" style="font-size: 1.5rem;"></font-awesome-icon>
+                  </template>
+                  <template #icons>
+                    <div class="text-sm text-900 ml-2">{{ dummy }}</div>
+                  </template>
+                  <p class="m-0 mt-3">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                     Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                   </p>
@@ -300,20 +314,33 @@ onMounted(async() => {
               </div>
             </div>
 
-            <div class="bg-white border-round-xl">
+            <div class="bg-white border-round-xl shadow-2">
               <div class="p-3">
                 <div class="text-xl font-bold text-primary">Files</div>
-                <div class="w-8 mx-auto flex flex-column gap-2">
+                <div class="mt-5 flex flex-column gap-2 text-700">
                   <div class="text-lg font-bold">Upload files</div>
                   <div class="">only .jpg and .png files. 5 MB max file size.</div>
-                  <div class="border-dashed h-10rem border-2 border-500 p-3 cursor-pointer text-center">
+                  <!-- <div class="border-dashed h-10rem border-2 border-500 p-3 cursor-pointer">
                     <div class="text-primary">Drag and drop files here or click to upload</div>
+                  </div> -->
+                  <div>
+                    <FileUpload
+                      name="demo[]"
+                      url="/api/upload"
+                      @upload="onAdvancedUpload($event)"
+                      :multiple="true"
+                      accept="image/*"
+                      :maxFileSize="5000000">
+                      <template #empty>
+                        <p>Drag and drop files to here to upload.</p>
+                      </template>
+                    </FileUpload>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="bg-white border-round-xl">
+            <div class="bg-white border-round-xl shadow-2">
               <div class="p-3 h-15rem">
                 <div class="text-xl font-bold text-primary">Reminders</div>
               </div>
@@ -337,9 +364,17 @@ onMounted(async() => {
 }
 .activity-panel.p-panel.p-panel-toggleable .p-panel-header {
   background-color: var(--primary-200);
+  display: flex;
+  flex-direction: row-reverse;
 }
 .activity-panel.p-panel.p-panel-toggleable .p-panel-header .p-panel-icons button {
   color: var(--cyan-900);
+}
+
+.activity-panel.p-panel.p-panel-toggleable .p-panel-header .p-panel-icons {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
 }
 
 </style>
