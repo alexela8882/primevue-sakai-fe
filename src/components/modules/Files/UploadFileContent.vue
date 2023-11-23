@@ -122,12 +122,14 @@ onMounted(() => {
                 :class="`${selectedCategory === ctx ? 'category-items-active' : 'category-items'}`">{{ category.label }}</div>
             </div>
           </div>
-          <div class="p-3 w-full" style="max-height: 100% !important; overflow-y: scroll;">
-            <span class="p-input-icon-left w-full mb-5" style="position: sticky !important;">
-              <i class="pi pi-search" />
-              <InputText v-model="itemSearch" placeholder="Search" class="w-full" />
-            </span>
-            <div v-if="selectedCategoryFile && selectedCategoryFile.items.length > 0">
+          <div class="w-full" style="max-height: 100% !important; overflow-y: scroll;">
+            <div class="file-search-container bg-white p-3">
+              <div class="p-input-icon-left w-full">
+                <i class="pi pi-search" />
+                <InputText v-model="itemSearch" placeholder="Search" class="w-full" />
+              </div>
+            </div>
+            <div v-if="selectedCategoryFile && selectedCategoryFile.items.length > 0" class="p-3">
               <div v-for="(item, itx) in selectedCategoryFile.items" :key="itx">
                 <BlockUI :blocked="selectedFileItems.length >= 10 && !item.selected">
                   <div
@@ -143,7 +145,7 @@ onMounted(() => {
                 </BlockUI>
               </div>
             </div>
-            <div v-else>You don't have any files here. Try a different filter, or upload a file.</div>
+            <div v-else class="p-3">You don't have any files here. Try a different filter, or upload a file.</div>
           </div>
         </div>
       </div>
@@ -181,6 +183,11 @@ onMounted(() => {
 }
 .items-div:hover {
   background-color: var(--surface-100);
+}
+.file-search-container {
+  position: sticky !important;
+  top: 0;
+  z-index: 2;
 }
 </style>
 
