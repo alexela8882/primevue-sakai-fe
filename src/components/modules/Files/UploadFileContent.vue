@@ -64,7 +64,13 @@ const props = defineProps({
 
 // actions
 const selectFileCategory = (ctx) => {
-  selectedFileItems.value = [] //reset
+  // resets
+  selectedFileItems.value = []
+  files.value.map(file => {
+    file.items.filter(item => item.selected = false)
+  })
+
+  //
   selectedCategoryFile.value = files.value.find(file => ctx === file.categoryValue)
   selectedCategory.value = ctx
 }
@@ -124,7 +130,10 @@ onMounted(() => {
             <div v-if="selectedCategoryFile && selectedCategoryFile.items.length > 0">
               <div v-for="(item, itx) in selectedCategoryFile.items" :key="itx">
                 <BlockUI :blocked="selectedFileItems.length >= 10 && !item.selected">
-                  <div @click="item.selected = !item.selected" class="items-div flex align-items-center gap-3 border-top-1 border-300 p-3 cursor-pointer">
+                  <div
+                    @click="item.selected = !item.selected"
+                    class="items-div flex align-items-center border-top-1 gap-3 p-3 cursor-pointer"
+                    :class="`${item.selected ? 'border-primary border-bottom-1' : 'border-300'}`">
                     <Checkbox :readonly="true" v-model="item.selected" :binary="true" />
                     <div>
                       <a href="javascript: void(0);">{{ item.label }}</a>
@@ -167,7 +176,7 @@ onMounted(() => {
 .category-items-active {
   border-top: 1px solid var(--primary-100);
   border-bottom: 1px solid var(--primary-100);
-  border-left: 4px solid var(--primary-color);
+  border-left: 7px solid var(--primary-color);
   background-color: var(--primary-50);
 }
 .items-div:hover {
