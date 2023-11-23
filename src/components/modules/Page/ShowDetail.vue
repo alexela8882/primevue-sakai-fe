@@ -11,6 +11,7 @@ const SalesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/Sale
 const ServicesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/ServicesTab.vue'))
 const RelatedListPanel = defineAsyncComponent(() => import('../../modules/Page/Tabs/RelatedListPanel.vue'))
 const SectionFields = defineAsyncComponent(() => import('../../modules/Page/SectionFields.vue'))
+const UploadFileContent = defineAsyncComponent(() => import('../../modules/Files/UploadFileContent.vue'))
 // loaders
 import DataTableLoader from '../../modules/DynamicDataTable/Loaders/DataTableLoader.vue'
 import SimpleLoader from '../../loading/Simple2.vue'
@@ -18,8 +19,10 @@ import TwoColumnList from '../../loading/TwoColumnList.vue'
 // stores
 import { useModuleStore } from '../../../stores/modules'
 import { useModuleDetailStore } from '../../../stores/modules/detail'
+import { useModuleFileStore } from '../../../stores/modules/file'
 
 // refs
+const fileMenu = ref()
 const toast = useToast()
 const tabIndex = ref(0)
 const route = useRoute()
@@ -35,6 +38,7 @@ const atShowRelatedLists = ref()
 // stores
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
+const moduleFileStore = useModuleFileStore()
 const { fetchModule, fetchBaseModule } = moduleStore
 const { getModule, getBaseModule, getFieldDetailsById } = storeToRefs(moduleStore)
 const {
@@ -47,6 +51,7 @@ const {
     getItemPanels,
     getItemValueByName } = storeToRefs(moduleDetailStore)
 const { fetchItem, fetchItemRelatedList, fetchItemRelatedLists } = moduleDetailStore
+const { fileLoading, fileDialogSwitch, fileDialog } = storeToRefs(moduleFileStore)
 // presets
 const bcrumbs = ref([
   {
@@ -55,6 +60,22 @@ const bcrumbs = ref([
   }, {
     label: `${route.params.name} details`,
     to: null
+  }
+])
+const fileMenuItems = ref([
+  {
+    label: 'Options',
+    items: [
+      {
+        label: 'Add files',
+        icon: 'pi pi-plus',
+        command: () => {
+          fileDialogSwitch.value = true
+          fileDialog.value = true
+          console.log(fileDialog.value)
+        }
+      }
+    ]
   }
 ])
 
@@ -108,7 +129,6 @@ onMounted(async() => {
   // fetches
   await fetchBaseModule(route.params.id)
   await fetchModule(route.params.name)
-  await fetchItem(route.params)
   await fetchItem(route.params)
   await fetchItemRelatedLists(route.params)
 
@@ -316,7 +336,15 @@ onMounted(async() => {
 
             <div class="bg-white border-round-xl shadow-2">
               <div class="p-3">
-                <div class="text-xl font-bold text-primary">Files</div>
+                <div class="flex justify-content-between align-items-center text-xl font-bold text-primary">
+                  <div>Files</div>
+                  <div>
+                    <div @click="fileMenu.toggle($event)" class="cursor-pointer">
+                      <font-awesome-icon icon="fa-regular fa-square-caret-down" style="font-size: 1.5rem;"></font-awesome-icon>
+                    </div>
+                    <Menu ref="fileMenu" id="overlay_menu" :model="fileMenuItems" :popup="true" />
+                  </div>
+                </div>
                 <div class="mt-5 flex flex-column gap-2 text-700">
                   <div class="text-lg font-bold">Upload files</div>
                   <div class="">only .jpg and .png files. 5 MB max file size.</div>
@@ -349,6 +377,8 @@ onMounted(async() => {
         </div>
       </div>
     </div>
+
+    <UploadFileContent :module="localModule" />
   </div>
 </template>
 

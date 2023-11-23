@@ -34,8 +34,11 @@ import {
   faGripVertical,
   faPen,
   faTrash,
-  faCaretDown
+  faCaretDown,
+  faSquareCaretDown,
+  faSquarePlus
 } from '@fortawesome/free-solid-svg-icons'
+import { faSquareCaretDown as faSquareCaretDownReg } from '@fortawesome/free-regular-svg-icons'
 
 axios.defaults.baseURL = 'http://localhost:8000/api/'
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
@@ -267,7 +270,10 @@ library.add(
   faGripVertical,
   faPen,
   faTrash,
-  faCaretDown
+  faCaretDown,
+  faSquareCaretDown,
+  faSquareCaretDownReg,
+  faSquarePlus
 )
 app.component('font-awesome-icon', FontAwesomeIcon)
 
