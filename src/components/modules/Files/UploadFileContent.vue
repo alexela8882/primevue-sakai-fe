@@ -150,7 +150,7 @@ onMounted(() => {
       <template #footer>
         <div class="flex align-items-center justify-content-between">
           <div>
-            0 of 0 files selected
+            {{ selectedFileItems.length }} of 10 files selected
           </div>
           <div class="flex align-items-center">
             <Button @click="fileDialog = false" label="Cancel" severity="secondary" outlined />
