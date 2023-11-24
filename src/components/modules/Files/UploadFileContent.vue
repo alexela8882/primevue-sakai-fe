@@ -2,15 +2,20 @@
 // imports
 import { onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useToast } from "primevue/usetoast"
+// stores
 import { useModuleFileStore } from '../../../stores/modules/file'
 
 // refs
+const toast = useToast()
 const itemSearch = ref()
 const moduleFileStore = useModuleFileStore()
-const { fileDialog } = storeToRefs(moduleFileStore)
+const { fileDialog, getFiles } = storeToRefs(moduleFileStore)
+const { addModuleFiles } = moduleFileStore
 const selectedCategory = ref(0)
 const selectedCategoryFile = ref()
 const selectedFileItems = ref([])
+const files = ref([])
 // presets
 const fileCategories = ref([
   {
@@ -33,30 +38,6 @@ const fileCategories = ref([
     value: 5
   }
 ])
-const files = ref([
-  {
-    categoryValue: 0,
-    items: [
-      { label: 'Test 1', date: 'Jan 23, 2023', size: '55kb', file_type: 'jpg', selected: false },
-      { label: 'Test 2', date: 'Aug 01, 2023', size: '45kb', file_type: 'jpg', selected: false },
-      { label: 'Test 3', date: 'Nov 23, 2023', size: '100kb', file_type: 'jpg', selected: false },
-      { label: 'Test 4', date: 'Sept 23, 2023', size: '1mb', file_type: 'png', selected: false },
-      { label: 'Test 5', date: 'Jan 06, 2023', size: '2.3mb', file_type: 'jpg', selected: false },
-      { label: 'Test 6', date: 'March 24, 2023', size: '50kb', file_type: 'jpeg', selected: false },
-      { label: 'Test 7', date: 'Nov 23, 2023', size: '1kb', file_type: 'jpeg', selected: false },
-      { label: 'Test 8', date: 'Nov 23, 2023', size: '0kb', file_type: 'png', selected: false },
-      { label: 'Test 9', date: 'Nov 23, 2023', size: '90kb', file_type: 'png', selected: false },
-      { label: 'Test 10', date: 'Nov 23, 2023', size: '1.1mb', file_type: 'jpg', selected: false },
-      { label: 'Test 11', date: 'Nov 23, 2023', size: '1.1mb', file_type: 'jpg', selected: false },
-      { label: 'Test 12', date: 'Dec 23, 2023', size: '1.1mb', file_type: 'jpg', selected: false }
-    ]
-  }, {
-    categoryValue: 2,
-    items: [
-      { label: 'Test 1', date: 'Nov 23, 2023', size: '55kb', file_type: 'jpg' }
-    ]
-  }
-])
 // defines
 const props = defineProps({
   module: Object
@@ -74,9 +55,17 @@ const selectFileCategory = (ctx) => {
   selectedCategoryFile.value = files.value.find(file => ctx === file.categoryValue)
   selectedCategory.value = ctx
 }
+const addFiles = () => {
+  if (selectedFileItems.value.length > 0) addModuleFiles(selectedFileItems.value)
+
+  // resets
+  selectedFileItems.value = []
+  fileDialog.value = false
+  toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 })
+}
 
 // lifecycles
-watch(files.value, (newVal, oldVal) => {
+watch(getFiles.value, (newVal, oldVal) => {
   selectedFileItems.value = [] // reset
   selectedCategoryFile.value.items.map(item => {
     if (item.selected) selectedFileItems.value.push(item)
@@ -84,6 +73,9 @@ watch(files.value, (newVal, oldVal) => {
 })
 
 onMounted(() => {
+  // pre-assignments
+  files.value = getFiles.value
+
   // initial selected file category
   selectedCategoryFile.value = files.value.find(file => selectedCategory.value === file.categoryValue)
 })
@@ -137,9 +129,10 @@ onMounted(() => {
                     class="items-div flex align-items-center border-top-1 gap-3 p-3 cursor-pointer"
                     :class="`${item.selected ? 'border-primary border-bottom-1' : 'border-300'}`">
                     <Checkbox :readonly="true" v-model="item.selected" :binary="true" />
+                    <Image src="/demo/images/galleria/galleria6s.jpg" alt="Image" width="50" />
                     <div>
                       <a href="javascript: void(0);">{{ item.label }}</a>
-                      <div class="text-700">{{ item.date }} &#x2022; {{ item.size }} &#x2022; {{ item.file_type }}</div>
+                      <div class="text-700">{{ item.date }} &#x2022; {{ item.size }} &#x2022; {{ item.type }}</div>
                     </div>
                   </div>
                 </BlockUI>
@@ -157,6 +150,7 @@ onMounted(() => {
           <div class="flex align-items-center">
             <Button @click="fileDialog = false" label="Cancel" severity="secondary" outlined />
             <Button
+              @click="addFiles"
               :disabled="selectedFileItems.length <= 0"
               :label="`Add${selectedFileItems.length > 0 ? ` (${selectedFileItems.length})` : ''}`"
               severity="primary" />

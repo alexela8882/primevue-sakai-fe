@@ -51,7 +51,8 @@ const {
     getItemPanels,
     getItemValueByName } = storeToRefs(moduleDetailStore)
 const { fetchItem, fetchItemRelatedList, fetchItemRelatedLists } = moduleDetailStore
-const { fileLoading, fileDialogSwitch, fileDialog } = storeToRefs(moduleFileStore)
+const { fileLoading, fileDialogSwitch, fileDialog, getFiles, getModuleFiles } = storeToRefs(moduleFileStore)
+const { addModuleFiles } = moduleFileStore
 // presets
 const bcrumbs = ref([
   {
@@ -114,9 +115,34 @@ const checkElVisibility = () => {
     }
   })
 }
-const onAdvancedUpload = () => {
-  console.log(onAdvancedUpload)
+const onAdvancedUpload = async (e) => {
+  const files = e.files
+  const reConstructedFiles = []
+  const lastId = getFiles.value.length > 0 ? getFiles.value[getFiles.value.length - 1] : 0
+
+  files.map(file => {
+    // res-construct file
+    let obj = Object.assign({}, {
+      id: lastId + 1,
+      label: file.name,
+      date: Date.now(),
+      size: file.size,
+      type: file.type,
+      selected: false
+    })
+    reConstructedFiles.push(obj)
+  })
+
+  // push new files
+  addModuleFiles(reConstructedFiles)
   toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 })
+}
+const onErrorUpload = (e) => {
+  console.log(e)
+}
+const removeModuleFile = (payload) => {
+  const index = getModuleFiles.value.findIndex(moduleFile => moduleFile.id === payload.id)
+  getModuleFiles.value.splice(index, 1)
 }
 
 // lifecycles
@@ -355,12 +381,54 @@ onMounted(async() => {
                     <FileUpload
                       name="demo[]"
                       url="/api/upload"
-                      @upload="onAdvancedUpload($event)"
+                      customUpload
+                      @uploader="onAdvancedUpload($event)"
+                      @error="onErrorUpload($event)"
                       :multiple="true"
                       accept="image/*"
                       :maxFileSize="5000000">
                       <template #empty>
-                        <p>Drag and drop files to here to upload.</p>
+                        <p v-if="getModuleFiles.length <= 0">Drag and drop files to here to upload.</p>
+                      </template>
+                      <template #content="{ files, uploadedFiles, removeUploadedFileCallback, removeFileCallback }">
+                        <div v-if="files.length > 0">
+                          <div v-for="(file, fx) in files" :key="fx" class="mb-2">
+                            <div class="border-round border-1 border-orange-300 p-2 flex align-items-center justify-content-between">
+                              <div class="flex align-items-center gap-3">
+                                <Image
+                                  src="/demo/images/galleria/galleria6s.jpg"
+                                  alt="dummy-img"
+                                  width="50"
+                                  class="cursor-pointer"/>
+                                <div>
+                                  <a href="javascript: void(0);">{{ file.name }}</a>
+                                  <div class="text-700">{{ Date.now() }} &#x2022; {{ file.size }} &#x2022; {{ file.type }}</div>
+                                </div>
+                              </div>
+                              <div @click="removeFileCallback(fx)" class="cursor-pointer mr-2">
+                                <Button icon="pi pi-times" severity="danger" text rounded aria-label="Cancel" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div v-for="(moduleFile, mfx) in getModuleFiles" :key="mfx" class="mb-2">
+                          <div class="border-round border-1 border-300 p-2 flex align-items-center justify-content-between">
+                            <div class="flex align-items-center gap-3">
+                              <Image
+                                src="/demo/images/galleria/galleria6s.jpg"
+                                alt="dummy-img"
+                                width="50"
+                                class="cursor-pointer"/>
+                              <div>
+                                <a href="javascript: void(0);">{{ moduleFile.label }}</a>
+                                <div class="text-700">{{ moduleFile.date }} &#x2022; {{ moduleFile.size }} &#x2022; {{ moduleFile.type }}</div>
+                              </div>
+                            </div>
+                            <div @click="removeModuleFile(moduleFile)" class="cursor-pointer mr-2">
+                              <Button icon="pi pi-times" severity="danger" text rounded aria-label="Cancel" />
+                            </div>
+                          </div>
+                        </div>
                       </template>
                     </FileUpload>
                   </div>

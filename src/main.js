@@ -36,7 +36,8 @@ import {
   faTrash,
   faCaretDown,
   faSquareCaretDown,
-  faSquarePlus
+  faSquarePlus,
+  faClose
 } from '@fortawesome/free-solid-svg-icons'
 import { faSquareCaretDown as faSquareCaretDownReg } from '@fortawesome/free-regular-svg-icons'
 
@@ -273,7 +274,8 @@ library.add(
   faCaretDown,
   faSquareCaretDown,
   faSquareCaretDownReg,
-  faSquarePlus
+  faSquarePlus,
+  faClose
 )
 app.component('font-awesome-icon', FontAwesomeIcon)
 
