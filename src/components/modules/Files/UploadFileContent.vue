@@ -59,7 +59,9 @@ const addFiles = () => {
   if (selectedFileItems.value.length > 0) addModuleFiles(selectedFileItems.value)
 
   // resets
-  selectedFileItems.value = []
+  files.value.map(file => {
+    file.items.filter(item => item.selected = false)
+  })
   fileDialog.value = false
   toast.add({ severity: 'info', summary: 'Success', detail: 'File Uploaded', life: 3000 })
 }
