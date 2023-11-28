@@ -39,6 +39,7 @@ const { addViewFilter } = moduleStore
 // defines
 const props = defineProps({
   mode: String,
+  module: Object,
   selectedViewFilter: String,
   saveTrigger: Number
 })
@@ -82,7 +83,7 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
         <span class="p-float-label">
           <Dropdown
             v-bind="summarize_by"
-            :options="getBaseModule.fields"
+            :options="module.fields"
             optionLabel="label"
             optionValue="name"
             filter
@@ -96,7 +97,7 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
         <span class="p-float-label">
           <Dropdown
             v-bind="group_by"
-            :options="getBaseModule.fields"
+            :options="module.fields"
             optionLabel="label"
             optionValue="_id"
             filter

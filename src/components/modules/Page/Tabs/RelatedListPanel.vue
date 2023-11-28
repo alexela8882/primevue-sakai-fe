@@ -40,6 +40,7 @@ const props = defineProps({
                 <DynamicDataTable
                   mode="view"
                   :moduleId="panel._id"
+                  :moduleEntityName="panel.entityName"
                   :moduleName="_getRelatedListsByCname(panel.cname).link"
                   :moduleLabel="_getRelatedListsByCname(panel.cname).label"
                   :fields="_getRelatedListsByCname(panel.cname).fields.data"

@@ -252,6 +252,7 @@ onMounted(async () => {
         <DynamicDataTable
           mode="edit"
           :moduleId="getBaseModule._id"
+          :moduleEntityName="getBaseModule.mainEntity"
           :moduleName="getBaseModule.name"
           :moduleLabel="getBaseModule.label"
           :fields="viewFilter.fields"
@@ -307,7 +308,8 @@ onMounted(async () => {
     :key="viewFiltersDialogComponentKey"
     v-if="viewFiltersDialogSwitch"
     :mode="viewFiltersDialogMode"
-    :selectedViewFilter="selectedViewFilter" />
+    :selectedViewFilter="selectedViewFilter"
+    :module="getModule" />
 </template>
 
 <style>

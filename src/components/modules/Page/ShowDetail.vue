@@ -248,6 +248,7 @@ onMounted(async() => {
                                 <Suspense v-if="getRelatedListsByCname(panel.panelName)">
                                   <DynamicDataTable
                                     :moduleId="panel._id"
+                                    :moduleEntityName="panel.entityName"
                                     :moduleName="getRelatedListsByCname(panel.panelName).link"
                                     :moduleLabel="getRelatedListsByCname(panel.panelName).label"
                                     :fields="getRelatedListsByCname(panel.panelName).fields.data"
@@ -403,6 +404,7 @@ onMounted(async() => {
                                 <div>
                                   <a href="javascript: void(0);">{{ file.name }}</a>
                                   <div class="text-700">{{ Date.now() }} &#x2022; {{ file.size }} &#x2022; {{ file.type }}</div>
+                                  <div class="text-orange-500">Pending</div>
                                 </div>
                               </div>
                               <div @click="removeFileCallback(fx)" class="cursor-pointer mr-2">

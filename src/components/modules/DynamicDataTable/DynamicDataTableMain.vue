@@ -14,6 +14,8 @@ import router from '../../../router'
 const props = defineProps({
   mode: String,
   sidebar: Boolean,
+  moduleId: String,
+  moduleEntityName: String,
   moduleName: String,
   moduleLabel: String,
   data: Array,
@@ -32,7 +34,7 @@ const cellEdit = ref(false)
 const editingRows = ref([])
 const route = useRoute()
 const moduleStore = useModuleStore()
-const { getCollection } = storeToRefs(moduleStore)
+const { getCollection, getBaseModule } = storeToRefs(moduleStore)
 const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 const rightShadowStyle = ref()
 const leftShadowStyle = ref()
@@ -72,21 +74,24 @@ const menuItems = ref([
     command: (event) => {
       console.log(event)
       console.log(menuSelectedData.value)
-    }
+    },
+    visible: props.moduleEntityName === getBaseModule.value.mainEntity
   }, {
     label: 'Update',
     icon: 'pi pi-refresh',
     command: (event) => {
       console.log(event)
       console.log(menuSelectedData.value)
-    }
+    },
+    visible: props.moduleEntityName === getBaseModule.value.mainEntity
   }, {
     label: 'Delete',
     icon: 'pi pi-times',
     command: (event) => {
       console.log(event)
       console.log(menuSelectedData.value)
-    }
+    },
+    visible: props.moduleEntityName === getBaseModule.value.mainEntity
   }
 ])
 const perPageItems = ref([
@@ -117,7 +122,7 @@ const onRowContextMenu = (event) => {
 const onRowEditSave = (event) => {
   let { newData, index } = event
   props.data[index] = newData
-};
+}
 const menuToggle = (event, data) => {
   menu.value.toggle(event)
   menuSelectedData.value = data
@@ -134,10 +139,9 @@ const onCellEditComplete = (event) => {
   data[field] = newValue
 }
 
-
 // life cycles
 onMounted(async () => {
-  // console.log(props)
+  console.log(route.params)
 })
 
 onClickOutside(listViewFilterRef, (event) => {
@@ -149,7 +153,8 @@ onClickOutside(listViewFilterRef, (event) => {
 </script>
 
 <template>
-  <!-- <pre>{{ pageItems }}</pre> -->
+  <!-- Test
+  {{ moduleEntityName }} {{ getBaseModule.mainEntity }} -->
   <DataTable
     v-model:selection="selectedData"
     v-model:contextMenuSelection="selectedContextData"

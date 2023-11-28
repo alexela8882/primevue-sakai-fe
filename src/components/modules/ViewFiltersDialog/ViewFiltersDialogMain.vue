@@ -22,7 +22,8 @@ const {
 // defines
 const props = defineProps({
   mode: String,
-  selectedViewFilter: String
+  selectedViewFilter: String,
+  module: Object
 })
 
 // actions
@@ -53,6 +54,7 @@ onMounted(() => {
     <TableSettings
       v-if="mode === 'new' || mode === 'edit-table'"
       :mode="mode"
+      :module="module"
       :selectedViewFilter="selectedViewFilter"
       :saveTrigger="saveTableSettings"
       @save-loading="saveLoad(payload)" />
@@ -60,6 +62,7 @@ onMounted(() => {
     <KanbanSettings
       v-if="mode === 'edit-kanban'"
       :mode="mode"
+      :module="module"
       :selectedViewFilter="selectedViewFilter"
       :saveTrigger="saveKanbanSettings"
       @save-loading="saveLoad(payload)" />
