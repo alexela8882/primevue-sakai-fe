@@ -5,8 +5,7 @@ import { onMounted, ref, watch, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from "primevue/usetoast"
 // components
-// import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
-const RdBreadCrumbs = defineAsyncComponent(() => import('../../RdBreadCrumbs.vue'))
+import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
 const DynamicDataTable = defineAsyncComponent(() => import('../../modules/DynamicDataTable/dynamicdatatablemain.vue'))
 const SalesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/SalesTab.vue'))
 const ServicesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/ServicesTab.vue'))
@@ -14,12 +13,9 @@ const RelatedListPanel = defineAsyncComponent(() => import('../../modules/Page/T
 const SectionFields = defineAsyncComponent(() => import('../../modules/Page/SectionFields.vue'))
 const UploadFileContent = defineAsyncComponent(() => import('../../modules/Files/UploadFileContent.vue'))
 // loaders
-// import DataTableLoader from '../../modules/DynamicDataTable/Loaders/DataTableLoader.vue'
-// import SimpleLoader from '../../loading/Simple2.vue'
-// import TwoColumnList from '../../loading/TwoColumnList.vue'
-const DataTableLoader = defineAsyncComponent(() => import('../../modules/DynamicDataTable/Loaders/DataTableLoader.vue'))
-const SimpleLoader = defineAsyncComponent(() => import('../../loading/Simple2.vue'))
-const TwoColumnList = defineAsyncComponent(() => import('../../loading/TwoColumnList.vue'))
+import DataTableLoader from '../../modules/DynamicDataTable/Loaders/DataTableLoader.vue'
+import SimpleLoader from '../../loading/Simple2.vue'
+import TwoColumnList from '../../loading/TwoColumnList.vue'
 // stores
 import { useModuleStore } from '../../../stores/modules'
 import { useModuleDetailStore } from '../../../stores/modules/detail'
