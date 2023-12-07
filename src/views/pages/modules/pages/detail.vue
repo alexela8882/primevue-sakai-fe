@@ -23,9 +23,11 @@ const ShowDetail = defineAsyncComponent({
 </script>
 
 <template>
-  <Suspense>
-    <ShowDetail />
-  </Suspense>
+  <div>
+    <Suspense>
+      <ShowDetail />
+    </Suspense>
+  </div>
 </template>
 
 <style scoped>
