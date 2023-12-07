@@ -8,7 +8,7 @@ import { defineAsyncComponent } from 'vue'
 //   import('../../../../components/modules/Page/ShowDetail.vue')
 // )
 const ShowDetail = defineAsyncComponent({
-  loader: () => import('../../../../components/modules/Page/ShowDetail.vue'),
+  loader: () => import('@/components/modules/Page/ShowDetail.vue'),
   // A component to use while the async component is loading
   // loadingComponent: LoadingComponent,
   // Delay before showing the loading component. Default: 200ms.
