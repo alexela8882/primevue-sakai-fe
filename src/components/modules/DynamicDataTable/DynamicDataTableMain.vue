@@ -8,6 +8,7 @@ import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 // stores
 import { useModuleStore } from '../../../stores/modules/index'
+import { useModuleDynamicTableStore } from '../../../stores/modules/dynamictable/index'
 import router from '../../../router'
 
 // defines
@@ -33,9 +34,6 @@ const listViewFilterRef = ref(null)
 const cellEdit = ref(false)
 const editingRows = ref([])
 const route = useRoute()
-const moduleStore = useModuleStore()
-const { getCollection, getBaseModule } = storeToRefs(moduleStore)
-const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 const rightShadowStyle = ref()
 const leftShadowStyle = ref()
 const menu = ref()
@@ -44,6 +42,14 @@ const updateRows = ref()
 const selectedData = ref()
 const selectedContextData = ref()
 const menuSelectedData = ref()
+// stores
+const moduleStore = useModuleStore()
+const moduleDynamicTableStore = useModuleDynamicTableStore()
+const { getCollection, getBaseModule, getEntity } = storeToRefs(moduleStore)
+const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
+const { getDropdownLists, getDropdown } = storeToRefs(moduleDynamicTableStore)
+const { fetchDropdownLists } = moduleDynamicTableStore
+// presets
 const menuModel = ref([
   {label: 'View', icon: 'pi pi-fw pi-search', command: () => console.log(selectedContextData.value)},
   {label: 'Delete', icon: 'pi pi-fw pi-times', command: () => console.log(selectedContextData.value)}
@@ -107,6 +113,13 @@ const perPageItems = ref([
 ])
 
 // actions
+const cellEditAction = (payload) => {
+  const cellModule = payload.relation && payload.relation.entity_id.name
+  cellEdit.value = true
+
+  console.log(getEntity.value(cellModule))
+  fetchDropdownLists(getEntity.value(cellModule).name)
+}
 const paginate = async (event, jump) => {
   let page = 1
   if (!jump) {
@@ -213,7 +226,7 @@ onClickOutside(listViewFilterRef, (event) => {
               <span v-else>{{ slotProps.data[col.name] }}</span>
             </div>
             <div v-if="mode === 'edit'">
-              <i @click="cellEdit = true" class="edit-icon cursor-pointer pi pi-pencil ml-3"></i>
+              <i @click="cellEditAction(col)" class="edit-icon cursor-pointer pi pi-pencil ml-3"></i>
             </div>
           </div>
         </div>
@@ -232,7 +245,13 @@ onClickOutside(listViewFilterRef, (event) => {
                 </div>
               </div>
               <div v-if="col.rules.ss_dropdown" class="my-1">
-                Dropdown edit here...
+                <Dropdown
+                  v-model="data[col.name]['_id']"
+                  :options="getDropdown(getEntity(col.relation.entity_id.name).name) && getDropdown(getEntity(col.relation.entity_id.name).name).collection.data"
+                  optionLabel="name"
+                  optionValue="_id"
+                  :placeholder="`Select a ${col.relation.entity_id.name}`"
+                  class="border-round-xl border-primary w-full md:w-12rem mr-2 mb-2 md:mb-0"/>
               </div>
               <div v-else class="my-1">
                 Other edits here...

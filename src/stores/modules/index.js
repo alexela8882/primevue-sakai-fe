@@ -70,6 +70,17 @@ export const useModuleStore = defineStore('moduleStore', () => {
     const viewFilters = module.value.viewFilters
     return viewFilters
   })
+  const getEntity = computed(() => {
+    return (payload) => {
+      const entity = modules.value.find(module => module.mainEntity === payload)
+      let obj = Object.assign({}, {
+        name: entity.name,
+        label: entity.label,
+        mainEntity: entity.mainEntity
+      })
+      return obj
+    }
+  })
   const getDefaultViewFilter = computed(() => {
     const moduleFields = module.value && module.value.fields
     const viewFilters = module.value && module.value.viewFilters
@@ -279,6 +290,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getModules,
     getCollection,
     getViewFilters,
+    getEntity,
     getDefaultViewFilter,
     getViewFilter,
     getViewFilterIds,

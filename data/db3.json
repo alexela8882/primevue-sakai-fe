@@ -123,1188 +123,7 @@
       "order": 1,
       "folder_id": "5c906a1ba6ebc7193110f893",
       "mainEntity": "Campaign",
-      "fields": [
-        {
-          "_id": "5c906a11a6ebc7193110ea95",
-          "name": "name",
-          "label": "Campaign Name",
-          "uniqueName": "campaign_name",
-          "quick": true,
-          "title": true,
-          "rules": {
-            "required": true,
-            "between": {
-              "min": 0,
-              "max": 155
-            },
-            "string": true
-          },
-          "searchKey": true,
-          "field_type": {
-            "name": "text",
-            "_id": "5c906a0ea6ebc7193110e73b"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110ea99",
-          "name": "parent_id",
-          "label": "Parent Campaign",
-          "uniqueName": "campaign_parent_id",
-          "fieldGlue": " ",
-          "rules": {
-            "ss_pop_up": true
-          },
-          "field_type": {
-            "name": "lookupModel",
-            "_id": "5c906a0ea6ebc7193110e738"
-          },
-          "relation": {
-            "_id": "5c906a11a6ebc7193110ea9b",
-            "displayFieldName": [
-              "name"
-            ],
-            "foreign_key": "parent_id",
-            "local_key": "_id",
-            "entity_id": {
-              "_id": "5c906a0fa6ebc7193110e7d7",
-              "name": "Campaign"
-            }
-          }
-        },
-        {
-          "_id": "5c906a11a6ebc7193110ea9c",
-          "name": "country_id",
-          "label": "Country",
-          "uniqueName": "campaign_country_id",
-          "fieldGlue": " ",
-          "tooltip": [
-            "Country or Region where the exhibition will take place",
-            "helper"
-          ],
-          "searchKey": false,
-          "rules": {
-            "ss_pop_up": true
-          },
-          "field_type": {
-            "name": "lookupModel",
-            "_id": "5c906a0ea6ebc7193110e738"
-          },
-          "relation": {
-            "_id": "5c906a11a6ebc7193110ea9e",
-            "displayFieldName": [
-              "name"
-            ],
-            "foreign_key": "country_id",
-            "local_key": "_id",
-            "entity_id": {
-              "_id": "5c906a0fa6ebc7193110e7bd",
-              "name": "Country"
-            }
-          }
-        },
-        {
-          "_id": "5c906a11a6ebc7193110ea9f",
-          "name": "venue",
-          "label": "Venue",
-          "uniqueName": "campaign_venue",
-          "searchKey": false,
-          "field_type": {
-            "name": "longText",
-            "_id": "5c906a0ea6ebc7193110e73c"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaa0",
-          "name": "freqExhibition",
-          "label": "Frequency of Exhibition",
-          "uniqueName": "campaign_freq_exhibition",
-          "searchKey": false,
-          "field_type": {
-            "name": "longText",
-            "_id": "5c906a0ea6ebc7193110e73c"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaa1",
-          "name": "noOfRegistrants",
-          "label": "No. of Registrants",
-          "uniqueName": "campaign_no_of_registrants",
-          "rules": {
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaa3",
-          "name": "noOfAttendees",
-          "label": "No. of Attendees",
-          "uniqueName": "campaign_no_of_attendees",
-          "rules": {
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaa5",
-          "name": "boothSize",
-          "label": "Booth Size (sqm)",
-          "uniqueName": "campaign_booth_size",
-          "rules": {
-            "decimal": 2,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaa8",
-          "name": "description",
-          "label": "Description",
-          "uniqueName": "campaign_description",
-          "searchKey": false,
-          "field_type": {
-            "name": "longText",
-            "_id": "5c906a0ea6ebc7193110e73c"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaa9",
-          "name": "active",
-          "label": "Active",
-          "uniqueName": "campaign_active",
-          "rules": {
-            "default_value": false,
-            "checkbox": true
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "boolean",
-            "_id": "5c906a0ea6ebc7193110e733"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaac",
-          "name": "currency_id",
-          "label": "Currency",
-          "uniqueName": "campaign_currency_id",
-          "fieldGlue": " ",
-          "quick": true,
-          "rules": {
-            "ss_dropdown": true,
-            "required": true
-          },
-          "field_type": {
-            "name": "lookupModel",
-            "_id": "5c906a0ea6ebc7193110e738"
-          },
-          "relation": {
-            "_id": "5c906a11a6ebc7193110eaaf",
-            "displayFieldName": [
-              "name"
-            ],
-            "foreign_key": "currency_id",
-            "local_key": "_id",
-            "entity_id": {
-              "_id": "5c906a0fa6ebc7193110e7bc",
-              "name": "Currency"
-            }
-          }
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eab0",
-          "name": "owner_id",
-          "label": "Campaign Owner",
-          "uniqueName": "campaign_owner_id",
-          "fieldGlue": " ",
-          "filterQuery": "where(\"Employee::_id\", \"=\", \"Role::user_id\")->where(\"Role::name\", \"in\", [\"crm_admin\", \"crm_sales_admin\", \"crm_sales_coordinator\", \"sales_person\"])",
-          "rules": {
-            "ss_pop_up": true
-          },
-          "searchKey": true,
-          "field_type": {
-            "name": "lookupModel",
-            "_id": "5c906a0ea6ebc7193110e738"
-          },
-          "relation": {
-            "_id": "5c906a11a6ebc7193110eab2",
-            "displayFieldName": [
-              "firstName",
-              "lastName"
-            ],
-            "foreign_key": "owner_id",
-            "local_key": "_id",
-            "entity_id": {
-              "_id": "5c906a0fa6ebc7193110e7b3",
-              "name": "Employee"
-            },
-            "popupDisplayFieldName": [
-              "firstName",
-              "lastName",
-              "email"
-            ]
-          }
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eab3",
-          "name": "status_id",
-          "label": "Status",
-          "uniqueName": "campaign_status_id",
-          "listName": "campaign_status",
-          "header": true,
-          "rules": {
-            "ss_dropdown": true
-          },
-          "field_type": {
-            "name": "picklist",
-            "_id": "5c906a0ea6ebc7193110e737"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eab5",
-          "name": "type_id",
-          "label": "Type",
-          "uniqueName": "campaign_type_id",
-          "listName": "campaign_type",
-          "header": true,
-          "rules": {
-            "ss_dropdown": true
-          },
-          "field_type": {
-            "name": "picklist",
-            "_id": "5c906a0ea6ebc7193110e737"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eab7",
-          "name": "startDate",
-          "label": "Start Date",
-          "uniqueName": "campaign_start_date",
-          "header": true,
-          "rules": {
-            "date_format": "m/d/Y",
-            "date_only": true
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "date",
-            "_id": "5c906a0ea6ebc7193110e732"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaba",
-          "name": "endDate",
-          "label": "End Date",
-          "uniqueName": "campaign_end_date",
-          "header": true,
-          "rules": {
-            "set_min_date": "startDate",
-            "date_format": "m/d/Y",
-            "date_only": true
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "date",
-            "_id": "5c906a0ea6ebc7193110e732"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eabe",
-          "name": "boothRentalB",
-          "label": "Booth Rental (Budget)",
-          "uniqueName": "campaign_booth_rental_b",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eac2",
-          "name": "boothConstuctionB",
-          "label": "Boot Construction (Budget)",
-          "uniqueName": "campaign_booth_constuction_b",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eac6",
-          "name": "untFrtLbrSrvcsB",
-          "label": "Unit Freight and Labor Services (Budget)",
-          "uniqueName": "campaign_unt_frt_lbr_srvcs_b",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaca",
-          "name": "foodTrvlHtlB",
-          "label": "Food, Travel, Hotel (Budget)",
-          "uniqueName": "campaign_food_trvl_htl_b",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eace",
-          "name": "promMatB",
-          "label": "Food, Travel, Hotel (Budget)",
-          "uniqueName": "campaign_prom_mat_b",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110ead2",
-          "name": "boothRentalA",
-          "label": "Booth Rental (Actual)",
-          "uniqueName": "campaign_booth_rental_a",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110ead6",
-          "name": "boothConstuctionA",
-          "label": "Boot Construction (Actual)",
-          "uniqueName": "campaign_booth_constuction_a",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eada",
-          "name": "untFrtLbrSrvcsA",
-          "label": "Unit Freight and Labor Services (Actual)",
-          "uniqueName": "campaign_unt_frt_lbr_srvcs_a",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eade",
-          "name": "foodTrvlHtlA",
-          "label": "Food, Travel, Hotel (Actual)",
-          "uniqueName": "campaign_food_trvl_htl_a",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eae2",
-          "name": "promMatA",
-          "label": "Food, Travel, Hotel (Actual)",
-          "uniqueName": "campaign_prom_mat_a",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eae6",
-          "name": "expectedRevenue",
-          "label": "Expected Revenue in Campaign",
-          "uniqueName": "campaign_expected_revenue",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaea",
-          "name": "numSent",
-          "label": "Number Sent in Campaign",
-          "uniqueName": "campaign_num_sent",
-          "rules": {
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaec",
-          "name": "expectedResponse",
-          "label": "Expected Response (%)",
-          "uniqueName": "campaign_expected_response",
-          "searchKey": false,
-          "field_type": {
-            "name": "percentage",
-            "_id": "5c906a0ea6ebc7193110e743"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaed",
-          "name": "budgetCost",
-          "label": "Budgeted Cost in Campaign",
-          "uniqueName": "campaign_budget_cost",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaf1",
-          "name": "actualCost",
-          "label": "Actual Cost in Campaign",
-          "uniqueName": "campaign_actual_cost",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaf5",
-          "name": "response",
-          "label": "Responses in Campaign",
-          "uniqueName": "campaign_response",
-          "rules": {
-            "hide_in": [
-              "create"
-            ],
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eaf8",
-          "name": "numSentH",
-          "label": "Number Sent in Hierarchy",
-          "uniqueName": "campaign_num_sent_h",
-          "rules": {
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eafa",
-          "name": "totalLeadsH",
-          "label": "Leads in Hierarchy",
-          "uniqueName": "campaign_total_leads_h",
-          "rules": {
-            "hide_in": [
-              "create"
-            ],
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eafd",
-          "name": "totalOpportunityH",
-          "label": "Opportunity in Hierarchy",
-          "uniqueName": "campaign_total_opportunity_h",
-          "rules": {
-            "hide_in": [
-              "create"
-            ],
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eb00",
-          "name": "responseH",
-          "label": "Responses in Hierarchy",
-          "uniqueName": "campaign_response_h",
-          "rules": {
-            "hide_in": [
-              "create"
-            ],
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eb03",
-          "name": "totalWonH",
-          "label": "Won Opprtunity in Hierarchy",
-          "uniqueName": "campaign_total_won_h",
-          "rules": {
-            "hide_in": [
-              "create"
-            ],
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eb06",
-          "name": "opportunityValueH",
-          "label": "Value of Opprtunity in Hierarchy",
-          "uniqueName": "campaign_opportunity_value_h",
-          "currencySource": {
-            "type": "lookupModel",
-            "concat": "code",
-            "field": "currency_id"
-          },
-          "rules": {
-            "decimal": 2,
-            "comma_seprated": true,
-            "hide_in": [
-              "create"
-            ],
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eb0b",
-          "name": "wonValueH",
-          "label": "Value of Won Opprtunity in Hierarchy",
-          "uniqueName": "campaign_won_value_h",
-          "currencySource": {
-            "type": "lookupModel",
-            "concat": "code",
-            "field": "currency_id"
-          },
-          "rules": {
-            "decimal": 2,
-            "comma_seprated": true,
-            "hide_in": [
-              "create"
-            ],
-            "digits_between": {
-              "min": 0,
-              "max": 15
-            }
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "currency",
-            "_id": "5c906a0ea6ebc7193110e73e"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eb10",
-          "name": "updated_at",
-          "label": "Last Modified Date",
-          "uniqueName": "campaign_updated_at",
-          "rules": {
-            "date_only": true,
-            "date_format": "m/d/Y",
-            "hide_in": [
-              "create",
-              "update"
-            ]
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "date",
-            "_id": "5c906a0ea6ebc7193110e732"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eb14",
-          "name": "created_at",
-          "label": "Created Date",
-          "uniqueName": "campaign_created_at",
-          "rules": {
-            "date_only": true,
-            "date_format": "m/d/Y",
-            "hide_in": [
-              "create",
-              "update"
-            ]
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "date",
-            "_id": "5c906a0ea6ebc7193110e732"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eb18",
-          "name": "updated_by",
-          "label": "Last Modified By",
-          "uniqueName": "campaign_updated_by",
-          "fieldGlue": " ",
-          "rules": {
-            "ss_pop_up": true,
-            "hide_in": [
-              "create",
-              "update"
-            ]
-          },
-          "field_type": {
-            "name": "lookupModel",
-            "_id": "5c906a0ea6ebc7193110e738"
-          },
-          "relation": {
-            "_id": "5c906a11a6ebc7193110eb1b",
-            "displayFieldName": [
-              "firstName",
-              "lastName"
-            ],
-            "foreign_key": "updated_by",
-            "local_key": "_id",
-            "entity_id": {
-              "_id": "5c906a0fa6ebc7193110e7b4",
-              "name": "User"
-            }
-          }
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eb1c",
-          "name": "created_by",
-          "label": "Created By",
-          "uniqueName": "campaign_created_by",
-          "fieldGlue": " ",
-          "rules": {
-            "ss_pop_up": true,
-            "hide_in": [
-              "create",
-              "update"
-            ]
-          },
-          "field_type": {
-            "name": "lookupModel",
-            "_id": "5c906a0ea6ebc7193110e738"
-          },
-          "relation": {
-            "_id": "5c906a11a6ebc7193110eb1f",
-            "displayFieldName": [
-              "firstName",
-              "lastName"
-            ],
-            "foreign_key": "created_by",
-            "local_key": "_id",
-            "entity_id": {
-              "_id": "5c906a0fa6ebc7193110e7b4",
-              "name": "User"
-            }
-          }
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eb20",
-          "name": "deleted_at",
-          "label": "Deleted At",
-          "uniqueName": "campaign_deleted_at",
-          "rules": {
-            "date_only": true,
-            "date_format": "m/d/Y",
-            "hide_in": [
-              "create",
-              "update"
-            ]
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "date",
-            "_id": "5c906a0ea6ebc7193110e732"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a11a6ebc7193110eb24",
-          "name": "deleted_by",
-          "label": "Deleted By",
-          "uniqueName": "campaign_deleted_by",
-          "fieldGlue": " ",
-          "rules": {
-            "ss_pop_up": true,
-            "hide_in": [
-              "create",
-              "update"
-            ]
-          },
-          "field_type": {
-            "name": "lookupModel",
-            "_id": "5c906a0ea6ebc7193110e738"
-          },
-          "relation": {
-            "_id": "5c906a11a6ebc7193110eb27",
-            "displayFieldName": [
-              "firstName",
-              "lastName"
-            ],
-            "foreign_key": "deleted_by",
-            "local_key": "_id",
-            "entity_id": {
-              "_id": "5c906a0fa6ebc7193110e7b4",
-              "name": "User"
-            }
-          }
-        },
-        {
-          "_id": "5c906a13a6ebc7193110ede5",
-          "name": "totalOpportunity",
-          "label": "Opportunity in Campaign",
-          "uniqueName": "campaign_total_opportunity",
-          "filters": null,
-          "filterLogic": null,
-          "rules": {
-            "disable": true
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a13a6ebc7193110ede7",
-          "name": "totalWon",
-          "label": "Won Opportunity in Campaign",
-          "uniqueName": "campaign_total_won",
-          "filters": [
-            [
-              "stage_id",
-              "=",
-              "Closed Won"
-            ]
-          ],
-          "filterLogic": null,
-          "rules": {
-            "disable": true
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a13a6ebc7193110ede9",
-          "name": "opportunityValue",
-          "label": "Value of Opportunity",
-          "uniqueName": "campaign_opportunity_value",
-          "filters": null,
-          "filterLogic": null,
-          "aggregateField": "amount",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "disable": true
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a13a6ebc7193110eded",
-          "name": "wonValue",
-          "label": "Value of Won Opportunity",
-          "uniqueName": "campaign_won_value",
-          "filters": [
-            [
-              "stage_id",
-              "=",
-              "Closed Won"
-            ]
-          ],
-          "filterLogic": null,
-          "aggregateField": "amount",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "disable": true
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "number",
-            "_id": "5c906a0ea6ebc7193110e73d"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a14a6ebc7193110ef49",
-          "name": "totalSalesOpportunity",
-          "label": "Sales Opportunity in Campaign",
-          "uniqueName": "campaign_total_sales_opportunity",
-          "connectingField": "campaign_id",
-          "rusEntity": "SalesOpportunity",
-          "rusType": "count",
-          "filters": null,
-          "filterLogic": null,
-          "rules": {
-            "disable": true
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "rollUpSummary",
-            "_id": "5c906a0ea6ebc7193110e742"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a14a6ebc7193110ef4b",
-          "name": "totalSalesWon",
-          "label": "Won Sales Opportunity in Campaign",
-          "uniqueName": "campaign_total_sales_won",
-          "connectingField": "campaign_id",
-          "rusEntity": "SalesOpportunity",
-          "rusType": "count",
-          "filters": [
-            [
-              "stage_id",
-              "=",
-              "Closed Won"
-            ]
-          ],
-          "filterLogic": null,
-          "rules": {
-            "disable": true
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "rollUpSummary",
-            "_id": "5c906a0ea6ebc7193110e742"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a14a6ebc7193110ef4d",
-          "name": "salesOpportunityValue",
-          "label": "Value of Sales Opportunity",
-          "uniqueName": "campaign_sales_opportunity_value",
-          "connectingField": "campaign_id",
-          "rusEntity": "SalesOpportunity",
-          "rusType": "sum",
-          "filters": null,
-          "filterLogic": null,
-          "aggregateField": "amount",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "disable": true
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "rollUpSummary",
-            "_id": "5c906a0ea6ebc7193110e742"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a14a6ebc7193110ef51",
-          "name": "wonSalesValue",
-          "label": "Value of Won Sales Opportunity",
-          "uniqueName": "campaign_won_sales_value",
-          "connectingField": "campaign_id",
-          "rusEntity": "SalesOpportunity",
-          "rusType": "sum",
-          "filters": [
-            [
-              "stage_id",
-              "=",
-              "Closed Won"
-            ]
-          ],
-          "filterLogic": null,
-          "aggregateField": "amount",
-          "rules": {
-            "decimal": 2,
-            "comma_separated": true,
-            "disable": true
-          },
-          "searchKey": false,
-          "field_type": {
-            "name": "rollUpSummary",
-            "_id": "5c906a0ea6ebc7193110e742"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a15a6ebc7193110f010",
-          "name": "totalLeads",
-          "label": "Leads in Campaign",
-          "uniqueName": "campaign_total_leads",
-          "rusEntity": "Lead",
-          "rusType": "count",
-          "filters": null,
-          "filterLogic": null,
-          "rules": {
-            "disable": true
-          },
-          "connectingField": "campaign_id",
-          "searchKey": false,
-          "field_type": {
-            "name": "rollUpSummary",
-            "_id": "5c906a0ea6ebc7193110e742"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5c906a15a6ebc7193110f012",
-          "name": "totalConvertedLeads",
-          "label": "Converted Leads in Campaign",
-          "uniqueName": "campaign_total_converted_leads",
-          "rusEntity": "Lead",
-          "rusType": "count",
-          "filters": [
-            [
-              "converted",
-              "=",
-              true
-            ]
-          ],
-          "filterLogic": null,
-          "rules": {
-            "disable": true
-          },
-          "connectingField": "campaign_id",
-          "searchKey": false,
-          "field_type": {
-            "name": "rollUpSummary",
-            "_id": "5c906a0ea6ebc7193110e742"
-          },
-          "relation": null
-        },
-        {
-          "_id": "5cf885d5a6ebc75bfe22feb2",
-          "name": "rfqCode",
-          "label": "RFQCODE",
-          "uniqueName": "campaign_rfq_code",
-          "format": "{0}",
-          "searchKey": true,
-          "field_type": {
-            "name": "autonumber",
-            "_id": "5c906a0ea6ebc7193110e741"
-          },
-          "relation": null
-        }
-      ],
+      "fields": [],
       "panels": [
         {
           "_id": "5c906a1da6ebc7193110fa28",
@@ -41194,6 +40013,2038 @@
         "updated_at": "2023-11-09 05:08:04",
         "created_at": "2023-09-26 02:56:37",
         "entity_id": "5c906a0fa6ebc7193110e7d4"
+      }
+    ]
+  },
+  "countries": {
+    "collection": {
+      "data": [
+        {
+          "_id": "5a529aa4678f7138736cc162",
+          "name": "Afghanistan",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc163",
+          "name": "Åland Islands",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc164",
+          "name": "Albania",
+          "region": "Europe",
+          "plugCode": "C",
+          "electricalOutlet": null,
+          "powerSupplyOne": 1,
+          "powerSupplyTwo": 8
+        },
+        {
+          "_id": "5a529aa4678f7138736cc165",
+          "name": "Algeria",
+          "region": "Africa",
+          "plugCode": "C",
+          "electricalOutlet": null,
+          "powerSupplyOne": 1,
+          "powerSupplyTwo": 8
+        },
+        {
+          "_id": "5a529aa4678f7138736cc166",
+          "name": "American Samoa",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc167",
+          "name": "Andorra",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc168",
+          "name": "Angola",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc169",
+          "name": "Anguilla",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc16a",
+          "name": "Antarctica",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc16b",
+          "name": "Antigua and Barbuda",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc16c",
+          "name": "Argentina",
+          "region": "Latin America",
+          "plugCode": "E",
+          "electricalOutlet": null,
+          "powerSupplyOne": 1,
+          "powerSupplyTwo": 8
+        },
+        {
+          "_id": "5a529aa4678f7138736cc16d",
+          "name": "Armenia",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc16e",
+          "name": "Aruba",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc16f",
+          "name": "Australia",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc170",
+          "name": "Austria",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc171",
+          "name": "Azerbaijan",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc172",
+          "name": "Bahamas",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc173",
+          "name": "Bahrain",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc174",
+          "name": "Bangladesh",
+          "region": "South Asia",
+          "plugCode": "H",
+          "electricalOutlet": null,
+          "powerSupplyOne": 1,
+          "powerSupplyTwo": 8
+        },
+        {
+          "_id": "5a529aa4678f7138736cc175",
+          "name": "Barbados",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc176",
+          "name": "Belarus",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc177",
+          "name": "Belgium",
+          "region": "Europe",
+          "plugCode": "C",
+          "electricalOutlet": null,
+          "powerSupplyOne": 1,
+          "powerSupplyTwo": 8
+        },
+        {
+          "_id": "5a529aa4678f7138736cc178",
+          "name": "Belize",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc179",
+          "name": "Benin",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        },
+        {
+          "_id": "5a529aa4678f7138736cc17a",
+          "name": "Bermuda",
+          "region": null,
+          "plugCode": null,
+          "electricalOutlet": null,
+          "powerSupplyOne": null,
+          "powerSupplyTwo": null
+        }
+      ],
+      "meta": {
+        "pagination": {
+          "total": 250,
+          "count": 25,
+          "per_page": 25,
+          "current_page": 1,
+          "total_pages": 10,
+          "links": {
+            "next": "http://uat.reddotcrm.com/api/countries?page=2"
+          }
+        }
+      }
+    },
+    "fields": [
+      {
+        "_id": "5c906a10a6ebc7193110e82a",
+        "name": "name",
+        "label": "Name",
+        "uniqueName": "country_name",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:28",
+        "rules": [
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            }
+          },
+          {
+            "name": "required",
+            "event": [
+              "onLoad",
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": true
+          },
+          {
+            "name": "disable_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "update"
+            ]
+          }
+        ],
+        "searchKey": false,
+        "quick": true,
+        "title": true,
+        "section1_ids": [
+          "64265f55a6ebc722f15baf40",
+          "64f943e9a6ebc71559749f5e"
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a10a6ebc7193110e82d",
+        "name": "alpha2Code",
+        "label": "Alpha2 Code",
+        "uniqueName": "country_alpha2_code",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:28",
+        "rules": [
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 2,
+              "max": 2
+            }
+          },
+          {
+            "name": "required",
+            "event": [
+              "onLoad",
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": true
+          },
+          {
+            "name": "disable_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "update"
+            ]
+          }
+        ],
+        "searchKey": false,
+        "header": true,
+        "quick": true,
+        "section1_ids": [
+          "64265f55a6ebc722f15baf40",
+          "64f943e9a6ebc71559749f5e"
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a10a6ebc7193110e830",
+        "name": "alpha3Code",
+        "label": "Alpha3 Code",
+        "uniqueName": "country_alpha3_code",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:28",
+        "rules": [
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 3,
+              "max": 3
+            }
+          },
+          {
+            "name": "required",
+            "event": [
+              "onLoad",
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": true
+          },
+          {
+            "name": "disable_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "update"
+            ]
+          }
+        ],
+        "searchKey": false,
+        "header": true,
+        "quick": true,
+        "section1_ids": [
+          "64265f55a6ebc722f15baf40",
+          "64f943e9a6ebc71559749f5e"
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a10a6ebc7193110e833",
+        "name": "timezone_ids",
+        "label": "Timezones",
+        "uniqueName": "country_timezone_ids",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "listName": "timezone",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2019-03-19 04:03:28",
+        "rules": [
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true
+          },
+          {
+            "name": "required",
+            "event": [
+              "onLoad",
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": true
+          },
+          {
+            "name": "disable_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "update"
+            ]
+          }
+        ],
+        "quick": true,
+        "section2_ids": [
+          "64265f55a6ebc722f15baf40",
+          "64f943e9a6ebc71559749f5e"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "641c00e1a6ebc70b5e1e23f2",
+        "name": "csis_ids",
+        "label": "CSIS In-Charge",
+        "uniqueName": "country_csis_ids",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": null,
+        "updated_by": null,
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-23 07:33:53",
+        "created_at": "2023-03-23 07:33:53",
+        "rules": [
+          {
+            "name": "ms_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "641c00e1a6ebc70b5e1e23f3"
+            }
+          }
+        ],
+        "section1_ids": [
+          "641c00e1a6ebc70b5e1e23f9"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "641c00e1a6ebc70b5e1e23f4",
+          "method": "belongsToMany",
+          "class": "App\\Models\\Employee\\Employee",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "country_csis_ids",
+          "local_key": "csis_ids",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b3",
+            "name": "Employee",
+            "model_class": "App\\Models\\Employee\\Employee",
+            "repository_class": "App\\Repositories\\Eloquent\\Employee\\EmployeeRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "users"
+          },
+          "popupDisplayFieldName": [
+            "firstName",
+            "lastName",
+            "email"
+          ],
+          "created_by": null,
+          "updated_by": null,
+          "field_id": "641c00e1a6ebc70b5e1e23f2"
+        }
+      },
+      {
+        "_id": "641c00e1a6ebc70b5e1e23f5",
+        "name": "shipping_in_charge_ids",
+        "label": "Shipping In-Charge",
+        "uniqueName": "country_shipping_in_charge_ids",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": null,
+        "updated_by": null,
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-23 07:33:53",
+        "created_at": "2023-03-23 07:33:53",
+        "rules": [
+          {
+            "name": "ms_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "641c00e1a6ebc70b5e1e23f6"
+            }
+          }
+        ],
+        "section2_ids": [
+          "641c00e1a6ebc70b5e1e23f9"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "641c00e1a6ebc70b5e1e23f7",
+          "method": "belongsToMany",
+          "class": "App\\Models\\Employee\\Employee",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "country_shipping_in_charge_ids",
+          "local_key": "shipping_in_charge_ids",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b3",
+            "name": "Employee",
+            "model_class": "App\\Models\\Employee\\Employee",
+            "repository_class": "App\\Repositories\\Eloquent\\Employee\\EmployeeRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "users"
+          },
+          "popupDisplayFieldName": [
+            "firstName",
+            "lastName",
+            "email"
+          ],
+          "created_by": null,
+          "updated_by": null,
+          "field_id": "641c00e1a6ebc70b5e1e23f5"
+        }
+      },
+      {
+        "_id": "64265f52a6ebc722f15bacd2",
+        "name": "region",
+        "label": "Region",
+        "uniqueName": "country_region",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacd3"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacd4"
+            }
+          }
+        ],
+        "section1_ids": [
+          "64265f55a6ebc722f15baf42",
+          "64f943e9a6ebc71559749f60"
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "64265f52a6ebc722f15bacd5",
+        "name": "plugCode",
+        "label": "Plug Code",
+        "uniqueName": "country_plug_code",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacd6"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacd7"
+            }
+          }
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "64265f52a6ebc722f15bacd8",
+        "name": "electricalOutlet",
+        "label": "Electrical Outlet",
+        "uniqueName": "country_electrical_outlet",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacd9"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacda"
+            }
+          }
+        ],
+        "section1_ids": [
+          "64265f55a6ebc722f15baf42",
+          "64f943e9a6ebc71559749f60"
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "64265f52a6ebc722f15bacdb",
+        "name": "powerSupplyOne",
+        "label": "Power Supply 1",
+        "uniqueName": "country_power_supply_one",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacdc"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacdd"
+            }
+          }
+        ],
+        "section2_ids": [
+          "64265f55a6ebc722f15baf42",
+          "64f943e9a6ebc71559749f60"
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "64265f52a6ebc722f15bacde",
+        "name": "powerSupplyTwo",
+        "label": "Power Supply 2",
+        "uniqueName": "country_power_supply_two",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacdf"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bace0"
+            }
+          }
+        ],
+        "section2_ids": [
+          "64265f55a6ebc722f15baf42",
+          "64f943e9a6ebc71559749f60"
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "64265f52a6ebc722f15bace1",
+        "name": "branch_id",
+        "label": "Esco Office",
+        "uniqueName": "country_branch_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": null,
+        "updated_by": null,
+        "fieldGlue": " ",
+        "quick": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bace2"
+            }
+          },
+          {
+            "name": "required",
+            "event": [
+              "onLoad",
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bace3"
+            }
+          },
+          {
+            "name": "disable_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "update"
+            ],
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bace4"
+            }
+          }
+        ],
+        "section2_ids": [
+          "64265f55a6ebc722f15baf40",
+          "64f943e9a6ebc71559749f5e"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "64265f52a6ebc722f15bace5",
+          "method": "belongsTo",
+          "class": "App\\Models\\Company\\Branch",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "branch_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7ba",
+            "name": "Branch",
+            "model_class": "App\\Models\\Company\\Branch",
+            "repository_class": "App\\Repositories\\Eloquent\\Company\\BranchRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "branches"
+          },
+          "created_by": null,
+          "updated_by": null,
+          "field_id": "64265f52a6ebc722f15bace1"
+        }
+      },
+      {
+        "_id": "64265f52a6ebc722f15bace6",
+        "name": "updated_at",
+        "label": "Last Modified Date",
+        "uniqueName": "country_updated_at",
+        "field_type_id": "5c906a0ea6ebc7193110e732",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bace7"
+            }
+          },
+          {
+            "name": "date_format",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": "m/d/Y",
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bace8"
+            }
+          },
+          {
+            "name": "date_only",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bace9"
+            }
+          }
+        ],
+        "section2_ids": [
+          "64265f55a6ebc722f15baf44",
+          "64f943e9a6ebc71559749f62"
+        ],
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "64265f52a6ebc722f15bacea",
+        "name": "created_at",
+        "label": "Created Date",
+        "uniqueName": "country_created_at",
+        "field_type_id": "5c906a0ea6ebc7193110e732",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "64265f52a6ebc722f15baceb"
+            }
+          },
+          {
+            "name": "date_format",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": "m/d/Y",
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacec"
+            }
+          },
+          {
+            "name": "date_only",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15baced"
+            }
+          }
+        ],
+        "section1_ids": [
+          "64265f55a6ebc722f15baf44",
+          "64f943e9a6ebc71559749f62"
+        ],
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "64265f52a6ebc722f15bacee",
+        "name": "updated_by",
+        "label": "Last Modified By",
+        "uniqueName": "country_updated_by",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": null,
+        "updated_by": null,
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacef"
+            }
+          },
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacf0"
+            }
+          }
+        ],
+        "section2_ids": [
+          "64265f55a6ebc722f15baf44",
+          "64f943e9a6ebc71559749f62"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "64265f52a6ebc722f15bacf1",
+          "method": "belongsTo",
+          "class": "App\\User",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "updated_by",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b4",
+            "name": "User",
+            "model_class": "App\\User",
+            "repository_class": "App\\Repositories\\Eloquent\\User\\UserRepository",
+            "mutable": false,
+            "notifiable": true,
+            "collection": "users"
+          },
+          "created_by": null,
+          "updated_by": null,
+          "field_id": "64265f52a6ebc722f15bacee"
+        }
+      },
+      {
+        "_id": "64265f52a6ebc722f15bacf2",
+        "name": "created_by",
+        "label": "Created By",
+        "uniqueName": "country_created_by",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": null,
+        "updated_by": null,
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacf3"
+            }
+          },
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacf4"
+            }
+          }
+        ],
+        "section1_ids": [
+          "64265f55a6ebc722f15baf44",
+          "64f943e9a6ebc71559749f62"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "64265f52a6ebc722f15bacf5",
+          "method": "belongsTo",
+          "class": "App\\User",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "created_by",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b4",
+            "name": "User",
+            "model_class": "App\\User",
+            "repository_class": "App\\Repositories\\Eloquent\\User\\UserRepository",
+            "mutable": false,
+            "notifiable": true,
+            "collection": "users"
+          },
+          "created_by": null,
+          "updated_by": null,
+          "field_id": "64265f52a6ebc722f15bacf2"
+        }
+      },
+      {
+        "_id": "64265f52a6ebc722f15bacf6",
+        "name": "deleted_at",
+        "label": "Deleted At",
+        "uniqueName": "country_deleted_at",
+        "field_type_id": "5c906a0ea6ebc7193110e732",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacf7"
+            }
+          },
+          {
+            "name": "date_format",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": "m/d/Y",
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacf8"
+            }
+          },
+          {
+            "name": "date_only",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacf9"
+            }
+          }
+        ],
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "64265f52a6ebc722f15bacfa",
+        "name": "deleted_by",
+        "label": "Deleted By",
+        "uniqueName": "country_deleted_by",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": null,
+        "updated_by": null,
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacfb"
+            }
+          },
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacfc"
+            }
+          }
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "64265f52a6ebc722f15bacfd",
+          "method": "belongsTo",
+          "class": "App\\User",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "deleted_by",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b4",
+            "name": "User",
+            "model_class": "App\\User",
+            "repository_class": "App\\Repositories\\Eloquent\\User\\UserRepository",
+            "mutable": false,
+            "notifiable": true,
+            "collection": "users"
+          },
+          "created_by": null,
+          "updated_by": null,
+          "field_id": "64265f52a6ebc722f15bacfa"
+        }
+      },
+      {
+        "_id": "64f943e9a6ebc71559749f56",
+        "name": "voltage",
+        "label": "Voltage",
+        "uniqueName": "country_voltage",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7bd",
+        "updated_at": "2023-09-07 03:30:49",
+        "created_at": "2023-09-07 03:30:49",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "64f943e9a6ebc71559749f57"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "64f943e9a6ebc71559749f58"
+            }
+          }
+        ],
+        "section1_ids": [
+          "64f943e9a6ebc71559749f60"
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      }
+    ],
+    "panels": [
+      {
+        "_id": "64265f55a6ebc722f15baf45",
+        "panelName": "port-panel-1",
+        "entityName": "Port",
+        "controllerMethod": "countries@show",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "selectionField": null,
+        "mutableType": "withForm",
+        "tabName": null,
+        "required": false,
+        "isChild": false,
+        "sections": [
+          {
+            "sectionLabel": "Ports",
+            "row": 1,
+            "field_ids": [
+              [
+                {
+                  "_id": "64265f52a6ebc722f15bacfe",
+                  "name": "name",
+                  "label": "Name",
+                  "uniqueName": "port_name",
+                  "field_type_id": "5c906a0ea6ebc7193110e73b",
+                  "created_by": null,
+                  "updated_by": null,
+                  "quick": true,
+                  "active": true,
+                  "entity_id": "64265f51a6ebc722f15bac97",
+                  "updated_at": "2023-03-31 04:19:30",
+                  "created_at": "2023-03-31 04:19:30",
+                  "rules": [
+                    {
+                      "name": "required",
+                      "event": [
+                        "onLoad",
+                        "onChange",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": true,
+                      "_id": {
+                        "$oid": "64265f52a6ebc722f15bacff"
+                      }
+                    },
+                    {
+                      "name": "between",
+                      "event": [
+                        "onLoad",
+                        "onBlur",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": {
+                        "min": 0,
+                        "max": 155
+                      },
+                      "_id": {
+                        "$oid": "64265f52a6ebc722f15bad00"
+                      }
+                    },
+                    {
+                      "name": "string",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": "txtRadio1",
+                      "value": true,
+                      "_id": {
+                        "$oid": "64265f52a6ebc722f15bad01"
+                      }
+                    }
+                  ],
+                  "section1_ids": [
+                    "64265f55a6ebc722f15baf46",
+                    "64f943e9a6ebc71559749f64"
+                  ],
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e73b",
+                    "name": "text",
+                    "label": "text",
+                    "html_elem": "input",
+                    "rule_ids": [
+                      "5c906a0fa6ebc7193110e796",
+                      "5c906a0fa6ebc7193110e797",
+                      "5c906a0fa6ebc7193110e798",
+                      "5c906a0fa6ebc7193110e799",
+                      "5c906a0fa6ebc7193110e79a",
+                      "5c906a0fa6ebc7193110e79b",
+                      "5c906a0fa6ebc7193110e79c",
+                      "5c906a0fa6ebc7193110e79d",
+                      "5c906a0fa6ebc7193110e79e",
+                      "5c906a0fa6ebc7193110e79f",
+                      "5c906a0fa6ebc7193110e78c",
+                      "5c906a0fa6ebc7193110e78d",
+                      "5c906a0fa6ebc7193110e78e",
+                      "5c906a0fa6ebc7193110e78f",
+                      "5c906a0fa6ebc7193110e790",
+                      "5c906a0fa6ebc7193110e791",
+                      "5c906a0fa6ebc7193110e792",
+                      "5c906a0fa6ebc7193110e793",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342",
+                      "5c906a0ea6ebc7193110e74f"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e78c",
+                        "ruleName": "between",
+                        "value": {
+                          "min": 0,
+                          "max": 155
+                        },
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a0"
+                        }
+                      },
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e79a",
+                        "ruleName": "string",
+                        "value": true,
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a1"
+                        }
+                      }
+                    ],
+                    "return_type_ids": [
+                      "5c906a0fa6ebc7193110e7ac"
+                    ]
+                  },
+                  "relation": null
+                },
+                {
+                  "_id": "64265f52a6ebc722f15bad02",
+                  "name": "transitTime",
+                  "label": "Transit Time",
+                  "uniqueName": "port_transit_time",
+                  "field_type_id": "5c906a0ea6ebc7193110e73b",
+                  "created_by": null,
+                  "updated_by": null,
+                  "quick": true,
+                  "active": true,
+                  "entity_id": "64265f51a6ebc722f15bac97",
+                  "updated_at": "2023-03-31 04:19:30",
+                  "created_at": "2023-03-31 04:19:30",
+                  "rules": [
+                    {
+                      "name": "between",
+                      "event": [
+                        "onLoad",
+                        "onBlur",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": {
+                        "min": 0,
+                        "max": 155
+                      },
+                      "_id": {
+                        "$oid": "64265f52a6ebc722f15bad03"
+                      }
+                    },
+                    {
+                      "name": "string",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": "txtRadio1",
+                      "value": true,
+                      "_id": {
+                        "$oid": "64265f52a6ebc722f15bad04"
+                      }
+                    }
+                  ],
+                  "section1_ids": [
+                    "64265f55a6ebc722f15baf46",
+                    "64f943e9a6ebc71559749f64"
+                  ],
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e73b",
+                    "name": "text",
+                    "label": "text",
+                    "html_elem": "input",
+                    "rule_ids": [
+                      "5c906a0fa6ebc7193110e796",
+                      "5c906a0fa6ebc7193110e797",
+                      "5c906a0fa6ebc7193110e798",
+                      "5c906a0fa6ebc7193110e799",
+                      "5c906a0fa6ebc7193110e79a",
+                      "5c906a0fa6ebc7193110e79b",
+                      "5c906a0fa6ebc7193110e79c",
+                      "5c906a0fa6ebc7193110e79d",
+                      "5c906a0fa6ebc7193110e79e",
+                      "5c906a0fa6ebc7193110e79f",
+                      "5c906a0fa6ebc7193110e78c",
+                      "5c906a0fa6ebc7193110e78d",
+                      "5c906a0fa6ebc7193110e78e",
+                      "5c906a0fa6ebc7193110e78f",
+                      "5c906a0fa6ebc7193110e790",
+                      "5c906a0fa6ebc7193110e791",
+                      "5c906a0fa6ebc7193110e792",
+                      "5c906a0fa6ebc7193110e793",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342",
+                      "5c906a0ea6ebc7193110e74f"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e78c",
+                        "ruleName": "between",
+                        "value": {
+                          "min": 0,
+                          "max": 155
+                        },
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a0"
+                        }
+                      },
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e79a",
+                        "ruleName": "string",
+                        "value": true,
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a1"
+                        }
+                      }
+                    ],
+                    "return_type_ids": [
+                      "5c906a0fa6ebc7193110e7ac"
+                    ]
+                  },
+                  "relation": null
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "64f943e9a6ebc71559749f5d",
+        "panelName": "country-panel-1",
+        "entityName": "Country",
+        "controllerMethod": "countries@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": "General Information",
+            "row": 1,
+            "field_ids": [
+              [
+                "5c906a10a6ebc7193110e82a",
+                "5c906a10a6ebc7193110e82d",
+                "5c906a10a6ebc7193110e830"
+              ],
+              [
+                "64265f52a6ebc722f15bace1",
+                "5c906a10a6ebc7193110e833"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "64f943e9a6ebc71559749f63",
+        "panelName": "port-panel-2",
+        "entityName": "Port",
+        "controllerMethod": "countries@show",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "selectionField": null,
+        "mutableType": "withForm",
+        "tabName": null,
+        "required": false,
+        "isChild": false,
+        "sections": [
+          {
+            "sectionLabel": "Ports",
+            "row": 1,
+            "field_ids": [
+              [
+                {
+                  "_id": "64265f52a6ebc722f15bacfe",
+                  "name": "name",
+                  "label": "Name",
+                  "uniqueName": "port_name",
+                  "field_type_id": "5c906a0ea6ebc7193110e73b",
+                  "created_by": null,
+                  "updated_by": null,
+                  "quick": true,
+                  "active": true,
+                  "entity_id": "64265f51a6ebc722f15bac97",
+                  "updated_at": "2023-03-31 04:19:30",
+                  "created_at": "2023-03-31 04:19:30",
+                  "rules": [
+                    {
+                      "name": "required",
+                      "event": [
+                        "onLoad",
+                        "onChange",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": true,
+                      "_id": {
+                        "$oid": "64265f52a6ebc722f15bacff"
+                      }
+                    },
+                    {
+                      "name": "between",
+                      "event": [
+                        "onLoad",
+                        "onBlur",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": {
+                        "min": 0,
+                        "max": 155
+                      },
+                      "_id": {
+                        "$oid": "64265f52a6ebc722f15bad00"
+                      }
+                    },
+                    {
+                      "name": "string",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": "txtRadio1",
+                      "value": true,
+                      "_id": {
+                        "$oid": "64265f52a6ebc722f15bad01"
+                      }
+                    }
+                  ],
+                  "section1_ids": [
+                    "64265f55a6ebc722f15baf46",
+                    "64f943e9a6ebc71559749f64"
+                  ],
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e73b",
+                    "name": "text",
+                    "label": "text",
+                    "html_elem": "input",
+                    "rule_ids": [
+                      "5c906a0fa6ebc7193110e796",
+                      "5c906a0fa6ebc7193110e797",
+                      "5c906a0fa6ebc7193110e798",
+                      "5c906a0fa6ebc7193110e799",
+                      "5c906a0fa6ebc7193110e79a",
+                      "5c906a0fa6ebc7193110e79b",
+                      "5c906a0fa6ebc7193110e79c",
+                      "5c906a0fa6ebc7193110e79d",
+                      "5c906a0fa6ebc7193110e79e",
+                      "5c906a0fa6ebc7193110e79f",
+                      "5c906a0fa6ebc7193110e78c",
+                      "5c906a0fa6ebc7193110e78d",
+                      "5c906a0fa6ebc7193110e78e",
+                      "5c906a0fa6ebc7193110e78f",
+                      "5c906a0fa6ebc7193110e790",
+                      "5c906a0fa6ebc7193110e791",
+                      "5c906a0fa6ebc7193110e792",
+                      "5c906a0fa6ebc7193110e793",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342",
+                      "5c906a0ea6ebc7193110e74f"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e78c",
+                        "ruleName": "between",
+                        "value": {
+                          "min": 0,
+                          "max": 155
+                        },
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a0"
+                        }
+                      },
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e79a",
+                        "ruleName": "string",
+                        "value": true,
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a1"
+                        }
+                      }
+                    ],
+                    "return_type_ids": [
+                      "5c906a0fa6ebc7193110e7ac"
+                    ]
+                  },
+                  "relation": null
+                },
+                {
+                  "_id": "64265f52a6ebc722f15bad02",
+                  "name": "transitTime",
+                  "label": "Transit Time",
+                  "uniqueName": "port_transit_time",
+                  "field_type_id": "5c906a0ea6ebc7193110e73b",
+                  "created_by": null,
+                  "updated_by": null,
+                  "quick": true,
+                  "active": true,
+                  "entity_id": "64265f51a6ebc722f15bac97",
+                  "updated_at": "2023-03-31 04:19:30",
+                  "created_at": "2023-03-31 04:19:30",
+                  "rules": [
+                    {
+                      "name": "between",
+                      "event": [
+                        "onLoad",
+                        "onBlur",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": {
+                        "min": 0,
+                        "max": 155
+                      },
+                      "_id": {
+                        "$oid": "64265f52a6ebc722f15bad03"
+                      }
+                    },
+                    {
+                      "name": "string",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": "txtRadio1",
+                      "value": true,
+                      "_id": {
+                        "$oid": "64265f52a6ebc722f15bad04"
+                      }
+                    }
+                  ],
+                  "section1_ids": [
+                    "64265f55a6ebc722f15baf46",
+                    "64f943e9a6ebc71559749f64"
+                  ],
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e73b",
+                    "name": "text",
+                    "label": "text",
+                    "html_elem": "input",
+                    "rule_ids": [
+                      "5c906a0fa6ebc7193110e796",
+                      "5c906a0fa6ebc7193110e797",
+                      "5c906a0fa6ebc7193110e798",
+                      "5c906a0fa6ebc7193110e799",
+                      "5c906a0fa6ebc7193110e79a",
+                      "5c906a0fa6ebc7193110e79b",
+                      "5c906a0fa6ebc7193110e79c",
+                      "5c906a0fa6ebc7193110e79d",
+                      "5c906a0fa6ebc7193110e79e",
+                      "5c906a0fa6ebc7193110e79f",
+                      "5c906a0fa6ebc7193110e78c",
+                      "5c906a0fa6ebc7193110e78d",
+                      "5c906a0fa6ebc7193110e78e",
+                      "5c906a0fa6ebc7193110e78f",
+                      "5c906a0fa6ebc7193110e790",
+                      "5c906a0fa6ebc7193110e791",
+                      "5c906a0fa6ebc7193110e792",
+                      "5c906a0fa6ebc7193110e793",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342",
+                      "5c906a0ea6ebc7193110e74f"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e78c",
+                        "ruleName": "between",
+                        "value": {
+                          "min": 0,
+                          "max": 155
+                        },
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a0"
+                        }
+                      },
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e79a",
+                        "ruleName": "string",
+                        "value": true,
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a1"
+                        }
+                      }
+                    ],
+                    "return_type_ids": [
+                      "5c906a0fa6ebc7193110e7ac"
+                    ]
+                  },
+                  "relation": null
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "64f943e9a6ebc71559749f5f",
+        "panelName": "country-panel-2",
+        "entityName": "Country",
+        "controllerMethod": "countries@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": "Pricelist Information",
+            "row": 1,
+            "field_ids": [
+              [
+                "64265f52a6ebc722f15bacd2",
+                "64265f52a6ebc722f15bacd8",
+                "64f943e9a6ebc71559749f56"
+              ],
+              [
+                "64265f52a6ebc722f15bacdb",
+                "64265f52a6ebc722f15bacde"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "64f943e9a6ebc71559749f61",
+        "panelName": "country-panel-3",
+        "entityName": "Country",
+        "controllerMethod": "countries@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": "System Information",
+            "row": 1,
+            "field_ids": [
+              [
+                "64265f52a6ebc722f15bacf2",
+                "64265f52a6ebc722f15bacea"
+              ],
+              [
+                "64265f52a6ebc722f15bacee",
+                "64265f52a6ebc722f15bace6"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "viewFilters": [
+      {
+        "_id": "651248673d39cc7c91574a98",
+        "query_id": "64265f56a6ebc722f15baf5c",
+        "sortField": null,
+        "sortOrder": null,
+        "filters": [],
+        "filterLogic": null,
+        "filterName": "All Countries",
+        "moduleName": "countries",
+        "fields": [
+          "5c906a10a6ebc7193110e82a",
+          "64265f52a6ebc722f15bacd2",
+          "64265f52a6ebc722f15bacd8",
+          "64265f52a6ebc722f15bacd5",
+          "64265f52a6ebc722f15bacdb",
+          "64265f52a6ebc722f15bacde"
+        ],
+        "isDefault": true,
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "64265f52a6ebc722f15bacd2",
+        "owner": "64c1f340a6ebc75ebb6cd792",
+        "created_by": "64c1f340a6ebc75ebb6cd792",
+        "updated_by": "64c1f340a6ebc75ebb6cd792",
+        "updated_at": "2023-09-26 02:56:39",
+        "created_at": "2023-09-26 02:56:39",
+        "entity_id": "5c906a0fa6ebc7193110e7bd"
       }
     ]
   },
