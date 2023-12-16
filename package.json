@@ -5,6 +5,8 @@
         "dev": "vite",
         "build": "vite build",
         "preview": "vite preview",
+        "start": "serve -s dist -p 5173",
+        "startjsonserver": "json-server data/db3.json -p 5174",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
     },
     "dependencies": {
