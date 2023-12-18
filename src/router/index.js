@@ -233,6 +233,16 @@ const router = createRouter({
         if (isAuthenticated) router.push('/')
         else next()
       }
+    }, {
+      path: '/auth/saml-login',
+      name: 'saml.login',
+      component: () => import('@/views/pages/auth/Saml.vue'),
+      beforeEnter(to, from, next) {
+        const isAuthenticated = localStorage.getItem('isAuthenticated')
+
+        if (isAuthenticated) router.push('/')
+        else next()
+      }
     },
   ]
 });

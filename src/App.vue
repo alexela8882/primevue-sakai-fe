@@ -2,10 +2,12 @@
 // imports
 import { storeToRefs } from 'pinia'
 import { defineAsyncComponent, onMounted, watch } from 'vue'
+import { useRouter } from 'vue-router'
 // stores & composables
 import { useGeneralStore } from './stores/general'
 
 // refs
+const router = useRouter()
 // stores & composables
 const generalStore = useGeneralStore()
 const { formModalTrigger, popUpModalTrigger } = storeToRefs(generalStore)

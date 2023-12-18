@@ -70,45 +70,8 @@ const submit = async () => {
   })
 }
 
-const passwordLessSignIgn = async () => {
-  // reset form
-  form.value.email.error = null
-  form.value.password.error = null
-
-  const fEmail = form.value.email.value
-  const fPassword = form.value.password.value
-
-  // validation
-  if (fEmail === '' || fEmail === null) {
-    form.value.email.error = 'Enter your email'
-  }
-
-  if (fPassword === '' || fPassword === null) {
-    form.value.password.error = 'Enter your password'
-  }
-
-  await axios.get('/passwordless-login', {
-    email: fEmail,
-    password: fPassword
-  }).then((response) => {
-    // isAuthenticated.value = true
-
-    localStorage.clear() // clear
-
-    localStorage.setItem('token', response.data.data.token)
-    localStorage.setItem('auth_id', response.data.data._id)
-    localStorage.setItem('isAuthenticated', true)
-    router.push({ path: '/' })
-
-    localLoading.value = false
-    toast.add({ severity: 'success', summary: 'Success', detail: response.data.message, life: 3000 })
-  }).catch((error) => {
-    if (error) {
-      console.log(error)
-
-      toast.add({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 })
-    }
-  })
+const samlLogin = async () => {
+  window.location.href = "https://api.reddotcrm.com/saml2/5e7cfe07-5de3-407d-9b26-0f42143d3ab7/login"
 }
 
 const logoUrl = computed(() => {
@@ -179,8 +142,8 @@ const logoUrl = computed(() => {
               class="w-full p-3 text-xl mb-5"></Button>
 
             <Button
-              @click="passwordLessSignIgn()"
-              label="Passwordless Sign In"
+              @click="samlLogin()"
+              label="Microsoft Sign In"
               class="w-full p-3 text-xl"
               severity="success"></Button>
           </div>
