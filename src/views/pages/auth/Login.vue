@@ -5,7 +5,7 @@
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { useLayout } from '@/layout/composables/layout'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import AppConfig from '@/layout/AppConfig.vue'
 import { useToast } from "primevue/usetoast"
 
@@ -70,9 +70,57 @@ const submit = async () => {
   })
 }
 
+const passwordLessSignIgn = async () => {
+  // reset form
+  form.value.email.error = null
+  form.value.password.error = null
+
+  const fEmail = form.value.email.value
+  const fPassword = form.value.password.value
+
+  // validation
+  if (fEmail === '' || fEmail === null) {
+    form.value.email.error = 'Enter your email'
+  }
+
+  if (fPassword === '' || fPassword === null) {
+    form.value.password.error = 'Enter your password'
+  }
+
+  await axios.get('/passwordless-login', {
+    email: fEmail,
+    password: fPassword
+  }).then((response) => {
+    // isAuthenticated.value = true
+
+    localStorage.clear() // clear
+
+    localStorage.setItem('token', response.data.data.token)
+    localStorage.setItem('auth_id', response.data.data._id)
+    localStorage.setItem('isAuthenticated', true)
+    router.push({ path: '/' })
+
+    localLoading.value = false
+    toast.add({ severity: 'success', summary: 'Success', detail: response.data.message, life: 3000 })
+  }).catch((error) => {
+    if (error) {
+      console.log(error)
+
+      toast.add({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 })
+    }
+  })
+}
+
 const logoUrl = computed(() => {
   return `layout/images/${layoutConfig.darkTheme.value ? 'logo-white' : 'logo-dark'}.svg`;
 })
+
+// onMounted(() => {
+//   sessionStorage.setItem("lastname", "Smith")
+//   sessionStorage.getItem("lastname")
+//   const session = sessionStorage.getItem("token")
+//   console.log(session)
+// })
 </script>
 
 <template>
@@ -128,7 +176,13 @@ const logoUrl = computed(() => {
               :loading="localLoading"
               @click="submit()"
               :label="`${localLoading ? 'Signing in...' : 'Sign In'}`"
-              class="w-full p-3 text-xl"></Button>
+              class="w-full p-3 text-xl mb-5"></Button>
+
+            <Button
+              @click="passwordLessSignIgn()"
+              label="Passwordless Sign In"
+              class="w-full p-3 text-xl"
+              severity="success"></Button>
           </div>
       </div>
       </div>
