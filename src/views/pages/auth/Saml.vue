@@ -8,11 +8,16 @@ const router = useRouter()
 
 // life cycles
 onMounted(() => {
-  const queryString = window.location.search
-  console.log(queryString)
-  const urlParams = new URLSearchParams(queryString)
-  const token = urlParams.get('token')
-  const auth_id = urlParams.get('auth_id')
+  var url = window.location.href
+  const token = new URL(`https://1.com?${url.split("?")[1]}`).searchParams.get("token")
+  const auth_id = new URL(`https://1.com?${url.split("?")[1]}`).searchParams.get("auth_id")
+
+  // const queryHash = window.location.hash
+  // const queryString = window.location.search
+  // console.log(queryHash)
+  // const urlParams = new URLSearchParams(queryString)
+  // const token = urlParams.get('token')
+  // const auth_id = urlParams.get('auth_id')
 
   console.log(token)
   console.log(auth_id)
