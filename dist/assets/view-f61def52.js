@@ -1,0 +1,1 @@
+import{o,d as t,w as a,S as s,f as _,i as n,C as r,_ as c}from"./index-8ee24510.js";const l={__name:"view",setup(u){const e=r(()=>c(()=>import("./Show-ba8969f0.js"),["assets/Show-ba8969f0.js","assets/index-8ee24510.js","assets/index-75db8d00.css","assets/DataTableLoader-2742cf5e.js"]));return(i,p)=>(o(),t(s,null,{default:a(()=>[_(n(e))]),_:1}))}};export{l as default};
