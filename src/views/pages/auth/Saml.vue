@@ -26,13 +26,13 @@ onMounted(() => {
     localStorage.setItem('auth_id', auth_id)
     localStorage.setItem('isAuthenticated', true)
     localStorage.setItem('SAMLauth', true)
-    router.push('/')
 
     toast.add({ severity: 'success', summary: 'Success', detail: 'Microsoft login successful', life: 3000 })
+    router.push('/')
   } else {
     message.value = "Your account cannot be logged in. Please contact the adminstrator."
+    toast.add({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 9000 })
     router.push({name: 'login'})
-    toast.add({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 30000 })
   }
 })
 
