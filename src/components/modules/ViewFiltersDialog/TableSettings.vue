@@ -64,7 +64,7 @@ const tblSettingsAutoFill = (viewFilter) => {
   setFieldValue('filterName', viewFilter.filterName)
   setFieldValue('sortField', viewFilter.sortField)
   setFieldValue('sortOrder', viewFilter.sortOrder)
-  const filteredFields = getBaseModule.value.fields.filter(item => !viewFilter.fields.some(removeItem => removeItem._id === item._id))
+  const filteredFields = props.module.fields.filter(item => !viewFilter.fields.some(removeItem => removeItem._id === item._id))
   pickListTblFields.value = [filteredFields, viewFilter.fields]
   setFieldValue('pickList', viewFilter.fields)
 }
@@ -72,11 +72,11 @@ const tblSettingsAutoFill = (viewFilter) => {
 // lifecycles
 onMounted(() => {
   viewFiltersDialogLoading.value = false
-  console.log(getViewFilters.value)
+  console.log(props.module.fields)
   localSelectedViewFilter.value = props.selectedViewFilter
 
   if (props.mode === 'new') {
-    pickListTblFields.value = [getBaseModule.value.fields, []]
+    pickListTblFields.value = [props.module.fields, []]
   } else if (props.mode === 'edit-table') tblSettingsAutoFill(getDefaultViewFilter.value)
 })
 
