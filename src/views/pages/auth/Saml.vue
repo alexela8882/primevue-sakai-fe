@@ -31,7 +31,7 @@ onMounted(() => {
     router.push('/')
   } else {
     message.value = "Your account cannot be logged in. Please contact the adminstrator."
-    toast.add({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 9000 })
+    toast.add({ severity: 'error', summary: 'Error', detail: message.value, life: 9000 })
     router.push({name: 'login'})
   }
 })
@@ -43,7 +43,7 @@ onMounted(() => {
     <div class="flex flex-column align-items-center justify-content-center">
       <div class="text-center">
         <ProgressSpinner />
-        <div>{{ message.value }}</div>
+        <div>{{ message }}</div>
         <div>Please wait...</div>
       </div>
     </div>
