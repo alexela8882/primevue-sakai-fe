@@ -143,9 +143,13 @@ const logoUrl = computed(() => {
 
             <Button
               @click="samlLogin()"
-              label="Microsoft Sign In"
               class="w-full p-3 text-xl"
-              severity="success"></Button>
+              severity="success">
+              <template #icon>
+                <div class="mr-2">Microsoft Login</div>
+                <font-awesome-icon icon="fa-brands fa-microsoft" style="font-size: 1.2rem;"></font-awesome-icon>
+              </template>
+            </Button>
           </div>
       </div>
       </div>

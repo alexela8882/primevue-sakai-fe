@@ -39,7 +39,12 @@ import {
   faSquarePlus,
   faClose
 } from '@fortawesome/free-solid-svg-icons'
-import { faSquareCaretDown as faSquareCaretDownReg } from '@fortawesome/free-regular-svg-icons'
+import { 
+  faSquareCaretDown as faSquareCaretDownReg
+} from '@fortawesome/free-regular-svg-icons'
+import { 
+  faMicrosoft as faMicrosoftBrand
+} from '@fortawesome/free-brands-svg-icons'
 
 axios.defaults.baseURL = 'https://api.reddotcrm.com/api/'
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
@@ -275,7 +280,8 @@ library.add(
   faSquareCaretDown,
   faSquareCaretDownReg,
   faSquarePlus,
-  faClose
+  faClose,
+  faMicrosoftBrand
 )
 app.component('font-awesome-icon', FontAwesomeIcon)
 
