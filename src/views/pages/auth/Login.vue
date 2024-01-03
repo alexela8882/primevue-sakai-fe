@@ -71,7 +71,26 @@ const submit = async () => {
 }
 
 const samlLogin = async () => {
-  window.location.href = "https://api.reddotcrm.com/saml2/5e7cfe07-5de3-407d-9b26-0f42143d3ab7/login"
+  await axios.post('/saml-login').then((response) => {
+    localStorage.clear() // clear
+
+    localStorage.setItem('token', response.data.data.token)
+    localStorage.setItem('auth_id', response.data.data._id)
+    localStorage.setItem('isAuthenticated', true)
+    localStorage.setItem('SAMLauth', true)
+
+    toast.add({ severity: 'success', summary: 'Success', detail: 'Microsoft login successful', life: 3000 })
+    router.push('/')
+  }).catch((error) => {
+    if (error) {
+      console.log(error)
+
+      toast.add({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 })
+    }
+
+    localLoading.value = false
+  })
+  // window.location.href = "https://api.reddotcrm.com/saml2/5e7cfe07-5de3-407d-9b26-0f42143d3ab7/login"
 }
 
 const logoUrl = computed(() => {
