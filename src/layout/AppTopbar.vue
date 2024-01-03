@@ -167,6 +167,10 @@ const logout = () => {
         <i class="pi pi-bell"></i>
         <span>Bell</span>
       </button>
+      <button @click="router.push('/outlook-mail')" class="p-link layout-topbar-button">
+        <i class="pi pi-envelope"></i>
+        <span>Mail</span>
+      </button>
       <!-- <Button icon="pi pi-bell" rounded aria-label="Filter" /> -->
       <div class="justify-content-center">
         <button v-if="isAuthenticated" @click="toggle" class="p-link layout-topbar-button">

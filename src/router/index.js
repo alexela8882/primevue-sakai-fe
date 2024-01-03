@@ -76,6 +76,20 @@ const router = createRouter({
             }
           ]
         }, {
+          path: '/outlook-mail',
+          name: 'outlookmail',
+          component: () => import('@/views/pages/outlookmail/main.vue'),
+          meta: {
+            requiresAuth: true
+          },
+          children: [
+            {
+              path: '',
+              name: 'outlookmail.index',
+              component: () => import('@/views/pages/outlookmail/index.vue'),
+            }
+          ]
+        }, {
           path: '/branches',
           name: 'branches',
           component: () => import('@/views/pages/branches/main.vue'),
