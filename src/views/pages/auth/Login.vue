@@ -90,7 +90,10 @@ const samlLogin = async () => {
 
     localLoading.value = false
   })
-  // window.location.href = "https://api.reddotcrm.com/saml2/5e7cfe07-5de3-407d-9b26-0f42143d3ab7/login"
+}
+
+const msLogin = async () => {
+  window.location.href = "https://api.reddotcrm.com/saml2/5e7cfe07-5de3-407d-9b26-0f42143d3ab7/login"
 }
 
 const logoUrl = computed(() => {
@@ -162,6 +165,16 @@ const logoUrl = computed(() => {
 
             <Button
               @click="samlLogin()"
+              class="w-full p-3 text-xl"
+              severity="success">
+              <template #icon>
+                <div class="mr-2">Saml Login</div>
+                <font-awesome-icon icon="fa-brands fa-microsoft" style="font-size: 1.2rem;"></font-awesome-icon>
+              </template>
+            </Button>
+
+            <Button
+              @click="msLogin()"
               class="w-full p-3 text-xl"
               severity="success">
               <template #icon>
