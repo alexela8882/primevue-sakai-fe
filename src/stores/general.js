@@ -23,7 +23,7 @@ export const useGeneralStore = defineStore('general', () => {
   const toastTimer = ref()
   const searchInput = ref()
   const searchItems = ref()
-  const backendUrl = ref('https://dfbe-2001-4452-2be-4000-f1f-af8a-47e1-f3eb.ngrok-free.app')
+  const backendUrl = ref('https://api.reddotcrm.com')
 
   // getters
   const getTheme = computed(() => theme.value)

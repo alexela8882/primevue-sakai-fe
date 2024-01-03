@@ -71,7 +71,7 @@ const submit = async () => {
 }
 
 const samlLogin = async () => {
-  window.location.href = "https://dfbe-2001-4452-2be-4000-f1f-af8a-47e1-f3eb.ngrok-free.app/saml2/6c7f706a-33d7-4f08-af5c-1a083d9e3976/login"
+  window.location.href = "https://api.reddotcrm.com/saml2/5e7cfe07-5de3-407d-9b26-0f42143d3ab7/login"
 }
 
 const logoUrl = computed(() => {

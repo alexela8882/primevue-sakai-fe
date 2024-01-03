@@ -46,7 +46,7 @@ import {
   faMicrosoft as faMicrosoftBrand
 } from '@fortawesome/free-brands-svg-icons'
 
-axios.defaults.baseURL = 'https://dfbe-2001-4452-2be-4000-f1f-af8a-47e1-f3eb.ngrok-free.app/api/'
+axios.defaults.baseURL = 'https://api.reddotcrm.com/api/'
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 
 import PrimeVue from 'primevue/config'
