@@ -41,7 +41,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faSquareCaretDown as faSquareCaretDownReg } from '@fortawesome/free-regular-svg-icons'
 
-axios.defaults.baseURL = 'https://api.reddotcrm.com/api/'
+axios.defaults.baseURL = 'http://localhost:8000/api/'
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 
 import PrimeVue from 'primevue/config'
