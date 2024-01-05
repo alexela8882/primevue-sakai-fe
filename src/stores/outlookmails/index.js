@@ -14,6 +14,7 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
   const mailFoldersLoading = ref(false)
   const mailFolderLoading = ref(false)
   const mailFolderMessagesLoading = ref(false)
+  const mailFolderMessagesMessageLoading = ref(false)
   const toast = useToast()
   // stores
   const baseStore = useBaseStore()
@@ -24,12 +25,14 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
   const mailFolders = ref([])
   const mailFolder = ref({})
   const mailFolderMessages = ref([])
+  const mailFolderMessagesMessage = ref({})
 
   // getters
   const getProfile = computed(() => profile.value)
   const getMailFolders = computed(() => mailFolders.value)
   const getMailFolder = computed(() => mailFolder.value)
   const getMailFolderMessages = computed(() => mailFolderMessages.value)
+  const getMailFolderMessagesMessage = computed(() => mailFolderMessagesMessage.value)
   const fetchMsGraph = computed(() => {
     return (payload) => {
       const _method = payload.method
@@ -45,6 +48,8 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
       }
       var baseEndpoint = "https://graph.microsoft.com/v1.0/"
       var graphEndpoint = `${baseEndpoint}${_endpoint}`
+
+      console.log(graphEndpoint)
     
       const response = fetch(graphEndpoint, options)
         .then(response => response.text())
@@ -74,19 +79,7 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
     profileLoading.value = false
   }
   const fetchMailFolders = async (_token) => {
-    mailFolderLoading.value = true
-    // const res = await axios(`msgraph/mail-folders`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     'ngrok-skip-browser-warning': 'true'
-    //   }
-    // })
-
-    // if (res.status === 200) {
-    //   // baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
-    //   console.log(res.data)
-    // }
+    mailFoldersLoading.value = true
 
     const payload = {
       method: "GET",
@@ -97,7 +90,30 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
     const response = await fetchMsGraph.value(payload)
     mailFolders.value = response.value
 
-    mailFolderLoading.value = false
+    mailFoldersLoading.value = false
+  }
+  const fetchMailFolderMessages = async (_token, folder) => {
+    mailFolderMessagesLoading.value = true
+
+    const payload = {
+      method: "GET",
+      endpoint: `me/mailFolders/${folder.id}/messages`,
+      token: _token
+    }
+
+    const response = await fetchMsGraph.value(payload)
+    console.log(response.value)
+    mailFolderMessages.value = response.value
+
+    mailFolderMessagesLoading.value = false
+  }
+  const fetchMailFolderMessagesMessage = async (id) => {
+    mailFolderMessagesMessageLoading.value = true
+
+    const message = mailFolderMessages.value.find(mfm => mfm.id === id)
+    mailFolderMessagesMessage.value = message
+
+    mailFolderMessagesMessageLoading.value = false
   }
 
   return {
@@ -105,11 +121,15 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
     mailFoldersLoading,
     mailFolderLoading,
     mailFolderMessagesLoading,
+    mailFolderMessagesMessageLoading,
     getProfile,
     getMailFolders,
     getMailFolder,
     getMailFolderMessages,
+    getMailFolderMessagesMessage,
     fetchProfile,
-    fetchMailFolders
+    fetchMailFolders,
+    fetchMailFolderMessages,
+    fetchMailFolderMessagesMessage
   }
 })

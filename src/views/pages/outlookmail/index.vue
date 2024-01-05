@@ -1,11 +1,18 @@
 <script setup>
 // imports
-import { onMounted, ref } from 'vue'
+import * as Msal from "msal"
+import { onMounted, ref, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
 import { useOutlookMailStore } from '@/stores/outlookmails/index'
 
 // refs
+const token = ref()
+const selectedFolder = ref()
+// components
+const Mailbox = defineAsyncComponent(() =>
+  import('@/components/outlookmails/mailbox.vue')
+)
 // stores
 const outlookMailStore = useOutlookMailStore()
 const {
@@ -16,24 +23,18 @@ const {
 } = storeToRefs(outlookMailStore)
 const { fetchProfile, fetchMailFolders } = outlookMailStore
 
-import * as Msal from "msal"
-// if using cdn version, 'Msal' will be available in the global scope
-
-const token = ref()
-const msgraphMe = ref()
-
+// MSAL SETUP
 const msalConfig = {
   auth: {
     clientId: '002454d9-50f5-4e5f-83ab-d5291500800a'
   }
 }
-
 const msalInstance = new Msal.UserAgentApplication(msalConfig)
-
 msalInstance.handleRedirectCallback((error, response) => {
   // handle redirect response or error
 })
 
+// actions
 const login = async () => {
   var loginRequest = {
     scopes: ["user.read", "mail.send"] // optional Array<string>
@@ -77,27 +78,6 @@ const getToken = async () => {
   }
 }
 
-// const getMsgraphProfile = () => {
-//   var headers = new Headers()
-//   var bearer = "Bearer " + token.value
-//   headers.append("Authorization", bearer)
-//   var options = {
-//     method: "GET",
-//     headers: headers
-//   }
-//   var baseEndpoint = "https://graph.microsoft.com/v1.0/"
-//   var endpoint = "me"
-//   var graphEndpoint = `${baseEndpoint}${endpoint}`
-
-//   fetch(graphEndpoint, options)
-//     .then(response => response.text())
-//     .then((dataStr) => {
-//       //do something with response
-//       msgraphMe.value = JSON.parse(dataStr)
-//       console.log(dataStr)
-//     })
-// }
-
 onMounted(async () => {
   await getToken()
   if (!token.value) await login()
@@ -110,25 +90,26 @@ onMounted(async () => {
 
 <template>
   <div>
-    Outlook mail
-
-    <div class="grid">
-      <div class="col">
-        <h3>getProfile</h3>
-        <div>{{ getProfile }}</div>
-      </div>
-      
-      <div class="col">
-        <h3>Mail Folders</h3>
+    <div class="mb-5"><h1>Mailbox</h1></div>
+    <div class="flex gap-6">
+      <div>
+        <h3>Folders</h3>
         <div>
-          <ul v-for="folder in getMailFolders">
-            <li>{{ folder.displayName }}</li>
-          </ul>
+          <Listbox
+            v-model="selectedFolder"
+            :options="getMailFolders"
+            optionLabel="displayName"
+            class="w-full md:w-14rem" />
         </div>
       </div>
-    </div>
 
-    <!-- <button @click="getMsgraphProfile()">Get MsGraph</button> -->
+      <div class="w-full">
+        <h3>&nbsp;</h3>
+        <Suspense>
+          <Mailbox :token="token" :folder="selectedFolder" />
+        </Suspense>
+      </div>
+    </div>
   </div>
 </template>
 
