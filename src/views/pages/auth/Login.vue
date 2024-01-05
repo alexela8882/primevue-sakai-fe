@@ -70,30 +70,8 @@ const submit = async () => {
   })
 }
 
-const samlLogin = async () => {
-  await axios.post('/saml-login').then((response) => {
-    localStorage.clear() // clear
-
-    localStorage.setItem('token', response.data.data.token)
-    localStorage.setItem('auth_id', response.data.data._id)
-    localStorage.setItem('isAuthenticated', true)
-    localStorage.setItem('SAMLauth', true)
-
-    toast.add({ severity: 'success', summary: 'Success', detail: 'Microsoft login successful', life: 3000 })
-    router.push('/')
-  }).catch((error) => {
-    if (error) {
-      console.log(error)
-
-      toast.add({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 })
-    }
-
-    localLoading.value = false
-  })
-}
-
 const msLogin = async () => {
-  window.location.href = "https://api.reddotcrm.com/saml2/5e7cfe07-5de3-407d-9b26-0f42143d3ab7/login"
+  window.location.href = "https://38ba-163-116-223-55.ngrok-free.app/saml2/4766585a-ce77-4041-b40c-bc4a7c4a56cc/login"
 }
 
 const logoUrl = computed(() => {
@@ -162,16 +140,6 @@ const logoUrl = computed(() => {
               @click="submit()"
               :label="`${localLoading ? 'Signing in...' : 'Sign In'}`"
               class="w-full p-3 text-xl mb-5"></Button>
-
-            <Button
-              @click="samlLogin()"
-              class="w-full p-3 text-xl"
-              severity="success">
-              <template #icon>
-                <div class="mr-2">Saml Login</div>
-                <font-awesome-icon icon="fa-brands fa-microsoft" style="font-size: 1.2rem;"></font-awesome-icon>
-              </template>
-            </Button>
 
             <Button
               @click="msLogin()"

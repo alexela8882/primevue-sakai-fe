@@ -4,8 +4,8 @@ import { ref, computed } from 'vue'
 
 export const useBaseStore = defineStore('baseStore', () => {
   // states
-  const jsonDbUrl = ref('https://data.reddotcrm.com')
-  const backendUrl = ref('https://api.reddotcrm.com')
+  const jsonDbUrl = ref('http://localhost:3000')
+  const backendUrl = ref('http://localhost:80')
   const configBar = ref(false)
   const routerLoading = ref(false)
 
