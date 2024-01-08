@@ -42,11 +42,11 @@ import {
 import { 
   faSquareCaretDown as faSquareCaretDownReg
 } from '@fortawesome/free-regular-svg-icons'
-import { 
+import {
   faMicrosoft as faMicrosoftBrand
 } from '@fortawesome/free-brands-svg-icons'
 
-axios.defaults.baseURL = 'http://localhost:80/api/'
+axios.defaults.baseURL = 'https://api.reddotcmr.com/api/'
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 
 import PrimeVue from 'primevue/config'
