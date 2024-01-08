@@ -92,19 +92,21 @@ onMounted(async () => {
   <div>
     <div class="mb-5"><h1>Mailbox</h1></div>
     <div class="flex gap-6">
-      <div>
-        <h3>Folders</h3>
-        <div>
-          <Listbox
-            v-model="selectedFolder"
-            :options="getMailFolders"
-            optionLabel="displayName"
-            class="w-full md:w-14rem" />
+      <div style="position: relative !important;">
+        <div class="white-space-nowrap" style="position: sticky !important; top: 100px !important;">
+          <div>
+            <div
+              v-for="(folder, fx) in getMailFolders"
+              :key="fx"
+              class="my-3 cursor-pointer"
+              @click="selectedFolder = folder">
+              {{ folder.displayName }}
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="w-full">
-        <h3>&nbsp;</h3>
         <Suspense>
           <Mailbox :token="token" :folder="selectedFolder" />
         </Suspense>

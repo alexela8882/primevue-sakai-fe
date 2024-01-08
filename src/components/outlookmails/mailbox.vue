@@ -38,7 +38,7 @@ const onRowClick = (event) => {
 
 // lifecycles
 watch(() => props.folder, (newFolder, oldFolder) => {
-  // console.log(oldFolder)
+  console.log(oldFolder)
   fetchMailFolderMessages(props.token, newFolder)
   folderOpened.value = true
 })
