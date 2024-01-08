@@ -76,6 +76,20 @@ const router = createRouter({
             }
           ]
         }, {
+          path: '/outlook-mail',
+          name: 'outlookmail',
+          component: () => import('@/views/pages/outlookmail/main.vue'),
+          meta: {
+            requiresAuth: true
+          },
+          children: [
+            {
+              path: '',
+              name: 'outlookmail.index',
+              component: () => import('@/views/pages/outlookmail/index.vue'),
+            }
+          ]
+        }, {
           path: '/branches',
           name: 'branches',
           component: () => import('@/views/pages/branches/main.vue'),
@@ -227,6 +241,16 @@ const router = createRouter({
       path: '/auth/login',
       name: 'login',
       component: () => import('@/views/pages/auth/Login.vue'),
+      beforeEnter(to, from, next) {
+        const isAuthenticated = localStorage.getItem('isAuthenticated')
+
+        if (isAuthenticated) router.push('/')
+        else next()
+      }
+    }, {
+      path: '/auth/saml-login',
+      name: 'saml.login',
+      component: () => import('@/views/pages/auth/Saml.vue'),
       beforeEnter(to, from, next) {
         const isAuthenticated = localStorage.getItem('isAuthenticated')
 

@@ -70,45 +70,9 @@ const submit = async () => {
   })
 }
 
-const passwordLessSignIgn = async () => {
-  // reset form
-  form.value.email.error = null
-  form.value.password.error = null
-
-  const fEmail = form.value.email.value
-  const fPassword = form.value.password.value
-
-  // validation
-  if (fEmail === '' || fEmail === null) {
-    form.value.email.error = 'Enter your email'
-  }
-
-  if (fPassword === '' || fPassword === null) {
-    form.value.password.error = 'Enter your password'
-  }
-
-  await axios.get('/passwordless-login', {
-    email: fEmail,
-    password: fPassword
-  }).then((response) => {
-    // isAuthenticated.value = true
-
-    localStorage.clear() // clear
-
-    localStorage.setItem('token', response.data.data.token)
-    localStorage.setItem('auth_id', response.data.data._id)
-    localStorage.setItem('isAuthenticated', true)
-    router.push({ path: '/' })
-
-    localLoading.value = false
-    toast.add({ severity: 'success', summary: 'Success', detail: response.data.message, life: 3000 })
-  }).catch((error) => {
-    if (error) {
-      console.log(error)
-
-      toast.add({ severity: 'error', summary: 'Error', detail: error.response.data.message, life: 3000 })
-    }
-  })
+const msLogin = async () => {
+  // window.location.href = "https://38ba-163-116-223-55.ngrok-free.app/saml2/4766585a-ce77-4041-b40c-bc4a7c4a56cc/login"
+  window.location.href = "https://api.reddotcrm.com/saml2/5e7cfe07-5de3-407d-9b26-0f42143d3ab7/login"
 }
 
 const logoUrl = computed(() => {
@@ -126,12 +90,12 @@ const logoUrl = computed(() => {
 <template>
   <div class="surface-ground flex align-items-center justify-content-center min-h-screen min-w-screen overflow-hidden">
     <div class="flex flex-column align-items-center justify-content-center">
-      <img :src="logoUrl" alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0" />
+      <!-- <img :src="logoUrl" alt="Sakai logo" class="mb-5 w-6rem flex-shrink-0" /> -->
       <div style="border-radius: 56px; padding: 0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%)">
         <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius: 53px">
           <div class="text-center mb-5">
-            <img src="/demo/images/login/avatar.png" alt="Image" height="50" class="mb-3" />
-            <div class="text-900 text-3xl font-medium mb-3">Welcome, Isabel!</div>
+            <!-- <img src="/favicon.png" alt="Image" height="50" class="mb-3" /> -->
+            <div class="text-900 text-3xl font-medium mb-3">Welcome to Reddot</div>
             <span class="text-600 font-medium">Sign in to continue</span>
           </div>
 
@@ -179,10 +143,14 @@ const logoUrl = computed(() => {
               class="w-full p-3 text-xl mb-5"></Button>
 
             <Button
-              @click="passwordLessSignIgn()"
-              label="Passwordless Sign In"
+              @click="msLogin()"
               class="w-full p-3 text-xl"
-              severity="success"></Button>
+              severity="success">
+              <template #icon>
+                <div class="mr-2">Microsoft Login</div>
+                <font-awesome-icon icon="fa-brands fa-microsoft" style="font-size: 1.2rem;"></font-awesome-icon>
+              </template>
+            </Button>
           </div>
       </div>
       </div>
