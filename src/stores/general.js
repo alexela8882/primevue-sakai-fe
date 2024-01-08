@@ -23,7 +23,7 @@ export const useGeneralStore = defineStore('general', () => {
   const toastTimer = ref()
   const searchInput = ref()
   const searchItems = ref()
-  const backendUrl = ref('http://localhost:8000')
+  const backendUrl = ref('http://localhost:80')
 
   // getters
   const getTheme = computed(() => theme.value)

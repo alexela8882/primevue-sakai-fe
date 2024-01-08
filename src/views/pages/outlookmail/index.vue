@@ -3,21 +3,22 @@
 import * as Msal from "msal"
 import { onMounted, ref, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
+// components
+const Mailbox = defineAsyncComponent(() =>
+  import('@/components/outlookmails/mailbox.vue')
+)
 // stores
 import { useOutlookMailStore } from '@/stores/outlookmails/index'
 
 // refs
 const token = ref()
 const selectedFolder = ref()
-// components
-const Mailbox = defineAsyncComponent(() =>
-  import('@/components/outlookmails/mailbox.vue')
-)
 // stores
 const outlookMailStore = useOutlookMailStore()
 const {
   getProfile,
   getMailFolders,
+  mailFoldersLoading,
   getMailFolder,
   getMailFolderMessages
 } = storeToRefs(outlookMailStore)
@@ -26,8 +27,7 @@ const { fetchProfile, fetchMailFolders } = outlookMailStore
 // MSAL SETUP
 const msalConfig = {
   auth: {
-    // clientId: '002454d9-50f5-4e5f-83ab-d5291500800a' // alexela8882
-    clientId: '393bd73e-ac09-4f31-a723-f4e981a027ce' // esco
+    clientId: '002454d9-50f5-4e5f-83ab-d5291500800a' // alexela8882
   }
 }
 const msalInstance = new Msal.UserAgentApplication(msalConfig)
@@ -94,7 +94,7 @@ onMounted(async () => {
     <div class="mb-5"><h1>Mailbox</h1></div>
     <div class="flex gap-6">
       <div style="position: relative !important;">
-        <div class="white-space-nowrap" style="position: sticky !important; top: 100px !important;">
+        <div v-if="!mailFoldersLoading" class="white-space-nowrap" style="position: sticky !important; top: 100px !important;">
           <div>
             <div
               v-for="(folder, fx) in getMailFolders"
@@ -104,6 +104,13 @@ onMounted(async () => {
               {{ folder.displayName }}
             </div>
           </div>
+        </div>
+        <div v-else>
+          <Skeleton class="mb-2"></Skeleton>
+          <Skeleton width="10rem" class="mb-2"></Skeleton>
+          <Skeleton width="5rem" class="mb-2"></Skeleton>
+          <Skeleton height="2rem" class="mb-2"></Skeleton>
+          <Skeleton width="10rem" height="4rem"></Skeleton>
         </div>
       </div>
 

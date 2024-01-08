@@ -46,7 +46,7 @@ import {
   faMicrosoft as faMicrosoftBrand
 } from '@fortawesome/free-brands-svg-icons'
 
-axios.defaults.baseURL = 'http://localhost:8000/api/'
+axios.defaults.baseURL = 'http://localhost:80/api/'
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 
 import PrimeVue from 'primevue/config'
@@ -146,6 +146,7 @@ import TreeSelect from 'primevue/treeselect'
 import TreeTable from 'primevue/treetable'
 import TriStateCheckbox from 'primevue/tristatecheckbox'
 import VirtualScroller from 'primevue/virtualscroller'
+import Editor from 'primevue/editor'
 import BlockViewer from '@/components/BlockViewer.vue'
 import '@/assets/styles.scss'
 
@@ -256,6 +257,7 @@ app.component('TreeSelect', TreeSelect)
 app.component('TreeTable', TreeTable)
 app.component('TriStateCheckbox', TriStateCheckbox)
 app.component('VirtualScroller', VirtualScroller)
+app.component('Editor', Editor)
 
 /* add icons to the library */
 library.add(
