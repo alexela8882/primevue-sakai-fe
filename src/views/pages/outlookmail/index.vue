@@ -42,7 +42,7 @@ const login = async () => {
 
   await msalInstance.loginPopup(loginRequest)
   .then(response => {
-    // handle response
+    getToken() // important
   })
   .catch(err => {
     // handle error
@@ -59,6 +59,7 @@ const getToken = async () => {
       // get access token from response
       token.value = response.accessToken
       console.log(response.accessToken)
+      initializeMsGraphAuth()
     })
     .catch(err => {
       // could also check if err instance of InteractionRequiredAuthError if you can import the class.
@@ -78,16 +79,20 @@ const getToken = async () => {
   }
 }
 
-onMounted(async () => {
-  await getToken()
-  if (!token.value) await login()
-
+const initializeMsGraphAuth = async () => {
   await fetchProfile(token.value)
   await fetchMailFolders(token.value)
 
   getMailFolders.value.map(mf => {
     if (mf.displayName === 'Inbox') router.push(`/outlook-mail/folder/${mf.id}`)
   })
+}
+
+onMounted(async () => {
+  await getToken()
+  if (!token.value) await login()
+
+  initializeMsGraphAuth()
 })
 
 </script>
