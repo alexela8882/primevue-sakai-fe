@@ -37,7 +37,8 @@ import {
   faCaretDown,
   faSquareCaretDown,
   faSquarePlus,
-  faClose
+  faClose,
+  faReply
 } from '@fortawesome/free-solid-svg-icons'
 import { 
   faSquareCaretDown as faSquareCaretDownReg
@@ -283,7 +284,8 @@ library.add(
   faSquareCaretDownReg,
   faSquarePlus,
   faClose,
-  faMicrosoftBrand
+  faMicrosoftBrand,
+  faReply
 )
 app.component('font-awesome-icon', FontAwesomeIcon)
 

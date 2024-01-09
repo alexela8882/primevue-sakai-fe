@@ -2,25 +2,24 @@
 // imports
 import * as Msal from "msal"
 import { onMounted, ref, defineAsyncComponent } from 'vue'
+import { useRouter } from "vue-router"
 import { storeToRefs } from 'pinia'
 // components
 const Mailbox = defineAsyncComponent(() =>
-  import('@/components/outlookmails/mailbox.vue')
+  import('@/components/outlookmails/Mailbox.vue')
 )
 // stores
 import { useOutlookMailStore } from '@/stores/outlookmails/index'
 
 // refs
+const router = useRouter()
 const token = ref()
 const selectedFolder = ref()
 // stores
 const outlookMailStore = useOutlookMailStore()
 const {
-  getProfile,
   getMailFolders,
-  mailFoldersLoading,
-  getMailFolder,
-  getMailFolderMessages
+  mailFoldersLoading
 } = storeToRefs(outlookMailStore)
 const { fetchProfile, fetchMailFolders } = outlookMailStore
 
@@ -83,24 +82,36 @@ onMounted(async () => {
   await getToken()
   if (!token.value) await login()
 
-  fetchProfile(token.value)
-  fetchMailFolders(token.value)
+  await fetchProfile(token.value)
+  await fetchMailFolders(token.value)
+
+  getMailFolders.value.map(mf => {
+    if (mf.displayName === 'Inbox') router.push(`/outlook-mail/folder/${mf.id}`)
+  })
 })
 
 </script>
 
 <template>
-  <div>
+  <div>Redirecting to inbox...</div>
+  <div class="hidden">
     <div class="mb-5"><h1>Mailbox</h1></div>
     <div class="flex gap-6">
       <div style="position: relative !important;">
         <div v-if="!mailFoldersLoading" class="white-space-nowrap" style="position: sticky !important; top: 100px !important;">
           <div>
-            <div
+            <!-- <div
               v-for="(folder, fx) in getMailFolders"
               :key="fx"
               class="my-3 cursor-pointer"
               @click="selectedFolder = folder">
+              {{ folder.displayName }}
+            </div> -->
+            <div
+              v-for="(folder, fx) in getMailFolders"
+              :key="fx"
+              class="my-3 cursor-pointer"
+              @click="router.push(`/outlook-mail/folder/${folder.id}`)">
               {{ folder.displayName }}
             </div>
           </div>

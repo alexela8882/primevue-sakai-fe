@@ -87,6 +87,10 @@ const router = createRouter({
               path: '',
               name: 'outlookmail.index',
               component: () => import('@/views/pages/outlookmail/index.vue'),
+            }, {
+              path: 'folder/:id',
+              name: 'outlookmail.folder',
+              component: () => import('@/views/pages/outlookmail/folder.vue'),
             }
           ]
         }, {

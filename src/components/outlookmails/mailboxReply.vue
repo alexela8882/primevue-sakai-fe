@@ -41,7 +41,11 @@ onMounted(() => {
     <Editor v-model="replyBody" editorStyle="height: 320px" />
 
     <div>
-      <Button @click="replyToMail()" label="Send" />
+      <Button
+        @click="replyToMail()"
+        :loading="folderMessageReplyLoading"
+        :disabled="folderMessageReplyLoading"
+        :label="`${folderMessageReplyLoading ? 'Sending...' : 'Send'}`" />
     </div>
   </div>
 </template>
