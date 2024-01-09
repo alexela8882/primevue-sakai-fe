@@ -1,19 +1,23 @@
 <script setup>
 // imports
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
+// components
+const MailboxMessage = defineAsyncComponent(() =>
+  import('@/components/outlookmails/MailboxMessage.vue')
+)
 // stores
 import { useOutlookMailStore } from '@/stores/outlookmails/index'
 
 // refs
 const folderOpened = ref(true)
-const selectedContextData = ref()
 // stores
 const outlookMailStore = useOutlookMailStore()
 const {
   getMailFolderMessages,
   getMailFolderMessagesMessage,
-  mailFolderMessagesLoading
+  mailFolderMessagesLoading,
+  folderMessageReplyLoading
 } = storeToRefs(outlookMailStore)
 const {
   fetchMailFolderMessages,
@@ -35,6 +39,8 @@ const onRowClick = (event) => {
 
   folderOpened.value = false
 }
+
+
 
 // lifecycles
 watch(() => props.folder, (newFolder, oldFolder) => {
@@ -60,32 +66,7 @@ watch(() => props.folder, (newFolder, oldFolder) => {
   </div>
 
   <div v-else>
-    <Card>
-      <template #title>{{ getMailFolderMessagesMessage.subject }}</template>
-      <template #content>
-        <div class="flex align-items-center mb-5 gap-2">
-          <div>
-            <Avatar icon="pi pi-user" class="mr-2" shape="circle" size="xlarge" />
-          </div>
-          <div>
-            <div>
-              {{ getMailFolderMessagesMessage.from.emailAddress.name }}
-              &lt;{{ getMailFolderMessagesMessage.from.emailAddress.address }}&gt;
-            </div>
-
-            <div>
-              <div v-for="recipient in getMailFolderMessagesMessage.toRecipients">
-                To: {{ recipient.emailAddress.address }}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <p class="m-0">
-          <div v-html="getMailFolderMessagesMessage.body.content"></div>
-        </p>
-      </template>
-    </Card>
+    <MailboxMessage :token="token" :message="getMailFolderMessagesMessage" />
   </div>
 </template>
 

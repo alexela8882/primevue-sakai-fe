@@ -2,24 +2,24 @@
 // imports
 import * as Msal from "msal"
 import { onMounted, ref, defineAsyncComponent } from 'vue'
+import { useRouter } from "vue-router"
 import { storeToRefs } from 'pinia'
+// components
+const Mailbox = defineAsyncComponent(() =>
+  import('@/components/outlookmails/Mailbox.vue')
+)
 // stores
 import { useOutlookMailStore } from '@/stores/outlookmails/index'
 
 // refs
+const router = useRouter()
 const token = ref()
 const selectedFolder = ref()
-// components
-const Mailbox = defineAsyncComponent(() =>
-  import('@/components/outlookmails/mailbox.vue')
-)
 // stores
 const outlookMailStore = useOutlookMailStore()
 const {
-  getProfile,
   getMailFolders,
-  getMailFolder,
-  getMailFolderMessages
+  mailFoldersLoading
 } = storeToRefs(outlookMailStore)
 const { fetchProfile, fetchMailFolders } = outlookMailStore
 
@@ -42,7 +42,7 @@ const login = async () => {
 
   await msalInstance.loginPopup(loginRequest)
   .then(response => {
-    // handle response
+    getToken() // important
   })
   .catch(err => {
     // handle error
@@ -59,6 +59,7 @@ const getToken = async () => {
       // get access token from response
       token.value = response.accessToken
       console.log(response.accessToken)
+      initializeMsGraphAuth()
     })
     .catch(err => {
       // could also check if err instance of InteractionRequiredAuthError if you can import the class.
@@ -78,31 +79,54 @@ const getToken = async () => {
   }
 }
 
+const initializeMsGraphAuth = async () => {
+  await fetchProfile(token.value)
+  await fetchMailFolders(token.value)
+
+  getMailFolders.value.map(mf => {
+    if (mf.displayName === 'Inbox') router.push(`/outlook-mail/folder/${mf.id}`)
+  })
+}
+
 onMounted(async () => {
   await getToken()
   if (!token.value) await login()
 
-  fetchProfile(token.value)
-  fetchMailFolders(token.value)
+  initializeMsGraphAuth()
 })
 
 </script>
 
 <template>
-  <div>
+  <div>Redirecting to inbox...</div>
+  <div class="hidden">
     <div class="mb-5"><h1>Mailbox</h1></div>
     <div class="flex gap-6">
       <div style="position: relative !important;">
-        <div class="white-space-nowrap" style="position: sticky !important; top: 100px !important;">
+        <div v-if="!mailFoldersLoading" class="white-space-nowrap" style="position: sticky !important; top: 100px !important;">
           <div>
-            <div
+            <!-- <div
               v-for="(folder, fx) in getMailFolders"
               :key="fx"
               class="my-3 cursor-pointer"
               @click="selectedFolder = folder">
               {{ folder.displayName }}
+            </div> -->
+            <div
+              v-for="(folder, fx) in getMailFolders"
+              :key="fx"
+              class="my-3 cursor-pointer"
+              @click="router.push(`/outlook-mail/folder/${folder.id}`)">
+              {{ folder.displayName }}
             </div>
           </div>
+        </div>
+        <div v-else>
+          <Skeleton class="mb-2"></Skeleton>
+          <Skeleton width="10rem" class="mb-2"></Skeleton>
+          <Skeleton width="5rem" class="mb-2"></Skeleton>
+          <Skeleton height="2rem" class="mb-2"></Skeleton>
+          <Skeleton width="10rem" height="4rem"></Skeleton>
         </div>
       </div>
 

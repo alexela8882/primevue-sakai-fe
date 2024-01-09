@@ -37,7 +37,8 @@ import {
   faCaretDown,
   faSquareCaretDown,
   faSquarePlus,
-  faClose
+  faClose,
+  faReply
 } from '@fortawesome/free-solid-svg-icons'
 import { 
   faSquareCaretDown as faSquareCaretDownReg
@@ -46,7 +47,7 @@ import {
   faMicrosoft as faMicrosoftBrand
 } from '@fortawesome/free-brands-svg-icons'
 
-axios.defaults.baseURL = 'https://api.reddotcmr.com/api/'
+axios.defaults.baseURL = 'https://api.reddotcrm.com/api/'
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 
 import PrimeVue from 'primevue/config'
@@ -146,6 +147,7 @@ import TreeSelect from 'primevue/treeselect'
 import TreeTable from 'primevue/treetable'
 import TriStateCheckbox from 'primevue/tristatecheckbox'
 import VirtualScroller from 'primevue/virtualscroller'
+import Editor from 'primevue/editor'
 import BlockViewer from '@/components/BlockViewer.vue'
 import '@/assets/styles.scss'
 
@@ -256,6 +258,7 @@ app.component('TreeSelect', TreeSelect)
 app.component('TreeTable', TreeTable)
 app.component('TriStateCheckbox', TriStateCheckbox)
 app.component('VirtualScroller', VirtualScroller)
+app.component('Editor', Editor)
 
 /* add icons to the library */
 library.add(
@@ -281,7 +284,8 @@ library.add(
   faSquareCaretDownReg,
   faSquarePlus,
   faClose,
-  faMicrosoftBrand
+  faMicrosoftBrand,
+  faReply
 )
 app.component('font-awesome-icon', FontAwesomeIcon)
 

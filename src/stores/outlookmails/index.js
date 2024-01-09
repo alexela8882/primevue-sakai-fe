@@ -15,6 +15,7 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
   const mailFolderLoading = ref(false)
   const mailFolderMessagesLoading = ref(false)
   const mailFolderMessagesMessageLoading = ref(false)
+  const folderMessageReplyLoading = ref(false)
   const toast = useToast()
   // stores
   const baseStore = useBaseStore()
@@ -38,25 +39,34 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
       const _method = payload.method
       const _endpoint = payload.endpoint
       const _token = payload.token
+      const _body = payload.body
 
       var headers = new Headers()
       var bearer = "Bearer " + _token
       headers.append("Authorization", bearer)
+      headers.append("Content-Type", 'application/json')
       var options = {
         method: _method,
-        headers: headers
+        headers: headers,
+        body: _body
       }
       var baseEndpoint = "https://graph.microsoft.com/v1.0/"
       var graphEndpoint = `${baseEndpoint}${_endpoint}`
 
       console.log(graphEndpoint)
+      console.log(_body)
     
-      const response = fetch(graphEndpoint, options)
-        .then(response => response.text())
-        .then((dataStr) => {
-          //do something with response
-          return JSON.parse(dataStr)
-        })
+      let response = null
+      if (!_body) {
+        response = fetch(graphEndpoint, options)
+          .then(response => response.text())
+          .then((dataStr) => {
+            //do something with response
+            return JSON.parse(dataStr)
+          })
+      } else {
+        response = fetch(graphEndpoint, options)
+      }
 
       return response
     }
@@ -92,6 +102,22 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
 
     mailFoldersLoading.value = false
   }
+  const fetchMailFolder = async (_token, id) => {
+    mailFolderLoading.value = true
+
+    const payload = {
+      method: "GET",
+      endpoint: `me/mailFolders/${id}`,
+      token: _token
+    }
+
+    const response = await fetchMsGraph.value(payload)
+    mailFolder.value = response
+
+    console.log(response)
+
+    mailFolderLoading.value = false
+  }
   const fetchMailFolderMessages = async (_token, folder) => {
     mailFolderMessagesLoading.value = true
 
@@ -115,6 +141,29 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
 
     mailFolderMessagesMessageLoading.value = false
   }
+  const replyToMailFolderMessagesMessage = async (_token, mail, body) => {
+    folderMessageReplyLoading.value = true
+
+    const reply = {
+      message: {
+        toRecipients: mail.toRecipients
+      },
+      comment: body
+    }
+
+    const payload = {
+      method: "POST",
+      endpoint: `me/mailFolders/${mail.parentFolderId}/messages/${mail.id}/reply`,
+      token: _token,
+      body: JSON.stringify(reply)
+    }
+
+    const response = await fetchMsGraph.value(payload)
+    if (response.status === 202) {
+      toast.add({ severity: 'success', summary: 'Success', detail: "Reply sent!", life: 3000 })
+      folderMessageReplyLoading.value = false
+    }
+  }
 
   return {
     profileLoading,
@@ -122,14 +171,17 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
     mailFolderLoading,
     mailFolderMessagesLoading,
     mailFolderMessagesMessageLoading,
+    folderMessageReplyLoading,
     getProfile,
     getMailFolders,
     getMailFolder,
     getMailFolderMessages,
     getMailFolderMessagesMessage,
     fetchProfile,
+    fetchMailFolder,
     fetchMailFolders,
     fetchMailFolderMessages,
-    fetchMailFolderMessagesMessage
+    fetchMailFolderMessagesMessage,
+    replyToMailFolderMessagesMessage
   }
 })
