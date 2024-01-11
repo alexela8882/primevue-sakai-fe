@@ -44,7 +44,7 @@ const login = async () => {
     scopes: ["user.read", "mail.send"] // optional Array<string>
   }
 
-  await msalInstance.loginPopup()
+  await msalInstance.loginPopup(loginRequest)
   .then(response => {
     // handle response
     getToken() // important
@@ -91,12 +91,12 @@ const initializeMsGraphAuth = async () => {
   await fetchMailFolderMessages(token.value, getMailFolder.value)
 
   // select first on the list
-  getMailFolderMessages.value.map((mfm, ix) => {
+  getMailFolderMessages.value.value.map((mfm, ix) => {
     if (ix === 0) selectedMessage.value = mfm
   })
 
   // assign
-  folderMessages.value = getMailFolderMessages.value
+  folderMessages.value = getMailFolderMessages.value.value
 }
 
 // lifecycles
