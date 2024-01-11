@@ -102,7 +102,7 @@ const initializeMsGraphAuth = async () => {
 // lifecycles
 watch(() => searchFolder.value, (newVal, oldVal) => {
   if (newVal) {
-    let filtered = getMailFolderMessages.value.filter(fm => {
+    let filtered = getMailFolderMessages.value.value.filter(fm => {
       if (
         fm.subject.toLowerCase().indexOf(newVal) > -1 ||
         fm.from.emailAddress.name.toLowerCase().indexOf(newVal) > -1 ||
@@ -110,7 +110,7 @@ watch(() => searchFolder.value, (newVal, oldVal) => {
       ) return fm
     })
     folderMessages.value = filtered
-  } else folderMessages.value = getMailFolderMessages.value
+  } else folderMessages.value = getMailFolderMessages.value.value
 })
 
 onMounted(async () => {
