@@ -128,8 +128,9 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
     }
 
     const response = await fetchMsGraph.value(payload)
-    console.log(response.value)
-    mailFolderMessages.value = response.value
+    // console.log(response)
+    // console.log(response.value)
+    mailFolderMessages.value = response
 
     mailFolderMessagesLoading.value = false
   }
