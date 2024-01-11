@@ -1,17 +1,20 @@
 <script setup>
 // imports
 import * as Msal from "msal"
-import { onMounted, ref, defineAsyncComponent } from 'vue'
+import { watch, onMounted, ref, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 // stores
 import { useOutlookMailStore } from '@/stores/outlookmails/index'
 // components
+import SimpleLoader2 from '@/components/loading/Simple2.vue'
 const MailboxMessage = defineAsyncComponent(() =>
   import('@/components/outlookmails/mailboxMessage.vue')
 )
 
 // refs
+const searchFolder = ref()
+const folderMessages = ref()
 const selectedMessage = ref()
 const token = ref()
 const route = useRoute()
@@ -44,6 +47,7 @@ const login = async () => {
   await msalInstance.loginPopup(loginRequest)
   .then(response => {
     // handle response
+    getToken() // important
   })
   .catch(err => {
     // handle error
@@ -53,7 +57,6 @@ const selectMessage = (payload) => {
   console.log(payload)
   selectedMessage.value = payload
 }
-
 const getToken = async () => {
   if (msalInstance.getAccount()) {
     var tokenRequest = {
@@ -64,6 +67,7 @@ const getToken = async () => {
       // get access token from response
       token.value = response.accessToken
       console.log(response.accessToken)
+      initializeMsGraphAuth()
     })
     .catch(err => {
       // could also check if err instance of InteractionRequiredAuthError if you can import the class.
@@ -82,11 +86,7 @@ const getToken = async () => {
     // user is not logged in, you will need to log them in to acquire a token
   }
 }
-
-onMounted(async () => {
-  await getToken()
-  if (!token.value) await login()
-
+const initializeMsGraphAuth = async () => {
   await fetchMailFolder(token.value, route.params.id)
   await fetchMailFolderMessages(token.value, getMailFolder.value)
 
@@ -94,49 +94,87 @@ onMounted(async () => {
   getMailFolderMessages.value.map((mfm, ix) => {
     if (ix === 0) selectedMessage.value = mfm
   })
+
+  // assign
+  folderMessages.value = getMailFolderMessages.value
+}
+
+// lifecycles
+watch(() => searchFolder.value, (newVal, oldVal) => {
+  if (newVal) {
+    let filtered = getMailFolderMessages.value.filter(fm => {
+      if (
+        fm.subject.toLowerCase().indexOf(newVal) > -1 ||
+        fm.from.emailAddress.name.toLowerCase().indexOf(newVal) > -1 ||
+        fm.from.emailAddress.address.toLowerCase().indexOf(newVal) > -1
+      ) return fm
+    })
+    folderMessages.value = filtered
+  } else folderMessages.value = getMailFolderMessages.value
+})
+
+onMounted(async () => {
+  await getToken()
+  if (!token.value) await login()
+
+  initializeMsGraphAuth()
 })
 
 </script>
 
 <template>
-  <Splitter class="mb-5">
-    <SplitterPanel class="flex" :size="5">
-      <div>
-        <div class="flex flex-column gap-3 m-3">
-          <div class="flex align-items-center justify-content-between">
-            <div class="flex align-items-center gap-1">
-              <div class="text-2xl text-primary font-bold">Mailbox</div>
-              <div class="font-bold">({{ getMailFolder.displayName }})</div>
+  <BlockUI :blocked="mailFolderLoading">
+    <Splitter class="mb-5">
+      <SplitterPanel class="flex" :size="5">
+        <div>
+          <div class="flex flex-column gap-3 m-3">
+            <div class="flex align-items-center justify-content-between">
+              <div class="flex align-items-center gap-1">
+                <div class="text-2xl text-primary font-bold">Mailbox</div>
+                <div class="font-bold">({{ getMailFolder.displayName }})</div>
+              </div>
+              <div>
+                <i @click="getToken()" class="cursor-pointer pi pi-refresh"></i>
+              </div>
             </div>
             <div>
-              <i class="cursor-pointer pi pi-refresh"></i>
+              <div>
+                <span class="p-input-icon-left w-full">
+                  <i class="pi pi-search" />
+                  <InputText v-model="searchFolder" placeholder="Search" class="w-full" />
+                </span>
+              </div>
             </div>
           </div>
-          <div>
-            <div>
-              <span class="p-input-icon-left w-full">
-                <i class="pi pi-search" />
-                <InputText v-model="value1" placeholder="Search" class="w-full" />
-              </span>
-            </div>
-          </div>
-        </div>
 
-        <div
-          v-if="selectedMessage"
-          v-for="(message, mx) in getMailFolderMessages"
-          :key="mx"
-          @click="selectMessage(message)"
-          class="p-4 cursor-pointer border-1 border-300 border-x-none white-space-nowrap overflow-hidden text-overflow-ellipsis"
-          :class="`${mx !== 0 && 'border-top-none'} ${message.id === selectedMessage.id && 'bg-primary-100'}`">
-          {{ message.subject }}
+          <div
+            v-if="folderMessages && folderMessages.length > 0"
+            v-for="(message, mx) in folderMessages"
+            :key="mx"
+            @click="selectMessage(message)"
+            class="p-4 cursor-pointer border-1 border-300 border-x-none white-space-nowrap overflow-hidden text-overflow-ellipsis"
+            :class="`${mx !== 0 && 'border-top-none'} ${message.id === selectedMessage.id && 'bg-primary-100'}`">
+            <div class="flex align-items-start justify-content-between gap-6">
+              <div class="flex flex-column gap-1">
+                <div class="font-bold">{{ message.from.emailAddress.name }}</div>
+                <div>{{ message.subject }}</div>
+              </div>
+              <div class="flex flex-column gap-2">
+                <div class="text-xs text-700">{{ message.receivedDateTime }}</div>
+                <div><Tag value="Sample Tag"></Tag></div>
+              </div>
+            </div>
+          </div>
+          <div v-else class="p-4 white-space-nowrap overflow-hidden text-overflow-ellipsis">
+            No messages found
+          </div>
         </div>
-      </div>
-    </SplitterPanel>
-    <SplitterPanel class="flex" :size="75">
-      <MailboxMessage :token="token" :message="selectedMessage" />
-    </SplitterPanel>
-  </Splitter>
+      </SplitterPanel>
+      <SplitterPanel class="flex" :size="75" >
+        <MailboxMessage :token="token" :message="selectedMessage" />
+      </SplitterPanel>
+    </Splitter>
+  </BlockUI>
 </template>
 
 <style scoped>

@@ -15,6 +15,7 @@ import { useOutlookMailStore } from '@/stores/outlookmails/index'
 const router = useRouter()
 const token = ref()
 const selectedFolder = ref()
+const msgraphLogicMessage = ref()
 // stores
 const outlookMailStore = useOutlookMailStore()
 const {
@@ -36,6 +37,8 @@ msalInstance.handleRedirectCallback((error, response) => {
 
 // actions
 const login = async () => {
+  msgraphLogicMessage.value = "Trying to sign you in"
+
   var loginRequest = {
     scopes: ["user.read", "mail.send"] // optional Array<string>
   }
@@ -80,8 +83,12 @@ const getToken = async () => {
 }
 
 const initializeMsGraphAuth = async () => {
+  msgraphLogicMessage.value = "Redirecting to your inbox"
+
   await fetchProfile(token.value)
   await fetchMailFolders(token.value)
+
+  // console.log(getMailFolders.value)
 
   getMailFolders.value.map(mf => {
     if (mf.displayName === 'Inbox') router.push(`/outlook-mail/folder/${mf.id}`)
@@ -98,20 +105,19 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div>Redirecting to inbox...</div>
-  <div class="hidden">
+  <div class="flex justify-content-center" style="height: 60vh !important;">
+    <div class="flex flex-column align-items-center justify-content-center text-center mt-n6">
+      <ProgressSpinner />
+      <div>{{ msgraphLogicMessage }}</div>
+      <div>Please wait...</div>
+    </div>
+  </div>
+  <!-- <div>
     <div class="mb-5"><h1>Mailbox</h1></div>
     <div class="flex gap-6">
       <div style="position: relative !important;">
         <div v-if="!mailFoldersLoading" class="white-space-nowrap" style="position: sticky !important; top: 100px !important;">
           <div>
-            <!-- <div
-              v-for="(folder, fx) in getMailFolders"
-              :key="fx"
-              class="my-3 cursor-pointer"
-              @click="selectedFolder = folder">
-              {{ folder.displayName }}
-            </div> -->
             <div
               v-for="(folder, fx) in getMailFolders"
               :key="fx"
@@ -136,7 +142,7 @@ onMounted(async () => {
         </Suspense>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style scoped>

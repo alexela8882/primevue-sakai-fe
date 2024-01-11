@@ -49,8 +49,6 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
           <div>
             <SplitButton
               label="Convert"
-              :model="items"
-              @click="save"
               outlined></SplitButton>
           </div>
         </div>
