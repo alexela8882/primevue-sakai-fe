@@ -45,7 +45,7 @@ const login = async () => {
     scopes: ["user.read", "mail.send"] // optional Array<string>
   }
 
-  await msalInstance.loginPopup()
+  await msalInstance.loginPopup(loginRequest)
   .then(response => {
     getToken() // important
   })
