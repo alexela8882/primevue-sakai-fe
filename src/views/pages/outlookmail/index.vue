@@ -88,6 +88,8 @@ const initializeMsGraphAuth = async () => {
   await fetchProfile(token.value)
   await fetchMailFolders(token.value)
 
+  // console.log(getMailFolders.value)
+
   getMailFolders.value.map(mf => {
     if (mf.displayName === 'Inbox') router.push(`/outlook-mail/folder/${mf.id}`)
   })

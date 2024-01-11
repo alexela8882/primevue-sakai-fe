@@ -102,7 +102,6 @@ const initializeMsGraphAuth = async () => {
 // lifecycles
 watch(() => searchFolder.value, (newVal, oldVal) => {
   if (newVal) {
-    console.log(newVal)
     let filtered = getMailFolderMessages.value.filter(fm => {
       if (
         fm.subject.toLowerCase().indexOf(newVal) > -1 ||
