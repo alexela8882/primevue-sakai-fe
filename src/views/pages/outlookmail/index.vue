@@ -27,8 +27,7 @@ const { fetchProfile, fetchMailFolders } = outlookMailStore
 // MSAL SETUP
 const msalConfig = {
   auth: {
-    // clientId: '393bd73e-ac09-4f31-a723-f4e981a027ce' // esco reddot auth
-    clientId: '1528f72b-9149-440c-9803-3a181a8197b1' // esco reddot
+    clientId: '393bd73e-ac09-4f31-a723-f4e981a027ce' // esco reddot auth
   }
 }
 const msalInstance = new Msal.UserAgentApplication(msalConfig)
