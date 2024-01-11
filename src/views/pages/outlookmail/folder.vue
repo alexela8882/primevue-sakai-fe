@@ -31,6 +31,7 @@ const { fetchMailFolder, fetchMailFolderMessages } = outlookMailStore
 const msalConfig = {
   auth: {
     clientId: '002454d9-50f5-4e5f-83ab-d5291500800a' // alexela8882
+    // clientId: 'error' // for error testing
   }
 }
 const msalInstance = new Msal.UserAgentApplication(msalConfig)

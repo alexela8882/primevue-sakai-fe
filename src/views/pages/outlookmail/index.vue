@@ -16,6 +16,7 @@ const router = useRouter()
 const token = ref()
 const selectedFolder = ref()
 const msgraphLogicMessage = ref()
+const msgraphErrorMessage = ref()
 // stores
 const outlookMailStore = useOutlookMailStore()
 const {
@@ -28,6 +29,7 @@ const { fetchProfile, fetchMailFolders } = outlookMailStore
 const msalConfig = {
   auth: {
     clientId: '002454d9-50f5-4e5f-83ab-d5291500800a' // alexela8882
+    // clientId: 'error' // for error testing
   }
 }
 const msalInstance = new Msal.UserAgentApplication(msalConfig)
@@ -49,6 +51,8 @@ const login = async () => {
   })
   .catch(err => {
     // handle error
+    console.log(err)
+    msgraphErrorMessage.value = err
   })
 }
 
@@ -74,8 +78,11 @@ const getToken = async () => {
           })
           .catch(err => {
             // handle error
+            console.log(err)
           });
       }
+
+      console.log(err)
     })
   } else {
     // user is not logged in, you will need to log them in to acquire a token
@@ -107,9 +114,15 @@ onMounted(async () => {
 <template>
   <div class="flex justify-content-center" style="height: 60vh !important;">
     <div class="flex flex-column align-items-center justify-content-center text-center mt-n6">
-      <ProgressSpinner />
-      <div>{{ msgraphLogicMessage }}</div>
-      <div>Please wait...</div>
+      <div v-if="!msgraphErrorMessage">
+        <ProgressSpinner />
+        <div>{{ msgraphLogicMessage }}</div>
+        <div>Please wait...</div>
+      </div>
+      <div v-else>
+        <div>{{ msgraphErrorMessage }}</div>
+        <div><Button link >Refresh page to retry</Button></div>
+      </div>
     </div>
   </div>
   <!-- <div>
