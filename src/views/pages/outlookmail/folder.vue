@@ -1,7 +1,7 @@
 <script setup>
 // imports
 import * as Msal from "msal"
-import { watch, onMounted, ref, defineAsyncComponent } from 'vue'
+import { computed, watch, onMounted, ref, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
 // stores
@@ -40,6 +40,15 @@ const msalConfig = {
 const msalInstance = new Msal.UserAgentApplication(msalConfig)
 msalInstance.handleRedirectCallback((error, response) => {
   // handle redirect response or error
+})
+
+// computed properties
+const itemPage = computed(() => Number(getSkipValue.value) + 1)
+const currentPage = computed(() => {
+  const curPage = Number(getSkipValue.value) + 10
+  if (curPage > getMailFolder.value.totalItemCount) {
+    return getMailFolder.value.totalItemCount
+  } else return curPage
 })
 
 // actions
@@ -200,7 +209,7 @@ onMounted(async () => {
             </div>
 
             <div class="flex align-items-center gap-3 m-3">
-              <div>1 - 10 of ({{ getMailFolder.totalItemCount }})</div>
+              <div>{{ itemPage }} - {{ currentPage }} of ({{ getMailFolder.totalItemCount }})</div>
               <div>
                 <Button
                   @click="prevLink()"
@@ -245,7 +254,7 @@ onMounted(async () => {
             </div>
 
             <div class="flex align-items-center gap-3 m-3">
-              <div>1 - 10 of ({{ getMailFolder.totalItemCount }})</div>
+              <div>{{ itemPage }} - {{ currentPage }} - {{ Number(getSkipValue) + 10 }} of ({{ getMailFolder.totalItemCount }})</div>
               <div>
                 <Button :disabled="!getMailFolder.previousLink" icon="pi pi-chevron-left" text rounded />
                 <Button
