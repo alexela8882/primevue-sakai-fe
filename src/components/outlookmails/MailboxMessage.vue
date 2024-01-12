@@ -66,8 +66,11 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
               </div>
 
               <div>
-                <div v-for="recipient in message.toRecipients">
+                <div v-for="recipient in message.toRecipients.slice(0, 2)">
                   To: {{ recipient.emailAddress.address }}
+                  <span v-if="message.toRecipients.length > 2">
+                    and {{ message.toRecipients.length - 2 }} others
+                  </span>
                 </div>
               </div>
             </div>

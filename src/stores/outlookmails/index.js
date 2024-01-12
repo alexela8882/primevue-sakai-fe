@@ -27,8 +27,12 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
   const mailFolder = ref({})
   const mailFolderMessages = ref([])
   const mailFolderMessagesMessage = ref({})
+  const skipValue = ref(0)
+  const previousLink = ref(null)
 
   // getters
+  const getSkipValue = computed(() => skipValue.value)
+  const getPreviousLink = computed(() => previousLink.value)
   const getProfile = computed(() => profile.value)
   const getMailFolders = computed(() => mailFolders.value)
   const getMailFolder = computed(() => mailFolder.value)
@@ -112,11 +116,11 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
     }
 
     const response = await fetchMsGraph.value(payload)
-    mailFolder.value = response
 
-    console.log(response)
-
-    mailFolderLoading.value = false
+    if (response) {
+      mailFolder.value = response
+      mailFolderLoading.value = false
+    }
   }
   const fetchMailFolderMessages = async (_token, folder) => {
     mailFolderMessagesLoading.value = true
@@ -128,11 +132,15 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
     }
 
     const response = await fetchMsGraph.value(payload)
-    // console.log(response)
-    // console.log(response.value)
-    mailFolderMessages.value = response
 
-    mailFolderMessagesLoading.value = false
+    if (response.value) {
+      console.log(response)
+      mailFolderMessages.value = response
+      mailFolderMessagesLoading.value = false
+
+      // reset skip value
+      skipValue.value = 0
+    }
   }
   const fetchMailFolderMessagesMessage = async (id) => {
     mailFolderMessagesMessageLoading.value = true
@@ -186,9 +194,19 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
                     })
 
     mailFolderMessages.value = response
-    console.log(response)
 
     if (response) {
+      // keep previous link
+      previousLink.value = link
+
+      // track skip params
+      let splittedLink = link.split("24")
+      let skipParam = splittedLink.find(item => item.toLowerCase().indexOf('skip=') > -1)
+      let skipVal = skipParam.split("=")[1]
+
+      skipValue.value = skipVal
+
+      // mail folder messages
       mailFolderMessages.value = response
       mailFolderLoading.value = false
     }
@@ -201,6 +219,8 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
     mailFolderMessagesLoading,
     mailFolderMessagesMessageLoading,
     folderMessageReplyLoading,
+    getSkipValue,
+    getPreviousLink,
     getProfile,
     getMailFolders,
     getMailFolder,
