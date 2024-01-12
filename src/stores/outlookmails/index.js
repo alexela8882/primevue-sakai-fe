@@ -166,6 +166,8 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
     }
   }
   const folderMailMessagesNavigate = async (_token, link) => {
+    mailFolderLoading.value = true
+
     var headers = new Headers()
     var bearer = "Bearer " + _token
     headers.append("Authorization", bearer)
@@ -182,7 +184,14 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
                       //do something with response
                       return JSON.parse(dataStr)
                     })
+
     mailFolderMessages.value = response
+    console.log(response)
+
+    if (response) {
+      mailFolderMessages.value = response
+      mailFolderLoading.value = false
+    }
   }
 
   return {

@@ -91,19 +91,18 @@ const initializeMsGraphAuth = async () => {
   await fetchMailFolder(token.value, route.params.id)
   await fetchMailFolderMessages(token.value, getMailFolder.value)
 
-  // select first on the list
+  // assign
+  folderMessages.value = getMailFolderMessages.value.value
+}
+const selectFirstMessageOnList = () => {
   getMailFolderMessages.value.value.map((mfm, ix) => {
     if (ix === 0) selectedMessage.value = mfm
   })
-
-  // assign
-  folderMessages.value = getMailFolderMessages.value.value
 }
 const nextLink = () => {
   console.log(getMailFolderMessages.value['@odata.nextLink'])
   folderMailMessagesNavigate(token.value, getMailFolderMessages.value['@odata.nextLink'])
 }
-
 const prevLink = () => {
   console.log(getMailFolderMessages.value['@odata.context'])
   folderMailMessagesNavigate(token.value, getMailFolderMessages.value['@odata.context'])
@@ -125,6 +124,11 @@ watch(() => searchFolder.value, (newVal, oldVal) => {
 
 watch(() => getMailFolderMessages.value, (newVal, oldVal) => {
   folderMessages.value = newVal.value
+
+  // select first message on the list
+  newVal.value.map((mfm, ix) => {
+    if (ix === 0) selectedMessage.value = mfm
+  })
 })
 
 onMounted(async () => {
@@ -185,7 +189,7 @@ onMounted(async () => {
                 :key="mx"
                 @click="selectMessage(message)"
                 class="p-4 cursor-pointer border-1 border-300 border-x-none white-space-nowrap overflow-hidden text-overflow-ellipsis"
-                :class="`${mx !== 0 && 'border-top-none'} ${message.id === selectedMessage.id && 'bg-primary-100'}`">
+                :class="`${mx !== 0 && 'border-top-none'} ${(message.id === (selectedMessage && selectedMessage.id)) && 'bg-primary-100'}`">
                 <div class="flex align-items-start justify-content-between gap-6">
                   <div class="flex flex-column gap-1">
                     <div class="font-bold">{{ message.from.emailAddress.name }}</div>
