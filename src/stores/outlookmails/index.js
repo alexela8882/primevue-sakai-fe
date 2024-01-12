@@ -149,7 +149,7 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
       message: {
         toRecipients: mail.toRecipients
       },
-      comment: body
+      comment: body // reply message
     }
 
     const payload = {

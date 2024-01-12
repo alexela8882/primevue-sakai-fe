@@ -75,6 +75,7 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
         </div>
 
         <p class="m-0">
+          <!-- <pre>{{ message }}</pre> -->
           <div v-html="message.body.content"></div>
         </p>
       </div>
