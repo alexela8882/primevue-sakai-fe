@@ -127,46 +127,69 @@ onMounted(async () => {
     <Splitter class="mb-5">
       <SplitterPanel class="flex" :size="5">
         <div>
-          <div class="flex flex-column gap-3 m-3">
-            <div class="flex align-items-center justify-content-between">
-              <div class="flex align-items-center gap-1">
-                <div class="text-2xl text-primary font-bold">Mailbox</div>
-                <div class="font-bold">({{ getMailFolder.displayName }})</div>
+          <!-- <pre>{{ getMailFolder }}</pre> -->
+          <div>
+            <div class="flex flex-column gap-3 m-3">
+              <div class="flex align-items-center justify-content-between">
+                <div class="flex align-items-center gap-1">
+                  <div class="text-2xl text-primary font-bold">Mailbox</div>
+                  <div class="font-bold">({{ getMailFolder.displayName }})</div>
+                </div>
+                <div>
+                  <i @click="getToken()" class="cursor-pointer pi pi-refresh"></i>
+                </div>
               </div>
               <div>
-                <i @click="getToken()" class="cursor-pointer pi pi-refresh"></i>
+                <div>
+                  <span class="p-input-icon-left w-full">
+                    <i class="pi pi-search" />
+                    <InputText v-model="searchFolder" placeholder="Search" class="w-full" />
+                  </span>
+                </div>
               </div>
             </div>
-            <div>
-              <div>
-                <span class="p-input-icon-left w-full">
-                  <i class="pi pi-search" />
-                  <InputText v-model="searchFolder" placeholder="Search" class="w-full" />
-                </span>
-              </div>
-            </div>
-          </div>
 
-          <div
-            v-if="folderMessages && folderMessages.length > 0"
-            v-for="(message, mx) in folderMessages"
-            :key="mx"
-            @click="selectMessage(message)"
-            class="p-4 cursor-pointer border-1 border-300 border-x-none white-space-nowrap overflow-hidden text-overflow-ellipsis"
-            :class="`${mx !== 0 && 'border-top-none'} ${message.id === selectedMessage.id && 'bg-primary-100'}`">
-            <div class="flex align-items-start justify-content-between gap-6">
-              <div class="flex flex-column gap-1">
-                <div class="font-bold">{{ message.from.emailAddress.name }}</div>
-                <div>{{ message.subject }}</div>
-              </div>
-              <div class="flex flex-column gap-2">
-                <div class="text-xs text-700">{{ message.receivedDateTime }}</div>
-                <div><Tag value="Sample Tag"></Tag></div>
+            <div class="flex align-items-center gap-3 m-3">
+              <div>1 - 10 of ({{ getMailFolder.totalItemCount }})</div>
+              <div>
+                <Button :disabled="!getMailFolder.previousLink" icon="pi pi-chevron-left" text rounded />
+                <Button :disabled="!getMailFolder.nextLink" icon="pi pi-chevron-right" text rounded />
               </div>
             </div>
-          </div>
-          <div v-else class="p-4 white-space-nowrap overflow-hidden text-overflow-ellipsis">
-            No messages found
+
+            <div>
+              <div
+                v-if="folderMessages && folderMessages.length > 0"
+                v-for="(message, mx) in folderMessages"
+                :key="mx"
+                @click="selectMessage(message)"
+                class="p-4 cursor-pointer border-1 border-300 border-x-none white-space-nowrap overflow-hidden text-overflow-ellipsis"
+                :class="`${mx !== 0 && 'border-top-none'} ${message.id === selectedMessage.id && 'bg-primary-100'}`">
+                <div class="flex align-items-start justify-content-between gap-6">
+                  <div class="flex flex-column gap-1">
+                    <div class="font-bold">{{ message.from.emailAddress.name }}</div>
+                    <div :class="`${!message.isRead && 'font-bold'}`">{{ message.subject }}</div>
+                  </div>
+                  <div class="flex flex-column gap-2">
+                    <div
+                      class="text-xs text-700"
+                      :class="`${!message.isRead && 'font-bold'}`"
+                    >{{ message.receivedDateTime }}</div>
+                  </div>
+                </div>
+              </div>
+              <div v-else class="p-4 white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                No messages found
+              </div>
+            </div>
+
+            <div class="flex align-items-center gap-3 m-3">
+              <div>1 - 10 of ({{ getMailFolder.totalItemCount }})</div>
+              <div>
+                <Button :disabled="!getMailFolder.previousLink" icon="pi pi-chevron-left" text rounded />
+                <Button :disabled="!getMailFolder.nextLink" icon="pi pi-chevron-right" text rounded />
+              </div>
+            </div>
           </div>
         </div>
       </SplitterPanel>
