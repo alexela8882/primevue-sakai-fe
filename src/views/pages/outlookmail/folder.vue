@@ -13,6 +13,8 @@ const MailboxMessage = defineAsyncComponent(() =>
 )
 
 // refs
+const msgraphLogicMessage = ref()
+const msgraphErrorMessage = ref()
 const searchFolder = ref()
 const folderMessages = ref()
 const selectedMessage = ref()
@@ -22,6 +24,8 @@ const route = useRoute()
 const outlookMailStore = useOutlookMailStore()
 const {
   mailFolderLoading,
+  getSkipValue,
+  getPreviousLink,
   getMailFolder,
   getMailFolderMessages
 } = storeToRefs(outlookMailStore)
@@ -40,6 +44,8 @@ msalInstance.handleRedirectCallback((error, response) => {
 
 // actions
 const login = async () => {
+  msgraphLogicMessage.value = "Trying to sign you in"
+
   var loginRequest = {
     scopes: ["user.read", "mail.send"] // optional Array<string>
   }
@@ -51,6 +57,7 @@ const login = async () => {
   })
   .catch(err => {
     // handle error
+    msgraphErrorMessage.value = err
   })
 }
 const selectMessage = (payload) => {
@@ -58,6 +65,8 @@ const selectMessage = (payload) => {
   selectedMessage.value = payload
 }
 const getToken = async () => {
+  msgraphLogicMessage.value = "Retrieving your messages"
+
   if (msalInstance.getAccount()) {
     var tokenRequest = {
       scopes: ["user.read", "mail.send"]
@@ -66,8 +75,12 @@ const getToken = async () => {
     .then(response => {
       // get access token from response
       token.value = response.accessToken
-      console.log(response.accessToken)
-      initializeMsGraphAuth()
+      // console.log(response.accessToken)
+      initializeMsGraph()
+
+      // resets
+      msgraphLogicMessage.value = null
+      msgraphErrorMessage.value = null
     })
     .catch(err => {
       // could also check if err instance of InteractionRequiredAuthError if you can import the class.
@@ -79,6 +92,7 @@ const getToken = async () => {
           })
           .catch(err => {
             // handle error
+            msgraphErrorMessage.value = err
           });
       }
     })
@@ -86,25 +100,31 @@ const getToken = async () => {
     // user is not logged in, you will need to log them in to acquire a token
   }
 }
-const initializeMsGraphAuth = async () => {
+const initializeMsGraph = async () => {
+  msgraphLogicMessage.value = "Retrieving your messages"
+
   await fetchMailFolder(token.value, route.params.id)
   await fetchMailFolderMessages(token.value, getMailFolder.value)
 
   // assign
   folderMessages.value = getMailFolderMessages.value.value
-}
-const selectFirstMessageOnList = () => {
-  getMailFolderMessages.value.value.map((mfm, ix) => {
-    if (ix === 0) selectedMessage.value = mfm
-  })
+  msgraphLogicMessage.value = null
 }
 const nextLink = () => {
   console.log(getMailFolderMessages.value['@odata.nextLink'])
   folderMailMessagesNavigate(token.value, getMailFolderMessages.value['@odata.nextLink'])
 }
 const prevLink = () => {
-  console.log(getMailFolderMessages.value['@odata.context'])
-  folderMailMessagesNavigate(token.value, getMailFolderMessages.value['@odata.context'])
+  console.log(getSkipValue.value)
+  if (getSkipValue.value) {
+    console.log(getPreviousLink.value)
+
+    let splittedLink = getPreviousLink.value.split("24")
+    let skipParam = splittedLink.find(item => item.toLowerCase().indexOf('skip=') > -1)
+
+    let newLink = getPreviousLink.value.replace(skipParam, `skip=${getSkipValue.value - 10}`)
+    folderMailMessagesNavigate(token.value, newLink)
+  }
 }
 
 // lifecycles
@@ -134,17 +154,30 @@ onMounted(async () => {
   await getToken()
   if (!token.value) await login()
 
-  initializeMsGraphAuth()
+  initializeMsGraph()
 })
 
 </script>
 
 <template>
-  <BlockUI :blocked="mailFolderLoading">
+  <div v-if="msgraphErrorMessage" class="flex justify-content-center" style="height: 60vh !important;">
+    <div class="flex flex-column align-items-center justify-content-center text-center mt-n6">
+      <div>{{ msgraphErrorMessage }}</div>
+      <div><Button link >Refresh page to retry</Button></div>
+    </div>
+  </div>
+  <div v-else-if="msgraphLogicMessage" class="flex justify-content-center" style="height: 60vh !important;">
+    <div class="flex flex-column align-items-center justify-content-center text-center mt-n6">
+      <ProgressSpinner />
+      <div>{{ msgraphLogicMessage }}</div>
+      <div>Please wait...</div>
+    </div>
+  </div>
+  <BlockUI v-else :blocked="mailFolderLoading">
     <Splitter class="mb-5">
       <SplitterPanel class="flex" :size="5">
         <div>
-          <!-- <pre>{{ getMailFolderMessages }}</pre> -->
+          <!-- <pre>{{ getSkipValue }}</pre> -->
           <div>
             <div class="flex flex-column gap-3 m-3">
               <div class="flex align-items-center justify-content-between">
@@ -170,7 +203,8 @@ onMounted(async () => {
               <div>1 - 10 of ({{ getMailFolder.totalItemCount }})</div>
               <div>
                 <Button
-                  :disabled="!getMailFolder.previousLink"
+                  @click="prevLink()"
+                  :disabled="getSkipValue == 0"
                   icon="pi pi-chevron-left"
                   text rounded />
                 <Button
