@@ -165,6 +165,25 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
       folderMessageReplyLoading.value = false
     }
   }
+  const folderMailMessagesNavigate = async (_token, link) => {
+    var headers = new Headers()
+    var bearer = "Bearer " + _token
+    headers.append("Authorization", bearer)
+    headers.append("Content-Type", 'application/json')
+    var options = {
+      method: 'GET',
+      headers: headers
+    }
+
+    let response = null
+    response = await fetch(link, options)
+                    .then(response => response.text())
+                    .then((dataStr) => {
+                      //do something with response
+                      return JSON.parse(dataStr)
+                    })
+    mailFolderMessages.value = response
+  }
 
   return {
     profileLoading,
@@ -183,6 +202,7 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
     fetchMailFolders,
     fetchMailFolderMessages,
     fetchMailFolderMessagesMessage,
-    replyToMailFolderMessagesMessage
+    replyToMailFolderMessagesMessage,
+    folderMailMessagesNavigate
   }
 })

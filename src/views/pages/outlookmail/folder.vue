@@ -25,7 +25,7 @@ const {
   getMailFolder,
   getMailFolderMessages
 } = storeToRefs(outlookMailStore)
-const { fetchMailFolder, fetchMailFolderMessages } = outlookMailStore
+const { fetchMailFolder, fetchMailFolderMessages, folderMailMessagesNavigate } = outlookMailStore
 
 // MSAL SETUP
 const msalConfig = {
@@ -98,6 +98,15 @@ const initializeMsGraphAuth = async () => {
   // assign
   folderMessages.value = getMailFolderMessages.value.value
 }
+const nextLink = () => {
+  console.log(getMailFolderMessages.value['@odata.nextLink'])
+  folderMailMessagesNavigate(token.value, getMailFolderMessages.value['@odata.nextLink'])
+}
+
+const prevLink = () => {
+  console.log(getMailFolderMessages.value['@odata.context'])
+  folderMailMessagesNavigate(token.value, getMailFolderMessages.value['@odata.context'])
+}
 
 // lifecycles
 watch(() => searchFolder.value, (newVal, oldVal) => {
@@ -111,6 +120,10 @@ watch(() => searchFolder.value, (newVal, oldVal) => {
     })
     folderMessages.value = filtered
   } else folderMessages.value = getMailFolderMessages.value.value
+})
+
+watch(() => getMailFolderMessages.value, (newVal, oldVal) => {
+  folderMessages.value = newVal.value
 })
 
 onMounted(async () => {
@@ -127,7 +140,7 @@ onMounted(async () => {
     <Splitter class="mb-5">
       <SplitterPanel class="flex" :size="5">
         <div>
-          <!-- <pre>{{ getMailFolder }}</pre> -->
+          <!-- <pre>{{ getMailFolderMessages }}</pre> -->
           <div>
             <div class="flex flex-column gap-3 m-3">
               <div class="flex align-items-center justify-content-between">
@@ -152,8 +165,15 @@ onMounted(async () => {
             <div class="flex align-items-center gap-3 m-3">
               <div>1 - 10 of ({{ getMailFolder.totalItemCount }})</div>
               <div>
-                <Button :disabled="!getMailFolder.previousLink" icon="pi pi-chevron-left" text rounded />
-                <Button :disabled="!getMailFolder.nextLink" icon="pi pi-chevron-right" text rounded />
+                <Button
+                  :disabled="!getMailFolder.previousLink"
+                  icon="pi pi-chevron-left"
+                  text rounded />
+                <Button
+                  @click="nextLink()"
+                  :disabled="!getMailFolderMessages['@odata.nextLink']"
+                  icon="pi pi-chevron-right"
+                  text rounded />
               </div>
             </div>
 
@@ -187,7 +207,7 @@ onMounted(async () => {
               <div>1 - 10 of ({{ getMailFolder.totalItemCount }})</div>
               <div>
                 <Button :disabled="!getMailFolder.previousLink" icon="pi pi-chevron-left" text rounded />
-                <Button :disabled="!getMailFolder.nextLink" icon="pi pi-chevron-right" text rounded />
+                <Button :disabled="!getMailFolderMessages['@odata.nextLink']" icon="pi pi-chevron-right" text rounded />
               </div>
             </div>
           </div>
