@@ -189,7 +189,10 @@ onMounted(async () => {
                 <div class="flex align-items-start justify-content-between gap-6">
                   <div class="flex flex-column gap-1">
                     <div class="font-bold">{{ message.from.emailAddress.name }}</div>
-                    <div :class="`${!message.isRead && 'font-bold'}`">{{ message.subject }}</div>
+                    <div
+                      class="text-overflow-ellipsis w-14rem overflow-hidden"
+                      :class="`${!message.isRead && 'font-bold'}`"
+                    >{{ message.subject }}</div>
                   </div>
                   <div class="flex flex-column gap-2">
                     <div
@@ -208,7 +211,11 @@ onMounted(async () => {
               <div>1 - 10 of ({{ getMailFolder.totalItemCount }})</div>
               <div>
                 <Button :disabled="!getMailFolder.previousLink" icon="pi pi-chevron-left" text rounded />
-                <Button :disabled="!getMailFolderMessages['@odata.nextLink']" icon="pi pi-chevron-right" text rounded />
+                <Button
+                  @click="nextLink()"
+                  :disabled="!getMailFolderMessages['@odata.nextLink']"
+                  icon="pi pi-chevron-right"
+                  text rounded />
               </div>
             </div>
           </div>
