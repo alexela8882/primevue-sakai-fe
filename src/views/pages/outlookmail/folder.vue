@@ -257,7 +257,11 @@ onMounted(async () => {
             <div class="flex align-items-center gap-3 m-3">
               <div>{{ itemPage }} - {{ currentPage }} - {{ Number(getSkipValue) + 10 }} of ({{ getMailFolder.totalItemCount }})</div>
               <div>
-                <Button :disabled="!getMailFolder.previousLink" icon="pi pi-chevron-left" text rounded />
+                <Button
+                  @click="prevLink()"
+                  :disabled="getSkipValue == 0"
+                  icon="pi pi-chevron-left"
+                  text rounded />
                 <Button
                   @click="nextLink()"
                   :disabled="!getMailFolderMessages['@odata.nextLink']"
