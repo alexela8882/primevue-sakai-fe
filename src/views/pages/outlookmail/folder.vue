@@ -184,9 +184,9 @@ onMounted(async () => {
     </div>
   </div>
   <BlockUI v-else :blocked="mailFolderLoading">
-    <Splitter class="mb-5">
+    <Splitter>
       <SplitterPanel class="flex" :size="5">
-        <div>
+        <div style="height: 85vh !important; overflow-y: scroll;">
           <!-- <pre>{{ getSkipValue }}</pre> -->
           <div>
             <div class="flex flex-column gap-3 m-3">
@@ -255,7 +255,7 @@ onMounted(async () => {
             </div>
 
             <div class="flex align-items-center gap-3 m-3">
-              <div>{{ itemPage }} - {{ currentPage }} - {{ Number(getSkipValue) + 10 }} of ({{ getMailFolder.totalItemCount }})</div>
+              <div>{{ itemPage }} - {{ currentPage }} of ({{ getMailFolder.totalItemCount }})</div>
               <div>
                 <Button
                   @click="prevLink()"
@@ -273,7 +273,9 @@ onMounted(async () => {
         </div>
       </SplitterPanel>
       <SplitterPanel class="flex" :size="75" >
-        <MailboxMessage :token="token" :message="selectedMessage" />
+        <div style="height: 85vh !important; overflow-y: scroll;" class="p-4 w-full">
+          <MailboxMessage :token="token" :message="selectedMessage" />
+        </div>
       </SplitterPanel>
     </Splitter>
   </BlockUI>
