@@ -97,7 +97,7 @@ const initializeMsGraphAuth = async () => {
   // console.log(getMailFolders.value)
 
   getMailFolders.value.map(mf => {
-    if (mf.displayName === 'Sent Items') router.push(`/outlook-mail/folder/${mf.id}`)
+    if (mf.displayName === 'Inbox') router.push(`/outlook-mail/folder/${mf.id}`)
   })
 }
 

@@ -188,7 +188,8 @@ onClickOutside(listViewFilterRef, (event) => {
     removableSort
     scrollable
     scrollHeight="60vh"
-    class="dynamic-tbl">
+    class="dynamic-tbl"
+    style="min-height: 60vh !important;">
     <Column
       v-if="mode === 'edit'"
       frozen

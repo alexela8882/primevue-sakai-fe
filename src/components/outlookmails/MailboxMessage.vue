@@ -33,7 +33,7 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
 </script>
 
 <template>
-  <div class="w-full m-4">
+  <div class="w-full">
     <div v-if="message" class="flex flex-column gap-4">
       <div class="flex justify-content-between">
         <div class="font-bold text-2xl">{{ message.subject }}</div>
