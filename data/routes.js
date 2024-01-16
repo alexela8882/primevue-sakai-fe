@@ -1,3 +1,3 @@
 {
-  "/inquiries-collection": "/inquiries/collection/data"
+  "/inquiries-collection": "/inquiries/collection"
 }

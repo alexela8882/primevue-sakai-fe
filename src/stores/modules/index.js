@@ -288,7 +288,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
   }
   const convertMailboxToInquiry = async (payload) => {
-    // json file setup
+    // // json file setup
     const filePath = '../../../data/db3.json'
     const response = await fetch(filePath)
     const jsonContent = await response.json()
@@ -300,23 +300,18 @@ export const useModuleStore = defineStore('moduleStore', () => {
     data.inquiries.collection.data.push(payload)
 
     // Step 4: Convert the modified JavaScript object back to a JSON string
-    const updatedJson = JSON.stringify(data, null, 2)
+    const updatedJson = JSON.stringify(data.inquiries)
 
-    console.log(data)
+    console.log(data.inquiries)
 
-    // console.log(payload)
-    // data.inquiries.collection.data.push(payload)
-    // const updatedJson = JSON.stringify(data, null, 2)
-    // fs.writeFileSync(filePath, updatedJson, 'utf-8')
-    // const uri = 'inquiries'
+    const uri = 'inquiries'
+    const res = await axios(`${jsonDbUrl.value}/${uri}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: updatedJson
+    })
 
-    // const res = await axios(`${jsonDbUrl.value}/${uri}`, {
-    //   method: 'GET',
-    //   headers: { 'Content-Type': 'application/json' },
-    //   // body: payload
-    // })
-
-    // console.log(res)
+    console.log(res)
   }
 
   return {
