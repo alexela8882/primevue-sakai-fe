@@ -7,7 +7,8 @@ import { useModuleStore } from '@/stores/modules/index'
 
 // defines
 const props = defineProps({
-  convertModule: Object
+  convertModule: Object,
+  mailboxMessage: Object
 })
 
 // refs
@@ -16,11 +17,31 @@ const createInquiryFrom = ref()
 // stores
 const moduleStore = useModuleStore()
 const { getEntityByName, getCollection } = storeToRefs(moduleStore)
-const { fetchModule } = moduleStore
+const { fetchModule, convertMailboxToInquiry } = moduleStore
 
 // actions
 const initialize = async () => {
   fetchModule(props.convertModule.name)
+}
+const proceedConvert = () => {
+  const convertedModule = getEntityByName.value(props.convertModule.name)
+
+  if (createInquiryFrom.value == 1) {
+    const data = Object.assign({}, {
+      source_id: 'Email',
+      dateRequested: Date.now(),
+      dateResponded: Date.now(),
+      dateResponded: Date.now(),
+      assigned_to_id: selectedModule.value.owner_id,
+      description: `This is a test - ${Date.now()}`,
+      type: convertedModule.mainEntity,
+      link_id: selectedModule.value._id,
+      email_id: props.mailboxMessage.id,
+      conversation_id: props.mailboxMessage.conversationId
+    })
+
+    convertMailboxToInquiry(data)
+  }
 }
 
 // lifecycles
@@ -96,8 +117,9 @@ onMounted(() => {
           class="border-round-3xl py-2 px-4 border-color-primary"
           size="small" />
         <Button
+          @click="proceedConvert()"
           :disabled="!createInquiryFrom"
-          label="Save"
+          label="Proceed"
           class="border-round-3xl py-2 px-4" />
       </div>
     </div>

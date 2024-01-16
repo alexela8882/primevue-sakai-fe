@@ -1,6 +1,7 @@
 // imports
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+// import fs from 'fs'
 import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
 import { storeToRefs } from 'pinia'
@@ -8,7 +9,6 @@ import { storeToRefs } from 'pinia'
 import { useBaseStore } from '@/stores/base'
 
 export const useModuleStore = defineStore('moduleStore', () => {
-
   // refs
   const moduleLoading = ref(false)
   const collectionLoading = ref(false)
@@ -287,6 +287,37 @@ export const useModuleStore = defineStore('moduleStore', () => {
       life: 3000
     })
   }
+  const convertMailboxToInquiry = async (payload) => {
+    // json file setup
+    const filePath = '../../../data/db3.json'
+    const response = await fetch(filePath)
+    const jsonContent = await response.json()
+
+    // Step 2: Parse the JSON content into a JavaScript object
+    const data = jsonContent
+
+    // Step 3: Add a new item to the "data" collection
+    data.inquiries.collection.data.push(payload)
+
+    // Step 4: Convert the modified JavaScript object back to a JSON string
+    const updatedJson = JSON.stringify(data, null, 2)
+
+    console.log(data)
+
+    // console.log(payload)
+    // data.inquiries.collection.data.push(payload)
+    // const updatedJson = JSON.stringify(data, null, 2)
+    // fs.writeFileSync(filePath, updatedJson, 'utf-8')
+    // const uri = 'inquiries'
+
+    // const res = await axios(`${jsonDbUrl.value}/${uri}`, {
+    //   method: 'GET',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   // body: payload
+    // })
+
+    // console.log(res)
+  }
 
   return {
     perPageItems,
@@ -316,6 +347,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     fetchModule,
     fetchBaseModule,
     fetchModules,
-    addViewFilter
+    addViewFilter,
+    convertMailboxToInquiry
   }
 })

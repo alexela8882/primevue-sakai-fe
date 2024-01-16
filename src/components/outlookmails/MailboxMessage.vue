@@ -149,6 +149,7 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
       </div>
     </template>
     <ConvertMailboxMessage
+      :mailboxMessage="message"
       :convertModule="convertMailboxToModule"
       @trigger-dialog="convertMailboxDialog = false"
     />
