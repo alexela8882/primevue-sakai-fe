@@ -10,6 +10,8 @@ import { useBaseStore } from '@/stores/base'
 
 export const useModuleStore = defineStore('moduleStore', () => {
   // refs
+  const convertMailboxDialog = ref(false)
+  const convertMailboxLoading = ref(false)
   const moduleLoading = ref(false)
   const collectionLoading = ref(false)
   const listViewFilterOverlay = ref(false)
@@ -288,30 +290,40 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
   }
   const convertMailboxToInquiry = async (payload) => {
-    // // json file setup
-    const filePath = '../../../data/db3.json'
-    const response = await fetch(filePath)
-    const jsonContent = await response.json()
-
-    // Step 2: Parse the JSON content into a JavaScript object
-    const data = jsonContent
-
-    // Step 3: Add a new item to the "data" collection
-    data.inquiries.collection.data.push(payload)
-
-    // Step 4: Convert the modified JavaScript object back to a JSON string
-    const updatedJson = JSON.stringify(data.inquiries)
-
-    console.log(data.inquiries)
+    convertMailboxLoading.value = true
 
     const uri = 'inquiries'
-    const res = await axios(`${jsonDbUrl.value}/${uri}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      data: updatedJson
+    const getRes = await axios(`${jsonDbUrl.value}/${uri}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
     })
 
-    console.log(res)
+    let updatedJson = getRes.data.collection.data.push(payload)
+    updatedJson = JSON.stringify(getRes.data)
+
+    try {
+      const res = await axios(`${jsonDbUrl.value}/${uri}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        data: updatedJson
+      })
+
+      // toast
+      toast.add({
+        severity: 'success',
+        summary: 'Success Message',
+        detail: 'Convert successful',
+        life: 3000
+      })
+
+      convertMailboxLoading.value = true
+      convertMailboxDialog.value = false
+    } catch (error) {
+      console.log(error)
+
+      convertMailboxLoading.value = true
+      convertMailboxDialog.value = false
+    }
   }
 
   return {
@@ -319,9 +331,11 @@ export const useModuleStore = defineStore('moduleStore', () => {
     viewFilterData,
     getReconstructedViewFilter,
     listViewFilterOverlay,
+    convertMailboxLoading,
     viewFiltersDialogLoading,
     viewFiltersDialogSwitch,
     viewFiltersDialog,
+    convertMailboxDialog,
     moduleLoading,
     collectionLoading,
     modulesLoading,
