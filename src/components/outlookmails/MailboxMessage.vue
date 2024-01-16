@@ -8,6 +8,9 @@ import { useOutlookMailStore } from '@/stores/outlookmails/index'
 const MailboxReply = defineAsyncComponent(() =>
   import('@/components/outlookmails/MailboxReply.vue')
 )
+const ConvertMailboxMessage = defineAsyncComponent(() =>
+  import('@/components/outlookmails/ConvertMailboxMessage.vue')
+)
 
 // defines
 const props = defineProps({
@@ -16,19 +19,53 @@ const props = defineProps({
 })
 
 // refs
-const outlookReply = ref(false)
+const convertMailboxDialog = ref(false)
+const outlookReplyDialog = ref(false)
+const convertMailboxToModule = ref()
+const convertMailboxTo = ref([
+  {
+    label: 'Leads',
+    name: 'leads',
+    command: (event) => {
+      convertMailboxMessageBtn(event.item)
+    }
+  }, {
+    label: 'Defect Reports',
+    name: 'defectreports',
+    command: (event) => {
+      convertMailboxMessageBtn(event.item)
+    }
+  }, {
+    label: 'Breakdown Log',
+    name: 'breakdownlogs',
+    command: (event) => {
+      convertMailboxMessageBtn(event.item)
+    }
+  }, {
+    label: 'Job Request',
+    name: 'servicejobs',
+    command: (event) => {
+      convertMailboxMessageBtn(event.item)
+    }
+  }
+])
 // stores
 const outlookMailStore = useOutlookMailStore()
 const { folderMessageReplyLoading } = storeToRefs(outlookMailStore)
 
 // actions
 const mailReply = async () => {
-  outlookReply.value = true
+  outlookReplyDialog.value = true
+}
+const convertMailboxMessageBtn = (payload) => {
+  console.log(props.message)
+  convertMailboxDialog.value = true
+  convertMailboxToModule.value = payload
 }
 
 // lifecycles
 watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
-  if (!newVal) outlookReply.value = false
+  if (!newVal) outlookReplyDialog.value = false
 })
 </script>
 
@@ -48,6 +85,7 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
           </div>
           <div>
             <SplitButton
+              :model="convertMailboxTo"
               label="Convert"
               outlined></SplitButton>
           </div>
@@ -87,7 +125,7 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
 
   <!-- Mail Reply Dialog -->
   <Dialog
-    v-model:visible="outlookReply"
+    v-model:visible="outlookReplyDialog"
     maximizable
     modal
     header="You are replying to a mail"
@@ -97,8 +135,36 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
       <MailboxReply :mail="message" :token="token" />
     </p>
   </Dialog>
+
+  <!-- Convert Mailbox Dialog -->
+  <Dialog
+    v-model:visible="convertMailboxDialog"
+    modal
+    maximizable
+    :style="{ width: '60vw' }"
+    class="convert-mailbox-dialog">
+    <template #header>
+      <div class="flex align-items-center text-2xl">
+        <div>Convert to Inquiry &mdash; {{ convertMailboxToModule.label }}</div>
+      </div>
+    </template>
+    <ConvertMailboxMessage
+      :convertModule="convertMailboxToModule"
+      @trigger-dialog="convertMailboxDialog = false"
+    />
+  </Dialog>
 </template>
 
-<style scoped>
+<style>
+.convert-mailbox-dialog .p-dialog-header {
+  background-color: var(--primary-color);
+  color: var(--surface-a);
+}
+.convert-mailbox-dialog.p-dialog .p-dialog-header .p-dialog-header-icon {
+  color: var(--surface-a);
+}
 
+.convert-mailbox-dialog.p-dialog .p-dialog-content {
+  padding: 0 !important;
+}
 </style>

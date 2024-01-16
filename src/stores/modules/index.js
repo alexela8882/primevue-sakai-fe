@@ -81,6 +81,11 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return obj
     }
   })
+  const getEntityByName = computed(() => {
+    return (payload) => {
+      return modules.value.find(module => module.name === payload)
+    }
+  })
   const getDefaultViewFilter = computed(() => {
     const moduleFields = module.value && module.value.fields
     const viewFilters = module.value && module.value.viewFilters
@@ -248,17 +253,26 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const fetchModule = async (moduleName, page) => {
     collectionLoading.value = true
     const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
-    const res = await axios(`${jsonDbUrl.value}/${uri}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    })
 
-    if (res.status === 200) {
-      let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
-      module.value = fetchedModule // insert module
-      collection.value = fetchedModule.collection // insert collection
+    try {
+      const res = await axios(`${jsonDbUrl.value}/${uri}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+  
+      if (res.status === 200) {
+        let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
+        module.value = fetchedModule // insert module
+        collection.value = fetchedModule.collection // insert collection
+        collectionLoading.value = false
+      }
+    } catch (error) {
+      console.log(error.response)
+      module.value = {}
+      collection.value = []
+
+      collectionLoading.value = false
     }
-    collectionLoading.value = false
   }
   const addViewFilter = async (payload) => {
     console.log(JSON.stringify(payload))
@@ -291,6 +305,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getCollection,
     getViewFilters,
     getEntity,
+    getEntityByName,
     getDefaultViewFilter,
     getViewFilter,
     getViewFilterIds,
