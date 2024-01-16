@@ -4,6 +4,7 @@ import { ref, watch, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
 import { useOutlookMailStore } from '@/stores/outlookmails/index'
+import { useModuleStore } from '@/stores/modules/index'
 // components
 const MailboxReply = defineAsyncComponent(() =>
   import('@/components/outlookmails/MailboxReply.vue')
@@ -19,7 +20,6 @@ const props = defineProps({
 })
 
 // refs
-const convertMailboxDialog = ref(false)
 const outlookReplyDialog = ref(false)
 const convertMailboxToModule = ref()
 const convertMailboxTo = ref([
@@ -51,7 +51,9 @@ const convertMailboxTo = ref([
 ])
 // stores
 const outlookMailStore = useOutlookMailStore()
+const moduleStore = useModuleStore()
 const { folderMessageReplyLoading } = storeToRefs(outlookMailStore)
+const { convertMailboxDialog } = storeToRefs(moduleStore)
 
 // actions
 const mailReply = async () => {

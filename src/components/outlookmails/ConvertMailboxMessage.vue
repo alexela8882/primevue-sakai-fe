@@ -16,11 +16,13 @@ const selectedModule = ref(null)
 const createInquiryFrom = ref()
 // stores
 const moduleStore = useModuleStore()
-const { getEntityByName, getCollection } = storeToRefs(moduleStore)
+const { getEntityByName, getCollection, convertMailboxLoading } = storeToRefs(moduleStore)
 const { fetchModule, convertMailboxToInquiry } = moduleStore
 
 // actions
 const initialize = async () => {
+  convertMailboxLoading.value = false
+
   fetchModule(props.convertModule.name)
 }
 const proceedConvert = () => {
@@ -112,13 +114,14 @@ onMounted(() => {
       <div class="flex align-items-center justify-content-end my-2 gap-2">
         <Button
           @click="$emit('trigger-dialog')"
+          :disabled="convertMailboxLoading"
           outlined
           label="Cancel"
           class="border-round-3xl py-2 px-4 border-color-primary"
           size="small" />
         <Button
           @click="proceedConvert()"
-          :disabled="!createInquiryFrom"
+          :disabled="!createInquiryFrom || convertMailboxLoading"
           label="Proceed"
           class="border-round-3xl py-2 px-4" />
       </div>

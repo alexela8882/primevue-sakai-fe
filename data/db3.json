@@ -4182,7 +4182,7 @@
     ]
   },
   "leads": {
-    "collection" :{
+    "collection": {
       "data": [
         {
           "_id": "65288b4ca6ebc75d70589d02",
@@ -4531,7 +4531,7 @@
             "name": "Italy",
             "alpha2Code": "IT"
           },
-          "created_at":"2023-10-12",
+          "created_at": "2023-10-12",
           "inquiry_type_id": "Service and Parts Inquiry"
         },
         {
@@ -6615,7 +6615,7 @@
             "name": "Colombia",
             "alpha2Code": "CO"
           },
-          "created_at":  "2023-10-12",
+          "created_at": "2023-10-12",
           "inquiry_type_id": "Service and Parts Inquiry"
         },
         {
@@ -26754,7 +26754,7 @@
     ]
   },
   "inquiries": {
-    "collection" :{
+    "collection": {
       "data": [
         {
           "source_id": "Email",
@@ -26764,13 +26764,153 @@
             "_id": "5bb104ed678f71061f6451f8",
             "firstName": "Ninoy",
             "lastName": "Cahayon",
-            "email":"ninoy.cahayon@escolifesciences.com"
+            "email": "ninoy.cahayon@escolifesciences.com"
           },
-          "description":null,
-          "type":"Lead",
-          "link_id":"65288b4ca6ebc75d70589d02",
-          "email_id":"",
-          "conversation_id":""
+          "description": null,
+          "type": "Lead",
+          "link_id": "65288b4ca6ebc75d70589d02",
+          "email_id": "",
+          "conversation_id": ""
+        },
+        {
+          "source_id": "Email",
+          "dateRequested": 1705397255257,
+          "dateResponded": 1705397255257,
+          "assigned_to_id": {
+            "_id": "5bff0f34678f715bf0332122",
+            "email": "fenny.suana@escolifesciences.com",
+            "firstName": "Fenny",
+            "lastName": "Suana",
+            "peopleUnder": null,
+            "people": [
+              "5bff0f34678f715bf0332122"
+            ]
+          },
+          "description": "This is a test - 1705397255257",
+          "type": "Lead",
+          "link_id": "6527c82ea6ebc76e7a3d6b73",
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3vJ4MgAAAA=",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c"
+        },
+        {
+          "source_id": "Email",
+          "dateRequested": 1705397277266,
+          "dateResponded": 1705397277266,
+          "assigned_to_id": {
+            "_id": "622f16e2a6ebc7ec350bd109",
+            "firstName": "Rebecca",
+            "lastName": "Howland",
+            "email": "rebecca.howland@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "622f16e2a6ebc7ec350bd109"
+            ]
+          },
+          "description": "This is a test - 1705397277266",
+          "type": "Lead",
+          "link_id": "65280897a6ebc73ca44601b2",
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB33MHKsAAAA=",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl"
+        },
+        {
+          "source_id": "Email",
+          "dateRequested": 1705397750817,
+          "dateResponded": 1705397750817,
+          "assigned_to_id": {
+            "_id": "5bb104ed678f71061f645232",
+            "email": "thomas.gibson@escolifesciences.com",
+            "firstName": "Thomas",
+            "lastName": "Gibson",
+            "peopleUnder": null,
+            "people": [
+              "5bb104ed678f71061f645232"
+            ]
+          },
+          "description": "This is a test - 1705397750817",
+          "type": "Lead",
+          "link_id": "65283592a6ebc770b2115553",
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3vJ4MoAAAA=",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEABrkDpkZvjiR7-QWNmnyqUB"
+        },
+        {
+          "source_id": "Email",
+          "dateRequested": 1705398402086,
+          "dateResponded": 1705398402086,
+          "assigned_to_id": {
+            "_id": "5cadbb8aa6ebc720a0361ef3",
+            "email": "jane.luu@escolifesciences.com",
+            "firstName": "Jane",
+            "lastName": "Luu",
+            "peopleUnder": null,
+            "people": [
+              "5cadbb8aa6ebc720a0361ef3"
+            ]
+          },
+          "description": "This is a test - 1705398402086",
+          "type": "Lead",
+          "link_id": "65288b4ca6ebc75d70589d02",
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB33MHKsAAAA=",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl"
+        },
+        {
+          "source_id": "Email",
+          "dateRequested": 1705398547052,
+          "dateResponded": 1705398547052,
+          "assigned_to_id": {
+            "_id": "5cadbb8aa6ebc720a0361ef3",
+            "email": "jane.luu@escolifesciences.com",
+            "firstName": "Jane",
+            "lastName": "Luu",
+            "peopleUnder": null,
+            "people": [
+              "5cadbb8aa6ebc720a0361ef3"
+            ]
+          },
+          "description": "This is a test - 1705398547052",
+          "type": "Lead",
+          "link_id": "65288b4ca6ebc75d70589d02",
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB33MHKsAAAA=",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl"
+        },
+        {
+          "source_id": "Email",
+          "dateRequested": 1705398940583,
+          "dateResponded": 1705398940583,
+          "assigned_to_id": {
+            "_id": "5cadbb8aa6ebc720a0361ef3",
+            "email": "jane.luu@escolifesciences.com",
+            "firstName": "Jane",
+            "lastName": "Luu",
+            "peopleUnder": null,
+            "people": [
+              "5cadbb8aa6ebc720a0361ef3"
+            ]
+          },
+          "description": "This is a test - 1705398940583",
+          "type": "Lead",
+          "link_id": "65288b4ca6ebc75d70589d02",
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB33MHKsAAAA=",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl"
+        },
+        {
+          "source_id": "Email",
+          "dateRequested": 1705399026007,
+          "dateResponded": 1705399026007,
+          "assigned_to_id": {
+            "_id": "5be9ca7b678f7140b667b894",
+            "email": "meiying.lee@escolifesciences.com",
+            "firstName": "Mei Ying",
+            "lastName": "Lee",
+            "peopleUnder": null,
+            "people": [
+              "5be9ca7b678f7140b667b894"
+            ]
+          },
+          "description": "This is a test - 1705399026007",
+          "type": "Lead",
+          "link_id": "6527bb88a6ebc75b4208e023",
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3vJ4MYAAAA=",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c"
         }
       ],
       "meta": {
@@ -26795,11 +26935,11 @@
         "listName": "inquiry_source",
         "header": true,
         "rules": {
-            "ss_dropdown": true
+          "ss_dropdown": true
         },
         "field_type": {
-            "name": "picklist",
-            "_id": "5c906a0ea6ebc7193110e737"
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
         },
         "relation": null
       },
@@ -26810,14 +26950,14 @@
         "uniqueName": "inquiry_date_requested",
         "header": false,
         "rules": {
-            "date_format":"m/d/Y",
-            "required": true,
-            "date_only": true
+          "date_format": "m/d/Y",
+          "required": true,
+          "date_only": true
         },
         "searchKey": false,
         "field_type": {
-            "name": "date",
-            "_id": "5c906a0ea6ebc7193110e732"
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
         },
         "relation": null
       },
@@ -26828,13 +26968,13 @@
         "uniqueName": "inquiry_date_responded",
         "header": false,
         "rules": {
-            "date_format":"m/d/Y",
-            "date_only": true
+          "date_format": "m/d/Y",
+          "date_only": true
         },
         "searchKey": false,
         "field_type": {
-            "name": "date",
-            "_id": "5c906a0ea6ebc7193110e732"
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
         },
         "relation": null
       },
@@ -26850,7 +26990,7 @@
           "helper"
         ],
         "rules": {
-          "ss_pop_up":true
+          "ss_pop_up": true
         },
         "searchKey": false,
         "field_type": {
@@ -26883,8 +27023,8 @@
         "uniqueName": "inquiry_description",
         "searchKey": false,
         "field_type": {
-            "name": "longText",
-            "_id": "5c906a0ea6ebc7193110e73c"
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
         },
         "relation": null
       },
@@ -26895,8 +27035,8 @@
         "uniqueName": "inquiry_email_id",
         "searchKey": false,
         "field_type": {
-            "name": "text",
-            "_id": "5c906a0ea6ebc7193110e73b"
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
         },
         "relation": null
       },
@@ -26907,8 +27047,8 @@
         "uniqueName": "inquiry_conversation_id",
         "searchKey": false,
         "field_type": {
-            "name": "text",
-            "_id": "5c906a0ea6ebc7193110e73b"
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
         },
         "relation": null
       },
@@ -26920,11 +27060,11 @@
         "listName": "inquiry_type",
         "header": true,
         "rules": {
-            "ss_dropdown": true
+          "ss_dropdown": true
         },
         "field_type": {
-            "name": "picklist",
-            "_id": "5c906a0ea6ebc7193110e737"
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
         },
         "relation": null
       },
@@ -26935,13 +27075,13 @@
         "uniqueName": "inquiry_link_id",
         "searchKey": false,
         "field_type": {
-            "name": "text",
-            "_id": "5c906a0ea6ebc7193110e73b"
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
         },
         "relation": null
       }
     ],
-    "panels":[
+    "panels": [
       {
         "_id": "5cadf210a6ebc747e22cb02r",
         "panelName": "inquiry-panel-1",
@@ -27027,16 +27167,126 @@
     ]
   },
   "products": [
-    {"id": "1000","code": "f230fh0g3","name": "Bamboo Watch","description": "Product Description","image": "bamboo-watch.jpg","price": 65,"category": "Accessories","quantity": 24,"inventoryStatus": "INSTOCK","rating": 5},
-    {"id": "1001","code": "nvklal433","name": "Black Watch","description": "Product Description","image": "black-watch.jpg","price": 72,"category": "Accessories","quantity": 61,"inventoryStatus": "INSTOCK","rating": 4},
-    {"id": "1002","code": "zz21cz3c1","name": "Blue Band","description": "Product Description","image": "blue-band.jpg","price": 79,"category": "Fitness","quantity": 2,"inventoryStatus": "LOWSTOCK","rating": 3},
-    {"id": "1003","code": "244wgerg2","name": "Blue T-Shirt","description": "Product Description","image": "blue-t-shirt.jpg","price": 29,"category": "Clothing","quantity": 25,"inventoryStatus": "INSTOCK","rating": 5},
-    {"id": "1004","code": "h456wer53","name": "Bracelet","description": "Product Description","image": "bracelet.jpg","price": 15,"category": "Accessories","quantity": 73,"inventoryStatus": "INSTOCK","rating": 4},
-    {"id": "1005","code": "av2231fwg","name": "Brown Purse","description": "Product Description","image": "brown-purse.jpg","price": 120,"category": "Accessories","quantity": 0,"inventoryStatus": "OUTOFSTOCK","rating": 4},
-    {"id": "1006","code": "bib36pfvm","name": "Chakra Bracelet","description": "Product Description","image": "chakra-bracelet.jpg","price": 32,"category": "Accessories","quantity": 5,"inventoryStatus": "LOWSTOCK","rating": 3},
-    {"id": "1007","code": "mbvjkgip5","name": "Galaxy Earrings","description": "Product Description","image": "galaxy-earrings.jpg","price": 34,"category": "Accessories","quantity": 23,"inventoryStatus": "INSTOCK","rating": 5},
-    {"id": "1008","code": "vbb124btr","name": "Game Controller","description": "Product Description","image": "game-controller.jpg","price": 99,"category": "Electronics","quantity": 2,"inventoryStatus": "LOWSTOCK","rating": 4},
-    {"id": "1009","code": "cm230f032","name": "Gaming Set","description": "Product Description","image": "gaming-set.jpg","price": 299,"category": "Electronics","quantity": 63,"inventoryStatus": "INSTOCK","rating": 3}
+    {
+      "id": "1000",
+      "code": "f230fh0g3",
+      "name": "Bamboo Watch",
+      "description": "Product Description",
+      "image": "bamboo-watch.jpg",
+      "price": 65,
+      "category": "Accessories",
+      "quantity": 24,
+      "inventoryStatus": "INSTOCK",
+      "rating": 5
+    },
+    {
+      "id": "1001",
+      "code": "nvklal433",
+      "name": "Black Watch",
+      "description": "Product Description",
+      "image": "black-watch.jpg",
+      "price": 72,
+      "category": "Accessories",
+      "quantity": 61,
+      "inventoryStatus": "INSTOCK",
+      "rating": 4
+    },
+    {
+      "id": "1002",
+      "code": "zz21cz3c1",
+      "name": "Blue Band",
+      "description": "Product Description",
+      "image": "blue-band.jpg",
+      "price": 79,
+      "category": "Fitness",
+      "quantity": 2,
+      "inventoryStatus": "LOWSTOCK",
+      "rating": 3
+    },
+    {
+      "id": "1003",
+      "code": "244wgerg2",
+      "name": "Blue T-Shirt",
+      "description": "Product Description",
+      "image": "blue-t-shirt.jpg",
+      "price": 29,
+      "category": "Clothing",
+      "quantity": 25,
+      "inventoryStatus": "INSTOCK",
+      "rating": 5
+    },
+    {
+      "id": "1004",
+      "code": "h456wer53",
+      "name": "Bracelet",
+      "description": "Product Description",
+      "image": "bracelet.jpg",
+      "price": 15,
+      "category": "Accessories",
+      "quantity": 73,
+      "inventoryStatus": "INSTOCK",
+      "rating": 4
+    },
+    {
+      "id": "1005",
+      "code": "av2231fwg",
+      "name": "Brown Purse",
+      "description": "Product Description",
+      "image": "brown-purse.jpg",
+      "price": 120,
+      "category": "Accessories",
+      "quantity": 0,
+      "inventoryStatus": "OUTOFSTOCK",
+      "rating": 4
+    },
+    {
+      "id": "1006",
+      "code": "bib36pfvm",
+      "name": "Chakra Bracelet",
+      "description": "Product Description",
+      "image": "chakra-bracelet.jpg",
+      "price": 32,
+      "category": "Accessories",
+      "quantity": 5,
+      "inventoryStatus": "LOWSTOCK",
+      "rating": 3
+    },
+    {
+      "id": "1007",
+      "code": "mbvjkgip5",
+      "name": "Galaxy Earrings",
+      "description": "Product Description",
+      "image": "galaxy-earrings.jpg",
+      "price": 34,
+      "category": "Accessories",
+      "quantity": 23,
+      "inventoryStatus": "INSTOCK",
+      "rating": 5
+    },
+    {
+      "id": "1008",
+      "code": "vbb124btr",
+      "name": "Game Controller",
+      "description": "Product Description",
+      "image": "game-controller.jpg",
+      "price": 99,
+      "category": "Electronics",
+      "quantity": 2,
+      "inventoryStatus": "LOWSTOCK",
+      "rating": 4
+    },
+    {
+      "id": "1009",
+      "code": "cm230f032",
+      "name": "Gaming Set",
+      "description": "Product Description",
+      "image": "gaming-set.jpg",
+      "price": 299,
+      "category": "Electronics",
+      "quantity": 63,
+      "inventoryStatus": "INSTOCK",
+      "rating": 3
+    }
   ],
   "leads-item": [
     {
