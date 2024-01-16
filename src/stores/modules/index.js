@@ -1,6 +1,7 @@
 // imports
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+// import fs from 'fs'
 import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
 import { storeToRefs } from 'pinia'
@@ -8,7 +9,6 @@ import { storeToRefs } from 'pinia'
 import { useBaseStore } from '@/stores/base'
 
 export const useModuleStore = defineStore('moduleStore', () => {
-
   // refs
   const moduleLoading = ref(false)
   const collectionLoading = ref(false)
@@ -79,6 +79,11 @@ export const useModuleStore = defineStore('moduleStore', () => {
         mainEntity: entity.mainEntity
       })
       return obj
+    }
+  })
+  const getEntityByName = computed(() => {
+    return (payload) => {
+      return modules.value.find(module => module.name === payload)
     }
   })
   const getDefaultViewFilter = computed(() => {
@@ -248,17 +253,26 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const fetchModule = async (moduleName, page) => {
     collectionLoading.value = true
     const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
-    const res = await axios(`${jsonDbUrl.value}/${uri}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    })
 
-    if (res.status === 200) {
-      let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
-      module.value = fetchedModule // insert module
-      collection.value = fetchedModule.collection // insert collection
+    try {
+      const res = await axios(`${jsonDbUrl.value}/${uri}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+  
+      if (res.status === 200) {
+        let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
+        module.value = fetchedModule // insert module
+        collection.value = fetchedModule.collection // insert collection
+        collectionLoading.value = false
+      }
+    } catch (error) {
+      console.log(error.response)
+      module.value = {}
+      collection.value = []
+
+      collectionLoading.value = false
     }
-    collectionLoading.value = false
   }
   const addViewFilter = async (payload) => {
     console.log(JSON.stringify(payload))
@@ -272,6 +286,32 @@ export const useModuleStore = defineStore('moduleStore', () => {
       detail: 'New view filters successfully added',
       life: 3000
     })
+  }
+  const convertMailboxToInquiry = async (payload) => {
+    // // json file setup
+    const filePath = '../../../data/db3.json'
+    const response = await fetch(filePath)
+    const jsonContent = await response.json()
+
+    // Step 2: Parse the JSON content into a JavaScript object
+    const data = jsonContent
+
+    // Step 3: Add a new item to the "data" collection
+    data.inquiries.collection.data.push(payload)
+
+    // Step 4: Convert the modified JavaScript object back to a JSON string
+    const updatedJson = JSON.stringify(data.inquiries)
+
+    console.log(data.inquiries)
+
+    const uri = 'inquiries'
+    const res = await axios(`${jsonDbUrl.value}/${uri}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: updatedJson
+    })
+
+    console.log(res)
   }
 
   return {
@@ -291,6 +331,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getCollection,
     getViewFilters,
     getEntity,
+    getEntityByName,
     getDefaultViewFilter,
     getViewFilter,
     getViewFilterIds,
@@ -301,6 +342,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     fetchModule,
     fetchBaseModule,
     fetchModules,
-    addViewFilter
+    addViewFilter,
+    convertMailboxToInquiry
   }
 })

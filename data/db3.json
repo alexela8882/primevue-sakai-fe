@@ -26757,14 +26757,34 @@
     "collection" :{
       "data": [
         {
-          "_id": "1234567",
-          "source_id": 1,
-          "dateRequested": "01/06/1991",
-          "dateResponded": "01/06/1991",
-          "assigned_to_id": 1,
-          "description": "this is a test"
+          "source_id": "Email",
+          "dateRequested": "2024-01-10",
+          "dateResponded": "2024-01-12",
+          "assigned_to_id": {
+            "_id": "5bb104ed678f71061f6451f8",
+            "firstName": "Ninoy",
+            "lastName": "Cahayon",
+            "email":"ninoy.cahayon@escolifesciences.com"
+          },
+          "description":null,
+          "type":"Lead",
+          "link_id":"65288b4ca6ebc75d70589d02",
+          "email_id":"",
+          "conversation_id":""
         }
-      ]
+      ],
+      "meta": {
+        "pagination": {
+          "total": 1,
+          "count": 25,
+          "per_page": 25,
+          "current_page": 1,
+          "total_pages": 1,
+          "links": {
+            "next": "http://reddotcrm.com/api/inquiries?page=2"
+          }
+        }
+      }
     },
     "fields": [
       {
@@ -26863,8 +26883,60 @@
         "uniqueName": "inquiry_description",
         "searchKey": false,
         "field_type": {
-          "name": "longText",
-          "_id": "5c906a0ea6ebc7193110e73c"
+            "name": "longText",
+            "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110ea93",
+        "name": "email_id",
+        "label": "Email",
+        "uniqueName": "inquiry_email_id",
+        "searchKey": false,
+        "field_type": {
+            "name": "text",
+            "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110ea9a",
+        "name": "conversation_id",
+        "label": "Email thread",
+        "uniqueName": "inquiry_conversation_id",
+        "searchKey": false,
+        "field_type": {
+            "name": "text",
+            "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eabd",
+        "name": "type_id",
+        "label": "Type",
+        "uniqueName": "inquiry_type_id",
+        "listName": "inquiry_type",
+        "header": true,
+        "rules": {
+            "ss_dropdown": true
+        },
+        "field_type": {
+            "name": "picklist",
+            "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110ea9g",
+        "name": "link_id",
+        "label": "Related record",
+        "uniqueName": "inquiry_link_id",
+        "searchKey": false,
+        "field_type": {
+            "name": "text",
+            "_id": "5c906a0ea6ebc7193110e73b"
         },
         "relation": null
       }
@@ -26941,7 +27013,11 @@
           "5c906a11a6ebc7193110eab9",
           "5c906a11a6ebc7193110eab4",
           "5c906a14a6ebc7193110efa2",
-          "5c906a11a6ebc7193110ea96"
+          "5c906a11a6ebc7193110ea96",
+          "5c906a11a6ebc7193110ea93",
+          "5c906a11a6ebc7193110ea9a",
+          "5c906a11a6ebc7193110eabd",
+          "5c906a11a6ebc7193110ea9g"
         ],
         "isDefault": true,
         "currentDisplay": "table",
