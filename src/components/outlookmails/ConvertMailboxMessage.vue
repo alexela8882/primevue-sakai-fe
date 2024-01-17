@@ -3,7 +3,7 @@
 import { ref, watch, defineAsyncComponent, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
-import { useModuleStore } from '@/stores/modules/index'
+import { useModuleStore } from '@/stores/modules'
 
 // defines
 const props = defineProps({
@@ -25,7 +25,7 @@ const initialize = async () => {
 
   fetchModule(props.convertModule.name)
 }
-const proceedConvert = () => {
+const proceedConvert = async () => {
   const convertedModule = getEntityByName.value(props.convertModule.name)
 
   if (createInquiryFrom.value == 1) {
@@ -42,7 +42,7 @@ const proceedConvert = () => {
       conversation_id: props.mailboxMessage.conversationId
     })
 
-    convertMailboxToInquiry(data)
+    await convertMailboxToInquiry(data)
   }
 }
 

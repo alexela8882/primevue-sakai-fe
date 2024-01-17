@@ -154,6 +154,9 @@ watch(() => searchFolder.value, (newVal, oldVal) => {
 watch(() => getMailFolderMessages.value, (newVal, oldVal) => {
   folderMessages.value = newVal.value
 
+  console.log(oldVal.value)
+  console.log(newVal.value)
+
   // select first message on the list
   newVal.value.map((mfm, ix) => {
     if (ix === 0) selectedMessage.value = mfm
@@ -233,7 +236,7 @@ onMounted(async () => {
                 @click="selectMessage(message)"
                 class="p-4 cursor-pointer border-1 border-300 border-x-none white-space-nowrap overflow-hidden text-overflow-ellipsis"
                 :class="`${mx !== 0 && 'border-top-none'} ${(message.id === (selectedMessage && selectedMessage.id)) && 'bg-primary-100'}`">
-                <div class="flex align-items-start justify-content-between gap-6">
+                <div class="flex align-items-center justify-content-between gap-6">
                   <div class="flex flex-column gap-1">
                     <div class="font-bold">{{ message.from.emailAddress.name }}</div>
                     <div
@@ -241,11 +244,14 @@ onMounted(async () => {
                       :class="`${!message.isRead && 'font-bold'}`"
                     >{{ message.subject }}</div>
                   </div>
-                  <div class="flex flex-column gap-2">
+                  <div class="flex flex-column gap-2 align-self-start">
                     <div
                       class="text-xs text-700"
                       :class="`${!message.isRead && 'font-bold'}`"
                     >{{ message.receivedDateTime }}</div>
+                    <div v-if="message.convertedToInquiry">
+                      <Button label="View inquiry" size="small" outlined />
+                    </div>
                   </div>
                 </div>
               </div>

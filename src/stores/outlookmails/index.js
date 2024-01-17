@@ -6,6 +6,7 @@ import { useToast } from 'primevue/usetoast'
 import { storeToRefs } from 'pinia'
 // stores
 import { useBaseStore } from '@/stores/base'
+import { useModuleStore } from '@/stores/modules'
 
 export const useOutlookMailStore = defineStore('outlookMailStore', () => {
 
@@ -19,7 +20,10 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
   const toast = useToast()
   // stores
   const baseStore = useBaseStore()
+  const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
+  const { getCollection } = storeToRefs(moduleStore)
+  const { fetchModule } = moduleStore
 
   // states
   const profile = ref()
@@ -134,7 +138,12 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
     const response = await fetchMsGraph.value(payload)
 
     if (response.value) {
-      console.log(response)
+      // get new response value
+      const newResValue = await fetchMailboxInInquiries(response.value)
+
+      // replace with new response value
+      response.value = newResValue
+
       mailFolderMessages.value = response
       mailFolderMessagesLoading.value = false
 
@@ -193,8 +202,6 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
                       return JSON.parse(dataStr)
                     })
 
-    mailFolderMessages.value = response
-
     if (response) {
       // keep previous link
       previousLink.value = link
@@ -206,10 +213,34 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
 
       skipValue.value = skipVal
 
+      // get new response value
+      const newResValue = await fetchMailboxInInquiries(response.value)
+
+      // replace with new response value
+      response.value = newResValue
+
+      console.log(response)
+
       // mail folder messages
       mailFolderMessages.value = response
       mailFolderLoading.value = false
     }
+  }
+  const fetchMailboxInInquiries = async (payload) => {
+    // fetch modules
+    await fetchModule('inquiries')
+
+    const inquiryMailboxIds = getCollection.value.data.map(gc => gc.email_id)
+
+    // append new key to tag as 'converted to inquiry'
+    const newResValue = payload.map(item => {
+      if (inquiryMailboxIds.includes(item.id)) {
+        return { ...item, convertedToInquiry: true }
+      }
+      return item
+    })
+
+    return newResValue
   }
 
   return {

@@ -7,7 +7,7 @@ const MailboxMessage = defineAsyncComponent(() =>
   import('@/components/outlookmails/MailboxMessage.vue')
 )
 // stores
-import { useOutlookMailStore } from '@/stores/outlookmails/index'
+import { useOutlookMailStore } from '@/stores/outlookmails'
 
 // refs
 const folderOpened = ref(true)
