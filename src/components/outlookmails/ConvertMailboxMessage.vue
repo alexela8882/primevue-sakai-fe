@@ -130,7 +130,8 @@ onMounted(() => {
           size="small" />
         <Button
           @click="proceedConvert()"
-          :disabled="!createInquiryFrom || convertMailboxLoading"
+          :disabled="!createInquiryFrom"
+          :loading="convertMailboxLoading"
           label="Proceed"
           class="border-round-3xl py-2 px-4" />
       </div>
