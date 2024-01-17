@@ -77,7 +77,22 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
       <div class="flex justify-content-between">
         <div class="flex align-items-center gap-2">
           <span class="font-bold text-2xl">{{ message.subject }}</span>
-          <span v-if="message.convertedToInquiry" class="text-xl">&nbsp;(Converted to inquiry)</span>
+          <span v-if="message.convertedToInquiry" class="flex align-items-center gap-2">
+            <span class="text-xl">&nbsp;(Converted to inquiry)</span>
+            <span
+              class="pi pi-reply cursor-pointer font-bold text-primary"
+              v-tooltip.bottom="{
+                value: 'view inquiry',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderBottomColor: 'var(--primary-color)'
+                    }
+                  },
+                  text: 'bg-primary font-medium'
+                }
+              }"></span>
+            </span>
         </div>
         <div class="flex align-items-center gap-3">
           <div>

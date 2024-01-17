@@ -235,7 +235,7 @@ onMounted(async () => {
                 :key="mx"
                 @click="selectMessage(message)"
                 class="p-4 cursor-pointer border-1 border-300 border-x-none white-space-nowrap overflow-hidden text-overflow-ellipsis"
-                :class="`${mx !== 0 && 'border-top-none'} ${(message.id === (selectedMessage && selectedMessage.id)) && 'bg-primary-100'}`">
+                :class="`${message.convertedToInquiry && 'bg-primary-50'} ${mx !== 0 && 'border-top-none'} ${(message.id === (selectedMessage && selectedMessage.id)) && 'bg-primary-100'}`">
                 <div class="flex align-items-center justify-content-between gap-6">
                   <div class="flex flex-column gap-1">
                     <div class="font-bold">{{ message.from.emailAddress.name }}</div>

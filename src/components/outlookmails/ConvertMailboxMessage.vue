@@ -4,6 +4,7 @@ import { ref, watch, defineAsyncComponent, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
 import { useModuleStore } from '@/stores/modules'
+import { useOutlookMailStore } from '@/stores/outlookmails'
 
 // defines
 const props = defineProps({
@@ -16,7 +17,9 @@ const selectedModule = ref(null)
 const createInquiryFrom = ref()
 // stores
 const moduleStore = useModuleStore()
+const outlookMailStore = useOutlookMailStore()
 const { getEntityByName, getCollection, convertMailboxLoading } = storeToRefs(moduleStore)
+const { getMailFolderMessages } = storeToRefs(outlookMailStore)
 const { fetchModule, convertMailboxToInquiry } = moduleStore
 
 // actions
@@ -43,6 +46,12 @@ const proceedConvert = async () => {
     })
 
     await convertMailboxToInquiry(data)
+    getMailFolderMessages.value.value.find(fm => {
+      if (fm.id === data.email_id) {
+        let newObj = { ...fm, convertedToInquiry: true }
+        Object.assign(fm, newObj)
+      }
+    })
   }
 }
 
