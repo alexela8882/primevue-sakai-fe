@@ -3,8 +3,8 @@
 import { ref, watch, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
-import { useOutlookMailStore } from '@/stores/outlookmails/index'
-import { useModuleStore } from '@/stores/modules/index'
+import { useOutlookMailStore } from '@/stores/outlookmails'
+import { useModuleStore } from '@/stores/modules'
 // components
 const MailboxReply = defineAsyncComponent(() =>
   import('@/components/outlookmails/MailboxReply.vue')
@@ -75,7 +75,25 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
   <div class="w-full">
     <div v-if="message" class="flex flex-column gap-4">
       <div class="flex justify-content-between">
-        <div class="font-bold text-2xl">{{ message.subject }}</div>
+        <div class="flex align-items-center gap-2">
+          <span class="font-bold text-2xl">{{ message.subject }}</span>
+          <span v-if="message.convertedToInquiry" class="flex align-items-center gap-2">
+            <span class="text-xl">&nbsp;(Converted to inquiry)</span>
+            <span
+              class="pi pi-reply cursor-pointer font-bold text-primary"
+              v-tooltip.bottom="{
+                value: 'view inquiry',
+                pt: {
+                  arrow: {
+                    style: {
+                      borderBottomColor: 'var(--primary-color)'
+                    }
+                  },
+                  text: 'bg-primary font-medium'
+                }
+              }"></span>
+            </span>
+        </div>
         <div class="flex align-items-center gap-3">
           <div>
             <font-awesome-icon
@@ -88,6 +106,7 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
           <div>
             <SplitButton
               :model="convertMailboxTo"
+              :disabled="message.convertedToInquiry"
               label="Convert"
               outlined></SplitButton>
           </div>

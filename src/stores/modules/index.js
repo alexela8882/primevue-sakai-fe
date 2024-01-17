@@ -289,6 +289,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
       life: 3000
     })
   }
+
+  // specific actions for inquiry module
   const convertMailboxToInquiry = async (payload) => {
     convertMailboxLoading.value = true
 
@@ -357,6 +359,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
     fetchBaseModule,
     fetchModules,
     addViewFilter,
+
+    // specific functions for inquiry module
     convertMailboxToInquiry
   }
 })

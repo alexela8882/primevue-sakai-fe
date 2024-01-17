@@ -3,7 +3,7 @@
 import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
-import { useOutlookMailStore } from '@/stores/outlookmails/index'
+import { useOutlookMailStore } from '@/stores/outlookmails'
 
 // defines
 const props = defineProps({
