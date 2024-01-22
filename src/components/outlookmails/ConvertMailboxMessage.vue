@@ -4,7 +4,12 @@ import { ref, watch, defineAsyncComponent, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
 import { useModuleStore } from '@/stores/modules'
+import { useModuleDetailStore } from '@/stores/modules/detail'
 import { useOutlookMailStore } from '@/stores/outlookmails'
+// loaders
+import TwoColumnList from '@/components/loading/TwoColumnList.vue'
+// components
+const SectionFields = defineAsyncComponent(() => import('@/components/modules/Page/SectionFields.vue'))
 
 // defines
 const props = defineProps({
@@ -13,20 +18,44 @@ const props = defineProps({
 })
 
 // refs
+const timeout = ref(true)
+const atIndexRelatedLists = ref([])
+const requiredFields = ref([])
+const requiredFieldsCount = ref(0)
+const newModuleFields = ref([])
 const selectedModule = ref(null)
 const createInquiryFrom = ref()
 // stores
 const moduleStore = useModuleStore()
+const moduleDetailStore = useModuleDetailStore()
 const outlookMailStore = useOutlookMailStore()
-const { getEntityByName, getCollection, convertMailboxLoading } = storeToRefs(moduleStore)
+const {
+    getEntityByName,
+    getCollection,
+    getModule,
+    convertMailboxLoading } = storeToRefs(moduleStore)
+const { getItemPanels, getRelatedListsByCname } = storeToRefs(moduleDetailStore)
 const { getMailFolderMessages } = storeToRefs(outlookMailStore)
 const { fetchModule, convertMailboxToInquiry } = moduleStore
 
 // actions
 const initialize = async () => {
+  setTimeout(() => {
+    timeout.value = false
+    $emit('update-timeout')
+  }, 100)
+
   convertMailboxLoading.value = false
 
-  fetchModule(props.convertModule.name)
+  await fetchModule(props.convertModule.name)
+
+  newModuleFields.value = getModule.value.fields
+  // add collection item for filling field data
+  newModuleFields.value.map(nmf => Object.assign(nmf, { ...nmf, data: { value: null } }))
+  requiredFields.value = newModuleFields.value.filter(nmf => (nmf.rules && nmf.rules.required))
+  requiredFieldsCount.value = requiredFields.value.length
+
+  atIndexRelatedLists.value = getItemPanels.value.filter(ip => ip.controllerMethod.includes('@index'))
 }
 const proceedConvert = async () => {
   const convertedModule = getEntityByName.value(props.convertModule.name)
@@ -53,6 +82,21 @@ const proceedConvert = async () => {
       }
     })
   }
+}
+const fillFields = (args) => {
+  console.log(args)
+  // console.log(newModuleFields.value)
+
+  const index = newModuleFields.value.findIndex(nmf => nmf._id === args.field_id)
+  if (index !== -1) {
+    newModuleFields.value[index].data.value = args.modelValue
+  }
+
+  // update required fields
+  requiredFieldsCount.value = newModuleFields.value.filter(nmf => ((nmf.rules && nmf.rules.required) && (nmf.data.value == null || nmf.data.value == ''))).length
+
+  // console.log(requiredFieldsCount.value)
+  console.log(newModuleFields.value)
 }
 
 // lifecycles
@@ -117,25 +161,88 @@ onMounted(() => {
         <RadioButton v-model="createInquiryFrom" inputId="ingredient1" name="2" :value="2" />
         <label class="ml-2">Create new</label>
       </div>
-    </div>
 
-    <div class="m-4">
-      <div class="flex align-items-center justify-content-end my-2 gap-2">
-        <Button
-          @click="$emit('trigger-dialog')"
-          :disabled="convertMailboxLoading"
-          outlined
-          label="Cancel"
-          class="border-round-3xl py-2 px-4 border-color-primary"
-          size="small" />
-        <Button
-          @click="proceedConvert()"
-          :disabled="!createInquiryFrom"
-          :loading="convertMailboxLoading"
-          label="Proceed"
-          class="border-round-3xl py-2 px-4" />
+      <div>
+        <h3>Quick add</h3>
+        <div class="grid">
+          <div v-for="(requiredField, rfx) in requiredFields" :key="rfx" class="col-6">
+            <span class="p-float-label">
+              <InputText
+                v-model="requiredField.data.value"
+                :disabled="requiredField.name == 'source_id'"
+                @update:modelValue="fillFields($event, { modelValue: $event, field_id: requiredField._id, field_uname: requiredField.uniqueName })"
+                class="w-full border-left-3 border-red-600"
+              />
+              <label>{{ requiredField.label }}</label>
+            </span>
+          </div>
+        </div>
+
+        <h3>Detailed add</h3>
+        <div v-for="(panel, px) in atIndexRelatedLists" :key="px" class="flex flex-column gap-1">
+          <div v-for="(section, sx) in panel.sections" :key="sx" :class="`${sx !== 0 && 'mt-4'}`">
+            <div>
+              <div>
+                <div v-if="section.sectionLabel">
+                  <div class="text-xl font-bold">{{ section.sectionLabel }}</div>
+                  <div v-if="getRelatedListsByCname(panel.panelName)">
+                    <div class="material-icons cursor-pointer">playlist_add</div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex flex-column mt-4">
+                <div v-if="panel.controllerMethod.indexOf('@index') > -1">
+                  <Suspense v-if="section.field_ids.length > 0">
+                    <SectionFields
+                      mode="edit"
+                      source="Email"
+                      :fieldIds="section.field_ids"
+                      @fill-fields="fillFields($event, modelValue)" />
+                    <template #fallback>
+                      <TwoColumnList />
+                    </template>
+                  </Suspense>
+                  <div v-if="section.additional_fields.length > 0">
+                    <div v-for="(addition_field, afx) in section.additional_fields" :key="afx">
+                      <Suspense v-if="addition_field.ids.length > 0">
+                        <SectionFields
+                          mode="edit"
+                          source="Email"
+                          :fieldIds="addition_field.ids"
+                          @fill-fields="fillFields($event, modelValue)" />
+                        <template #fallback>
+                          <TwoColumnList />
+                        </template>
+                      </Suspense>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <Teleport v-if="!timeout" to=".mailbox-dialog-footer">
+      <div class="p-2 border-top-1 border-200">
+        <div class="flex align-items-center justify-content-end my-2 gap-2">
+          <Button
+            @click="$emit('trigger-dialog')"
+            :disabled="convertMailboxLoading"
+            outlined
+            label="Cancel"
+            class="border-round-3xl py-2 px-4 border-color-primary"
+            size="small" />
+          <Button
+            @click="proceedConvert()"
+            :disabled="!createInquiryFrom && requiredFieldsCount > 1"
+            :loading="convertMailboxLoading"
+            label="Proceed"
+            class="border-round-3xl py-2 px-4" />
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>
 
