@@ -17,6 +17,7 @@ const { getItemValueByName } = storeToRefs(moduleDetailStore)
 // defines
 const props = defineProps({
   fieldIds: Array,
+  newModuleFields: Array,
   source: String,
   mode: {
     type: String,
@@ -91,16 +92,18 @@ watch(() => getFieldDetailsById.value, (newVal, oldVal) => {
             </div>
           </div>
           <div v-else>
-            <span class="p-float-label">
-              <InputText
-                :disabled="getFieldDetailsById(id).name == 'source_id' && source == 'Email'"
-                v-model="getFieldDetailsById(id).value"
-                @update:modelValue="$emit('fill-fields', { modelValue: $event, field_id: id, field_uname: getFieldDetailsById(id).uniqueName })"
-                class="w-full"
-                :class="`${(getFieldDetailsById(id).rules && getFieldDetailsById(id).rules.required) && 'border-left-3 border-red-600'}`"
-              />
-              <label>{{ getFieldDetailsById(id).label }}</label>
-            </span>
+            <div v-for="(nmField, nmf) in newModuleFields.filter(nmi => nmi._id === id)" :key="nmf">
+              <span class="p-float-label">
+                <InputText
+                  :disabled="nmField.name == 'source_id' && source == 'Email'"
+                  v-model="nmField.data.value"
+                  @update:modelValue="$emit('update-module-fields')"
+                  class="w-full"
+                  :class="`${(nmField.rules && nmField.rules.required) && 'border-left-3 border-red-600'}`"
+                />
+                <label>{{ nmField.label }}</label>
+              </span>
+            </div>
           </div>
         </div>
       </div>

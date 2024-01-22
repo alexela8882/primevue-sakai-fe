@@ -52,8 +52,12 @@ const initialize = async () => {
   newModuleFields.value = getModule.value.fields
   // add collection item for filling field data
   newModuleFields.value.map(nmf => Object.assign(nmf, { ...nmf, data: { value: null } }))
+
+  // generate required fields for quick add
   requiredFields.value = newModuleFields.value.filter(nmf => (nmf.rules && nmf.rules.required))
   requiredFieldsCount.value = requiredFields.value.length
+
+  console.log(newModuleFields.value)
 
   atIndexRelatedLists.value = getItemPanels.value.filter(ip => ip.controllerMethod.includes('@index'))
 }
@@ -84,7 +88,7 @@ const proceedConvert = async () => {
   }
 }
 const fillFields = (args) => {
-  console.log(args)
+  // console.log(args)
   // console.log(newModuleFields.value)
 
   const index = newModuleFields.value.findIndex(nmf => nmf._id === args.field_id)
@@ -96,7 +100,14 @@ const fillFields = (args) => {
   requiredFieldsCount.value = newModuleFields.value.filter(nmf => ((nmf.rules && nmf.rules.required) && (nmf.data.value == null || nmf.data.value == ''))).length
 
   // console.log(requiredFieldsCount.value)
-  console.log(newModuleFields.value)
+  // console.log(newModuleFields.value)
+}
+const updateModuleFields = () => {
+  // console.log(newModuleFields.value)
+
+  // update required fields
+  requiredFieldsCount.value = newModuleFields.value.filter(nmf => ((nmf.rules && nmf.rules.required) && (nmf.data.value == null || nmf.data.value == ''))).length
+  console.log(requiredFieldsCount.value)
 }
 
 // lifecycles
@@ -111,6 +122,7 @@ watch(() => props.convertModule, (newVal, oldVal) => {
   console.log(newVal)
   initialize()
 })
+
 onMounted(() => {
   initialize()
 
@@ -158,7 +170,7 @@ onMounted(() => {
     <Divider />
     <div class="flex flex-column gap-3 m-4">
       <div class="flex align-items-center">
-        <RadioButton v-model="createInquiryFrom" inputId="ingredient1" name="2" :value="2" />
+        <RadioButton v-model="createInquiryFrom" name="2" :value="2" />
         <label class="ml-2">Create new</label>
       </div>
 
@@ -170,7 +182,7 @@ onMounted(() => {
               <InputText
                 v-model="requiredField.data.value"
                 :disabled="requiredField.name == 'source_id'"
-                @update:modelValue="fillFields($event, { modelValue: $event, field_id: requiredField._id, field_uname: requiredField.uniqueName })"
+                @update:modelValue="updateModuleFields()"
                 class="w-full border-left-3 border-red-600"
               />
               <label>{{ requiredField.label }}</label>
@@ -184,10 +196,7 @@ onMounted(() => {
             <div>
               <div>
                 <div v-if="section.sectionLabel">
-                  <div class="text-xl font-bold">{{ section.sectionLabel }}</div>
-                  <div v-if="getRelatedListsByCname(panel.panelName)">
-                    <div class="material-icons cursor-pointer">playlist_add</div>
-                  </div>
+                  <div class="text-l text-700 font-bold bg-primary-50 p-2">{{ section.sectionLabel }}</div>
                 </div>
               </div>
               <div class="flex flex-column mt-4">
@@ -197,7 +206,8 @@ onMounted(() => {
                       mode="edit"
                       source="Email"
                       :fieldIds="section.field_ids"
-                      @fill-fields="fillFields($event, modelValue)" />
+                      :newModuleFields="newModuleFields"
+                      @update-module-fields="updateModuleFields()" />
                     <template #fallback>
                       <TwoColumnList />
                     </template>
@@ -209,7 +219,8 @@ onMounted(() => {
                           mode="edit"
                           source="Email"
                           :fieldIds="addition_field.ids"
-                          @fill-fields="fillFields($event, modelValue)" />
+                          :newModuleFields="newModuleFields"
+                          @update-module-fields="updateModuleFields()" />
                         <template #fallback>
                           <TwoColumnList />
                         </template>
@@ -236,7 +247,7 @@ onMounted(() => {
             size="small" />
           <Button
             @click="proceedConvert()"
-            :disabled="!createInquiryFrom && requiredFieldsCount > 1"
+            :disabled="!createInquiryFrom || (createInquiryFrom == 2 && requiredFieldsCount > 1)"
             :loading="convertMailboxLoading"
             label="Proceed"
             class="border-round-3xl py-2 px-4" />
