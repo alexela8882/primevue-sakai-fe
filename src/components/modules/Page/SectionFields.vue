@@ -18,6 +18,9 @@ const { getItemValueByName } = storeToRefs(moduleDetailStore)
 const props = defineProps({
   fieldIds: Array,
   newModuleFields: Array,
+  moduleValidationInputs: Object,
+  moduleValidationErrors: Object,
+  moduleValidationMeta: Object,
   source: String,
   mode: {
     type: String,
@@ -95,14 +98,16 @@ watch(() => getFieldDetailsById.value, (newVal, oldVal) => {
             <div v-for="(nmField, nmf) in newModuleFields.filter(nmi => nmi._id === id)" :key="nmf">
               <span class="p-float-label">
                 <InputText
-                  :disabled="nmField.name == 'source_id' && source == 'Email'"
-                  v-model="nmField.data.value"
-                  @update:modelValue="$emit('update-module-fields')"
+                  v-bind="moduleValidationInputs[nmField.uniqueName]"
+                  @update:modelValue="$emit('validate-sync-func')"
                   class="w-full"
-                  :class="`${(nmField.rules && nmField.rules.required) && 'border-left-3 border-red-600'}`"
+                  :class="`${(nmField.rules && nmField.rules.required) && 'border-left-3'} ${!moduleValidationErrors[nmField.uniqueName] && moduleValidationMeta.touched ? 'border-green-600' : 'border-red-600'}`"
                 />
                 <label>{{ nmField.label }}</label>
               </span>
+              <small v-if="moduleValidationErrors[nmField.uniqueName]" class="text-red-800">
+                {{ moduleValidationErrors[nmField.uniqueName] }}
+              </small>
             </div>
           </div>
         </div>

@@ -179,8 +179,8 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
       @update-timeout="cmmtimeout = false"
     />
     <template #footer>
-      <div class="mailbox-dialog-footer">
-        <div v-if="cmmtimeout" class="flex align-items-center justify-content-end gap-2 p-2 border-top-1 border-200">
+      <div class="mailbox-dialog-footer surface-50">
+        <div v-if="cmmtimeout" class="flex align-items-center justify-content-end gap-2 p-2">
           <Skeleton width="5rem" height="2rem"></Skeleton>
           <Skeleton width="5rem" height="2rem"></Skeleton>
         </div>

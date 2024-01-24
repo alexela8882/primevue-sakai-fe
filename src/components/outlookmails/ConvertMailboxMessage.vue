@@ -2,6 +2,8 @@
 // imports
 import { ref, watch, defineAsyncComponent, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useForm } from 'vee-validate'
+import * as yup from 'yup'
 // stores
 import { useModuleStore } from '@/stores/modules'
 import { useModuleDetailStore } from '@/stores/modules/detail'
@@ -16,8 +18,15 @@ const props = defineProps({
   convertModule: Object,
   mailboxMessage: Object
 })
+const emit = defineEmits(['update-timeout'])
 
 // refs
+const testValidationSchema = ref({
+  test: 'initial value'
+})
+const testInputObj = ref()
+const moduleValidationSchemes = ref({})
+const moduleValidationInputs = ref({})
 const timeout = ref(true)
 const atIndexRelatedLists = ref([])
 const requiredFields = ref([])
@@ -25,6 +34,39 @@ const requiredFieldsCount = ref(0)
 const newModuleFields = ref([])
 const selectedModule = ref(null)
 const createInquiryFrom = ref()
+const {
+  values,
+  errors,
+  setErrors,
+  setFieldError,
+  ErrorBag,
+  defineComponentBinds,
+  isSubmitting,
+  setFieldValue,
+  handleSubmit,
+  meta
+} = useForm({
+  // validationSchema: yup.object({
+  //   // field0: yup.string().label('Field 0').required(),
+  //   // test_fields: yup.object().shape({
+  //   //   field_1: yup.string().label('Field 1').required()
+  //   // }),
+  //   // testInputs: yup.object({
+  //   //   lead_first_name: yup.string().label('First Name').required()
+  //   // }),
+  //   testInputs: testInputObj.value
+  // })
+  // validationSchema: yup.object({
+  //   lead_company: yup.string().label('Company').required()
+  // }),
+  // initialValues: testValidationSchema.value,
+  // enableReinitialize: true
+})
+const field0 = defineComponentBinds('field0')
+const test_fields = ref({
+  field_1: defineComponentBinds('test_fields.field_1')
+})
+// const field_1 = defineComponentBinds('test_fields.field_1')
 // stores
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
@@ -40,11 +82,6 @@ const { fetchModule, convertMailboxToInquiry } = moduleStore
 
 // actions
 const initialize = async () => {
-  setTimeout(() => {
-    timeout.value = false
-    $emit('update-timeout')
-  }, 100)
-
   convertMailboxLoading.value = false
 
   await fetchModule(props.convertModule.name)
@@ -52,20 +89,68 @@ const initialize = async () => {
   newModuleFields.value = getModule.value.fields
   // add collection item for filling field data
   newModuleFields.value.map(nmf => Object.assign(nmf, { ...nmf, data: { value: null } }))
+  // generate dynamic fields for validation
+  const testConst = {}
+  newModuleFields.value.map(nmf => {
+    if (nmf.rules && nmf.rules.required) {
+      testConst[nmf.uniqueName] = yup.string().label(nmf.label).required()
+      // moduleValidationSchemes.value[nmf.uniqueName] = yup.string().label(nmf.label).required()
+
+      // console.log(yup.string().label(nmf.label).required())
+      // console.log(moduleValidationSchemes.value[nmf.uniqueName])
+
+      let obj = Object.assign({}, {
+        [nmf.uniqueName]: yup.string().label(nmf.label).required()
+      })
+
+      console.log(obj)
+    } else {
+      testConst[nmf.uniqueName] = yup.string().label(nmf.label).nullable()
+      // moduleValidationSchemes.value[nmf.uniqueName] = yup.string().label(nmf.label).nullable()
+    }
+
+    moduleValidationInputs.value[nmf.uniqueName] = defineComponentBinds(`${nmf.uniqueName}`)
+    setFieldValue(`${nmf.uniqueName}`, null)
+
+    // console.log(moduleValidationInputs.value)
+    // console.log(moduleValidationInputs.value[nmf.uniqueName])
+
+    // console.log(test_fields.value)
+  })
+
+  moduleValidationSchemes.value = testConst
+  moduleValidationSchemes.value = yup.object(testConst)
+  console.log(moduleValidationSchemes.value)
 
   // generate required fields for quick add
   requiredFields.value = newModuleFields.value.filter(nmf => (nmf.rules && nmf.rules.required))
   requiredFieldsCount.value = requiredFields.value.length
 
-  console.log(newModuleFields.value)
+  let testObj = {
+    test_fields: yup.object().shape({
+      field_1: yup.string().label('Field 1').required()
+    })
+  }
+
+  // console.log(testObj.test_fields.fields)
+
+  // console.log(moduleValidationSchemes.value)
+  // console.log(moduleValidationInputs.value)
 
   atIndexRelatedLists.value = getItemPanels.value.filter(ip => ip.controllerMethod.includes('@index'))
+
+  // bug fix
+  setTimeout(() => {
+    timeout.value = false
+    emit('update-timeout')
+  }, 100)
 }
 const proceedConvert = async () => {
   const convertedModule = getEntityByName.value(props.convertModule.name)
+  let data = null
 
   if (createInquiryFrom.value == 1) {
-    const data = Object.assign({}, {
+    data = Object.assign({}, {
       source_id: 'Email',
       dateRequested: Date.now(),
       dateResponded: Date.now(),
@@ -78,36 +163,50 @@ const proceedConvert = async () => {
       conversation_id: props.mailboxMessage.conversationId
     })
 
-    await convertMailboxToInquiry(data)
-    getMailFolderMessages.value.value.find(fm => {
-      if (fm.id === data.email_id) {
-        let newObj = { ...fm, convertedToInquiry: true }
-        Object.assign(fm, newObj)
-      }
+    // convert mailbox to inquiry
+    proceedConvertMailboxToInquiry(data)
+  } else saveNewConvert()
+}
+
+const saveNewConvert = async () => {
+  const res = await validateSyncFunc()
+  console.log(res)
+}
+const validateSyncFunc = handleSubmit((values, actions) => {
+  // update errors
+  Object.keys(moduleValidationInputs.value).forEach((key, index) => {
+    const val = moduleValidationInputs.value[key].modelValue
+    if (val !== null) setFieldError(key, null)
+  })
+
+  try {
+    moduleValidationSchemes.value.validateSync(values, { abortEarly: false })
+
+    // alert(JSON.stringify(values, null, 2))
+    console.log(values)
+    return values
+  } catch (error) {
+    // console.log(errors)
+    // console.log(error.inner)
+    let errArray = []
+    error.inner.map(err => {
+      let obj = { [err.path]: err.message }
+      errArray.push(obj)
+      // actions.setErrors(obj)
+      actions.setFieldError(err.path, err.message)
     })
+
+    return error
   }
-}
-const fillFields = (args) => {
-  // console.log(args)
-  // console.log(newModuleFields.value)
-
-  const index = newModuleFields.value.findIndex(nmf => nmf._id === args.field_id)
-  if (index !== -1) {
-    newModuleFields.value[index].data.value = args.modelValue
-  }
-
-  // update required fields
-  requiredFieldsCount.value = newModuleFields.value.filter(nmf => ((nmf.rules && nmf.rules.required) && (nmf.data.value == null || nmf.data.value == ''))).length
-
-  // console.log(requiredFieldsCount.value)
-  // console.log(newModuleFields.value)
-}
-const updateModuleFields = () => {
-  // console.log(newModuleFields.value)
-
-  // update required fields
-  requiredFieldsCount.value = newModuleFields.value.filter(nmf => ((nmf.rules && nmf.rules.required) && (nmf.data.value == null || nmf.data.value == ''))).length
-  console.log(requiredFieldsCount.value)
+})
+const proceedConvertMailboxToInquiry = async (data) => {
+  await convertMailboxToInquiry(data)
+  getMailFolderMessages.value.value.find(fm => {
+    if (fm.id === data.email_id) {
+      let newObj = { ...fm, convertedToInquiry: true }
+      Object.assign(fm, newObj)
+    }
+  })
 }
 
 // lifecycles
@@ -176,17 +275,32 @@ onMounted(() => {
 
       <div>
         <h3>Quick add</h3>
+        <!-- <pre>{{ meta }}</pre> -->
+        <!-- <pre>{{ errors }}</pre> -->
+        <div class="text-l text-700 font-bold bg-primary-50 p-2 mb-4">All required fields</div>
         <div class="grid">
+          <!-- <InputText
+            v-bind="field0"
+            class="w-full border-left-3 border-red-600"
+          />
+          <InputText
+            v-bind="test_fields.field_1"
+            class="w-full border-left-3 border-red-600"
+          /> -->
           <div v-for="(requiredField, rfx) in requiredFields" :key="rfx" class="col-6">
+            <!-- <pre>{{ moduleValidationInputs[requiredField.uniqueName] }}</pre> -->
             <span class="p-float-label">
               <InputText
-                v-model="requiredField.data.value"
-                :disabled="requiredField.name == 'source_id'"
-                @update:modelValue="updateModuleFields()"
-                class="w-full border-left-3 border-red-600"
+                @update:modelValue="validateSyncFunc()"
+                v-bind="moduleValidationInputs[requiredField.uniqueName]"
+                class="w-full border-left-3"
+                :class="`${!errors[requiredField.uniqueName] && meta.touched ? 'border-green-600' : 'border-red-600'}`"
               />
               <label>{{ requiredField.label }}</label>
             </span>
+            <small v-if="errors[requiredField.uniqueName]" class="text-red-600">
+              {{ errors[requiredField.uniqueName] }}
+            </small>
           </div>
         </div>
 
@@ -207,7 +321,10 @@ onMounted(() => {
                       source="Email"
                       :fieldIds="section.field_ids"
                       :newModuleFields="newModuleFields"
-                      @update-module-fields="updateModuleFields()" />
+                      :moduleValidationInputs="moduleValidationInputs"
+                      :moduleValidationErrors="errors"
+                      :moduleValidationMeta="meta"
+                      @validate-sync-func="validateSyncFunc()" />
                     <template #fallback>
                       <TwoColumnList />
                     </template>
@@ -220,7 +337,10 @@ onMounted(() => {
                           source="Email"
                           :fieldIds="addition_field.ids"
                           :newModuleFields="newModuleFields"
-                          @update-module-fields="updateModuleFields()" />
+                          :moduleValidationInputs="moduleValidationInputs"
+                          :moduleValidationErrors="errors"
+                          :moduleValidationMeta="meta"
+                          @validate-sync-func="validateSyncFunc()" />
                         <template #fallback>
                           <TwoColumnList />
                         </template>
@@ -247,8 +367,8 @@ onMounted(() => {
             size="small" />
           <Button
             @click="proceedConvert()"
-            :disabled="!createInquiryFrom || (createInquiryFrom == 2 && requiredFieldsCount > 1)"
-            :loading="convertMailboxLoading"
+            :disabled="!createInquiryFrom || !meta.touched"
+            :loading="convertMailboxLoading || isSubmitting"
             label="Proceed"
             class="border-round-3xl py-2 px-4" />
         </div>
