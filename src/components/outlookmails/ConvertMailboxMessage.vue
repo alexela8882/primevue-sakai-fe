@@ -183,7 +183,7 @@ const validateSyncFunc = handleSubmit((values, actions) => {
     moduleValidationSchemes.value.validateSync(values, { abortEarly: false })
 
     // alert(JSON.stringify(values, null, 2))
-    console.log(values)
+    // console.log(values)
     return values
   } catch (error) {
     // console.log(errors)
@@ -367,7 +367,7 @@ onMounted(() => {
             size="small" />
           <Button
             @click="proceedConvert()"
-            :disabled="!createInquiryFrom || !meta.touched"
+            :disabled="!createInquiryFrom || (createInquiryFrom == 2 && (!meta.valid))"
             :loading="convertMailboxLoading || isSubmitting"
             label="Proceed"
             class="border-round-3xl py-2 px-4" />
