@@ -73,12 +73,13 @@ const moduleDetailStore = useModuleDetailStore()
 const outlookMailStore = useOutlookMailStore()
 const {
     getEntityByName,
+    getFieldDetailsByUname,
     getCollection,
     getModule,
     convertMailboxLoading } = storeToRefs(moduleStore)
 const { getItemPanels, getRelatedListsByCname } = storeToRefs(moduleDetailStore)
 const { getMailFolderMessages } = storeToRefs(outlookMailStore)
-const { fetchModule, convertMailboxToInquiry } = moduleStore
+const { fetchModule, convertMailboxToInquiry, insertModuleFromMailbox } = moduleStore
 
 // actions
 const initialize = async () => {
@@ -145,32 +146,75 @@ const initialize = async () => {
     emit('update-timeout')
   }, 100)
 }
-const proceedConvert = async () => {
+const convertBtn = async () => {
+  if (createInquiryFrom.value == 1) {
+    proceedConvertMailbox(null)
+  } else saveNewConvert()
+}
+
+const proceedConvertMailbox = (module) => {
+  let _module = null
+  if (module !== null) _module = module
+  else _module = selectedModule.value
+
   const convertedModule = getEntityByName.value(props.convertModule.name)
   let data = null
 
-  if (createInquiryFrom.value == 1) {
-    data = Object.assign({}, {
-      source_id: 'Email',
-      dateRequested: Date.now(),
-      dateResponded: Date.now(),
-      dateResponded: Date.now(),
-      assigned_to_id: selectedModule.value.owner_id,
-      description: `This is a test - ${Date.now()}`,
-      type: convertedModule.mainEntity,
-      link_id: selectedModule.value._id,
-      email_id: props.mailboxMessage.id,
-      conversation_id: props.mailboxMessage.conversationId
-    })
+  data = Object.assign({}, {
+    source_id: 'Email',
+    dateRequested: Date.now(),
+    dateResponded: Date.now(),
+    dateResponded: Date.now(),
+    assigned_to_id: _module.owner_id,
+    description: `This is a test - ${Date.now()}`,
+    type: convertedModule.mainEntity,
+    link_id: _module._id,
+    email_id: props.mailboxMessage.id,
+    conversation_id: props.mailboxMessage.conversationId
+  })
 
-    // convert mailbox to inquiry
-    proceedConvertMailboxToInquiry(data)
-  } else saveNewConvert()
+  // convert mailbox to inquiry
+  proceedConvertMailboxToInquiry(data)
 }
 
 const saveNewConvert = async () => {
   const res = await validateSyncFunc()
-  console.log(res)
+
+  if (!res.inner) {
+    const uuidDummy = Date.now()
+    let obj = {_id: uuidDummy}
+
+    Object.keys(res).forEach(r => {
+      if (res[r] !== null) {
+        const fieldName = getFieldDetailsByUname.value(r).name
+        const fieldValue = res[r]
+        // console.log(`${fieldName} - ${fieldValue}`)
+        obj[fieldName] = fieldValue
+      }
+    })
+
+    // dummy required lead owner
+    obj['owner_id'] = {
+      "_id": "5bb104ed678f71061f6451f8",
+      "firstName": "Ninoy",
+      "lastName": "Cahayon",
+      "email": "ninoy.cahayon@escolifesciences.com"
+    }
+
+    // push new obj into collection
+    // getCollection.value.data.push(obj)
+
+    // console.log(getCollection.value)
+    // console.log(props.convertModule.name)
+
+    // proceed to api
+    const data = { module: props.convertModule, data: obj }
+    const moduleRes = await insertModuleFromMailbox(data)
+    console.log(moduleRes)
+
+    if (moduleRes && moduleRes.status === 200) proceedConvertMailbox(data.data)
+    // proceedConvertMailbox()
+  } else console.log(res)
 }
 const validateSyncFunc = handleSubmit((values, actions) => {
   // update errors
@@ -366,7 +410,7 @@ onMounted(() => {
             class="border-round-3xl py-2 px-4 border-color-primary"
             size="small" />
           <Button
-            @click="proceedConvert()"
+            @click="convertBtn()"
             :disabled="!createInquiryFrom || (createInquiryFrom == 2 && (!meta.valid))"
             :loading="convertMailboxLoading || isSubmitting"
             label="Proceed"

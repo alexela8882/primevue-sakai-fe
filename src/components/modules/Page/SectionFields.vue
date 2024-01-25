@@ -105,7 +105,7 @@ watch(() => getFieldDetailsById.value, (newVal, oldVal) => {
                 />
                 <label>{{ nmField.label }}</label>
               </span>
-              <small v-if="moduleValidationErrors[nmField.uniqueName]" class="text-red-800">
+              <small v-if="moduleValidationErrors[nmField.uniqueName]" class="text-red-600">
                 {{ moduleValidationErrors[nmField.uniqueName] }}
               </small>
             </div>
