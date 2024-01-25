@@ -209,7 +209,7 @@ const saveNewConvert = async () => {
 
     // proceed to api
     const data = { module: props.convertModule, data: obj }
-    const moduleRes = await insertModuleFromMailbox(data)
+    const moduleRes = insertModuleFromMailbox(data)
     console.log(moduleRes)
 
     if (moduleRes && moduleRes.status === 200) proceedConvertMailbox(data.data)
