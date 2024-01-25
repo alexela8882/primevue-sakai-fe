@@ -317,16 +317,18 @@ export const useModuleStore = defineStore('moduleStore', () => {
         data: updatedJson
       })
 
-      // toast
-      toast.add({
-        severity: 'success',
-        summary: 'Success Message',
-        detail: 'Convert successful',
-        life: 3000
-      })
+      if (res && res.status === 200) {
+        // toast
+        toast.add({
+          severity: 'success',
+          summary: 'Success Message',
+          detail: 'Convert successful',
+          life: 3000
+        })
 
-      convertMailboxLoading.value = true
-      convertMailboxDialog.value = false
+        convertMailboxLoading.value = true
+        convertMailboxDialog.value = false
+      }
     } catch (error) {
       console.log(error)
 
@@ -347,15 +349,9 @@ export const useModuleStore = defineStore('moduleStore', () => {
     try {
       const res = await axios(`${jsonDbUrl.value}/${uri}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': '*'
-        },
+        headers: { 'Content-Type': 'application/json' },
         data: updatedJson
       })
-
-      console.log(res)
 
       if (res && res.status === 200) {
         // toast
