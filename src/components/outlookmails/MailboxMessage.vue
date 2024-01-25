@@ -5,6 +5,8 @@ import { storeToRefs } from 'pinia'
 // stores
 import { useOutlookMailStore } from '@/stores/outlookmails'
 import { useModuleStore } from '@/stores/modules'
+// loaders
+import TwoColumnList from '@/components/loading/TwoColumnList.vue'
 // components
 const MailboxReply = defineAsyncComponent(() =>
   import('@/components/outlookmails/MailboxReply.vue')
@@ -20,6 +22,7 @@ const props = defineProps({
 })
 
 // refs
+const cmmtimeout = ref(false)
 const outlookReplyDialog = ref(false)
 const convertMailboxToModule = ref()
 const convertMailboxTo = ref([
@@ -173,7 +176,16 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
       :mailboxMessage="message"
       :convertModule="convertMailboxToModule"
       @trigger-dialog="convertMailboxDialog = false"
+      @update-timeout="cmmtimeout = false"
     />
+    <template #footer>
+      <div class="mailbox-dialog-footer surface-50">
+        <div v-if="cmmtimeout" class="flex align-items-center justify-content-end gap-2 p-2">
+          <Skeleton width="5rem" height="2rem"></Skeleton>
+          <Skeleton width="5rem" height="2rem"></Skeleton>
+        </div>
+      </div>
+    </template>
   </Dialog>
 </template>
 
@@ -186,7 +198,7 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
   color: var(--surface-a);
 }
 
-.convert-mailbox-dialog.p-dialog .p-dialog-content {
+.convert-mailbox-dialog.p-dialog .p-dialog-content, .p-dialog-footer {
   padding: 0 !important;
 }
 </style>

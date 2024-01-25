@@ -226,6 +226,13 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return field
     }
   })
+  const getFieldDetailsByUname = computed(() => {
+    return (payload) => { // supply `name` column from `fields` collection
+      const fields = getModule.value.fields
+      const field = fields && fields.find(fx => fx.uniqueName === payload)
+      return field
+    }
+  })
 
   // actions
   const fetchBaseModule = async (id) => {
@@ -327,6 +334,40 @@ export const useModuleStore = defineStore('moduleStore', () => {
       convertMailboxDialog.value = false
     }
   }
+  const insertModuleFromMailbox = async (payload) => {
+    const uri = payload.module.name
+    const getRes = await axios(`${jsonDbUrl.value}/${uri}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    let updatedJson = getRes.data.collection.data.push(payload.data)
+    updatedJson = JSON.stringify(getRes.data)
+
+    try {
+      const res = await axios(`${jsonDbUrl.value}/${uri}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        data: updatedJson
+      })
+
+      console.log(res)
+
+      if (res && res.status === 200) {
+        // toast
+        toast.add({
+          severity: 'success',
+          summary: 'Success Message',
+          detail: `New ${payload.module.label} successfully added`,
+          life: 3000
+        })
+
+        return res
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return {
     perPageItems,
@@ -355,12 +396,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getKanbanData,
     getFieldDetails,
     getFieldDetailsById,
+    getFieldDetailsByUname,
     fetchModule,
     fetchBaseModule,
     fetchModules,
     addViewFilter,
 
     // specific functions for inquiry module
-    convertMailboxToInquiry
+    convertMailboxToInquiry,
+    insertModuleFromMailbox
   }
 })
