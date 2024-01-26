@@ -49,7 +49,6 @@ import {
 
 axios.defaults.baseURL = 'https://api.reddotcrm.com/api/'
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
-axios.defaults.headers['Access-Control-Allow-Origin'] = '*'
 
 import PrimeVue from 'primevue/config'
 import AutoComplete from 'primevue/autocomplete'
