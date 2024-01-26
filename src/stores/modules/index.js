@@ -351,7 +351,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
     try {
       const res = await axios(`${jsonDbUrl.value}/${uri}`, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         data: updatedJson
       })
