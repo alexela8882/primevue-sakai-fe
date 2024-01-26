@@ -4808,24 +4808,6 @@
           },
           "created_at": "2023-10-12",
           "inquiry_type_id": null
-        },
-        {
-          "_id": 1706232937224,
-          "owner_id": {
-            "_id": "5bb104ed678f71061f6451f8",
-            "firstName": "Ninoy",
-            "lastName": "Cahayon",
-            "email": "ninoy.cahayon@escolifesciences.com"
-          }
-        },
-        {
-          "_id": 1706233159455,
-          "owner_id": {
-            "_id": "5bb104ed678f71061f6451f8",
-            "firstName": "Ninoy",
-            "lastName": "Cahayon",
-            "email": "ninoy.cahayon@escolifesciences.com"
-          }
         }
       ],
       "meta": {
@@ -26789,78 +26771,6 @@
           "link_id": "65288b4ca6ebc75d70589d02",
           "email_id": "",
           "conversation_id": ""
-        },
-        {
-          "source_id": "Email",
-          "dateRequested": 1706232927383,
-          "dateResponded": 1706232927383,
-          "assigned_to_id": {
-            "_id": "5cadbb8aa6ebc720a0361ef3",
-            "email": "jane.luu@escolifesciences.com",
-            "firstName": "Jane",
-            "lastName": "Luu",
-            "peopleUnder": null,
-            "people": [
-              "5cadbb8aa6ebc720a0361ef3"
-            ]
-          },
-          "description": "This is a test - 1706232927383",
-          "type": "Lead",
-          "link_id": "65285756a6ebc71e371f5962",
-          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3yDfJwAAAA=",
-          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c"
-        },
-        {
-          "source_id": "Email",
-          "dateRequested": 1706232937314,
-          "dateResponded": 1706232937314,
-          "assigned_to_id": {
-            "_id": "5bb104ed678f71061f6451f8",
-            "firstName": "Ninoy",
-            "lastName": "Cahayon",
-            "email": "ninoy.cahayon@escolifesciences.com"
-          },
-          "description": "This is a test - 1706232937314",
-          "type": "Lead",
-          "link_id": 1706232937224,
-          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3vJ4MoAAAA=",
-          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEABrkDpkZvjiR7-QWNmnyqUB"
-        },
-        {
-          "source_id": "Email",
-          "dateRequested": 1706233150662,
-          "dateResponded": 1706233150662,
-          "assigned_to_id": {
-            "_id": "5bb104ed678f71061f645232",
-            "email": "thomas.gibson@escolifesciences.com",
-            "firstName": "Thomas",
-            "lastName": "Gibson",
-            "peopleUnder": null,
-            "people": [
-              "5bb104ed678f71061f645232"
-            ]
-          },
-          "description": "This is a test - 1706233150662",
-          "type": "Lead",
-          "link_id": "65283592a6ebc770b2115553",
-          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3vJ4MkAAAA=",
-          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEABxO8iKCycGQ6pW7CKMzXAa"
-        },
-        {
-          "source_id": "Email",
-          "dateRequested": 1706233159543,
-          "dateResponded": 1706233159543,
-          "assigned_to_id": {
-            "_id": "5bb104ed678f71061f6451f8",
-            "firstName": "Ninoy",
-            "lastName": "Cahayon",
-            "email": "ninoy.cahayon@escolifesciences.com"
-          },
-          "description": "This is a test - 1706233159543",
-          "type": "Lead",
-          "link_id": 1706233159455,
-          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3vJ4MgAAAA=",
-          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c"
         }
       ],
       "meta": {
