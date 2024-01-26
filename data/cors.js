@@ -7,3 +7,5 @@ const server = jsonServer.create()
         
 // Then use it before your routes are set up:
 server.use(cors())
+
+module.exports = cors()
