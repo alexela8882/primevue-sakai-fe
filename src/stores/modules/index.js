@@ -337,7 +337,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
   }
   const insertModuleFromMailbox = async (payload) => {
-    const uri = payload.module.name
+    const uri = 'leads'
     const getRes = await axios(`${jsonDbUrl.value}/${uri}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -349,11 +349,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     try {
       const res = await axios(`${jsonDbUrl.value}/${uri}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': '*'
-        },
+        headers: { 'Content-Type': 'application/json' },
         data: updatedJson
       })
 
