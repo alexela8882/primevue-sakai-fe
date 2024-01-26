@@ -374,6 +374,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
     } catch (error) {
       console.log(error)
 
+      // toast
+      toast.add({
+        severity: 'danger',
+        summary: 'Error',
+        detail: error,
+        life: 3000
+      })
+
       convertMailboxLoading.value = true
       convertMailboxDialog.value = false
     }
