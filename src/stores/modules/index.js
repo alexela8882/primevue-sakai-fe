@@ -339,8 +339,9 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
   }
   const insertModuleFromMailbox = async (payload) => {
-    const uri = payload.module.name
+    convertMailboxLoading.value = true
 
+    const uri = payload.module.name
     const getRes = await axios(`${jsonDbUrl.value}/${uri}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -365,10 +366,16 @@ export const useModuleStore = defineStore('moduleStore', () => {
           life: 3000
         })
 
+        convertMailboxLoading.value = true
+        convertMailboxDialog.value = false
+
         return res
       }
     } catch (error) {
       console.log(error)
+
+      convertMailboxLoading.value = true
+      convertMailboxDialog.value = false
     }
   }
 

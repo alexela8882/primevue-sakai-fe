@@ -207,7 +207,7 @@ const saveNewConvert = async () => {
     // console.log(getCollection.value)
     // console.log(props.convertModule.name)
 
-    // proceed to api
+    // proceed to call api
     const data = { module: props.convertModule, data: obj }
     const moduleRes = await insertModuleFromMailbox(data)
 
