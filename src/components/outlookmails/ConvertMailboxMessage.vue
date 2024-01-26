@@ -178,7 +178,7 @@ const proceedConvertMailbox = (module) => {
 }
 
 const saveNewConvert = async () => {
-  const res = validateSyncFunc()
+  const res = await validateSyncFunc()
 
   if (!res.inner) {
     const uuidDummy = Date.now()
@@ -209,10 +209,9 @@ const saveNewConvert = async () => {
 
     // proceed to api
     const data = { module: props.convertModule, data: obj }
-    const moduleRes = await insertModuleFromMailbox(data)
-    console.log(moduleRes)
+    const res = await insertModuleFromMailbox(data)
 
-    if (moduleRes && moduleRes.status === 200) proceedConvertMailbox(data.data)
+    if (res && res.status === 200) proceedConvertMailbox(data.data)
   } else console.log(res)
 }
 const validateSyncFunc = handleSubmit((values, actions) => {
@@ -243,13 +242,16 @@ const validateSyncFunc = handleSubmit((values, actions) => {
   }
 })
 const proceedConvertMailboxToInquiry = async (data) => {
-  await convertMailboxToInquiry(data)
-  getMailFolderMessages.value.value.find(fm => {
-    if (fm.id === data.email_id) {
-      let newObj = { ...fm, convertedToInquiry: true }
-      Object.assign(fm, newObj)
-    }
-  })
+  const res = await convertMailboxToInquiry(data)
+  
+  if (res && res.status === 200) {
+    getMailFolderMessages.value.value.find(fm => {
+      if (fm.id === data.email_id) {
+        let newObj = { ...fm, convertedToInquiry: true }
+        Object.assign(fm, newObj)
+      }
+    })
+  }
 }
 
 // lifecycles
