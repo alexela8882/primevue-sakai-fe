@@ -209,10 +209,10 @@ const saveNewConvert = async () => {
 
     // proceed to api
     const data = { module: props.convertModule, data: obj }
-    const res = await insertModuleFromMailbox(data)
+    const moduleRes = await insertModuleFromMailbox(data)
 
-    if (res && res.status === 200) proceedConvertMailbox(data.data)
-  } else console.log(res)
+    if (moduleRes && moduleRes.status === 200) proceedConvertMailbox(data.data)
+  } else console.log(moduleRes)
 }
 const validateSyncFunc = handleSubmit((values, actions) => {
   // update errors
