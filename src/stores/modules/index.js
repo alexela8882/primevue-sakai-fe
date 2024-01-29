@@ -61,11 +61,13 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const modulesLoading = ref(false)
   const baseModule = ref({})
   const module = ref({})
+  const linkedModuleData = ref(null)
   const collection = ref({})
 
   // getters
   const getBaseModule = computed(() => baseModule.value)
   const getModule = computed(() => module.value)
+  const getLinkedModuleData = computed(() => linkedModuleData.value)
   const getModules = computed(() => modules.value)
   const getCollection = computed(() => collection.value)
   const getViewFilters = computed(() => {
@@ -283,6 +285,30 @@ export const useModuleStore = defineStore('moduleStore', () => {
       collectionLoading.value = false
     }
   }
+  const fetchLinkedModuleData = async (moduleName, linkid) => {
+    console.log(linkid)
+    try {
+      const res = await axios(`${jsonDbUrl.value}/${moduleName}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      })
+  
+      if (res.status === 200) {
+        let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
+        // linkedModuleData.value = fetchedModule // insert module
+        if (fetchedModule.collection) {
+          const data = fetchedModule.collection.data.find(d => d.link_id == linkid)
+          linkedModuleData.value = data
+        } else return null
+
+        // linkedModuleCollection.value = fetchedModule.collection // insert collection
+      }
+    } catch (error) {
+      console.log(error.response)
+      linkedModuleData.value = null
+      // collection.value = []
+    }
+  }
   const addViewFilter = async (payload) => {
     console.log(JSON.stringify(payload))
 
@@ -402,6 +428,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     modulesLoading,
     getBaseModule,
     getModule,
+    getLinkedModuleData,
     getModules,
     getCollection,
     getViewFilters,
@@ -416,6 +443,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getFieldDetailsById,
     getFieldDetailsByUname,
     fetchModule,
+    fetchLinkedModuleData,
     fetchBaseModule,
     fetchModules,
     addViewFilter,
