@@ -160,16 +160,21 @@ const proceedConvertMailbox = (module) => {
   const convertedModule = getEntityByName.value(props.convertModule.name)
   let data = null
 
+  const mailboxmsgName = props.mailboxMessage.from.emailAddress.name
+  const mailboxmsgEmail = props.mailboxMessage.from.emailAddress.address
+
   data = Object.assign({}, {
+    _id: `${Date.now()}`,
     source_id: 'Email',
-    dateRequested: Date.now(),
-    dateResponded: Date.now(),
-    dateResponded: Date.now(),
+    dateRequested: "01-06-2024",
+    dateResponded: "01-06-2024",
     assigned_to_id: _module.owner_id,
-    description: `This is a test - ${Date.now()}`,
-    type: convertedModule.mainEntity,
+    description: `This is a test from converted mailbox - ${Date.now()}`,
+    type_id: convertedModule.mainEntity,
     link_id: _module._id,
     email_id: props.mailboxMessage.id,
+    name: mailboxmsgName,
+    email: mailboxmsgEmail,
     conversation_id: props.mailboxMessage.conversationId
   })
 
@@ -276,6 +281,7 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- <pre>{{ mailboxMessage }}</pre> -->
   <div>
     <!-- <pre>{{ getEntityByName(convertModule.name) }}</pre> -->
     <div class="flex flex-column gap-3 m-4">

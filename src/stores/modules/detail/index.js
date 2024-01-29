@@ -60,8 +60,10 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
         }
         else {
           const lastSection = reconstructedPanels[px].sections.slice(-1).pop()
-          let additionalField = Object.assign({}, { ids: section.field_ids })
-          lastSection.additional_fields.push(additionalField)
+          if (lastSection) {
+            let additionalField = Object.assign({}, { ids: section.field_ids })
+            lastSection.additional_fields.push(additionalField)
+          }
         }
       })
     })

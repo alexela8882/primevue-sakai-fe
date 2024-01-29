@@ -22,6 +22,7 @@ import { useModuleDetailStore } from '../../../stores/modules/detail'
 import { useModuleFileStore } from '../../../stores/modules/file'
 
 // refs
+const linkedInquiryModule = ref(null)
 const fileMenu = ref()
 const toast = useToast()
 const tabIndex = ref(0)
@@ -39,8 +40,8 @@ const atShowRelatedLists = ref()
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
 const moduleFileStore = useModuleFileStore()
-const { fetchModule, fetchBaseModule } = moduleStore
-const { getModule, getBaseModule, getFieldDetailsById } = storeToRefs(moduleStore)
+const { fetchModule, fetchLinkedModuleData, fetchBaseModule } = moduleStore
+const { getModule, getLinkedModuleData, getBaseModule, getFieldDetailsById } = storeToRefs(moduleStore)
 const {
     itemLoading,
     relatedListLoading,
@@ -155,6 +156,7 @@ onMounted(async() => {
   // fetches
   await fetchBaseModule(route.params.id)
   await fetchModule(route.params.name)
+  await fetchLinkedModuleData('inquiries', route.params.pageid)
   await fetchItem(route.params)
   await fetchItemRelatedLists(route.params)
 
@@ -166,6 +168,9 @@ onMounted(async() => {
   localRelatedLists.value = getRelatedLists.value
   atIndexRelatedLists.value = getItemPanels.value.filter(ip => ip.controllerMethod.includes('@index'))
   atShowRelatedLists.value = _getRelatedOrderedLists.value.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))
+  linkedInquiryModule.value = getLinkedModuleData.value
+
+  console.log(linkedInquiryModule.value)
 
   // other logics
   // Attach the scroll event listener to the window or container
@@ -312,6 +317,11 @@ onMounted(async() => {
                       <SimpleLoader class="mt-4" />
                     </template>
                   </Suspense>
+                </div>
+              </TabPanel>
+              <TabPanel v-if="linkedInquiryModule" header="Email">
+                <div>
+                  <pre>{{ linkedInquiryModule }}</pre>
                 </div>
               </TabPanel>
             </TabView>
