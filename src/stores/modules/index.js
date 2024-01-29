@@ -70,6 +70,12 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const getLinkedModuleData = computed(() => linkedModuleData.value)
   const getModules = computed(() => modules.value)
   const getCollection = computed(() => collection.value)
+  const getCollectionById = computed(() => {
+    return (id) => {
+      const data = collection.value.data && collection.value.data.find(c => c._id == id)
+      return data
+    }
+  })
   const getViewFilters = computed(() => {
     const viewFilters = module.value.viewFilters
     return viewFilters
@@ -431,6 +437,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getLinkedModuleData,
     getModules,
     getCollection,
+    getCollectionById,
     getViewFilters,
     getEntity,
     getEntityByName,

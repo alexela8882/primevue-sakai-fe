@@ -26843,6 +26843,25 @@
           "name": "alexander flores",
           "email": "alexela8882@gmail.com",
           "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c"
+        },
+        {
+          "_id": "1706507423498",
+          "source_id": "Email",
+          "dateRequested": "01-06-2024",
+          "dateResponded": "01-06-2024",
+          "assigned_to_id": {
+            "_id": "5bb104ed678f71061f6451f8",
+            "firstName": "Ninoy",
+            "lastName": "Cahayon",
+            "email": "ninoy.cahayon@escolifesciences.com"
+          },
+          "description": "This is a test from converted mailbox - 1706507423498",
+          "type_id": "DefectReport",
+          "link_id": 1706507423405,
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3vJ4MkAAAA=",
+          "name": "alexander flores",
+          "email": "alexela8882@gmail.com",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEABxO8iKCycGQ6pW7CKMzXAa"
         }
       ],
       "meta": {
@@ -27164,12 +27183,12 @@
     "collection": {
       "data": [
         {
-          "_id": 1706502317142,
+          "_id": 1706507423405,
           "branch_id": "asd",
           "problem_discovered_id": "asd",
           "nature_of_problem_id": "asd",
           "type_of_problem_id": "asd",
-          "deliverToCompanyName": "asdasdasd",
+          "deliverToCompanyName": "asdasd",
           "owner_id": {
             "_id": "5bb104ed678f71061f6451f8",
             "firstName": "Ninoy",
@@ -43889,6 +43908,22 @@
       "displayFieldName": [
         "name"
       ]
+    }
+  ],
+  "defectreports-item": [
+    {
+      "_id": 1706502317142,
+      "branch_id": "asd",
+      "problem_discovered_id": "asd",
+      "nature_of_problem_id": "asd",
+      "type_of_problem_id": "asd",
+      "deliverToCompanyName": "asdasdasd",
+      "owner_id": {
+        "_id": "5bb104ed678f71061f6451f8",
+        "firstName": "Ninoy",
+        "lastName": "Cahayon",
+        "email": "ninoy.cahayon@escolifesciences.com"
+      }
     }
   ]
 }
