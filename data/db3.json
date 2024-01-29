@@ -4808,22 +4808,6 @@
           },
           "created_at": "2023-10-12",
           "inquiry_type_id": null
-        },
-        {
-          "_id": 1706238129483,
-          "company": "asd",
-          "phoneNo": "asd",
-          "status_id": "asd",
-          "source_id": "asd",
-          "type_id": "asd",
-          "business_unit_ids": "asd",
-          "country_id": "asdasd",
-          "owner_id": {
-            "_id": "5bb104ed678f71061f6451f8",
-            "firstName": "Ninoy",
-            "lastName": "Cahayon",
-            "email": "ninoy.cahayon@escolifesciences.com"
-          }
         }
       ],
       "meta": {
@@ -26787,22 +26771,6 @@
           "link_id": "65288b4ca6ebc75d70589d02",
           "email_id": "",
           "conversation_id": ""
-        },
-        {
-          "source_id": "Email",
-          "dateRequested": 1706238129575,
-          "dateResponded": 1706238129575,
-          "assigned_to_id": {
-            "_id": "5bb104ed678f71061f6451f8",
-            "firstName": "Ninoy",
-            "lastName": "Cahayon",
-            "email": "ninoy.cahayon@escolifesciences.com"
-          },
-          "description": "This is a test - 1706238129575",
-          "type": "Lead",
-          "link_id": 1706238129483,
-          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3yDfJwAAAA=",
-          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c"
         }
       ],
       "meta": {
@@ -27055,6 +27023,2084 @@
         "currentDisplay": "table",
         "summarize_by": null,
         "group_by": "5c906a11a6ebc7193110eab1"
+      }
+    ]
+  },
+  "defectreports": {
+    "collection": {
+      "data": [
+      ],
+      "meta": {
+        "pagination": {
+          "total": 1,
+          "count": 25,
+          "per_page": 25,
+          "current_page": 1,
+          "total_pages": 1,
+          "links": {
+            "next": "http://reddotcrm.com/api/inquiries?page=2"
+          }
+        }
+      }
+    },
+    "fields": [
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf312",
+        "name": "drfCode",
+        "label": "DRF Code",
+        "uniqueName": "defectreport_drf_code",
+        "format": "{0}",
+        "searchKey": false,
+        "field_type": {
+          "name": "autonumber",
+          "_id": "5c906a0ea6ebc7193110e741"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf313",
+        "name": "hasRP",
+        "label": "Has RP?",
+        "uniqueName": "defectreport_has_r_p",
+        "rules": {
+          "default_value": {
+            "_id": {
+              "$oid": "5e6ecb95a6ebc75a3e7bf314"
+            }
+          },
+          "checkbox": true
+        },
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf316",
+        "name": "converted",
+        "label": "Converted",
+        "uniqueName": "defectreport_converted",
+        "rules": {
+          "default_value": {
+            "_id": {
+              "$oid": "5e6ecb95a6ebc75a3e7bf317"
+            }
+          },
+          "checkbox": true
+        },
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf319",
+        "name": "isOnline",
+        "label": "Online Submission",
+        "uniqueName": "defectreport_is_online",
+        "cloak": true,
+        "rules": {
+          "default_value": {
+            "_id": {
+              "$oid": "5e6ecb95a6ebc75a3e7bf31a"
+            }
+          },
+          "checkbox": true
+        },
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf31c",
+        "name": "owner_id",
+        "label": "Defect Owner",
+        "uniqueName": "defectreport_owner_id",
+        "fieldGlue": " ",
+        "rules": {
+          "ss_pop_up": true,
+          "required_if": {
+            "anotherField": "isOnline",
+            "values": false
+          }
+        },
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5e6ecb95a6ebc75a3e7bf31f",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "owner_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b3",
+            "name": "Employee"
+          },
+          "popupDisplayFieldName": [
+            "firstName",
+            "lastName",
+            "email"
+          ]
+        }
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf320",
+        "name": "branch_id",
+        "label": "Esco Office",
+        "uniqueName": "defectreport_branch_id",
+        "fieldGlue": " ",
+        "filterQuery": "where(\"Branch::_id\", \"in\",  \"currentUser::handled_branch_ids\")",
+        "quick": true,
+        "rules": {
+          "required": true,
+          "ss_dropdown": true
+        },
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5e6ecb95a6ebc75a3e7bf323",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "branch_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7ba",
+            "name": "Branch"
+          }
+        }
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf324",
+        "name": "name",
+        "label": "Name",
+        "uniqueName": "defectreport_name",
+        "cloak": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf327",
+        "name": "title",
+        "label": "Title",
+        "uniqueName": "defectreport_title",
+        "cloak": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf32a",
+        "name": "company",
+        "label": "Company",
+        "uniqueName": "defectreport_company",
+        "title": true,
+        "cloak": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf32d",
+        "name": "email",
+        "label": "Email",
+        "uniqueName": "defectreport_email",
+        "cloak": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf330",
+        "name": "phone",
+        "label": "Cell / Mobile",
+        "uniqueName": "defectreport_phone",
+        "cloak": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf333",
+        "name": "endUser",
+        "label": "End User (Name of Institute)",
+        "uniqueName": "defectreport_end_user",
+        "header": true,
+        "cloak": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf336",
+        "name": "shippingStreet",
+        "label": "Street",
+        "uniqueName": "defectreport_shipping_street",
+        "groupWith": {
+          "street": "shippingStreet",
+          "zipcode": "shippingZipCode",
+          "city": "shippingCity",
+          "state": "shippingState",
+          "country_id": "shipping_country_id"
+        },
+        "concatenated": false,
+        "fieldGlue": ",",
+        "groupLabel": "Shipping Address",
+        "group": "address",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true,
+          "hide_in": [
+            "show"
+          ]
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf339",
+        "name": "shippingZipCode",
+        "label": "Zipcode",
+        "uniqueName": "defectreport_shipping_zip_code",
+        "group": "address",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf33c",
+        "name": "shippingCity",
+        "label": "City",
+        "uniqueName": "defectreport_shipping_city",
+        "group": "address",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf33f",
+        "name": "shippingState",
+        "label": "State",
+        "uniqueName": "defectreport_shipping_state",
+        "group": "address",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf342",
+        "name": "shipping_country_id",
+        "label": "Country",
+        "uniqueName": "defectreport_shipping_country_id",
+        "fieldGlue": " ",
+        "extraInfo": [
+          "alpha2Code"
+        ],
+        "group": "address",
+        "rules": {
+          "ss_dropdown": true
+        },
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5e6ecb95a6ebc75a3e7bf344",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "shipping_country_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7bd",
+            "name": "Country"
+          }
+        }
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf345",
+        "name": "deliveryAddress",
+        "label": "Delivery Address",
+        "uniqueName": "defectreport_delivery_address",
+        "cloak": true,
+        "tooltip": [
+          "Indicate the complete delivery address for the replacement part including \"Attention To\" detail.",
+          "helper"
+        ],
+        "active": true,
+        "field_type": {
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf346",
+        "name": "attentionTo",
+        "label": "Attention To",
+        "uniqueName": "defectreport_attention_to",
+        "active": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf349",
+        "name": "courierAccountNo",
+        "label": "Courier Account No.",
+        "uniqueName": "defectreport_courier_account_no",
+        "tooltip": [
+          "The limited warranty covers parts only, and not transportation or insurance charges.",
+          "helper"
+        ],
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true,
+          "required_if": {
+            "anotherField": "delivery_requirement_id",
+            "values": [
+              "Courier at Esco Account",
+              "Courier at Customer's Account"
+            ]
+          }
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf34c",
+        "name": "telNo",
+        "label": "Telephone No.",
+        "uniqueName": "defectreport_tel_no",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf34f",
+        "name": "faxNo",
+        "label": "Fax No.",
+        "uniqueName": "defectreport_fax_no",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf352",
+        "name": "country_id",
+        "label": "Country",
+        "uniqueName": "defectreport_country_id",
+        "fieldGlue": " ",
+        "rules": {
+          "ss_dropdown": true,
+          "required_if": {
+            "anotherField": "isOnline",
+            "values": false
+          }
+        },
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5e6ecb95a6ebc75a3e7bf355",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "country_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7bd",
+            "name": "Country"
+          }
+        }
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf356",
+        "name": "company_id",
+        "label": "Company",
+        "uniqueName": "defectreport_company_id",
+        "fieldGlue": " ",
+        "addable": {
+          "moduleName": "accounts",
+          "parentField": null
+        },
+        "rules": {
+          "required_if": {
+            "anotherField": "isOnline",
+            "values": false
+          },
+          "ss_pop_up": true,
+          "auto_fill": [
+            [
+              "name",
+              "company"
+            ],
+            [
+              "shipping_country_id",
+              "country_id"
+            ]
+          ],
+          "hide_in": [
+            "show"
+          ]
+        },
+        "searchKey": true,
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5e6ecb95a6ebc75a3e7bf35b",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "company_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7d4",
+            "name": "Account",
+            "collection": "accounts"
+          },
+          "popupDisplayFieldName": [
+            "name",
+            "owner_id",
+            "shipping_country_id",
+            "is_locked"
+          ]
+        }
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf35c",
+        "name": "contact_name_id",
+        "label": "Contact Name",
+        "uniqueName": "defectreport_contact_name_id",
+        "fieldGlue": " ",
+        "filterQueryParams": [],
+        "filterQuery": "where(\"Contact::account_ids\", \"in\", \"%DefectReport::company_id%\")",
+        "addable": {
+          "moduleName": "contacts",
+          "parentField": "company_id"
+        },
+        "rules": {
+          "required_if": {
+            "anotherField": "isOnline",
+            "values": false
+          },
+          "ss_pop_up": true,
+          "hide_in": [
+            "show"
+          ],
+          "auto_fill": [
+            [
+              "designation",
+              "title"
+            ],
+            [
+              "email",
+              "email"
+            ],
+            [
+              "phoneNo",
+              "phone"
+            ],
+            [
+              "fullName",
+              "name"
+            ]
+          ]
+        },
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5e6ecb95a6ebc75a3e7bf361",
+          "displayFieldName": [
+            "fullName"
+          ],
+          "foreign_key": "contact_name_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7d6",
+            "name": "Contact"
+          },
+          "popupDisplayFieldName": [
+            "fullName",
+            "email",
+            "phoneNo"
+          ]
+        }
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf362",
+        "name": "end_user_id",
+        "label": "End User (Name of Institute)",
+        "uniqueName": "defectreport_end_user_id",
+        "fieldGlue": " ",
+        "addable": {
+          "moduleName": "accounts",
+          "parentField": null
+        },
+        "rules": {
+          "auto_fill": [
+            [
+              "name",
+              "endUser"
+            ],
+            [
+              "shippingStreet",
+              "shippingStreet"
+            ],
+            [
+              "shippingZipCode",
+              "shippingZipCode"
+            ],
+            [
+              "shippingCity",
+              "shippingCity"
+            ],
+            [
+              "shippingState",
+              "shippingState"
+            ],
+            [
+              "shipping_country_id",
+              "shipping_country_id"
+            ]
+          ],
+          "required_if": {
+            "anotherField": "isOnline",
+            "values": false
+          },
+          "hide_in": [
+            "show"
+          ],
+          "ss_pop_up": true
+        },
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5e6ecb95a6ebc75a3e7bf367",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "end_user_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7d4",
+            "name": "Account"
+          },
+          "popupDisplayFieldName": [
+            "name",
+            "owner_id",
+            "billing_country_id",
+            "is_locked"
+          ]
+        }
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf368",
+        "name": "productUnit",
+        "label": "Model",
+        "uniqueName": "defectreport_product_unit",
+        "cloak": true,
+        "header": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf36b",
+        "name": "serialNo",
+        "label": "Serial Number",
+        "uniqueName": "defectreport_serial_no",
+        "cloak": true,
+        "header": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "searchKey": true,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf36e",
+        "name": "dateUnitInstalled",
+        "label": "Date Unit Installed",
+        "uniqueName": "defectreport_date_unit_installed",
+        "cloak": true,
+        "header": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf371",
+        "name": "product_category_id",
+        "label": "Product Category",
+        "uniqueName": "defectreport_product_category_id",
+        "fieldGlue": " ",
+        "header": true,
+        "cloak": true,
+        "rules": {
+          "ss_dropdown": true
+        },
+        "searchKey": true,
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5e6ecb95a6ebc75a3e7bf373",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "product_category_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7c8",
+            "name": "ProductCategory"
+          }
+        }
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf374",
+        "name": "product_unit_id",
+        "label": "Unit",
+        "uniqueName": "defectreport_product_unit_id",
+        "fieldGlue": " ",
+        "filterQueryParams": [],
+        "filterQuery": "where(\"Unit::account_id\", \"=\", \"%DefectReport::end_user_id%\")->where(\"Unit::serialNo\", \"!=\", \"\")->where(\"Unit::serialNo\", \"!=\", null)",
+        "addable": {
+          "moduleName": "units",
+          "parentField": "end_user_id"
+        },
+        "rules": {
+          "hide_in": [
+            "show"
+          ],
+          "required_if": {
+            "anotherField": "isOnline",
+            "values": false
+          },
+          "ss_pop_up": true,
+          "auto_fill": [
+            [
+              "serialNo",
+              "serialNo"
+            ],
+            [
+              "installationDate",
+              "dateUnitInstalled"
+            ],
+            [
+              "category_id",
+              "product_category_id"
+            ]
+          ]
+        },
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5e6ecb95a6ebc75a3e7bf379",
+          "displayFieldName": [
+            "product_id"
+          ],
+          "foreign_key": "product_unit_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7bf",
+            "name": "Unit"
+          },
+          "popupDisplayFieldName": [
+            "product_id",
+            "serialNo",
+            "category_id",
+            "brand",
+            "brand_id",
+            "warrantyStartDate",
+            "warrantyEndDate",
+            "installationDate"
+          ]
+        }
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf37a",
+        "name": "problem_discovered_id",
+        "label": "Problem(s) Discovered",
+        "uniqueName": "defectreport_problem_discovered_id",
+        "listName": "problem_discover",
+        "quick": true,
+        "rules": {
+          "ss_dropdown": true,
+          "required": true
+        },
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf37d",
+        "name": "nature_of_problem_id",
+        "label": "Nature of Problem",
+        "uniqueName": "defectreport_nature_of_problem_id",
+        "listName": "problem_nature",
+        "quick": true,
+        "rules": {
+          "ss_dropdown": true,
+          "required": true
+        },
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf380",
+        "name": "type_of_problem_id",
+        "label": "Type of Problem",
+        "uniqueName": "defectreport_type_of_problem_id",
+        "listName": "problem_type",
+        "quick": true,
+        "rules": {
+          "ss_dropdown": true,
+          "required": true
+        },
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf383",
+        "name": "describeProblem",
+        "label": "Describe the Problem",
+        "uniqueName": "defectreport_describe_problem",
+        "tooltip": [
+          "Provide as much information as possible, if possible including photo's, sketches, etc. More information assists Esco in making a better diagnosis, in order to resolve the problem as rapidly as possible.",
+          "helper"
+        ],
+        "field_type": {
+          "name": "richTextbox",
+          "_id": "5c906a0ea6ebc7193110e739"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf384",
+        "name": "additionalRemarks",
+        "label": "Customer Remarks",
+        "uniqueName": "defectreport_additional_remarks",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 5000
+          }
+        },
+        "field_type": {
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf386",
+        "name": "describeStepsTaken",
+        "label": "Describe Steps Taken to Troubleshoot and Outcome",
+        "uniqueName": "defectreport_describe_steps_taken",
+        "tooltip": [
+          "If Troubleshoot Carried Out",
+          "helper"
+        ],
+        "field_type": {
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf387",
+        "name": "rootCauseAnalysis",
+        "label": "Root Cause Analysis",
+        "uniqueName": "defectreport_root_cause_analysis",
+        "tooltip": [
+          "if performed",
+          "helper"
+        ],
+        "field_type": {
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf388",
+        "name": "delivery_requirement_id",
+        "label": "Delivery Requirement",
+        "uniqueName": "defectreport_delivery_requirement_id",
+        "listName": "shipment_mode",
+        "quick": true,
+        "rules": {
+          "required_unless": {
+            "anotherField": "isNeeded",
+            "values": false
+          },
+          "ss_dropdown": true
+        },
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf38b",
+        "name": "updated_at",
+        "label": "Last Modified Date",
+        "uniqueName": "defectreport_updated_at",
+        "rules": {
+          "hide_in": [
+            "create",
+            "update"
+          ],
+          "date_format": "m/d/Y",
+          "date_only": true
+        },
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf38f",
+        "name": "created_at",
+        "label": "Created Date",
+        "uniqueName": "defectreport_created_at",
+        "rules": {
+          "hide_in": [
+            "create",
+            "update"
+          ],
+          "date_format": "m/d/Y",
+          "date_only": true
+        },
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf393",
+        "name": "updated_by",
+        "label": "Last Modified By",
+        "uniqueName": "defectreport_updated_by",
+        "fieldGlue": " ",
+        "rules": {
+          "ss_pop_up": true,
+          "hide_in": [
+            "create",
+            "update"
+          ]
+        },
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5e6ecb95a6ebc75a3e7bf396",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "updated_by",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b4",
+            "name": "User"
+          }
+        }
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf397",
+        "name": "created_by",
+        "label": "Created By",
+        "uniqueName": "defectreport_created_by",
+        "fieldGlue": " ",
+        "rules": {
+          "ss_pop_up": true,
+          "hide_in": [
+            "create",
+            "update"
+          ]
+        },
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5e6ecb95a6ebc75a3e7bf39a",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "created_by",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b4",
+            "name": "User",
+            "collection": "users"
+          }
+        }
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf39b",
+        "name": "deleted_at",
+        "label": "Deleted At",
+        "uniqueName": "defectreport_deleted_at",
+        "rules": {
+          "hide_in": [
+            "create",
+            "update"
+          ],
+          "date_format": "m/d/Y",
+          "date_only": true
+        },
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf39f",
+        "name": "deleted_by",
+        "label": "Deleted By",
+        "uniqueName": "defectreport_deleted_by",
+        "fieldGlue": " ",
+        "rules": {
+          "ss_pop_up": true,
+          "hide_in": [
+            "create",
+            "update"
+          ]
+        },
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5e6ecb95a6ebc75a3e7bf3a2",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "deleted_by",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b4",
+            "name": "User"
+          }
+        }
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3a3",
+        "name": "dateReceive",
+        "label": "Date Received",
+        "uniqueName": "defectreport_date_receive",
+        "rules": {
+          "date_format": "d-M-y",
+          "date_only": true
+        },
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3a6",
+        "name": "caseID",
+        "label": "Assigned Case ID",
+        "uniqueName": "defectreport_case_i_d",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3a9",
+        "name": "rpNo",
+        "label": "Assigned RP Number",
+        "uniqueName": "defectreport_rp_no",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3ac",
+        "name": "warranty_id",
+        "label": "In Warranty",
+        "uniqueName": "defectreport_warranty_id",
+        "listName": "yes_no",
+        "rules": {
+          "ss_dropdown": true
+        },
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3ae",
+        "name": "detailStepToTroubleshoot",
+        "label": "Detailed steps to troubleshoot",
+        "uniqueName": "defectreport_detail_step_to_troubleshoot",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 5000
+          }
+        },
+        "field_type": {
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3b0",
+        "name": "detailInstructionForOnsiteFix",
+        "label": "Detailed instructions for on-site fix",
+        "uniqueName": "defectreport_detail_instruction_for_onsite_fix",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 5000
+          }
+        },
+        "field_type": {
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3b2",
+        "name": "request_to_return_defective_id",
+        "label": "Request customer to return defective parts at Esco cost?",
+        "uniqueName": "defectreport_request_to_return_defective_id",
+        "listName": "yes_no",
+        "tooltip": [
+          "Esco to request parts to be returned only if post-mortem analysis is deemed necessary i.e. in cases where the reason for the failure cannot be clearly identified and therefore detailed investigation must be carried out.",
+          "helper"
+        ],
+        "rules": {
+          "ss_dropdown": true
+        },
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3b4",
+        "name": "engrPrpearingResponse",
+        "label": "Engineer Preparing Response",
+        "uniqueName": "defectreport_engr_prpearing_response",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3b7",
+        "name": "cparNo",
+        "label": "CPAR No.",
+        "uniqueName": "defectreport_cpar_no",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3ba",
+        "name": "probOwner",
+        "label": "Problem Owner",
+        "uniqueName": "defectreport_prob_owner",
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5ecdcd5ca6ebc74457094102",
+        "name": "manualRPWO",
+        "label": "Manually Created RPWO",
+        "uniqueName": "defectreport_manual_r_p_w_o",
+        "cloak": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true,
+          "default_value": "N/A"
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5ecfa897a6ebc7b6877379a2",
+        "name": "photos",
+        "label": "Image Upload",
+        "uniqueName": "defectreport_photos",
+        "field_type_id": "5c906a0ea6ebc7193110e735",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7c0",
+        "updated_at": "2021-07-27 08:37:19",
+        "created_at": "2020-05-28 12:03:35",
+        "rules": [
+          {
+            "name": "max",
+            "event": [
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": 3000
+          }
+        ],
+        "section1_ids": [
+          "5edd9726a6ebc7932e0cd6c3"
+        ],
+        "field_type": {
+          "name": "file",
+          "_id": "5c906a0ea6ebc7193110e735"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5ef575c1a6ebc710cf317902",
+        "name": "drfNo",
+        "label": "Defect Report Number",
+        "uniqueName": "defectreport_drf_no",
+        "format": "{0}",
+        "searchKey": false,
+        "field_type": {
+          "name": "autonumber",
+          "_id": "5c906a0ea6ebc7193110e741"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5f19aa6ea6ebc7b23c011ca3",
+        "name": "status_id",
+        "label": "Status",
+        "uniqueName": "defectreport_status_id",
+        "listName": "drf_status",
+        "rules": {
+          "ss_dropdown": true,
+          "default_value": "5f19aa6ea6ebc7b23c011ca7"
+        },
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5f19aa6ea6ebc7b23c011ca9",
+        "name": "isNeeded",
+        "label": "RP Needed?",
+        "uniqueName": "defectreport_is_needed",
+        "rules": {
+          "default_value": true,
+          "checkbox": true
+        },
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5f8007dba6ebc740b51740e4",
+        "name": "isFlag",
+        "label": "Is Flag?",
+        "uniqueName": "defectreport_is_flag",
+        "rules": {
+          "default_value": false,
+          "flag_with": "status_id"
+        },
+        "relation": null
+      },
+      {
+        "_id": "6007fb74a6ebc72dcb052362",
+        "name": "delivery_to_id",
+        "label": "Delivery To",
+        "uniqueName": "defectreport_delivery_to_id",
+        "listName": "delivery_to",
+        "rules": {
+          "ss_dropdown": true
+        },
+        "quick": true,
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "6011217ca6ebc725ae472ba2",
+        "name": "remarksEsco",
+        "label": "Remarks for Esco Office team",
+        "uniqueName": "defectreport_remarks_esco",
+        "field_type": {
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "601b7474a6ebc7a2bb5dbc22",
+        "name": "isMobile",
+        "label": "Mobile Submission",
+        "uniqueName": "defectreport_is_mobile",
+        "cloak": true,
+        "rules": {
+          "default_value": true,
+          "checkbox": true
+        },
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "618e232aa6ebc79b6f1c16b2",
+        "name": "deliverToCompanyName",
+        "label": "Delivery to Company Name",
+        "uniqueName": "defectreport_deliver_to_company_name",
+        "quick": true,
+        "rules": {
+          "required": true,
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "string": true
+        },
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      }
+    ],
+    "panels": [
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3e8",
+        "panelName": "defectreport-panel-1",
+        "entityName": "DefectReport",
+        "controllerMethod": "defectreports@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "_id": "5e6ecb95a6ebc75a3e7bf3e9",
+            "sectionLabel": "Customer Information",
+            "row": 1,
+            "field_ids": [
+              [
+                "5e6ecb95a6ebc75a3e7bf324",
+                "5e6ecb95a6ebc75a3e7bf327",
+                "5e6ecb95a6ebc75a3e7bf32a",
+                "5e6ecb95a6ebc75a3e7bf32d",
+                "5e6ecb95a6ebc75a3e7bf330",
+                "5e6ecb95a6ebc75a3e7bf333",
+                "5e6ecb95a6ebc75a3e7bf356",
+                "5e6ecb95a6ebc75a3e7bf352",
+                "5e6ecb95a6ebc75a3e7bf35c",
+                "5e6ecb95a6ebc75a3e7bf362"
+              ],
+              [
+                "5e6ecb95a6ebc75a3e7bf319",
+                "601b7474a6ebc7a2bb5dbc22",
+                "5f19aa6ea6ebc7b23c011ca9",
+                "5f19aa6ea6ebc7b23c011ca3",
+                "5ef575c1a6ebc710cf317902",
+                "5e6ecb95a6ebc75a3e7bf312",
+                "5e6ecb95a6ebc75a3e7bf31c",
+                "5e6ecb95a6ebc75a3e7bf320",
+                "5ecdcd5ca6ebc74457094102"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "5e6ecb96a6ebc75a3e7bf3f2",
+        "panelName": "defectreportitem-panel-1",
+        "entityName": "DefectReportItem",
+        "controllerMethod": "defectreports@show",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "selectionField": [
+          "replacement_product_id",
+          "Search Products"
+        ],
+        "mutableType": "withSelection",
+        "tabName": null,
+        "required": false,
+        "isChild": false,
+        "sections": [
+          {
+            "_id": "5e6ecb96a6ebc75a3e7bf3f3",
+            "sectionLabel": "Requested Replacement Parts",
+            "row": 1,
+            "field_ids": [
+              [
+                {
+                  "_id": "5e6ecb95a6ebc75a3e7bf3c5",
+                  "name": "replacementProduct",
+                  "label": "Replacement Item",
+                  "uniqueName": "defectreportitem_replacement_product",
+                  "field_type_id": "5c906a0ea6ebc7193110e73b",
+                  "created_by": null,
+                  "updated_by": null,
+                  "cloak": true,
+                  "active": true,
+                  "entity_id": "5c906a0fa6ebc7193110e7c1",
+                  "updated_at": "2020-03-16 00:43:01",
+                  "created_at": "2020-03-16 00:43:01",
+                  "rules": [
+                    {
+                      "name": "between",
+                      "event": [
+                        "onLoad",
+                        "onBlur",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": {
+                        "min": 0,
+                        "max": 155
+                      },
+                      "_id": {
+                        "$oid": "5e6ecb95a6ebc75a3e7bf3c6"
+                      }
+                    },
+                    {
+                      "name": "string",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": "txtRadio1",
+                      "value": true,
+                      "_id": {
+                        "$oid": "5e6ecb95a6ebc75a3e7bf3c7"
+                      }
+                    }
+                  ],
+                  "section1_ids": [
+                    "5e6ecb96a6ebc75a3e7bf3f3"
+                  ],
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e73b",
+                    "name": "text",
+                    "label": "text",
+                    "html_elem": "input",
+                    "rule_ids": [
+                      "5c906a0fa6ebc7193110e796",
+                      "5c906a0fa6ebc7193110e797",
+                      "5c906a0fa6ebc7193110e798",
+                      "5c906a0fa6ebc7193110e799",
+                      "5c906a0fa6ebc7193110e79a",
+                      "5c906a0fa6ebc7193110e79b",
+                      "5c906a0fa6ebc7193110e79c",
+                      "5c906a0fa6ebc7193110e79d",
+                      "5c906a0fa6ebc7193110e79e",
+                      "5c906a0fa6ebc7193110e79f",
+                      "5c906a0fa6ebc7193110e78c",
+                      "5c906a0fa6ebc7193110e78d",
+                      "5c906a0fa6ebc7193110e78e",
+                      "5c906a0fa6ebc7193110e78f",
+                      "5c906a0fa6ebc7193110e790",
+                      "5c906a0fa6ebc7193110e791",
+                      "5c906a0fa6ebc7193110e792",
+                      "5c906a0fa6ebc7193110e793",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342",
+                      "5c906a0ea6ebc7193110e74f"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e78c",
+                        "ruleName": "between",
+                        "value": {
+                          "min": 0,
+                          "max": 155
+                        },
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a0"
+                        }
+                      },
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e79a",
+                        "ruleName": "string",
+                        "value": true,
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a1"
+                        }
+                      }
+                    ],
+                    "return_type_ids": [
+                      "5c906a0fa6ebc7193110e7ac"
+                    ]
+                  },
+                  "relation": null
+                },
+                {
+                  "_id": "5e6ecb95a6ebc75a3e7bf3c8",
+                  "name": "replacement_product_id",
+                  "label": "Replacement Item",
+                  "uniqueName": "defectreportitem_replacement_product_id",
+                  "field_type_id": "5c906a0ea6ebc7193110e738",
+                  "created_by": null,
+                  "updated_by": null,
+                  "fieldGlue": " ",
+                  "filterQuery": "where(\"Product::product_type_id\", \"in\", picklist(\"product_types\",[\"Accessory\", \"Replacement Part\", \"Esco Software\", \"Service\", \"Equipment\", \"Consumable\"]))->where(\"Product::active\", \"=\", true)",
+                  "active": true,
+                  "entity_id": "5c906a0fa6ebc7193110e7c1",
+                  "updated_at": "2021-08-26 06:23:00",
+                  "created_at": "2020-03-16 00:43:01",
+                  "rules": [
+                    {
+                      "name": "hide_in",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": "visibility",
+                      "value": [
+                        "show"
+                      ],
+                      "_id": {
+                        "$oid": "5e6ecb95a6ebc75a3e7bf3c9"
+                      }
+                    },
+                    {
+                      "name": "auto_fill",
+                      "event": [
+                        "onLoad",
+                        "onChange"
+                      ],
+                      "groupName": null,
+                      "value": [
+                        [
+                          "name",
+                          "replacementProduct"
+                        ]
+                      ],
+                      "_id": {
+                        "$oid": "5e6ecb95a6ebc75a3e7bf3ca"
+                      }
+                    },
+                    {
+                      "name": "ss_pop_up",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": "option4",
+                      "value": true,
+                      "_id": {
+                        "$oid": "5e6ecb95a6ebc75a3e7bf3cb"
+                      }
+                    }
+                  ],
+                  "section1_ids": [
+                    "5e6ecb96a6ebc75a3e7bf3f3"
+                  ],
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e738",
+                    "name": "lookupModel",
+                    "label": "lookup",
+                    "html_elem": "option",
+                    "rule_ids": [
+                      "5c906a0ea6ebc7193110e782",
+                      "5c906a0ea6ebc7193110e783",
+                      "5c906a0ea6ebc7193110e784",
+                      "5c906a0ea6ebc7193110e76f",
+                      "5c906a0ea6ebc7193110e785",
+                      "5c906a0ea6ebc7193110e786",
+                      "5c906a0ea6ebc7193110e787",
+                      "5c906a0ea6ebc7193110e788",
+                      "5c906a0ea6ebc7193110e789",
+                      "5c906a0ea6ebc7193110e78a",
+                      "5c906a0ea6ebc7193110e774",
+                      "5c906a0ea6ebc7193110e775",
+                      "5c906a0ea6ebc7193110e776",
+                      "5c906a0ea6ebc7193110e777",
+                      "5c906a0ea6ebc7193110e778",
+                      "5c906a0ea6ebc7193110e779",
+                      "5c906a0ea6ebc7193110e77a",
+                      "5c906a0ea6ebc7193110e77b",
+                      "5c906a0ea6ebc7193110e77c",
+                      "5c906a0ea6ebc7193110e74f",
+                      "5c906a0ea6ebc7193110e750",
+                      "5c906a0ea6ebc7193110e751",
+                      "5c906a0ea6ebc7193110e752",
+                      "5c906a0ea6ebc7193110e753",
+                      "5c906a0ea6ebc7193110e754",
+                      "5c906a0ea6ebc7193110e755",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0ea6ebc7193110e78a",
+                        "ruleName": "ms_pop_up",
+                        "value": true,
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e78b"
+                        }
+                      }
+                    ]
+                  },
+                  "relation": {
+                    "_id": "5e6ecb95a6ebc75a3e7bf3cc",
+                    "method": "belongsTo",
+                    "class": "App\\Models\\Product\\Product",
+                    "displayFieldName": [
+                      "name"
+                    ],
+                    "foreign_key": "replacement_product_id",
+                    "local_key": "_id",
+                    "entity_id": "5c906a0fa6ebc7193110e7be",
+                    "popupDisplayFieldName": [
+                      "name",
+                      "itemCode",
+                      "modelCode"
+                    ],
+                    "created_by": null,
+                    "updated_by": null,
+                    "field_id": "5e6ecb95a6ebc75a3e7bf3c8"
+                  }
+                },
+                {
+                  "_id": "5e6ecb95a6ebc75a3e7bf3cd",
+                  "name": "qty",
+                  "label": "Qty",
+                  "uniqueName": "defectreportitem_qty",
+                  "field_type_id": "5c906a0ea6ebc7193110e73d",
+                  "created_by": null,
+                  "updated_by": null,
+                  "active": true,
+                  "entity_id": "5c906a0fa6ebc7193110e7c1",
+                  "updated_at": "2020-05-06 02:37:50",
+                  "created_at": "2020-03-16 00:43:01",
+                  "rules": [
+                    {
+                      "name": "decimal",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": null,
+                      "value": 0
+                    },
+                    {
+                      "name": "default_value",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": null,
+                      "value": 1
+                    }
+                  ],
+                  "section1_ids": [
+                    "5e6ecb96a6ebc75a3e7bf3f3"
+                  ],
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e73d",
+                    "name": "number",
+                    "label": "number",
+                    "html_elem": "input",
+                    "rule_ids": [
+                      "5c906a0fa6ebc7193110e7a2",
+                      "5c906a0fa6ebc7193110e7a3",
+                      "5c906a0fa6ebc7193110e7a4",
+                      "5c906a0fa6ebc7193110e7a6",
+                      "5c906a0fa6ebc7193110e797",
+                      "5c906a0fa6ebc7193110e78d",
+                      "5c906a0fa6ebc7193110e78e",
+                      "5c906a0fa6ebc7193110e78f",
+                      "5c906a0fa6ebc7193110e790",
+                      "5c906a0fa6ebc7193110e791",
+                      "5c906a0fa6ebc7193110e792",
+                      "5c906a0fa6ebc7193110e793",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342",
+                      "5c906a0ea6ebc7193110e74f"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e7a6",
+                        "ruleName": "digits_between",
+                        "value": {
+                          "min": 0,
+                          "max": 15
+                        },
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a7"
+                        }
+                      }
+                    ],
+                    "return_type_ids": [
+                      "5c906a0fa6ebc7193110e7ac"
+                    ]
+                  },
+                  "relation": null
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3ec",
+        "panelName": "defectreport-panel-3",
+        "entityName": "DefectReport",
+        "controllerMethod": "defectreports@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "_id": "5e6ecb95a6ebc75a3e7bf3ed",
+            "sectionLabel": "Delivery Information",
+            "row": 1,
+            "field_ids": [
+              [
+                "5e6ecb95a6ebc75a3e7bf345",
+                "5e6ecb95a6ebc75a3e7bf336",
+                "5e6ecb95a6ebc75a3e7bf339",
+                "5e6ecb95a6ebc75a3e7bf33c",
+                "5e6ecb95a6ebc75a3e7bf33f",
+                "5e6ecb95a6ebc75a3e7bf342"
+              ],
+              [
+                "618e232aa6ebc79b6f1c16b2",
+                "5e6ecb95a6ebc75a3e7bf346",
+                "5e6ecb95a6ebc75a3e7bf349",
+                "5e6ecb95a6ebc75a3e7bf34c",
+                "5e6ecb95a6ebc75a3e7bf34f",
+                "5e6ecb95a6ebc75a3e7bf388",
+                "6007fb74a6ebc72dcb052362"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "5e6ecb95a6ebc75a3e7bf3ea",
+        "panelName": "defectreport-panel-2",
+        "entityName": "DefectReport",
+        "controllerMethod": "defectreports@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "_id": "5e6ecb95a6ebc75a3e7bf3eb",
+            "sectionLabel": "Problem Information",
+            "row": 1,
+            "field_ids": [
+              [
+                "5e6ecb95a6ebc75a3e7bf368",
+                "5e6ecb95a6ebc75a3e7bf371",
+                "5e6ecb95a6ebc75a3e7bf36b",
+                "5e6ecb95a6ebc75a3e7bf36e",
+                "5e6ecb95a6ebc75a3e7bf374",
+                "5e6ecb95a6ebc75a3e7bf383",
+                "5e6ecb95a6ebc75a3e7bf384",
+                "5e6ecb95a6ebc75a3e7bf386",
+                "5e6ecb95a6ebc75a3e7bf387",
+                "6011217ca6ebc725ae472ba2"
+              ],
+              [
+                "5e6ecb95a6ebc75a3e7bf37a",
+                "5e6ecb95a6ebc75a3e7bf37d",
+                "5e6ecb95a6ebc75a3e7bf380"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "5edd9726a6ebc7932e0cd6c2",
+        "panelName": "defectreport-panel-6",
+        "entityName": "DefectReport",
+        "controllerMethod": "defectreports@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "_id": "5edd9726a6ebc7932e0cd6c3",
+            "sectionLabel": null,
+            "row": 1,
+            "field_ids": [
+              [
+                "5ecfa897a6ebc7b6877379a2"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "5e6ecb96a6ebc75a3e7bf3ee",
+        "panelName": "defectreport-panel-4",
+        "entityName": "DefectReport",
+        "controllerMethod": "defectreports@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "rules": {
+          "visible_if": "{hasRP} == true"
+        },
+        "highlight": null,
+        "sections": [
+          {
+            "_id": "5e6ecb96a6ebc75a3e7bf3ef",
+            "sectionLabel": "Response to Customer",
+            "row": 1,
+            "field_ids": [
+              [
+                "5e6ecb95a6ebc75a3e7bf3a3",
+                "5e6ecb95a6ebc75a3e7bf3a6",
+                "5e6ecb95a6ebc75a3e7bf3a9",
+                "5e6ecb95a6ebc75a3e7bf3ac",
+                "5e6ecb95a6ebc75a3e7bf3ae",
+                "5e6ecb95a6ebc75a3e7bf3b0"
+              ],
+              [
+                "5e6ecb95a6ebc75a3e7bf3b2",
+                "5e6ecb95a6ebc75a3e7bf3b4",
+                "5e6ecb95a6ebc75a3e7bf3b7",
+                "5e6ecb95a6ebc75a3e7bf3ba"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "5e6ecb96a6ebc75a3e7bf3f0",
+        "panelName": "defectreport-panel-5",
+        "entityName": "DefectReport",
+        "controllerMethod": "defectreports@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "_id": "5e6ecb96a6ebc75a3e7bf3f1",
+            "sectionLabel": "System Information",
+            "row": 1,
+            "field_ids": [
+              [
+                "5e6ecb95a6ebc75a3e7bf397",
+                "5e6ecb95a6ebc75a3e7bf38f"
+              ],
+              [
+                "5e6ecb95a6ebc75a3e7bf393",
+                "5e6ecb95a6ebc75a3e7bf38b"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "viewFilters": [
+      {
+        "_id": "618f00cea6ebc7f57c21c4822",
+        "query_id": "5c906a1ba6ebc7193110f8bbb",
+        "sortField": "created_at",
+        "sortOrder": "DESC",
+        "filters": [
+          [
+            "5c906a15a6ebc7193110eff4",
+            "5bb104cf678f71061f643c2a",
+            true
+          ]
+        ],
+        "filterLogic": null,
+        "filterName": "My Team's Defect Reports",
+        "moduleName": "defectreports",
+        "fields": [
+          "5e6ecb95a6ebc75a3e7bf31c",
+          "5e6ecb95a6ebc75a3e7bf320",
+          "5e6ecb95a6ebc75a3e7bf37a",
+          "5e6ecb95a6ebc75a3e7bf37d",
+          "5e6ecb95a6ebc75a3e7bf380",
+          "618e232aa6ebc79b6f1c16b2"
+        ],
+        "isDefault": true,
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5e6ecb95a6ebc75a3e7bf312"
       }
     ]
   },
