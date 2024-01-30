@@ -1,0 +1,344 @@
+{
+  "inquiries": {
+    "collection": {
+      "data": [
+        {
+          "_id": "1706578238995",
+          "source_id": "Email",
+          "dateRequested": "01-06-2024",
+          "dateResponded": "01-06-2024",
+          "assigned_to_id": {
+            "_id": "5cadbb8aa6ebc720a0361ef3",
+            "email": "jane.luu@escolifesciences.com",
+            "firstName": "Jane",
+            "lastName": "Luu",
+            "peopleUnder": null,
+            "people": [
+              "5cadbb8aa6ebc720a0361ef3"
+            ]
+          },
+          "description": "This is a test from converted mailbox - 1706578238995",
+          "type_id": "Lead",
+          "link_id": "65288b4ca6ebc75d70589d02",
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3yDfJwAAAA=",
+          "name": "alexander flores",
+          "email": "alexela8882@gmail.com",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c"
+        }
+      ],
+      "meta": {
+        "pagination": {
+          "total": 1,
+          "count": 25,
+          "per_page": 25,
+          "current_page": 1,
+          "total_pages": 1,
+          "links": {
+            "next": "http://reddotcrm.com/api/inquiries?page=2"
+          }
+        }
+      }
+    },
+    "fields": [
+      {
+        "_id": "5c906a11a6ebc7193110eab1",
+        "name": "source_id",
+        "label": "Source",
+        "uniqueName": "inquiry_source_id",
+        "listName": "inquiry_source",
+        "header": true,
+        "rules": {
+          "ss_dropdown": true
+        },
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a14a6ebc7193110ef7g",
+        "name": "email",
+        "label": "Email",
+        "uniqueName": "inquiry_email",
+        "header": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "email": true
+        },
+        "searchKey": true,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a14a6ebc7193110ef8g",
+        "name": "phoneNo",
+        "label": "Int'l Phone No",
+        "uniqueName": "inquiry_phone_no",
+        "tooltip": [
+          "International Phone Number",
+          "helper"
+        ],
+        "quick": true,
+        "header": true,
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
+          },
+          "phone": true,
+          "required": true
+        },
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a14a6ebc7193110ef6i",
+        "name": "name",
+        "label": "Name",
+        "uniqueName": "inquiry_name",
+        "concatenated": false,
+        "title": true,
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eab9",
+        "name": "dateRequested",
+        "label": "Date Requested",
+        "uniqueName": "inquiry_date_requested",
+        "header": false,
+        "rules": {
+          "date_format": "m/d/Y",
+          "required": true,
+          "date_only": true
+        },
+        "searchKey": false,
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eab4",
+        "name": "dateResponded",
+        "label": "Date Responded",
+        "uniqueName": "inquiry_date_responded",
+        "header": false,
+        "rules": {
+          "date_format": "m/d/Y",
+          "date_only": true
+        },
+        "searchKey": false,
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a14a6ebc7193110efa2",
+        "name": "assigned_to_id",
+        "label": "Assigned To",
+        "uniqueName": "inquiry_assigned_to",
+        "fieldGlue": " ",
+        "filterQuery": "where(\"Employee::_id\", \"=\", \"Role::user_id\")->where(\"Role::name\", \"=\", \"sales_person\")",
+        "tooltip": [
+          "For Esco offices who have sales team and want to assign this inquiry to their specific sales person",
+          "helper"
+        ],
+        "rules": {
+          "ss_pop_up": true
+        },
+        "searchKey": false,
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a14a6ebc7193110efa3",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "assigned_to_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b3",
+            "name": "Employee"
+          },
+          "popupDisplayFieldName": [
+            "firstName",
+            "lastName",
+            "email"
+          ]
+        }
+      },
+      {
+        "_id": "5c906a11a6ebc7193110ea96",
+        "name": "description",
+        "label": "Description",
+        "uniqueName": "inquiry_description",
+        "searchKey": false,
+        "field_type": {
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110ea93",
+        "name": "email_id",
+        "label": "Email",
+        "uniqueName": "inquiry_email_id",
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110ea9a",
+        "name": "conversation_id",
+        "label": "Email thread",
+        "uniqueName": "inquiry_conversation_id",
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eabd",
+        "name": "type_id",
+        "label": "Type",
+        "uniqueName": "inquiry_type_id",
+        "listName": "inquiry_type",
+        "header": true,
+        "rules": {
+          "ss_dropdown": true
+        },
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110ea9g",
+        "name": "link_id",
+        "label": "Related record",
+        "uniqueName": "inquiry_link_id",
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      }
+    ],
+    "panels": [
+      {
+        "_id": "5cadf210a6ebc747e22cb02r",
+        "panelName": "inquiry-panel-1",
+        "entityName": "Inquiry",
+        "controllerMethod": "inquiries@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "rules": null,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": null,
+            "row": 1,
+            "field_ids": [
+              [
+                "5c906a11a6ebc7193110eab1",
+                "5c906a11a6ebc7193110ea96"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "5cadf210a6ebc747e22cb02t",
+        "panelName": "inquiry-panel-2",
+        "entityName": "Inquiry",
+        "controllerMethod": "inquiries@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "rules": null,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": null,
+            "row": 1,
+            "field_ids": [
+              [
+                "5c906a11a6ebc7193110eab9",
+                "5c906a11a6ebc7193110eab4"
+              ],
+              [
+                "5c906a14a6ebc7193110efa2"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "viewFilters": [
+      {
+        "_id": "618f00cea6ebc7f57c21c482",
+        "query_id": "5c906a1ba6ebc7193110f8bb",
+        "sortField": "created_at",
+        "sortOrder": "DESC",
+        "filters": [
+          [
+            "5c906a15a6ebc7193110eff4",
+            "5bb104cf678f71061f643c2a",
+            true
+          ]
+        ],
+        "filterLogic": null,
+        "filterName": "My Team's Inquiries",
+        "moduleName": "inquiries",
+        "fields": [
+          "5c906a11a6ebc7193110eab1",
+          "5c906a14a6ebc7193110ef7g",
+          "5c906a14a6ebc7193110ef6i",
+          "5c906a11a6ebc7193110eab9",
+          "5c906a11a6ebc7193110eab4",
+          "5c906a14a6ebc7193110efa2",
+          "5c906a11a6ebc7193110ea96",
+          "5c906a11a6ebc7193110ea93",
+          "5c906a11a6ebc7193110ea9a",
+          "5c906a11a6ebc7193110eabd",
+          "5c906a11a6ebc7193110ea9g"
+        ],
+        "isDefault": true,
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a11a6ebc7193110eab1"
+      }
+    ]
+  }
+}

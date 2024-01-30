@@ -1,7 +1,7 @@
 <script setup>
 // imports
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 // components
 import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
@@ -11,6 +11,7 @@ import { useModuleDetailStore } from '@/stores/modules/detail'
 
 // presets
 const route = useRoute()
+const router = useRouter()
 const bcrumbs = ref([
   {
     label: `${route.params.name}`,
@@ -24,25 +25,51 @@ const bcrumbs = ref([
 // refs
 const localModule = ref()
 const localData = ref({})
+const localLinkedModuleInfo = ref()
+const localLinkedModule = ref()
+const localLinkedModuleData = ref()
+const localEntity = ref()
 // stores
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
-const { getModule, getCollectionById, getFieldDetails } = storeToRefs(moduleStore)
+const {
+  getEntity,
+  getModule,
+  getModules,
+  getLinkedModuleData,
+  getCollectionById,
+  _getFieldDetails,
+  getFieldDetails } = storeToRefs(moduleStore)
 const { getItemValueByName, moduleLoading } = storeToRefs(moduleDetailStore)
-const { fetchModule } = moduleStore
+const { fetchModule, fetchLinkedModuleData, _fetchModule } = moduleStore
+const { fetchItem } = moduleDetailStore
+
+// actions
+const fetchRelatedRecord = async () => {
+  localEntity.value = getEntity.value(localData.value.type_id)
+  const entityName = localEntity.value.name
+
+  await fetchLinkedModuleData(entityName, { link_field: '_id', link_id: localData.value.link_id })
+  localLinkedModuleData.value = getLinkedModuleData.value
+
+  localLinkedModule.value = await _fetchModule(localEntity.value.name)
+  localLinkedModuleInfo.value = getModules.value.find(m => m.name == localEntity.value.name)
+}
 
 // lifecycle
 onMounted(async () => {
   await fetchModule(route.params.name)
+  await fetchItem(route.params)
 
   localModule.value = getModule.value
   localData.value = getCollectionById.value(route.params.pageid)
+
+  await fetchRelatedRecord()
 })
 </script>
 
 <template>
   <div>
-    <pre>{{ getModule.value }}</pre>
     <RdBreadCrumbs :bcrumbs="bcrumbs" />
 
     <div
@@ -99,9 +126,17 @@ onMounted(async () => {
                       v-for="(key, kx) in Object.keys(localData)"
                       :key="kx"
                       class="grid">
-                        <div class="col-6">{{ getFieldDetails(key) && getFieldDetails(key).label }}</div>
-                        <div class="col-6 overflow-auto">
-                          <p class="white-space-normal">{{ localData[key] }}</p>
+                        <div class="col flex align-items-center gap-4">
+                          <div>
+                            <p class="white-space-nowrap">
+                              {{ getFieldDetails(key) ? getFieldDetails(key).label : 'ID' }}
+                            </p>
+                          </div>
+                          <div
+                            style="width: 40% !important"
+                            class="white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                            {{ localData[key] }}
+                          </div>
                         </div>
                     </div>
                   </div>
@@ -111,7 +146,36 @@ onMounted(async () => {
           </div>
         </div>
         <div class="col-5">
-          <div class="p-3 bg-white border-round-xl shadow-2"></div>
+          <div v-if="localEntity" class="bg-white border-round-xl shadow-2">
+            <div
+              @click="router.push({ name: 'modules.pages.detail', params: { name: localEntity.name, id: localLinkedModuleInfo._id, pageid: localData.link_id } })"
+              class="cursor-pointer p-3 border-round-top-xl text-2xl bg-primary-300 text-50">
+              {{ localEntity.label }}
+            </div>
+            <div class="p-3">
+              <div
+                v-if="localLinkedModule"
+                v-for="(key, kx) in Object.keys(localLinkedModuleData)"
+                :key="kx"
+                class="grid">
+                  <div class="col flex align-items-center gap-4">
+                    <div>
+                      <p class="white-space-nowrap">
+                        {{ _getFieldDetails({ module: localLinkedModule, field: key }) ? _getFieldDetails({ module: localLinkedModule, field: key }).label : 'ID' }}
+                      </p>
+                    </div>
+                    <div
+                      style="width: 40% !important"
+                      class="white-space-nowrap overflow-hidden text-overflow-ellipsis">
+                      {{ localData[key] }}
+                    </div>
+                  </div>
+              </div>
+              <!-- <pre v-if="localLinkedModule">
+                {{ _getFieldDetails({ module: localLinkedModule }) }}
+              </pre> -->
+            </div>
+          </div>
         </div>
       </div>
     </div>

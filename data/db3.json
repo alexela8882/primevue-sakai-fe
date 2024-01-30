@@ -26786,6 +26786,29 @@
   "inquiries": {
     "collection": {
       "data": [
+        {
+          "_id": "1706578238995",
+          "source_id": "Email",
+          "dateRequested": "01-06-2024",
+          "dateResponded": "01-06-2024",
+          "assigned_to_id": {
+            "_id": "5cadbb8aa6ebc720a0361ef3",
+            "email": "jane.luu@escolifesciences.com",
+            "firstName": "Jane",
+            "lastName": "Luu",
+            "peopleUnder": null,
+            "people": [
+              "5cadbb8aa6ebc720a0361ef3"
+            ]
+          },
+          "description": "This is a test from converted mailbox - 1706578238995",
+          "type_id": "Lead",
+          "link_id": "65288b4ca6ebc75d70589d02",
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3yDfJwAAAA=",
+          "name": "alexander flores",
+          "email": "alexela8882@gmail.com",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c"
+        }
       ],
       "meta": {
         "pagination": {
@@ -27104,8 +27127,7 @@
   },
   "defectreports": {
     "collection": {
-      "data": [
-      ],
+      "data": [],
       "meta": {
         "pagination": {
           "total": 1,
@@ -30946,6 +30968,47 @@
       "is_locked": false,
       "locked_remarks": null,
       "forPricelist": false
+    }
+  ],
+  "inquiries-item": [
+    {
+      "_id": "1706578238995",
+      "source_id": "Email",
+      "dateRequested": "01-06-2024",
+      "dateResponded": "01-06-2024",
+      "assigned_to_id": {
+        "_id": "5cadbb8aa6ebc720a0361ef3",
+        "email": "jane.luu@escolifesciences.com",
+        "firstName": "Jane",
+        "lastName": "Luu",
+        "peopleUnder": null,
+        "people": [
+          "5cadbb8aa6ebc720a0361ef3"
+        ]
+      },
+      "description": "This is a test from converted mailbox - 1706578238995",
+      "type_id": "Lead",
+      "link_id": "65288b4ca6ebc75d70589d02",
+      "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3yDfJwAAAA=",
+      "name": "alexander flores",
+      "email": "alexela8882@gmail.com",
+      "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c"
+    }
+  ],
+  "defectreports-item": [
+    {
+      "_id": 1706502317142,
+      "branch_id": "asd",
+      "problem_discovered_id": "asd",
+      "nature_of_problem_id": "asd",
+      "type_of_problem_id": "asd",
+      "deliverToCompanyName": "asdasdasd",
+      "owner_id": {
+        "_id": "5bb104ed678f71061f6451f8",
+        "firstName": "Ninoy",
+        "lastName": "Cahayon",
+        "email": "ninoy.cahayon@escolifesciences.com"
+      }
     }
   ],
   "accounts-related": [
@@ -43817,22 +43880,6 @@
       "displayFieldName": [
         "name"
       ]
-    }
-  ],
-  "defectreports-item": [
-    {
-      "_id": 1706502317142,
-      "branch_id": "asd",
-      "problem_discovered_id": "asd",
-      "nature_of_problem_id": "asd",
-      "type_of_problem_id": "asd",
-      "deliverToCompanyName": "asdasdasd",
-      "owner_id": {
-        "_id": "5bb104ed678f71061f6451f8",
-        "firstName": "Ninoy",
-        "lastName": "Cahayon",
-        "email": "ninoy.cahayon@escolifesciences.com"
-      }
     }
   ]
 }

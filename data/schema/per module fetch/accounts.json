@@ -1,0 +1,5048 @@
+{
+  "accounts": {
+    "collection": {
+      "data": [
+        {
+          "_id": "5bb19faf306947718ca470a5",
+          "name": "Sample Account (For Test Report Testing)",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5bb104ed678f71061f645215",
+            "email": "christia.l@escolifesciences.com",
+            "firstName": "Christia",
+            "lastName": "Lagamson",
+            "peopleUnder": null,
+            "people": [
+              "5bb104ed678f71061f645215"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-10-02 05:58:01.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fb74dba6ebc7780420e917",
+          "name": "McMaster University",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "64d443b3a6ebc75a1b7a7c98",
+            "firstName": "Anthony",
+            "lastName": "Paone",
+            "email": "anthony.paone@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "64d443b3a6ebc75a1b7a7c98"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 19:24:11.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fb0400a6ebc777346e74d5",
+          "name": "IIT, Kanpur",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5fd99981a6ebc76529590f33",
+            "email": "sanjana.varadaraj@escolifesciences.com",
+            "firstName": "Sanjana",
+            "lastName": "Varadaraj",
+            "peopleUnder": null,
+            "people": [
+              "5fd99981a6ebc76529590f33"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 11:22:40.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fb000aa6ebc774356ba4f2",
+          "name": "ILenSys Technologies Pvt Ltd",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5fd99981a6ebc76529590f33",
+            "email": "sanjana.varadaraj@escolifesciences.com",
+            "firstName": "Sanjana",
+            "lastName": "Varadaraj",
+            "peopleUnder": null,
+            "people": [
+              "5fd99981a6ebc76529590f33"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 11:05:46.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64faf1ada6ebc762732c31c2",
+          "name": "Brunei Methanol Company Sdn Bhd",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "627dbee0a6ebc7ff616a0457",
+            "firstName": "Fajriah",
+            "lastName": "Syam",
+            "email": "fajriah.syam@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "627dbee0a6ebc7ff616a0457"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 10:04:29.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64faeaf0a6ebc758b9559652",
+          "name": "Triplan India Pvt Ltd, Pune",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5fd99981a6ebc76529590f33",
+            "email": "sanjana.varadaraj@escolifesciences.com",
+            "firstName": "Sanjana",
+            "lastName": "Varadaraj",
+            "peopleUnder": null,
+            "people": [
+              "5fd99981a6ebc76529590f33"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 09:35:44.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fae99aa6ebc756930ce4a7",
+          "name": "BIOTECHNOLOGY EQUIPEMENTS",
+          "type_id": "Dealer",
+          "owner_id": {
+            "_id": "6283084ba6ebc785da6d78f4",
+            "firstName": "Serge",
+            "lastName": "Tshimpumpu",
+            "email": "serge.tshimpumpu@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "6283084ba6ebc785da6d78f4"
+            ]
+          },
+          "phoneNo": "+221338252760",
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 09:30:02.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fada02a6ebc7407939cda2",
+          "name": "RSUD KOTA SABANG",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5f86dfe4a6ebc738724aedf2",
+            "email": "ryan.setiawan@escolifesciences.com",
+            "firstName": "Ryan",
+            "lastName": "Setiawan",
+            "peopleUnder": null,
+            "people": [
+              "5f86dfe4a6ebc738724aedf2"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 08:23:30.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fad595a6ebc7391c498c32",
+          "name": "RSUD Rantau Perapat",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5f86dfe4a6ebc738724aedf2",
+            "email": "ryan.setiawan@escolifesciences.com",
+            "firstName": "Ryan",
+            "lastName": "Setiawan",
+            "peopleUnder": null,
+            "people": [
+              "5f86dfe4a6ebc738724aedf2"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 08:04:37.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64facc2fa6ebc72a3c2e3f92",
+          "name": "Physician Diagnostic Center",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "63b66fe8a6ebc76cd70c254b",
+            "firstName": "\nPamela Jane",
+            "lastName": "Cordero",
+            "email": "pamela.cordero@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "63b66fe8a6ebc76cd70c254b"
+            ]
+          },
+          "phoneNo": "+63 2 524 0626",
+          "website": "http://pdsclinic.com",
+          "created_at": {
+            "date": "2023-09-08 07:24:31.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64faca19a6ebc7273c49d632",
+          "name": "Tesco Energy, PT",
+          "type_id": "Dealer",
+          "owner_id": {
+            "_id": "613760eba6ebc70fda5b9fd4",
+            "firstName": "Eris Mahrus",
+            "lastName": "Hadi",
+            "email": "eris.hadi@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "613760eba6ebc70fda5b9fd4"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 07:15:37.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fac86ba6ebc723e27c7b35",
+          "name": "Công ty cổ phần tập đoàn Thiên Long",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5c1626fd678f717f71196842",
+            "email": "queen.ngo@escolifesciences.com",
+            "firstName": "Ngo To",
+            "lastName": "Uyen",
+            "peopleUnder": null,
+            "people": [
+              "5c1626fd678f717f71196842"
+            ]
+          },
+          "phoneNo": "(84-8) 37 505 555",
+          "website": "http://thienlonggroup.com",
+          "created_at": {
+            "date": "2023-09-08 07:08:27.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fac497a6ebc71d4963bf15",
+          "name": "Dinas Lingkungan Hidup Provinsi Aceh",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5f86dfe4a6ebc738724aedf2",
+            "email": "ryan.setiawan@escolifesciences.com",
+            "firstName": "Ryan",
+            "lastName": "Setiawan",
+            "peopleUnder": null,
+            "people": [
+              "5f86dfe4a6ebc738724aedf2"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 06:52:07.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fac180a6ebc71852559b26",
+          "name": "CIDEIM",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5e37a1e8a6ebc7909d444b32",
+            "email": "support.global@escolifesciences.com",
+            "firstName": "Charles",
+            "lastName": "Sitindaon",
+            "peopleUnder": null,
+            "people": [
+              "5e37a1e8a6ebc7909d444b32"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 06:38:56.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fac114a6ebc717a13a55b4",
+          "name": "RSUD Kab. Aceh Barat",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5f86dfe4a6ebc738724aedf2",
+            "email": "ryan.setiawan@escolifesciences.com",
+            "firstName": "Ryan",
+            "lastName": "Setiawan",
+            "peopleUnder": null,
+            "people": [
+              "5f86dfe4a6ebc738724aedf2"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 06:37:08.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fabf69a6ebc715a6788e42",
+          "name": "CHRU de SAINT ETIENNE",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5e37a1e8a6ebc7909d444b32",
+            "email": "support.global@escolifesciences.com",
+            "firstName": "Charles",
+            "lastName": "Sitindaon",
+            "peopleUnder": null,
+            "people": [
+              "5e37a1e8a6ebc7909d444b32"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 06:30:01.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fabc8da6ebc7105d392847",
+          "name": "The 960th Hospital of the People's Liberation Army in Jinan",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5dccb5a8a6ebc75e242120f2",
+            "email": "monika.jablonskiene@escolifesciences.com",
+            "firstName": "Monika",
+            "lastName": "Chreptaviciute",
+            "peopleUnder": null,
+            "people": [
+              "5dccb5a8a6ebc75e242120f2"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 06:17:49.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fabc5fa6ebc710cb7d7df2",
+          "name": "River Regeneration and Rejuvenation Biotechnology Co. Ltd.瑞河再生醫學生技股份有限公司",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "627222d3a6ebc744c974868c",
+            "firstName": "Silvia",
+            "lastName": "You",
+            "email": "silvia.you@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "627222d3a6ebc744c974868c"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 06:17:03.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fabbc5a6ebc70fee710722",
+          "name": "Balai Verteriner Provinsi Aceh",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5f86dfe4a6ebc738724aedf2",
+            "email": "ryan.setiawan@escolifesciences.com",
+            "firstName": "Ryan",
+            "lastName": "Setiawan",
+            "peopleUnder": null,
+            "people": [
+              "5f86dfe4a6ebc738724aedf2"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 06:14:29.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fab1eda6ebc70184769d22",
+          "name": "PT Pesona Natasha Gemilang",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5ec53594a6ebc74db1568c03",
+            "email": "dewi.kristianawati@escolifesciences.com",
+            "firstName": "Dewi",
+            "lastName": "Kristianawati",
+            "peopleUnder": null,
+            "people": [
+              "5ec53594a6ebc74db1568c03"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 05:32:29.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fa9d83a6ebc766576fbeb2",
+          "name": "RJPS Industries",
+          "type_id": "Contractor/Construction Firm",
+          "owner_id": {
+            "_id": "5bb104ed678f71061f6451f5",
+            "email": "judy.tronsal@escolifesciences.com",
+            "firstName": "Judy Ann",
+            "lastName": "Tronsal",
+            "peopleUnder": null,
+            "people": [
+              "5bb104ed678f71061f6451f5"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 04:05:23.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fa9a29a6ebc7613c05d392",
+          "name": "Universitas Jember Kampus Bondowoso",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5bff0f34678f715bf0332122",
+            "email": "fenny.suana@escolifesciences.com",
+            "firstName": "Fenny",
+            "lastName": "Suana",
+            "peopleUnder": null,
+            "people": [
+              "5bff0f34678f715bf0332122"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 03:51:05.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fa9580a6ebc75b1f298172",
+          "name": "คณะสาธารณสุขศาสตร์ โภชนาการ  มหาวิทยาลัยมหิดล ศาลายา",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "640fe223a6ebc70268141983",
+            "firstName": "Sukanda",
+            "lastName": "Changern",
+            "email": "sukanda.changern@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "640fe223a6ebc70268141983"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 03:31:12.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fa8c08a6ebc74c182617c8",
+          "name": "Davao Analytical Laboratories, Inc. - Bohol Branch",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "5bb104ed678f71061f6451f5",
+            "email": "judy.tronsal@escolifesciences.com",
+            "firstName": "Judy Ann",
+            "lastName": "Tronsal",
+            "peopleUnder": null,
+            "people": [
+              "5bb104ed678f71061f6451f5"
+            ]
+          },
+          "phoneNo": "09663049325",
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 02:50:48.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        },
+        {
+          "_id": "64fa8beba6ebc74d663166f3",
+          "name": "Nelipak Healthcare Packaging",
+          "type_id": "End User",
+          "owner_id": {
+            "_id": "60336e4fa6ebc7b1c75d91b2",
+            "email": "julia.duncan@escolifesciences.com",
+            "firstName": "Julia",
+            "lastName": "Duncan",
+            "peopleUnder": null,
+            "people": [
+              "60336e4fa6ebc7b1c75d91b2"
+            ]
+          },
+          "phoneNo": null,
+          "website": null,
+          "created_at": {
+            "date": "2023-09-08 02:50:19.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          }
+        }
+      ],
+      "meta": {
+        "pagination": {
+          "total": 45425,
+          "count": 25,
+          "per_page": 25,
+          "current_page": 1,
+          "total_pages": 1817,
+          "links": {
+            "next": "http://uat.reddotcrm.com/api/accounts?page=2"
+          }
+        }
+      }
+    },
+    "fields": [
+      {
+        "_id": "5c906a12a6ebc7193110eb45",
+        "name": "isEscoBranch",
+        "label": "Is Esco Office",
+        "uniqueName": "account_is_esco_branch",
+        "field_type_id": "5c906a0ea6ebc7193110e733",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb46"
+            }
+          },
+          {
+            "name": "default_value",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": false,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb47"
+            }
+          },
+          {
+            "name": "checkbox",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "boolRadio4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb48"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb49",
+        "name": "business_unit_ids",
+        "label": "Business Unit",
+        "uniqueName": "account_business_unit_ids",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "extraInfo": [
+          "level"
+        ],
+        "level": "level",
+        "quick": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ms_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb4a"
+            }
+          },
+          {
+            "name": "required",
+            "event": [
+              "onLoad",
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb4b"
+            }
+          }
+        ],
+        "controls": "products_handled_id",
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110eb4c",
+          "method": "belongsToMany",
+          "class": "App\\Models\\Company\\BusinessUnit",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "account_ids",
+          "local_key": "business_unit_ids",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7c9",
+            "name": "BusinessUnit",
+            "model_class": "App\\Models\\Company\\BusinessUnit",
+            "repository_class": "App\\Repositories\\Eloquent\\Company\\BusinessUnitRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "business_units"
+          },
+          "popupDisplayFieldName": [
+            "name",
+            "description"
+          ],
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110eb49"
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb4d",
+        "name": "name",
+        "label": "Account Name",
+        "uniqueName": "account_name",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "title": true,
+        "quick": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "title_case",
+            "event": [
+              "onBlur"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb4e"
+            }
+          },
+          {
+            "name": "unique",
+            "event": [
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": "Account",
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb4f"
+            }
+          },
+          {
+            "name": "required",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb50"
+            }
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb51"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb52"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": true,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb53",
+        "name": "type_id",
+        "label": "Type",
+        "uniqueName": "account_type_id",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "listName": "account_type",
+        "quick": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "required",
+            "event": [
+              "onLoad",
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb54"
+            }
+          },
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb55"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb56",
+        "name": "currency_id",
+        "label": "Account Currency",
+        "uniqueName": "account_currency_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "quick": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb57"
+            }
+          },
+          {
+            "name": "required",
+            "event": [
+              "onLoad",
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb58"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110eb59",
+          "method": "belongsTo",
+          "class": "App\\Models\\Core\\Currency",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "currency_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7bc",
+            "name": "Currency",
+            "model_class": "App\\Models\\Core\\Currency",
+            "repository_class": "App\\Repositories\\Eloquent\\Core\\CurrencyRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "currencies"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110eb56"
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb5a",
+        "name": "existing",
+        "label": "Existing Customer",
+        "uniqueName": "account_existing",
+        "field_type_id": "5c906a0ea6ebc7193110e733",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "default_value",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": false,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb5b"
+            }
+          },
+          {
+            "name": "checkbox",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "boolRadio4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb5c"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb5d",
+        "name": "owner_id",
+        "label": "Account Owner",
+        "uniqueName": "account_owner_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "quick": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": true,
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110eb5f",
+          "method": "belongsTo",
+          "class": "App\\Models\\Employee\\Employee",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "owner_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b3",
+            "name": "Employee",
+            "model_class": "App\\Models\\Employee\\Employee",
+            "repository_class": "App\\Repositories\\Eloquent\\Employee\\EmployeeRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "users"
+          },
+          "popupDisplayFieldName": [
+            "firstName",
+            "lastName",
+            "email"
+          ],
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110eb5d"
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb60",
+        "name": "dealer_id",
+        "label": "Dealer's Assigned",
+        "uniqueName": "account_dealer_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "extraInfo": [
+          "isEscoBranch"
+        ],
+        "filterQuery": "where(\"Account::type_id\", \"in\", picklist(\"account_type\",[\"Dealer\", \"Distributor\"]))",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": false,
+        "addable": {
+          "moduleName": "accounts",
+          "parentField": null
+        },
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110eb62",
+          "method": "belongsTo",
+          "class": "App\\Models\\Customer\\Account",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "dealer_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7d4",
+            "name": "Account",
+            "model_class": "App\\Models\\Customer\\Account",
+            "repository_class": "App\\Repositories\\Eloquent\\Customer\\AccountRepository",
+            "mutable": false,
+            "notifiable": false,
+            "connection_id": [
+              "5c906a0fa6ebc7193110e802"
+            ],
+            "collection": "accounts"
+          },
+          "created_by": null,
+          "updated_by": null,
+          "field_id": "5c906a12a6ebc7193110eb60",
+          "popupDisplayFieldName": [
+            "name",
+            "owner_id",
+            "is_locked"
+          ]
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb63",
+        "name": "distributor_id",
+        "label": "Distributor's Assigned",
+        "uniqueName": "account_distributor_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "extraInfo": [
+          "isEscoBranch"
+        ],
+        "filterQuery": "where(\"Account::type_id\", \"in\", picklist(\"account_type\",[\"Distributor\"]))",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2021-09-22 08:34:54",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "addable": {
+          "moduleName": "accounts",
+          "parentField": null
+        },
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110eb65",
+          "method": "belongsTo",
+          "class": "App\\Models\\Customer\\Account",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "distributor_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7d4",
+            "name": "Account",
+            "model_class": "App\\Models\\Customer\\Account",
+            "repository_class": "App\\Repositories\\Eloquent\\Customer\\AccountRepository",
+            "mutable": false,
+            "notifiable": false,
+            "connection_id": [
+              "5c906a0fa6ebc7193110e802"
+            ],
+            "collection": "accounts"
+          },
+          "created_by": null,
+          "updated_by": null,
+          "field_id": "5c906a12a6ebc7193110eb63",
+          "popupDisplayFieldName": [
+            "name",
+            "owner_id",
+            "is_locked"
+          ]
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb66",
+        "name": "mfg_sales_rep_id",
+        "label": "Manufacturer Sales Rep",
+        "uniqueName": "account_mfg_sales_rep_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "extraInfo": [
+          "isEscoBranch"
+        ],
+        "filterQuery": "where(\"Account::type_id\", \"in\", picklist(\"account_type\",[\"Distributor\"]))",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb67"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110eb68",
+          "method": "belongsTo",
+          "class": "App\\Models\\Customer\\Account",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "mfg_sales_rep_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7d4",
+            "name": "Account",
+            "model_class": "App\\Models\\Customer\\Account",
+            "repository_class": "App\\Repositories\\Eloquent\\Customer\\AccountRepository",
+            "mutable": false,
+            "notifiable": false,
+            "connection_id": [
+              "5c906a0fa6ebc7193110e802"
+            ],
+            "collection": "accounts"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110eb66",
+          "popupDisplayFieldName": [
+            "name",
+            "owner_id",
+            "is_locked"
+          ]
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb69",
+        "name": "salesperson_in_charge_id",
+        "label": "Sales Person In-Charge",
+        "uniqueName": "account_salesperson_in_charge_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "filterQuery": "where(\"Employee::_id\", \"=\", \"Role::user_id\")->where(\"Role::name\", \"=\", \"sales_person\")",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb6a"
+            }
+          }
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110eb6b",
+          "method": "belongsTo",
+          "class": "App\\Models\\Employee\\Employee",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "salesperson_in_charge_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b3",
+            "name": "Employee",
+            "model_class": "App\\Models\\Employee\\Employee",
+            "repository_class": "App\\Repositories\\Eloquent\\Employee\\EmployeeRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "users"
+          },
+          "popupDisplayFieldName": [
+            "firstName",
+            "lastName",
+            "email"
+          ],
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110eb69"
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb6c",
+        "name": "phoneNo",
+        "label": "Int'l Phone No",
+        "uniqueName": "account_phone_no",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "tooltip": [
+          "International Phone Number",
+          "helper"
+        ],
+        "header": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 5,
+              "max": 100
+            },
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb6d"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb6e"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb6f",
+        "name": "phoneNo2",
+        "label": "Phone",
+        "uniqueName": "account_phone_no2",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "tooltip": [
+          "Phone Number",
+          "helper"
+        ],
+        "header": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 5,
+              "max": 100
+            },
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb70"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb71"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb72",
+        "name": "fax",
+        "label": "Int'l Fax No",
+        "uniqueName": "account_fax",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "tooltip": [
+          "International Fax Number",
+          "helper"
+        ],
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "fax",
+            "event": [
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb73"
+            }
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 10,
+              "max": 30
+            },
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb74"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb75",
+        "name": "email",
+        "label": "Email",
+        "uniqueName": "account_email",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "header": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "email",
+            "event": [
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb76"
+            }
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 10,
+              "max": 100
+            },
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb77"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": true,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb78",
+        "name": "website",
+        "label": "Website",
+        "uniqueName": "account_website",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "url",
+            "event": [
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb79"
+            }
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb7a"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb7b",
+        "name": "billingStreet",
+        "label": "Street",
+        "uniqueName": "account_billing_street",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "groupWith": {
+          "street": "billingStreet",
+          "zipcode": "billingZipCode",
+          "city": "billingCity",
+          "state": "billingState",
+          "country_id": "billing_country_id"
+        },
+        "concatenated": false,
+        "fieldGlue": ",",
+        "groupLabel": "Billing Address",
+        "group": "address",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 1000
+            }
+          }
+        ],
+        "quick": true,
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa33",
+          "5cfa2590a6ebc785950a37d4",
+          "5cfa25c2a6ebc785bb4b5614",
+          "5cfa2643a6ebc78627412424",
+          "5cfa2661a6ebc7864451c0d4",
+          "5cfa27c4a6ebc787575ff2a4"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb7e",
+        "name": "billingZipCode",
+        "label": "Zipcode",
+        "uniqueName": "account_billing_zip_code",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "group": "address",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [],
+        "quick": true,
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa33",
+          "5cfa2590a6ebc785950a37d4",
+          "5cfa25c2a6ebc785bb4b5614",
+          "5cfa2643a6ebc78627412424",
+          "5cfa2661a6ebc7864451c0d4",
+          "5cfa27c4a6ebc787575ff2a4"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb81",
+        "name": "billingCity",
+        "label": "City",
+        "uniqueName": "account_billing_city",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "group": "address",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [],
+        "quick": true,
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa33",
+          "5cfa2590a6ebc785950a37d4",
+          "5cfa25c2a6ebc785bb4b5614",
+          "5cfa2643a6ebc78627412424",
+          "5cfa2661a6ebc7864451c0d4",
+          "5cfa27c4a6ebc787575ff2a4"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb84",
+        "name": "billingState",
+        "label": "State",
+        "uniqueName": "account_billing_state",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "group": "address",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [],
+        "quick": true,
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa33",
+          "5cfa2590a6ebc785950a37d4",
+          "5cfa25c2a6ebc785bb4b5614",
+          "5cfa2643a6ebc78627412424",
+          "5cfa2661a6ebc7864451c0d4",
+          "5cfa27c4a6ebc787575ff2a4"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb87",
+        "name": "billing_country_id",
+        "label": "Country",
+        "uniqueName": "account_billing_country_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "extraInfo": [
+          "alpha2Code"
+        ],
+        "group": "address",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:41",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb88"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa33",
+          "5cfa2590a6ebc785950a37d4",
+          "5cfa25c2a6ebc785bb4b5614",
+          "5cfa2643a6ebc78627412424",
+          "5cfa2661a6ebc7864451c0d4",
+          "5cfa27c4a6ebc787575ff2a4"
+        ],
+        "quick": true,
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110eb89",
+          "method": "belongsTo",
+          "class": "App\\Models\\Core\\Country",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "billing_country_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7bd",
+            "name": "Country",
+            "model_class": "App\\Models\\Core\\Country",
+            "repository_class": "App\\Repositories\\Eloquent\\Core\\CountryRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "countries"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110eb87"
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb8a",
+        "name": "salesforceID",
+        "label": "Sales Force ID",
+        "uniqueName": "account_salesforce_i_d",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "hide",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb8b"
+            }
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb8c"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb8d"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb8e",
+        "name": "shippingStreet",
+        "label": "Street",
+        "uniqueName": "account_shipping_street",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "groupWith": {
+          "street": "shippingStreet",
+          "zipcode": "shippingZipCode",
+          "city": "shippingCity",
+          "state": "shippingState",
+          "country_id": "shipping_country_id"
+        },
+        "concatenated": false,
+        "fieldGlue": ",",
+        "groupLabel": "Shipping Address",
+        "group": "address",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 1000
+            }
+          }
+        ],
+        "quick": true,
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa33",
+          "5cfa2590a6ebc785950a37d4",
+          "5cfa25c2a6ebc785bb4b5614",
+          "5cfa2643a6ebc78627412424",
+          "5cfa2661a6ebc7864451c0d4",
+          "5cfa27c4a6ebc787575ff2a4"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb91",
+        "name": "shippingZipCode",
+        "label": "Zipcode",
+        "uniqueName": "account_shipping_zip_code",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "group": "address",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [],
+        "quick": true,
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa33",
+          "5cfa2590a6ebc785950a37d4",
+          "5cfa25c2a6ebc785bb4b5614",
+          "5cfa2643a6ebc78627412424",
+          "5cfa2661a6ebc7864451c0d4",
+          "5cfa27c4a6ebc787575ff2a4"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb94",
+        "name": "shippingCity",
+        "label": "City",
+        "uniqueName": "account_shipping_city",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "group": "address",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [],
+        "quick": true,
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa33",
+          "5cfa2590a6ebc785950a37d4",
+          "5cfa25c2a6ebc785bb4b5614",
+          "5cfa2643a6ebc78627412424",
+          "5cfa2661a6ebc7864451c0d4",
+          "5cfa27c4a6ebc787575ff2a4"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb97",
+        "name": "shippingState",
+        "label": "State",
+        "uniqueName": "account_shipping_state",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "group": "address",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [],
+        "quick": true,
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa33",
+          "5cfa2590a6ebc785950a37d4",
+          "5cfa25c2a6ebc785bb4b5614",
+          "5cfa2643a6ebc78627412424",
+          "5cfa2661a6ebc7864451c0d4",
+          "5cfa27c4a6ebc787575ff2a4"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb9a",
+        "name": "shipping_country_id",
+        "label": "Country",
+        "uniqueName": "account_shipping_country_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "extraInfo": [
+          "alpha2Code"
+        ],
+        "group": "address",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:41",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb9b"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa33",
+          "5cfa2590a6ebc785950a37d4",
+          "5cfa25c2a6ebc785bb4b5614",
+          "5cfa2643a6ebc78627412424",
+          "5cfa2661a6ebc7864451c0d4",
+          "5cfa27c4a6ebc787575ff2a4"
+        ],
+        "quick": true,
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110eb9c",
+          "method": "belongsTo",
+          "class": "App\\Models\\Core\\Country",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "shipping_country_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7bd",
+            "name": "Country",
+            "model_class": "App\\Models\\Core\\Country",
+            "repository_class": "App\\Repositories\\Eloquent\\Core\\CountryRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "countries"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110eb9a"
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eb9d",
+        "name": "group_id",
+        "label": "Account Group",
+        "uniqueName": "account_group_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eb9e"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa32",
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110eb9f",
+          "method": "belongsTo",
+          "class": "App\\Models\\Customer\\AccountGroup",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "group_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7d5",
+            "name": "AccountGroup",
+            "model_class": "App\\Models\\Customer\\AccountGroup",
+            "repository_class": "App\\Repositories\\Eloquent\\Customer\\AccountGroupRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "account_groups"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110eb9d"
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eba0",
+        "name": "industry_id",
+        "label": "Industry",
+        "uniqueName": "account_industry_id",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "listName": "industry",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eba1"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa34",
+          "5cfa2590a6ebc785950a37d5",
+          "5cfa25c2a6ebc785bb4b5615",
+          "5cfa2643a6ebc78627412425",
+          "5cfa2661a6ebc7864451c0d5",
+          "5cfa27c4a6ebc787575ff2a5"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eba2",
+        "name": "major_segment_id",
+        "label": "Major Segment",
+        "uniqueName": "account_major_segment_id",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "listName": "major_segment",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eba3"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa34",
+          "5cfa2590a6ebc785950a37d5",
+          "5cfa25c2a6ebc785bb4b5615",
+          "5cfa2643a6ebc78627412425",
+          "5cfa2661a6ebc7864451c0d5",
+          "5cfa27c4a6ebc787575ff2a5"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eba4",
+        "name": "minor_segment_id",
+        "label": "Industry Minor Segment",
+        "uniqueName": "account_minor_segment_id",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "listName": "industry_minor_segment",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eba5"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa34",
+          "5cfa2590a6ebc785950a37d5",
+          "5cfa25c2a6ebc785bb4b5615",
+          "5cfa2643a6ebc78627412425",
+          "5cfa2661a6ebc7864451c0d5",
+          "5cfa27c4a6ebc787575ff2a5"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eba6",
+        "name": "location_coverage_id",
+        "label": "Location Coverage",
+        "uniqueName": "account_location_coverage_id",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "listName": "account_location_coverage",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eba7"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa35",
+          "5cfa2590a6ebc785950a37d6",
+          "5cfa25c2a6ebc785bb4b5616",
+          "5cfa2643a6ebc78627412426",
+          "5cfa2661a6ebc7864451c0d6",
+          "5cfa27c4a6ebc787575ff2a6"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110eba8",
+        "name": "branch_id",
+        "label": "Branch",
+        "uniqueName": "account_branch_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "quick": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110eba9"
+            }
+          }
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110ebaa",
+          "method": "belongsTo",
+          "class": "App\\Models\\Company\\Branch",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "branch_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7ba",
+            "name": "Branch",
+            "model_class": "App\\Models\\Company\\Branch",
+            "repository_class": "App\\Repositories\\Eloquent\\Company\\BranchRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "branches"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110eba8"
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110ebab",
+        "name": "products_handled_id",
+        "label": "Products Handled",
+        "uniqueName": "account_products_handled_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "extraInfo": [
+          "business_unit_ids"
+        ],
+        "filterSourceField": "business_unit_ids",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "filtered_by",
+            "event": [
+              "onLoad",
+              "onChange"
+            ],
+            "groupName": "cat1",
+            "value": "business_unit_ids",
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebac"
+            }
+          },
+          {
+            "name": "tab_multi_select",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebad"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa36",
+          "5cfa2590a6ebc785950a37d7",
+          "5cfa25c2a6ebc785bb4b5617",
+          "5cfa2643a6ebc78627412427",
+          "5cfa2661a6ebc7864451c0d7",
+          "5cfa27c4a6ebc787575ff2a7"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110ebae",
+          "method": "belongsToMany",
+          "class": "App\\Models\\Product\\ProductCategory",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "account_ids",
+          "local_key": "products_handled_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7c8",
+            "name": "ProductCategory",
+            "model_class": "App\\Models\\Product\\ProductCategory",
+            "repository_class": "App\\Repositories\\Eloquent\\Product\\ProductCategoryRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "product_categories"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110ebab"
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110ebaf",
+        "name": "description",
+        "label": "Description",
+        "uniqueName": "account_description",
+        "field_type_id": "5c906a0ea6ebc7193110e73c",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 2500
+            },
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebb0"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa37",
+          "5cfa2590a6ebc785950a37d8",
+          "5cfa25c2a6ebc785bb4b5618",
+          "5cfa2643a6ebc78627412428",
+          "5cfa2661a6ebc7864451c0d8",
+          "5cfa27c4a6ebc787575ff2a8"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110ebb1",
+        "name": "updated_at",
+        "label": "Last Modified Date",
+        "uniqueName": "account_updated_at",
+        "field_type_id": "5c906a0ea6ebc7193110e732",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebb2"
+            }
+          },
+          {
+            "name": "date_format",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": "m/d/Y",
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebb3"
+            }
+          },
+          {
+            "name": "date_only",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebb4"
+            }
+          }
+        ],
+        "searchKey": false,
+        "section2_ids": [
+          "5da54716a6ebc7dcd5609a33",
+          "5da54736a6ebc7dcee57cac3"
+        ],
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110ebb5",
+        "name": "created_at",
+        "label": "Created Date",
+        "uniqueName": "account_created_at",
+        "field_type_id": "5c906a0ea6ebc7193110e732",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebb6"
+            }
+          },
+          {
+            "name": "date_format",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": "m/d/Y",
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebb7"
+            }
+          },
+          {
+            "name": "date_only",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebb8"
+            }
+          }
+        ],
+        "searchKey": false,
+        "section1_ids": [
+          "5da54716a6ebc7dcd5609a33",
+          "5da54736a6ebc7dcee57cac3"
+        ],
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110ebb9",
+        "name": "updated_by",
+        "label": "Last Modified By",
+        "uniqueName": "account_updated_by",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebba"
+            }
+          },
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebbb"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5da54716a6ebc7dcd5609a33",
+          "5da54736a6ebc7dcee57cac3"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110ebbc",
+          "method": "belongsTo",
+          "class": "App\\User",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "updated_by",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b4",
+            "name": "User",
+            "model_class": "App\\User",
+            "repository_class": "App\\Repositories\\Eloquent\\User\\UserRepository",
+            "mutable": false,
+            "notifiable": true,
+            "collection": "users"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110ebb9"
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110ebbd",
+        "name": "created_by",
+        "label": "Created By",
+        "uniqueName": "account_created_by",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebbe"
+            }
+          },
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebbf"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5da54716a6ebc7dcd5609a33",
+          "5da54736a6ebc7dcee57cac3"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110ebc0",
+          "method": "belongsTo",
+          "class": "App\\User",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "created_by",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b4",
+            "name": "User",
+            "model_class": "App\\User",
+            "repository_class": "App\\Repositories\\Eloquent\\User\\UserRepository",
+            "mutable": false,
+            "notifiable": true,
+            "collection": "users"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110ebbd"
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110ebc1",
+        "name": "deleted_at",
+        "label": "Deleted At",
+        "uniqueName": "account_deleted_at",
+        "field_type_id": "5c906a0ea6ebc7193110e732",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebc2"
+            }
+          },
+          {
+            "name": "date_format",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": "m/d/Y",
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebc3"
+            }
+          },
+          {
+            "name": "date_only",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebc4"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a12a6ebc7193110ebc5",
+        "name": "deleted_by",
+        "label": "Deleted By",
+        "uniqueName": "account_deleted_by",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebc6"
+            }
+          },
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ebc7"
+            }
+          }
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110ebc8",
+          "method": "belongsTo",
+          "class": "App\\User",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "deleted_by",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b4",
+            "name": "User",
+            "model_class": "App\\User",
+            "repository_class": "App\\Repositories\\Eloquent\\User\\UserRepository",
+            "mutable": false,
+            "notifiable": true,
+            "collection": "users"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110ebc5"
+        }
+      },
+      {
+        "_id": "5c906a12a6ebc7193110ec37",
+        "name": "contact_ids",
+        "label": "Contacts",
+        "uniqueName": "account_contact_ids",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2019-03-19 04:03:30",
+        "created_at": "2019-03-19 04:03:30",
+        "rules": [
+          {
+            "name": "ms_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ec38"
+            }
+          },
+          {
+            "name": "hide",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a12a6ebc7193110ec39"
+            }
+          }
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a12a6ebc7193110ec3a",
+          "method": "belongsToMany",
+          "class": "App\\Models\\Customer\\Contact",
+          "displayFieldName": [
+            "lastName",
+            "firstName"
+          ],
+          "foreign_key": "account_ids",
+          "local_key": "contact_ids",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7d6",
+            "name": "Contact",
+            "model_class": "App\\Models\\Customer\\Contact",
+            "repository_class": "App\\Repositories\\Eloquent\\Customer\\ContactRepository",
+            "mutable": false,
+            "notifiable": false,
+            "connection_id": [
+              "5c906a0fa6ebc7193110e7f7"
+            ],
+            "collection": "contacts"
+          },
+          "popupDisplayFieldName": [
+            "firstName",
+            "lastName",
+            "email",
+            "phoneNo"
+          ],
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a12a6ebc7193110ec37"
+        }
+      },
+      {
+        "_id": "5cde7ca7a6ebc7c7de199cf2",
+        "name": "customerNo",
+        "label": "Navision Customer No.",
+        "uniqueName": "account_customer_no",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "header": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-05-17 09:19:35",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "5cde7ca7a6ebc7c7de199cf3"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "5cde7ca7a6ebc7c7de199cf4"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5cde7ca7a6ebc7c7de199cf5",
+        "name": "shipToCode",
+        "label": "Ship To Code",
+        "uniqueName": "account_ship_to_code",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-05-17 09:19:35",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "5cde7ca7a6ebc7c7de199cf6"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "5cde7ca7a6ebc7c7de199cf7"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5cfa2590a6ebc785950a37d3",
+          "5cfa25c2a6ebc785bb4b5613",
+          "5cfa2643a6ebc78627412423",
+          "5cfa2661a6ebc7864451c0d3",
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5ed4d98fa6ebc75215582d22",
+        "name": "localName",
+        "label": "Account Name Local Language",
+        "uniqueName": "account_local_name",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": null,
+        "updated_by": null,
+        "quick": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2020-06-01 10:33:51",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "5ed4d98fa6ebc75215582d23"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "5ed4d98fa6ebc75215582d24"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5cfa27c4a6ebc787575ff2a3"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "6023c238a6ebc72a7c669cf2",
+        "name": "ph_regions_id",
+        "label": "PH Regions",
+        "uniqueName": "account_ph_regions_id",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": null,
+        "updated_by": null,
+        "listName": "philippine_regions",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2021-02-10 11:27:34",
+        "created_at": "2021-02-10 11:23:36",
+        "rules": [
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true
+          }
+        ],
+        "section1_ids": [
+          "5cfa27c4a6ebc787575ff2a6"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "60539652a6ebc74a526100e4",
+        "name": "region_id",
+        "label": "Region",
+        "uniqueName": "account_region_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": null,
+        "updated_by": null,
+        "fieldGlue": " ",
+        "filterQueryParams": [],
+        "filterQuery": "where(\"Region::country_id\",\"=\",\"%Account::shipping_country_id%\")",
+        "tooltip": [
+          "For Esco offices catering different regions. For report purposes",
+          "helper"
+        ],
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2021-03-18 18:27:43",
+        "created_at": "2021-03-18 18:05:06",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true
+          }
+        ],
+        "section1_ids": [
+          "60539652a6ebc74a526100e9"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "60539652a6ebc74a526100e7",
+          "method": "belongsTo",
+          "class": "App\\Models\\Core\\Region",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "region_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "60539652a6ebc74a526100dc",
+            "name": "Region",
+            "model_class": "App\\Models\\Core\\Region",
+            "repository_class": "App\\Repositories\\Eloquent\\Core\\RegionRepository",
+            "mutable": "App\\Repositories\\Eloquent\\Core\\RegionRepository"
+          },
+          "created_by": null,
+          "updated_by": null,
+          "field_id": "60539652a6ebc74a526100e4"
+        }
+      },
+      {
+        "_id": "62047677a6ebc71ab668ae25",
+        "name": "annualCycles",
+        "label": "Annual Cycles",
+        "uniqueName": "account_annual_cycles",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-10 02:20:39",
+        "created_at": "2022-02-10 02:20:39",
+        "rules": [
+          {
+            "name": "required_if",
+            "event": [
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "anotherField": "business_unit_ids",
+              "values": [
+                "Medical"
+              ]
+            },
+            "_id": {
+              "$oid": "62047677a6ebc71ab668ae26"
+            }
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "62047677a6ebc71ab668ae27"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "62047677a6ebc71ab668ae28"
+            }
+          }
+        ],
+        "section1_ids": [
+          "62047677a6ebc71ab668ae36"
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "62047677a6ebc71ab668ae29",
+        "name": "freshCycles",
+        "label": "Fresh Cycles",
+        "uniqueName": "account_fresh_cycles",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-10 02:20:39",
+        "created_at": "2022-02-10 02:20:39",
+        "rules": [
+          {
+            "name": "required_if",
+            "event": [
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "anotherField": "business_unit_ids",
+              "values": [
+                "Medical"
+              ]
+            },
+            "_id": {
+              "$oid": "62047677a6ebc71ab668ae2a"
+            }
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "62047677a6ebc71ab668ae2b"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "62047677a6ebc71ab668ae2c"
+            }
+          }
+        ],
+        "section1_ids": [
+          "62047677a6ebc71ab668ae36"
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "62047677a6ebc71ab668ae2d",
+        "name": "ivfCycles",
+        "label": "IVF Cycles",
+        "uniqueName": "account_ivf_cycles",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-10 02:20:39",
+        "created_at": "2022-02-10 02:20:39",
+        "rules": [
+          {
+            "name": "required_if",
+            "event": [
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "anotherField": "business_unit_ids",
+              "values": [
+                "Medical"
+              ]
+            },
+            "_id": {
+              "$oid": "62047677a6ebc71ab668ae2e"
+            }
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "62047677a6ebc71ab668ae2f"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "62047677a6ebc71ab668ae30"
+            }
+          }
+        ],
+        "section1_ids": [
+          "62047677a6ebc71ab668ae36"
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "62047677a6ebc71ab668ae31",
+        "name": "icsiCycles",
+        "label": "ICSI Cycles",
+        "uniqueName": "account_icsi_cycles",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-10 02:20:39",
+        "created_at": "2022-02-10 02:20:39",
+        "rules": [
+          {
+            "name": "required_if",
+            "event": [
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "anotherField": "business_unit_ids",
+              "values": [
+                "Medical"
+              ]
+            },
+            "_id": {
+              "$oid": "62047677a6ebc71ab668ae32"
+            }
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "62047677a6ebc71ab668ae33"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "62047677a6ebc71ab668ae34"
+            }
+          }
+        ],
+        "section1_ids": [
+          "62047677a6ebc71ab668ae36"
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "6213515ea6ebc7d7f12a6552",
+        "name": "isBenchtop",
+        "label": "Benchtop",
+        "uniqueName": "account_is_benchtop",
+        "field_type_id": "5c906a0ea6ebc7193110e733",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-21 08:46:22",
+        "created_at": "2022-02-21 08:46:22",
+        "rules": [
+          {
+            "name": "checkbox",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "boolRadio4",
+            "value": true,
+            "_id": {
+              "$oid": "6213515ea6ebc7d7f12a6553"
+            }
+          },
+          {
+            "name": "default_value",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": false,
+            "_id": {
+              "$oid": "6213515ea6ebc7d7f12a6554"
+            }
+          }
+        ],
+        "section1_ids": [
+          "6213515ea6ebc7d7f12a6579"
+        ],
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "6213515ea6ebc7d7f12a6555",
+        "name": "technology_benchtop_id",
+        "label": "Benchtop Brands",
+        "uniqueName": "account_technology_benchtop_id",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": null,
+        "updated_by": null,
+        "listName": "account_technology_brands",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-21 09:24:35",
+        "created_at": "2022-02-21 08:46:22",
+        "rules": [
+          {
+            "name": "required_if",
+            "event": [
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "anotherField": "isBenchtop",
+              "values": true
+            }
+          },
+          {
+            "name": "ms_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true
+          }
+        ],
+        "section2_ids": [
+          "6213515ea6ebc7d7f12a6579"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "6213515ea6ebc7d7f12a6560",
+        "name": "isTimeLapse",
+        "label": "Time-Lapse",
+        "uniqueName": "account_is_time_lapse",
+        "field_type_id": "5c906a0ea6ebc7193110e733",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-21 08:46:22",
+        "created_at": "2022-02-21 08:46:22",
+        "rules": [
+          {
+            "name": "checkbox",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "boolRadio4",
+            "value": true,
+            "_id": {
+              "$oid": "6213515ea6ebc7d7f12a6561"
+            }
+          },
+          {
+            "name": "default_value",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": false,
+            "_id": {
+              "$oid": "6213515ea6ebc7d7f12a6562"
+            }
+          }
+        ],
+        "section1_ids": [
+          "6213515ea6ebc7d7f12a6579"
+        ],
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "6213515ea6ebc7d7f12a6563",
+        "name": "technology_time_lapse_id",
+        "label": "Time-Lapse Brands",
+        "uniqueName": "account_technology_time_lapse_id",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": null,
+        "updated_by": null,
+        "listName": "account_technology_brands",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-21 09:24:35",
+        "created_at": "2022-02-21 08:46:22",
+        "rules": [
+          {
+            "name": "required_if",
+            "event": [
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "anotherField": "isTimeLapse",
+              "values": true
+            }
+          },
+          {
+            "name": "ms_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true
+          }
+        ],
+        "section2_ids": [
+          "6213515ea6ebc7d7f12a6579"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "6213515ea6ebc7d7f12a6567",
+        "name": "isWorkstationClassI",
+        "label": "Workstation Class I",
+        "uniqueName": "account_is_workstation_class_i",
+        "field_type_id": "5c906a0ea6ebc7193110e733",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-21 08:46:22",
+        "created_at": "2022-02-21 08:46:22",
+        "rules": [
+          {
+            "name": "checkbox",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "boolRadio4",
+            "value": true,
+            "_id": {
+              "$oid": "6213515ea6ebc7d7f12a6568"
+            }
+          },
+          {
+            "name": "default_value",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": false,
+            "_id": {
+              "$oid": "6213515ea6ebc7d7f12a6569"
+            }
+          }
+        ],
+        "section1_ids": [
+          "6213515ea6ebc7d7f12a6579"
+        ],
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "6213515ea6ebc7d7f12a656a",
+        "name": "technology_workstation_class_i_id",
+        "label": "Workstation Class I Brands",
+        "uniqueName": "account_technology_workstation_class_i_id",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": null,
+        "updated_by": null,
+        "listName": "account_technology_brands",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-21 09:24:35",
+        "created_at": "2022-02-21 08:46:22",
+        "rules": [
+          {
+            "name": "required_if",
+            "event": [
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "anotherField": "isWorkstationClassI",
+              "values": true
+            }
+          },
+          {
+            "name": "ms_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true
+          }
+        ],
+        "section2_ids": [
+          "6213515ea6ebc7d7f12a6579"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "6213515ea6ebc7d7f12a656e",
+        "name": "isWorkstationClassII",
+        "label": "Workstation Class II",
+        "uniqueName": "account_is_workstation_class_i_i",
+        "field_type_id": "5c906a0ea6ebc7193110e733",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-21 08:46:22",
+        "created_at": "2022-02-21 08:46:22",
+        "rules": [
+          {
+            "name": "checkbox",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "boolRadio4",
+            "value": true,
+            "_id": {
+              "$oid": "6213515ea6ebc7d7f12a656f"
+            }
+          },
+          {
+            "name": "default_value",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": false,
+            "_id": {
+              "$oid": "6213515ea6ebc7d7f12a6570"
+            }
+          }
+        ],
+        "section1_ids": [
+          "6213515ea6ebc7d7f12a6579"
+        ],
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "6213515ea6ebc7d7f12a6571",
+        "name": "technology_workstation_class_ii_id",
+        "label": "Workstation Class II Brands",
+        "uniqueName": "account_technology_workstation_class_ii_id",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": null,
+        "updated_by": null,
+        "listName": "account_technology_brands",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-21 09:24:35",
+        "created_at": "2022-02-21 08:46:22",
+        "rules": [
+          {
+            "name": "required_if",
+            "event": [
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "anotherField": "isWorkstationClassII",
+              "values": true
+            }
+          },
+          {
+            "name": "ms_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true
+          }
+        ],
+        "section2_ids": [
+          "6213515ea6ebc7d7f12a6579"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "6213515ea6ebc7d7f12a6575",
+        "name": "isTechnologyNone",
+        "label": "None",
+        "uniqueName": "account_is_technology_none",
+        "field_type_id": "5c906a0ea6ebc7193110e733",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2022-02-21 08:46:22",
+        "created_at": "2022-02-21 08:46:22",
+        "rules": [
+          {
+            "name": "checkbox",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "boolRadio4",
+            "value": true,
+            "_id": {
+              "$oid": "6213515ea6ebc7d7f12a6576"
+            }
+          },
+          {
+            "name": "default_value",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": false,
+            "_id": {
+              "$oid": "6213515ea6ebc7d7f12a6577"
+            }
+          }
+        ],
+        "section1_ids": [
+          "6213515ea6ebc7d7f12a6579"
+        ],
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "63b6488ea6ebc73db80118d2",
+        "name": "is_locked",
+        "label": "Locked/Banned",
+        "uniqueName": "account_is_locked",
+        "field_type_id": "5c906a0ea6ebc7193110e733",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-01-05 03:48:30",
+        "created_at": "2023-01-05 03:48:30",
+        "rules": [
+          {
+            "name": "default_value",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": false,
+            "_id": {
+              "$oid": "63b6488ea6ebc73db80118d3"
+            }
+          },
+          {
+            "name": "checkbox",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "boolRadio4",
+            "value": true,
+            "_id": {
+              "$oid": "63b6488ea6ebc73db80118d4"
+            }
+          }
+        ],
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "63b6488ea6ebc73db80118d5",
+        "name": "locked_remarks",
+        "label": "Locked Remarks",
+        "uniqueName": "account_locked_remarks",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-01-05 03:48:30",
+        "created_at": "2023-01-05 03:48:30",
+        "rules": [
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "63b6488ea6ebc73db80118d6"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "63b6488ea6ebc73db80118d7"
+            }
+          }
+        ],
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "64265f52a6ebc722f15baccf",
+        "name": "forPricelist",
+        "label": "For Pricelist?",
+        "uniqueName": "account_for_pricelist",
+        "field_type_id": "5c906a0ea6ebc7193110e733",
+        "created_by": null,
+        "updated_by": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d4",
+        "updated_at": "2023-03-31 04:19:30",
+        "created_at": "2023-03-31 04:19:30",
+        "rules": [
+          {
+            "name": "default_value",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": false,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacd0"
+            }
+          },
+          {
+            "name": "checkbox",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "boolRadio4",
+            "value": true,
+            "_id": {
+              "$oid": "64265f52a6ebc722f15bacd1"
+            }
+          }
+        ],
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      }
+    ],
+    "panels": [
+      {
+        "_id": "5cfa27c4a6ebc787575ff2a2",
+        "panelName": "account-panel-1",
+        "entityName": "Account",
+        "controllerMethod": "accounts@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": "Account Information",
+            "row": 1,
+            "field_ids": [
+              [
+                "5c906a12a6ebc7193110eb49",
+                "5c906a12a6ebc7193110eb4d",
+                "5ed4d98fa6ebc75215582d22",
+                "5c906a12a6ebc7193110eb45",
+                "5c906a12a6ebc7193110eb53",
+                "5c906a12a6ebc7193110eb56",
+                "5c906a12a6ebc7193110eb5a",
+                "5cde7ca7a6ebc7c7de199cf2",
+                "5cde7ca7a6ebc7c7de199cf5",
+                "5c906a12a6ebc7193110eb60",
+                "5c906a12a6ebc7193110eb63",
+                "5c906a12a6ebc7193110eb66"
+              ],
+              [
+                "5c906a12a6ebc7193110eb5d",
+                "5c906a12a6ebc7193110eb9d",
+                "5c906a12a6ebc7193110eb6c",
+                "5c906a12a6ebc7193110eb72",
+                "5c906a12a6ebc7193110eb75",
+                "5c906a12a6ebc7193110eb78"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "5cfa27c4a6ebc787575ff2ad",
+        "panelName": "contact-panel-2",
+        "entityName": "Contact",
+        "controllerMethod": "accounts@show",
+        "label": "Contact",
+        "tabKey": "N",
+        "mutable": true,
+        "selectionField": null,
+        "mutableType": "withForm",
+        "tabName": null,
+        "required": false,
+        "isChild": false,
+        "sections": [
+          {
+            "sectionLabel": "Contacts",
+            "row": 1,
+            "field_ids": [
+              [
+                {
+                  "_id": "5c906a12a6ebc7193110ebce",
+                  "name": "firstName",
+                  "label": "First Name",
+                  "uniqueName": "contact_first_name",
+                  "field_type_id": "5c906a0ea6ebc7193110e73b",
+                  "created_by": "5bb104d0678f71061f643d1a",
+                  "updated_by": "5bb104d0678f71061f643d1a",
+                  "group": "name",
+                  "active": true,
+                  "entity_id": "5c906a0fa6ebc7193110e7d6",
+                  "updated_at": "2023-07-03 04:52:56",
+                  "created_at": "2019-03-19 04:03:30",
+                  "rules": [],
+                  "quick": true,
+                  "title": true,
+                  "section1_ids": [
+                    "5c906a1da6ebc7193110fa39",
+                    "5c906a1da6ebc7193110fa3d",
+                    "5cfa2590a6ebc785950a37da",
+                    "5cfa2590a6ebc785950a37de",
+                    "5cfa25c2a6ebc785bb4b561a",
+                    "5cfa25c2a6ebc785bb4b561e",
+                    "5cfa2643a6ebc7862741242a",
+                    "5cfa2643a6ebc7862741242e",
+                    "5cfa2661a6ebc7864451c0da",
+                    "5cfa2661a6ebc7864451c0de",
+                    "5cfa27c4a6ebc787575ff2aa",
+                    "5cfa27c4a6ebc787575ff2ae"
+                  ],
+                  "searchKey": false,
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e73b",
+                    "name": "text",
+                    "label": "text",
+                    "html_elem": "input",
+                    "rule_ids": [
+                      "5c906a0fa6ebc7193110e796",
+                      "5c906a0fa6ebc7193110e797",
+                      "5c906a0fa6ebc7193110e798",
+                      "5c906a0fa6ebc7193110e799",
+                      "5c906a0fa6ebc7193110e79a",
+                      "5c906a0fa6ebc7193110e79b",
+                      "5c906a0fa6ebc7193110e79c",
+                      "5c906a0fa6ebc7193110e79d",
+                      "5c906a0fa6ebc7193110e79e",
+                      "5c906a0fa6ebc7193110e79f",
+                      "5c906a0fa6ebc7193110e78c",
+                      "5c906a0fa6ebc7193110e78d",
+                      "5c906a0fa6ebc7193110e78e",
+                      "5c906a0fa6ebc7193110e78f",
+                      "5c906a0fa6ebc7193110e790",
+                      "5c906a0fa6ebc7193110e791",
+                      "5c906a0fa6ebc7193110e792",
+                      "5c906a0fa6ebc7193110e793",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342",
+                      "5c906a0ea6ebc7193110e74f"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e78c",
+                        "ruleName": "between",
+                        "value": {
+                          "min": 0,
+                          "max": 155
+                        },
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a0"
+                        }
+                      },
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e79a",
+                        "ruleName": "string",
+                        "value": true,
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a1"
+                        }
+                      }
+                    ],
+                    "return_type_ids": [
+                      "5c906a0fa6ebc7193110e7ac"
+                    ]
+                  },
+                  "relation": null
+                },
+                {
+                  "_id": "5c906a12a6ebc7193110ebd1",
+                  "name": "lastName",
+                  "label": "Last Name",
+                  "uniqueName": "contact_last_name",
+                  "field_type_id": "5c906a0ea6ebc7193110e73b",
+                  "created_by": "5bb104d0678f71061f643d1a",
+                  "updated_by": "5bb104d0678f71061f643d1a",
+                  "group": "name",
+                  "active": true,
+                  "entity_id": "5c906a0fa6ebc7193110e7d6",
+                  "updated_at": "2023-07-03 04:52:56",
+                  "created_at": "2019-03-19 04:03:30",
+                  "rules": [
+                    {
+                      "name": "required",
+                      "event": [
+                        "onLoad",
+                        "onBlur",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": true
+                    }
+                  ],
+                  "quick": true,
+                  "title": true,
+                  "section1_ids": [
+                    "5c906a1da6ebc7193110fa39",
+                    "5c906a1da6ebc7193110fa3d",
+                    "5cfa2590a6ebc785950a37da",
+                    "5cfa2590a6ebc785950a37de",
+                    "5cfa25c2a6ebc785bb4b561a",
+                    "5cfa25c2a6ebc785bb4b561e",
+                    "5cfa2643a6ebc7862741242a",
+                    "5cfa2643a6ebc7862741242e",
+                    "5cfa2661a6ebc7864451c0da",
+                    "5cfa2661a6ebc7864451c0de",
+                    "5cfa27c4a6ebc787575ff2aa",
+                    "5cfa27c4a6ebc787575ff2ae"
+                  ],
+                  "searchKey": false,
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e73b",
+                    "name": "text",
+                    "label": "text",
+                    "html_elem": "input",
+                    "rule_ids": [
+                      "5c906a0fa6ebc7193110e796",
+                      "5c906a0fa6ebc7193110e797",
+                      "5c906a0fa6ebc7193110e798",
+                      "5c906a0fa6ebc7193110e799",
+                      "5c906a0fa6ebc7193110e79a",
+                      "5c906a0fa6ebc7193110e79b",
+                      "5c906a0fa6ebc7193110e79c",
+                      "5c906a0fa6ebc7193110e79d",
+                      "5c906a0fa6ebc7193110e79e",
+                      "5c906a0fa6ebc7193110e79f",
+                      "5c906a0fa6ebc7193110e78c",
+                      "5c906a0fa6ebc7193110e78d",
+                      "5c906a0fa6ebc7193110e78e",
+                      "5c906a0fa6ebc7193110e78f",
+                      "5c906a0fa6ebc7193110e790",
+                      "5c906a0fa6ebc7193110e791",
+                      "5c906a0fa6ebc7193110e792",
+                      "5c906a0fa6ebc7193110e793",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342",
+                      "5c906a0ea6ebc7193110e74f"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e78c",
+                        "ruleName": "between",
+                        "value": {
+                          "min": 0,
+                          "max": 155
+                        },
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a0"
+                        }
+                      },
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e79a",
+                        "ruleName": "string",
+                        "value": true,
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a1"
+                        }
+                      }
+                    ],
+                    "return_type_ids": [
+                      "5c906a0fa6ebc7193110e7ac"
+                    ]
+                  },
+                  "relation": null
+                },
+                {
+                  "_id": "5c906a12a6ebc7193110ebeb",
+                  "name": "email",
+                  "label": "Email",
+                  "uniqueName": "contact_email",
+                  "field_type_id": "5c906a0ea6ebc7193110e73b",
+                  "created_by": "5bb104d0678f71061f643d1a",
+                  "updated_by": "5bb104d0678f71061f643d1a",
+                  "quick": true,
+                  "active": true,
+                  "entity_id": "5c906a0fa6ebc7193110e7d6",
+                  "updated_at": "2023-07-03 04:52:56",
+                  "created_at": "2019-03-19 04:03:30",
+                  "rules": [
+                    {
+                      "name": "email",
+                      "event": [
+                        "onBlur",
+                        "onSubmit"
+                      ],
+                      "groupName": "txtRadio1",
+                      "value": true,
+                      "_id": {
+                        "$oid": "5c906a12a6ebc7193110ebec"
+                      }
+                    },
+                    {
+                      "name": "between",
+                      "event": [
+                        "onLoad",
+                        "onBlur",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": {
+                        "min": 10,
+                        "max": 100
+                      },
+                      "_id": {
+                        "$oid": "5c906a12a6ebc7193110ebed"
+                      }
+                    },
+                    {
+                      "name": "required",
+                      "event": [
+                        "onLoad",
+                        "onBlur",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": true,
+                      "_id": {
+                        "$oid": "5c906a12a6ebc7193110ebee"
+                      }
+                    }
+                  ],
+                  "section2_ids": [
+                    "5c906a1da6ebc7193110fa39",
+                    "5cfa2590a6ebc785950a37da",
+                    "5cfa25c2a6ebc785bb4b561a",
+                    "5cfa2643a6ebc7862741242a",
+                    "5cfa2661a6ebc7864451c0da",
+                    "5cfa27c4a6ebc787575ff2aa"
+                  ],
+                  "section1_ids": [
+                    "5c906a1da6ebc7193110fa3d",
+                    "5cfa2590a6ebc785950a37de",
+                    "5cfa25c2a6ebc785bb4b561e",
+                    "5cfa2643a6ebc7862741242e",
+                    "5cfa2661a6ebc7864451c0de",
+                    "5cfa27c4a6ebc787575ff2ae"
+                  ],
+                  "searchKey": true,
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e73b",
+                    "name": "text",
+                    "label": "text",
+                    "html_elem": "input",
+                    "rule_ids": [
+                      "5c906a0fa6ebc7193110e796",
+                      "5c906a0fa6ebc7193110e797",
+                      "5c906a0fa6ebc7193110e798",
+                      "5c906a0fa6ebc7193110e799",
+                      "5c906a0fa6ebc7193110e79a",
+                      "5c906a0fa6ebc7193110e79b",
+                      "5c906a0fa6ebc7193110e79c",
+                      "5c906a0fa6ebc7193110e79d",
+                      "5c906a0fa6ebc7193110e79e",
+                      "5c906a0fa6ebc7193110e79f",
+                      "5c906a0fa6ebc7193110e78c",
+                      "5c906a0fa6ebc7193110e78d",
+                      "5c906a0fa6ebc7193110e78e",
+                      "5c906a0fa6ebc7193110e78f",
+                      "5c906a0fa6ebc7193110e790",
+                      "5c906a0fa6ebc7193110e791",
+                      "5c906a0fa6ebc7193110e792",
+                      "5c906a0fa6ebc7193110e793",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342",
+                      "5c906a0ea6ebc7193110e74f"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e78c",
+                        "ruleName": "between",
+                        "value": {
+                          "min": 0,
+                          "max": 155
+                        },
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a0"
+                        }
+                      },
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e79a",
+                        "ruleName": "string",
+                        "value": true,
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a1"
+                        }
+                      }
+                    ],
+                    "return_type_ids": [
+                      "5c906a0fa6ebc7193110e7ac"
+                    ]
+                  },
+                  "relation": null
+                },
+                {
+                  "_id": "5c906a12a6ebc7193110ebf5",
+                  "name": "phoneNo",
+                  "label": "Int'l Phone No",
+                  "uniqueName": "contact_phone_no",
+                  "field_type_id": "5c906a0ea6ebc7193110e73b",
+                  "created_by": "5bb104d0678f71061f643d1a",
+                  "updated_by": "5bb104d0678f71061f643d1a",
+                  "quick": true,
+                  "tooltip": [
+                    "International Phone Number",
+                    "helper"
+                  ],
+                  "active": true,
+                  "entity_id": "5c906a0fa6ebc7193110e7d6",
+                  "updated_at": "2023-07-03 04:52:56",
+                  "created_at": "2019-03-19 04:03:30",
+                  "rules": [
+                    {
+                      "name": "between",
+                      "event": [
+                        "onLoad",
+                        "onBlur",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": {
+                        "min": 5,
+                        "max": 100
+                      },
+                      "_id": {
+                        "$oid": "5c906a12a6ebc7193110ebf6"
+                      }
+                    },
+                    {
+                      "name": "required",
+                      "event": [
+                        "onLoad",
+                        "onBlur",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": true,
+                      "_id": {
+                        "$oid": "5c906a12a6ebc7193110ebf7"
+                      }
+                    },
+                    {
+                      "name": "string",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": "txtRadio1",
+                      "value": true,
+                      "_id": {
+                        "$oid": "5c906a12a6ebc7193110ebf8"
+                      }
+                    }
+                  ],
+                  "section2_ids": [
+                    "5c906a1da6ebc7193110fa39",
+                    "5cfa2590a6ebc785950a37da",
+                    "5cfa25c2a6ebc785bb4b561a",
+                    "5cfa2643a6ebc7862741242a",
+                    "5cfa2661a6ebc7864451c0da",
+                    "5cfa27c4a6ebc787575ff2aa"
+                  ],
+                  "section1_ids": [
+                    "5c906a1da6ebc7193110fa3d",
+                    "5cfa2590a6ebc785950a37de",
+                    "5cfa25c2a6ebc785bb4b561e",
+                    "5cfa2643a6ebc7862741242e",
+                    "5cfa2661a6ebc7864451c0de",
+                    "5cfa27c4a6ebc787575ff2ae"
+                  ],
+                  "searchKey": false,
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e73b",
+                    "name": "text",
+                    "label": "text",
+                    "html_elem": "input",
+                    "rule_ids": [
+                      "5c906a0fa6ebc7193110e796",
+                      "5c906a0fa6ebc7193110e797",
+                      "5c906a0fa6ebc7193110e798",
+                      "5c906a0fa6ebc7193110e799",
+                      "5c906a0fa6ebc7193110e79a",
+                      "5c906a0fa6ebc7193110e79b",
+                      "5c906a0fa6ebc7193110e79c",
+                      "5c906a0fa6ebc7193110e79d",
+                      "5c906a0fa6ebc7193110e79e",
+                      "5c906a0fa6ebc7193110e79f",
+                      "5c906a0fa6ebc7193110e78c",
+                      "5c906a0fa6ebc7193110e78d",
+                      "5c906a0fa6ebc7193110e78e",
+                      "5c906a0fa6ebc7193110e78f",
+                      "5c906a0fa6ebc7193110e790",
+                      "5c906a0fa6ebc7193110e791",
+                      "5c906a0fa6ebc7193110e792",
+                      "5c906a0fa6ebc7193110e793",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342",
+                      "5c906a0ea6ebc7193110e74f"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e78c",
+                        "ruleName": "between",
+                        "value": {
+                          "min": 0,
+                          "max": 155
+                        },
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a0"
+                        }
+                      },
+                      {
+                        "rule_id": "5c906a0fa6ebc7193110e79a",
+                        "ruleName": "string",
+                        "value": true,
+                        "_id": {
+                          "$oid": "5c906a0fa6ebc7193110e7a1"
+                        }
+                      }
+                    ],
+                    "return_type_ids": [
+                      "5c906a0fa6ebc7193110e7ac"
+                    ]
+                  },
+                  "relation": null
+                },
+                {
+                  "_id": "5c906a12a6ebc7193110ebe1",
+                  "name": "contact_role_id",
+                  "label": "Role",
+                  "uniqueName": "contact_contact_role_id",
+                  "field_type_id": "5c906a0ea6ebc7193110e737",
+                  "created_by": "5bb104d0678f71061f643d1a",
+                  "updated_by": "5bb104d0678f71061f643d1a",
+                  "listName": "contact_role",
+                  "quick": true,
+                  "active": true,
+                  "entity_id": "5c906a0fa6ebc7193110e7d6",
+                  "updated_at": "2023-07-03 04:52:56",
+                  "created_at": "2019-03-19 04:03:30",
+                  "rules": [
+                    {
+                      "name": "required",
+                      "event": [
+                        "onLoad",
+                        "onChange",
+                        "onSubmit"
+                      ],
+                      "groupName": null,
+                      "value": true,
+                      "_id": {
+                        "$oid": "5c906a12a6ebc7193110ebe2"
+                      }
+                    },
+                    {
+                      "name": "ss_dropdown",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": "option4",
+                      "value": true,
+                      "_id": {
+                        "$oid": "5c906a12a6ebc7193110ebe3"
+                      }
+                    }
+                  ],
+                  "section1_ids": [
+                    "5c906a1da6ebc7193110fa39",
+                    "5c906a1da6ebc7193110fa3d",
+                    "5cfa2590a6ebc785950a37da",
+                    "5cfa2590a6ebc785950a37de",
+                    "5cfa25c2a6ebc785bb4b561a",
+                    "5cfa25c2a6ebc785bb4b561e",
+                    "5cfa2643a6ebc7862741242a",
+                    "5cfa2643a6ebc7862741242e",
+                    "5cfa2661a6ebc7864451c0da",
+                    "5cfa2661a6ebc7864451c0de",
+                    "5cfa27c4a6ebc787575ff2aa",
+                    "5cfa27c4a6ebc787575ff2ae"
+                  ],
+                  "searchKey": false,
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e737",
+                    "name": "picklist",
+                    "label": "list",
+                    "html_elem": "option",
+                    "rule_ids": [
+                      "5c906a0ea6ebc7193110e76f",
+                      "5c906a0ea6ebc7193110e770",
+                      "5c906a0ea6ebc7193110e771",
+                      "5c906a0ea6ebc7193110e772",
+                      "5c906a0ea6ebc7193110e773",
+                      "5c906a0ea6ebc7193110e774",
+                      "5c906a0ea6ebc7193110e775",
+                      "5c906a0ea6ebc7193110e776",
+                      "5c906a0ea6ebc7193110e777",
+                      "5c906a0ea6ebc7193110e778",
+                      "5c906a0ea6ebc7193110e779",
+                      "5c906a0ea6ebc7193110e77a",
+                      "5c906a0ea6ebc7193110e77b",
+                      "5c906a0ea6ebc7193110e77c",
+                      "5c906a0ea6ebc7193110e74f",
+                      "5c906a0ea6ebc7193110e750",
+                      "5c906a0ea6ebc7193110e751",
+                      "5c906a0ea6ebc7193110e752",
+                      "5c906a0ea6ebc7193110e753",
+                      "5c906a0ea6ebc7193110e754",
+                      "5c906a0ea6ebc7193110e755",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0ea6ebc7193110e774",
+                        "ruleName": "ss_dropdown",
+                        "value": true,
+                        "_id": {
+                          "$oid": "5c906a0ea6ebc7193110e77d"
+                        }
+                      }
+                    ]
+                  },
+                  "relation": null
+                },
+                {
+                  "_id": "5c906a12a6ebc7193110ec1f",
+                  "name": "updated_at",
+                  "label": "Last Modified Date",
+                  "uniqueName": "contact_updated_at",
+                  "field_type_id": "5c906a0ea6ebc7193110e732",
+                  "created_by": "5bb104d0678f71061f643d1a",
+                  "updated_by": "5bb104d0678f71061f643d1a",
+                  "active": true,
+                  "entity_id": "5c906a0fa6ebc7193110e7d6",
+                  "updated_at": "2023-07-03 04:52:56",
+                  "created_at": "2019-03-19 04:03:30",
+                  "rules": [
+                    {
+                      "name": "hide_in",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": "visibility",
+                      "value": [
+                        "create",
+                        "update"
+                      ],
+                      "_id": {
+                        "$oid": "5c906a12a6ebc7193110ec20"
+                      }
+                    },
+                    {
+                      "name": "date_format",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": null,
+                      "value": "m/d/Y",
+                      "_id": {
+                        "$oid": "5c906a12a6ebc7193110ec21"
+                      }
+                    },
+                    {
+                      "name": "date_only",
+                      "event": [
+                        "onLoad"
+                      ],
+                      "groupName": "option4",
+                      "value": true,
+                      "_id": {
+                        "$oid": "5c906a12a6ebc7193110ec22"
+                      }
+                    }
+                  ],
+                  "section1_ids": [
+                    "5c906a1da6ebc7193110fa3d",
+                    "5cfa2590a6ebc785950a37de",
+                    "5cfa25c2a6ebc785bb4b561e",
+                    "5cfa2643a6ebc7862741242e",
+                    "5cfa2661a6ebc7864451c0de",
+                    "5cfa27c4a6ebc787575ff2ae"
+                  ],
+                  "searchKey": false,
+                  "section2_ids": [
+                    "5db2b6c2a6ebc7dc4e70c793"
+                  ],
+                  "field_type": {
+                    "_id": "5c906a0ea6ebc7193110e732",
+                    "name": "date",
+                    "label": "date",
+                    "html_elem": "date",
+                    "rule_ids": [
+                      "5c906a0ea6ebc7193110e745",
+                      "5c906a0ea6ebc7193110e746",
+                      "5c906a0ea6ebc7193110e747",
+                      "5c906a0ea6ebc7193110e748",
+                      "5c906a0ea6ebc7193110e749",
+                      "5c906a0ea6ebc7193110e74a",
+                      "5c906a0ea6ebc7193110e74b",
+                      "5c906a0ea6ebc7193110e74c",
+                      "5c906a0ea6ebc7193110e74d",
+                      "5c906a0ea6ebc7193110e74e",
+                      "5c906a0ea6ebc7193110e74f",
+                      "5c906a0ea6ebc7193110e750",
+                      "5c906a0ea6ebc7193110e751",
+                      "5c906a0ea6ebc7193110e752",
+                      "5c906a0ea6ebc7193110e753",
+                      "5c906a0ea6ebc7193110e754",
+                      "5c906a0ea6ebc7193110e755",
+                      "5c906a0ea6ebc7193110e756",
+                      "5c906a0ea6ebc7193110e757",
+                      "5c906a0ea6ebc7193110e758",
+                      "5c906a0ea6ebc7193110e759",
+                      "5c906a0ea6ebc7193110e75a",
+                      "5c906a0ea6ebc7193110e75b",
+                      "5c906a0ea6ebc7193110e75c",
+                      "5c906a0ea6ebc7193110e75d",
+                      "5c906a0ea6ebc7193110e75e",
+                      "5c906a0ea6ebc7193110e75f",
+                      "5c906a0ea6ebc7193110e760",
+                      "5e86f6e1a6ebc77c98359342",
+                      "63bd3baba6ebc70feb7dd6f2"
+                    ],
+                    "defaultRule": [
+                      {
+                        "rule_id": "5c906a0ea6ebc7193110e747",
+                        "ruleName": "date_format",
+                        "value": "m/d/Y",
+                        "_id": {
+                          "$oid": "5c906a0ea6ebc7193110e761"
+                        }
+                      },
+                      {
+                        "rule_id": "5c906a0ea6ebc7193110e74e",
+                        "ruleName": "date_only",
+                        "value": true,
+                        "_id": {
+                          "$oid": "5c906a0ea6ebc7193110e762"
+                        }
+                      }
+                    ],
+                    "return_type_ids": [
+                      "5c906a0fa6ebc7193110e7ac"
+                    ]
+                  },
+                  "relation": null
+                }
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "62047677a6ebc71ab668ae35",
+        "panelName": "account-panel-2",
+        "entityName": "Account",
+        "controllerMethod": "accounts@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": "Number of Cycles",
+            "row": 1,
+            "field_ids": [
+              [
+                "62047677a6ebc71ab668ae25",
+                "62047677a6ebc71ab668ae29",
+                "62047677a6ebc71ab668ae2d",
+                "62047677a6ebc71ab668ae31"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "6213515ea6ebc7d7f12a6578",
+        "panelName": "account-panel-7",
+        "entityName": "Account",
+        "controllerMethod": "accounts@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": "Account Technology",
+            "row": 1,
+            "field_ids": [
+              [
+                "6213515ea6ebc7d7f12a6552",
+                "6213515ea6ebc7d7f12a6560",
+                "6213515ea6ebc7d7f12a6567",
+                "6213515ea6ebc7d7f12a656e",
+                "6213515ea6ebc7d7f12a6575"
+              ],
+              [
+                "6213515ea6ebc7d7f12a6555",
+                "6213515ea6ebc7d7f12a6563",
+                "6213515ea6ebc7d7f12a656a",
+                "6213515ea6ebc7d7f12a6571"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "62047677a6ebc71ab668ae22",
+        "panelName": "account-panel-3",
+        "entityName": "Account",
+        "controllerMethod": "accounts@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": "Address Information",
+            "row": 2,
+            "field_ids": [
+              [
+                "5c906a12a6ebc7193110eb7b",
+                "5c906a12a6ebc7193110eb81",
+                "5c906a12a6ebc7193110eb84",
+                "5c906a12a6ebc7193110eb7e",
+                "5c906a12a6ebc7193110eb87"
+              ],
+              [
+                "5c906a12a6ebc7193110eb8e",
+                "5c906a12a6ebc7193110eb94",
+                "5c906a12a6ebc7193110eb97",
+                "5c906a12a6ebc7193110eb91",
+                "5c906a12a6ebc7193110eb9a"
+              ]
+            ]
+          },
+          {
+            "sectionLabel": null,
+            "row": 3,
+            "field_ids": [
+              [
+                "60539652a6ebc74a526100e4"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "62047677a6ebc71ab668ae23",
+        "panelName": "account-panel-4",
+        "entityName": "Account",
+        "controllerMethod": "accounts@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": "Additional Information",
+            "row": 4,
+            "field_ids": [
+              [
+                "5c906a12a6ebc7193110eba0",
+                "5c906a12a6ebc7193110eba2",
+                "5c906a12a6ebc7193110eba4"
+              ]
+            ]
+          },
+          {
+            "sectionLabel": null,
+            "row": 5,
+            "field_ids": [
+              [
+                "5c906a12a6ebc7193110eba6",
+                "6023c238a6ebc72a7c669cf2"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "62047677a6ebc71ab668ae24",
+        "panelName": "account-panel-5",
+        "entityName": "Account",
+        "controllerMethod": "accounts@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": "Products Handled",
+            "row": 6,
+            "field_ids": [
+              [
+                "5c906a12a6ebc7193110ebab"
+              ]
+            ]
+          },
+          {
+            "sectionLabel": null,
+            "row": 7,
+            "field_ids": [
+              [
+                "5c906a12a6ebc7193110ebaf"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "5da54716a6ebc7dcd5609a32",
+        "panelName": "account-panel-6",
+        "entityName": "Account",
+        "controllerMethod": "accounts@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": "System Information",
+            "row": 1,
+            "field_ids": [
+              [
+                "5c906a12a6ebc7193110ebbd",
+                "5c906a12a6ebc7193110ebb5"
+              ],
+              [
+                "5c906a12a6ebc7193110ebb9",
+                "5c906a12a6ebc7193110ebb1"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "viewFilters": [
+      {
+        "_id": "651248653d39cc7c91574a7c",
+        "query_id": "5c906a1ba6ebc7193110f8c3",
+        "sortField": "created_at",
+        "sortOrder": "DESC",
+        "filters": [],
+        "filterLogic": null,
+        "filterName": "My Team's Accounts",
+        "moduleName": "accounts",
+        "fields": [
+          "5c906a12a6ebc7193110ebb5",
+          "5c906a12a6ebc7193110eb4d",
+          "5c906a12a6ebc7193110eb53",
+          "5c906a12a6ebc7193110eb6c",
+          "5c906a12a6ebc7193110eb78",
+          "5c906a12a6ebc7193110eb5d"
+        ],
+        "isDefault": true,
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a12a6ebc7193110eb4d",
+        "owner": "64c1f340a6ebc75ebb6cd792",
+        "created_by": "64c1f340a6ebc75ebb6cd792",
+        "updated_by": "64c1f340a6ebc75ebb6cd792",
+        "updated_at": "2023-11-09 05:08:04",
+        "created_at": "2023-09-26 02:56:37",
+        "entity_id": "5c906a0fa6ebc7193110e7d4"
+      },
+      {
+        "_id": "651248653d39cc7c91574a7d",
+        "query_id": "5c906a1ba6ebc7193110f8c4",
+        "sortField": "created_at",
+        "sortOrder": "DESC",
+        "filters": [],
+        "filterLogic": null,
+        "filterName": "My Accounts",
+        "moduleName": "accounts",
+        "fields": [
+          "5c906a12a6ebc7193110ebb5",
+          "5c906a12a6ebc7193110eb4d",
+          "5c906a12a6ebc7193110eb53",
+          "5c906a12a6ebc7193110eb6c",
+          "5c906a12a6ebc7193110eb78",
+          "5c906a12a6ebc7193110eb5d"
+        ],
+        "isDefault": false,
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a12a6ebc7193110ebb5",
+        "owner": "64c1f340a6ebc75ebb6cd792",
+        "created_by": "64c1f340a6ebc75ebb6cd792",
+        "updated_by": "64c1f340a6ebc75ebb6cd792",
+        "updated_at": "2023-11-09 05:08:04",
+        "created_at": "2023-09-26 02:56:37",
+        "entity_id": "5c906a0fa6ebc7193110e7d4"
+      }
+    ]
+  }
+}

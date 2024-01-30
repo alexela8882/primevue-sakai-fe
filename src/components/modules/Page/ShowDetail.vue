@@ -156,7 +156,7 @@ onMounted(async() => {
   // fetches
   await fetchBaseModule(route.params.id)
   await fetchModule(route.params.name)
-  await fetchLinkedModuleData('inquiries', route.params.pageid)
+  await fetchLinkedModuleData('inquiries', { link_field: 'link_id', link_id: route.params.pageid })
   await fetchItem(route.params)
   await fetchItemRelatedLists(route.params)
 
@@ -169,8 +169,6 @@ onMounted(async() => {
   atIndexRelatedLists.value = getItemPanels.value.filter(ip => ip.controllerMethod.includes('@index'))
   atShowRelatedLists.value = _getRelatedOrderedLists.value.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))
   linkedInquiryModule.value = getLinkedModuleData.value
-
-  console.log(linkedInquiryModule.value)
 
   // other logics
   // Attach the scroll event listener to the window or container
