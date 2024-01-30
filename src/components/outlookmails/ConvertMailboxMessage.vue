@@ -250,9 +250,11 @@ const proceedConvertMailboxToInquiry = async (data) => {
   const res = await convertMailboxToInquiry(data)
   
   if (res && res.status === 200) {
+    const inquiry_id = res.data.collection.data.find(d => d.email_id == data.email_id)._id
+
     getMailFolderMessages.value.value.find(fm => {
       if (fm.id === data.email_id) {
-        let newObj = { ...fm, convertedToInquiry: true }
+        let newObj = { ...fm, convertedToInquiry: true, inquiry_id: inquiry_id }
         Object.assign(fm, newObj)
       }
     })

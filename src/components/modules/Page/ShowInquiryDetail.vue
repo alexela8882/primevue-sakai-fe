@@ -124,7 +124,7 @@ onMounted(async () => {
                   <Panel class="detail-page-panel">
                     <template #header>
                       <div class="flex align-items-center gap-2">
-                        <span class="font-bold">Inquiry details</span>
+                        <span class="text-2xl font-bold">Inquiry details</span>
                       </div>
                     </template>
                     <div class="mt-4">
@@ -151,7 +151,7 @@ onMounted(async () => {
                   <Panel class="detail-page-panel">
                     <template #header>
                       <div class="flex align-items-center gap-2">
-                        <span class="font-bold">Email Thread</span>
+                        <span class="text-2xl font-bold">Email Thread</span>
                       </div>
                     </template>
                     <div class="mt-4">
@@ -163,7 +163,9 @@ onMounted(async () => {
             </TabView>
           </div>
         </div>
-        <div class="col-5">
+        <div
+          style="position: sticky !important; top: 145px !important; height: 75vh !important;"
+          class="col-5">
           <div v-if="localEntity" class="bg-white border-round-xl shadow-2">
             <div
               @click="router.push({ name: 'modules.pages.detail', params: { name: localEntity.name, id: localLinkedModuleInfo._id, pageid: localData.link_id } })"
@@ -182,16 +184,11 @@ onMounted(async () => {
                         {{ _getFieldDetails({ module: localLinkedModule, field: key }) ? _getFieldDetails({ module: localLinkedModule, field: key }).label : 'ID' }}
                       </p>
                     </div>
-                    <div
-                      style="width: 40% !important"
-                      class="white-space-nowrap overflow-hidden text-overflow-ellipsis">
-                      {{ localData[key] }}
+                    <div>
+                      {{ localLinkedModuleData[key] }}
                     </div>
                   </div>
               </div>
-              <!-- <pre v-if="localLinkedModule">
-                {{ _getFieldDetails({ module: localLinkedModule }) }}
-              </pre> -->
             </div>
           </div>
         </div>
@@ -200,6 +197,9 @@ onMounted(async () => {
   </div>
 </template>
 
-<style scoped>
-
+<style>
+.detail-page-panel .p-panel-header {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+}
 </style>
