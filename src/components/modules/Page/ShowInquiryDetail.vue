@@ -120,12 +120,18 @@ onMounted(async () => {
           <div class="p-3 bg-white border-round-xl shadow-2">
             <TabView>
               <TabPanel header="Details">
-                <div>
-                  <div>
-                    <div
-                      v-for="(key, kx) in Object.keys(localData)"
-                      :key="kx"
-                      class="grid">
+                <div class="flex flex-column gap-4">
+                  <Panel class="detail-page-panel">
+                    <template #header>
+                      <div class="flex align-items-center gap-2">
+                        <span class="font-bold">Inquiry details</span>
+                      </div>
+                    </template>
+                    <div class="mt-4">
+                      <div
+                        v-for="(key, kx) in Object.keys(localData)"
+                        :key="kx"
+                        class="grid">
                         <div class="col flex align-items-center gap-4">
                           <div>
                             <p class="white-space-nowrap">
@@ -138,8 +144,20 @@ onMounted(async () => {
                             {{ localData[key] }}
                           </div>
                         </div>
+                      </div>
                     </div>
-                  </div>
+                  </Panel>
+
+                  <Panel class="detail-page-panel">
+                    <template #header>
+                      <div class="flex align-items-center gap-2">
+                        <span class="font-bold">Email Thread</span>
+                      </div>
+                    </template>
+                    <div class="mt-4">
+                      Thread here...
+                    </div>
+                  </Panel>
                 </div>
               </TabPanel>
             </TabView>
