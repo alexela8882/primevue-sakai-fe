@@ -2,9 +2,10 @@
 // imports
 import * as Msal from "msal"
 import { computed, watch, onMounted, ref, defineAsyncComponent } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 // stores
+import { useModuleStore } from '@/stores/modules'
 import { useOutlookMailStore } from '@/stores/outlookmails/index'
 // components
 import SimpleLoader2 from '@/components/loading/Simple2.vue'
@@ -20,8 +21,13 @@ const folderMessages = ref()
 const selectedMessage = ref()
 const token = ref()
 const route = useRoute()
+const router = useRouter()
+const inquiryModuleInfo = ref()
+const inquiryModule = ref()
 // stores
+const moduleStore = useModuleStore()
 const outlookMailStore = useOutlookMailStore()
+const { getModules } = storeToRefs(moduleStore)
 const {
   mailFolderLoading,
   getSkipValue,
@@ -30,6 +36,7 @@ const {
   getMailFolderMessages
 } = storeToRefs(outlookMailStore)
 const { fetchMailFolder, fetchMailFolderMessages, folderMailMessagesNavigate } = outlookMailStore
+const { fetchModules } = moduleStore
 
 // MSAL SETUP
 const msalConfig = {
@@ -153,8 +160,8 @@ watch(() => searchFolder.value, (newVal, oldVal) => {
 watch(() => getMailFolderMessages.value, (newVal, oldVal) => {
   folderMessages.value = newVal.value
 
-  console.log(oldVal.value)
-  console.log(newVal.value)
+  // console.log(oldVal.value)
+  // console.log(newVal.value)
 
   // select first message on the list
   newVal.value.map((mfm, ix) => {
@@ -167,6 +174,10 @@ onMounted(async () => {
   if (!token.value) await login()
 
   initializeMsGraph()
+
+  await fetchModules()
+
+  inquiryModuleInfo.value = getModules.value.find(m => m.name == 'inquiries')
 })
 
 </script>
@@ -249,7 +260,12 @@ onMounted(async () => {
                       :class="`${!message.isRead && 'font-bold'}`"
                     >{{ message.receivedDateTime }}</div>
                     <div v-if="message.convertedToInquiry">
-                      <Button label="View inquiry" size="small" outlined />
+                      <Button
+                        @click="router.push({ name: 'modules.pages.detail', params: { name: 'inquiries', id: inquiryModuleInfo._id, pageid: message.inquiry_id }})"
+                        label="View inquiry"
+                        size="small"
+                        outlined>
+                      </Button>
                     </div>
                   </div>
                 </div>

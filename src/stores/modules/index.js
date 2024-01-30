@@ -220,6 +220,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return finalData
     }
   })
+  const _getFieldDetails = computed(() => {
+    return (payload) => {
+      const fields = payload.module.fields
+      const field = fields.find(fx => fx.name === payload.field)
+      console.log(payload)
+      return field
+    }
+  })
   const getFieldDetails = computed(() => {
     return (payload) => { // supply `name` column from `fields` collection
       const fields = module.value && module.value.fields
@@ -267,7 +275,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
     modulesLoading.value = false
   }
-  const fetchModule = async (moduleName, page) => {
+  const fetchModule = async (moduleName, page, reuse) => {
     collectionLoading.value = true
     const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
 
@@ -279,9 +287,11 @@ export const useModuleStore = defineStore('moduleStore', () => {
   
       if (res.status === 200) {
         let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
-        module.value = fetchedModule // insert module
-        collection.value = fetchedModule.collection // insert collection
-        collectionLoading.value = false
+        if (!reuse) {
+          module.value = fetchedModule // insert module
+          collection.value = fetchedModule.collection // insert collection
+          collectionLoading.value = false
+        } else return fetchedModule
       }
     } catch (error) {
       console.log(error.response)
@@ -291,8 +301,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
       collectionLoading.value = false
     }
   }
-  const fetchLinkedModuleData = async (moduleName, linkid) => {
-    console.log(linkid)
+  const fetchLinkedModuleData = async (moduleName, link) => {
     try {
       const res = await axios(`${jsonDbUrl.value}/${moduleName}`, {
         method: 'GET',
@@ -303,8 +312,10 @@ export const useModuleStore = defineStore('moduleStore', () => {
         let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
         // linkedModuleData.value = fetchedModule // insert module
         if (fetchedModule.collection) {
-          const data = fetchedModule.collection.data.find(d => d.link_id == linkid)
+          const data = fetchedModule.collection.data.find(d => d[link.link_field] == link.link_id)
           linkedModuleData.value = data
+
+          return data
         } else return null
 
         // linkedModuleCollection.value = fetchedModule.collection // insert collection
@@ -327,6 +338,9 @@ export const useModuleStore = defineStore('moduleStore', () => {
       detail: 'New view filters successfully added',
       life: 3000
     })
+  }
+  const _fetchModule = async (payload) => {
+    return await fetchModule(payload, null, true)
   }
 
   // specific actions for inquiry module
@@ -446,9 +460,11 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getViewFilterIds,
     getSearchKeyFieldIds,
     getKanbanData,
+    _getFieldDetails,
     getFieldDetails,
     getFieldDetailsById,
     getFieldDetailsByUname,
+    _fetchModule,
     fetchModule,
     fetchLinkedModuleData,
     fetchBaseModule,

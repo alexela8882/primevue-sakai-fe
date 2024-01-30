@@ -232,10 +232,17 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
 
     const inquiryMailboxIds = getCollection.value.data.map(gc => gc.email_id)
 
+    // console.log(payload)
+    // console.log(getCollection.value)
+
     // append new key to tag as 'converted to inquiry'
     const newResValue = payload.map(item => {
+      const email_id = item.id
+      const collection = getCollection.value.data.find(d => d.email_id == email_id)
+      const inquiry_id = collection && collection._id
+
       if (inquiryMailboxIds.includes(item.id)) {
-        return { ...item, convertedToInquiry: true }
+        return { ...item, convertedToInquiry: true, inquiry_id: inquiry_id }
       }
       return item
     })

@@ -1,0 +1,3769 @@
+{
+  "campaigns": {
+    "collection": {
+      "data": [
+        {
+          "_id": "64cb5a4ca6ebc727390e1532",
+          "name": "2023 - ATE",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "Trade Show",
+          "startDate": "2023-07-14",
+          "endDate": "2023-07-14",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2023-08-03 07:42:04.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 0,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "64aad3d0a6ebc70e7c0dcc94",
+          "name": "Lab Africa 2023",
+          "owner_id": {
+            "_id": "5c37de3f678f7115274fdd25",
+            "email": "alet.lange@escolifesciences.com",
+            "firstName": "Alet",
+            "lastName": "De Lange",
+            "peopleUnder": null,
+            "people": [
+              "5c37de3f678f7115274fdd25"
+            ]
+          },
+          "type_id": null,
+          "startDate": "",
+          "endDate": "",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2023-07-09 15:35:44.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 0,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "64a3b9d0a6ebc71a385e7105",
+          "name": "2023 - ACMTT (Medtech)",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "Trade Show",
+          "startDate": "2023-06-28",
+          "endDate": "2023-06-30",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2023-07-04 06:18:56.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 0,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "648994dda6ebc7717d778042",
+          "name": "2023 EUS - Asahi Intecc",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2023-05-26",
+          "endDate": "2023-05-26",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2023-06-14 10:22:21.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 0,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "6489944ba6ebc770b035fff3",
+          "name": "2023 EUS - Damnoen Saduak Hospital",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2023-05-22",
+          "endDate": "2023-05-22",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2023-06-14 10:19:55.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 0,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "6489939ba6ebc76f47054153",
+          "name": "2023 Medical workshop",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "Trade Show",
+          "startDate": "2023-03-23",
+          "endDate": "2023-03-24",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2023-06-14 10:16:59.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 0,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "6461d036a6ebc7032a7f2f73",
+          "name": "2023 Booth - TSRM 17-19 May",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "Trade Show",
+          "startDate": "2023-05-17",
+          "endDate": "2023-05-19",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2023-05-15 06:24:54.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 8,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "645c5e10a6ebc737c45c4a22",
+          "name": "2023 EUS - The Golden Gate Hospital, Korat",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2023-05-11",
+          "endDate": "2023-05-11",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2023-05-11 03:16:32.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 18,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "63340965a6ebc746be50d9d2",
+          "name": "Pharma Booth 2022 @Don Mueang",
+          "owner_id": {
+            "_id": "5bf45d4b678f714eac558ba7",
+            "email": "csts.th.sales1@escolifesciences.com",
+            "firstName": "Jutharat",
+            "lastName": "Khemthong",
+            "peopleUnder": null,
+            "people": [
+              "5bf45d4b678f714eac558ba7"
+            ]
+          },
+          "type_id": "Trade Show",
+          "startDate": "2022-08-10",
+          "endDate": "2022-08-11",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-09-28 08:44:21.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 0,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "632ac615a6ebc74114086fa2",
+          "name": "Thailand Lab 2022",
+          "owner_id": {
+            "_id": "5bf45d4b678f714eac558ba7",
+            "email": "csts.th.sales1@escolifesciences.com",
+            "firstName": "Jutharat",
+            "lastName": "Khemthong",
+            "peopleUnder": null,
+            "people": [
+              "5bf45d4b678f714eac558ba7"
+            ]
+          },
+          "type_id": "Trade Show",
+          "startDate": "2022-09-14",
+          "endDate": "2022-09-16",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-09-21 08:06:45.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 0,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "630835fba6ebc74a97773542",
+          "name": "Booth Med Tech ตรัง",
+          "owner_id": {
+            "_id": "5bf45d4b678f714eac558ba7",
+            "email": "csts.th.sales1@escolifesciences.com",
+            "firstName": "Jutharat",
+            "lastName": "Khemthong",
+            "peopleUnder": null,
+            "people": [
+              "5bf45d4b678f714eac558ba7"
+            ]
+          },
+          "type_id": "Trade Show",
+          "startDate": "2022-08-09",
+          "endDate": "2022-08-11",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-08-26 02:54:51.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 0,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "62fef04ca6ebc7506367fa19",
+          "name": "Booth ATE@ Chiang Mai 2022",
+          "owner_id": {
+            "_id": "5bf45d4b678f714eac558ba7",
+            "email": "csts.th.sales1@escolifesciences.com",
+            "firstName": "Jutharat",
+            "lastName": "Khemthong",
+            "peopleUnder": null,
+            "people": [
+              "5bf45d4b678f714eac558ba7"
+            ]
+          },
+          "type_id": null,
+          "startDate": "2022-06-27",
+          "endDate": "2022-06-28",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-08-19 02:07:08.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 0,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "62f22881a6ebc7366f0e7bb2",
+          "name": "Booth Virus 2022",
+          "owner_id": {
+            "_id": "5bf45d4b678f714eac558ba7",
+            "email": "csts.th.sales1@escolifesciences.com",
+            "firstName": "Jutharat",
+            "lastName": "Khemthong",
+            "peopleUnder": null,
+            "people": [
+              "5bf45d4b678f714eac558ba7"
+            ]
+          },
+          "type_id": "Trade Show",
+          "startDate": "2022-08-04",
+          "endDate": "2022-08-04",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-08-09 09:27:29.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 0,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "62a19884a6ebc7603b7b1283",
+          "name": "booth Biosafety Conference 2022",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "Trade Show",
+          "startDate": "2022-06-06",
+          "endDate": "2022-06-06",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-06-09 06:51:48.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 4,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "62943202a6ebc7132f276ad2",
+          "name": "booth Medtech ACMTT - 2022",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "Trade Show",
+          "startDate": "2022-05-25",
+          "endDate": "2022-05-27",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-05-30 02:54:58.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 0,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "62846b74a6ebc70ce76e7054",
+          "name": "2022 - EUS Wan Thai Foods Industry",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2022-05-17",
+          "endDate": "2022-05-17",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-05-18 03:43:48.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 3,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "628315a8a6ebc78bbf1b7932",
+          "name": "2022 - EUS Superior A.R.T.",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2022-05-12",
+          "endDate": "2022-05-12",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-05-17 03:25:28.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 3,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "628301d5a6ebc782a8747444",
+          "name": "2022 EUS - Bangyai Hospital",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2022-05-12",
+          "endDate": "2022-05-12",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-05-17 02:00:53.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 9,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "626bae60a6ebc7834e3c66d2",
+          "name": "2021 EUS - Chiangmai Ram",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2022-04-29",
+          "endDate": "2022-04-29",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-04-29 09:22:40.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 7,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "625e1feea6ebc7a7336ad8f6",
+          "name": "2021 EUS - Lopburi Seed Research and Development center",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2021-10-05",
+          "endDate": "2021-10-05",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-04-19 02:35:26.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 7,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "625e1a3aa6ebc7a5fc57922c",
+          "name": "2021 EUS - Rajavithi Hospital",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2021-12-27",
+          "endDate": "2021-12-28",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-04-19 02:11:06.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 8,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "625d3da1a6ebc76ad17e3895",
+          "name": "2021 EUS - Faculty of Pharmacy, Burapha University",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2021-06-25",
+          "endDate": "2021-06-25",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-04-18 10:29:53.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 22,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "625d3734a6ebc76c7d319f02",
+          "name": "2022 EUS - Faculty Tropical Medicine, Mahidol University",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2022-02-23",
+          "endDate": "2022-02-23",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-04-18 10:02:28.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 5,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "625d2ed3a6ebc769aa56fba5",
+          "name": "2021 EUS - Faculty of Veterinary Medicine, Chiang Mai University",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2021-10-08",
+          "endDate": "2021-10-08",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-04-18 09:26:43.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 8,
+          "totalConvertedLeads": 0
+        },
+        {
+          "_id": "625d2930a6ebc766f8083ea3",
+          "name": "2021 EUS - Faculty of Medicine, Chiang Mai University",
+          "owner_id": {
+            "_id": "625d073ca6ebc75ddc3dc539",
+            "firstName": "Chonlada",
+            "lastName": "Sangcha",
+            "email": "th.marketing@escolifesciences.com",
+            "peopleUnder": null,
+            "people": [
+              "625d073ca6ebc75ddc3dc539"
+            ]
+          },
+          "type_id": "End User Seminar",
+          "startDate": "2021-10-08",
+          "endDate": "2021-10-08",
+          "actualCost": 0,
+          "created_at": {
+            "date": "2022-04-18 09:02:40.000000",
+            "timezone_type": 3,
+            "timezone": "UTC"
+          },
+          "totalWon": null,
+          "wonValue": null,
+          "totalLeads": 4,
+          "totalConvertedLeads": 0
+        }
+      ],
+      "meta": {
+        "pagination": {
+          "total": 150,
+          "count": 25,
+          "per_page": 25,
+          "current_page": 1,
+          "total_pages": 6,
+          "links": {
+            "next": "http://uat.reddotcrm.com/api/campaigns?page=2"
+          }
+        }
+      }
+    },
+    "fields": [
+      {
+        "_id": "5c906a11a6ebc7193110ea95",
+        "name": "name",
+        "label": "Campaign Name",
+        "uniqueName": "campaign_name",
+        "field_type_id": "5c906a0ea6ebc7193110e73b",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "quick": true,
+        "title": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "required",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ea96"
+            }
+          },
+          {
+            "name": "between",
+            "event": [
+              "onLoad",
+              "onBlur",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 155
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ea97"
+            }
+          },
+          {
+            "name": "string",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "txtRadio1",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ea98"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "searchKey": true,
+        "field_type": {
+          "name": "text",
+          "_id": "5c906a0ea6ebc7193110e73b"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110ea99",
+        "name": "parent_id",
+        "label": "Parent Campaign",
+        "uniqueName": "campaign_parent_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2019-03-19 04:03:29",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ea9a"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a11a6ebc7193110ea9b",
+          "method": "belongsTo",
+          "class": "App\\Models\\Company\\Campaign",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "parent_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7d7",
+            "name": "Campaign",
+            "model_class": "App\\Models\\Company\\Campaign",
+            "repository_class": "App\\Repositories\\Eloquent\\Company\\CampaignRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "campaigns"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a11a6ebc7193110ea99"
+        }
+      },
+      {
+        "_id": "5c906a11a6ebc7193110ea9c",
+        "name": "country_id",
+        "label": "Country",
+        "uniqueName": "campaign_country_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "tooltip": [
+          "Country or Region where the exhibition will take place",
+          "helper"
+        ],
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2019-03-19 04:03:29",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ea9d"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a11a6ebc7193110ea9e",
+          "method": "belongsTo",
+          "class": "App\\Models\\Core\\Country",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "country_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7bd",
+            "name": "Country",
+            "model_class": "App\\Models\\Core\\Country",
+            "repository_class": "App\\Repositories\\Eloquent\\Core\\CountryRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "countries"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a11a6ebc7193110ea9c"
+        }
+      },
+      {
+        "_id": "5c906a11a6ebc7193110ea9f",
+        "name": "venue",
+        "label": "Venue",
+        "uniqueName": "campaign_venue",
+        "field_type_id": "5c906a0ea6ebc7193110e73c",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaa0",
+        "name": "freqExhibition",
+        "label": "Frequency of Exhibition",
+        "uniqueName": "campaign_freq_exhibition",
+        "field_type_id": "5c906a0ea6ebc7193110e73c",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaa1",
+        "name": "noOfRegistrants",
+        "label": "No. of Registrants",
+        "uniqueName": "campaign_no_of_registrants",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaa2"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaa3",
+        "name": "noOfAttendees",
+        "label": "No. of Attendees",
+        "uniqueName": "campaign_no_of_attendees",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaa4"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaa5",
+        "name": "boothSize",
+        "label": "Booth Size (sqm)",
+        "uniqueName": "campaign_booth_size",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaa6"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaa7"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaa8",
+        "name": "description",
+        "label": "Description",
+        "uniqueName": "campaign_description",
+        "field_type_id": "5c906a0ea6ebc7193110e73c",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "longText",
+          "_id": "5c906a0ea6ebc7193110e73c"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaa9",
+        "name": "active",
+        "label": "Active",
+        "uniqueName": "campaign_active",
+        "field_type_id": "5c906a0ea6ebc7193110e733",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "default_value",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": false,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaaa"
+            }
+          },
+          {
+            "name": "checkbox",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "boolRadio4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaab"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "boolean",
+          "_id": "5c906a0ea6ebc7193110e733"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaac",
+        "name": "currency_id",
+        "label": "Currency",
+        "uniqueName": "campaign_currency_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "quick": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2019-03-19 04:03:29",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaad"
+            }
+          },
+          {
+            "name": "required",
+            "event": [
+              "onLoad",
+              "onChange",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaae"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a11a6ebc7193110eaaf",
+          "method": "belongsTo",
+          "class": "App\\Models\\Core\\Currency",
+          "displayFieldName": [
+            "name"
+          ],
+          "foreign_key": "currency_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7bc",
+            "name": "Currency",
+            "model_class": "App\\Models\\Core\\Currency",
+            "repository_class": "App\\Repositories\\Eloquent\\Core\\CurrencyRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "currencies"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a11a6ebc7193110eaac"
+        }
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eab0",
+        "name": "owner_id",
+        "label": "Campaign Owner",
+        "uniqueName": "campaign_owner_id",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "filterQuery": "where(\"Employee::_id\", \"=\", \"Role::user_id\")->where(\"Role::name\", \"in\", [\"crm_admin\", \"crm_sales_admin\", \"crm_sales_coordinator\", \"sales_person\"])",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eab1"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "searchKey": true,
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a11a6ebc7193110eab2",
+          "method": "belongsTo",
+          "class": "App\\Models\\Employee\\Employee",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "owner_id",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b3",
+            "name": "Employee",
+            "model_class": "App\\Models\\Employee\\Employee",
+            "repository_class": "App\\Repositories\\Eloquent\\Employee\\EmployeeRepository",
+            "mutable": false,
+            "notifiable": false,
+            "collection": "users"
+          },
+          "popupDisplayFieldName": [
+            "firstName",
+            "lastName",
+            "email"
+          ],
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a11a6ebc7193110eab0"
+        }
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eab3",
+        "name": "status_id",
+        "label": "Status",
+        "uniqueName": "campaign_status_id",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "listName": "campaign_status",
+        "header": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2019-03-19 04:03:29",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eab4"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eab5",
+        "name": "type_id",
+        "label": "Type",
+        "uniqueName": "campaign_type_id",
+        "field_type_id": "5c906a0ea6ebc7193110e737",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "listName": "campaign_type",
+        "header": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2019-03-19 04:03:29",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "ss_dropdown",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eab6"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa29"
+        ],
+        "field_type": {
+          "name": "picklist",
+          "_id": "5c906a0ea6ebc7193110e737"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eab7",
+        "name": "startDate",
+        "label": "Start Date",
+        "uniqueName": "campaign_start_date",
+        "field_type_id": "5c906a0ea6ebc7193110e732",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "header": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "date_format",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": "m/d/Y",
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eab8"
+            }
+          },
+          {
+            "name": "date_only",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eab9"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa2a"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaba",
+        "name": "endDate",
+        "label": "End Date",
+        "uniqueName": "campaign_end_date",
+        "field_type_id": "5c906a0ea6ebc7193110e732",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "header": true,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "set_min_date",
+            "event": [
+              "onLoad",
+              "onChange"
+            ],
+            "groupName": "settings1",
+            "value": "startDate",
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eabb"
+            }
+          },
+          {
+            "name": "date_format",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": "m/d/Y",
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eabc"
+            }
+          },
+          {
+            "name": "date_only",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eabd"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa2a"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eabe",
+        "name": "boothRentalB",
+        "label": "Booth Rental (Budget)",
+        "uniqueName": "campaign_booth_rental_b",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eabf"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eac0"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eac1"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa2a"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eac2",
+        "name": "boothConstuctionB",
+        "label": "Boot Construction (Budget)",
+        "uniqueName": "campaign_booth_constuction_b",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eac3"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eac4"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eac5"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa2a"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eac6",
+        "name": "untFrtLbrSrvcsB",
+        "label": "Unit Freight and Labor Services (Budget)",
+        "uniqueName": "campaign_unt_frt_lbr_srvcs_b",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eac7"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eac8"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eac9"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa2a"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaca",
+        "name": "foodTrvlHtlB",
+        "label": "Food, Travel, Hotel (Budget)",
+        "uniqueName": "campaign_food_trvl_htl_b",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eacb"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eacc"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eacd"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa2a"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eace",
+        "name": "promMatB",
+        "label": "Food, Travel, Hotel (Budget)",
+        "uniqueName": "campaign_prom_mat_b",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eacf"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ead0"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ead1"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa2a"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110ead2",
+        "name": "boothRentalA",
+        "label": "Booth Rental (Actual)",
+        "uniqueName": "campaign_booth_rental_a",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ead3"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ead4"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ead5"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa2a"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110ead6",
+        "name": "boothConstuctionA",
+        "label": "Boot Construction (Actual)",
+        "uniqueName": "campaign_booth_constuction_a",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ead7"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ead8"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110ead9"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa2a"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eada",
+        "name": "untFrtLbrSrvcsA",
+        "label": "Unit Freight and Labor Services (Actual)",
+        "uniqueName": "campaign_unt_frt_lbr_srvcs_a",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eadb"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eadc"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eadd"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa2a"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eade",
+        "name": "foodTrvlHtlA",
+        "label": "Food, Travel, Hotel (Actual)",
+        "uniqueName": "campaign_food_trvl_htl_a",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eadf"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eae0"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eae1"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa2a"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eae2",
+        "name": "promMatA",
+        "label": "Food, Travel, Hotel (Actual)",
+        "uniqueName": "campaign_prom_mat_a",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eae3"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eae4"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eae5"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa2a"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eae6",
+        "name": "expectedRevenue",
+        "label": "Expected Revenue in Campaign",
+        "uniqueName": "campaign_expected_revenue",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eae7"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eae8"
+            }
+          },
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eae9"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa2c"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaea",
+        "name": "numSent",
+        "label": "Number Sent in Campaign",
+        "uniqueName": "campaign_num_sent",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaeb"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa2c"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaec",
+        "name": "expectedResponse",
+        "label": "Expected Response (%)",
+        "uniqueName": "campaign_expected_response",
+        "field_type_id": "5c906a0ea6ebc7193110e743",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa2c"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "percentage",
+          "_id": "5c906a0ea6ebc7193110e743"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaed",
+        "name": "budgetCost",
+        "label": "Budgeted Cost in Campaign",
+        "uniqueName": "campaign_budget_cost",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaee"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaef"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaf0"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa2c"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaf1",
+        "name": "actualCost",
+        "label": "Actual Cost in Campaign",
+        "uniqueName": "campaign_actual_cost",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaf2"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaf3"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaf4"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa2c"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaf5",
+        "name": "response",
+        "label": "Responses in Campaign",
+        "uniqueName": "campaign_response",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaf6"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaf7"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eaf8",
+        "name": "numSentH",
+        "label": "Number Sent in Hierarchy",
+        "uniqueName": "campaign_num_sent_h",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaf9"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eafa",
+        "name": "totalLeadsH",
+        "label": "Leads in Hierarchy",
+        "uniqueName": "campaign_total_leads_h",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eafb"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eafc"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eafd",
+        "name": "totalOpportunityH",
+        "label": "Opportunity in Hierarchy",
+        "uniqueName": "campaign_total_opportunity_h",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eafe"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eaff"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eb00",
+        "name": "responseH",
+        "label": "Responses in Hierarchy",
+        "uniqueName": "campaign_response_h",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb01"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb02"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eb03",
+        "name": "totalWonH",
+        "label": "Won Opprtunity in Hierarchy",
+        "uniqueName": "campaign_total_won_h",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb04"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb05"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eb06",
+        "name": "opportunityValueH",
+        "label": "Value of Opprtunity in Hierarchy",
+        "uniqueName": "campaign_opportunity_value_h",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "currencySource": {
+          "type": "lookupModel",
+          "concat": "code",
+          "field": "currency_id"
+        },
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb07"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb08"
+            }
+          },
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb09"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb0a"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eb0b",
+        "name": "wonValueH",
+        "label": "Value of Won Opprtunity in Hierarchy",
+        "uniqueName": "campaign_won_value_h",
+        "field_type_id": "5c906a0ea6ebc7193110e73e",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "currencySource": {
+          "type": "lookupModel",
+          "concat": "code",
+          "field": "currency_id"
+        },
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb0c"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb0d"
+            }
+          },
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb0e"
+            }
+          },
+          {
+            "name": "digits_between",
+            "event": [
+              "onLoad",
+              "onSubmit"
+            ],
+            "groupName": null,
+            "value": {
+              "min": 0,
+              "max": 15
+            },
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb0f"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "currency",
+          "_id": "5c906a0ea6ebc7193110e73e"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eb10",
+        "name": "updated_at",
+        "label": "Last Modified Date",
+        "uniqueName": "campaign_updated_at",
+        "field_type_id": "5c906a0ea6ebc7193110e732",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb11"
+            }
+          },
+          {
+            "name": "date_format",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": "m/d/Y",
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb12"
+            }
+          },
+          {
+            "name": "date_only",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb13"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa2d"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eb14",
+        "name": "created_at",
+        "label": "Created Date",
+        "uniqueName": "campaign_created_at",
+        "field_type_id": "5c906a0ea6ebc7193110e732",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb15"
+            }
+          },
+          {
+            "name": "date_format",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": "m/d/Y",
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb16"
+            }
+          },
+          {
+            "name": "date_only",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb17"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa2d"
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eb18",
+        "name": "updated_by",
+        "label": "Last Modified By",
+        "uniqueName": "campaign_updated_by",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2019-03-19 04:03:29",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb19"
+            }
+          },
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb1a"
+            }
+          }
+        ],
+        "section2_ids": [
+          "5c906a1da6ebc7193110fa2d"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a11a6ebc7193110eb1b",
+          "method": "belongsTo",
+          "class": "App\\User",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "updated_by",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b4",
+            "name": "User",
+            "model_class": "App\\User",
+            "repository_class": "App\\Repositories\\Eloquent\\User\\UserRepository",
+            "mutable": false,
+            "notifiable": true,
+            "collection": "users"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a11a6ebc7193110eb18"
+        }
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eb1c",
+        "name": "created_by",
+        "label": "Created By",
+        "uniqueName": "campaign_created_by",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2019-03-19 04:03:29",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb1d"
+            }
+          },
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb1e"
+            }
+          }
+        ],
+        "section1_ids": [
+          "5c906a1da6ebc7193110fa2d"
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a11a6ebc7193110eb1f",
+          "method": "belongsTo",
+          "class": "App\\User",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "created_by",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b4",
+            "name": "User",
+            "model_class": "App\\User",
+            "repository_class": "App\\Repositories\\Eloquent\\User\\UserRepository",
+            "mutable": false,
+            "notifiable": true,
+            "collection": "users"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a11a6ebc7193110eb1c"
+        }
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eb20",
+        "name": "deleted_at",
+        "label": "Deleted At",
+        "uniqueName": "campaign_deleted_at",
+        "field_type_id": "5c906a0ea6ebc7193110e732",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb21"
+            }
+          },
+          {
+            "name": "date_format",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": "m/d/Y",
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb22"
+            }
+          },
+          {
+            "name": "date_only",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb23"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "date",
+          "_id": "5c906a0ea6ebc7193110e732"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eb24",
+        "name": "deleted_by",
+        "label": "Deleted By",
+        "uniqueName": "campaign_deleted_by",
+        "field_type_id": "5c906a0ea6ebc7193110e738",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "fieldGlue": " ",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2019-03-19 04:03:29",
+        "created_at": "2019-03-19 04:03:29",
+        "rules": [
+          {
+            "name": "ss_pop_up",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "option4",
+            "value": true,
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb25"
+            }
+          },
+          {
+            "name": "hide_in",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": "visibility",
+            "value": [
+              "create",
+              "update"
+            ],
+            "_id": {
+              "$oid": "5c906a11a6ebc7193110eb26"
+            }
+          }
+        ],
+        "field_type": {
+          "name": "lookupModel",
+          "_id": "5c906a0ea6ebc7193110e738"
+        },
+        "relation": {
+          "_id": "5c906a11a6ebc7193110eb27",
+          "method": "belongsTo",
+          "class": "App\\User",
+          "displayFieldName": [
+            "firstName",
+            "lastName"
+          ],
+          "foreign_key": "deleted_by",
+          "local_key": "_id",
+          "entity_id": {
+            "_id": "5c906a0fa6ebc7193110e7b4",
+            "name": "User",
+            "model_class": "App\\User",
+            "repository_class": "App\\Repositories\\Eloquent\\User\\UserRepository",
+            "mutable": false,
+            "notifiable": true,
+            "collection": "users"
+          },
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "field_id": "5c906a11a6ebc7193110eb24"
+        }
+      },
+      {
+        "_id": "5c906a13a6ebc7193110ede5",
+        "name": "totalOpportunity",
+        "label": "Opportunity in Campaign",
+        "uniqueName": "campaign_total_opportunity",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "filters": null,
+        "filterLogic": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:31",
+        "rules": [
+          {
+            "name": "disable",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a13a6ebc7193110ede6"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a13a6ebc7193110ede7",
+        "name": "totalWon",
+        "label": "Won Opportunity in Campaign",
+        "uniqueName": "campaign_total_won",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "filters": [
+          [
+            "stage_id",
+            "=",
+            "Closed Won"
+          ]
+        ],
+        "filterLogic": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:31",
+        "rules": [
+          {
+            "name": "disable",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a13a6ebc7193110ede8"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a13a6ebc7193110ede9",
+        "name": "opportunityValue",
+        "label": "Value of Opportunity",
+        "uniqueName": "campaign_opportunity_value",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "filters": null,
+        "filterLogic": null,
+        "aggregateField": "amount",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:31",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a13a6ebc7193110edea"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a13a6ebc7193110edeb"
+            }
+          },
+          {
+            "name": "disable",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a13a6ebc7193110edec"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a13a6ebc7193110eded",
+        "name": "wonValue",
+        "label": "Value of Won Opportunity",
+        "uniqueName": "campaign_won_value",
+        "field_type_id": "5c906a0ea6ebc7193110e73d",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "filters": [
+          [
+            "stage_id",
+            "=",
+            "Closed Won"
+          ]
+        ],
+        "filterLogic": null,
+        "aggregateField": "amount",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:31",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a13a6ebc7193110edee"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a13a6ebc7193110edef"
+            }
+          },
+          {
+            "name": "disable",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a13a6ebc7193110edf0"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "number",
+          "_id": "5c906a0ea6ebc7193110e73d"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a14a6ebc7193110ef49",
+        "name": "totalSalesOpportunity",
+        "label": "Sales Opportunity in Campaign",
+        "uniqueName": "campaign_total_sales_opportunity",
+        "field_type_id": "5c906a0ea6ebc7193110e742",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "connectingField": "campaign_id",
+        "rusEntity": "SalesOpportunity",
+        "rusType": "count",
+        "filters": null,
+        "filterLogic": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:32",
+        "rules": [
+          {
+            "name": "disable",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a14a6ebc7193110ef4a"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "rollUpSummary",
+          "_id": "5c906a0ea6ebc7193110e742"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a14a6ebc7193110ef4b",
+        "name": "totalSalesWon",
+        "label": "Won Sales Opportunity in Campaign",
+        "uniqueName": "campaign_total_sales_won",
+        "field_type_id": "5c906a0ea6ebc7193110e742",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "connectingField": "campaign_id",
+        "rusEntity": "SalesOpportunity",
+        "rusType": "count",
+        "filters": [
+          [
+            "stage_id",
+            "=",
+            "Closed Won"
+          ]
+        ],
+        "filterLogic": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:32",
+        "rules": [
+          {
+            "name": "disable",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a14a6ebc7193110ef4c"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "rollUpSummary",
+          "_id": "5c906a0ea6ebc7193110e742"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a14a6ebc7193110ef4d",
+        "name": "salesOpportunityValue",
+        "label": "Value of Sales Opportunity",
+        "uniqueName": "campaign_sales_opportunity_value",
+        "field_type_id": "5c906a0ea6ebc7193110e742",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "connectingField": "campaign_id",
+        "rusEntity": "SalesOpportunity",
+        "rusType": "sum",
+        "filters": null,
+        "filterLogic": null,
+        "aggregateField": "amount",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:32",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a14a6ebc7193110ef4e"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a14a6ebc7193110ef4f"
+            }
+          },
+          {
+            "name": "disable",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a14a6ebc7193110ef50"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "rollUpSummary",
+          "_id": "5c906a0ea6ebc7193110e742"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a14a6ebc7193110ef51",
+        "name": "wonSalesValue",
+        "label": "Value of Won Sales Opportunity",
+        "uniqueName": "campaign_won_sales_value",
+        "field_type_id": "5c906a0ea6ebc7193110e742",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "connectingField": "campaign_id",
+        "rusEntity": "SalesOpportunity",
+        "rusType": "sum",
+        "filters": [
+          [
+            "stage_id",
+            "=",
+            "Closed Won"
+          ]
+        ],
+        "filterLogic": null,
+        "aggregateField": "amount",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:32",
+        "rules": [
+          {
+            "name": "decimal",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": 2,
+            "_id": {
+              "$oid": "5c906a14a6ebc7193110ef52"
+            }
+          },
+          {
+            "name": "comma_separated",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a14a6ebc7193110ef53"
+            }
+          },
+          {
+            "name": "disable",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a14a6ebc7193110ef54"
+            }
+          }
+        ],
+        "searchKey": false,
+        "field_type": {
+          "name": "rollUpSummary",
+          "_id": "5c906a0ea6ebc7193110e742"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a15a6ebc7193110f010",
+        "name": "totalLeads",
+        "label": "Leads in Campaign",
+        "uniqueName": "campaign_total_leads",
+        "field_type_id": "5c906a0ea6ebc7193110e742",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "rusEntity": "Lead",
+        "rusType": "count",
+        "filters": null,
+        "filterLogic": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:33",
+        "rules": [
+          {
+            "name": "disable",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a15a6ebc7193110f011"
+            }
+          }
+        ],
+        "connectingField": "campaign_id",
+        "searchKey": false,
+        "field_type": {
+          "name": "rollUpSummary",
+          "_id": "5c906a0ea6ebc7193110e742"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5c906a15a6ebc7193110f012",
+        "name": "totalConvertedLeads",
+        "label": "Converted Leads in Campaign",
+        "uniqueName": "campaign_total_converted_leads",
+        "field_type_id": "5c906a0ea6ebc7193110e742",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "rusEntity": "Lead",
+        "rusType": "count",
+        "filters": [
+          [
+            "converted",
+            "=",
+            true
+          ]
+        ],
+        "filterLogic": null,
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-03-19 04:03:33",
+        "rules": [
+          {
+            "name": "disable",
+            "event": [
+              "onLoad"
+            ],
+            "groupName": null,
+            "value": true,
+            "_id": {
+              "$oid": "5c906a15a6ebc7193110f013"
+            }
+          }
+        ],
+        "connectingField": "campaign_id",
+        "searchKey": false,
+        "field_type": {
+          "name": "rollUpSummary",
+          "_id": "5c906a0ea6ebc7193110e742"
+        },
+        "relation": null
+      },
+      {
+        "_id": "5cf885d5a6ebc75bfe22feb2",
+        "name": "rfqCode",
+        "label": "RFQCODE",
+        "uniqueName": "campaign_rfq_code",
+        "field_type_id": "5c906a0ea6ebc7193110e741",
+        "created_by": "5bb104d0678f71061f643d1a",
+        "updated_by": "5bb104d0678f71061f643d1a",
+        "format": "{0}",
+        "active": true,
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "updated_at": "2023-07-03 04:52:56",
+        "created_at": "2019-06-06 03:17:41",
+        "searchKey": true,
+        "field_type": {
+          "name": "autonumber",
+          "_id": "5c906a0ea6ebc7193110e741"
+        },
+        "relation": null
+      }
+    ],
+    "panels": [
+      {
+        "_id": "5c906a1da6ebc7193110fa28",
+        "panelName": "campaign-panel-1",
+        "entityName": "Campaign",
+        "controllerMethod": "campaigns@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": "Campaign Information",
+            "row": 1,
+            "field_ids": [
+              [
+                "5c906a11a6ebc7193110ea95",
+                "5c906a11a6ebc7193110ea99",
+                "5c906a11a6ebc7193110ea9c",
+                "5c906a11a6ebc7193110ea9f",
+                "5c906a11a6ebc7193110eaa0",
+                "5c906a11a6ebc7193110eaa1",
+                "5c906a11a6ebc7193110eaa3",
+                "5c906a11a6ebc7193110eaa5"
+              ],
+              [
+                "5c906a11a6ebc7193110eaa9",
+                "5c906a11a6ebc7193110eaac",
+                "5c906a11a6ebc7193110eab0",
+                "5c906a11a6ebc7193110eab3",
+                "5c906a11a6ebc7193110eab5",
+                "5c906a11a6ebc7193110eaa8"
+              ]
+            ]
+          },
+          {
+            "sectionLabel": "Planning",
+            "row": 2,
+            "field_ids": [
+              [
+                "5c906a11a6ebc7193110eab7",
+                "5c906a11a6ebc7193110eabe",
+                "5c906a11a6ebc7193110eac2",
+                "5c906a11a6ebc7193110eac6",
+                "5c906a11a6ebc7193110eaca",
+                "5c906a11a6ebc7193110eace"
+              ],
+              [
+                "5c906a11a6ebc7193110eaba",
+                "5c906a11a6ebc7193110ead2",
+                "5c906a11a6ebc7193110ead6",
+                "5c906a11a6ebc7193110eada",
+                "5c906a11a6ebc7193110eade",
+                "5c906a11a6ebc7193110eae2"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "_id": "5c906a1da6ebc7193110fa2b",
+        "panelName": "campaign-panel-2",
+        "entityName": "Campaign",
+        "controllerMethod": "campaigns@index",
+        "label": null,
+        "tabKey": "N",
+        "mutable": true,
+        "highlight": null,
+        "sections": [
+          {
+            "sectionLabel": "Campaign Statistics",
+            "row": 1,
+            "field_ids": [
+              [
+                "5c906a11a6ebc7193110eae6",
+                "5c906a11a6ebc7193110eaea",
+                "5c906a11a6ebc7193110eaec"
+              ],
+              [
+                "5c906a11a6ebc7193110eaed",
+                "5c906a11a6ebc7193110eaf1"
+              ]
+            ]
+          },
+          {
+            "sectionLabel": null,
+            "row": 2,
+            "field_ids": [
+              [
+                "5c906a11a6ebc7193110eb1c",
+                "5c906a11a6ebc7193110eb14"
+              ],
+              [
+                "5c906a11a6ebc7193110eb18",
+                "5c906a11a6ebc7193110eb10"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "viewFilters": [
+      {
+        "_id": "651248653d39cc7c91574a73",
+        "query_id": "5c906a1ba6ebc7193110f8b2",
+        "sortField": "created_at",
+        "sortOrder": "DESC",
+        "filters": [],
+        "filterLogic": null,
+        "filterName": "My Team's Campaigns",
+        "moduleName": "campaigns",
+        "fields": [
+          "5c906a11a6ebc7193110eb14",
+          "5c906a11a6ebc7193110eab5",
+          "5c906a11a6ebc7193110ea95",
+          "5c906a11a6ebc7193110eab0",
+          "5c906a11a6ebc7193110eab7",
+          "5c906a11a6ebc7193110eaba",
+          "5c906a15a6ebc7193110f010",
+          "5c906a15a6ebc7193110f012",
+          "5c906a11a6ebc7193110eaf1",
+          "5c906a13a6ebc7193110ede7",
+          "5c906a13a6ebc7193110eded"
+        ],
+        "isDefault": true,
+        "owner": "64c1f340a6ebc75ebb6cd792",
+        "created_by": "64c1f340a6ebc75ebb6cd792",
+        "updated_by": "64c1f340a6ebc75ebb6cd792",
+        "updated_at": "2023-10-19 06:41:28",
+        "created_at": "2023-09-26 02:56:37",
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a11a6ebc7193110eaf1"
+      },
+      {
+        "_id": "651248653d39cc7c91574a74",
+        "query_id": "5c906a1ba6ebc7193110f8b3",
+        "sortField": "created_at",
+        "sortOrder": "DESC",
+        "filters": [],
+        "filterLogic": null,
+        "filterName": "My Campaigns",
+        "moduleName": "campaigns",
+        "fields": [
+          "5c906a11a6ebc7193110ea95",
+          "5c906a11a6ebc7193110eab0",
+          "5c906a11a6ebc7193110eab7",
+          "5c906a11a6ebc7193110eaba",
+          "5c906a11a6ebc7193110eab5",
+          "5c906a11a6ebc7193110eab3"
+        ],
+        "isDefault": false,
+        "owner": "64c1f340a6ebc75ebb6cd792",
+        "created_by": "64c1f340a6ebc75ebb6cd792",
+        "updated_by": "64c1f340a6ebc75ebb6cd792",
+        "updated_at": "2023-10-19 06:41:28",
+        "created_at": "2023-09-26 02:56:37",
+        "entity_id": "5c906a0fa6ebc7193110e7d7",
+        "currentDisplay": "table",
+        "summarize_by": null,
+        "group_by": "5c906a11a6ebc7193110eab5"
+      }
+    ]
+  }
+}
