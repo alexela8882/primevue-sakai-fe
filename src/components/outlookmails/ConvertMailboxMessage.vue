@@ -165,6 +165,7 @@ const proceedConvertMailbox = (module) => {
 
   data = Object.assign({}, {
     _id: `${Date.now()}`,
+    owner_id: localStorage.getItem('auth_id'),
     source_id: 'Email',
     dateRequested: "01-06-2024",
     dateResponded: "01-06-2024",

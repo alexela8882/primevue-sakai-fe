@@ -26786,6 +26786,30 @@
   "inquiries": {
     "collection": {
       "data": [
+        {
+          "_id": "1706668001730",
+          "owner_id": "659763cebebdd5aad80b0fa5",
+          "source_id": "Email",
+          "dateRequested": "01-06-2024",
+          "dateResponded": "01-06-2024",
+          "assigned_to_id": {
+            "_id": "5cadbb8aa6ebc720a0361ef3",
+            "email": "jane.luu@escolifesciences.com",
+            "firstName": "Jane",
+            "lastName": "Luu",
+            "peopleUnder": null,
+            "people": [
+              "5cadbb8aa6ebc720a0361ef3"
+            ]
+          },
+          "description": "This is a test from converted mailbox - 1706668001730",
+          "type_id": "Lead",
+          "link_id": "65288b4ca6ebc75d70589d02",
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB3yDfJwAAAA=",
+          "name": "alexander flores",
+          "email": "alexela8882@gmail.com",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c"
+        }
       ],
       "meta": {
         "pagination": {
@@ -26816,6 +26840,13 @@
           "_id": "5c906a0ea6ebc7193110e737"
         },
         "relation": null
+      },
+      {
+        "_id": "5c906a11a6ebc7193110eab1i",
+        "name": "owner_id",
+        "label": "Owner",
+        "uniqueName": "inquiry_owner_id",
+        "listName": "inquiry_owner"
       },
       {
         "_id": "5c906a14a6ebc7193110ef7g",
@@ -27104,8 +27135,7 @@
   },
   "defectreports": {
     "collection": {
-      "data": [
-      ],
+      "data": [],
       "meta": {
         "pagination": {
           "total": 1,

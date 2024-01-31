@@ -1,6 +1,7 @@
 <script setup>
 // imports
 import { ref, watch, defineAsyncComponent } from 'vue'
+import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 // stores
 import { useOutlookMailStore } from '@/stores/outlookmails'
@@ -18,10 +19,12 @@ const ConvertMailboxMessage = defineAsyncComponent(() =>
 // defines
 const props = defineProps({
   token: String,
-  message: Object
+  message: Object,
+  inquiryModuleInfo: Object
 })
 
 // refs
+const router = useRouter()
 const cmmtimeout = ref(false)
 const outlookReplyDialog = ref(false)
 const convertMailboxToModule = ref()
@@ -83,6 +86,7 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
           <span v-if="message.convertedToInquiry" class="flex align-items-center gap-2">
             <span class="text-xl">&nbsp;(Converted to inquiry)</span>
             <span
+              @click="router.push({ name: 'modules.pages.detail', params: { name: 'inquiries', id: inquiryModuleInfo._id, pageid: message.inquiry_id }})"
               class="pi pi-reply cursor-pointer font-bold text-primary"
               v-tooltip.bottom="{
                 value: 'view inquiry',

@@ -156,7 +156,10 @@ onMounted(async() => {
   // fetches
   await fetchBaseModule(route.params.id)
   await fetchModule(route.params.name)
-  await fetchLinkedModuleData('inquiries', { link_field: 'link_id', link_id: route.params.pageid })
+
+  const lmdParams = { module: 'inquiries', link_field: 'link_id', link_id: route.params.pageid }
+  await fetchLinkedModuleData(lmdParams)
+
   await fetchItem(route.params)
   await fetchItemRelatedLists(route.params)
 

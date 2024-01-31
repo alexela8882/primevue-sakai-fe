@@ -49,7 +49,8 @@ const fetchRelatedRecord = async () => {
   localEntity.value = getEntity.value(localData.value.type_id)
   const entityName = localEntity.value.name
 
-  await fetchLinkedModuleData(entityName, { link_field: '_id', link_id: localData.value.link_id })
+  let lmdParams = { module: entityName, link_field: '_id', link_id: localData.value.link_id }
+  await fetchLinkedModuleData(lmdParams)
   localLinkedModuleData.value = getLinkedModuleData.value
 
   localLinkedModule.value = await _fetchModule(localEntity.value.name)
