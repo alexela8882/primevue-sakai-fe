@@ -6,6 +6,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { useToast } from "primevue/usetoast"
 // components
 import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
+const MailboxThreads = defineAsyncComponent(() =>
+  import('@/components/outlookmails/MailboxThreads.vue')
+)
 const DynamicDataTable = defineAsyncComponent(() => import('../../modules/DynamicDataTable/dynamicdatatablemain.vue'))
 const SalesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/SalesTab.vue'))
 const ServicesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/ServicesTab.vue'))
@@ -322,7 +325,7 @@ onMounted(async() => {
               </TabPanel>
               <TabPanel v-if="linkedInquiryModule" header="Email">
                 <div>
-                  <pre>{{ linkedInquiryModule }}</pre>
+                  <MailboxThreads :threads="linkedInquiryModule.conversations.slice().reverse()" />
                 </div>
               </TabPanel>
             </TabView>

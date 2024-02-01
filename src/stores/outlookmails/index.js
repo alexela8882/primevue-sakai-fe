@@ -31,6 +31,7 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
   const mailFolder = ref({})
   const mailFolderMessages = ref([])
   const mailFolderMessagesMessage = ref({})
+  const conversationMessages = ref([])
   const skipValue = ref(0)
   const previousLink = ref(null)
 
@@ -42,6 +43,7 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
   const getMailFolder = computed(() => mailFolder.value)
   const getMailFolderMessages = computed(() => mailFolderMessages.value)
   const getMailFolderMessagesMessage = computed(() => mailFolderMessagesMessage.value)
+  const getConversationMessages = computed(() => conversationMessages.value)
   const fetchMsGraph = computed(() => {
     return (payload) => {
       const _method = payload.method
@@ -61,7 +63,7 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
       var baseEndpoint = "https://graph.microsoft.com/v1.0/"
       var graphEndpoint = `${baseEndpoint}${_endpoint}`
 
-      console.log(graphEndpoint)
+      console.log(JSON.stringify(graphEndpoint))
       console.log(_body)
     
       let response = null
@@ -249,6 +251,21 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
 
     return newResValue
   }
+  const fetchConversationMessages = async (message, _token) => {
+    if (message) {
+      console.log(message.conversationId)
+      const payload = {
+        method: "GET",
+        endpoint: `me/messages?$filter=conversationId eq '${message.conversationId}'`,
+        token: _token
+      }
+  
+      const response = await fetchMsGraph.value(payload)
+      conversationMessages.value = response.value
+  
+      console.log(conversationMessages.value)
+    }
+  }
 
   return {
     profileLoading,
@@ -264,11 +281,13 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
     getMailFolder,
     getMailFolderMessages,
     getMailFolderMessagesMessage,
+    getConversationMessages,
     fetchProfile,
     fetchMailFolder,
     fetchMailFolders,
     fetchMailFolderMessages,
     fetchMailFolderMessagesMessage,
+    fetchConversationMessages,
     replyToMailFolderMessagesMessage,
     folderMailMessagesNavigate
   }

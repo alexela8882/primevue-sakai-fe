@@ -35,7 +35,11 @@ const {
   getMailFolder,
   getMailFolderMessages
 } = storeToRefs(outlookMailStore)
-const { fetchMailFolder, fetchMailFolderMessages, folderMailMessagesNavigate } = outlookMailStore
+const {
+  fetchMailFolder,
+  fetchMailFolderMessages,
+  folderMailMessagesNavigate,
+  fetchConversationMessages } = outlookMailStore
 const { fetchBaseModuleByField } = moduleStore
 
 // MSAL SETUP
@@ -77,8 +81,9 @@ const login = async () => {
     msgraphErrorMessage.value = err
   })
 }
-const selectMessage = (payload) => {
+const selectMessage = async (payload) => {
   console.log(payload)
+  // await fetchConversationMessages(payload, token.value)
   selectedMessage.value = payload
 }
 const getToken = async () => {

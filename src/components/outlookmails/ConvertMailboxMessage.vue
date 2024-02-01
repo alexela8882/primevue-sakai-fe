@@ -15,6 +15,7 @@ const SectionFields = defineAsyncComponent(() => import('@/components/modules/Pa
 
 // defines
 const props = defineProps({
+  token: Object,
   convertModule: Object,
   mailboxMessage: Object
 })
@@ -78,7 +79,8 @@ const {
     getModule,
     convertMailboxLoading } = storeToRefs(moduleStore)
 const { getItemPanels, getRelatedListsByCname } = storeToRefs(moduleDetailStore)
-const { getMailFolderMessages } = storeToRefs(outlookMailStore)
+const { getMailFolderMessages, getConversationMessages } = storeToRefs(outlookMailStore)
+const { fetchConversationMessages } = outlookMailStore
 const { fetchModule, convertMailboxToInquiry, insertModuleFromMailbox } = moduleStore
 
 // actions
@@ -152,7 +154,7 @@ const convertBtn = async () => {
   } else saveNewConvert()
 }
 
-const proceedConvertMailbox = (module) => {
+const proceedConvertMailbox = async (module) => {
   let _module = null
   if (module !== null) _module = module
   else _module = selectedModule.value
@@ -162,6 +164,9 @@ const proceedConvertMailbox = (module) => {
 
   const mailboxmsgName = props.mailboxMessage.from.emailAddress.name
   const mailboxmsgEmail = props.mailboxMessage.from.emailAddress.address
+
+  // get convertsation messages
+  await fetchConversationMessages(props.mailboxMessage, props.token)
 
   data = Object.assign({}, {
     _id: `${Date.now()}`,
@@ -176,7 +181,8 @@ const proceedConvertMailbox = (module) => {
     email_id: props.mailboxMessage.id,
     name: mailboxmsgName,
     email: mailboxmsgEmail,
-    conversation_id: props.mailboxMessage.conversationId
+    conversation_id: props.mailboxMessage.conversationId,
+    conversations: getConversationMessages.value
   })
 
   // convert mailbox to inquiry
