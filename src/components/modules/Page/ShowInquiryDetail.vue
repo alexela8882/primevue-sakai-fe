@@ -158,7 +158,7 @@ onMounted(async () => {
                         <span class="text-2xl font-bold">Email Thread</span>
                       </div>
                     </template>
-                    <div v-if="localData.conversations.length > 0" class="mt-4">
+                    <div v-if="localData.conversations && localData.conversations.length > 0" class="mt-4">
                       <MailboxThreads :threads="localData.conversations.slice().reverse()" />
                     </div>
                   </Panel>
