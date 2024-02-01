@@ -6,6 +6,9 @@ import { useRoute, useRouter } from 'vue-router'
 import { useToast } from "primevue/usetoast"
 // components
 import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
+const MailboxThreads = defineAsyncComponent(() =>
+  import('@/components/outlookmails/MailboxThreads.vue')
+)
 const DynamicDataTable = defineAsyncComponent(() => import('../../modules/DynamicDataTable/dynamicdatatablemain.vue'))
 const SalesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/SalesTab.vue'))
 const ServicesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/ServicesTab.vue'))
@@ -156,7 +159,10 @@ onMounted(async() => {
   // fetches
   await fetchBaseModule(route.params.id)
   await fetchModule(route.params.name)
-  await fetchLinkedModuleData('inquiries', { link_field: 'link_id', link_id: route.params.pageid })
+
+  const lmdParams = { module: 'inquiries', link_field: 'link_id', link_id: route.params.pageid }
+  await fetchLinkedModuleData(lmdParams)
+
   await fetchItem(route.params)
   await fetchItemRelatedLists(route.params)
 
@@ -319,7 +325,7 @@ onMounted(async() => {
               </TabPanel>
               <TabPanel v-if="linkedInquiryModule" header="Email">
                 <div>
-                  <pre>{{ linkedInquiryModule }}</pre>
+                  <MailboxThreads :threads="linkedInquiryModule.conversations.slice().reverse()" />
                 </div>
               </TabPanel>
             </TabView>

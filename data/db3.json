@@ -26818,6 +26818,13 @@
         "relation": null
       },
       {
+        "_id": "5c906a11a6ebc7193110eab1i",
+        "name": "owner_id",
+        "label": "Owner",
+        "uniqueName": "inquiry_owner_id",
+        "listName": "inquiry_owner"
+      },
+      {
         "_id": "5c906a14a6ebc7193110ef7g",
         "name": "email",
         "label": "Email",
@@ -27104,8 +27111,7 @@
   },
   "defectreports": {
     "collection": {
-      "data": [
-      ],
+      "data": [],
       "meta": {
         "pagination": {
           "total": 1,

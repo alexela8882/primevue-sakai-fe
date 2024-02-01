@@ -1,10 +1,13 @@
 <script setup>
 // imports
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 // components
 import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
+const MailboxThreads = defineAsyncComponent(() =>
+  import('@/components/outlookmails/MailboxThreads.vue')
+)
 // stores
 import { useModuleStore } from '@/stores/modules'
 import { useModuleDetailStore } from '@/stores/modules/detail'
@@ -49,7 +52,8 @@ const fetchRelatedRecord = async () => {
   localEntity.value = getEntity.value(localData.value.type_id)
   const entityName = localEntity.value.name
 
-  await fetchLinkedModuleData(entityName, { link_field: '_id', link_id: localData.value.link_id })
+  let lmdParams = { module: entityName, link_field: '_id', link_id: localData.value.link_id }
+  await fetchLinkedModuleData(lmdParams)
   localLinkedModuleData.value = getLinkedModuleData.value
 
   localLinkedModule.value = await _fetchModule(localEntity.value.name)
@@ -132,7 +136,7 @@ onMounted(async () => {
                         v-for="(key, kx) in Object.keys(localData)"
                         :key="kx"
                         class="grid">
-                        <div class="col flex align-items-center gap-4">
+                        <div v-if="key !== 'conversations'" class="col flex align-items-center gap-4">
                           <div>
                             <p class="white-space-nowrap">
                               {{ getFieldDetails(key) ? getFieldDetails(key).label : 'ID' }}
@@ -154,8 +158,8 @@ onMounted(async () => {
                         <span class="text-2xl font-bold">Email Thread</span>
                       </div>
                     </template>
-                    <div class="mt-4">
-                      Thread here...
+                    <div v-if="localData.conversations.length > 0" class="mt-4">
+                      <MailboxThreads :threads="localData.conversations.slice().reverse()" />
                     </div>
                   </Panel>
                 </div>

@@ -27,7 +27,7 @@ const inquiryModule = ref()
 // stores
 const moduleStore = useModuleStore()
 const outlookMailStore = useOutlookMailStore()
-const { getModules } = storeToRefs(moduleStore)
+const { getBaseModule } = storeToRefs(moduleStore)
 const {
   mailFolderLoading,
   getSkipValue,
@@ -35,8 +35,12 @@ const {
   getMailFolder,
   getMailFolderMessages
 } = storeToRefs(outlookMailStore)
-const { fetchMailFolder, fetchMailFolderMessages, folderMailMessagesNavigate } = outlookMailStore
-const { fetchModules } = moduleStore
+const {
+  fetchMailFolder,
+  fetchMailFolderMessages,
+  folderMailMessagesNavigate,
+  fetchConversationMessages } = outlookMailStore
+const { fetchBaseModuleByField } = moduleStore
 
 // MSAL SETUP
 const msalConfig = {
@@ -76,8 +80,9 @@ const login = async () => {
     msgraphErrorMessage.value = err
   })
 }
-const selectMessage = (payload) => {
+const selectMessage = async (payload) => {
   console.log(payload)
+  // await fetchConversationMessages(payload, token.value)
   selectedMessage.value = payload
 }
 const getToken = async () => {
@@ -175,9 +180,9 @@ onMounted(async () => {
 
   initializeMsGraph()
 
-  await fetchModules()
-
-  inquiryModuleInfo.value = getModules.value.find(m => m.name == 'inquiries')
+  // fetch inquiry module
+  await fetchBaseModuleByField({ field: 'name', value: 'inquiries' })
+  inquiryModuleInfo.value = getBaseModule.value
 })
 
 </script>
@@ -295,7 +300,7 @@ onMounted(async () => {
       </SplitterPanel>
       <SplitterPanel class="flex" :size="75" >
         <div style="height: 85vh !important; overflow-y: scroll;" class="p-4 w-full">
-          <MailboxMessage :token="token" :message="selectedMessage" />
+          <MailboxMessage :token="token" :message="selectedMessage" :inquiryModuleInfo="inquiryModuleInfo" />
         </div>
       </SplitterPanel>
     </Splitter>
