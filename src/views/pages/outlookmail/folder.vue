@@ -45,7 +45,7 @@ const { fetchBaseModuleByField } = moduleStore
 // MSAL SETUP
 const msalConfig = {
   auth: {
-    clientId: '002454d9-50f5-4e5f-83ab-d5291500800a' // alexela8882
+    clientId: 'ff1c1cc7-8341-4587-bbf7-f92982b6ec29' // alexela8882
     // clientId: 'error' // for error testing
   }
 }
@@ -68,7 +68,7 @@ const login = async () => {
   msgraphLogicMessage.value = "Trying to sign you in"
 
   var loginRequest = {
-    scopes: ["user.read", "mail.send"] // optional Array<string>
+    scopes: ["user.read", "mail.read", "mail.send"] // optional Array<string>
   }
 
   await msalInstance.loginPopup(loginRequest)
@@ -91,7 +91,7 @@ const getToken = async () => {
 
   if (msalInstance.getAccount()) {
     var tokenRequest = {
-      scopes: ["user.read", "mail.send"]
+      scopes: ["user.read", "mail.read", "mail.send"]
     }
     await msalInstance.acquireTokenSilent(tokenRequest)
     .then(response => {
