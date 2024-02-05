@@ -29,6 +29,13 @@ const router = createRouter({
             requiresAuth: true
           }
         }, {
+          path: '/test-pages/tabs',
+          name: 'test-pages.tabs',
+          component: () => import('@/views/test-pages/tabs.vue'),
+          meta: {
+            requiresAuth: true
+          }
+        }, {
           path: '/users',
           name: 'users',
           component: () => import('@/views/pages/users/main.vue'),
