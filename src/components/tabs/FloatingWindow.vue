@@ -12,7 +12,7 @@ const { getTabs } = storeToRefs(tabStore)
 </script>
 
 <template>
-  <div class="z-1 fixed bottom-0 right-0 m-5 p-2 flex justify-content-end">
+  <div class="z-1 fixed bottom-0 right-0 mx-3 p-2 flex justify-content-end">
     <div
       class="p-2 align-self-end"
       v-for="(tab, tx) in getTabs.filter(t => t.style == 'window')" :key="tx">
@@ -22,9 +22,11 @@ const { getTabs } = storeToRefs(tabStore)
           toggleable
           :collapsed="!tab.expanded"
           class="floating-window h-full">
-          <p class="m-0">
+          <div
+            style="height: 300px !important;"
+            class="m-0 floating-window-content overflow-scroll">
             <component :is="tab.component"></component>
-          </p>
+          </div>
         </Panel>
       </div>
     </div>
@@ -32,7 +34,4 @@ const { getTabs } = storeToRefs(tabStore)
 </template>
 
 <style>
-.floating-window .p-panel-content {
-  min-height: 300px;
-}
 </style>

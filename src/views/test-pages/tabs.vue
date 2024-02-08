@@ -1,6 +1,6 @@
 <script setup>
 // imports
-import { ref, defineAsyncComponent, onMounted } from 'vue'
+import { ref, shallowRef, defineAsyncComponent, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
 import { useTabStore } from '@/stores/tabs/index'
@@ -18,7 +18,7 @@ import ListViewLoader from '@/components/modules/DynamicDataTable/Loaders/ListVi
 // refs
 // stores
 const tabStore = useTabStore()
-const { getTabs } = storeToRefs(tabStore)
+const { getTabs, tabsLoading } = storeToRefs(tabStore)
 const { toggleTabs, generateTabs } = tabStore
 
 const tabs = ref([
@@ -51,7 +51,7 @@ const tabs = ref([
     style: 'window',
     name: 'form1-window',
     label: 'Form 1',
-    component: DataTableLoader,
+    component: shallowRef(DataTableLoader),
     expanded: false,
     opened: false
   }, {
@@ -59,7 +59,7 @@ const tabs = ref([
     style: 'window',
     name: 'form2-window',
     label: 'Form 2',
-    component: ListViewLoader,
+    component: shallowRef(ListViewLoader),
     expanded: false,
     opened: false
   },
@@ -82,7 +82,17 @@ onMounted(() => {
       </div>
     </div>
 
-    <BaseTab />
+    <Suspense v-if="!tabsLoading">
+      <BaseTab />
+      <template #fallback>
+        <div
+          class="flex align-items-center justify-content-center"
+          style="height: 60vh !important;">
+          <ProgressSpinner />
+        </div>
+      </template>
+    </Suspense>
+
     <FloatingWindow />
   </div>
 </template>

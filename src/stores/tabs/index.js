@@ -16,24 +16,7 @@ export const useTabStore = defineStore('tabStore', () => {
   const baseStore = useBaseStore()
   const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
-  const {
-    listViewFilterOverlay,
-    viewFiltersDialogLoading,
-    viewFiltersDialogSwitch,
-    viewFiltersDialog,
-    moduleLoading,
-    collectionLoading,
-    getModule,
-    getBaseModule,
-    getCollection,
-    getViewFilters,
-    getDefaultViewFilter,
-    _getViewFilterIds,
-    getViewFilterIds,
-    _getViewFilter,
-    getViewFilter,
-    getSearchKeyFieldIds
-  } = storeToRefs(moduleStore)
+  const {  _getViewFilter } = storeToRefs(moduleStore)
   const { _fetchModule, fetchBaseModuleByField } = moduleStore
 
   // states
@@ -44,6 +27,7 @@ export const useTabStore = defineStore('tabStore', () => {
 
   // actions
   const generateTabs = async (payload) => {
+    tabs.value = [] // refresh
     tabsLoading.value = true
 
     payload.map(async p => {
@@ -70,6 +54,8 @@ export const useTabStore = defineStore('tabStore', () => {
     tabsLoading.value = false
   }
   const toggleTabs = async (payload) => {
+    tabsLoading.value = true
+
     tabs.value.map(async tab => {
       if (tab.name == payload.name) {
         tab.visible = true
@@ -92,6 +78,8 @@ export const useTabStore = defineStore('tabStore', () => {
         Object.assign(tab, newTab)
       } else tab.visible = false
     })
+
+    tabsLoading.value = false
   }
 
   return {
