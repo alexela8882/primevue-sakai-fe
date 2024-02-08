@@ -132,18 +132,17 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
   const getViewFilter = computed(() => {
     return (payload) => {
-      const moduleFields = module.value && module.value.fields
       const viewFilters = module.value && module.value.viewFilters
       const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload)
 
-      return getReconstructedViewFilter.value(viewFilter, null)
+      return getReconstructedViewFilter.value(viewFilter, module.value)
     }
   })
   
   const getReconstructedViewFilter = computed(() => {
-    return (payload, module) => {
+    return (payload, _module) => {
       let moduleFields = null
-      if (module) moduleFields = module.fields
+      if (_module) moduleFields = _module.fields
       else moduleFields = module.value && module.value.fields
       const viewFilter = payload
 
