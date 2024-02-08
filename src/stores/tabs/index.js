@@ -54,10 +54,7 @@ export const useTabStore = defineStore('tabStore', () => {
         const viewFilterWithFields = _getViewFilter.value({ module: moduleData, id: viewFilter._id })
         // console.log(moduleData.viewFilters)
         let obj = Object.assign({}, {
-          name: p.name,
-          module: p.module,
-          display: p.display,
-          visible: p.visible,
+          ...p,
           base_module: baseModule,
           module: Object.assign({}, {
             collection: moduleData.collection,
@@ -83,10 +80,7 @@ export const useTabStore = defineStore('tabStore', () => {
         const viewFilterWithFields = _getViewFilter.value({ module: moduleData, id: viewFilter._id })
         // console.log(moduleData.viewFilters)
         let newTab = Object.assign({}, {
-          name: payload.name,
-          module: payload.module,
-          display: payload.display,
-          visible: payload.visible,
+          ...payload,
           base_module: baseModule,
           module: Object.assign({}, {
             collection: moduleData.collection,
@@ -96,8 +90,7 @@ export const useTabStore = defineStore('tabStore', () => {
           })
         })
         Object.assign(tab, newTab)
-      }
-      else tab.visible = false
+      } else tab.visible = false
     })
   }
 

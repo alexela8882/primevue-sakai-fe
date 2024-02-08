@@ -1,6 +1,6 @@
 <script setup>
 // imports
-import { ref, defineAsyncComponent } from 'vue'
+import { ref, defineAsyncComponent, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
 import { useTabStore } from '@/stores/tabs/index'
@@ -8,42 +8,82 @@ import { useTabStore } from '@/stores/tabs/index'
 const BaseTab = defineAsyncComponent(() =>
   import('@/components/tabs/Base.vue')
 )
+const FloatingWindow = defineAsyncComponent(() =>
+  import('@/components/tabs/FloatingWindow.vue')
+)
+// loaders
+import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
+import ListViewLoader from '@/components/modules/DynamicDataTable/Loaders/ListViewLoader.vue'
 
 // refs
 // stores
 const tabStore = useTabStore()
-const { toggleTabs } = tabStore
+const { getTabs } = storeToRefs(tabStore)
+const { toggleTabs, generateTabs } = tabStore
 
 const tabs = ref([
   {
+    type: 'module',
+    style: 'tab',
     name: 'lead-tab',
     label: 'Leads',
     module: 'leads',
     display: 'table',
     visible: true
   }, {
+    type: 'module',
+    style: 'tab',
     name: 'inquiry-tab',
     label: 'Inquiries',
     module: 'inquiries',
     display: 'table',
     visible: false
   }, {
+    type: 'module',
+    style: 'tab',
     name: 'campaign-tab',
     label: 'Campaigns',
     module: 'campaigns',
     display: 'table',
     visible: false
-  }
+  }, {
+    type: 'form',
+    style: 'window',
+    name: 'form1-window',
+    label: 'Form 1',
+    component: DataTableLoader,
+    expanded: false,
+    opened: false
+  }, {
+    type: 'form',
+    style: 'window',
+    name: 'form2-window',
+    label: 'Form 2',
+    component: ListViewLoader,
+    expanded: false,
+    opened: false
+  },
 ])
+
+onMounted(() => {
+  generateTabs(tabs.value)
+})
 </script>
 
 <template>
   <div>
-    <div v-for="(tab, tx) in tabs" :key="tx">
-      <a @click="toggleTabs(tab)" href="javascript:void(0);">{{ tab.label }}</a>
+    <div class="flex mb-2">
+      <div
+        v-for="(tab, tx) in getTabs.filter(t => t.style == 'tab')"
+        :key="tx"
+        class="p-2 px-3 border-round-top"
+        :class="`${tab.visible && 'surface-200 text-green-300'}`">
+        <a @click="toggleTabs(tab)" href="javascript:void(0);" class="text-800">{{ tab.label }}</a>
+      </div>
     </div>
 
-    <BaseTab :tabs="tabs" />
+    <BaseTab />
+    <FloatingWindow />
   </div>
 </template>
 
