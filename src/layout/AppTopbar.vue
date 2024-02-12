@@ -2,7 +2,7 @@
 // --------------
 // imports
 // --------------
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch  } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useToast } from "primevue/usetoast"
@@ -10,6 +10,8 @@ import axios from 'axios'
 // stores & composables
 import { useBaseStore } from '../stores/base'
 import { useLayout } from '@/layout/composables/layout'
+import { useModuleStore } from '../stores/modules'
+import { filter, includes, reduce } from 'lodash';
 
 // -----------
 // refs
@@ -17,6 +19,8 @@ import { useLayout } from '@/layout/composables/layout'
 // stores & composables
 const baseStore = useBaseStore()
 const { layoutConfig, onMenuToggle } = useLayout()
+const moduleStore = useModuleStore()
+const { getModules } = storeToRefs(moduleStore)
 const authUser = ref()
 const toast = useToast()
 const outsideClickListener = ref(null)
@@ -48,6 +52,25 @@ const items = ref([
       }
     }
 ])
+const createNewItems = ref()
+// Watch for changes in the 'modules' state of moduleStore
+watch(() => getModules.value, (newValue, oldValue) => {
+  // Update the value in the component when it changes
+  if(createNewItems.value==null){
+    createNewItems.value  = reduce(newValue, function(res,val,i){
+
+      if(includes(['Account','Lead','Opportunity'],val.mainEntity)){
+        res.push({'label':val.mainEntity,'command':()=>{  newForm(val.mainEntity) }})
+      }
+      return res
+    },[])
+  }
+});
+
+function newForm(entity){
+  console.log(entity)
+}
+
 
 // -------------
 // methods
@@ -163,6 +186,7 @@ const logout = () => {
         <i class="pi pi-user"></i>
         <span>Profile</span>
       </button> -->
+      <SplitButton label="New" :model="createNewItems" text ></SplitButton>
       <button @click="onSettingsClick()" class="p-link layout-topbar-button">
         <i class="pi pi-bell"></i>
         <span>Bell</span>
