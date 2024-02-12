@@ -150,7 +150,7 @@ onMounted(() => {
       <h3>Quick add</h3>
       <div class="text-l text-700 font-bold bg-primary-50 p-2 mb-4">All required fields</div>
       <div class="grid">
-        <div v-for="(requiredField, rfx) in module.required_fields" :key="rfx" class="col-6">
+        <div v-for="(requiredField, rfx) in requiredFields" :key="rfx" class="col-6">
           <span class="p-float-label">
             <InputText
               @update:modelValue="validateSyncFunc()"

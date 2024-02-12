@@ -141,11 +141,9 @@ const createNewForm = (entity) => {
   })
   const index = newForms.value.findIndex(form => form.name === obj.name)
   if (index === -1) {
+    addTab(obj)
     newForms.value.push(obj)
   }
-
-  // re-generate
-  generateTabs(newForms.value)
 }
 
 // lifecycles
