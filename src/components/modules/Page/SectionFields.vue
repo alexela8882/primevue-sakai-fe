@@ -3,15 +3,15 @@
 import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
-import { useModuleStore } from '../../../stores/modules'
-import { useModuleDetailStore } from '../../../stores/modules/detail'
+import { useModuleStore } from '@/stores/modules'
+import { useModuleDetailStore } from '@/stores/modules/detail'
 
 // refs
 const fieldWithValues = ref([])
 // stores
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
-const { getFieldDetailsById } = storeToRefs(moduleStore)
+const { _getFieldDetailsById, getFieldDetailsById } = storeToRefs(moduleStore)
 const { getItemValueByName } = storeToRefs(moduleDetailStore)
 
 // defines
@@ -57,20 +57,20 @@ watch(() => getFieldDetailsById.value, (newVal, oldVal) => {
       :key="fx"
       class="col flex flex-column gap-4">
       <div v-for="(id, idx) in field">
-        <div v-if="getFieldDetailsById(id)" :class="`${mode === 'view' && 'border-bottom-1 border-200'}`">
+        <div v-if="_getFieldDetailsById({ fields: newModuleFields, _id: id })" :class="`${mode === 'view' && 'border-bottom-1 border-200'}`">
           <div v-if="mode === 'view'" class="flex align-items-start gap-4">
-            <div class="white-space-nowrap">{{ getFieldDetailsById(id).label }}</div>
-            <div v-if="getFieldDetailsById(id).relation" class="flex gap-2">
-              <div v-for="(displayField, dfx) in getFieldDetailsById(id).relation.displayFieldName" :key="dfx" class="font-bold">
-                <div v-if="getItemValueByName(getFieldDetailsById(id).name)">
-                  <div v-if="typeof getItemValueByName(getFieldDetailsById(id).name) === 'object' &&
-                              !Array.isArray(getItemValueByName(getFieldDetailsById(id).name)) &&
-                              getItemValueByName(getFieldDetailsById(id).name) !== null">
-                    {{ getItemValueByName(getFieldDetailsById(id).name)[displayField] }}
+            <div class="white-space-nowrap">{{ _getFieldDetailsById({ fields: newModuleFields, _id: id }).label }}</div>
+            <div v-if="_getFieldDetailsById({ fields: newModuleFields, _id: id }).relation" class="flex gap-2">
+              <div v-for="(displayField, dfx) in _getFieldDetailsById({ fields: newModuleFields, _id: id }).relation.displayFieldName" :key="dfx" class="font-bold">
+                <div v-if="getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name)">
+                  <div v-if="typeof getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name) === 'object' &&
+                              !Array.isArray(getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name)) &&
+                              getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name) !== null">
+                    {{ getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name)[displayField] }}
                   </div>
-                  <div v-else-if="Array.isArray(getItemValueByName(getFieldDetailsById(id).name))">
+                  <div v-else-if="Array.isArray(getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name))">
                     <Tag
-                      v-for="(relationArr, rax) in getItemValueByName(getFieldDetailsById(id).name)"
+                      v-for="(relationArr, rax) in getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name)"
                       :key="rax"
                       rounded
                       :value="relationArr[displayField]"
@@ -81,16 +81,16 @@ watch(() => getFieldDetailsById.value, (newVal, oldVal) => {
               </div>
             </div>
             <div v-else class="flex gap-4 font-bold">
-              <div v-if="Array.isArray(getItemValueByName(getFieldDetailsById(id).name))">
+              <div v-if="Array.isArray(getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name))">
                 <Tag
-                  v-for="(item, itx) in getItemValueByName(getFieldDetailsById(id).name)"
+                  v-for="(item, itx) in getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name)"
                   :key="itx"
                   rounded
                   :value="item"
                   class="white-space-nowrap px-3 m-1 cursor-pointer my-1" severity="info"></Tag>
               </div>
               <div v-else>
-                {{ getItemValueByName(getFieldDetailsById(id).name) ? getItemValueByName(getFieldDetailsById(id).name) : '' }}
+                {{ getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name) ? getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name) : '' }}
               </div>
             </div>
           </div>
