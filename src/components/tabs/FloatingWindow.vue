@@ -22,9 +22,9 @@ onMounted(async () => {
 <template>
   <div class="z-3 fixed bottom-0 right-0 mx-3 p-2 flex justify-content-end">
     <div
-      class="p-2 align-self-end"
+      class="px-1 align-self-end"
       v-for="(tab, tx) in getTabs.filter(t => t.style == 'window')" :key="tx">
-      <div style="width: 500px;">
+      <div style="width: 45vw;">
         <Panel
           toggleable
           :collapsed="!tab.expanded"
@@ -34,7 +34,7 @@ onMounted(async () => {
           </template>
           <div
             style="height: 65vh !important;"
-            class="m-0 floating-window-content overflow-scroll">
+            class="m-0 p-0 floating-window-content overflow-y-scroll overflow-x-hidden">
             <div v-if="tab.type === 'component'">
               <component :is="tab.component"></component>
             </div>
@@ -42,9 +42,6 @@ onMounted(async () => {
               <GeneralForm :name="tab.name" :module="tab.module" />
             </div>
           </div>
-          <template #footer>
-            <div :class="`${tab.name}-floating-window-panel-footer`"></div>
-          </template>
         </Panel>
       </div>
     </div>

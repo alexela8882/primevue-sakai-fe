@@ -241,6 +241,13 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return field
     }
   })
+  const _getFieldDetailsById = computed(() => {
+    return (payload) => { // supply `name` column from `fields` collection
+      const fields = payload.fields
+      const field = fields && fields.find(fx => fx._id === payload._id)
+      return field
+    }
+  })
   const getFieldDetailsById = computed(() => {
     return (payload) => { // supply `name` column from `fields` collection
       const fields = getModule.value.fields
@@ -488,6 +495,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getKanbanData,
     _getFieldDetails,
     getFieldDetails,
+    _getFieldDetailsById,
     getFieldDetailsById,
     getFieldDetailsByUname,
     _fetchModule,

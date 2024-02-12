@@ -51,7 +51,7 @@ const proceedBtn = async () => {
   const res = await validateSyncFunc()
   console.log(res)
 }
-const initialize = async () => {
+const initialize = () => {
   newModuleFields.value = props.module.fields
   // add collection item for filling field data
   newModuleFields.value.map(nmf => Object.assign(nmf, { ...nmf, data: { value: null } }))
@@ -139,13 +139,13 @@ const validateSyncFunc = handleSubmit((values, actions) => {
 })
 
 // lifecycles
-onMounted(async () => {
-  await initialize()
+onMounted(() => {
+  initialize()
 })
 </script>
 
 <template>
-  <div class="my-4">
+  <div class="relative mt-4">
     <div>
       <h3>Quick add</h3>
       <div class="text-l text-700 font-bold bg-primary-50 p-2 mb-4">All required fields</div>
@@ -181,7 +181,7 @@ onMounted(async () => {
               <Suspense v-if="section.field_ids.length > 0">
                 <SectionFields
                   mode="edit"
-                  source="Email"
+                  source="Form"
                   :fieldIds="section.field_ids"
                   :newModuleFields="newModuleFields"
                   :moduleValidationInputs="moduleValidationInputs"
@@ -197,7 +197,7 @@ onMounted(async () => {
                   <Suspense v-if="addition_field.ids.length > 0">
                     <SectionFields
                       mode="edit"
-                      source="Email"
+                      source="Form"
                       :fieldIds="addition_field.ids"
                       :newModuleFields="newModuleFields"
                       :moduleValidationInputs="moduleValidationInputs"
@@ -216,9 +216,9 @@ onMounted(async () => {
       </div>
     </div>
 
-    <Teleport :to="`.${name}-floating-window-panel-footer`">
+    <div class="sticky bottom-0 right-0 pt-3 surface-0">
       <Button @click="proceedBtn" label="Proceed" />
-    </Teleport>
+    </div>
   </div>
 </template>
 
