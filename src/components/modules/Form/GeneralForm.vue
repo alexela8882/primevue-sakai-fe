@@ -147,7 +147,7 @@ onMounted(() => {
 <template>
   <div class="relative mt-4">
     <div>
-      <h3>Quick add</h3>
+      <h5>Quick add</h5>
       <div class="text-l text-700 font-bold bg-primary-50 p-2 mb-4">All required fields</div>
       <div class="grid">
         <div v-for="(requiredField, rfx) in requiredFields" :key="rfx" class="col-6">
@@ -167,7 +167,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <h3>Detailed add</h3>
+    <h5>Detailed add</h5>
     <div v-for="(panel, px) in atIndexRelatedLists" :key="px" class="flex flex-column gap-1">
       <div v-for="(section, sx) in panel.sections" :key="sx" :class="`${sx !== 0 && 'mt-4'}`">
         <div>
@@ -217,7 +217,7 @@ onMounted(() => {
     </div>
 
     <div class="sticky bottom-0 right-0 pt-3 surface-0">
-      <Button @click="proceedBtn" label="Proceed" />
+      <Button @click="proceedBtn" label="Save" />
     </div>
   </div>
 </template>

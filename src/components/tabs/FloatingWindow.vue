@@ -29,8 +29,16 @@ onMounted(async () => {
           toggleable
           :collapsed="!tab.expanded"
           class="floating-window h-full">
+          <template #togglericon>
+            <div>
+              <span class="pi pi-minus"></span>
+            </div>
+          </template>
           <template #header>
-            <div class="text-2xl font-bold">{{ tab.label.charAt(0).toUpperCase() + tab.label.slice(1) }}</div>
+            <div class="flex align-items-center gap-2 text-xl font-bold">
+              <div class="material-icons">{{ tab.base_module.icon }}</div>
+              <div>{{ tab.label.charAt(0).toUpperCase() + tab.label.slice(1) }}</div>
+            </div>
           </template>
           <div
             style="height: 65vh !important;"
