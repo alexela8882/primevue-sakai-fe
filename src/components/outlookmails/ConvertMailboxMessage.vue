@@ -335,20 +335,9 @@ onMounted(() => {
 
       <div>
         <h3>Quick add</h3>
-        <!-- <pre>{{ meta }}</pre> -->
-        <!-- <pre>{{ errors }}</pre> -->
         <div class="text-l text-700 font-bold bg-primary-50 p-2 mb-4">All required fields</div>
         <div class="grid">
-          <!-- <InputText
-            v-bind="field0"
-            class="w-full border-left-3 border-red-600"
-          />
-          <InputText
-            v-bind="test_fields.field_1"
-            class="w-full border-left-3 border-red-600"
-          /> -->
           <div v-for="(requiredField, rfx) in requiredFields" :key="rfx" class="col-6">
-            <!-- <pre>{{ moduleValidationInputs[requiredField.uniqueName] }}</pre> -->
             <span class="p-float-label">
               <InputText
                 @update:modelValue="validateSyncFunc()"

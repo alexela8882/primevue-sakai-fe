@@ -2,33 +2,55 @@
 // --------------
 // imports
 // --------------
-import { ref, computed, onMounted, onBeforeUnmount, watch  } from 'vue'
+import {
+  ref,
+  shallowRef,
+  computed,
+  onMounted,
+  onBeforeUnmount,
+  watch,
+  defineAsyncComponent  } from 'vue'
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useToast } from "primevue/usetoast"
 import axios from 'axios'
+import { filter, includes, reduce } from 'lodash'
 // stores & composables
-import { useBaseStore } from '../stores/base'
+import { useBaseStore } from '@/stores/base'
 import { useLayout } from '@/layout/composables/layout'
-import { useModuleStore } from '../stores/modules'
-import { filter, includes, reduce } from 'lodash';
+import { useModuleStore } from '@/stores/modules'
+import { useTabStore } from '@/stores/tabs/index'
+// components
+const FloatingWindow = defineAsyncComponent(() =>
+  import('@/components/tabs/FloatingWindow.vue')
+)
+// loaders
+// loaders
+import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
+import ListViewLoader from '@/components/modules/DynamicDataTable/Loaders/ListViewLoader.vue'
 
 // -----------
 // refs
 // -----------
-// stores & composables
-const baseStore = useBaseStore()
-const { layoutConfig, onMenuToggle } = useLayout()
-const moduleStore = useModuleStore()
-const { getModules } = storeToRefs(moduleStore)
+const newForms = ref([])
+const createNewItems = ref()
+const menu = ref()
 const authUser = ref()
 const toast = useToast()
+const router = useRouter()
 const outsideClickListener = ref(null)
 const topbarMenuActive = ref(false)
-const router = useRouter()
 const isAuthenticated = localStorage.getItem('isAuthenticated')
-const menu = ref()
+const { layoutConfig, onMenuToggle } = useLayout()
+// stores & composables
+const baseStore = useBaseStore()
+const moduleStore = useModuleStore()
+const tabStore = useTabStore()
+const { getModules } = storeToRefs(moduleStore)
 const { configBar } = storeToRefs(baseStore)
+const { getTabs, tabsLoading } = storeToRefs(tabStore)
+const { toggleTabs, generateTabs, addTab } = tabStore
+// presets
 const items = ref([
   {
     label: 'Themes',
@@ -52,25 +74,6 @@ const items = ref([
       }
     }
 ])
-const createNewItems = ref()
-// Watch for changes in the 'modules' state of moduleStore
-watch(() => getModules.value, (newValue, oldValue) => {
-  // Update the value in the component when it changes
-  if(createNewItems.value==null){
-    createNewItems.value  = reduce(newValue, function(res,val,i){
-
-      if(includes(['Account','Lead','Opportunity'],val.mainEntity)){
-        res.push({'label':val.mainEntity,'command':()=>{  newForm(val.mainEntity) }})
-      }
-      return res
-    },[])
-  }
-});
-
-function newForm(entity){
-  console.log(entity)
-}
-
 
 // -------------
 // methods
@@ -78,37 +81,21 @@ function newForm(entity){
 const toggle = (event) => {
   menu.value.toggle(event)
 }
-onMounted(async () => {
-  bindOutsideClickListener()
-
-  // get auth user
-  await axios.get(`users/${localStorage.getItem('auth_id')}/get`).then((response) => {
-    authUser.value = response.data
-    console.log(authUser.value)
-  })
-})
-
-onBeforeUnmount(() => {
-  unbindOutsideClickListener()
-});
-
 const logoUrl = computed(() => {
   return `layout/${layoutConfig.darkTheme.value ? 'reddot-logo' : 'reddot-logo'}.png`
-});
-
+})
 const onTopBarMenuButton = () => {
   topbarMenuActive.value = !topbarMenuActive.value
-};
+}
 const onSettingsClick = () => {
   topbarMenuActive.value = false
   router.push('/documentation')
-};
+}
 const topbarMenuClasses = computed(() => {
   return {
     'layout-topbar-menu-mobile-active': topbarMenuActive.value
   }
 })
-
 const bindOutsideClickListener = () => {
   if (!outsideClickListener.value) {
     outsideClickListener.value = (event) => {
@@ -133,7 +120,6 @@ const isOutsideClicked = (event) => {
 
   return !(sidebarEl.isSameNode(event.target) || sidebarEl.contains(event.target) || topbarEl.isSameNode(event.target) || topbarEl.contains(event.target))
 }
-
 const logout = () => {
   // localStorage.clear()
   localStorage.removeItem("token")
@@ -143,6 +129,53 @@ const logout = () => {
   router.push({name: 'login'})
   toast.add({ severity: 'success', summary: 'Success', detail: 'Logged out successfully', life: 3000 })
 }
+const createNewForm = (entity) => {
+  let obj = Object.assign({}, {
+    type: 'form',
+    style: 'window',
+    name: `${entity}-window`,
+    label: entity,
+    module: entity,
+    expanded: true,
+    opened: false
+  })
+  const index = newForms.value.findIndex(form => form.name === obj.name)
+  if (index === -1) {
+    newForms.value.push(obj)
+  }
+
+  // re-generate
+  generateTabs(newForms.value)
+}
+
+// lifecycles
+onMounted(async () => {
+  bindOutsideClickListener()
+
+  // get auth user
+  await axios.get(`users/${localStorage.getItem('auth_id')}/get`).then((response) => {
+    authUser.value = response.data
+    console.log(authUser.value)
+  })
+
+  // initial generation
+  generateTabs(newForms.value)
+})
+onBeforeUnmount(() => {
+  unbindOutsideClickListener()
+})
+// Watch for changes in the 'modules' state of moduleStore
+watch(() => getModules.value, (newValue, oldValue) => {
+  // Update the value in the component when it changes
+  if(createNewItems.value == null){
+    createNewItems.value = reduce(newValue, function(res, val, i){
+      if(includes(['Account','Lead','Opportunity'],val.mainEntity)){
+        res.push({'label':val.mainEntity,'command':()=>{ createNewForm(val.name) }})
+      }
+      return res
+    }, [])
+  }
+})
 </script>
 
 <template>
@@ -209,6 +242,8 @@ const logout = () => {
       </button> -->
     </div>
   </div>
+
+  <FloatingWindow />
 </template>
 
 <style scoped>
