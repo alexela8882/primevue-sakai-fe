@@ -25,7 +25,7 @@ const { getTabs } = storeToRefs(tabStore)
           <div
             style="height: 300px !important;"
             class="m-0 floating-window-content overflow-scroll">
-            <component :is="tab.component"></component>
+            <component :is="tab.component" :module="tab.module"></component>
           </div>
         </Panel>
       </div>
