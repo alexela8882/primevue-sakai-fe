@@ -281,8 +281,11 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
     moduleLoading.value = false
   }
-  const fetchBaseModuleByField = async (payload) => {
-    moduleLoading.value = true
+  const _fetchBaseModuleByField = async (payload) => {
+    return fetchBaseModuleByField(payload, true)
+  }
+  const fetchBaseModuleByField = async (payload, reuse) => {
+    if (!reuse) moduleLoading.value = true
     const res = await axios(`${jsonDbUrl.value}/modules?${payload.field}=${payload.value}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -290,13 +293,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
     if (res.status === 200) {
       const data = (res.data && res.data.length > 0) ? res.data[0] : res.data
-      baseModule.value = data
-      return data
+      if (!reuse) {
+        baseModule.value = data
+        moduleLoading.value = false
+      } else return data
     }
-    moduleLoading.value = false
   }
   const fetchModule = async (moduleName, page, reuse) => {
-    collectionLoading.value = true
+    if (!reuse) collectionLoading.value = true
     const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
 
     try {
@@ -490,6 +494,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     fetchModule,
     fetchLinkedModuleData,
     fetchBaseModule,
+    _fetchBaseModuleByField,
     fetchBaseModuleByField,
     fetchModules,
     addViewFilter,

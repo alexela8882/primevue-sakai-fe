@@ -17,7 +17,7 @@ export const useTabStore = defineStore('tabStore', () => {
   const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
   const {  _getViewFilter } = storeToRefs(moduleStore)
-  const { _fetchModule, fetchBaseModuleByField } = moduleStore
+  const { _fetchModule, fetchBaseModuleByField, _fetchBaseModuleByField } = moduleStore
 
   // states
   const tabs = ref([])
@@ -31,8 +31,8 @@ export const useTabStore = defineStore('tabStore', () => {
     tabsLoading.value = true
 
     payload.map(async p => {
-      if (p.visible) {
-        const baseModule = await fetchBaseModuleByField({ field: 'name', value: p.module })
+      if (p.type === 'module' && p.visible) {
+        const baseModule = await _fetchBaseModuleByField({ field: 'name', value: p.module })
         const moduleData = await _fetchModule(p.module)
         const viewFilter = moduleData.viewFilters.find(vf => vf.isDefault === true)
         const viewFilterWithFields = _getViewFilter.value({ module: moduleData, id: viewFilter._id })
@@ -43,6 +43,23 @@ export const useTabStore = defineStore('tabStore', () => {
           module: Object.assign({}, {
             collection: moduleData.collection,
             fields: moduleData.fields,
+            panels: moduleData.panels,
+            viewFilterWithFields: viewFilterWithFields
+          })
+        })
+        tabs.value.push(obj)
+      } else if (p.type === 'form') {
+        const baseModule = await _fetchBaseModuleByField({ field: 'name', value: p.module })
+        const moduleData = await _fetchModule(p.module)
+        const viewFilter = moduleData.viewFilters.find(vf => vf.isDefault === true)
+        const viewFilterWithFields = _getViewFilter.value({ module: moduleData, id: viewFilter._id })
+        let obj = Object.assign({}, {
+          ...p,
+          base_module: baseModule,
+          module: Object.assign({}, {
+            collection: moduleData.collection,
+            fields: moduleData.fields,
+            required_fields: moduleData.fields.filter(field => (field.rules && field.rules.required)),
             panels: moduleData.panels,
             viewFilterWithFields: viewFilterWithFields
           })
@@ -81,11 +98,19 @@ export const useTabStore = defineStore('tabStore', () => {
 
     tabsLoading.value = false
   }
+  const addTab = (payload) => {
+    const index = tabs.value.findIndex(tab => tab.name === payload.name)
+    if (index) tabs.value.push(payload)
+
+    // generate tabs
+    generateTabs(tabs.value)
+  }
 
   return {
     tabsLoading,
     getTabs,
     generateTabs,
-    toggleTabs
+    toggleTabs,
+    addTab
   }
 })
