@@ -6,6 +6,7 @@ import { storeToRefs } from 'pinia'
 import { useTabStore } from '@/stores/tabs/index'
 // components
 const DynamicDataTable = defineAsyncComponent(() => import('@/components/modules/DynamicDataTable/DynamicDataTableMain.vue'))
+const GeneralForm = defineAsyncComponent(() => import('@/components/modules/Form/GeneralForm.vue'))
 // loaders
 import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
 
@@ -35,6 +36,9 @@ const { getTabs } = storeToRefs(tabStore)
               <DataTableLoader />
             </template>
           </Suspense>
+        </div>
+        <div v-else-if="tab.type == 'module-form'">
+          <GeneralForm :tabStyle="tab.style" :name="tab.name" :module="tab.module" />
         </div>
       </div>
     </div>

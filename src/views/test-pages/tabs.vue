@@ -19,7 +19,7 @@ import ListViewLoader from '@/components/modules/DynamicDataTable/Loaders/ListVi
 // stores
 const tabStore = useTabStore()
 const { getTabs, tabsLoading } = storeToRefs(tabStore)
-const { toggleTabs, generateTabs } = tabStore
+const { toggleTabs, addTab } = tabStore
 
 const tabs = ref([
   {
@@ -39,6 +39,13 @@ const tabs = ref([
     display: 'table',
     visible: false
   }, {
+    type: 'module-form',
+    style: 'tab',
+    name: 'leads',
+    label: 'New Lead',
+    module: 'leads',
+    visible: false
+  }, {
     type: 'module',
     style: 'tab',
     name: 'campaign-tab',
@@ -47,7 +54,7 @@ const tabs = ref([
     display: 'table',
     visible: false
   }, {
-    type: 'form',
+    type: 'component',
     style: 'window',
     name: 'form1-window',
     label: 'Form 1',
@@ -55,18 +62,20 @@ const tabs = ref([
     expanded: false,
     opened: false
   }, {
-    type: 'form',
+    type: 'component',
     style: 'window',
-    name: 'form2-window',
-    label: 'Form 2',
+    name: 'form1-window',
+    label: 'form 2',
     component: shallowRef(ListViewLoader),
     expanded: false,
     opened: false
   },
 ])
 
-onMounted(() => {
-  generateTabs(tabs.value)
+onMounted(async () => {
+  tabs.value.map(async t => {
+    await addTab(t)
+  })
 })
 </script>
 

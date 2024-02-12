@@ -14,6 +14,7 @@ import TwoColumnList from '@/components/loading/TwoColumnList.vue'
 
 // defines & emits
 const props = defineProps({
+  tabStyle: String,
   name: String,
   module: Object
 })
@@ -49,7 +50,8 @@ const { getItemPanels, getRelatedListsByCname } = storeToRefs(moduleDetailStore)
 // actions
 const proceedBtn = async () => {
   const res = await validateSyncFunc()
-  console.log(res)
+  if (!res.inner) console.log('passed')
+  else console.log('error')
 }
 const initialize = () => {
   newModuleFields.value = props.module.fields
@@ -147,7 +149,6 @@ onMounted(() => {
 <template>
   <div class="relative mt-4">
     <div>
-      <h5>Quick add</h5>
       <div class="text-l text-700 font-bold bg-primary-50 p-2 mb-4">All required fields</div>
       <div class="grid">
         <div v-for="(requiredField, rfx) in requiredFields" :key="rfx" class="col-6">
@@ -216,7 +217,9 @@ onMounted(() => {
       </div>
     </div>
 
-    <div class="sticky bottom-0 right-0 pt-3 surface-0">
+    <div
+      class="sticky bottom-0 right-0 pt-3 surface-0"
+      :class="`${tabStyle === 'tab' && 'mb-7 pb-7'}`">
       <Button @click="proceedBtn" label="Save" />
     </div>
   </div>

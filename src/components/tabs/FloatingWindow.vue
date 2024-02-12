@@ -36,8 +36,9 @@ onMounted(async () => {
           </template>
           <template #header>
             <div class="flex align-items-center gap-2 text-xl font-bold">
-              <div class="material-icons">{{ tab.base_module.icon }}</div>
+              <div v-if="tab.type === 'module-form'" class="material-icons">{{ tab.base_module.icon }}</div>
               <div>{{ tab.label.charAt(0).toUpperCase() + tab.label.slice(1) }}</div>
+              <div v-if="tab.type === 'module-form'">(New)</div>
             </div>
           </template>
           <div
@@ -46,7 +47,7 @@ onMounted(async () => {
             <div v-if="tab.type === 'component'">
               <component :is="tab.component"></component>
             </div>
-            <div v-else-if="tab.type === 'form'">
+            <div v-else-if="tab.type === 'module-form'">
               <GeneralForm :name="tab.name" :module="tab.module" />
             </div>
           </div>

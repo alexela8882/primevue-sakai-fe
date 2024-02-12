@@ -24,10 +24,6 @@ import { useTabStore } from '@/stores/tabs/index'
 const FloatingWindow = defineAsyncComponent(() =>
   import('@/components/tabs/FloatingWindow.vue')
 )
-// loaders
-// loaders
-import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
-import ListViewLoader from '@/components/modules/DynamicDataTable/Loaders/ListViewLoader.vue'
 
 // -----------
 // refs
@@ -131,12 +127,12 @@ const logout = () => {
 }
 const createNewForm = (entity) => {
   let obj = Object.assign({}, {
-    type: 'form',
+    type: 'module-form',
     style: 'window',
     name: `${entity}-window`,
     label: entity,
     module: entity,
-    expanded: true,
+    expanded: false,
     opened: false
   })
   const index = newForms.value.findIndex(form => form.name === obj.name)
