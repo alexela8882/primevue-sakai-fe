@@ -27,35 +27,34 @@ export const useTabStore = defineStore('tabStore', () => {
 
   // actions
   const generateTab = async (payload) => {
-    const baseModule = await _fetchBaseModuleByField({ field: 'name', value: payload.module })
-    const moduleData = await _fetchModule(payload.module)
-    const viewFilter = moduleData.viewFilters.find(vf => vf.isDefault === true)
-    const viewFilterWithFields = _getViewFilter.value({ module: moduleData, id: viewFilter._id })
-    let obj = Object.assign({}, {
-      ...payload,
-      base_module: baseModule,
-      module: Object.assign({}, {
-        collection: moduleData.collection,
-        fields: moduleData.fields,
-        panels: moduleData.panels,
-        viewFilterWithFields: viewFilterWithFields
+    if ((payload.type === 'module' && payload.visible) || payload.type === 'module-form') {
+      const baseModule = await _fetchBaseModuleByField({ field: 'name', value: payload.module })
+      const moduleData = await _fetchModule(payload.module)
+      const viewFilter = moduleData.viewFilters.find(vf => vf.isDefault === true)
+      const viewFilterWithFields = _getViewFilter.value({ module: moduleData, id: viewFilter._id })
+      let obj = Object.assign({}, {
+        ...payload,
+        base_module: baseModule,
+        module: Object.assign({}, {
+          collection: moduleData.collection,
+          fields: moduleData.fields,
+          panels: moduleData.panels,
+          viewFilterWithFields: viewFilterWithFields
+        })
       })
-    })
 
-    return obj
+      return obj
+    } else {
+      return payload
+    }
   }
   const generateTabs = async (payload) => {
-    tabs.value = [] // refresh
+    console.log(payload)
     tabsLoading.value = true
 
     payload.map(async p => {
-      if (p.type === 'module' && p.visible) {
-        const tab = generateTab(p)
-        tabs.value.push(tab)
-      } else if (p.type === 'form') {
-        const tab = generateTab(p)
-        tabs.value.push(tab)
-      } else tabs.value.push(p)
+      const tab = await generateTab(p)
+      tabs.value.push(tab)
     })
 
     tabsLoading.value = false
@@ -64,24 +63,10 @@ export const useTabStore = defineStore('tabStore', () => {
     tabsLoading.value = true
 
     tabs.value.map(async tab => {
-      if (tab.name == payload.name) {
+      if (tab.name === payload.name) {
         tab.visible = true
 
-        const baseModule = await fetchBaseModuleByField({ field: 'name', value: payload.module })
-        const moduleData = await _fetchModule(payload.module)
-        const viewFilter = moduleData.viewFilters.find(vf => vf.isDefault === true)
-        const viewFilterWithFields = _getViewFilter.value({ module: moduleData, id: viewFilter._id })
-        // console.log(moduleData.viewFilters)
-        let newTab = Object.assign({}, {
-          ...payload,
-          base_module: baseModule,
-          module: Object.assign({}, {
-            collection: moduleData.collection,
-            fields: moduleData.fields,
-            panels: moduleData.panels,
-            viewFilterWithFields: viewFilterWithFields
-          })
-        })
+        const newTab = await generateTab(payload)
         Object.assign(tab, newTab)
       } else tab.visible = false
     })
@@ -90,12 +75,10 @@ export const useTabStore = defineStore('tabStore', () => {
   }
   const addTab = async (payload) => {
     const index = tabs.value.findIndex(tab => tab.name === payload.name)
-    if (index) {
+    if (index === -1) {
       const tab = await generateTab(payload)
       tabs.value.push(tab)
     }
-
-    console.log(tabs.value)
   }
 
   return {

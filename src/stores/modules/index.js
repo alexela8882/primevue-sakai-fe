@@ -102,23 +102,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
     const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter.isDefault)
 
     return getReconstructedViewFilter.value(viewFilter)
-
-    // const filteredFields = moduleFields && moduleFields.filter(field => viewFilter.fields.includes(field._id))
-
-    // const finalViewFilter = Object.assign({}, {
-    //   _id: viewFilter && viewFilter._id,
-    //   filterLogic: viewFilter && viewFilter.filterLogic,
-    //   filterName: viewFilter && viewFilter.filterName,
-    //   filters: viewFilter && viewFilter.filters,
-    //   isDefault: viewFilter && viewFilter.isDefault,
-    //   moduleName: viewFilter && viewFilter.moduleName,
-    //   query_id: viewFilter && viewFilter.query_id,
-    //   sortField: viewFilter && viewFilter.sortField,
-    //   sortOrder: viewFilter && viewFilter.sortOrder,
-    //   fields: filteredFields
-    // })
-
-    // return finalViewFilter
   })
   
   const _getViewFilter = computed(() => {
@@ -322,6 +305,19 @@ export const useModuleStore = defineStore('moduleStore', () => {
           module.value = fetchedModule // insert module
           collection.value = fetchedModule.collection // insert collection
           collectionLoading.value = false
+
+          // fill modules with fields & panels
+          modules.value.map(m => {
+            if (m.name === moduleName) {
+              let obj = Object.assign({}, {
+                ...m,
+                fields: fetchedModule.fields,
+                panels: fetchedModule.panels
+              })
+              Object.assign(m, obj)
+            }
+          })
+          console.log(modules.value)
         } else return fetchedModule
       }
     } catch (error) {

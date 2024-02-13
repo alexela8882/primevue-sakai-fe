@@ -14,6 +14,7 @@ import TwoColumnList from '@/components/loading/TwoColumnList.vue'
 
 // defines & emits
 const props = defineProps({
+  tabStyle: String,
   name: String,
   module: Object
 })
@@ -49,7 +50,8 @@ const { getItemPanels, getRelatedListsByCname } = storeToRefs(moduleDetailStore)
 // actions
 const proceedBtn = async () => {
   const res = await validateSyncFunc()
-  console.log(res)
+  if (!res.inner) console.log('passed')
+  else console.log('error')
 }
 const initialize = () => {
   newModuleFields.value = props.module.fields
@@ -147,7 +149,6 @@ onMounted(() => {
 <template>
   <div class="relative mt-4">
     <div>
-      <h3>Quick add</h3>
       <div class="text-l text-700 font-bold bg-primary-50 p-2 mb-4">All required fields</div>
       <div class="grid">
         <div v-for="(requiredField, rfx) in requiredFields" :key="rfx" class="col-6">
@@ -167,7 +168,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <h3>Detailed add</h3>
+    <h5>Detailed add</h5>
     <div v-for="(panel, px) in atIndexRelatedLists" :key="px" class="flex flex-column gap-1">
       <div v-for="(section, sx) in panel.sections" :key="sx" :class="`${sx !== 0 && 'mt-4'}`">
         <div>
@@ -216,8 +217,10 @@ onMounted(() => {
       </div>
     </div>
 
-    <div class="sticky bottom-0 right-0 pt-3 surface-0">
-      <Button @click="proceedBtn" label="Proceed" />
+    <div
+      class="sticky bottom-0 right-0 pt-3 surface-0"
+      :class="`${tabStyle === 'tab' && 'mb-7 pb-7'}`">
+      <Button @click="proceedBtn" label="Save" />
     </div>
   </div>
 </template>
