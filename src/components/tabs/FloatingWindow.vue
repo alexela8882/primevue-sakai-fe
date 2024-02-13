@@ -49,10 +49,26 @@ onMounted(async () => {
           toggleable
           :collapsed="!tab.expanded"
           class="floating-window h-full shadow-4">
-          <template #togglericon>
-            <div>
-              <span class="pi pi-minus"></span>
+          <template #icons>
+            <div class="flex align-items-center gap-2 ml-2">
+              <Button text rounded>
+                <template #icon>
+                  <div class="material-icons" style="font-size: 12px;">open_in_full</div>
+                </template>
+              </Button>
+              <Button text rounded>
+                <template #icon>
+                  <div class="material-icons" style="font-size: 12px;">close</div>
+                </template>
+              </Button>
             </div>
+          </template>
+          <template #togglericon>
+            <Button text rounded>
+              <template #icon>
+                <div class="material-icons" style="font-size: 12px;">minimize</div>
+              </template>
+            </Button>
           </template>
           <template #header>
             <div class="flex align-items-center gap-2 text-xl font-bold">
@@ -60,11 +76,6 @@ onMounted(async () => {
               <div>{{ tab.label.charAt(0).toUpperCase() + tab.label.slice(1) }}</div>
               <div v-if="tab.type === 'module-form'">(New)</div>
             </div>
-          </template>
-          <template #icons>
-            <button class="p-panel-header-icon p-link mr-2">
-              <span class="pi pi-times"></span>
-            </button>
           </template>
           <div
             style="height: 65vh !important;"
@@ -103,5 +114,9 @@ onMounted(async () => {
 <style>
 .floating-window .p-panel-header {
   border-bottom: 1px solid var(--surface-300);
+}
+.floating-window .p-panel-icons {
+  display: flex;
+  flex-direction: row-reverse;
 }
 </style>
