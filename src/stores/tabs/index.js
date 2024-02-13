@@ -28,8 +28,8 @@ export const useTabStore = defineStore('tabStore', () => {
   // actions
   const generateTab = async (payload) => {
     if ((payload.type === 'module' && payload.visible) || payload.type === 'module-form') {
-      const baseModule = await _fetchBaseModuleByField({ field: 'name', value: payload.module })
-      const moduleData = await _fetchModule(payload.module)
+      const baseModule = await _fetchBaseModuleByField({ field: 'name', value: payload._module })
+      const moduleData = await _fetchModule(payload._module)
       const viewFilter = moduleData.viewFilters.find(vf => vf.isDefault === true)
       const viewFilterWithFields = _getViewFilter.value({ module: moduleData, id: viewFilter._id })
       let obj = Object.assign({}, {
@@ -49,7 +49,6 @@ export const useTabStore = defineStore('tabStore', () => {
     }
   }
   const generateTabs = async (payload) => {
-    console.log(payload)
     tabsLoading.value = true
 
     payload.map(async p => {
@@ -77,7 +76,7 @@ export const useTabStore = defineStore('tabStore', () => {
     const index = tabs.value.findIndex(tab => tab.name === payload.name)
     if (index === -1) {
       const tab = await generateTab(payload)
-      tabs.value.push(tab)
+      tabs.value.unshift(tab)
     }
   }
 

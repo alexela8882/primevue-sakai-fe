@@ -27,7 +27,7 @@ const tabs = ref([
     style: 'tab',
     name: 'lead-tab',
     label: 'Leads',
-    module: 'leads',
+    _module: 'leads',
     display: 'table',
     visible: true
   }, {
@@ -35,7 +35,7 @@ const tabs = ref([
     style: 'tab',
     name: 'inquiry-tab',
     label: 'Inquiries',
-    module: 'inquiries',
+    _module: 'inquiries',
     display: 'table',
     visible: false
   }, {
@@ -43,14 +43,14 @@ const tabs = ref([
     style: 'tab',
     name: 'leads',
     label: 'New Lead',
-    module: 'leads',
+    _module: 'leads',
     visible: false
   }, {
     type: 'module',
     style: 'tab',
     name: 'campaign-tab',
     label: 'Campaigns',
-    module: 'campaigns',
+    _module: 'campaigns',
     display: 'table',
     visible: false
   }, {
@@ -69,6 +69,14 @@ const tabs = ref([
     component: shallowRef(ListViewLoader),
     expanded: false,
     opened: false
+  }, {
+    type: 'module',
+    style: 'window',
+    name: 'lead-window',
+    label: 'Leads',
+    _module: 'leads',
+    display: 'table',
+    visible: true
   },
 ])
 
