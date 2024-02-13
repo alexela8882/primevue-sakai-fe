@@ -11,102 +11,111 @@ const DynamicDataTable = defineAsyncComponent(() => import('@/components/modules
 import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
 
 // refs
+const menu = ref()
+const selectedTab = ref()
+const windowTabs = ref([])
 // stores
 const tabStore = useTabStore()
-const { getTabs } = storeToRefs(tabStore)
+const { xTabsLoading, getTabs } = storeToRefs(tabStore)
+const { removeTab, toggleWindows } = tabStore
 
 // actions
+const removeTabAction = async (tab) => {
+  await removeTab(tab)
+}
 
 // lifecycles
 onMounted(async () => {
+  windowTabs.value = getTabs.value.filter(t => t.style == 'window')
+})
+watch(() => selectedTab.value, async (newVal, oldVal) => {
+  await toggleWindows(newVal)
+})
+watch(getTabs.value, (newVal, oldVal) => {
+  windowTabs.value = newVal.filter(t => t.style == 'window')
 })
 
 </script>
 
 <template>
   <div class="z-3 fixed bottom-0 right-0 mx-3 p-2 flex justify-content-end align-items-center">
-    <div v-if="getTabs.length > 0" class="relative align-self-end mr-2">
+    <div v-if="windowTabs.length > 0" class="align-self-end mr-2">
       <div>
         <Dropdown
-          :options="getTabs.filter(t => t.style == 'window')"
+          v-model="selectedTab"
+          :options="windowTabs"
           optionLabel="label"
           checkmark :highlightOnSelect="false" />
-        <!-- <SplitButton
-          :model="getTabs.filter(t => t.style == 'window')"
-          menuButtonIcon="pi pi-ellipsis-h"
-          raised
-          text>
-            <span class="flex align-items-center font-bold">
-            </span>
-        </SplitButton> -->
       </div>
     </div>
     <div
       class="px-1 align-self-end"
-      v-for="(tab, tx) in getTabs.filter(t => t.style == 'window').slice(0,2)" :key="tx">
-      <div style="width: 35vw;">
-        <Panel
-          toggleable
-          :collapsed="!tab.expanded"
-          class="floating-window h-full shadow-4">
-          <template #icons>
-            <div class="flex align-items-center gap-2 ml-2">
+      v-for="(tab, tx) in windowTabs.slice(0,2)" :key="tx">
+      <BlockUI :blocked="xTabsLoading">
+        <div style="width: 35vw;">
+          <Panel
+            toggleable
+            :collapsed="!tab.expanded"
+            class="floating-window h-full shadow-4">
+            <template #icons>
+              <div class="flex align-items-center gap-2 ml-2">
+                <Button text rounded>
+                  <template #icon>
+                    <div class="material-icons" style="font-size: 12px;">open_in_full</div>
+                  </template>
+                </Button>
+                <Button text rounded>
+                  <template #icon>
+                    <div @click="removeTabAction(tab)" class="material-icons" style="font-size: 12px;">close</div>
+                  </template>
+                </Button>
+              </div>
+            </template>
+            <template #togglericon>
               <Button text rounded>
                 <template #icon>
-                  <div class="material-icons" style="font-size: 12px;">open_in_full</div>
+                  <div class="material-icons" style="font-size: 12px;">minimize</div>
                 </template>
               </Button>
-              <Button text rounded>
-                <template #icon>
-                  <div class="material-icons" style="font-size: 12px;">close</div>
-                </template>
-              </Button>
+            </template>
+            <template #header>
+              <div class="flex align-items-center gap-2 text-xl font-bold">
+                <div v-if="tab.type === 'module-form'" class="material-icons">{{ tab.base_module.icon }}</div>
+                <div>{{ tab.label.charAt(0).toUpperCase() + tab.label.slice(1) }}</div>
+                <div v-if="tab.type === 'module-form'">(New)</div>
+              </div>
+            </template>
+            <div
+              style="height: 65vh !important;"
+              class="m-0 p-0 floating-window-content overflow-y-scroll overflow-x-hidden">
+              <div v-if="tab.type === 'component'" class="p-2">
+                <component :is="tab.component"></component>
+              </div>
+              <div v-else-if="tab.type === 'module-form'" class="p-2">
+                <GeneralForm :key="tab.name" :name="tab.name" :module="tab.module" />
+              </div>
+              <div v-else-if="tab.type == 'module'" class="p-2">
+                <Suspense v-if="tab.base_module">
+                  <DynamicDataTable
+                    :key="tab.base_module._id"
+                    mode="view"
+                    :moduleId="tab.base_module._id"
+                    :moduleEntityName="tab.base_module.mainEntity"
+                    :moduleName="tab.base_module.name"
+                    :moduleLabel="tab.base_module.label"
+                    :fields="tab.module.viewFilterWithFields.fields"
+                    :data="tab.module.collection.data"
+                    :pagination="tab.module.collection.meta && tab.module.collection.meta.pagination">
+                  </DynamicDataTable>
+                  <template #fallback>
+                    <DataTableLoader />
+                  </template>
+                </Suspense>
+              </div>
             </div>
-          </template>
-          <template #togglericon>
-            <Button text rounded>
-              <template #icon>
-                <div class="material-icons" style="font-size: 12px;">minimize</div>
-              </template>
-            </Button>
-          </template>
-          <template #header>
-            <div class="flex align-items-center gap-2 text-xl font-bold">
-              <div v-if="tab.type === 'module-form'" class="material-icons">{{ tab.base_module.icon }}</div>
-              <div>{{ tab.label.charAt(0).toUpperCase() + tab.label.slice(1) }}</div>
-              <div v-if="tab.type === 'module-form'">(New)</div>
-            </div>
-          </template>
-          <div
-            style="height: 65vh !important;"
-            class="m-0 p-0 floating-window-content overflow-y-scroll overflow-x-hidden">
-            <div v-if="tab.type === 'component'">
-              <component :is="tab.component"></component>
-            </div>
-            <div v-else-if="tab.type === 'module-form'">
-              <GeneralForm :key="tab.name" :name="tab.name" :module="tab.module" />
-            </div>
-            <div v-else-if="tab.type == 'module'">
-              <Suspense v-if="tab.base_module">
-                <DynamicDataTable
-                  :key="tab.base_module._id"
-                  mode="view"
-                  :moduleId="tab.base_module._id"
-                  :moduleEntityName="tab.base_module.mainEntity"
-                  :moduleName="tab.base_module.name"
-                  :moduleLabel="tab.base_module.label"
-                  :fields="tab.module.viewFilterWithFields.fields"
-                  :data="tab.module.collection.data"
-                  :pagination="tab.module.collection.meta && tab.module.collection.meta.pagination">
-                </DynamicDataTable>
-                <template #fallback>
-                  <DataTableLoader />
-                </template>
-              </Suspense>
-            </div>
-          </div>
-        </Panel>
-      </div>
+          </Panel>
+        </div>
+      </BlockUI>
     </div>
   </div>
 </template>
@@ -118,5 +127,8 @@ onMounted(async () => {
 .floating-window .p-panel-icons {
   display: flex;
   flex-direction: row-reverse;
+}
+.floating-window .p-panel-content {
+  padding: 0 !important;
 }
 </style>

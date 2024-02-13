@@ -27,7 +27,7 @@ const tabs = ref([
     type: 'module',
     style: 'tab',
     name: 'lead-tab',
-    label: 'Leads',
+    label: 'Leads Table',
     _module: 'leads',
     display: 'table',
     visible: true
@@ -74,7 +74,7 @@ const tabs = ref([
     type: 'module',
     style: 'window',
     name: 'lead-window',
-    label: 'Leads',
+    label: 'Leads Table',
     _module: 'leads',
     display: 'table',
     visible: true

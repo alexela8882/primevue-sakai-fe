@@ -218,7 +218,7 @@ onMounted(async () => {
     </div>
 
     <div
-      class="sticky bottom-0 right-0 pt-3"
+      class="sticky bottom-0 right-0 py-2"
       :class="`${tabStyle === 'tab' ? 'mb-7 pb-7 surface-50' : 'surface-0'}`">
       <Button @click="proceedBtn" label="Save" />
     </div>

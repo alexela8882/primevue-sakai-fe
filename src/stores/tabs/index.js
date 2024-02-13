@@ -12,6 +12,7 @@ export const useTabStore = defineStore('tabStore', () => {
 
   // refs
   const tabsLoading = ref(false)
+  const xTabsLoading = ref(false)
   // stores
   const baseStore = useBaseStore()
   const moduleStore = useModuleStore()
@@ -49,17 +50,13 @@ export const useTabStore = defineStore('tabStore', () => {
     }
   }
   const generateTabs = async (payload) => {
-    tabsLoading.value = true
-
     payload.map(async p => {
       const tab = await generateTab(p)
       tabs.value.push(tab)
     })
-
-    tabsLoading.value = false
   }
   const toggleTabs = async (payload) => {
-    tabsLoading.value = true
+    xTabsLoading.value = true
 
     tabs.value.map(async tab => {
       if (tab.name === payload.name) {
@@ -70,21 +67,51 @@ export const useTabStore = defineStore('tabStore', () => {
       } else tab.visible = false
     })
 
-    tabsLoading.value = false
+    xTabsLoading.value = false
+  }
+  const toggleWindows = async (payload) => {
+    xTabsLoading.value = true
+
+    setTimeout(() => {
+      const index = tabs.value.findIndex(tab => tab.label === payload.label)
+      if (index !== -1) {
+        tabs.value.unshift(tabs.value.splice(index, 1)[0])
+      }
+
+      xTabsLoading.value = false
+    }, 100)
   }
   const addTab = async (payload) => {
+    xTabsLoading.value = true
+
     const index = tabs.value.findIndex(tab => tab.name === payload.name)
+    console.log(index)
     if (index === -1) {
       const tab = await generateTab(payload)
       tabs.value.unshift(tab)
     }
+
+    xTabsLoading.value = false
+  }
+  const removeTab = async (payload) => {
+    xTabsLoading.value = true
+
+    setTimeout(() => {
+      const index = tabs.value.findIndex(tab => tab.name === payload.name)
+      tabs.value.splice(index, 1)
+
+      xTabsLoading.value = false
+    }, 100)
   }
 
   return {
+    xTabsLoading,
     tabsLoading,
     getTabs,
     generateTabs,
     toggleTabs,
-    addTab
+    toggleWindows,
+    addTab,
+    removeTab
   }
 })
