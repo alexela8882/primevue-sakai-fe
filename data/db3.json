@@ -20285,47 +20285,11 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "hide_in",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "visibility",
-            "value": [
-              "create",
-              "update"
-            ],
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb46"
-            }
-          },
-          {
-            "name": "default_value",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": false,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb47"
-            }
-          },
-          {
-            "name": "checkbox",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "boolRadio4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb48"
-            }
-          },
-          {
-            "required": true
-          }
-        ],
+        "rules": {
+          "hide_in": ["create","update"],
+          "default_value": false,
+          "checkbox": true
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa32",
           "5cfa2590a6ebc785950a37d3",
@@ -20359,32 +20323,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ms_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb4a"
-            }
-          },
-          {
-            "name": "required",
-            "event": [
-              "onLoad",
-              "onChange",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb4b"
-            }
-          }
-        ],
+        "rules":{
+          "required":true,
+          "ms_dropdown":false
+        },
         "controls": "products_handled_id",
         "section1_ids": [
           "5c906a1da6ebc7193110fa32",
@@ -20440,78 +20382,16 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "title_case",
-            "event": [
-              "onBlur"
-            ],
-            "groupName": null,
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb4e"
-            }
-          },
-          {
-            "name": "unique",
-            "event": [
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": "Account",
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb4f"
-            }
-          },
-          {
-            "name": "required",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb50"
-            }
-          },
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 155
-            },
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb51"
-            }
-          },
-          {
-            "name": "string",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb52"
-            }
+        "rules": {
+          "title_case": true,
+          "unique": true,
+          "required": true,
+          "string": true,
+          "between": {
+            "min": 0,
+            "max": 155
           }
-        ],
-        "section1_ids": [
-          "5c906a1da6ebc7193110fa32",
-          "5cfa2590a6ebc785950a37d3",
-          "5cfa25c2a6ebc785bb4b5613",
-          "5cfa2643a6ebc78627412423",
-          "5cfa2661a6ebc7864451c0d3",
-          "5cfa27c4a6ebc787575ff2a3"
-        ],
+        },
         "searchKey": true,
         "field_type": {
           "name": "text",
@@ -20533,32 +20413,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "required",
-            "event": [
-              "onLoad",
-              "onChange",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb54"
-            }
-          },
-          {
-            "name": "ss_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb55"
-            }
-          }
-        ],
+        "rules": {
+          "required": true,
+          "ms_dropdown": true
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa32",
           "5cfa2590a6ebc785950a37d3",
@@ -20578,6 +20436,7 @@
         "name": "currency_id",
         "label": "Account Currency",
         "uniqueName": "account_currency_id",
+        "listName": "account_currency",
         "field_type_id": "5c906a0ea6ebc7193110e738",
         "created_by": "5bb104d0678f71061f643d1a",
         "updated_by": "5bb104d0678f71061f643d1a",
@@ -20587,40 +20446,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb57"
-            }
-          },
-          {
-            "name": "required",
-            "event": [
-              "onLoad",
-              "onChange",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb58"
-            }
-          }
-        ],
-        "section1_ids": [
-          "5c906a1da6ebc7193110fa32",
-          "5cfa2590a6ebc785950a37d3",
-          "5cfa25c2a6ebc785bb4b5613",
-          "5cfa2643a6ebc78627412423",
-          "5cfa2661a6ebc7864451c0d3",
-          "5cfa27c4a6ebc787575ff2a3"
-        ],
+        "rules": {
+          "required": true,
+          "ss_dropdown": true
+        },
         "field_type": {
           "name": "lookupModel",
           "_id": "5c906a0ea6ebc7193110e738"
@@ -20660,30 +20489,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "default_value",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": false,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb5b"
-            }
-          },
-          {
-            "name": "checkbox",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "boolRadio4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb5c"
-            }
-          }
-        ],
+        "rules": {
+          "default_value": false,
+          "checkbox": true
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa32",
           "5cfa2590a6ebc785950a37d3",
@@ -20713,16 +20522,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_pop_up",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true
-          }
-        ],
+        "rules": {
+          "ss_pop_up": true
+        },
         "section2_ids": [
           "5c906a1da6ebc7193110fa32",
           "5cfa2590a6ebc785950a37d3",
@@ -20782,16 +20584,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_pop_up",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true
-          }
-        ],
+        "rules": {
+          "ss_pop_up": true
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa32",
           "5cfa2590a6ebc785950a37d3",
@@ -20857,16 +20652,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2021-09-22 08:34:54",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_pop_up",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true
-          }
-        ],
+        "rules": {
+          "ss_pop_up": true
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa32",
           "5cfa2590a6ebc785950a37d3",
@@ -20931,19 +20719,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_pop_up",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb67"
-            }
-          }
-        ],
+        "rules": {
+          "ss_pop_up": true
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa32",
           "5cfa2590a6ebc785950a37d3",
@@ -21001,19 +20779,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_pop_up",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb6a"
-            }
-          }
-        ],
+        "rules": {
+          "ss_pop_up": true
+        },
         "field_type": {
           "name": "lookupModel",
           "_id": "5c906a0ea6ebc7193110e738"
@@ -21064,35 +20832,13 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 5,
-              "max": 100
-            },
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb6d"
-            }
+        "rules": {
+          "between":{
+            "min": 5,
+            "max": 100
           },
-          {
-            "name": "string",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb6e"
-            }
-          }
-        ],
+          "string": true
+        },
         "section2_ids": [
           "5c906a1da6ebc7193110fa32",
           "5cfa2590a6ebc785950a37d3",
@@ -21125,35 +20871,13 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 5,
-              "max": 100
-            },
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb70"
-            }
+        "rules": {
+          "between":{
+            "min": 5,
+            "max": 100
           },
-          {
-            "name": "string",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb71"
-            }
-          }
-        ],
+          "string": true
+        },
         "searchKey": false,
         "field_type": {
           "name": "text",
@@ -21235,36 +20959,13 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "email",
-            "event": [
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb76"
-            }
+        "rules": {
+          "between":{
+            "min": 10,
+            "max": 100
           },
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 10,
-              "max": 100
-            },
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb77"
-            }
-          }
-        ],
+          "email": true
+        },
         "section2_ids": [
           "5c906a1da6ebc7193110fa32",
           "5cfa2590a6ebc785950a37d3",
@@ -21292,36 +20993,13 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "url",
-            "event": [
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb79"
-            }
+        "rules": {
+          "between":{
+            "min": 0,
+            "max": 100
           },
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 155
-            },
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb7a"
-            }
-          }
-        ],
+          "url": true
+        },
         "section2_ids": [
           "5c906a1da6ebc7193110fa32",
           "5cfa2590a6ebc785950a37d3",
@@ -21360,21 +21038,12 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 1000
-            }
+        "rules": {
+          "between":{
+            "min": 0,
+            "max": 1000
           }
-        ],
+        },
         "quick": true,
         "section1_ids": [
           "5c906a1da6ebc7193110fa33",
@@ -21498,19 +21167,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:41",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb88"
-            }
-          }
-        ],
+        "rules": {
+          "ss_dropdown": true
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa33",
           "5cfa2590a6ebc785950a37d4",
@@ -21559,46 +21218,14 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "hide",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb8b"
-            }
+        "rules": {
+          "between":{
+            "min": 0,
+            "max": 155
           },
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 155
-            },
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb8c"
-            }
-          },
-          {
-            "name": "string",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb8d"
-            }
-          }
-        ],
+          "string": true,
+          "hide": true
+        },
         "searchKey": false,
         "field_type": {
           "name": "text",
@@ -21629,21 +21256,12 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 1000
-            }
+        "rules": {
+          "between":{
+            "min": 0,
+            "max": 1000
           }
-        ],
+        },
         "quick": true,
         "section2_ids": [
           "5c906a1da6ebc7193110fa33",
@@ -21767,19 +21385,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:41",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb9b"
-            }
-          }
-        ],
+        "rules": {
+          "ss_dropdown": true
+        },
         "section2_ids": [
           "5c906a1da6ebc7193110fa33",
           "5cfa2590a6ebc785950a37d4",
@@ -21829,19 +21437,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_pop_up",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eb9e"
-            }
-          }
-        ],
+        "rules": {
+          "ss_pop_up": true
+        },
         "section2_ids": [
           "5c906a1da6ebc7193110fa32",
           "5cfa2590a6ebc785950a37d3",
@@ -21890,19 +21488,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eba1"
-            }
-          }
-        ],
+        "rules": {
+          "ss_dropdown": true
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa34",
           "5cfa2590a6ebc785950a37d5",
@@ -21930,19 +21518,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eba3"
-            }
-          }
-        ],
+        "rules": {
+          "ss_dropdown": true
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa34",
           "5cfa2590a6ebc785950a37d5",
@@ -21970,19 +21548,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eba5"
-            }
-          }
-        ],
+        "rules": {
+          "ss_dropdown": true
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa34",
           "5cfa2590a6ebc785950a37d5",
@@ -22010,19 +21578,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eba7"
-            }
-          }
-        ],
+        "rules": {
+          "ss_dropdown": true
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa35",
           "5cfa2590a6ebc785950a37d6",
@@ -22051,19 +21609,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_pop_up",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110eba9"
-            }
-          }
-        ],
+        "rules": {
+          "ss_pop_up": true
+        },
         "field_type": {
           "name": "lookupModel",
           "_id": "5c906a0ea6ebc7193110e738"
@@ -22108,31 +21656,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "filtered_by",
-            "event": [
-              "onLoad",
-              "onChange"
-            ],
-            "groupName": "cat1",
-            "value": "business_unit_ids",
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebac"
-            }
-          },
-          {
-            "name": "tab_multi_select",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebad"
-            }
-          }
-        ],
+        "rules": {
+          "filtered_by": "business_unit_ids",
+          "tab_multi_select": true
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa36",
           "5cfa2590a6ebc785950a37d7",
@@ -22180,24 +21707,12 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 2500
-            },
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebb0"
-            }
+        "rules":{
+          "between":{
+            "min": 0,
+            "max": 2500
           }
-        ],
+        },
         "section1_ids": [
           "5c906a1da6ebc7193110fa37",
           "5cfa2590a6ebc785950a37d8",
@@ -22225,44 +21740,11 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "hide_in",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "visibility",
-            "value": [
-              "create",
-              "update"
-            ],
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebb2"
-            }
-          },
-          {
-            "name": "date_format",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": "m/d/Y",
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebb3"
-            }
-          },
-          {
-            "name": "date_only",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebb4"
-            }
-          }
-        ],
+        "rules": {
+          "hide_in":["create","update"],
+          "date_format":"m/d/Y",
+          "date_only": true
+        },
         "searchKey": false,
         "section2_ids": [
           "5da54716a6ebc7dcd5609a33",
@@ -22286,44 +21768,11 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "hide_in",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "visibility",
-            "value": [
-              "create",
-              "update"
-            ],
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebb6"
-            }
-          },
-          {
-            "name": "date_format",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": "m/d/Y",
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebb7"
-            }
-          },
-          {
-            "name": "date_only",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebb8"
-            }
-          }
-        ],
+        "rules": {
+          "hide_in":["create","update"],
+          "date_format":"m/d/Y",
+          "date_only": true
+        },
         "searchKey": false,
         "section1_ids": [
           "5da54716a6ebc7dcd5609a33",
@@ -22348,33 +21797,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_pop_up",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebba"
-            }
-          },
-          {
-            "name": "hide_in",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "visibility",
-            "value": [
-              "create",
-              "update"
-            ],
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebbb"
-            }
-          }
-        ],
+        "rules": {
+          "hide_in":["create","update"],
+          "ss_pop_up": true
+        },
         "section2_ids": [
           "5da54716a6ebc7dcd5609a33",
           "5da54736a6ebc7dcee57cac3"
@@ -22420,33 +21846,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_pop_up",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebbe"
-            }
-          },
-          {
-            "name": "hide_in",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "visibility",
-            "value": [
-              "create",
-              "update"
-            ],
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebbf"
-            }
-          }
-        ],
+        "rules": {
+          "hide_in":["create","update"],
+          "ss_pop_up": true
+        },
         "section1_ids": [
           "5da54716a6ebc7dcd5609a33",
           "5da54736a6ebc7dcee57cac3"
@@ -22491,44 +21894,11 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "hide_in",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "visibility",
-            "value": [
-              "create",
-              "update"
-            ],
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebc2"
-            }
-          },
-          {
-            "name": "date_format",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": "m/d/Y",
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebc3"
-            }
-          },
-          {
-            "name": "date_only",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebc4"
-            }
-          }
-        ],
+        "rules": {
+          "hide_in":["create","update"],
+          "date_format":"m/d/Y",
+          "date_only": true
+        },
         "searchKey": false,
         "field_type": {
           "name": "date",
@@ -22549,33 +21919,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ss_pop_up",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebc6"
-            }
-          },
-          {
-            "name": "hide_in",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "visibility",
-            "value": [
-              "create",
-              "update"
-            ],
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ebc7"
-            }
-          }
-        ],
+        "rules": {
+          "hide_in":["create","update"],
+          "ss_pop_up": true
+        },
         "field_type": {
           "name": "lookupModel",
           "_id": "5c906a0ea6ebc7193110e738"
@@ -22617,30 +21964,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
-        "rules": [
-          {
-            "name": "ms_pop_up",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ec38"
-            }
-          },
-          {
-            "name": "hide",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": true,
-            "_id": {
-              "$oid": "5c906a12a6ebc7193110ec39"
-            }
-          }
-        ],
+        "rules": {
+          "ms_pop_up": true,
+          "hide": true
+        },
         "field_type": {
           "name": "lookupModel",
           "_id": "5c906a0ea6ebc7193110e738"
@@ -22691,35 +22018,13 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-05-17 09:19:35",
-        "rules": [
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 155
-            },
-            "_id": {
-              "$oid": "5cde7ca7a6ebc7c7de199cf3"
-            }
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
           },
-          {
-            "name": "string",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "5cde7ca7a6ebc7c7de199cf4"
-            }
-          }
-        ],
+          "string":true
+        },
         "section1_ids": [
           "5cfa2590a6ebc785950a37d3",
           "5cfa25c2a6ebc785bb4b5613",
@@ -22746,35 +22051,13 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-05-17 09:19:35",
-        "rules": [
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 155
-            },
-            "_id": {
-              "$oid": "5cde7ca7a6ebc7c7de199cf6"
-            }
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
           },
-          {
-            "name": "string",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "5cde7ca7a6ebc7c7de199cf7"
-            }
-          }
-        ],
+          "string":true
+        },
         "section1_ids": [
           "5cfa2590a6ebc785950a37d3",
           "5cfa25c2a6ebc785bb4b5613",
@@ -22802,35 +22085,13 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2020-06-01 10:33:51",
-        "rules": [
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 155
-            },
-            "_id": {
-              "$oid": "5ed4d98fa6ebc75215582d23"
-            }
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
           },
-          {
-            "name": "string",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "5ed4d98fa6ebc75215582d24"
-            }
-          }
-        ],
+          "string":true
+        },
         "section1_ids": [
           "5cfa27c4a6ebc787575ff2a3"
         ],
@@ -22854,16 +22115,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2021-02-10 11:27:34",
         "created_at": "2021-02-10 11:23:36",
-        "rules": [
-          {
-            "name": "ss_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true
-          }
-        ],
+        "rules": {
+          "ss_dropdown": true
+        },
         "section1_ids": [
           "5cfa27c4a6ebc787575ff2a6"
         ],
@@ -22892,16 +22146,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2021-03-18 18:27:43",
         "created_at": "2021-03-18 18:05:06",
-        "rules": [
-          {
-            "name": "ss_pop_up",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true
-          }
-        ],
+        "rules": {
+          "ss_pop_up": true
+        },
         "section1_ids": [
           "60539652a6ebc74a526100e9"
         ],
@@ -22942,52 +22189,19 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-10 02:20:39",
         "created_at": "2022-02-10 02:20:39",
-        "rules": [
-          {
-            "name": "required_if",
-            "event": [
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "anotherField": "business_unit_ids",
-              "values": [
-                "Medical"
-              ]
-            },
-            "_id": {
-              "$oid": "62047677a6ebc71ab668ae26"
-            }
+        "rules": {
+          "required_if":{
+            "anotherField": "business_unit_ids",
+            "values": [
+              "Medical"
+            ]
           },
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 155
-            },
-            "_id": {
-              "$oid": "62047677a6ebc71ab668ae27"
-            }
+          "between":{
+            "min": 0,
+            "max": 155
           },
-          {
-            "name": "string",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "62047677a6ebc71ab668ae28"
-            }
-          }
-        ],
+          "string": true
+        },
         "section1_ids": [
           "62047677a6ebc71ab668ae36"
         ],
@@ -23009,52 +22223,19 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-10 02:20:39",
         "created_at": "2022-02-10 02:20:39",
-        "rules": [
-          {
-            "name": "required_if",
-            "event": [
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "anotherField": "business_unit_ids",
-              "values": [
-                "Medical"
-              ]
-            },
-            "_id": {
-              "$oid": "62047677a6ebc71ab668ae2a"
-            }
+        "rules": {
+          "required_if":{
+            "anotherField": "business_unit_ids",
+            "values": [
+              "Medical"
+            ]
           },
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 155
-            },
-            "_id": {
-              "$oid": "62047677a6ebc71ab668ae2b"
-            }
+          "between":{
+            "min": 0,
+            "max": 155
           },
-          {
-            "name": "string",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "62047677a6ebc71ab668ae2c"
-            }
-          }
-        ],
+          "string": true
+        },
         "section1_ids": [
           "62047677a6ebc71ab668ae36"
         ],
@@ -23076,52 +22257,19 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-10 02:20:39",
         "created_at": "2022-02-10 02:20:39",
-        "rules": [
-          {
-            "name": "required_if",
-            "event": [
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "anotherField": "business_unit_ids",
-              "values": [
-                "Medical"
-              ]
-            },
-            "_id": {
-              "$oid": "62047677a6ebc71ab668ae2e"
-            }
+        "rules": {
+          "required_if":{
+            "anotherField": "business_unit_ids",
+            "values": [
+              "Medical"
+            ]
           },
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 155
-            },
-            "_id": {
-              "$oid": "62047677a6ebc71ab668ae2f"
-            }
+          "between":{
+            "min": 0,
+            "max": 155
           },
-          {
-            "name": "string",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "62047677a6ebc71ab668ae30"
-            }
-          }
-        ],
+          "string": true
+        },
         "section1_ids": [
           "62047677a6ebc71ab668ae36"
         ],
@@ -23143,52 +22291,19 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-10 02:20:39",
         "created_at": "2022-02-10 02:20:39",
-        "rules": [
-          {
-            "name": "required_if",
-            "event": [
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "anotherField": "business_unit_ids",
-              "values": [
-                "Medical"
-              ]
-            },
-            "_id": {
-              "$oid": "62047677a6ebc71ab668ae32"
-            }
+        "rules": {
+          "required_if":{
+            "anotherField": "business_unit_ids",
+            "values": [
+              "Medical"
+            ]
           },
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 155
-            },
-            "_id": {
-              "$oid": "62047677a6ebc71ab668ae33"
-            }
+          "between":{
+            "min": 0,
+            "max": 155
           },
-          {
-            "name": "string",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "62047677a6ebc71ab668ae34"
-            }
-          }
-        ],
+          "string": true
+        },
         "section1_ids": [
           "62047677a6ebc71ab668ae36"
         ],
@@ -23210,30 +22325,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-21 08:46:22",
         "created_at": "2022-02-21 08:46:22",
-        "rules": [
-          {
-            "name": "checkbox",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "boolRadio4",
-            "value": true,
-            "_id": {
-              "$oid": "6213515ea6ebc7d7f12a6553"
-            }
-          },
-          {
-            "name": "default_value",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": false,
-            "_id": {
-              "$oid": "6213515ea6ebc7d7f12a6554"
-            }
-          }
-        ],
+        "rules": {
+          "checkbox": true,
+          "default_value": false
+        },
         "section1_ids": [
           "6213515ea6ebc7d7f12a6579"
         ],
@@ -23256,28 +22351,13 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-21 09:24:35",
         "created_at": "2022-02-21 08:46:22",
-        "rules": [
-          {
-            "name": "required_if",
-            "event": [
-              "onChange",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "anotherField": "isBenchtop",
-              "values": true
-            }
+        "rules": {
+          "required_if":{
+            "anotherField": "isBenchtop",
+            "values": true
           },
-          {
-            "name": "ms_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true
-          }
-        ],
+          "ms_dropdown": true
+        },
         "section2_ids": [
           "6213515ea6ebc7d7f12a6579"
         ],
@@ -23299,30 +22379,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-21 08:46:22",
         "created_at": "2022-02-21 08:46:22",
-        "rules": [
-          {
-            "name": "checkbox",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "boolRadio4",
-            "value": true,
-            "_id": {
-              "$oid": "6213515ea6ebc7d7f12a6561"
-            }
-          },
-          {
-            "name": "default_value",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": false,
-            "_id": {
-              "$oid": "6213515ea6ebc7d7f12a6562"
-            }
-          }
-        ],
+        "rules": {
+          "checkbox": true,
+          "default_value":false
+        },
         "section1_ids": [
           "6213515ea6ebc7d7f12a6579"
         ],
@@ -23345,28 +22405,13 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-21 09:24:35",
         "created_at": "2022-02-21 08:46:22",
-        "rules": [
-          {
-            "name": "required_if",
-            "event": [
-              "onChange",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "anotherField": "isTimeLapse",
-              "values": true
-            }
+        "rules": {
+          "required_if": {
+            "anotherField": "isTimeLapse",
+            "values": true
           },
-          {
-            "name": "ms_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true
-          }
-        ],
+          "ms_dropdown": true
+        },
         "section2_ids": [
           "6213515ea6ebc7d7f12a6579"
         ],
@@ -23388,30 +22433,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-21 08:46:22",
         "created_at": "2022-02-21 08:46:22",
-        "rules": [
-          {
-            "name": "checkbox",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "boolRadio4",
-            "value": true,
-            "_id": {
-              "$oid": "6213515ea6ebc7d7f12a6568"
-            }
-          },
-          {
-            "name": "default_value",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": false,
-            "_id": {
-              "$oid": "6213515ea6ebc7d7f12a6569"
-            }
-          }
-        ],
+        "rules": {
+          "checkbox":true,
+          "default_value":false
+        },
         "section1_ids": [
           "6213515ea6ebc7d7f12a6579"
         ],
@@ -23434,28 +22459,13 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-21 09:24:35",
         "created_at": "2022-02-21 08:46:22",
-        "rules": [
-          {
-            "name": "required_if",
-            "event": [
-              "onChange",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
+        "rules": {
+          "required_if": {
               "anotherField": "isWorkstationClassI",
               "values": true
-            }
-          },
-          {
-            "name": "ms_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true
-          }
-        ],
+            },
+            "ms_dropdown":true
+        },
         "section2_ids": [
           "6213515ea6ebc7d7f12a6579"
         ],
@@ -23477,30 +22487,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-21 08:46:22",
         "created_at": "2022-02-21 08:46:22",
-        "rules": [
-          {
-            "name": "checkbox",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "boolRadio4",
-            "value": true,
-            "_id": {
-              "$oid": "6213515ea6ebc7d7f12a656f"
-            }
-          },
-          {
-            "name": "default_value",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": false,
-            "_id": {
-              "$oid": "6213515ea6ebc7d7f12a6570"
-            }
-          }
-        ],
+        "rules": {
+          "checkbox":true,
+          "default_value":false
+        },
         "section1_ids": [
           "6213515ea6ebc7d7f12a6579"
         ],
@@ -23523,28 +22513,13 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-21 09:24:35",
         "created_at": "2022-02-21 08:46:22",
-        "rules": [
-          {
-            "name": "required_if",
-            "event": [
-              "onChange",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
+        "rules": {
+          "required_if": {
               "anotherField": "isWorkstationClassII",
               "values": true
-            }
-          },
-          {
-            "name": "ms_dropdown",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "option4",
-            "value": true
-          }
-        ],
+            },
+          "ms_dropdown":true
+        },
         "section2_ids": [
           "6213515ea6ebc7d7f12a6579"
         ],
@@ -23566,30 +22541,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2022-02-21 08:46:22",
         "created_at": "2022-02-21 08:46:22",
-        "rules": [
-          {
-            "name": "checkbox",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "boolRadio4",
-            "value": true,
-            "_id": {
-              "$oid": "6213515ea6ebc7d7f12a6576"
-            }
-          },
-          {
-            "name": "default_value",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": false,
-            "_id": {
-              "$oid": "6213515ea6ebc7d7f12a6577"
-            }
-          }
-        ],
+        "rules": {
+          "checkbox":true,
+          "default_value":false
+        },
         "section1_ids": [
           "6213515ea6ebc7d7f12a6579"
         ],
@@ -23611,30 +22566,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-01-05 03:48:30",
         "created_at": "2023-01-05 03:48:30",
-        "rules": [
-          {
-            "name": "default_value",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": false,
-            "_id": {
-              "$oid": "63b6488ea6ebc73db80118d3"
-            }
-          },
-          {
-            "name": "checkbox",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "boolRadio4",
-            "value": true,
-            "_id": {
-              "$oid": "63b6488ea6ebc73db80118d4"
-            }
-          }
-        ],
+        "rules": {
+          "checkbox":true,
+          "default_value":false
+        },
         "field_type": {
           "name": "boolean",
           "_id": "5c906a0ea6ebc7193110e733"
@@ -23653,35 +22588,13 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-01-05 03:48:30",
         "created_at": "2023-01-05 03:48:30",
-        "rules": [
-          {
-            "name": "between",
-            "event": [
-              "onLoad",
-              "onBlur",
-              "onSubmit"
-            ],
-            "groupName": null,
-            "value": {
-              "min": 0,
-              "max": 155
-            },
-            "_id": {
-              "$oid": "63b6488ea6ebc73db80118d6"
-            }
+        "rules": {
+          "between": {
+            "min": 0,
+            "max": 155
           },
-          {
-            "name": "string",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "txtRadio1",
-            "value": true,
-            "_id": {
-              "$oid": "63b6488ea6ebc73db80118d7"
-            }
-          }
-        ],
+          "string":true
+        },
         "field_type": {
           "name": "text",
           "_id": "5c906a0ea6ebc7193110e73b"
@@ -23700,30 +22613,10 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-03-31 04:19:30",
         "created_at": "2023-03-31 04:19:30",
-        "rules": [
-          {
-            "name": "default_value",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": null,
-            "value": false,
-            "_id": {
-              "$oid": "64265f52a6ebc722f15bacd0"
-            }
-          },
-          {
-            "name": "checkbox",
-            "event": [
-              "onLoad"
-            ],
-            "groupName": "boolRadio4",
-            "value": true,
-            "_id": {
-              "$oid": "64265f52a6ebc722f15bacd1"
-            }
-          }
-        ],
+        "rules": {
+          "default_value":false,
+          "checkbox": true
+        },
         "field_type": {
           "name": "boolean",
           "_id": "5c906a0ea6ebc7193110e733"
@@ -23747,13 +22640,14 @@
             "row": 1,
             "field_ids": [
               [
+                
                 "5c906a12a6ebc7193110eb49",
                 "5c906a12a6ebc7193110eb4d",
                 "5ed4d98fa6ebc75215582d22",
                 "5c906a12a6ebc7193110eb45",
                 "5c906a12a6ebc7193110eb53",
-                "5c906a12a6ebc7193110eb56",
                 "5c906a12a6ebc7193110eb5a",
+                "5c906a12a6ebc7193110eb56",
                 "5cde7ca7a6ebc7c7de199cf2",
                 "5cde7ca7a6ebc7c7de199cf5",
                 "5c906a12a6ebc7193110eb60",
@@ -44056,5 +42950,873 @@
         "name"
       ]
     }
-  ]
+  ],
+  "picklist":{
+    "account_type": {
+      "values": [
+        {
+          "value": "Collaborator",
+          "active": true,
+          "_id": "5df89621a6ebc7ad4e0c11f2",
+          "order": 0
+        },
+        {
+          "value": "Competitor",
+          "active": true,
+          "_id": "651fce16a6ebc72c08607fa2",
+          "order": 1
+        },
+        {
+          "value": "Contractor/Construction Firm",
+          "active": true,
+          "_id": "5bb104d4678f71061f6440b7",
+          "order": 2
+        },
+        {
+          "value": "Dealer",
+          "active": true,
+          "_id": "5bb104d4678f71061f6440ba",
+          "order": 3
+        },
+        {
+          "value": "Distributor",
+          "active": true,
+          "_id": "5bb104d4678f71061f6440b9",
+          "order": 4
+        },
+        {
+          "value": "End User",
+          "active": true,
+          "_id": "5bb104d4678f71061f6440b8",
+          "order": 5
+        },
+        {
+          "value": "Investor",
+          "active": true,
+          "_id": "5df89621a6ebc7ad4e0c11f3",
+          "order": 6
+        },
+        {
+          "value": "Manufacturer Sales Rep",
+          "active": true,
+          "_id": "5bb104d4678f71061f6440bb",
+          "order": 7
+        },
+        {
+          "value": "Service",
+          "active": true,
+          "_id": "5bb104d4678f71061f6440bc",
+          "order": 8
+        }
+      ],
+      "catSrcListName": null
+    },
+    "industry": {
+      "values": [
+        {
+          "value": "Government",
+          "active": true,
+          "_id": "5bb104d5678f71061f644103",
+          "order": 0
+        },
+        {
+          "value": "Private",
+          "active": true,
+          "_id": "5bb104d5678f71061f644104",
+          "order": 1
+        }
+      ],
+      "catSrcListName": null
+    },
+    "major_segment": {
+      "values": [
+        {
+          "value": "Aerospace",
+          "active": true,
+          "_id": "5bb104d5678f71061f64410d",
+          "order": 0
+        },
+        {
+          "value": "Agri Biotech",
+          "active": true,
+          "_id": "5bb104d5678f71061f64410c",
+          "order": 1
+        },
+        {
+          "value": "Bank/Pawn Shop",
+          "active": true,
+          "_id": "5bb104d5678f71061f644117",
+          "order": 2
+        },
+        {
+          "value": "Consultant",
+          "active": true,
+          "_id": "5bb104d5678f71061f644110",
+          "order": 3
+        },
+        {
+          "value": "Contractor",
+          "active": true,
+          "_id": "5bb104d5678f71061f644111",
+          "order": 4
+        },
+        {
+          "value": "Dealer",
+          "active": true,
+          "_id": "5bb104d5678f71061f644113",
+          "order": 5
+        },
+        {
+          "value": "Distributor",
+          "active": true,
+          "_id": "5bb104d5678f71061f644112",
+          "order": 6
+        },
+        {
+          "value": "Engineering Firm",
+          "active": true,
+          "_id": "5bb104d5678f71061f644114",
+          "order": 7
+        },
+        {
+          "value": "Hospital",
+          "active": true,
+          "_id": "5bb104d5678f71061f644108",
+          "order": 8
+        },
+        {
+          "value": "IVF Clinic",
+          "active": true,
+          "_id": "5bb104d5678f71061f644115",
+          "order": 9
+        },
+        {
+          "value": "Industrial Lab",
+          "active": true,
+          "_id": "5bb104d5678f71061f64410e",
+          "order": 10
+        },
+        {
+          "value": "Manufacturer",
+          "active": true,
+          "_id": "5bb104d5678f71061f64410f",
+          "order": 11
+        },
+        {
+          "value": "Mining",
+          "active": true,
+          "_id": "5bb104d5678f71061f644116",
+          "order": 12
+        },
+        {
+          "value": "Oil and Gas",
+          "active": true,
+          "_id": "5bb104d5678f71061f64410b",
+          "order": 13
+        },
+        {
+          "value": "Research Institute",
+          "active": true,
+          "_id": "5bb104d5678f71061f64410a",
+          "order": 14
+        },
+        {
+          "value": "University",
+          "active": true,
+          "_id": "5bb104d5678f71061f644109",
+          "order": 15
+        }
+      ],
+      "catSrcListName": null
+    },
+    "industry_minor_segment": {
+      "values": [
+        {
+          "value": "Agricultural Biotech",
+          "active": true,
+          "_id": "5bb104d5678f71061f64411c",
+          "order": 2
+        },
+        {
+          "value": "Agriculture",
+          "active": true,
+          "_id": "5bb104d5678f71061f644146",
+          "order": 3
+        },
+        {
+          "value": "Animal Breeding",
+          "active": true,
+          "_id": "5bb104d5678f71061f64411d",
+          "order": 4
+        },
+        {
+          "value": "Animal Lab",
+          "active": true,
+          "_id": "5bb104d5678f71061f64413d",
+          "order": 5
+        },
+        {
+          "value": "Automotive",
+          "active": true,
+          "_id": "5bb104d5678f71061f64411e",
+          "order": 6
+        },
+        {
+          "value": "Biotechnology",
+          "active": true,
+          "_id": "5bb104d5678f71061f64413a",
+          "order": 8
+        },
+        {
+          "value": "CDC",
+          "active": true,
+          "_id": "5bb104d5678f71061f64411f",
+          "order": 9
+        },
+        {
+          "value": "Cell Processing Centers",
+          "active": true,
+          "_id": "5bb104d5678f71061f644120",
+          "order": 10
+        },
+        {
+          "value": "Chemicals",
+          "active": true,
+          "_id": "5bb104d5678f71061f644121",
+          "order": 11
+        },
+        {
+          "value": "Chemistry Lab",
+          "active": true,
+          "_id": "5bb104d5678f71061f64413b",
+          "order": 12
+        },
+        {
+          "value": "Clinical Lab",
+          "active": true,
+          "_id": "5bb104d5678f71061f64413e",
+          "order": 13
+        },
+        {
+          "value": "Cocoa",
+          "active": true,
+          "_id": "5bb104d5678f71061f644142",
+          "order": 14
+        },
+        {
+          "value": "Cosmetics",
+          "active": true,
+          "_id": "5bb104d5678f71061f644122",
+          "order": 17
+        },
+        {
+          "value": "Diagnostic Labs",
+          "active": true,
+          "_id": "5bb104d5678f71061f644123",
+          "order": 18
+        },
+        {
+          "value": "Electronics",
+          "active": true,
+          "_id": "5bb104d5678f71061f644124",
+          "order": 20
+        },
+        {
+          "value": "Environmental Lab",
+          "active": true,
+          "_id": "5bb104d5678f71061f644125",
+          "order": 21
+        },
+        {
+          "value": "Fish",
+          "active": true,
+          "_id": "5bb104d5678f71061f644144",
+          "order": 22
+        },
+        {
+          "value": "Food and Beverage",
+          "active": true,
+          "_id": "5bb104d5678f71061f644126",
+          "order": 23
+        },
+        {
+          "value": "Forensic",
+          "active": true,
+          "_id": "5bb104d5678f71061f644127",
+          "order": 24
+        },
+        {
+          "value": "Forest",
+          "active": true,
+          "_id": "5bb104d5678f71061f644141",
+          "order": 25
+        },
+        {
+          "value": "Lab Furniture Manufacturer",
+          "active": true,
+          "_id": "5bff0fff678f715bf86a0852",
+          "order": 30
+        },
+        {
+          "value": "Manufacturer - Rubber Products",
+          "active": true,
+          "_id": "5bb104d5678f71061f644139",
+          "order": 31
+        },
+        {
+          "value": "Medical Devices",
+          "active": true,
+          "_id": "5bb104d5678f71061f644128",
+          "order": 35
+        },
+        {
+          "value": "Microbiology lab",
+          "active": true,
+          "_id": "5bb104d5678f71061f64413c",
+          "order": 36
+        },
+        {
+          "value": "Military",
+          "active": true,
+          "_id": "5bb104d5678f71061f644147",
+          "order": 37
+        },
+        {
+          "value": "Others",
+          "active": true,
+          "_id": "5bb104d5678f71061f644129",
+          "order": 42
+        },
+        {
+          "value": "Paper and Plastic",
+          "active": true,
+          "_id": "5bb104d5678f71061f64412a",
+          "order": 43
+        },
+        {
+          "value": "Pathology Lab",
+          "active": true,
+          "_id": "5bb104d5678f71061f644140",
+          "order": 45
+        },
+        {
+          "value": "Pharma - Conglomerate",
+          "active": true,
+          "_id": "5bb104d5678f71061f64412c",
+          "order": 47
+        },
+        {
+          "value": "Pharma - Contract manufacturing",
+          "active": true,
+          "_id": "5bb104d5678f71061f64412d",
+          "order": 48
+        },
+        {
+          "value": "Pharma - Contract research org",
+          "active": true,
+          "_id": "5bb104d5678f71061f64412e",
+          "order": 49
+        },
+        {
+          "value": "Pharma - Generics",
+          "active": true,
+          "_id": "5bb104d5678f71061f644130",
+          "order": 50
+        },
+        {
+          "value": "Pharma - High potency active ingredients",
+          "active": true,
+          "_id": "5bb104d5678f71061f644131",
+          "order": 51
+        },
+        {
+          "value": "Pharma - Insulin production",
+          "active": true,
+          "_id": "5bb104d5678f71061f644132",
+          "order": 52
+        },
+        {
+          "value": "Pharma - Milk powder / nutraceuticals",
+          "active": true,
+          "_id": "5bb104d5678f71061f644133",
+          "order": 53
+        },
+        {
+          "value": "Pharma - Optics / eyecare",
+          "active": true,
+          "_id": "5bb104d5678f71061f644134",
+          "order": 54
+        },
+        {
+          "value": "Pharma - Pilot plants / kilo labs",
+          "active": true,
+          "_id": "5bb104d5678f71061f644135",
+          "order": 55
+        },
+        {
+          "value": "Pharma - Skincare / ointments",
+          "active": true,
+          "_id": "5bb104d5678f71061f644136",
+          "order": 56
+        },
+        {
+          "value": "Pharma - Total parenteral nutrition",
+          "active": true,
+          "_id": "5bb104d5678f71061f644137",
+          "order": 57
+        },
+        {
+          "value": "Pharmacy Compounding",
+          "active": true,
+          "_id": "5bb104d5678f71061f64412f",
+          "order": 59
+        },
+        {
+          "value": "Research Institutes",
+          "active": true,
+          "_id": "5bb104d5678f71061f644138",
+          "order": 63
+        },
+        {
+          "value": "Research Lab",
+          "active": true,
+          "_id": "5bb104d5678f71061f64413f",
+          "order": 64
+        },
+        {
+          "value": "Test Labs",
+          "active": true,
+          "_id": "5bb104d5678f71061f64411b",
+          "order": 67
+        },
+        {
+          "value": "Veterinary",
+          "active": true,
+          "_id": "5bb104d5678f71061f644145",
+          "order": 71
+        },
+        {
+          "value": "Wildlife",
+          "active": true,
+          "_id": "5bb104d5678f71061f644143",
+          "order": 72
+        }
+      ],
+      "catSrcListName": null
+    },
+    "account_location_coverage": {
+      "values": [
+        {
+          "value": "Luzon : Batangas",
+          "active": true,
+          "_id": "5bb104d5678f71061f64414c",
+          "order": 0
+        },
+        {
+          "value": "Luzon : Dagupan",
+          "active": true,
+          "_id": "5bb104d5678f71061f64414d",
+          "order": 1
+        },
+        {
+          "value": "Luzon : Manila",
+          "active": true,
+          "_id": "5bb104d5678f71061f64414b",
+          "order": 2
+        },
+        {
+          "value": "Mindanao : Cagayan de Oro",
+          "active": true,
+          "_id": "5bb104d5678f71061f644150",
+          "order": 3
+        },
+        {
+          "value": "Mindanao : Davao",
+          "active": true,
+          "_id": "5bb104d5678f71061f644151",
+          "order": 4
+        },
+        {
+          "value": "Visayas : Cebu",
+          "active": true,
+          "_id": "5bb104d5678f71061f64414e",
+          "order": 5
+        },
+        {
+          "value": "Visayas : Iloilo",
+          "active": true,
+          "_id": "5bb104d5678f71061f64414f",
+          "order": 6
+        }
+      ],
+      "catSrcListName": null
+    },
+    "contact_role": {
+      "values": [
+        {
+          "value": "Accounts",
+          "active": true,
+          "_id": "5c0e1222678f716f654593c6",
+          "order": 0
+        },
+        {
+          "value": "Change user to end user",
+          "active": true,
+          "_id": "5c0e1222678f716f654593c3",
+          "order": 2
+        },
+        {
+          "value": "Consultant",
+          "active": true,
+          "_id": "5c0e1222678f716f654593c4",
+          "order": 3
+        },
+        {
+          "value": "Contractor",
+          "active": true,
+          "_id": "5c0e1222678f716f654593c5",
+          "order": 4
+        },
+        {
+          "value": "Dealer",
+          "active": true,
+          "_id": "5c0e1222678f716f654593c2",
+          "order": 5
+        },
+        {
+          "value": "Decision Maker",
+          "active": true,
+          "_id": "5bb104d5678f71061f644195",
+          "order": 6
+        },
+        {
+          "value": "Employee",
+          "active": true,
+          "_id": "5df9d62aa6ebc7b49f4e1b72",
+          "order": 7
+        },
+        {
+          "value": "Influencer",
+          "active": true,
+          "_id": "5bb104d5678f71061f644197",
+          "order": 8
+        },
+        {
+          "value": "Purchaser",
+          "active": true,
+          "_id": "5bb104d5678f71061f644198",
+          "order": 9
+        },
+        {
+          "value": "Rep",
+          "active": true,
+          "_id": "5f92e058a6ebc79ed1528ba2",
+          "order": 10
+        },
+        {
+          "value": "User",
+          "active": true,
+          "_id": "5bb104d5678f71061f644196",
+          "order": 11
+        }
+      ],
+      "catSrcListName": null
+    },
+    "philippine_regions": {
+      "values": [
+        {
+          "value": "Region I — Ilocos Region",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a492",
+          "order": 0
+        },
+        {
+          "value": "Region II — Cagayan Valley",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a493",
+          "order": 1
+        },
+        {
+          "value": "Region III — Central Luzon",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a494",
+          "order": 2
+        },
+        {
+          "value": "Region IV-A — CALABARZON",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a495",
+          "order": 3
+        },
+        {
+          "value": "MIMAROPA Region",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a496",
+          "order": 4
+        },
+        {
+          "value": "Region V — Bicol Region",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a497",
+          "order": 5
+        },
+        {
+          "value": "Region VI — Western Visayas",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a498",
+          "order": 6
+        },
+        {
+          "value": "Region VII — Central Visayas",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a499",
+          "order": 7
+        },
+        {
+          "value": "Region VIII — Eastern Visayas",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a49a",
+          "order": 8
+        },
+        {
+          "value": "Region IX — Zamboanga Peninsula",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a49b",
+          "order": 9
+        },
+        {
+          "value": "Region X — Northern Mindanao",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a49c",
+          "order": 10
+        },
+        {
+          "value": "Region XI — Davao Region",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a49d",
+          "order": 11
+        },
+        {
+          "value": "Region XII — SOCCSKSARGEN",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a49e",
+          "order": 12
+        },
+        {
+          "value": "Region XIII — Caraga",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a49f",
+          "order": 13
+        },
+        {
+          "value": "NCR — National Capital Region",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a4a0",
+          "order": 14
+        },
+        {
+          "value": "CAR — Cordillera Administrative Region",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a4a1",
+          "order": 15
+        },
+        {
+          "value": "BARMM — Bangsamoro Autonomous Region in Muslim Mindanao",
+          "active": true,
+          "_id": "6023c456a6ebc72b9829a4a2",
+          "order": 16
+        }
+      ],
+      "catSrcListName": null
+    },
+    "account_technology_brands": {
+      "values": [
+        {
+          "value": "CooperSurgical",
+          "active": true,
+          "order": 0,
+          "_id": "6213515ea6ebc7d7f12a655a"
+        },
+        {
+          "value": "Esco",
+          "active": true,
+          "order": 1,
+          "_id": "6213515ea6ebc7d7f12a655b"
+        },
+        {
+          "value": "IVFTech",
+          "active": true,
+          "order": 2,
+          "_id": "6213515ea6ebc7d7f12a655c"
+        },
+        {
+          "value": "Merck",
+          "active": true,
+          "order": 3,
+          "_id": "6213515ea6ebc7d7f12a655d"
+        },
+        {
+          "value": "Others",
+          "active": true,
+          "order": 4,
+          "_id": "6213515ea6ebc7d7f12a655e"
+        },
+        {
+          "value": "Vitrolife",
+          "active": true,
+          "order": 5,
+          "_id": "6213515ea6ebc7d7f12a655f"
+        }
+      ],
+      "catSrcListName": null
+    },
+    "account_currency":{
+      "values":[
+        {
+          "_id": "5a7ff2c8678f716be22b37f2",
+          "code": "AUD",
+          "name": "Australia Dollar",
+          "symbol": "AU$"
+        },
+        {
+          "_id": "5a7ff2c8678f716be22b37f3",
+          "code": "EUR",
+          "name": "Euro Member Countries",
+          "symbol": "â‚¬"
+        },
+        {
+          "_id": "5a7ff2c8678f716be22b37f4",
+          "code": "GBP",
+          "name": "United Kingdom Pound",
+          "symbol": "Â£"
+        },
+        {
+          "_id": "5a7ff2c8678f716be22b37f5",
+          "code": "HKD",
+          "name": "Hong Kong Dollar",
+          "symbol": "HK$"
+        },
+        {
+          "_id": "5a7ff2c8678f716be22b37f6",
+          "code": "IDR",
+          "name": "Indonesia Rupiah",
+          "symbol": "Rp"
+        },
+        {
+          "_id": "5a7ff2c8678f716be22b37f7",
+          "code": "JPY",
+          "name": "Japan Yen",
+          "symbol": "Â¥"
+        },
+        {
+          "_id": "5a7ff2c8678f716be22b37f8",
+          "code": "KRW",
+          "name": "Korea (South) Won",
+          "symbol": "â‚©"
+        },
+        {
+          "_id": "5a7ff2c8678f716be22b37f9",
+          "code": "MYR",
+          "name": "Malaysia Ringgit",
+          "symbol": "RM"
+        },
+        {
+          "_id": "5a7ff2c8678f716be22b37fa",
+          "code": "PHP",
+          "name": "Philippine Peso",
+          "symbol": "₱"
+        },
+        {
+          "_id": "5a7ff2c8678f716be22b37fb",
+          "code": "SGD",
+          "name": "Singapore Dollar",
+          "symbol": "S$"
+        },
+        {
+          "_id": "5a7ff2c8678f716be22b37fc",
+          "code": "USD",
+          "name": "United States Dollar",
+          "symbol": "$"
+        },
+        {
+          "_id": "5a7ff2c8678f716be22b37fd",
+          "code": "ZAR",
+          "name": "South Africa Rand",
+          "symbol": "R"
+        },
+        {
+          "_id": "5a83652e678f7170f3400682",
+          "code": "CAD",
+          "name": "Canada Dollar",
+          "symbol": "CA$"
+        },
+        {
+          "_id": "5a83652e678f7170f3400683",
+          "code": "CNY",
+          "name": "China Yuan Renminbi",
+          "symbol": "CN¥"
+        },
+        {
+          "_id": "5a83652e678f7170f3400684",
+          "code": "THB",
+          "name": "Thailand Baht",
+          "symbol": "฿"
+        },
+        {
+          "_id": "5a83652e678f7170f3400685",
+          "code": "TWD",
+          "name": "Taiwan New Dollar",
+          "symbol": "NT$"
+        },
+        {
+          "_id": "5a83652e678f7170f3400686",
+          "code": "VND",
+          "name": "Viet Nam Dong",
+          "symbol": "₫"
+        },
+        {
+          "_id": "5bcfb0d0678f7125be0e04b2",
+          "code": "AED",
+          "name": "United Arab Emirates Dirham",
+          "symbol": "AED"
+        },
+        {
+          "_id": "5bcfb0d0678f7125be0e04b8",
+          "code": "BDT",
+          "name": "Bangladesh Taka",
+          "symbol": "Tk"
+        },
+        {
+          "_id": "5c6102c4a6ebc726c77e8b32",
+          "code": "XOF",
+          "name": "Communauté Financière Africaine (BCEAO) Franc",
+          "symbol": "CFA"
+        },
+        {
+          "_id": "5e54b6cda6ebc7b480423432",
+          "code": "MMK",
+          "name": "Myanmar (Burma) Kyat",
+          "symbol": "KYAT"
+        },
+        {
+          "_id": "5f475947a6ebc73df50f3752",
+          "code": "ILS",
+          "name": "Israeli Shekel",
+          "symbol": "ILS"
+        },
+        {
+          "_id": "5f8cefe6a6ebc7ac9a033f02",
+          "code": "INR",
+          "name": "India Rupee",
+          "symbol": "Rs"
+        },
+        {
+          "_id": "6544c8f4a6ebc736c15809a2",
+          "code": "KES",
+          "name": "Kenya Shilling",
+          "symbol": "Ksh"
+        }
+      ]
+    }
+  }
 }

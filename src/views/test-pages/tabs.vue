@@ -14,6 +14,7 @@ const FloatingWindow = defineAsyncComponent(() =>
 // loaders
 import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
 import ListViewLoader from '@/components/modules/DynamicDataTable/Loaders/ListViewLoader.vue'
+import ModuleForm from '@/components/modules/Form/ModuleForm.vue'
 
 // refs
 // stores
@@ -59,9 +60,10 @@ const tabs = ref([
     style: 'window',
     name: 'form2-window',
     label: 'Form 2',
-    component: shallowRef(ListViewLoader),
+    component: shallowRef(ModuleForm),
+    module:'leads',
     expanded: false,
-    opened: false
+    opened: true
   },
 ])
 

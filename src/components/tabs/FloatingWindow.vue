@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia'
 import { useTabStore } from '@/stores/tabs/index'
 // components
 const GeneralForm = defineAsyncComponent(() => import('@/components/modules/Form/GeneralForm.vue'))
-
+const Form = defineAsyncComponent(() => import('@/components/modules/Form/Form.vue'))
 // refs
 // stores
 const tabStore = useTabStore()
@@ -39,7 +39,8 @@ onMounted(async () => {
               <component :is="tab.component"></component>
             </div>
             <div v-else-if="tab.type === 'form'">
-              <GeneralForm :name="tab.name" :module="tab.module" />
+              <Form :config="tab" />
+              <!-- <GeneralForm :name="tab.name" :module="tab.module" /> -->
             </div>
           </div>
         </Panel>

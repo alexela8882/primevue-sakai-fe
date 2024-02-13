@@ -51,6 +51,8 @@ axios.defaults.baseURL = 'http://localhost:80/api/'
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 
 import PrimeVue from 'primevue/config'
+// import 'primevue/resources/themes/saga-blue/theme.css'; // theme
+// import 'primevue/resources/primevue.min.css'; // core css
 import AutoComplete from 'primevue/autocomplete'
 import Accordion from 'primevue/accordion'
 import AccordionTab from 'primevue/accordiontab'
