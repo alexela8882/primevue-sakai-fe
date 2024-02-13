@@ -14,6 +14,7 @@ const FloatingWindow = defineAsyncComponent(() =>
 // loaders
 import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
 import ListViewLoader from '@/components/modules/DynamicDataTable/Loaders/ListViewLoader.vue'
+import ModuleForm from '@/components/modules/Form/ModuleForm.vue'
 
 // refs
 // stores
