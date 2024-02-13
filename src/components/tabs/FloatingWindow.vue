@@ -64,9 +64,9 @@ watch(getTabs.value, (newVal, oldVal) => {
                     <div class="material-icons" style="font-size: 12px;">open_in_full</div>
                   </template>
                 </Button>
-                <Button text rounded>
+                <Button @click="removeTabAction(tab)" text rounded>
                   <template #icon>
-                    <div @click="removeTabAction(tab)" class="material-icons" style="font-size: 12px;">close</div>
+                    <div class="material-icons" style="font-size: 12px;">close</div>
                   </template>
                 </Button>
               </div>
