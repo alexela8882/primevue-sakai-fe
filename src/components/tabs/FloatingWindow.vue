@@ -5,10 +5,7 @@ import { storeToRefs } from 'pinia'
 // stores
 import { useTabStore } from '@/stores/tabs/index'
 // components
-const GeneralForm = defineAsyncComponent(() => import('@/components/modules/Form/GeneralForm.vue'))
-const DynamicDataTable = defineAsyncComponent(() => import('@/components/modules/DynamicDataTable/DynamicDataTableMain.vue'))
-// loaders
-import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
+const FloatingWindowContent = defineAsyncComponent(() => import('@/components/tabs/FloatingWindowContent.vue'))
 
 // refs
 const menu = ref()
@@ -17,12 +14,20 @@ const windowTabs = ref([])
 const openedWindowTabs = ref([])
 // stores
 const tabStore = useTabStore()
-const { xTabsLoading, getTabs, getWinTabs, getOpenedWinTabs } = storeToRefs(tabStore)
-const { removeTab, toggleWindows, sortTabs } = tabStore
+const {
+  tabDialog,
+  xTabsLoading,
+  getTabs,
+  getWinTabs,
+  getOpenedWinTabs } = storeToRefs(tabStore)
+const { removeTab, toggleWindows, sortTabs, maximizeTab } = tabStore
 
 // actions
 const removeTabAction = async (tab) => {
   await removeTab(tab)
+}
+const maximizeTabAction = async (tab) => {
+  await maximizeTab(tab)
 }
 
 // lifecycles
@@ -65,7 +70,7 @@ watch(getTabs.value, (newVal, oldVal) => {
             class="floating-window h-full shadow-4">
             <template #icons>
               <div class="flex align-items-center gap-2 ml-2">
-                <Button text rounded>
+                <Button @click="maximizeTabAction(tab)" text rounded>
                   <template #icon>
                     <div class="material-icons" style="font-size: 12px;">open_in_full</div>
                   </template>
@@ -94,30 +99,9 @@ watch(getTabs.value, (newVal, oldVal) => {
             <div
               style="height: 65vh !important;"
               class="m-0 p-0 floating-window-content overflow-y-scroll overflow-x-hidden">
-              <div v-if="tab.type === 'component'" class="p-2">
-                <component :is="tab.component"></component>
-              </div>
-              <div v-else-if="tab.type === 'module-form'" class="p-2">
-                <GeneralForm :key="tab.name" :name="tab.name" :module="tab.module" />
-              </div>
-              <div v-else-if="tab.type == 'module'" class="p-2">
-                <Suspense v-if="tab.base_module">
-                  <DynamicDataTable
-                    :key="tab.base_module._id"
-                    mode="view"
-                    :moduleId="tab.base_module._id"
-                    :moduleEntityName="tab.base_module.mainEntity"
-                    :moduleName="tab.base_module.name"
-                    :moduleLabel="tab.base_module.label"
-                    :fields="tab.module.viewFilterWithFields.fields"
-                    :data="tab.module.collection.data"
-                    :pagination="tab.module.collection.meta && tab.module.collection.meta.pagination">
-                  </DynamicDataTable>
-                  <template #fallback>
-                    <DataTableLoader />
-                  </template>
-                </Suspense>
-              </div>
+              <Teleport :disabled="!tab.maximized" :to="`${tab.maximized ? '.fw-dialog-content' : '.hidden-div'}`">
+                <FloatingWindowContent :key="tx" :tab="tab" />
+              </Teleport>
             </div>
           </Panel>
         </div>
@@ -127,14 +111,17 @@ watch(getTabs.value, (newVal, oldVal) => {
 </template>
 
 <style>
-.floating-window .p-panel-header {
+.floating-window .p-panel-header,
+.floating-window-dialog .p-dialog-header {
   border-bottom: 1px solid var(--surface-300);
 }
 .floating-window .p-panel-icons {
   display: flex;
   flex-direction: row-reverse;
 }
-.floating-window .p-panel-content {
+.floating-window .p-panel-content,
+.floating-window-dialog .p-dialog-content {
   padding: 0 !important;
+  overflow-x: hidden;
 }
 </style>
