@@ -11,6 +11,7 @@ import { useModuleStore } from '@/stores/modules'
 export const useTabStore = defineStore('tabStore', () => {
 
   // refs
+  const tabDialog = ref(false)
   const tabsLoading = ref(false)
   const xTabsLoading = ref(false)
   // stores
@@ -40,6 +41,23 @@ export const useTabStore = defineStore('tabStore', () => {
   const resetTabs = async () => {
     return tabs.value = []
   }
+  const maximizeTab = async (payload) => {
+    tabs.value.map(tab => {
+      if (tab.name === payload.name) tab.maximized = true
+      else tab.maximized = false
+    })
+
+    // open global dialog
+    tabDialog.value = true
+  }
+  const minimizeTab = async () => {
+    tabs.value.map(tab => {
+      if (tab.maximized) tab.maximized = false
+    })
+
+    // close global dialog
+    tabDialog.value = false
+  }
   const generateTab = async (payload) => {
     if ((payload.type === 'module' && payload.visible) || payload.type === 'module-form') {
       const baseModule = await _fetchBaseModuleByField({ field: 'name', value: payload._module })
@@ -66,8 +84,6 @@ export const useTabStore = defineStore('tabStore', () => {
     payload.map(async p => {
       const tab = await generateTab(p)
       tabs.value.push(tab)
-
-
     })
   }
   const toggleTabs = async (payload) => {
@@ -147,6 +163,7 @@ export const useTabStore = defineStore('tabStore', () => {
   }
 
   return {
+    tabDialog,
     xTabsLoading,
     tabsLoading,
     getTabs,
@@ -158,6 +175,8 @@ export const useTabStore = defineStore('tabStore', () => {
     toggleWindows,
     addTab,
     removeTab,
-    resetTabs
+    resetTabs,
+    maximizeTab,
+    minimizeTab
   }
 })

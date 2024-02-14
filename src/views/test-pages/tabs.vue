@@ -61,7 +61,8 @@ const tabs = ref([
     label: 'Form 1',
     component: shallowRef(DataTableLoader),
     expanded: false,
-    opened: false
+    opened: false,
+    maximized: false
   }, {
     type: 'component',
     style: 'window',
@@ -70,7 +71,8 @@ const tabs = ref([
     component: shallowRef(ListViewLoader),
     expanded: false,
     opened: true,
-    opened_order: 1
+    opened_order: 1,
+    maximized: false
   }, {
     type: 'module',
     style: 'window',
@@ -80,7 +82,8 @@ const tabs = ref([
     display: 'table',
     visible: true,
     opened: true,
-    opened_order: 2
+    opened_order: 2,
+    maximized: false
   }
 ])
 
