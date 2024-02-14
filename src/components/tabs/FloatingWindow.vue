@@ -14,10 +14,11 @@ import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataT
 const menu = ref()
 const selectedTab = ref()
 const windowTabs = ref([])
+const openedWindowTabs = ref([])
 // stores
 const tabStore = useTabStore()
-const { xTabsLoading, getTabs } = storeToRefs(tabStore)
-const { removeTab, toggleWindows } = tabStore
+const { xTabsLoading, getTabs, getWinTabs, getOpenedWinTabs } = storeToRefs(tabStore)
+const { removeTab, toggleWindows, sortTabs } = tabStore
 
 // actions
 const removeTabAction = async (tab) => {
@@ -26,31 +27,36 @@ const removeTabAction = async (tab) => {
 
 // lifecycles
 onMounted(async () => {
-  windowTabs.value = getTabs.value.filter(t => t.style == 'window')
+  // windowTabs.value = getTabs.value.filter(t => t.style == 'window')
+  // openedWindowTabs.value = windowTabs.value.filter(wt => wt.opened)
 })
 watch(() => selectedTab.value, async (newVal, oldVal) => {
   await toggleWindows(newVal)
 })
 watch(getTabs.value, (newVal, oldVal) => {
   windowTabs.value = newVal.filter(t => t.style == 'window')
+  let sortedOpenWinTabs = windowTabs.value.filter(wt => wt.opened).sort((a, b) => {
+    return a.opened_order - b.opened_order
+  })
+  openedWindowTabs.value = sortedOpenWinTabs
 })
 
 </script>
 
 <template>
   <div class="z-3 fixed bottom-0 right-0 mx-3 p-2 flex justify-content-end align-items-center">
-    <div v-if="windowTabs.length > 0" class="align-self-end mr-2">
+    <div v-if="getWinTabs.length > 2" class="align-self-end mr-2">
       <div>
         <Dropdown
           v-model="selectedTab"
-          :options="windowTabs"
+          :options="getWinTabs"
           optionLabel="label"
           checkmark :highlightOnSelect="false" />
       </div>
     </div>
     <div
       class="px-1 align-self-end"
-      v-for="(tab, tx) in windowTabs.slice(0,2)" :key="tx">
+      v-for="(tab, tx) in openedWindowTabs" :key="tx">
       <BlockUI :blocked="xTabsLoading">
         <div style="width: 35vw;">
           <Panel

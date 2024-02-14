@@ -20,7 +20,7 @@ import ModuleForm from '@/components/modules/Form/ModuleForm.vue'
 // stores
 const tabStore = useTabStore()
 const { getTabs, tabsLoading } = storeToRefs(tabStore)
-const { toggleTabs, addTab } = tabStore
+const { toggleTabs, addTab, resetTabs } = tabStore
 
 const tabs = ref([
   {
@@ -65,11 +65,12 @@ const tabs = ref([
   }, {
     type: 'component',
     style: 'window',
-    name: 'form1-window',
+    name: 'form2-window',
     label: 'form 2',
     component: shallowRef(ListViewLoader),
     expanded: false,
-    opened: false
+    opened: true,
+    opened_order: 1
   }, {
     type: 'module',
     style: 'window',
@@ -77,11 +78,14 @@ const tabs = ref([
     label: 'Leads Table',
     _module: 'leads',
     display: 'table',
-    visible: true
-  },
+    visible: true,
+    opened: true,
+    opened_order: 2
+  }
 ])
 
 onMounted(async () => {
+  resetTabs() // reset tabs
   tabs.value.map(async t => {
     await addTab(t)
   })

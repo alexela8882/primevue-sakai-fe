@@ -137,7 +137,7 @@ const createNewForm = (entity) => {
   })
   const index = getTabs.value.findIndex(form => form.name === obj.name)
   if (index === -1) {
-    addTab(obj)
+    addTab(obj, true)
   }
 }
 
