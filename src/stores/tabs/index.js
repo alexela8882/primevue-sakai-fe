@@ -26,6 +26,7 @@ export const useTabStore = defineStore('tabStore', () => {
 
   // getters
   const getTabs = computed(() => tabs.value)
+  const getMaximizedTab = computed(() => tabs.value.find(tab => tab.maximized))
   const getWinTabs = computed(() => tabs.value.filter(tab => tab.style === 'window'))
   const getOpenedWinTabs = computed(() => getWinTabs.value.filter(tab => tab.opened))
   const sortTabs = computed(() => {
@@ -43,7 +44,10 @@ export const useTabStore = defineStore('tabStore', () => {
   }
   const maximizeTab = async (payload) => {
     tabs.value.map(tab => {
-      if (tab.name === payload.name) tab.maximized = true
+      if (tab.name === payload.name) {
+        tab.maximized = true
+        tab.expanded = true
+      }
       else tab.maximized = false
     })
 
@@ -167,6 +171,7 @@ export const useTabStore = defineStore('tabStore', () => {
     xTabsLoading,
     tabsLoading,
     getTabs,
+    getMaximizedTab,
     getWinTabs,
     getOpenedWinTabs,
     sortTabs,

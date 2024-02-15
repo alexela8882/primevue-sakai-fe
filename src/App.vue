@@ -11,7 +11,7 @@ import { useTabStore } from '@/stores/tabs/index'
 const router = useRouter()
 // stores & composables
 const tabStore = useTabStore()
-const { tabDialog } = storeToRefs(tabStore)
+const { tabDialog, getMaximizedTab } = storeToRefs(tabStore)
 const generalStore = useGeneralStore()
 const { minimizeTab } = tabStore
 const { formModalTrigger, popUpModalTrigger } = storeToRefs(generalStore)
@@ -35,8 +35,10 @@ const GlobalDialog = defineAsyncComponent(() => import('@/components/dynamic/Glo
   </Suspense>
 
   <div class="hidden-div hidden"></div>
-  <!-- <div class="fw-dialog-content"></div> -->
-  <GlobalDialog @close="minimizeTab()" v-model:visible="tabDialog" title="Custom Dialog" icon="pi pi-info-circle">
+  <GlobalDialog
+    @close="minimizeTab()"
+    v-model:visible="tabDialog"
+    :title="getMaximizedTab && getMaximizedTab.label" icon="pi pi-info-circle">
     <template #default>
       <div class="fw-dialog-content"></div>
     </template>

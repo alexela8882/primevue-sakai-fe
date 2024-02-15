@@ -80,6 +80,7 @@ const tabs = ref([
     label: 'Leads Table',
     _module: 'leads',
     display: 'table',
+    expanded: false,
     visible: true,
     opened: true,
     opened_order: 2,

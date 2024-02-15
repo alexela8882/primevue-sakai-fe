@@ -20,11 +20,25 @@ const {
   getTabs,
   getWinTabs,
   getOpenedWinTabs } = storeToRefs(tabStore)
-const { removeTab, toggleWindows, sortTabs, maximizeTab } = tabStore
+const {
+  removeTab,
+  toggleWindows,
+  sortTabs,
+  maximizeTab,
+  minimizeTab } = tabStore
 
 // actions
 const removeTabAction = async (tab) => {
   await removeTab(tab)
+}
+
+// bug fix for PrimeVue Panel component
+const watchPanelCollapse = (event) => {
+  console.log(event)
+}
+const updatePanelCollapse = (event, tab) => {
+  console.log(event.value)
+  tab.expanded = !event.value
 }
 const maximizeTabAction = async (tab) => {
   await maximizeTab(tab)
@@ -66,6 +80,8 @@ watch(getTabs.value, (newVal, oldVal) => {
         <div style="width: 35vw;">
           <Panel
             toggleable
+            @update:collapsed="watchPanelCollapse($event)"
+            @toggle="updatePanelCollapse($event, tab)"
             :collapsed="!tab.expanded"
             class="floating-window h-full shadow-4">
             <template #icons>
@@ -85,11 +101,18 @@ watch(getTabs.value, (newVal, oldVal) => {
             <template #togglericon>
               <Button text rounded>
                 <template #icon>
-                  <div class="material-icons" style="font-size: 12px;">minimize</div>
+                  <div @click="minimizeTab(tab)" class="material-icons" style="font-size: 12px;">minimize</div>
                 </template>
               </Button>
             </template>
             <template #header>
+              <Teleport :to="`${tab.maximized ? '.global-dialog-header' : '.hidden-div'}`">
+                <div class="flex align-items-center gap-2 text-xl font-bold">
+                  <div v-if="tab.type === 'module-form'" class="material-icons">{{ tab.base_module.icon }}</div>
+                  <div>{{ tab.label.charAt(0).toUpperCase() + tab.label.slice(1) }}</div>
+                  <div v-if="tab.type === 'module-form'">(New)</div>
+                </div>
+              </Teleport>
               <div class="flex align-items-center gap-2 text-xl font-bold">
                 <div v-if="tab.type === 'module-form'" class="material-icons">{{ tab.base_module.icon }}</div>
                 <div>{{ tab.label.charAt(0).toUpperCase() + tab.label.slice(1) }}</div>
