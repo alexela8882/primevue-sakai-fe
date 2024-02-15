@@ -90,11 +90,13 @@ watch(getTabs.value, (newVal, oldVal) => {
               </Button>
             </template>
             <template #header>
-              <div class="flex align-items-center gap-2 text-xl font-bold">
-                <div v-if="tab.type === 'module-form'" class="material-icons">{{ tab.base_module.icon }}</div>
-                <div>{{ tab.label.charAt(0).toUpperCase() + tab.label.slice(1) }}</div>
-                <div v-if="tab.type === 'module-form'">(New)</div>
-              </div>
+              <Teleport :disabled="!tab.maximized" :to="`${tab.maximized ? '.global-dialog-header' : '.hidden-div'}`">
+                <div class="flex align-items-center gap-2 text-xl font-bold">
+                  <div v-if="tab.type === 'module-form'" class="material-icons">{{ tab.base_module.icon }}</div>
+                  <div>{{ tab.label.charAt(0).toUpperCase() + tab.label.slice(1) }}</div>
+                  <div v-if="tab.type === 'module-form'">(New)</div>
+                </div>
+              </Teleport>
             </template>
             <div
               style="height: 65vh !important;"
