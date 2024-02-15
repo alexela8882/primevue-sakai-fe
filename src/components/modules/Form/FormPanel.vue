@@ -21,8 +21,8 @@
 </script>
 <template>
     <div>
-        <div  v-for="section in panel.sections" :key="section._id" class="flex flex-column mt-4">
-            <h6>{{ section.sectionLabel }}</h6>
+        <div v-for="(section,sectioni) in panel.sections" :key="section._id" class="flex flex-column" :class="(sectioni > 1) ? 'mt-2' : ''">
+            <h6 class="formSectionLabel">{{ section.sectionLabel }}</h6>
             <div class="grid">
                 <div  v-for="(col,colI) in section.field_ids" :key="colI" class="col flex flex-column gap-2">
                     <Field v-for="field in col" :key="field" :config="find(form.fields,{'_id':field})"/>
@@ -34,5 +34,9 @@
 <style>
 .fieldInput.required input{
     border-left: 5px solid #f44336 !important;
+}
+.formSectionLabel{
+    background: #80808029;
+    padding:5px 2px;
 }
 </style>

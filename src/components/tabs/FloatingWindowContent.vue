@@ -18,7 +18,7 @@ const props = defineProps({
     <div v-if="tab.type === 'component'" class="p-2">
       <component :is="tab.component"></component>
     </div>
-    <div v-else-if="tab.type === 'module-form'" class="p-2">
+    <div v-else-if="tab.type === 'module-form'" class="p-3">
       <Form :config="tab" />
     </div>
     <div v-else-if="tab.type == 'module'" class="p-2">
