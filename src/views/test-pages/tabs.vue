@@ -62,6 +62,7 @@ const tabs = ref([
     component: shallowRef(DataTableLoader),
     expanded: false,
     opened: false,
+    opened_order: null,
     maximized: false
   }, {
     type: 'component',

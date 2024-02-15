@@ -160,7 +160,8 @@ const createNewForm = (entity) => {
     label: `${entity} form`,
     _module: entity,
     expanded: true,
-    opened: false
+    opened: false,
+    opened_order: null
   })
   const index = getTabs.value.findIndex(form => form.name === obj.name)
   if (index === -1) {
@@ -177,30 +178,21 @@ const createNewTable = (entity) => {
     _module: entity,
     visible: true,
     expanded: true,
-    opened: false
+    opened: false,
+    opened_order: null
   })
   const index = getTabs.value.findIndex(form => form.name === obj.name)
   if (index === -1) {
     addTab(obj, true)
   }
 }
-
-// lifecycles
-onMounted(async () => {
-  bindOutsideClickListener()
-
-  // get auth user
-  await axios.get(`users/${localStorage.getItem('auth_id')}/get`).then((response) => {
-    authUser.value = response.data
-    console.log(authUser.value)
-  })
-
+const initialize = async () => {
   // create forms and tables
   getModules.value.map(module => {
     if (
       module.mainEntity === 'Account' ||
       module.mainEntity === 'Lead' ||
-      module.mainEntity === 'Opportunity'
+      module.mainEntity === 'SalesOpportunity'
     ) {
       // create forms
       let formObj = Object.assign({}, {
@@ -225,6 +217,20 @@ onMounted(async () => {
       fwTable.items.push(tableObj)
     }
   })
+}
+
+// lifecycles
+onMounted(async () => {
+  bindOutsideClickListener()
+
+  // get auth user
+  await axios.get(`users/${localStorage.getItem('auth_id')}/get`).then((response) => {
+    authUser.value = response.data
+    console.log(authUser.value)
+  })
+
+  // initialize
+  initialize()
 })
 onBeforeUnmount(() => {
   unbindOutsideClickListener()
