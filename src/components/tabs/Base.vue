@@ -20,9 +20,10 @@ const { getTabs } = storeToRefs(tabStore)
   <div>
     <div v-for="(tab, tx) in getTabs" :key="tx">
       <div v-if="tab.visible">
-        <div v-if="tab.type == 'module'">
+        <div v-if="tab.type == 'module' && tab.style == 'tab'">
           <Suspense v-if="tab.base_module">
             <DynamicDataTable
+              :key="tab.base_module._id"
               mode="view"
               :moduleId="tab.base_module._id"
               :moduleEntityName="tab.base_module.mainEntity"

@@ -4808,6 +4808,22 @@
           },
           "created_at": "2023-10-12",
           "inquiry_type_id": null
+        },
+        {
+          "_id": 1707794081147,
+          "company": "asd",
+          "phoneNo": "asd",
+          "status_id": "asd",
+          "source_id": "asd",
+          "type_id": "asd",
+          "business_unit_ids": "asd",
+          "country_id": "asdasd",
+          "owner_id": {
+            "_id": "5bb104ed678f71061f6451f8",
+            "firstName": "Ninoy",
+            "lastName": "Cahayon",
+            "email": "ninoy.cahayon@escolifesciences.com"
+          }
         }
       ],
       "meta": {
@@ -25703,6 +25719,190 @@
           "type_id": "Lead",
           "link_id": "65288b4ca6ebc75d70589d02",
           "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB4uarysAAAA=",
+          "name": "alexander flores",
+          "email": "alexela8882@gmail.com",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl",
+          "conversations": [
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAeLz89m\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB33MHKsAAAA=",
+              "createdDateTime": "2024-01-12T01:33:13Z",
+              "lastModifiedDateTime": "2024-02-02T02:27:59Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAeLz89m",
+              "categories": [],
+              "receivedDateTime": "2024-01-12T01:33:13Z",
+              "sentDateTime": "2024-01-12T01:33:13Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB1536C187EA14009F641FEB3CB06F2@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "Test",
+              "bodyPreview": "Test",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl",
+              "conversationIndex": "AQHaRPdOHlG1VHjagEePcV3CvzZY5Q==",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC%2BhIg8pZ4JMoxc0AB33MHKsAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style></head><body dir=\"ltr\"><div class=\"elementToProof\" style=\"font-family:Calibri,Helvetica,sans-serif; font-size:12pt; color:rgb(0,0,0)\">Test<br></div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "hansgorospe@gmail.com",
+                    "address": "hansgorospe@gmail.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAeLz89+\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB4uaryoAAAA=",
+              "createdDateTime": "2024-02-02T02:27:56Z",
+              "lastModifiedDateTime": "2024-02-02T02:29:46Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAeLz89+",
+              "categories": [],
+              "receivedDateTime": "2024-02-02T02:28:01Z",
+              "sentDateTime": "2024-02-02T02:28:01Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB1536AEC344A7495C84F88BCDB0422@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "RE: Test",
+              "bodyPreview": "________________________________\r\nFrom: alexander flores on behalf of alexander flores <alexela8882@gmail.com>\r\nSent: Friday, January 12, 2024 1:33:13 AM\r\nTo: hansgorospe@gmail.com <hansgorospe@gmail.com>\r\nSubject: Test\r\n\r\nTest",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl",
+              "conversationIndex": "AQHaRPdOHlG1VHjagEePcV3CvzZY5bD2dPIa",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC%2BhIg8pZ4JMoxc0AB4uaryoAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style></head><body dir=\"ltr\"><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> alexander flores on behalf of alexander flores &lt;alexela8882@gmail.com&gt;<br><b>Sent:</b> Friday, January 12, 2024 1:33:13 AM<br><b>To:</b> hansgorospe@gmail.com &lt;hansgorospe@gmail.com&gt;<br><b>Subject:</b> Test</font> <div>&nbsp;</div></div><div><div class=\"elementToProof\" style=\"font-family:Calibri,Helvetica,sans-serif; font-size:12pt; color:rgb(0,0,0)\">Test<br></div></div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "hansgorospe@gmail.com",
+                    "address": "hansgorospe@gmail.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAeLz8+S\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB4uarysAAAA=",
+              "createdDateTime": "2024-02-02T02:29:46Z",
+              "lastModifiedDateTime": "2024-02-02T02:29:47Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAeLz8+S",
+              "categories": [],
+              "receivedDateTime": "2024-02-02T02:29:46Z",
+              "sentDateTime": "2024-02-02T02:29:46Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB1536FB37CF1C07F0A712648CB0422@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "RE: Test",
+              "bodyPreview": "Test reply\r\n\r\n\r\n\r\n  1.  list 1\r\n  2.  list 2\r\n  3.  list 3\r\n\r\nColored fonted font\r\n\r\n________________________________\r\nFrom: alexander flores on behalf of alexander flores <alexela8882@gmail.com>\r\nSent: Friday, February 2, 2024 2:28:01 AM\r\nTo: hansgorospe",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl",
+              "conversationIndex": "AQHaRPdOHlG1VHjagEePcV3CvzZY5bD2dPIagAAAf8o=",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC%2BhIg8pZ4JMoxc0AB4uarysAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style></head><body dir=\"ltr\"><p>Test <strong>reply</strong></p><p>&nbsp;</p><ol><li>list 1</li><li>list 2</li><li>list 3</li></ol><p><span style=\"color:#b96ad9; font-family:impact,sans-serif\"><em>Colored fonted font</em></span></p><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> alexander flores on behalf of alexander flores &lt;alexela8882@gmail.com&gt;<br><b>Sent:</b> Friday, February 2, 2024 2:28:01 AM<br><b>To:</b> hansgorospe@gmail.com &lt;hansgorospe@gmail.com&gt;<br><b>Subject:</b> RE: Test</font> <div>&nbsp;</div></div><div><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> alexander flores on behalf of alexander flores &lt;alexela8882@gmail.com&gt;<br><b>Sent:</b> Friday, January 12, 2024 1:33:13 AM<br><b>To:</b> hansgorospe@gmail.com &lt;hansgorospe@gmail.com&gt;<br><b>Subject:</b> Test</font> <div>&nbsp;</div></div><div><div class=\"elementToProof\" style=\"font-family:Calibri,Helvetica,sans-serif; font-size:12pt; color:rgb(0,0,0)\">Test<br></div></div></div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "hansgorospe@gmail.com",
+                    "address": "hansgorospe@gmail.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            }
+          ]
+        },
+        {
+          "_id": "1707794081700",
+          "owner_id": "659763cebebdd5aad80b0fa5",
+          "source_id": "Email",
+          "dateRequested": "01-06-2024",
+          "dateResponded": "01-06-2024",
+          "assigned_to_id": {
+            "_id": "5bb104ed678f71061f6451f8",
+            "firstName": "Ninoy",
+            "lastName": "Cahayon",
+            "email": "ninoy.cahayon@escolifesciences.com"
+          },
+          "description": "This is a test from converted mailbox - 1707794081700",
+          "type_id": "Lead",
+          "link_id": 1707794081147,
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB4uaryoAAAA=",
           "name": "alexander flores",
           "email": "alexela8882@gmail.com",
           "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl",

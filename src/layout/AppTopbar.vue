@@ -131,14 +131,13 @@ const createNewForm = (entity) => {
     style: 'window',
     name: `${entity}-window`,
     label: entity,
-    module: entity,
+    _module: entity,
     expanded: false,
     opened: false
   })
-  const index = newForms.value.findIndex(form => form.name === obj.name)
+  const index = getTabs.value.findIndex(form => form.name === obj.name)
   if (index === -1) {
-    addTab(obj)
-    newForms.value.push(obj)
+    addTab(obj, true)
   }
 }
 
@@ -213,7 +212,7 @@ watch(() => getModules.value, (newValue, oldValue) => {
         <i class="pi pi-user"></i>
         <span>Profile</span>
       </button> -->
-      <SplitButton label="New" :model="createNewItems" text ></SplitButton>
+      <SplitButton label="New" :model="createNewItems" text class="ml-3"></SplitButton>
       <button @click="onSettingsClick()" class="p-link layout-topbar-button">
         <i class="pi pi-bell"></i>
         <span>Bell</span>

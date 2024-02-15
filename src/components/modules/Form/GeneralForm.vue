@@ -53,7 +53,7 @@ const proceedBtn = async () => {
   if (!res.inner) console.log('passed')
   else console.log('error')
 }
-const initialize = () => {
+const initialize = async () => {
   newModuleFields.value = props.module.fields
   // add collection item for filling field data
   newModuleFields.value.map(nmf => Object.assign(nmf, { ...nmf, data: { value: null } }))
@@ -141,8 +141,8 @@ const validateSyncFunc = handleSubmit((values, actions) => {
 })
 
 // lifecycles
-onMounted(() => {
-  initialize()
+onMounted(async () => {
+  await initialize()
 })
 </script>
 
@@ -218,8 +218,8 @@ onMounted(() => {
     </div>
 
     <div
-      class="sticky bottom-0 right-0 pt-3 surface-0"
-      :class="`${tabStyle === 'tab' && 'mb-7 pb-7'}`">
+      class="sticky bottom-0 right-0 py-2"
+      :class="`${tabStyle === 'tab' ? 'mb-7 pb-7 surface-50' : 'surface-0'}`">
       <Button @click="proceedBtn" label="Save" />
     </div>
   </div>

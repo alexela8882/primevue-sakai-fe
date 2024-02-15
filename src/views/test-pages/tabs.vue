@@ -20,15 +20,15 @@ import ModuleForm from '@/components/modules/Form/ModuleForm.vue'
 // stores
 const tabStore = useTabStore()
 const { getTabs, tabsLoading } = storeToRefs(tabStore)
-const { toggleTabs, addTab } = tabStore
+const { toggleTabs, addTab, resetTabs } = tabStore
 
 const tabs = ref([
   {
     type: 'module',
     style: 'tab',
     name: 'lead-tab',
-    label: 'Leads',
-    module: 'leads',
+    label: 'Leads Table',
+    _module: 'leads',
     display: 'table',
     visible: true
   }, {
@@ -36,7 +36,7 @@ const tabs = ref([
     style: 'tab',
     name: 'inquiry-tab',
     label: 'Inquiries',
-    module: 'inquiries',
+    _module: 'inquiries',
     display: 'table',
     visible: false
   }, {
@@ -44,14 +44,14 @@ const tabs = ref([
     style: 'tab',
     name: 'leads',
     label: 'New Lead',
-    module: 'leads',
+    _module: 'leads',
     visible: false
   }, {
     type: 'module',
     style: 'tab',
     name: 'campaign-tab',
     label: 'Campaigns',
-    module: 'campaigns',
+    _module: 'campaigns',
     display: 'table',
     visible: false
   }, {
@@ -61,20 +61,34 @@ const tabs = ref([
     label: 'Form 1',
     component: shallowRef(DataTableLoader),
     expanded: false,
-    opened: false
+    opened: false,
+    maximized: false
   }, {
     type: 'component',
     style: 'window',
     name: 'form2-window',
-    label: 'Form 2',
-    component: shallowRef(ModuleForm),
-    module:'leads',
+    label: 'form 2',
+    component: shallowRef(ListViewLoader),
     expanded: false,
-    opened: true
-  },
+    opened: true,
+    opened_order: 1,
+    maximized: false
+  }, {
+    type: 'module',
+    style: 'window',
+    name: 'lead-window',
+    label: 'Leads Table',
+    _module: 'leads',
+    display: 'table',
+    visible: true,
+    opened: true,
+    opened_order: 2,
+    maximized: false
+  }
 ])
 
 onMounted(async () => {
+  resetTabs() // reset tabs
   tabs.value.map(async t => {
     await addTab(t)
   })
