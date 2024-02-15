@@ -19,7 +19,7 @@ const props = defineProps({
       <component :is="tab.component"></component>
     </div>
     <div v-else-if="tab.type === 'module-form'" class="p-3">
-      <Form :config="tab" />
+      <Form :key="tab.name" :config="tab" />
     </div>
     <div v-else-if="tab.type == 'module'" class="p-2">
       <Suspense v-if="tab.base_module">
