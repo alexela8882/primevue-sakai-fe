@@ -35,28 +35,43 @@
             <!-- <small></small> -->
         </div>
     </template>
-    <template v-if="config.field_type.name=='number' || config.field_type.name=='percentage'">
-        <label :for="config.name">{{ config.label }}</label>
-        <InputNumber v-model="form.values.main[config.name]" inputId="config.name" 
-        mode="decimal"
-        :useGrouping="get(config.rules,'comma_separated',false)" 
-        :suffix="(config.field_type.name=='percentage') ? '%' : ''"
-        :minFractionDigits="get(config.rules,'decimal',null)" 
-        :maxFractionDigits="get(config.rules,'decimal',null)" 
-        :min="get(config.rules,'digits_between.min',null)" 
-        :max="get(config.rules,'digits_between.max',null)" />
+    <template v-else-if="config.field_type.name=='number' || config.field_type.name=='percentage'">
+        <div class="fieldInput flex flex-column" :class="{'required': get(config.rules,'required',false)}">
+            <label :for="config.name">{{ config.label }}</label>
+            <InputNumber v-model="form.values.main[config.name]" inputId="config.name" 
+            mode="decimal"
+            :useGrouping="get(config.rules,'comma_separated',false)" 
+            :suffix="(config.field_type.name=='percentage') ? '%' : ''"
+            :minFractionDigits="get(config.rules,'decimal',null)" 
+            :maxFractionDigits="get(config.rules,'decimal',null)" 
+            :min="get(config.rules,'digits_between.min',null)" 
+            :max="get(config.rules,'digits_between.max',null)" />
+        </div>
     </template>
     <template v-else-if="config.field_type.name=='currency'">
+        <div class="fieldInput flex flex-column" :class="{'required': get(config.rules,'required',false)}">
+            <label :for="config.name">{{ config.label }}</label>
+            <InputNumber v-model="form.values.main[config.name]" inputId="config.name" 
+            mode="currency"
+            :useGrouping="get(config.rules,'comma_separated',false)" 
+            :currency="(config.field_type.name=='currency') ? get(form.values.main,config.currencySource.field+'.code','SGD') : ''"
+            :currencyDisplay="get(config,'currencySource.concat','')"
+            :minFractionDigits="get(config.rules,'decimal',null)" 
+            :maxFractionDigits="get(config.rules,'decimal',null)" 
+            :min="get(config.rules,'digits_between.min',null)" 
+            :max="get(config.rules,'digits_between.max',null)" />
+        </div>
+    </template>
+    <template v-else-if="config.field_type.name=='date'">
+        <div class="fieldInput flex flex-column" >
         <label :for="config.name">{{ config.label }}</label>
-        <InputNumber v-model="form.values.main[config.name]" inputId="config.name" 
-        mode="currency"
-        :useGrouping="get(config.rules,'comma_separated',false)" 
-        :currency="(config.field_type.name=='currency') ? get(form.values.main,config.currencySource.field+'.code','SGD') : ''"
-        :currencyDisplay="get(config,'currencySource.concat','')"
-        :minFractionDigits="get(config.rules,'decimal',null)" 
-        :maxFractionDigits="get(config.rules,'decimal',null)" 
-        :min="get(config.rules,'digits_between.min',null)" 
-        :max="get(config.rules,'digits_between.max',null)" />
+         <el-date-picker class="w-full"
+            v-model="form.values.main[config.name]"
+            clearable
+            :type="get(config.rules,'date_selection','date')"
+            :format="((get(config.rules,'date_selection','date') == 'month') ? 'MMM YYYY' : ((get(config.rules,'date_selection','date') == 'week') ?  'YYYY [w]ww' : 'MM/DD/YYYY'))">
+            </el-date-picker>
+        </div>
     </template>
     <template v-else-if="config.field_type.name=='richTextBox'">
         <div class="fieldInput flex flex-column" :class="{'required': get(config.rules,'required',false)}">
@@ -139,5 +154,15 @@
 }
 .fieldInput.checkbox label{
     margin-left:10px;
+}
+.el-date-editor.el-input, .el-date-editor.el-input__wrapper{
+    height: 36.5px;
+    --el-input-border-color: rgba(0,0,0,0.38);
+}
+.el-date-editor .el-input__wrapper.is-focus{
+    box-shadow: inset 0 0 0 2px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5 !important;
+}
+.el-date-editor .el-input__wrapper:hover{
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 87%) inset;
 }
 </style>

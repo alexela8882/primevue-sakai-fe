@@ -14,7 +14,7 @@ import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useToast } from "primevue/usetoast"
 import axios from 'axios'
-import { filter, includes, reduce } from 'lodash'
+import { filter, includes, reduce, orderBy, startCase } from 'lodash'
 // stores & composables
 import { useBaseStore } from '@/stores/base'
 import { useLayout } from '@/layout/composables/layout'
@@ -152,7 +152,7 @@ onMounted(async () => {
   })
 
   // initial generation
-  generateTabs(newForms.value)
+  // generateTabs(newForms.value)
 })
 onBeforeUnmount(() => {
   unbindOutsideClickListener()
@@ -161,9 +161,9 @@ onBeforeUnmount(() => {
 watch(() => getModules.value, (newValue, oldValue) => {
   // Update the value in the component when it changes
   if(createNewItems.value == null){
-    createNewItems.value = reduce(newValue, function(res, val, i){
-      if(includes(['Account','Lead','Opportunity'],val.mainEntity)){
-        res.push({'label':val.mainEntity,'command':()=>{ createNewForm(val.name) }})
+    createNewItems.value = reduce(orderBy(newValue,'label'), function(res, val, i){
+      if(includes(['Account','Contact','Lead','SalesOpportunity'],val.mainEntity)){
+        res.push({'label':startCase(val.mainEntity),'command':()=>{ createNewForm(val.name) }})
       }
       return res
     }, [])
