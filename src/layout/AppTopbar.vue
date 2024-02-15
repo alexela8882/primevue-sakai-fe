@@ -152,7 +152,7 @@ onMounted(async () => {
   })
 
   // initial generation
-  generateTabs(newForms.value)
+  // generateTabs(newForms.value)
 })
 onBeforeUnmount(() => {
   unbindOutsideClickListener()
