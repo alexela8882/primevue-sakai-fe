@@ -28,6 +28,7 @@ const FloatingWindow = defineAsyncComponent(() =>
 // -----------
 // refs
 // -----------
+const fwMenu = ref(false)
 const newForms = ref([])
 const createNewItems = ref()
 const menu = ref()
@@ -50,25 +51,48 @@ const { toggleTabs, generateTabs, addTab } = tabStore
 const items = ref([
   {
     label: 'Themes',
-      icon: 'pi pi-palette',
-      command: () => {
-        configBar.value = true
-      }
-    }, {
-      label: 'Modules',
-      icon: 'pi pi-book',
-      command: () => {
-        router.push('/modules')
-      }
-    }, {
-      separator: true
-    }, {
-      label: 'Sign Out',
-      icon: 'pi pi-sign-out',
-      command: () => {
-        logout()
-      }
+    icon: 'pi pi-palette',
+    command: () => {
+      configBar.value = true
     }
+  }, {
+    label: 'Modules',
+    icon: 'pi pi-book',
+    command: () => {
+      router.push('/modules')
+    }
+  }, {
+    separator: true
+  }, {
+    label: 'Sign Out',
+    icon: 'pi pi-sign-out',
+    command: () => {
+      logout()
+    }
+  }
+])
+const floatingItems = ref([
+  {
+    label: 'Test Pages',
+    icon: 'pi pi-book',
+    items: [
+      {
+        label: 'Tabs',
+        icon: 'pi pi-clone',
+        command: () => {
+          router.push({ name: 'test-pages.tabs' })
+        }
+      }
+    ]
+  }, {
+    label: 'Tables',
+    icon: 'pi pi-table',
+    items: []
+  }, {
+    label: 'Forms',
+    icon: 'pi pi-form',
+    items: []
+  }
 ])
 
 // -------------
@@ -76,6 +100,9 @@ const items = ref([
 // -------------
 const toggle = (event) => {
   menu.value.toggle(event)
+}
+const fwMenuToggle = (event) => {
+  fwMenu.value.toggle(event)
 }
 const logoUrl = computed(() => {
   return `layout/${layoutConfig.darkTheme.value ? 'reddot-logo' : 'reddot-logo'}.png`
@@ -129,9 +156,26 @@ const createNewForm = (entity) => {
   let obj = Object.assign({}, {
     type: 'module-form',
     style: 'window',
-    name: `${entity}-window`,
-    label: entity,
+    name: `${entity}-window-form`,
+    label: `${entity} form`,
     _module: entity,
+    expanded: true,
+    opened: false
+  })
+  const index = getTabs.value.findIndex(form => form.name === obj.name)
+  if (index === -1) {
+    addTab(obj, true)
+  }
+}
+const createNewTable = (entity) => {
+  let obj = Object.assign({}, {
+    type: 'module',
+    style: 'window',
+    display: 'table',
+    name: `${entity}-window-table`,
+    label: `${entity} table`,
+    _module: entity,
+    visible: true,
     expanded: true,
     opened: false
   })
@@ -151,8 +195,36 @@ onMounted(async () => {
     console.log(authUser.value)
   })
 
-  // initial generation
-  generateTabs(newForms.value)
+  // create forms and tables
+  getModules.value.map(module => {
+    if (
+      module.mainEntity === 'Account' ||
+      module.mainEntity === 'Lead' ||
+      module.mainEntity === 'Opportunity'
+    ) {
+      // create forms
+      let formObj = Object.assign({}, {
+        label: module.label,
+        icon: module.icon,
+        command: () => {
+          createNewForm(module.name)
+        }
+      })
+      let fwForm = floatingItems.value.find(fw => fw.label == 'Forms')
+      fwForm.items.push(formObj)
+
+      // create tables
+      let tableObj = Object.assign({}, {
+        label: module.label,
+        icon: module.icon,
+        command: () => {
+          createNewTable(module.name)
+        }
+      })
+      let fwTable = floatingItems.value.find(fw => fw.label == 'Tables')
+      fwTable.items.push(tableObj)
+    }
+  })
 })
 onBeforeUnmount(() => {
   unbindOutsideClickListener()
@@ -160,14 +232,14 @@ onBeforeUnmount(() => {
 // Watch for changes in the 'modules' state of moduleStore
 watch(() => getModules.value, (newValue, oldValue) => {
   // Update the value in the component when it changes
-  if(createNewItems.value == null){
-    createNewItems.value = reduce(newValue, function(res, val, i){
-      if(includes(['Account','Lead','Opportunity'],val.mainEntity)){
-        res.push({'label':val.mainEntity,'command':()=>{ createNewForm(val.name) }})
-      }
-      return res
-    }, [])
-  }
+  // if(createNewItems.value == null){
+  //   createNewItems.value = reduce(newValue, function(res, val, i){
+  //     if(includes(['Account','Lead','Opportunity'],val.mainEntity)){
+  //       res.push({'label':val.mainEntity,'command':()=>{ createNewForm(val.name) }})
+  //     }
+  //     return res
+  //   }, [])
+  // }
 })
 </script>
 
@@ -198,7 +270,7 @@ watch(() => getModules.value, (newValue, oldValue) => {
     <div class="layout-topbar-menu" :class="topbarMenuClasses">
       <span class="flex align-items-center layout-search p-input-icon-left ml-3">
         <i class="pi pi-search" />
-        <InputText placeholder="Quick search..." size="large" />
+        <InputText class="atb-inputtext" placeholder="Quick search..." size="large" />
       </span>
       <!-- <div class="flex align-items-center">
         <span>Hello!&nbsp;</span>
@@ -212,7 +284,14 @@ watch(() => getModules.value, (newValue, oldValue) => {
         <i class="pi pi-user"></i>
         <span>Profile</span>
       </button> -->
-      <SplitButton label="New" :model="createNewItems" text class="ml-3"></SplitButton>
+      <!-- <SplitButton label="New" :model="createNewItems" text class="ml-3"></SplitButton> -->
+      <div class="justify-content-center">
+        <button v-if="isAuthenticated" @click="fwMenuToggle" class="p-link layout-topbar-button">
+          <i class="pi pi-chevron-down" style="font-size: 1rem;"></i>
+          <span>FwMenu</span>
+        </button>
+        <Menu class="fw-menu" ref="fwMenu" :model="floatingItems" :popup="true" />
+      </div>
       <button @click="onSettingsClick()" class="p-link layout-topbar-button">
         <i class="pi pi-bell"></i>
         <span>Bell</span>
@@ -239,14 +318,18 @@ watch(() => getModules.value, (newValue, oldValue) => {
   <FloatingWindow />
 </template>
 
-<style scoped>
+<style>
 
 .layout-topbar a:focus {
   box-shadow: none !important;
 }
-.p-inputtext {
+.atb-inputtext.p-inputtext {
   border: 1px solid lightgray !important;
   border-radius: 10px !important;
   padding: 7px 15px 7px 35px !important;
+}
+.fw-menu.p-menu ul {
+  overflow-y: scroll;
+  height: 300px;
 }
 </style>
