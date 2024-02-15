@@ -85,7 +85,7 @@ const handleDragging = (event) => {
 
 <style scoped>
 .custom-dialog-mask {
-  z-index: 1665;
+  z-index: 1000;
   position: fixed;
   top: 0;
   left: 0;
