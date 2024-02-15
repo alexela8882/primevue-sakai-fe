@@ -2,7 +2,7 @@
 // imports
 import { defineProps, defineAsyncComponent } from 'vue'
 // components
-const GeneralForm = defineAsyncComponent(() => import('@/components/modules/Form/GeneralForm.vue'))
+const Form = defineAsyncComponent(() => import('@/components/modules/Form/Form.vue'))
 const DynamicDataTable = defineAsyncComponent(() => import('@/components/modules/DynamicDataTable/DynamicDataTableMain.vue'))
 // loaders
 import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
@@ -19,7 +19,7 @@ const props = defineProps({
       <component :is="tab.component"></component>
     </div>
     <div v-else-if="tab.type === 'module-form'" class="p-2">
-      <GeneralForm :key="tab.name" :name="tab.name" :module="tab.module" />
+      <Form :config="tab" />
     </div>
     <div v-else-if="tab.type == 'module'" class="p-2">
       <Suspense v-if="tab.base_module">
