@@ -44,7 +44,10 @@ export const useTabStore = defineStore('tabStore', () => {
   }
   const maximizeTab = async (payload) => {
     tabs.value.map(tab => {
-      if (tab.name === payload.name) tab.maximized = true
+      if (tab.name === payload.name) {
+        tab.maximized = true
+        tab.expanded = true
+      }
       else tab.maximized = false
     })
 

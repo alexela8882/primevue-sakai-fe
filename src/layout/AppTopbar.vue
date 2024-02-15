@@ -132,7 +132,7 @@ const createNewForm = (entity) => {
     name: `${entity}-window`,
     label: entity,
     _module: entity,
-    expanded: false,
+    expanded: true,
     opened: false
   })
   const index = getTabs.value.findIndex(form => form.name === obj.name)
