@@ -120,7 +120,7 @@ watch(getTabs.value, (newVal, oldVal) => {
               </div>
             </template>
             <div
-              style="height: 65vh !important;"
+              style="height: 70vh !important;"
               class="m-0 p-0 floating-window-content overflow-y-scroll overflow-x-hidden">
               <Teleport :disabled="!tab.maximized" :to="`${tab.maximized ? '.fw-dialog-content' : '.hidden-div'}`">
                 <FloatingWindowContent :key="tx" :tab="tab" />
