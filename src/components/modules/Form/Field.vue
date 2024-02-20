@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, onMounted,inject   } from 'vue'
+    import { ref, onMounted,inject, defineAsyncComponent    } from 'vue'
     import { useRouter } from 'vue-router'
     import { storeToRefs } from 'pinia'
     import { useToast } from "primevue/usetoast"
@@ -10,6 +10,8 @@
     import { useFormDataStore } from '../../../stores/forms'
 
     import Editor from '@tinymce/tinymce-vue'
+    
+    const LookupField = defineAsyncComponent(() => import('@/components/modules/Form/LookupField.vue'))
 
     const props = defineProps({
         config: Object
@@ -21,10 +23,25 @@
     const value = ref()
     const tinyApiKey = ref('izbi1p0d9vddiqqrjjtgx2a6ech4jv2wqogrplsesugoa0gs')
     const form = inject('form')
+    const popupLoading = ref(false)
 
+    const remoteLookupOptions = (query) => {
+        if (query) {
+            popupLoading.value = true
+            setTimeout(() => {
+                popupLoading.value = false
+                options.value = list.value.filter((item) => {
+                    return item.label.toLowerCase().includes(query.toLowerCase())
+                })
+            }, 3000)
+        } else {
+            options.value = []
+        }
+    } 
     onMounted(()=>{
         
     })
+
 
 </script>
 <template>
@@ -120,24 +137,44 @@
     <template v-else-if="config.field_type.name=='lookupModel'">
         <div class="fieldInput flex flex-column" :class="{'required': get(config.rules,'required',false)}">
             <label :for="config.name">{{ config.label }}</label>
-            <Dropdown v-if="get(config.rules,'ss_dropdown',false)" v-model="form.values.main[config.name]" :options="getPicklistByListName(config.listName)" showClear filter  optionLabel="code" :placeholder="'Select '+ config.label" checkmark :highlightOnSelect="false" class="w-full">
-                <!-- <template #value="slotProps">
-                    <div v-if="slotProps.value" class="flex align-items-center">
-                        <img :alt="slotProps.value.label" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png" :class="`mr-2 flag flag-${slotProps.value.code.toLowerCase()}`" style="width: 18px" />
-                        <div>{{ slotProps.value.name }}</div>
-                    </div>
-                    <span v-else>
-                        {{ slotProps.placeholder }}
-                    </span>
-                </template>
-                <template #option="slotProps">
-                    <div class="flex align-items-center">
-                        <img :alt="slotProps.option.label" src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png" :class="`mr-2 flag flag-${slotProps.option.code.toLowerCase()}`" style="width: 18px" />
-                        <div>{{ slotProps.option.name }}</div>
-                    </div>
-                </template> -->
-            </Dropdown>
-            <MultiSelect v-else v-model="form.values.main[config.name]" display="chip" :options="getPicklistByListName(config.listName)" optionLabel="value" :placeholder="'Select '+ config.label" :selectionLimit="get(config.rules,'between.max',0)" class="w-full" />
+            <template v-if="get(config.rules,'ss_dropdown',false) || get(config.rules,'ms_dropdown',false)">
+                <el-select v-if="get(form.lookup,config.uniqueName + '.group',false)" v-model="form.values.main[config.name]" placeholder="Select" class="w-full">
+                    <el-option-group
+                    v-for="group in get(form.lookup,config.uniqueName+'.options',[])"
+                    :key="group.label"
+                    :label="group.label"
+                    >
+                    <el-option
+                        v-for="item in group.options"
+                        :key="item._id"
+                        :label="item.value"
+                        :value="item._id"
+                    />
+                    </el-option-group>
+                </el-select>
+                <el-select v-else
+                    v-model="form.values.main[config.name]"
+                    class="w-full"
+                    placeholder="Select">
+                        <el-option
+                        v-for="item in get(form.lookup,config.uniqueName+'.options',[])"
+                        :key="item._id"
+                        :label="item.value"
+                        :value="item._id"
+                        />
+                </el-select>
+            </template>
+            <div v-else-if="get(config.rules,'checkbox',false) || get(config.rules,'checkbox_inline',false) || get(config.rules,'radiobutton',false) || get(config.rules,'radiobutton_inline',false)" :class="(get(config.rules,'checkbox_inline',false) || get(config.rules,'radiobutton_inline',false)) ? 'card flex flex-wrap justify-content-center gap-3': ''">
+                <div  v-for="option of get(form.lookup,config.uniqueName+'.options',[])" :key="option._id" class="flex align-items-center" :class="(get(config.rules,'checkbox',false) || get(config.rules,'radiobutton',false)) ? 'mb-1 mt-1 ml-3' : ''">
+                    <Checkbox v-if="get(config.rules,'checkbox',false) || get(config.rules,'checkbox_inline',false)" v-model="form.values.main[config.name]" :inputId="option._id" name="category" :value="option" />
+                    <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values.main[config.name]"/>
+                    <label :for="option._id" class="ml-1">{{ option.value }}</label>
+                </div>
+            </div>
+            <Listbox v-else-if="get(config.rules,'ss_list_view',false) || get(config.rules,'ms_list_view',false)" v-model="form.values.main[config.name]" :options="get(form.lookup,config.uniqueName+'.options',[])" :multiple="get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
+            <template v-else>
+                <LookupField :field="config"/>
+            </template>
         </div>
     </template>
     <template v-else>
@@ -149,20 +186,31 @@
     </template>
 </template>
 <style>
-.fieldInput.required input, .fieldInput.required .p-dropdown{
-    border-left: 5px solid #f44336 !important;
+.fieldInput.required input, .fieldInput.required .el-input__wrapper, .fieldInput.required .p-dropdown{
+    border-left: 5px solid #f44336;
 }
+.fieldInput.required .el-select .el-input__wrapper input{
+    border-left: 0px !important;
+}
+.fieldInput.required .p-inputtext:enabled:focus{
+    border-left-color: #f44336;;
+}
+.fieldInput.required .p-inputtext:enabled:hover{
+    border-left-color: #f44336;;
+}
+
 .fieldInput.checkbox label{
     margin-left:10px;
 }
-.el-date-editor.el-input, .el-date-editor.el-input__wrapper{
+.fieldInput .el-input, .fieldInput .el-input__wrapper{
     height: 36.5px;
     --el-input-border-color: rgba(0,0,0,0.38);
 }
-.el-date-editor .el-input__wrapper.is-focus{
+.fieldInput .el-input__wrapper.is-focus,.fieldInput .el-select .el-input.is-focus .el-input__wrapper{
     box-shadow: inset 0 0 0 2px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5 !important;
 }
-.el-date-editor .el-input__wrapper:hover{
+.fieldInput .el-input__wrapper:hover,.fieldInput .el-select .el-input__wrapper:hover{
     box-shadow: 0 0 0 1px rgb(0 0 0 / 87%) inset;
 }
+
 </style>

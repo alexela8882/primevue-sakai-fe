@@ -153,6 +153,8 @@ import Editor from 'primevue/editor'
 import BlockViewer from '@/components/BlockViewer.vue'
 import '@/assets/styles.scss'
 
+import ClickOutsideDirective from '@/mixins/ClickOutsideDirective';
+
 const pinia = createPinia()
 const app = createApp(App)
 
@@ -168,6 +170,7 @@ app.directive('tooltip', Tooltip)
 app.directive('badge', BadgeDirective)
 app.directive('ripple', Ripple)
 app.directive('styleclass', StyleClass)
+app.directive('click-outside', ClickOutsideDirective);
 
 app.component('BlockViewer', BlockViewer)
 
