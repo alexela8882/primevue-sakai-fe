@@ -48,6 +48,65 @@ export const useFormDataStore = defineStore('formDataStore', () => {
           picklist.value = data
         }
     }
+
+    const fetchLookup = async (payload) => {
+      try {
+        const response = await axios(`${jsonDbUrl.value}/lookup/${payload}`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+        return {'values':response.data.values.data,'field':payload};
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
+    const fetchLookupPaginated = async (payload) => {
+      // let cancelToken = null; // Variable to store the cancel token
+      // // Cancel the previous request if it exists
+      // if (cancelToken) {
+      //     cancelToken.cancel('Previous search canceled');
+      // }
+
+      // // Create a new cancel token
+      // cancelToken = axios.CancelToken.source();
+      
+      try {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        const response = await axios.get(jsonDbUrl.value+'/lookup-paginated', {
+            headers: { 'Content-Type': 'application/json' },
+            params: { "_page": payload.page,"fieldId": payload.fieldId, "search": payload.search },
+            cancelToken: payload.cancelToken.token // Pass the cancel token to the request
+        });
+        // const response = await axios(`${jsonDbUrl.value}/lookup-paginated?_page=${payload.page}&fieldId=${payload.fieldId}`, {
+        //   method: 'GET',
+        //   headers: { 'Content-Type': 'application/json' },
+        // });
+        let meta = {
+          "pagination": {
+            "total": 50,
+            "count": 10,
+            "per_page": 10,
+            "current_page": payload.page,
+            "total_pages": 5,
+            "links": {
+              "previous": "http://reddotcrm.com/api/lookup?page=1",
+              "next": "http://reddotcrm.com/api/lookup?page=3"
+            }
+          }
+        }
+        return {'values':response.data,'field':payload.fieldId,'meta':meta};
+      } catch (error) {
+        // if (axios.isCancel(error)) {
+        //     console.log('Request canceled:', error.message);
+        // } else {
+        //     console.error('Error fetching data:', error);
+        // }
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
     return {
         forms,
         picklist,
@@ -55,6 +114,8 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         getForms,
         getPicklistByListName,
         generateForm,
-        fetchPicklist 
+        fetchPicklist ,
+        fetchLookup,
+        fetchLookupPaginated
     }
 })
