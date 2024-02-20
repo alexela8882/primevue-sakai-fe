@@ -157,18 +157,24 @@ export const useTabStore = defineStore('tabStore', () => {
       const index = tabs.value.findIndex(tab => tab.name === payload.name)
       tabs.value.splice(index, 1)
 
-      // open all window style items when only '2' items left
-      if (getWinTabs.value.length < 3) {
-        getWinTabs.value.map(tab => tab.opened = true)
+      // set only 1 item to order 1
+      if (getWinTabs.value.length == 1) {
+        getWinTabs.value.map(tab => tab.opened_order = 1)
       } else {
-        // re-order last opened item
-        const lastOpenedItem = getWinTabs.value.find(tab => tab.opened_order === 1)
-        lastOpenedItem.opened_order = 2
+        // open all window style items when only '2' items left
+        if (getWinTabs.value.length < 3) {
+          getWinTabs.value.map(tab => tab.opened = true)
+        } else {
+          console.log(getWinTabs.value)
+          // re-order last opened item
+          const lastOpenedItem = getWinTabs.value.find(tab => tab.opened_order === 1)
+          if (lastOpenedItem) lastOpenedItem.opened_order = 2
 
-        // open last item
-        const lastClosedItem = getWinTabs.value.find(tab => !tab.opened)
-        lastClosedItem.opened = true
-        lastClosedItem.opened_order = 1
+          // open last item
+          const lastClosedItem = getWinTabs.value.find(tab => !tab.opened)
+          lastClosedItem.opened = true
+          lastClosedItem.opened_order = 1
+        }
       }
 
       xTabsLoading.value = false
