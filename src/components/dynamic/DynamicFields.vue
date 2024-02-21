@@ -22,7 +22,7 @@ const props = defineProps({
               v-bind="moduleValidationInputs[field.name]"
               @update:modelValue="$emit('validate-sync-func')"
               class="w-full"
-              :class="`${field.rules.required && 'border-left-3'} ${moduleValidationErrors[field.name] && 'border-red-600'}`"
+              :class="`${field.rules.required && 'border-left-3 border-red-600'}`"
             />
             <label>{{ field.label }}</label>
           </span>
@@ -36,7 +36,7 @@ const props = defineProps({
               v-bind="moduleValidationInputs[field.name]"
               @update:modelValue="$emit('validate-sync-func')"
               class="w-full"
-              :pt="{ input: { class: `${field.rules.required && 'border-left-3'} ${moduleValidationErrors[field.name] && 'border-red-600'}` } }"
+              :pt="{ input: { class: `${field.rules.required && 'border-left-3 border-red-600'}` } }"
             />
             <label>{{ field.label }}</label>
           </span>
@@ -51,7 +51,7 @@ const props = defineProps({
               @update:modelValue="$emit('validate-sync-func')"
               timeOnly
               class="w-full"
-              :pt="{ input: { class: `${field.rules.required && 'border-left-3'} ${moduleValidationErrors[field.name] && 'border-red-600'}` } }"
+              :pt="{ input: { class: `${field.rules.required && 'border-left-3 border-red-600'}` } }"
             />
             <label>{{ field.label }}</label>
           </span>
@@ -69,7 +69,7 @@ const props = defineProps({
               optionValue="name"
               :placeholder="field.label"
               class="w-full"
-              :class="`${field.rules.required && 'border-left-3'} ${moduleValidationErrors[field.name] && 'border-red-600'}`" />
+              :class="`${field.rules.required && 'border-left-3 border-red-600'}`" />
             <label>{{ field.label }}</label>
           </span>
           <small v-if="moduleValidationErrors[field.name]" class="text-red-600">
@@ -86,7 +86,7 @@ const props = defineProps({
               optionValue="name"
               :placeholder="field.label"
               class="w-full"
-              :class="`${field.rules.required && 'border-left-3'} ${moduleValidationErrors[field.name] && 'border-red-600'}`" />
+              :class="`${field.rules.required && 'border-left-3 border-red-600'}`" />
             <label>{{ field.label }}</label>
           </span>
           <small v-if="moduleValidationErrors[field.name]" class="text-red-600">

@@ -85,7 +85,7 @@ const floatingItems = ref([
       }
     ]
   }, {
-    label: 'Static Forms',
+    label: 'Activity',
     icon: 'pi pi-form',
     items: []
   }, {
@@ -100,7 +100,7 @@ const floatingItems = ref([
 ])
 const staticForms = ref([
   {
-    label: 'New Task',
+    label: 'Task',
     name: 'task',
     icon: 'pi pi-calendar',
     form: {
@@ -197,7 +197,7 @@ const staticForms = ref([
       ]
     }
   }, {
-    label: 'New Event Log',
+    label: 'Event',
     name: 'event',
     icon: 'pi pi-book',
     form: {
@@ -304,55 +304,6 @@ const staticForms = ref([
           name: 'module_id',
           uniqueName: 'event_module_id',
           type: 'related',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }
-      ]
-    }
-  }, {
-    label: 'New Contact',
-    name: 'contact',
-    icon: 'pi pi-phone',
-    form: {
-      fields: [
-        {
-          label: 'Contact name',
-          name: 'name',
-          type: 'text',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'field 1',
-          name: 'field_1',
-          type: 'text',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'field 2',
-          name: 'field_2',
-          type: 'text',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'field 3',
-          name: 'field_3',
-          type: 'text',
           rules: {
             required: true,
           },
@@ -515,7 +466,7 @@ const initialize = async () => {
         createStaticForm(sform)
       }
     })
-    let fwSForm = floatingItems.value.find(fw => fw.label == 'Static Forms')
+    let fwSForm = floatingItems.value.find(fw => fw.label == 'Activity')
     fwSForm.items.push(sformObj)
   })
 }
@@ -594,7 +545,7 @@ watch(() => getModules.value, (newValue, oldValue) => {
       <!-- <SplitButton label="New" :model="createNewItems" text class="ml-3"></SplitButton> -->
       <div class="justify-content-center">
         <button v-if="isAuthenticated" @click="fwMenuToggle" class="p-link layout-topbar-button">
-          <i class="pi pi-chevron-down" style="font-size: 1rem;"></i>
+          <i class="pi pi-plus" style="font-size: 1rem;"></i>
           <span>FwMenu</span>
         </button>
         <Menu class="fw-menu" ref="fwMenu" :model="floatingItems" :popup="true" />

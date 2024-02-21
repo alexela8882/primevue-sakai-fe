@@ -20,7 +20,7 @@ const props = defineProps({
     <div v-if="tab.type === 'component'" class="p-2">
       <component :is="tab.component"></component>
     </div>
-    <div v-if="tab.type === 'static-form'" class="p-3 h-full">
+    <div v-if="tab.type === 'static-form'" class="p-3 py-5 h-full">
       <DynamicForm :key="tab.name" :form="tab.form" />
     </div>
     <div v-else-if="tab.type === 'module-form'" class="p-3">
