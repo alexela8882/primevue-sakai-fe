@@ -3,8 +3,11 @@
 import { storeToRefs } from 'pinia'
 import { onMounted, watch, ref, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
+import { useConfirm } from "primevue/useconfirm"
 // stores
 import { useModuleStore } from '@/stores/modules/index'
+import { useTabStore } from '@/stores/tabs/index'
+import { useFormDataStore } from '@/stores/forms'
 // components
 const ViewFiltersDialog = defineAsyncComponent(() => import('../modules/ViewFiltersDialog/ViewFiltersDialogMain.vue'))
 const listViewFilterContent = defineAsyncComponent(() => import('../modules/DynamicDataTable/ListViewFilterContent.vue'))
@@ -26,6 +29,9 @@ const selectedFields = ref()
 const selectedSearchKeyIds = ref()
 // stores
 const moduleStore = useModuleStore()
+const tabStore = useTabStore()
+const formDataStore = useFormDataStore()
+const confirm = useConfirm()
 const {
   listViewFilterOverlay,
   viewFiltersDialogLoading,
@@ -42,6 +48,9 @@ const {
   getViewFilter,
   getSearchKeyFieldIds } = storeToRefs(moduleStore)
 const { fetchModule, fetchBaseModule } = moduleStore
+const { getTabs } = storeToRefs(tabStore)
+const { addTab,toggleWindows } = tabStore
+const { setFormReset } = formDataStore
 // presets
 const tblMenu = ref(false)
 const tblMenu2 = ref(false)
@@ -106,7 +115,45 @@ const tblSettingsBtn = ref([
 ])
 
 // actions
+const createNewForm = (module) => {
+  let obj = Object.assign({}, {
+    type: 'module-form',
+    style: 'window',
+    name: `${module.name}-window-create-form`,
+    label: `${module.label} Form`,
+    _module: module.name,
+    expanded: true,
+    opened: false,
+    opened_order: null
+  })
+  const index = getTabs.value.findIndex(form => form.name === obj.name)
+  if (index === -1) {
+    addTab(obj, true)
+  }else{
+    confirmAddTab(module,index)
+  }
+}
 
+const confirmAddTab = (module,index) => {
+  confirm.require({
+      group: 'templating',
+      header: 'Unsaved '+module.mainEntity+' Alert',
+      message: module.mainEntity,
+      icon: 'pi pi-exclamation-triangle',
+      rejectClass: 'p-button-outlined',
+      rejectLabel: 'Continue',
+      acceptLabel: 'Create New '+module.mainEntity,
+      accept: () => {
+          let index = getTabs.value.findIndex(form => form.name === `${module.name}-window-create-form`)
+          setFormReset(`${module.name}-window-create-form`)
+          toggleWindows(getTabs.value[index])
+      },
+      reject: () => {
+        let index = getTabs.value.findIndex(form => form.name === `${module.name}-window-create-form`)
+        toggleWindows(getTabs.value[index])
+      }
+  });
+};
 // lifescycles
 watch(selectedViewFilter, (newVal, oldVal) => {
   if (newVal) viewFilter.value = getViewFilter.value(newVal)
@@ -240,7 +287,7 @@ onMounted(async () => {
                   icon="pi pi-filter"
                   aria-label="Submit"
                   class="list-view-filter-btn border-round-md mr-2" />
-                <Button class="border-round-md mr-2" icon="pi pi-plus" :label="`New ${getBaseModule.label}`" />
+                <Button class="border-round-md mr-2" icon="pi pi-plus" @click="createNewForm(getBaseModule)" :label="`New ${getBaseModule.label}`" />
               </div>
             </div>
           </div>
