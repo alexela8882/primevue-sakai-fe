@@ -85,6 +85,10 @@ const floatingItems = ref([
       }
     ]
   }, {
+    label: 'Activity',
+    icon: 'pi pi-form',
+    items: []
+  }, {
     label: 'Tables',
     icon: 'pi pi-table',
     items: []
@@ -92,6 +96,223 @@ const floatingItems = ref([
     label: 'Forms',
     icon: 'pi pi-form',
     items: []
+  }
+])
+const staticForms = ref([
+  {
+    label: 'Task',
+    name: 'task',
+    icon: 'pi pi-calendar',
+    form: {
+      fields: [
+        {
+          label: 'Subject',
+          name: 'subject',
+          uniqueName: 'task_subject',
+          type: 'text',
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Type',
+          name: 'type_id',
+          uniqueName: 'task_type_id',
+          type: 'picklist',
+          items: [
+            { label: 'Verbal', name: 'verbal' },
+            { label: 'Call', name: 'call' },
+            { label: 'E-mail', name: 'email,' },
+            { label: 'Send Quotation', name: 'send_quotation,' }
+          ],
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Due Date',
+          name: 'date',
+          uniqueName: 'task_date',
+          type: 'date',
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Status',
+          name: 'status',
+          uniqueName: 'task_status',
+          type: 'picklist',
+          items: [
+            { label: 'Pending', name: 'pending' },
+            { label: 'Cancelled', name: 'cancelled' },
+            { label: 'Completed', name: 'completed' }
+          ],
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Remarks',
+          name: 'remarks',
+          uniqueName: 'task_remarks',
+          type: 'text',
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Linked To',
+          name: 'link_id',
+          uniqueName: 'task_link_id',
+          type: 'related',
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Module',
+          name: 'module_id',
+          uniqueName: 'task_module_id',
+          type: 'related',
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }
+      ]
+    }
+  }, {
+    label: 'Event',
+    name: 'event',
+    icon: 'pi pi-book',
+    form: {
+      fields: [
+        {
+          label: 'Subject',
+          name: 'subject',
+          uniqueName: 'event_subject',
+          type: 'text',
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Type',
+          name: 'type_id',
+          uniqueName: 'event_type_id',
+          type: 'picklist',
+          items: [
+            { label: 'Meeting with Customer', name: 'meeting_with_customer' },
+            { label: 'Customer Visit', name: 'customer_visit' }
+          ],
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Event Date',
+          name: 'date',
+          uniqueName: 'event_date',
+          type: 'date',
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Status',
+          name: 'status',
+          uniqueName: 'event_status',
+          type: 'picklist',
+          items: [
+            { label: 'Pending', name: 'pending' },
+            { label: 'Cancelled', name: 'cancelled' },
+            { label: 'Completed', name: 'completed' }
+          ],
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Start Time',
+          name: 'startTime',
+          uniqueName: 'event_starttime',
+          type: 'time',
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'End Time',
+          name: 'endTime',
+          uniqueName: 'event_endtime',
+          type: 'time',
+          rules: {
+            required: false,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Remarks',
+          name: 'remarks',
+          uniqueName: 'event_remarks',
+          type: 'text',
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Linked To',
+          name: 'link_id',
+          uniqueName: 'event_link_id',
+          type: 'related',
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }, {
+          label: 'Module',
+          name: 'module_id',
+          uniqueName: 'event_module_id',
+          type: 'related',
+          rules: {
+            required: true,
+          },
+          data: {
+            value: null
+          }
+        }
+      ]
+    }
   }
 ])
 
@@ -152,13 +373,14 @@ const logout = () => {
   router.push({name: 'login'})
   toast.add({ severity: 'success', summary: 'Success', detail: 'Logged out successfully', life: 3000 })
 }
-const createNewForm = (entity) => {
+const createStaticForm = (sform) => {
   let obj = Object.assign({}, {
-    type: 'module-form',
+    type: 'static-form',
     style: 'window',
-    name: `${entity}-window-form`,
-    label: `${entity} form`,
-    _module: entity,
+    name: `${sform.name}-window-sform`,
+    label: sform.label,
+    icon: sform.icon,
+    form: sform.form,
     expanded: true,
     opened: false,
     opened_order: null
@@ -168,14 +390,30 @@ const createNewForm = (entity) => {
     addTab(obj, true)
   }
 }
-const createNewTable = (entity) => {
+const createNewForm = (module) => {
+  let obj = Object.assign({}, {
+    type: 'module-form',
+    style: 'window',
+    name: `${module.name}-window-form`,
+    label: `${module.label} Form`,
+    _module: module.name,
+    expanded: true,
+    opened: false,
+    opened_order: null
+  })
+  const index = getTabs.value.findIndex(form => form.name === obj.name)
+  if (index === -1) {
+    addTab(obj, true)
+  }
+}
+const createNewTable = (module) => {
   let obj = Object.assign({}, {
     type: 'module',
     style: 'window',
     display: 'table',
-    name: `${entity}-window-table`,
-    label: `${entity} table`,
-    _module: entity,
+    name: `${module.name}-window-table`,
+    label: `${module.label} Table`,
+    _module: module.name,
     visible: true,
     expanded: true,
     opened: false,
@@ -199,7 +437,7 @@ const initialize = async () => {
         label: module.label,
         icon: module.icon,
         command: () => {
-          createNewForm(module.name)
+          createNewForm(module)
         }
       })
       let fwForm = floatingItems.value.find(fw => fw.label == 'Forms')
@@ -210,12 +448,26 @@ const initialize = async () => {
         label: module.label,
         icon: module.icon,
         command: () => {
-          createNewTable(module.name)
+          createNewTable(module)
         }
       })
       let fwTable = floatingItems.value.find(fw => fw.label == 'Tables')
       fwTable.items.push(tableObj)
     }
+  })
+
+  // push static forms
+  staticForms.value.map(sform => {
+    let sformObj = Object.assign({}, {
+      label: sform.label,
+      icon: sform.icon,
+      form: sform.form,
+      command: () => {
+        createStaticForm(sform)
+      }
+    })
+    let fwSForm = floatingItems.value.find(fw => fw.label == 'Activity')
+    fwSForm.items.push(sformObj)
   })
 }
 
@@ -293,7 +545,7 @@ watch(() => getModules.value, (newValue, oldValue) => {
       <!-- <SplitButton label="New" :model="createNewItems" text class="ml-3"></SplitButton> -->
       <div class="justify-content-center">
         <button v-if="isAuthenticated" @click="fwMenuToggle" class="p-link layout-topbar-button">
-          <i class="pi pi-chevron-down" style="font-size: 1rem;"></i>
+          <i class="pi pi-plus" style="font-size: 1rem;"></i>
           <span>FwMenu</span>
         </button>
         <Menu class="fw-menu" ref="fwMenu" :model="floatingItems" :popup="true" />
