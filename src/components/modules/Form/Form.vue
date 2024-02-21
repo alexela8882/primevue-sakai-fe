@@ -8,7 +8,7 @@
     import _ from 'lodash'
 
     import { useFormDataStore } from '../../../stores/forms'
-    
+
 
     const Field = defineAsyncComponent(() => import('@/components/modules/Form/Field.vue'))
     const FormPanel = defineAsyncComponent(() => import('@/components/modules/Form/FormPanel.vue'))
@@ -17,7 +17,7 @@
         config: Object
     })
     const formDataStore = useFormDataStore()
-    const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues } = helper();
+    const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate } = helper();
     const { fetchPicklist, fetchLookup } = formDataStore
     const tempFields = ref(_.fill(Array(10),1))
     const formLoading = ref(true)
@@ -38,43 +38,45 @@
     const hiddenPanels = ref([])
     
     onMounted(async () => {
+        console.log(transformDate('2020-01-20',{'default_value':{'type':'computed','function':'now','value':'2024-02-07'},'date_format':"M d,Y",'date_only':true},true)) 
         formData.value.fields = props.config.module.fields
         formData.value.panels = props.config.module.panels
-        formData.value.values.main = transformFormValues(props.config.module.fields)
+        
         let listNames = getPicklistFields(props.config.module.fields)
         let lookupFields = getLookupFields(props.config.module.fields)
   
         await fetchPicklistandLookup(listNames,lookupFields)
+        formData.value.values.main = transformFormValues(props.config.module.fields)
         initialize();
     })
 
     const fetchPicklistandLookup  = async (picklist, lookup) =>{
+        const promises = [];
+
         if(picklist.length > 0){
-            fetchPicklist(picklist);
+            promises.push(fetchPicklist(picklist))
         }
         if(lookup.length > 0){
             _.forEach(lookup, function(field){
-                fetchLookups(field);
+                promises.push(fetchLookups(field))
             });
         }
+        await Promise.all(promises);
     }
 
-    const fetchLookups  = async (field) =>{
-        try {
-            const data = await fetchLookup(field);
-            // Handle the resolved data here
-            console.log(data)
+    const fetchLookups  = (field) =>{
+        return new Promise((resolve, reject) => {
+            const data = fetchLookup(field);
             if(!_.has(formData.value.lookup,data['id'])){
                 formData.value.lookup[data['field']] = formatLookupOptions(_.cloneDeep(data),formData.value.fields)
             };
-        } catch (error) {
-            // Handle errors here
-            console.error(error);
-        }
+            resolve();
+       });
     }
 
     const initialize  = () => {
         let quickAddFields = _.chain(formData.value.fields).filter({'quick':true}).map('_id').value()
+        
         console.log('initialize')
         //get quick add panels
         _.forEach(formData.value.panels, function(panel, panelI){

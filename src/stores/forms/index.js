@@ -25,11 +25,11 @@ export const useFormDataStore = defineStore('formDataStore', () => {
     const getForms = computed(() => forms.value)
     const getPicklist = computed(() => picklist.value)
     const getPicklistByListName = computed(() => {
-        return (payload) => {
-          let attr = payload+'.values'
-          return get(picklist.value,attr,[])
-        }
-      })
+      return (payload) => {
+        let attr = payload+'.values'
+        return get(picklist.value,attr,[])
+      }
+    })
 
     //actions
     const generateForm = async (payload) => {
@@ -112,6 +112,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         picklist,
         formLoading,
         getForms,
+        getPicklist,
         getPicklistByListName,
         generateForm,
         fetchPicklist ,
