@@ -4,34 +4,51 @@ import { ref, computed } from 'vue'
 import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
 import { storeToRefs } from 'pinia'
-import { get } from 'lodash'
+import _ from 'lodash'
 
 import { useBaseStore } from '@/stores/base'
 import { useModuleStore } from '@/stores/modules'
 
-const baseStore = useBaseStore()
-const moduleStore = useModuleStore()
-const { jsonDbUrl } = storeToRefs(baseStore)
-const { _fetchModule, fetchBaseModuleByField } = moduleStore
-
-
-
 export const useFormDataStore = defineStore('formDataStore', () => {
+    const baseStore = useBaseStore()
+    const moduleStore = useModuleStore()
+    const { jsonDbUrl } = storeToRefs(baseStore)
+    const { _fetchModule, fetchBaseModuleByField } = moduleStore
+
     //ref
     const forms = ref([])
-    const formLoading = ref(true)
     const picklist = ref([])
+    const formReset = ref("")
     //getters
     const getForms = computed(() => forms.value)
     const getPicklist = computed(() => picklist.value)
     const getPicklistByListName = computed(() => {
       return (payload) => {
         let attr = payload+'.values'
-        return get(picklist.value,attr,[])
+        return _.get(picklist.value,attr,[])
       }
     })
+    const getCachedFormData = computed(() => {
+      return (payload) => {
+        if(_.endsWith(payload,'create-form')){
+          return _.find(forms.value,{'formName':payload})
+        }else{
+          return null
+        }
+      }
+    })
+    const getFormReset = computed(() => formReset.value)
 
     //actions
+    const saveForm = (form) =>{
+       let index = _.findIndex(forms.value,{'formName':form.formName})
+       if(index > -1){
+          forms.value[index] = _.cloneDeep(form)
+       }else{
+          forms.value.push(_.cloneDeep(form))
+       }
+    }
+    
     const generateForm = async (payload) => {
         const moduleData = await _fetchModule(payload)
         forms.value.push({'module':payload,'fields':moduleData.fields,'panels':moduleData.panels})
@@ -107,16 +124,24 @@ export const useFormDataStore = defineStore('formDataStore', () => {
       }
     }
 
+    const setFormReset = (payload) =>{
+      console.log('reset')
+      formReset.value = payload
+    }
+
     return {
         forms,
         picklist,
-        formLoading,
         getForms,
         getPicklist,
         getPicklistByListName,
+        getCachedFormData,
+        getFormReset,
+        saveForm,
         generateForm,
-        fetchPicklist ,
+        fetchPicklist,
         fetchLookup,
-        fetchLookupPaginated
+        fetchLookupPaginated,
+        setFormReset
     }
 })

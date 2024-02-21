@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, onMounted, defineAsyncComponent,provide } from 'vue'
+    import { ref, onMounted, defineAsyncComponent,provide, onBeforeUnmount,watch } from 'vue'
     import { useRouter } from 'vue-router'
     import { storeToRefs } from 'pinia'
     import { useToast } from "primevue/usetoast"
@@ -18,7 +18,8 @@
     })
     const formDataStore = useFormDataStore()
     const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate } = helper();
-    const { fetchPicklist, fetchLookup } = formDataStore
+    const { fetchPicklist, fetchLookup, saveForm, setFormReset } = formDataStore
+    const { getCachedFormData,getFormReset } = storeToRefs(formDataStore)
     const tempFields = ref(_.fill(Array(10),1))
     const formLoading = ref(true)
     const formData = ref({
@@ -32,22 +33,44 @@
         'errors':{
             'main':{},
             'mutable':[]
-        }
+        },
+        'formName':props.config.name
     })
 
     const hiddenPanels = ref([])
     
     onMounted(async () => {
-        console.log(transformDate('2020-01-20',{'default_value':{'type':'computed','function':'now','value':'2024-02-07'},'date_format':"M d,Y",'date_only':true},true)) 
-        formData.value.fields = props.config.module.fields
-        formData.value.panels = props.config.module.panels
-        
-        let listNames = getPicklistFields(props.config.module.fields)
-        let lookupFields = getLookupFields(props.config.module.fields)
-  
-        await fetchPicklistandLookup(listNames,lookupFields)
-        formData.value.values.main = transformFormValues(props.config.module.fields)
-        initialize();
+        let tmpData = getCachedFormData.value(props.config.name)
+       
+        if(tmpData){
+             formData.value =  _.merge(formData.value,_.cloneDeep(tmpData))
+             if(props.config.name==getFormReset.value){
+                 formData.value.values.main = transformFormValues(props.config.module.fields)
+                setFormReset("")
+             }
+             formLoading.value = false
+        }else{
+            formData.value.fields = props.config.module.fields
+            formData.value.panels = props.config.module.panels
+            
+            let listNames = getPicklistFields(props.config.module.fields)
+            let lookupFields = getLookupFields(props.config.module.fields)
+    
+            await fetchPicklistandLookup(listNames,lookupFields)
+            formData.value.values.main = transformFormValues(props.config.module.fields)
+            initialize();
+        }
+    })
+
+    onBeforeUnmount(()=>{
+        console.log('before unmount')
+        saveForm(formData.value)
+    })
+    watch(() => getFormReset.value, (newValue, oldValue) => {
+        if(newValue==props.config.name){
+            formData.value.values.main = transformFormValues(props.config.module.fields)
+            setFormReset("")
+        }
     })
 
     const fetchPicklistandLookup  = async (picklist, lookup) =>{
@@ -101,11 +124,10 @@
 
         formLoading.value = false
     }
-
     provide('form', formData)
 </script>
 <template>
-    <Suspense v-if="!formLoading">
+    <Suspense v-if="!formLoading">       
         <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && config.style == 'window' ">
             <Field v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id" :config="field"/>
         </template>

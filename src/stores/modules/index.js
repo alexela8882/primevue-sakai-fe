@@ -261,15 +261,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
   }
   const fetchBaseModule = async (id) => {
     moduleLoading.value = true
-    // const res = await axios(`${jsonDbUrl.value}/modules?_id=${id}`, {
-    //   method: 'GET',
-    //   headers: { 'Content-Type': 'application/json' }
-    // })
+    const res = await axios(`${jsonDbUrl.value}/modules?_id=${id}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
 
-    // if (res.status === 200) {
-    //   baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
-    // }
-    baseModule.value = getModules.value.find(module => module._id === id)
+    if (res.status === 200) {
+      baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
+    }
     moduleLoading.value = false
   }
   const _fetchBaseModuleByField = async (payload) => {

@@ -127,6 +127,7 @@ export const useTabStore = defineStore('tabStore', () => {
 
         const newItem = tabs.value.find(item => item.name === itemToToggle.name)
         newItem.opened = true
+        newItem.expanded = true
         newItem.opened_order = 1
         console.log(newItem)
 
@@ -134,7 +135,10 @@ export const useTabStore = defineStore('tabStore', () => {
 
         xTabsLoading.value = false
       }, 50)
-    } else xTabsLoading.value = false
+    } else if(!itemToToggle.expanded){
+      itemToToggle.expanded = true
+      xTabsLoading.value = false
+    }else xTabsLoading.value = false
   }
   const addTab = async (payload, window = false) => {
     xTabsLoading.value = true
@@ -171,8 +175,11 @@ export const useTabStore = defineStore('tabStore', () => {
 
         // open last item
         const lastClosedItem = getWinTabs.value.find(tab => !tab.opened)
-        lastClosedItem.opened = true
-        lastClosedItem.opened_order = 1
+        if(lastClosedItem){
+          lastClosedItem.opened = true
+          lastClosedItem.opened_order = 1
+        }
+        
       }
 
       xTabsLoading.value = false
