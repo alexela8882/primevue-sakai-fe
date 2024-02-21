@@ -13,13 +13,16 @@ import {
 import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
 import { useToast } from "primevue/usetoast"
+import { useConfirm } from "primevue/useconfirm"
 import axios from 'axios'
+import _ from 'lodash'
 import { filter, includes, reduce, orderBy, startCase } from 'lodash'
 // stores & composables
 import { useBaseStore } from '@/stores/base'
 import { useLayout } from '@/layout/composables/layout'
 import { useModuleStore } from '@/stores/modules'
 import { useTabStore } from '@/stores/tabs/index'
+import { useFormDataStore } from '@/stores/forms'
 // components
 const FloatingWindow = defineAsyncComponent(() =>
   import('@/components/tabs/FloatingWindow.vue')
@@ -34,6 +37,7 @@ const createNewItems = ref()
 const menu = ref()
 const authUser = ref()
 const toast = useToast()
+const confirm = useConfirm()
 const router = useRouter()
 const outsideClickListener = ref(null)
 const topbarMenuActive = ref(false)
@@ -43,10 +47,12 @@ const { layoutConfig, onMenuToggle } = useLayout()
 const baseStore = useBaseStore()
 const moduleStore = useModuleStore()
 const tabStore = useTabStore()
+const formDataStore = useFormDataStore()
 const { getModules } = storeToRefs(moduleStore)
 const { configBar } = storeToRefs(baseStore)
 const { getTabs, tabsLoading } = storeToRefs(tabStore)
-const { toggleTabs, generateTabs, addTab } = tabStore
+const { toggleTabs, generateTabs, addTab, toggleWindows } = tabStore
+const { setFormReset } = formDataStore
 // presets
 const items = ref([
   {
@@ -394,7 +400,7 @@ const createNewForm = (module) => {
   let obj = Object.assign({}, {
     type: 'module-form',
     style: 'window',
-    name: `${module.name}-window-form`,
+    name: `${module.name}-window-create-form`,
     label: `${module.label} Form`,
     _module: module.name,
     expanded: true,
@@ -404,6 +410,8 @@ const createNewForm = (module) => {
   const index = getTabs.value.findIndex(form => form.name === obj.name)
   if (index === -1) {
     addTab(obj, true)
+  }else{
+    confirmAddTab(module,index)
   }
 }
 const createNewTable = (module) => {
@@ -424,6 +432,28 @@ const createNewTable = (module) => {
     addTab(obj, true)
   }
 }
+
+const confirmAddTab = (module,index) => {
+    confirm.require({
+        group: 'templating',
+        header: 'Unsaved '+module.mainEntity+' Alert',
+        message: module.mainEntity,
+        icon: 'pi pi-exclamation-triangle',
+        rejectClass: 'p-button-outlined',
+        rejectLabel: 'Continue',
+        acceptLabel: 'Create New '+module.mainEntity,
+        accept: () => {
+            let index = getTabs.value.findIndex(form => form.name === `${module.name}-window-create-form`)
+            setFormReset(`${module.name}-window-create-form`)
+            toggleWindows(getTabs.value[index])
+        },
+        reject: () => {
+          let index = getTabs.value.findIndex(form => form.name === `${module.name}-window-create-form`)
+          toggleWindows(getTabs.value[index])
+        }
+    });
+};
+
 const initialize = async () => {
   // create forms and tables
   getModules.value.map(module => {
@@ -572,8 +602,22 @@ watch(() => getModules.value, (newValue, oldValue) => {
       </button> -->
     </div>
   </div>
-
+  <ConfirmDialog group="templating">
+        <template #message="{message}">
+            <div class="flex flex-column align-items-center w-full gap-3 border-bottom-1 surface-border">
+                <i :class="message.icon" class="text-6xl text-primary-500"></i>
+                <div class="flex flex-column p-5 surface-overlay border-round">
+            <p class="mb-0">You have unsaved {{ _.toLower(_.startCase(message.message)) }} data. <br/>Would you like to continue filling up the current form, or start a new {{ _.toLower(_.startCase(message.message)) }} entry?</p>
+            <br/>
+            <p class="mb-0">- <b>Continue</b>: Resume filling up the current {{ _.toLower(_.startCase(message.message)) }} form.</p>
+            <p class="mb-0">- <b>Create New {{ _.startCase(message.message) }}</b>: Discard the current {{ _.toLower(_.startCase(message.message)) }} data and start a new {{ _.toLower(_.startCase(message.message)) }} entry.</p>
+        </div>
+            </div>
+            
+        </template>
+    </ConfirmDialog>
   <FloatingWindow />
+ 
 </template>
 
 <style>
