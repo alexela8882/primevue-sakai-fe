@@ -109,13 +109,15 @@ watch(getTabs.value, (newVal, oldVal) => {
               <Teleport :to="`${tab.maximized ? '.global-dialog-header' : '.hidden-div'}`">
                 <div class="flex align-items-center gap-2 text-xl font-bold">
                   <div v-if="tab.type === 'module-form'" class="material-icons">{{ tab.base_module.icon }}</div>
-                  <div>{{ tab.label.charAt(0).toUpperCase() + tab.label.slice(1) }}</div>
+                  <div v-if="tab.type === 'static-form'" :class="`pi pi-${tab.icon}`"></div>
+                  <div>{{ tab.label }}</div>
                   <div v-if="tab.type === 'module-form'">(New)</div>
                 </div>
               </Teleport>
               <div class="flex align-items-center gap-2 text-xl font-bold">
                 <div v-if="tab.type === 'module-form'" class="material-icons">{{ tab.base_module.icon }}</div>
-                <div>{{ tab.label.charAt(0).toUpperCase() + tab.label.slice(1) }}</div>
+                <div v-if="tab.type === 'static-form'" :class="`pi pi-${tab.icon}`"></div>
+                <div>{{ tab.label }}</div>
                 <div v-if="tab.type === 'module-form'">(New)</div>
               </div>
             </template>

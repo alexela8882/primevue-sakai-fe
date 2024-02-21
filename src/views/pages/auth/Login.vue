@@ -71,7 +71,7 @@ const submit = async () => {
 }
 
 const msLogin = async () => {
-  window.location.href = "https://330b-163-116-223-51.ngrok-free.app/saml2/efc67095-3189-4807-81de-2e8a30db311e/login"
+  window.location.href = "https://3c68-163-116-223-55.ngrok-free.app/saml2/45a9e0c2-7312-4d7b-8942-d13afb0bb489/login"
 }
 
 const logoUrl = computed(() => {

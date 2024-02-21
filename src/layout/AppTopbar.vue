@@ -427,7 +427,8 @@ const createStaticForm = (sform) => {
     type: 'static-form',
     style: 'window',
     name: `${sform.name}-window-sform`,
-    label: `${sform.name} Form`,
+    label: sform.label,
+    icon: sform.icon,
     form: sform.form,
     expanded: true,
     opened: false,
@@ -438,13 +439,13 @@ const createStaticForm = (sform) => {
     addTab(obj, true)
   }
 }
-const createNewForm = (entity) => {
+const createNewForm = (module) => {
   let obj = Object.assign({}, {
     type: 'module-form',
     style: 'window',
-    name: `${entity}-window-form`,
-    label: `${entity} Form`,
-    _module: entity,
+    name: `${module.name}-window-form`,
+    label: `${module.label} Form`,
+    _module: module.name,
     expanded: true,
     opened: false,
     opened_order: null
@@ -454,14 +455,14 @@ const createNewForm = (entity) => {
     addTab(obj, true)
   }
 }
-const createNewTable = (entity) => {
+const createNewTable = (module) => {
   let obj = Object.assign({}, {
     type: 'module',
     style: 'window',
     display: 'table',
-    name: `${entity}-window-table`,
-    label: `${entity} Table`,
-    _module: entity,
+    name: `${module.name}-window-table`,
+    label: `${module.label} Table`,
+    _module: module.name,
     visible: true,
     expanded: true,
     opened: false,
@@ -485,7 +486,7 @@ const initialize = async () => {
         label: module.label,
         icon: module.icon,
         command: () => {
-          createNewForm(module.name)
+          createNewForm(module)
         }
       })
       let fwForm = floatingItems.value.find(fw => fw.label == 'Forms')
@@ -496,7 +497,7 @@ const initialize = async () => {
         label: module.label,
         icon: module.icon,
         command: () => {
-          createNewTable(module.name)
+          createNewTable(module)
         }
       })
       let fwTable = floatingItems.value.find(fw => fw.label == 'Tables')
