@@ -134,7 +134,7 @@ export const useTabStore = defineStore('tabStore', () => {
 
       const newItem = tabs.value.find(item => item.name === itemToToggle.name)
       newItem.opened = true
-      newItem.expanded = true
+      if (newItem.mode !== 'modal') newItem.expanded = true
       newItem.opened_order = 1
       console.log(newItem)
 
