@@ -1,0 +1,1 @@
+.floating-window .p-panel-header,.floating-window-dialog .p-dialog-header{border-bottom:1px solid var(--surface-300)}.floating-window .p-panel-icons{display:flex;flex-direction:row-reverse}.floating-window .p-panel-content,.floating-window-dialog .p-dialog-content{padding:0!important;overflow-x:hidden}
