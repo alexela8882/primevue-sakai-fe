@@ -4,21 +4,28 @@ import { storeToRefs } from 'pinia'
 import { defineAsyncComponent, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 // stores & composables
-import { useGeneralStore } from './stores/general'
+import { useGeneralStore } from './stores/general'// stores
+import { useTabStore } from '@/stores/tabs/index'
 
 // refs
 const router = useRouter()
 // stores & composables
+const tabStore = useTabStore()
+const { tabDialog, getMaximizedTab } = storeToRefs(tabStore)
 const generalStore = useGeneralStore()
+const { minimizeTab } = tabStore
 const { formModalTrigger, popUpModalTrigger } = storeToRefs(generalStore)
 
-const FormDialog = defineAsyncComponent(() => import('./components/dynamic/FormDialog.vue'))
-const PopUpDialog = defineAsyncComponent(() => import('./components/dynamic/PopUpDialog.vue'))
+const FormDialog = defineAsyncComponent(() => import('@/components/dynamic/FormDialog.vue'))
+const PopUpDialog = defineAsyncComponent(() => import('@/components/dynamic/PopUpDialog.vue'))
+const GlobalDialog = defineAsyncComponent(() => import('@/components/dynamic/GlobalDialog.vue'))
 
 </script>
 
 <template>
-  <router-view></router-view>
+  <div class="mb-6 pb-6">
+    <router-view></router-view>
+  </div>
 
   <Toast class="z-index-900" />
 
@@ -30,6 +37,14 @@ const PopUpDialog = defineAsyncComponent(() => import('./components/dynamic/PopU
   </Suspense>
 
   <div class="hidden-div hidden"></div>
+  <GlobalDialog
+    @close="minimizeTab()"
+    v-model:visible="tabDialog"
+    :title="getMaximizedTab && getMaximizedTab.label" icon="pi pi-info-circle">
+    <template #default>
+      <div class="fw-dialog-content"></div>
+    </template>
+  </GlobalDialog>
 </template>
 
 <style>

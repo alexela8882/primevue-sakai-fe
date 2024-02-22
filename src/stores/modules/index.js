@@ -102,54 +102,31 @@ export const useModuleStore = defineStore('moduleStore', () => {
     const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter.isDefault)
 
     return getReconstructedViewFilter.value(viewFilter)
-
-    // const filteredFields = moduleFields && moduleFields.filter(field => viewFilter.fields.includes(field._id))
-
-    // const finalViewFilter = Object.assign({}, {
-    //   _id: viewFilter && viewFilter._id,
-    //   filterLogic: viewFilter && viewFilter.filterLogic,
-    //   filterName: viewFilter && viewFilter.filterName,
-    //   filters: viewFilter && viewFilter.filters,
-    //   isDefault: viewFilter && viewFilter.isDefault,
-    //   moduleName: viewFilter && viewFilter.moduleName,
-    //   query_id: viewFilter && viewFilter.query_id,
-    //   sortField: viewFilter && viewFilter.sortField,
-    //   sortOrder: viewFilter && viewFilter.sortOrder,
-    //   fields: filteredFields
-    // })
-
-    // return finalViewFilter
   })
+  
+  const _getViewFilter = computed(() => {
+    return (payload) => {
+      const viewFilters = payload.module && payload.module.viewFilters
+      const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload.id)
+
+      return getReconstructedViewFilter.value(viewFilter, payload.module)
+    }
+  })
+
   const getViewFilter = computed(() => {
     return (payload) => {
-      const moduleFields = module.value && module.value.fields
       const viewFilters = module.value && module.value.viewFilters
       const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload)
 
-      return getReconstructedViewFilter.value(viewFilter)
-
-      // const filteredFields = moduleFields && moduleFields.filter(field => viewFilter.fields.includes(field._id))
-
-      // const finalViewFilter = Object.assign({}, {
-      //   _id: viewFilter && viewFilter._id,
-      //   filterLogic: viewFilter && viewFilter.filterLogic,
-      //   filterName: viewFilter && viewFilter.filterName,
-      //   filters: viewFilter && viewFilter.filters,
-      //   isDefault: viewFilter && viewFilter.isDefault,
-      //   moduleName: viewFilter && viewFilter.moduleName,
-      //   query_id: viewFilter && viewFilter.query_id,
-      //   sortField: viewFilter && viewFilter.sortField,
-      //   sortOrder: viewFilter && viewFilter.sortOrder,
-      //   fields: filteredFields
-      // })
-
-      // return finalViewFilter
+      return getReconstructedViewFilter.value(viewFilter, module.value)
     }
   })
   
   const getReconstructedViewFilter = computed(() => {
-    return (payload) => {
-      const moduleFields = module.value && module.value.fields
+    return (payload, _module) => {
+      let moduleFields = null
+      if (_module) moduleFields = _module.fields
+      else moduleFields = module.value && module.value.fields
       const viewFilter = payload
 
       const filteredFields = moduleFields && moduleFields.filter(field => viewFilter.fields.includes(field._id))
@@ -171,6 +148,18 @@ export const useModuleStore = defineStore('moduleStore', () => {
       })
 
       return finalViewFilter
+    }
+  })
+  const _getViewFilterIds = computed(() => {
+    return (module) => {
+      const fieldIds = []
+      const viewFilters = module && module.viewFilters
+      viewFilters && viewFilters.map(viewFilter => {
+        viewFilter.fields.map(field => {
+          fieldIds.push(field)
+        })
+      })
+      return fieldIds
     }
   })
   const getViewFilterIds = computed(() => {
@@ -235,6 +224,13 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return field
     }
   })
+  const _getFieldDetailsById = computed(() => {
+    return (payload) => { // supply `name` column from `fields` collection
+      const fields = payload.fields
+      const field = fields && fields.find(fx => fx._id === payload._id)
+      return field
+    }
+  })
   const getFieldDetailsById = computed(() => {
     return (payload) => { // supply `name` column from `fields` collection
       const fields = getModule.value.fields
@@ -275,20 +271,26 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
     moduleLoading.value = false
   }
-  const fetchBaseModuleByField = async (payload) => {
-    moduleLoading.value = true
+  const _fetchBaseModuleByField = async (payload) => {
+    return fetchBaseModuleByField(payload, true)
+  }
+  const fetchBaseModuleByField = async (payload, reuse) => {
+    if (!reuse) moduleLoading.value = true
     const res = await axios(`${jsonDbUrl.value}/modules?${payload.field}=${payload.value}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
-      baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
+      const data = (res.data && res.data.length > 0) ? res.data[0] : res.data
+      if (!reuse) {
+        baseModule.value = data
+        moduleLoading.value = false
+      } else return data
     }
-    moduleLoading.value = false
   }
   const fetchModule = async (moduleName, page, reuse) => {
-    collectionLoading.value = true
+    if (!reuse) collectionLoading.value = true
     const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
 
     try {
@@ -303,6 +305,19 @@ export const useModuleStore = defineStore('moduleStore', () => {
           module.value = fetchedModule // insert module
           collection.value = fetchedModule.collection // insert collection
           collectionLoading.value = false
+
+          // fill modules with fields & panels
+          modules.value.map(m => {
+            if (m.name === moduleName) {
+              let obj = Object.assign({}, {
+                ...m,
+                fields: fetchedModule.fields,
+                panels: fetchedModule.panels
+              })
+              Object.assign(m, obj)
+            }
+          })
+          console.log(modules.value)
         } else return fetchedModule
       }
     } catch (error) {
@@ -468,18 +483,22 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getEntity,
     getEntityByName,
     getDefaultViewFilter,
+    _getViewFilter,
     getViewFilter,
+    _getViewFilterIds,
     getViewFilterIds,
     getSearchKeyFieldIds,
     getKanbanData,
     _getFieldDetails,
     getFieldDetails,
+    _getFieldDetailsById,
     getFieldDetailsById,
     getFieldDetailsByUname,
     _fetchModule,
     fetchModule,
     fetchLinkedModuleData,
     fetchBaseModule,
+    _fetchBaseModuleByField,
     fetchBaseModuleByField,
     fetchModules,
     addViewFilter,

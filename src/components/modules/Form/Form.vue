@@ -1,0 +1,142 @@
+<script setup>
+    import { ref, onMounted, defineAsyncComponent,provide, onBeforeUnmount,watch } from 'vue'
+    import { useRouter } from 'vue-router'
+    import { storeToRefs } from 'pinia'
+    import { useToast } from "primevue/usetoast"
+    import axios from 'axios'
+    import helper from '@/mixins/Helper';
+    import _ from 'lodash'
+
+    import { useFormDataStore } from '../../../stores/forms'
+
+
+    const Field = defineAsyncComponent(() => import('@/components/modules/Form/Field.vue'))
+    const FormPanel = defineAsyncComponent(() => import('@/components/modules/Form/FormPanel.vue'))
+
+    const props = defineProps({
+        config: Object
+    })
+    const formDataStore = useFormDataStore()
+    const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate } = helper();
+    const { fetchPicklist, fetchLookup, saveForm, setFormReset } = formDataStore
+    const { getCachedFormData,getFormReset } = storeToRefs(formDataStore)
+    const tempFields = ref(_.fill(Array(10),1))
+    const formLoading = ref(true)
+    const formData = ref({
+        'fields':[],
+        'panels':[],
+        'values':{
+            'main':{},
+            'mutable':[]
+        },
+        'lookup':{},
+        'errors':{
+            'main':{},
+            'mutable':[]
+        },
+        'formName':props.config.name
+    })
+
+    const hiddenPanels = ref([])
+    
+    onMounted(async () => {
+        let tmpData = getCachedFormData.value(props.config.name)
+       
+        if(tmpData){
+             formData.value =  _.merge(formData.value,_.cloneDeep(tmpData))
+             if(props.config.name==getFormReset.value){
+                 formData.value.values.main = transformFormValues(props.config.module.fields)
+                setFormReset("")
+             }
+             formLoading.value = false
+        }else{
+            formData.value.fields = props.config.module.fields
+            formData.value.panels = props.config.module.panels
+            
+            let listNames = getPicklistFields(props.config.module.fields)
+            let lookupFields = getLookupFields(props.config.module.fields)
+    
+            await fetchPicklistandLookup(listNames,lookupFields)
+            formData.value.values.main = transformFormValues(props.config.module.fields)
+            initialize();
+        }
+    })
+
+    onBeforeUnmount(()=>{
+        console.log('before unmount')
+        saveForm(formData.value)
+    })
+    watch(() => getFormReset.value, (newValue, oldValue) => {
+        if(newValue==props.config.name){
+            formData.value.values.main = transformFormValues(props.config.module.fields)
+            setFormReset("")
+        }
+    })
+
+    const fetchPicklistandLookup  = async (picklist, lookup) =>{
+        const promises = [];
+
+        if(picklist.length > 0){
+            promises.push(fetchPicklist(picklist))
+        }
+        if(lookup.length > 0){
+            _.forEach(lookup, function(field){
+                promises.push(fetchLookups(field))
+            });
+        }
+        await Promise.all(promises);
+    }
+
+    const fetchLookups  = (field) =>{
+        return new Promise((resolve, reject) => {
+            const data = fetchLookup(field);
+            if(!_.has(formData.value.lookup,data['id'])){
+                formData.value.lookup[data['field']] = formatLookupOptions(_.cloneDeep(data),formData.value.fields)
+            };
+            resolve();
+       });
+    }
+
+    const initialize  = () => {
+        let quickAddFields = _.chain(formData.value.fields).filter({'quick':true}).map('_id').value()
+        
+        console.log('initialize')
+        //get quick add panels
+        _.forEach(formData.value.panels, function(panel, panelI){
+            formData.value.panels[panelI]['quick'] = false
+            _.forEach(panel.sections, function(section, sectionI){
+                formData.value.panels[panelI]['sections'][sectionI]['quick'] = false
+                let allF = section.field_ids[0]
+                if(section.field_ids.length>1){
+                    allF.concat(section.field_ids[1])
+                }
+                let tmpFields = _.filter(allF, function(f){
+                    if(_.includes(quickAddFields, f)){
+                        return true
+                    }
+                })
+                if(tmpFields.length > 0){
+                    formData.value.panels[panelI]['quick'] = true
+                    formData.value.panels[panelI]['sections'][sectionI]['quick'] = true
+                }
+            })
+        })
+
+        formLoading.value = false
+    }
+    provide('form', formData)
+</script>
+<template>
+    <Suspense v-if="!formLoading">       
+        <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && config.style == 'window' ">
+            <Field v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id" :config="field"/>
+        </template>
+        <template v-else>
+            <FormPanel v-for="panel in _.filter(formData.panels, function(p){ if(!_.includes(hiddenPanels,p._id) && _.endsWith(p.controllerMethod,'@index') && ((config.style=='window' && p.quick) || config.style!='window' && !p.quick)){ return true;} })" :quickAdd="config.style == 'window'" :key="panel._id" :panel="panel"/>
+        </template>
+        <template #fallback>
+           <Skeleton v-for="(item,index) in tempFields" :key="index" height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
+        </template>
+    </Suspense>
+    
+</template>

@@ -51,6 +51,8 @@ axios.defaults.baseURL = 'https://api.reddotcrm.com/api/'
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 
 import PrimeVue from 'primevue/config'
+// import 'primevue/resources/themes/saga-blue/theme.css'; // theme
+// import 'primevue/resources/primevue.min.css'; // core css
 import AutoComplete from 'primevue/autocomplete'
 import Accordion from 'primevue/accordion'
 import AccordionTab from 'primevue/accordiontab'
@@ -151,8 +153,12 @@ import Editor from 'primevue/editor'
 import BlockViewer from '@/components/BlockViewer.vue'
 import '@/assets/styles.scss'
 
+import ClickOutsideDirective from '@/mixins/ClickOutsideDirective';
+
 const pinia = createPinia()
 const app = createApp(App)
+
+
 
 app.use(pinia)
 app.use(router)
@@ -166,6 +172,7 @@ app.directive('tooltip', Tooltip)
 app.directive('badge', BadgeDirective)
 app.directive('ripple', Ripple)
 app.directive('styleclass', StyleClass)
+app.directive('click-outside', ClickOutsideDirective);
 
 app.component('BlockViewer', BlockViewer)
 

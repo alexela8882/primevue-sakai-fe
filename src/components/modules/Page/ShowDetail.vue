@@ -256,6 +256,7 @@ onMounted(async() => {
                               <div v-if="getRelatedListsByCname(panel.panelName)">
                                 <Suspense v-if="getRelatedListsByCname(panel.panelName)">
                                   <DynamicDataTable
+                                    :key="panel._id"
                                     :moduleId="panel._id"
                                     :moduleEntityName="panel.entityName"
                                     :moduleName="getRelatedListsByCname(panel.panelName).link"
@@ -278,7 +279,7 @@ onMounted(async() => {
                             </div>
                             <div v-else>
                               <Suspense v-if="section.field_ids.length > 0">
-                                <SectionFields :fieldIds="section.field_ids" />
+                                <SectionFields :newModuleFields="localModule.fields" :fieldIds="section.field_ids" />
                                 <template #fallback>
                                   <TwoColumnList />
                                 </template>
@@ -286,7 +287,7 @@ onMounted(async() => {
                               <div v-if="section.additional_fields.length > 0">
                                 <div v-for="(addition_field, afx) in section.additional_fields" :key="afx">
                                   <Suspense v-if="addition_field.ids.length > 0">
-                                    <SectionFields :fieldIds="addition_field.ids" />
+                                    <SectionFields :newModuleFields="localModule.fields" :fieldIds="addition_field.ids" />
                                     <template #fallback>
                                       <TwoColumnList />
                                     </template>

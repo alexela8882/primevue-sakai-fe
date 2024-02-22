@@ -140,3 +140,8 @@ a {
   transform: translateX(50px);
   opacity: 0;
 }
+
+// tinymce inline toolbar bug fix
+.tox-tinymce-inline {
+  z-index: 1200 !important;
+}

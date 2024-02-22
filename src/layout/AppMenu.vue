@@ -18,12 +18,13 @@ const {
   sidebarMenu2
 } = storeToRefs(menuStore)
 const { fetchModules } = moduleStore
+const { getModules } = storeToRefs(moduleStore)
 const { fetchMenu, fetchMenu2 } = menuStore
 
-onMounted(() => {
-  fetchMenu()
+onMounted(async () => {
+  await fetchMenu()
   // fetchMenu2()
-  fetchModules()
+  await fetchModules()
 })
 </script>
 

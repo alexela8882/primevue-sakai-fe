@@ -31,8 +31,8 @@ const DataViewModules = defineAsyncComponent({
   timeout: 3000
 })
 
-onMounted(() => {
-  fetchModules()
+onMounted(async () => {
+  await fetchModules()
 })
 
 </script>
