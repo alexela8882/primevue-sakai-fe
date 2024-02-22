@@ -67,7 +67,7 @@ const login = async () => {
   msgraphLogicMessage.value = "Trying to sign you in"
 
   var loginRequest = {
-    scopes: ["user.read", "mail.read", "mail.send"] // optional Array<string>
+    scopes: ["user.read", "mail.send"] // optional Array<string>
   }
 
   await msalInstance.loginPopup(loginRequest)
@@ -90,7 +90,7 @@ const getToken = async () => {
 
   if (msalInstance.getAccount()) {
     var tokenRequest = {
-      scopes: ["user.read", "mail.read", "mail.send"]
+      scopes: ["user.read", "mail.send"]
     }
     await msalInstance.acquireTokenSilent(tokenRequest)
     .then(response => {
