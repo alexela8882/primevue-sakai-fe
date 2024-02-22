@@ -98,6 +98,7 @@ const handleDragging = (event) => {
 }
 
 .custom-dialog {
+  min-height: 300px;
   width: 600px;
   background-color: #fff;
   border-radius: 8px;
