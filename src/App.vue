@@ -23,7 +23,9 @@ const GlobalDialog = defineAsyncComponent(() => import('@/components/dynamic/Glo
 </script>
 
 <template>
-  <router-view></router-view>
+  <div class="mb-6 pb-6">
+    <router-view></router-view>
+  </div>
 
   <Toast class="z-index-900" />
 

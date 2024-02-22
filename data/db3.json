@@ -4824,6 +4824,22 @@
             "lastName": "Cahayon",
             "email": "ninoy.cahayon@escolifesciences.com"
           }
+        },
+        {
+          "_id": 1708578799097,
+          "company": "Test",
+          "phoneNo": "Test",
+          "status_id": "Test",
+          "source_id": "Test",
+          "type_id": "Test",
+          "business_unit_ids": "Test",
+          "country_id": "Test",
+          "owner_id": {
+            "_id": "5bb104ed678f71061f6451f8",
+            "firstName": "Ninoy",
+            "lastName": "Cahayon",
+            "email": "ninoy.cahayon@escolifesciences.com"
+          }
         }
       ],
       "meta": {
@@ -5162,7 +5178,9 @@
         "rules": {
           "ms_dropdown": true,
           "required": true,
-          "default_value":["635b9fdba6ebc703445543b2"]
+          "default_value": [
+            "635b9fdba6ebc703445543b2"
+          ]
         },
         "searchKey": false,
         "field_type": {
@@ -5181,7 +5199,7 @@
         "rules": {
           "ss_dropdown": true,
           "required": true,
-          "default_value":"60bdd7c6a6ebc77ede159522"
+          "default_value": "60bdd7c6a6ebc77ede159522"
         },
         "searchKey": false,
         "field_type": {
@@ -9954,8 +9972,8 @@
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:31",
         "rules": {
-          "default_value":{
-            "type":"computed",
+          "default_value": {
+            "type": "computed",
             "function": "now"
           },
           "date_format": "m/d/Y",
@@ -15586,9 +15604,9 @@
         "updated_at": "2023-01-10 10:19:23",
         "created_at": "2023-01-10 10:19:23",
         "rules": {
-          "date_selection":"month",
+          "date_selection": "month",
           "required": true,
-          "date_format":"m/d/Y"
+          "date_format": "m/d/Y"
         },
         "section2_ids": [
           "5cadf20da6ebc747db0ce8b3"
@@ -15613,9 +15631,9 @@
         "updated_at": "2023-01-10 10:19:23",
         "created_at": "2023-01-10 10:19:23",
         "rules": {
-          "date_selection":"week",
+          "date_selection": "week",
           "required": true,
-          "date_format":"m/d/Y"
+          "date_format": "m/d/Y"
         },
         "section2_ids": [
           "5cadf20da6ebc747db0ce8b3"
@@ -20208,7 +20226,7 @@
         ],
         "active": true,
         "rules": {
-          "default_value":1,
+          "default_value": 1,
           "decimal": 2,
           "comma_separated": true,
           "disable": true
@@ -20234,7 +20252,10 @@
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "hide_in": ["create","update"],
+          "hide_in": [
+            "create",
+            "update"
+          ],
           "default_value": false,
           "checkbox": true
         },
@@ -20271,9 +20292,9 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules":{
-          "required":true,
-          "ms_dropdown":true
+        "rules": {
+          "required": true,
+          "ms_dropdown": true
         },
         "controls": "products_handled_id",
         "section1_ids": [
@@ -20781,7 +20802,7 @@
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "between":{
+          "between": {
             "min": 5,
             "max": 100
           },
@@ -20820,7 +20841,7 @@
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "between":{
+          "between": {
             "min": 5,
             "max": 100
           },
@@ -20908,7 +20929,7 @@
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "between":{
+          "between": {
             "min": 10,
             "max": 100
           },
@@ -20942,7 +20963,7 @@
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "between":{
+          "between": {
             "min": 0,
             "max": 100
           },
@@ -20987,7 +21008,7 @@
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "between":{
+          "between": {
             "min": 0,
             "max": 1000
           }
@@ -21167,7 +21188,7 @@
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "between":{
+          "between": {
             "min": 0,
             "max": 155
           },
@@ -21205,7 +21226,7 @@
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "between":{
+          "between": {
             "min": 0,
             "max": 1000
           }
@@ -21655,8 +21676,8 @@
         "entity_id": "5c906a0fa6ebc7193110e7d4",
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
-        "rules":{
-          "between":{
+        "rules": {
+          "between": {
             "min": 0,
             "max": 2500
           }
@@ -21689,8 +21710,11 @@
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "hide_in":["create","update"],
-          "date_format":"m/d/Y",
+          "hide_in": [
+            "create",
+            "update"
+          ],
+          "date_format": "m/d/Y",
           "date_only": true
         },
         "searchKey": false,
@@ -21717,8 +21741,11 @@
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "hide_in":["create","update"],
-          "date_format":"m/d/Y",
+          "hide_in": [
+            "create",
+            "update"
+          ],
+          "date_format": "m/d/Y",
           "date_only": true
         },
         "searchKey": false,
@@ -21746,7 +21773,10 @@
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "hide_in":["create","update"],
+          "hide_in": [
+            "create",
+            "update"
+          ],
           "ss_pop_up": true
         },
         "section2_ids": [
@@ -21795,7 +21825,10 @@
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "hide_in":["create","update"],
+          "hide_in": [
+            "create",
+            "update"
+          ],
           "ss_pop_up": true
         },
         "section1_ids": [
@@ -21843,8 +21876,11 @@
         "updated_at": "2023-07-03 04:52:56",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "hide_in":["create","update"],
-          "date_format":"m/d/Y",
+          "hide_in": [
+            "create",
+            "update"
+          ],
+          "date_format": "m/d/Y",
           "date_only": true
         },
         "searchKey": false,
@@ -21868,7 +21904,10 @@
         "updated_at": "2019-03-19 04:03:30",
         "created_at": "2019-03-19 04:03:30",
         "rules": {
-          "hide_in":["create","update"],
+          "hide_in": [
+            "create",
+            "update"
+          ],
           "ss_pop_up": true
         },
         "field_type": {
@@ -21971,7 +22010,7 @@
             "min": 0,
             "max": 155
           },
-          "string":true
+          "string": true
         },
         "section1_ids": [
           "5cfa2590a6ebc785950a37d3",
@@ -22004,7 +22043,7 @@
             "min": 0,
             "max": 155
           },
-          "string":true
+          "string": true
         },
         "section1_ids": [
           "5cfa2590a6ebc785950a37d3",
@@ -22038,7 +22077,7 @@
             "min": 0,
             "max": 155
           },
-          "string":true
+          "string": true
         },
         "section1_ids": [
           "5cfa27c4a6ebc787575ff2a3"
@@ -22138,13 +22177,13 @@
         "updated_at": "2022-02-10 02:20:39",
         "created_at": "2022-02-10 02:20:39",
         "rules": {
-          "required_if":{
+          "required_if": {
             "anotherField": "business_unit_ids",
             "values": [
               "Medical"
             ]
           },
-          "between":{
+          "between": {
             "min": 0,
             "max": 155
           },
@@ -22172,13 +22211,13 @@
         "updated_at": "2022-02-10 02:20:39",
         "created_at": "2022-02-10 02:20:39",
         "rules": {
-          "required_if":{
+          "required_if": {
             "anotherField": "business_unit_ids",
             "values": [
               "Medical"
             ]
           },
-          "between":{
+          "between": {
             "min": 0,
             "max": 155
           },
@@ -22206,13 +22245,13 @@
         "updated_at": "2022-02-10 02:20:39",
         "created_at": "2022-02-10 02:20:39",
         "rules": {
-          "required_if":{
+          "required_if": {
             "anotherField": "business_unit_ids",
             "values": [
               "Medical"
             ]
           },
-          "between":{
+          "between": {
             "min": 0,
             "max": 155
           },
@@ -22240,13 +22279,13 @@
         "updated_at": "2022-02-10 02:20:39",
         "created_at": "2022-02-10 02:20:39",
         "rules": {
-          "required_if":{
+          "required_if": {
             "anotherField": "business_unit_ids",
             "values": [
               "Medical"
             ]
           },
-          "between":{
+          "between": {
             "min": 0,
             "max": 155
           },
@@ -22300,7 +22339,7 @@
         "updated_at": "2022-02-21 09:24:35",
         "created_at": "2022-02-21 08:46:22",
         "rules": {
-          "required_if":{
+          "required_if": {
             "anotherField": "isBenchtop",
             "values": true
           },
@@ -22329,7 +22368,7 @@
         "created_at": "2022-02-21 08:46:22",
         "rules": {
           "checkbox": true,
-          "default_value":false
+          "default_value": false
         },
         "section1_ids": [
           "6213515ea6ebc7d7f12a6579"
@@ -22382,8 +22421,8 @@
         "updated_at": "2022-02-21 08:46:22",
         "created_at": "2022-02-21 08:46:22",
         "rules": {
-          "checkbox":true,
-          "default_value":false
+          "checkbox": true,
+          "default_value": false
         },
         "section1_ids": [
           "6213515ea6ebc7d7f12a6579"
@@ -22409,10 +22448,10 @@
         "created_at": "2022-02-21 08:46:22",
         "rules": {
           "required_if": {
-              "anotherField": "isWorkstationClassI",
-              "values": true
-            },
-            "ms_dropdown":true
+            "anotherField": "isWorkstationClassI",
+            "values": true
+          },
+          "ms_dropdown": true
         },
         "section2_ids": [
           "6213515ea6ebc7d7f12a6579"
@@ -22436,8 +22475,8 @@
         "updated_at": "2022-02-21 08:46:22",
         "created_at": "2022-02-21 08:46:22",
         "rules": {
-          "checkbox":true,
-          "default_value":false
+          "checkbox": true,
+          "default_value": false
         },
         "section1_ids": [
           "6213515ea6ebc7d7f12a6579"
@@ -22463,10 +22502,10 @@
         "created_at": "2022-02-21 08:46:22",
         "rules": {
           "required_if": {
-              "anotherField": "isWorkstationClassII",
-              "values": true
-            },
-          "ms_dropdown":true
+            "anotherField": "isWorkstationClassII",
+            "values": true
+          },
+          "ms_dropdown": true
         },
         "section2_ids": [
           "6213515ea6ebc7d7f12a6579"
@@ -22490,8 +22529,8 @@
         "updated_at": "2022-02-21 08:46:22",
         "created_at": "2022-02-21 08:46:22",
         "rules": {
-          "checkbox":true,
-          "default_value":false
+          "checkbox": true,
+          "default_value": false
         },
         "section1_ids": [
           "6213515ea6ebc7d7f12a6579"
@@ -22515,8 +22554,8 @@
         "updated_at": "2023-01-05 03:48:30",
         "created_at": "2023-01-05 03:48:30",
         "rules": {
-          "checkbox":true,
-          "default_value":false
+          "checkbox": true,
+          "default_value": false
         },
         "field_type": {
           "name": "boolean",
@@ -22541,7 +22580,7 @@
             "min": 0,
             "max": 155
           },
-          "string":true
+          "string": true
         },
         "field_type": {
           "name": "text",
@@ -22562,7 +22601,7 @@
         "updated_at": "2023-03-31 04:19:30",
         "created_at": "2023-03-31 04:19:30",
         "rules": {
-          "default_value":false,
+          "default_value": false,
           "checkbox": true
         },
         "field_type": {
@@ -25991,6 +26030,756 @@
                   "emailAddress": {
                     "name": "hansgorospe@gmail.com",
                     "address": "hansgorospe@gmail.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            }
+          ]
+        },
+        {
+          "_id": "1708578769175",
+          "owner_id": "659763cebebdd5aad80b0fa5",
+          "source_id": "Email",
+          "dateRequested": "01-06-2024",
+          "dateResponded": "01-06-2024",
+          "assigned_to_id": {
+            "_id": "5cadbb8aa6ebc720a0361ef3",
+            "email": "jane.luu@escolifesciences.com",
+            "firstName": "Jane",
+            "lastName": "Luu",
+            "peopleUnder": null,
+            "people": [
+              "5cadbb8aa6ebc720a0361ef3"
+            ]
+          },
+          "description": "This is a test from converted mailbox - 1708578769175",
+          "type_id": "Lead",
+          "link_id": "65288b4ca6ebc75d70589d02",
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB33MHKsAAAA=",
+          "name": "alexander flores",
+          "email": "alexela8882@gmail.com",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl",
+          "conversations": [
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAeLz89m\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB33MHKsAAAA=",
+              "createdDateTime": "2024-01-12T01:33:13Z",
+              "lastModifiedDateTime": "2024-02-02T02:27:59Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAeLz89m",
+              "categories": [],
+              "receivedDateTime": "2024-01-12T01:33:13Z",
+              "sentDateTime": "2024-01-12T01:33:13Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB1536C187EA14009F641FEB3CB06F2@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "Test",
+              "bodyPreview": "Test",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl",
+              "conversationIndex": "AQHaRPdOHlG1VHjagEePcV3CvzZY5Q==",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC%2BhIg8pZ4JMoxc0AB33MHKsAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style></head><body dir=\"ltr\"><div class=\"elementToProof\" style=\"font-family:Calibri,Helvetica,sans-serif; font-size:12pt; color:rgb(0,0,0)\">Test<br></div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "hansgorospe@gmail.com",
+                    "address": "hansgorospe@gmail.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAeLz89+\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB4uaryoAAAA=",
+              "createdDateTime": "2024-02-02T02:27:56Z",
+              "lastModifiedDateTime": "2024-02-02T02:29:46Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAeLz89+",
+              "categories": [],
+              "receivedDateTime": "2024-02-02T02:28:01Z",
+              "sentDateTime": "2024-02-02T02:28:01Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB1536AEC344A7495C84F88BCDB0422@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "RE: Test",
+              "bodyPreview": "________________________________\r\nFrom: alexander flores on behalf of alexander flores <alexela8882@gmail.com>\r\nSent: Friday, January 12, 2024 1:33:13 AM\r\nTo: hansgorospe@gmail.com <hansgorospe@gmail.com>\r\nSubject: Test\r\n\r\nTest",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl",
+              "conversationIndex": "AQHaRPdOHlG1VHjagEePcV3CvzZY5bD2dPIa",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC%2BhIg8pZ4JMoxc0AB4uaryoAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style></head><body dir=\"ltr\"><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> alexander flores on behalf of alexander flores &lt;alexela8882@gmail.com&gt;<br><b>Sent:</b> Friday, January 12, 2024 1:33:13 AM<br><b>To:</b> hansgorospe@gmail.com &lt;hansgorospe@gmail.com&gt;<br><b>Subject:</b> Test</font> <div>&nbsp;</div></div><div><div class=\"elementToProof\" style=\"font-family:Calibri,Helvetica,sans-serif; font-size:12pt; color:rgb(0,0,0)\">Test<br></div></div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "hansgorospe@gmail.com",
+                    "address": "hansgorospe@gmail.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAeLz8+S\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB4uarysAAAA=",
+              "createdDateTime": "2024-02-02T02:29:46Z",
+              "lastModifiedDateTime": "2024-02-02T02:29:47Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAeLz8+S",
+              "categories": [],
+              "receivedDateTime": "2024-02-02T02:29:46Z",
+              "sentDateTime": "2024-02-02T02:29:46Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB1536FB37CF1C07F0A712648CB0422@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "RE: Test",
+              "bodyPreview": "Test reply\r\n\r\n\r\n\r\n  1.  list 1\r\n  2.  list 2\r\n  3.  list 3\r\n\r\nColored fonted font\r\n\r\n________________________________\r\nFrom: alexander flores on behalf of alexander flores <alexela8882@gmail.com>\r\nSent: Friday, February 2, 2024 2:28:01 AM\r\nTo: hansgorospe",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEAAeUbVUeNqAR49xXcK-Nljl",
+              "conversationIndex": "AQHaRPdOHlG1VHjagEePcV3CvzZY5bD2dPIagAAAf8o=",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC%2BhIg8pZ4JMoxc0AB4uarysAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style></head><body dir=\"ltr\"><p>Test <strong>reply</strong></p><p>&nbsp;</p><ol><li>list 1</li><li>list 2</li><li>list 3</li></ol><p><span style=\"color:#b96ad9; font-family:impact,sans-serif\"><em>Colored fonted font</em></span></p><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> alexander flores on behalf of alexander flores &lt;alexela8882@gmail.com&gt;<br><b>Sent:</b> Friday, February 2, 2024 2:28:01 AM<br><b>To:</b> hansgorospe@gmail.com &lt;hansgorospe@gmail.com&gt;<br><b>Subject:</b> RE: Test</font> <div>&nbsp;</div></div><div><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> alexander flores on behalf of alexander flores &lt;alexela8882@gmail.com&gt;<br><b>Sent:</b> Friday, January 12, 2024 1:33:13 AM<br><b>To:</b> hansgorospe@gmail.com &lt;hansgorospe@gmail.com&gt;<br><b>Subject:</b> Test</font> <div>&nbsp;</div></div><div><div class=\"elementToProof\" style=\"font-family:Calibri,Helvetica,sans-serif; font-size:12pt; color:rgb(0,0,0)\">Test<br></div></div></div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "hansgorospe@gmail.com",
+                    "address": "hansgorospe@gmail.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            }
+          ]
+        },
+        {
+          "_id": "1708578799794",
+          "owner_id": "659763cebebdd5aad80b0fa5",
+          "source_id": "Email",
+          "dateRequested": "01-06-2024",
+          "dateResponded": "01-06-2024",
+          "assigned_to_id": {
+            "_id": "5bb104ed678f71061f6451f8",
+            "firstName": "Ninoy",
+            "lastName": "Cahayon",
+            "email": "ninoy.cahayon@escolifesciences.com"
+          },
+          "description": "This is a test from converted mailbox - 1708578799794",
+          "type_id": "Lead",
+          "link_id": 1708578799097,
+          "email_id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCQAAAMePbPrEC_hIg8pZ4JMoxc0AB31GZ-EAAAA=",
+          "name": "alexander flores",
+          "email": "alexela8882@gmail.com",
+          "conversation_id": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c",
+          "conversations": [
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd9e55T\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBDAAAAMePbPrEC_hIg8pZ4JMoxc0AAAIFXAAAAA==",
+              "createdDateTime": "2014-03-16T10:48:03Z",
+              "lastModifiedDateTime": "2024-01-11T06:11:09Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd9e55T",
+              "categories": [],
+              "receivedDateTime": "2014-03-16T10:48:03Z",
+              "sentDateTime": "2014-03-16T10:48:03Z",
+              "hasAttachments": false,
+              "internetMessageId": "<SIXPR02MB07045FC1FEDA6BD806722457A9F50@SIXPR02MB0704.apcprd02.prod.outlook.com>",
+              "subject": "Getting started with your mail account",
+              "bodyPreview": "<-- Update the width and height when the final logo is available -->\r\nComplete these 4 simple steps to get started.\r\nHello, and welcome to Outlook.com\r\nTo get started, let's set up your inbox so you can start emailing and more.\r\nBring in your email\r\nHave ",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBDAAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c",
+              "conversationIndex": "AQHRSXeYxJU2jw+T8EK5lXSSJ+SO3A==",
+              "isDeliveryReceiptRequested": null,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBDAAAAMePbPrEC%2BhIg8pZ4JMoxc0AAAIFXAAAAA%3D%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\">\r\n<!--\r\n.MLetter\r\n\t{font-family:Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size:14px;\r\n\tcolor:#454545;\r\n\tline-height:normal;\r\n\tdirection:ltr;\r\n\tpadding:0px 2px}\r\n.MLetter .MText\r\n\t{font-size:14px;\r\n\tline-height:20px}\r\n.MLetter .MSubhead\r\n\t{font-family:'Segoe UI Web Semibold','Segoe UI Web Regular','Segoe UI','Helvetica Neue Medium',Arial;\r\n\tcolor:#0072C6;\r\n\tfont-size:19px;\r\n\tline-height:25px}\r\n.MLetter .MPreHeader\r\n\t{display:none}\r\n.MLetter .MPreHeader .MText\r\n\t{color:#ffffff}\r\n.MLetter .MHeader\r\n\t{background-color:#0072C6;\r\n\tcolor:#ffffff;\r\n\tpadding:50px 30px 50px}\r\n.MLetter .MHeader .MTitle\r\n\t{font-family:'Segoe UI Web Light','Segoe UI Light','Segoe UI Web Regular','Segoe UI','Helvetica Neue UltraLight',Arial;\r\n\tfont-size:40px;\r\n\tline-height:40px}\r\n.MLetter .MContent .MPara\r\n\t{padding-top:30px}\r\n.MLetter .MContent a\r\n\t{color:#0072C6;\r\n\ttext-decoration:none}\r\n.MLetter .MFooter\r\n\t{background-color:#bbbbbb;\r\n\tcolor:#ffffff;\r\n\tfont-family:Arial;\r\n\tfont-size:11px;\r\n\tpadding:30px}\r\n.MLetter .MFooter .MPara\r\n\t{padding-top:10px}\r\n.MLetter .MFooter a\r\n\t{color:#ffffff}\r\n-->\r\n</style></head><body><div class=\"MLetter\"><div class=\"MPreHeader\" style=\"padding:17px 30px 23px\"><div>&lt;-- Update the width and height when the final logo is available --&gt; <img width=\"0px\" height=\"0px\" src=\"\" style=\"float:left\"> </div><div class=\"MText\">Complete these 4 simple steps to get started.</div></div><div class=\"MHeader\"><div class=\"MTitle\">Hello, and welcome to Outlook.com </div><div class=\"MSubhead\" style=\"color:#ffffff; padding-top:15px\">To get started, let's set up your inbox so you can start emailing and more. </div></div><div class=\"MContent\" style=\"padding:22px 30px\"><div class=\"MPara\"><div class=\"MSubhead\">Bring in your email </div><div class=\"MText\">Have another email account like Gmail? Bring your email into Outlook.com so it's easier to keep up with all of your messages. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter1\">Set it up</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Connect to Facebook and Twitter </div><div class=\"MText\">See your friends' Facebook updates and Tweets in your inbox rather than ads, and keep all your contact information in sync so you never have to update your address book. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter2\">Connect now</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Import your contacts </div><div class=\"MText\">Save time hunting for email addresses. Quickly import your contacts from other services like Facebook, LinkedIn and Gmail. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter3\">Add contacts</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Get Outlook.com on your mobile phone </div><div class=\"MText\">It's quick and easy to set up Outlook.com on your mobile phone so you can access your email wherever you are. Outlook.com is available on Windows Phone, iPhone, Android and more. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter4\">Set it up</a> </div><div class=\"MSubhead\" style=\"padding-top:50px\">Sound easy? It is. Thanks for signing up. </div><div class=\"MText\" style=\"padding-bottom:35px\">The Outlook.com Team </div></div><div class=\"MFooter\"><div>Microsoft respects your privacy. To learn more, please read our online <a href=\"http://go.microsoft.com/fwlink/p/?LinkId=253457\">Privacy Statement</a>. </div><div class=\"MPara\">Microsoft Corporation, One Microsoft Way, Redmond, WA 98052-6399, USA © 2014 Microsoft Corporation. All rights reserved. </div></div></div><img alt=\"\" width=\"1\" height=\"1\" src=\"http://switch.atdmt.com/action?WL_WL_ZZ_ALL_FY09_HotmailMemberLetter\" style=\"display:none\"> </body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "Outlook.com Team",
+                  "address": "member_services@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "Outlook.com Team",
+                  "address": "member_services@outlook.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "alexela8882@gmail.com",
+                    "address": "alexela8882@gmail.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7Sqlo\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC_hIg8pZ4JMoxc0AB3sVH-AAAAA=",
+              "createdDateTime": "2024-01-08T04:14:26Z",
+              "lastModifiedDateTime": "2024-01-08T04:23:02Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7Sqlo",
+              "categories": [],
+              "receivedDateTime": "2024-01-08T04:14:27Z",
+              "sentDateTime": "2024-01-08T04:14:26Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB15368EC8573F7D530E66BB57B06B2@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "RE: Getting started with your mail account",
+              "bodyPreview": "________________________________\r\nFrom: Outlook.com Team <member_services@outlook.com>\r\nSent: Sunday, March 16, 2014 10:48:03 AM\r\nTo: alexela8882@gmail.com <alexela8882@gmail.com>\r\nSubject: Getting started with your mail account\r\n\r\n<-- Update the width an",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c",
+              "conversationIndex": "AQHRSXeYxJU2jw+T8EK5lXSSJ+SO3LDhP2bQ",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC%2BhIg8pZ4JMoxc0AB3sVH%2FAAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\">\r\n<!--\r\n.MLetter\r\n\t{font-family:Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size:14px;\r\n\tcolor:#454545;\r\n\tline-height:normal;\r\n\tdirection:ltr;\r\n\tpadding:0px 2px}\r\n.MLetter .MText\r\n\t{font-size:14px;\r\n\tline-height:20px}\r\n.MLetter .MSubhead\r\n\t{font-family:'Segoe UI Web Semibold','Segoe UI Web Regular','Segoe UI','Helvetica Neue Medium',Arial;\r\n\tcolor:#0072C6;\r\n\tfont-size:19px;\r\n\tline-height:25px}\r\n.MLetter .MPreHeader\r\n\t{display:none}\r\n.MLetter .MPreHeader .MText\r\n\t{color:#ffffff}\r\n.MLetter .MHeader\r\n\t{background-color:#0072C6;\r\n\tcolor:#ffffff;\r\n\tpadding:50px 30px 50px}\r\n.MLetter .MHeader .MTitle\r\n\t{font-family:'Segoe UI Web Light','Segoe UI Light','Segoe UI Web Regular','Segoe UI','Helvetica Neue UltraLight',Arial;\r\n\tfont-size:40px;\r\n\tline-height:40px}\r\n.MLetter .MContent .MPara\r\n\t{padding-top:30px}\r\n.MLetter .MContent a\r\n\t{color:#0072C6;\r\n\ttext-decoration:none}\r\n.MLetter .MFooter\r\n\t{background-color:#bbbbbb;\r\n\tcolor:#ffffff;\r\n\tfont-family:Arial;\r\n\tfont-size:11px;\r\n\tpadding:30px}\r\n.MLetter .MFooter .MPara\r\n\t{padding-top:10px}\r\n.MLetter .MFooter a\r\n\t{color:#ffffff}\r\n-->\r\n</style></head><body><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Outlook.com Team &lt;member_services@outlook.com&gt;<br><b>Sent:</b> Sunday, March 16, 2014 10:48:03 AM<br><b>To:</b> alexela8882@gmail.com &lt;alexela8882@gmail.com&gt;<br><b>Subject:</b> Getting started with your mail account</font> <div>&nbsp;</div></div><div><div class=\"MLetter\"><div class=\"MPreHeader\" style=\"padding:17px 30px 23px\"><div>&lt;-- Update the width and height when the final logo is available --&gt; <img width=\"0px\" height=\"0px\" src=\"\" style=\"float:left\"> </div><div class=\"MText\">Complete these 4 simple steps to get started.</div></div><div class=\"MHeader\"><div class=\"MTitle\">Hello, and welcome to Outlook.com </div><div class=\"MSubhead\" style=\"color:#ffffff; padding-top:15px\">To get started, let's set up your inbox so you can start emailing and more. </div></div><div class=\"MContent\" style=\"padding:22px 30px\"><div class=\"MPara\"><div class=\"MSubhead\">Bring in your email </div><div class=\"MText\">Have another email account like Gmail? Bring your email into Outlook.com so it's easier to keep up with all of your messages. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter1\">Set it up</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Connect to Facebook and Twitter </div><div class=\"MText\">See your friends' Facebook updates and Tweets in your inbox rather than ads, and keep all your contact information in sync so you never have to update your address book. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter2\">Connect now</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Import your contacts </div><div class=\"MText\">Save time hunting for email addresses. Quickly import your contacts from other services like Facebook, LinkedIn and Gmail. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter3\">Add contacts</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Get Outlook.com on your mobile phone </div><div class=\"MText\">It's quick and easy to set up Outlook.com on your mobile phone so you can access your email wherever you are. Outlook.com is available on Windows Phone, iPhone, Android and more. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter4\">Set it up</a> </div><div class=\"MSubhead\" style=\"padding-top:50px\">Sound easy? It is. Thanks for signing up. </div><div class=\"MText\" style=\"padding-bottom:35px\">The Outlook.com Team </div></div><div class=\"MFooter\"><div>Microsoft respects your privacy. To learn more, please read our online <a href=\"http://go.microsoft.com/fwlink/p/?LinkId=253457\">Privacy Statement</a>. </div><div class=\"MPara\">Microsoft Corporation, One Microsoft Way, Redmond, WA 98052-6399, USA © 2014 Microsoft Corporation. All rights reserved. </div></div></div><img alt=\"\" width=\"1\" height=\"1\" src=\"http://switch.atdmt.com/action?WL_WL_ZZ_ALL_FY09_HotmailMemberLetter\" style=\"display:none\"> </div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "Outlook.com Team",
+                    "address": "member_services@outlook.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7Sqll\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC_hIg8pZ4JMoxc0AB3sVH_8AAAA=",
+              "createdDateTime": "2024-01-08T04:15:32Z",
+              "lastModifiedDateTime": "2024-01-08T04:23:02Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7Sqll",
+              "categories": [],
+              "receivedDateTime": "2024-01-08T04:15:33Z",
+              "sentDateTime": "2024-01-08T04:15:32Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB15362275E07C28844ECC5D6AB06B2@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "RE: Getting started with your mail account",
+              "bodyPreview": "________________________________\r\nFrom: Outlook.com Team <member_services@outlook.com>\r\nSent: Sunday, March 16, 2014 10:48:03 AM\r\nTo: alexela8882@gmail.com <alexela8882@gmail.com>\r\nSubject: Getting started with your mail account\r\n\r\n<-- Update the width an",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c",
+              "conversationIndex": "AQHRSXeYxJU2jw+T8EK5lXSSJ+SO3LDhP7Uf",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC%2BhIg8pZ4JMoxc0AB3sVH%2B8AAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\">\r\n<!--\r\n.MLetter\r\n\t{font-family:Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size:14px;\r\n\tcolor:#454545;\r\n\tline-height:normal;\r\n\tdirection:ltr;\r\n\tpadding:0px 2px}\r\n.MLetter .MText\r\n\t{font-size:14px;\r\n\tline-height:20px}\r\n.MLetter .MSubhead\r\n\t{font-family:'Segoe UI Web Semibold','Segoe UI Web Regular','Segoe UI','Helvetica Neue Medium',Arial;\r\n\tcolor:#0072C6;\r\n\tfont-size:19px;\r\n\tline-height:25px}\r\n.MLetter .MPreHeader\r\n\t{display:none}\r\n.MLetter .MPreHeader .MText\r\n\t{color:#ffffff}\r\n.MLetter .MHeader\r\n\t{background-color:#0072C6;\r\n\tcolor:#ffffff;\r\n\tpadding:50px 30px 50px}\r\n.MLetter .MHeader .MTitle\r\n\t{font-family:'Segoe UI Web Light','Segoe UI Light','Segoe UI Web Regular','Segoe UI','Helvetica Neue UltraLight',Arial;\r\n\tfont-size:40px;\r\n\tline-height:40px}\r\n.MLetter .MContent .MPara\r\n\t{padding-top:30px}\r\n.MLetter .MContent a\r\n\t{color:#0072C6;\r\n\ttext-decoration:none}\r\n.MLetter .MFooter\r\n\t{background-color:#bbbbbb;\r\n\tcolor:#ffffff;\r\n\tfont-family:Arial;\r\n\tfont-size:11px;\r\n\tpadding:30px}\r\n.MLetter .MFooter .MPara\r\n\t{padding-top:10px}\r\n.MLetter .MFooter a\r\n\t{color:#ffffff}\r\n-->\r\n</style></head><body><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Outlook.com Team &lt;member_services@outlook.com&gt;<br><b>Sent:</b> Sunday, March 16, 2014 10:48:03 AM<br><b>To:</b> alexela8882@gmail.com &lt;alexela8882@gmail.com&gt;<br><b>Subject:</b> Getting started with your mail account</font> <div>&nbsp;</div></div><div><div class=\"MLetter\"><div class=\"MPreHeader\" style=\"padding:17px 30px 23px\"><div>&lt;-- Update the width and height when the final logo is available --&gt; <img width=\"0px\" height=\"0px\" src=\"\" style=\"float:left\"> </div><div class=\"MText\">Complete these 4 simple steps to get started.</div></div><div class=\"MHeader\"><div class=\"MTitle\">Hello, and welcome to Outlook.com </div><div class=\"MSubhead\" style=\"color:#ffffff; padding-top:15px\">To get started, let's set up your inbox so you can start emailing and more. </div></div><div class=\"MContent\" style=\"padding:22px 30px\"><div class=\"MPara\"><div class=\"MSubhead\">Bring in your email </div><div class=\"MText\">Have another email account like Gmail? Bring your email into Outlook.com so it's easier to keep up with all of your messages. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter1\">Set it up</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Connect to Facebook and Twitter </div><div class=\"MText\">See your friends' Facebook updates and Tweets in your inbox rather than ads, and keep all your contact information in sync so you never have to update your address book. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter2\">Connect now</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Import your contacts </div><div class=\"MText\">Save time hunting for email addresses. Quickly import your contacts from other services like Facebook, LinkedIn and Gmail. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter3\">Add contacts</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Get Outlook.com on your mobile phone </div><div class=\"MText\">It's quick and easy to set up Outlook.com on your mobile phone so you can access your email wherever you are. Outlook.com is available on Windows Phone, iPhone, Android and more. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter4\">Set it up</a> </div><div class=\"MSubhead\" style=\"padding-top:50px\">Sound easy? It is. Thanks for signing up. </div><div class=\"MText\" style=\"padding-bottom:35px\">The Outlook.com Team </div></div><div class=\"MFooter\"><div>Microsoft respects your privacy. To learn more, please read our online <a href=\"http://go.microsoft.com/fwlink/p/?LinkId=253457\">Privacy Statement</a>. </div><div class=\"MPara\">Microsoft Corporation, One Microsoft Way, Redmond, WA 98052-6399, USA © 2014 Microsoft Corporation. All rights reserved. </div></div></div><img alt=\"\" width=\"1\" height=\"1\" src=\"http://switch.atdmt.com/action?WL_WL_ZZ_ALL_FY09_HotmailMemberLetter\" style=\"display:none\"> </div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "Outlook.com Team",
+                    "address": "member_services@outlook.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7Sqli\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC_hIg8pZ4JMoxc0AB3sVH_4AAAA=",
+              "createdDateTime": "2024-01-08T04:18:34Z",
+              "lastModifiedDateTime": "2024-01-08T04:23:02Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7Sqli",
+              "categories": [],
+              "receivedDateTime": "2024-01-08T04:18:35Z",
+              "sentDateTime": "2024-01-08T04:18:35Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB1536FE1B2ED1187503802659B06B2@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "RE: Getting started with your mail account",
+              "bodyPreview": "________________________________\r\nFrom: Outlook.com Team <member_services@outlook.com>\r\nSent: Sunday, March 16, 2014 10:48:03 AM\r\nTo: alexela8882@gmail.com <alexela8882@gmail.com>\r\nSubject: Getting started with your mail account\r\n\r\n<-- Update the width an",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c",
+              "conversationIndex": "AQHRSXeYxJU2jw+T8EK5lXSSJ+SO3LDhQI49",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC%2BhIg8pZ4JMoxc0AB3sVH%2B4AAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\">\r\n<!--\r\n.MLetter\r\n\t{font-family:Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size:14px;\r\n\tcolor:#454545;\r\n\tline-height:normal;\r\n\tdirection:ltr;\r\n\tpadding:0px 2px}\r\n.MLetter .MText\r\n\t{font-size:14px;\r\n\tline-height:20px}\r\n.MLetter .MSubhead\r\n\t{font-family:'Segoe UI Web Semibold','Segoe UI Web Regular','Segoe UI','Helvetica Neue Medium',Arial;\r\n\tcolor:#0072C6;\r\n\tfont-size:19px;\r\n\tline-height:25px}\r\n.MLetter .MPreHeader\r\n\t{display:none}\r\n.MLetter .MPreHeader .MText\r\n\t{color:#ffffff}\r\n.MLetter .MHeader\r\n\t{background-color:#0072C6;\r\n\tcolor:#ffffff;\r\n\tpadding:50px 30px 50px}\r\n.MLetter .MHeader .MTitle\r\n\t{font-family:'Segoe UI Web Light','Segoe UI Light','Segoe UI Web Regular','Segoe UI','Helvetica Neue UltraLight',Arial;\r\n\tfont-size:40px;\r\n\tline-height:40px}\r\n.MLetter .MContent .MPara\r\n\t{padding-top:30px}\r\n.MLetter .MContent a\r\n\t{color:#0072C6;\r\n\ttext-decoration:none}\r\n.MLetter .MFooter\r\n\t{background-color:#bbbbbb;\r\n\tcolor:#ffffff;\r\n\tfont-family:Arial;\r\n\tfont-size:11px;\r\n\tpadding:30px}\r\n.MLetter .MFooter .MPara\r\n\t{padding-top:10px}\r\n.MLetter .MFooter a\r\n\t{color:#ffffff}\r\n-->\r\n</style></head><body><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Outlook.com Team &lt;member_services@outlook.com&gt;<br><b>Sent:</b> Sunday, March 16, 2014 10:48:03 AM<br><b>To:</b> alexela8882@gmail.com &lt;alexela8882@gmail.com&gt;<br><b>Subject:</b> Getting started with your mail account</font> <div>&nbsp;</div></div><div><div class=\"MLetter\"><div class=\"MPreHeader\" style=\"padding:17px 30px 23px\"><div>&lt;-- Update the width and height when the final logo is available --&gt; <img width=\"0px\" height=\"0px\" src=\"\" style=\"float:left\"> </div><div class=\"MText\">Complete these 4 simple steps to get started.</div></div><div class=\"MHeader\"><div class=\"MTitle\">Hello, and welcome to Outlook.com </div><div class=\"MSubhead\" style=\"color:#ffffff; padding-top:15px\">To get started, let's set up your inbox so you can start emailing and more. </div></div><div class=\"MContent\" style=\"padding:22px 30px\"><div class=\"MPara\"><div class=\"MSubhead\">Bring in your email </div><div class=\"MText\">Have another email account like Gmail? Bring your email into Outlook.com so it's easier to keep up with all of your messages. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter1\">Set it up</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Connect to Facebook and Twitter </div><div class=\"MText\">See your friends' Facebook updates and Tweets in your inbox rather than ads, and keep all your contact information in sync so you never have to update your address book. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter2\">Connect now</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Import your contacts </div><div class=\"MText\">Save time hunting for email addresses. Quickly import your contacts from other services like Facebook, LinkedIn and Gmail. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter3\">Add contacts</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Get Outlook.com on your mobile phone </div><div class=\"MText\">It's quick and easy to set up Outlook.com on your mobile phone so you can access your email wherever you are. Outlook.com is available on Windows Phone, iPhone, Android and more. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter4\">Set it up</a> </div><div class=\"MSubhead\" style=\"padding-top:50px\">Sound easy? It is. Thanks for signing up. </div><div class=\"MText\" style=\"padding-bottom:35px\">The Outlook.com Team </div></div><div class=\"MFooter\"><div>Microsoft respects your privacy. To learn more, please read our online <a href=\"http://go.microsoft.com/fwlink/p/?LinkId=253457\">Privacy Statement</a>. </div><div class=\"MPara\">Microsoft Corporation, One Microsoft Way, Redmond, WA 98052-6399, USA © 2014 Microsoft Corporation. All rights reserved. </div></div></div><img alt=\"\" width=\"1\" height=\"1\" src=\"http://switch.atdmt.com/action?WL_WL_ZZ_ALL_FY09_HotmailMemberLetter\" style=\"display:none\"> </div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "Outlook.com Team",
+                    "address": "member_services@outlook.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7SqqN\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC_hIg8pZ4JMoxc0AB3sVH_0AAAA=",
+              "createdDateTime": "2024-01-08T04:19:12Z",
+              "lastModifiedDateTime": "2024-01-08T04:40:58Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7SqqN",
+              "categories": [],
+              "receivedDateTime": "2024-01-08T04:19:17Z",
+              "sentDateTime": "2024-01-08T04:19:17Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB15364862DE7DEB244A61CD51B06B2@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "Re: Getting started with your mail account",
+              "bodyPreview": "Test reply\r\n________________________________\r\nFrom: Outlook.com Team <member_services@outlook.com>\r\nSent: Sunday, 16 March 2014 6:48 pm\r\nTo: alexela8882@gmail.com <alexela8882@gmail.com>\r\nSubject: Getting started with your mail account\r\n\r\n<-- Update the w",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c",
+              "conversationIndex": "AQHRSXeYxJU2jw+T8EK5lXSSJ+SO3LDhQLsC",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC%2BhIg8pZ4JMoxc0AB3sVH%2B0AAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\" style=\"display:none\">\r\n<!--\r\np\r\n\t{margin-top:0;\r\n\tmargin-bottom:0}\r\n-->\r\n</style></head><body dir=\"ltr\"><div class=\"elementToProof\" style=\"font-family:Calibri,Helvetica,sans-serif; font-size:12pt; color:rgb(0,0,0)\">Test reply<br></div><div id=\"appendonsend\"></div><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Outlook.com Team &lt;member_services@outlook.com&gt;<br><b>Sent:</b> Sunday, 16 March 2014 6:48 pm<br><b>To:</b> alexela8882@gmail.com &lt;alexela8882@gmail.com&gt;<br><b>Subject:</b> Getting started with your mail account</font> <div>&nbsp;</div></div><style type=\"text/css\">\r\n<!--\r\n.x_MLetter\r\n\t{font-family:Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size:14px;\r\n\tcolor:#454545;\r\n\tline-height:normal;\r\n\tdirection:ltr;\r\n\tpadding:0px 2px}\r\n.x_MLetter .x_MText\r\n\t{font-size:14px;\r\n\tline-height:20px}\r\n.x_MLetter .x_MSubhead\r\n\t{font-family:'Segoe UI Web Semibold','Segoe UI Web Regular','Segoe UI','Helvetica Neue Medium',Arial;\r\n\tcolor:#0072C6;\r\n\tfont-size:19px;\r\n\tline-height:25px}\r\n.x_MLetter .x_MPreHeader\r\n\t{display:none}\r\n.x_MLetter .x_MPreHeader .x_MText\r\n\t{color:#ffffff}\r\n.x_MLetter .x_MHeader\r\n\t{background-color:#0072C6;\r\n\tcolor:#ffffff;\r\n\tpadding:50px 30px 50px}\r\n.x_MLetter .x_MHeader .x_MTitle\r\n\t{font-family:'Segoe UI Web Light','Segoe UI Light','Segoe UI Web Regular','Segoe UI','Helvetica Neue UltraLight',Arial;\r\n\tfont-size:40px;\r\n\tline-height:40px}\r\n.x_MLetter .x_MContent .x_MPara\r\n\t{padding-top:30px}\r\n.x_MLetter .x_MContent a\r\n\t{color:#0072C6;\r\n\ttext-decoration:none}\r\n.x_MLetter .x_MFooter\r\n\t{background-color:#bbbbbb;\r\n\tcolor:#ffffff;\r\n\tfont-family:Arial;\r\n\tfont-size:11px;\r\n\tpadding:30px}\r\n.x_MLetter .x_MFooter .x_MPara\r\n\t{padding-top:10px}\r\n.x_MLetter .x_MFooter a\r\n\t{color:#ffffff}\r\n-->\r\n</style><div><div class=\"x_MLetter\"><div class=\"x_MPreHeader\" style=\"padding:17px 30px 23px\"><div>&lt;-- Update the width and height when the final logo is available --&gt; <img width=\"0px\" height=\"0px\" style=\"float:left\"> </div><div class=\"x_MText\">Complete these 4 simple steps to get started.</div></div><div class=\"x_MHeader\"><div class=\"x_MTitle\">Hello, and welcome to Outlook.com </div><div class=\"x_MSubhead\" style=\"color:#ffffff; padding-top:15px\">To get started, let's set up your inbox so you can start emailing and more. </div></div><div class=\"x_MContent\" style=\"padding:22px 30px\"><div class=\"x_MPara\"><div class=\"x_MSubhead\">Bring in your email </div><div class=\"x_MText\">Have another email account like Gmail? Bring your email into Outlook.com so it's easier to keep up with all of your messages. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter1\">Set it up</a> </div><div class=\"x_MPara\"><div class=\"x_MSubhead\">Connect to Facebook and Twitter </div><div class=\"x_MText\">See your friends' Facebook updates and Tweets in your inbox rather than ads, and keep all your contact information in sync so you never have to update your address book. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter2\">Connect now</a> </div><div class=\"x_MPara\"><div class=\"x_MSubhead\">Import your contacts </div><div class=\"x_MText\">Save time hunting for email addresses. Quickly import your contacts from other services like Facebook, LinkedIn and Gmail. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter3\">Add contacts</a> </div><div class=\"x_MPara\"><div class=\"x_MSubhead\">Get Outlook.com on your mobile phone </div><div class=\"x_MText\">It's quick and easy to set up Outlook.com on your mobile phone so you can access your email wherever you are. Outlook.com is available on Windows Phone, iPhone, Android and more. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter4\">Set it up</a> </div><div class=\"x_MSubhead\" style=\"padding-top:50px\">Sound easy? It is. Thanks for signing up. </div><div class=\"x_MText\" style=\"padding-bottom:35px\">The Outlook.com Team </div></div><div class=\"x_MFooter\"><div>Microsoft respects your privacy. To learn more, please read our online <a href=\"http://go.microsoft.com/fwlink/p/?LinkId=253457\">Privacy Statement</a>. </div><div class=\"x_MPara\">Microsoft Corporation, One Microsoft Way, Redmond, WA 98052-6399, USA © 2014 Microsoft Corporation. All rights reserved. </div></div></div><img alt=\"\" width=\"1\" height=\"1\" src=\"http://switch.atdmt.com/action?WL_WL_ZZ_ALL_FY09_HotmailMemberLetter\" style=\"display:none\"> </div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "Outlook.com Team",
+                    "address": "member_services@outlook.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7Sqlc\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC_hIg8pZ4JMoxc0AB3sVH_wAAAA=",
+              "createdDateTime": "2024-01-08T04:20:07Z",
+              "lastModifiedDateTime": "2024-01-08T04:23:02Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7Sqlc",
+              "categories": [],
+              "receivedDateTime": "2024-01-08T04:20:08Z",
+              "sentDateTime": "2024-01-08T04:20:07Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB15363C6E81F09DBBAA285C05B06B2@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "RE: Getting started with your mail account",
+              "bodyPreview": "________________________________\r\nFrom: Outlook.com Team <member_services@outlook.com>\r\nSent: Sunday, March 16, 2014 10:48:03 AM\r\nTo: alexela8882@gmail.com <alexela8882@gmail.com>\r\nSubject: Getting started with your mail account\r\n\r\n<-- Update the width an",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c",
+              "conversationIndex": "AQHRSXeYxJU2jw+T8EK5lXSSJ+SO3LDhQP3k",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC%2BhIg8pZ4JMoxc0AB3sVH%2BwAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\">\r\n<!--\r\n.MLetter\r\n\t{font-family:Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size:14px;\r\n\tcolor:#454545;\r\n\tline-height:normal;\r\n\tdirection:ltr;\r\n\tpadding:0px 2px}\r\n.MLetter .MText\r\n\t{font-size:14px;\r\n\tline-height:20px}\r\n.MLetter .MSubhead\r\n\t{font-family:'Segoe UI Web Semibold','Segoe UI Web Regular','Segoe UI','Helvetica Neue Medium',Arial;\r\n\tcolor:#0072C6;\r\n\tfont-size:19px;\r\n\tline-height:25px}\r\n.MLetter .MPreHeader\r\n\t{display:none}\r\n.MLetter .MPreHeader .MText\r\n\t{color:#ffffff}\r\n.MLetter .MHeader\r\n\t{background-color:#0072C6;\r\n\tcolor:#ffffff;\r\n\tpadding:50px 30px 50px}\r\n.MLetter .MHeader .MTitle\r\n\t{font-family:'Segoe UI Web Light','Segoe UI Light','Segoe UI Web Regular','Segoe UI','Helvetica Neue UltraLight',Arial;\r\n\tfont-size:40px;\r\n\tline-height:40px}\r\n.MLetter .MContent .MPara\r\n\t{padding-top:30px}\r\n.MLetter .MContent a\r\n\t{color:#0072C6;\r\n\ttext-decoration:none}\r\n.MLetter .MFooter\r\n\t{background-color:#bbbbbb;\r\n\tcolor:#ffffff;\r\n\tfont-family:Arial;\r\n\tfont-size:11px;\r\n\tpadding:30px}\r\n.MLetter .MFooter .MPara\r\n\t{padding-top:10px}\r\n.MLetter .MFooter a\r\n\t{color:#ffffff}\r\n-->\r\n</style></head><body><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Outlook.com Team &lt;member_services@outlook.com&gt;<br><b>Sent:</b> Sunday, March 16, 2014 10:48:03 AM<br><b>To:</b> alexela8882@gmail.com &lt;alexela8882@gmail.com&gt;<br><b>Subject:</b> Getting started with your mail account</font> <div>&nbsp;</div></div><div><div class=\"MLetter\"><div class=\"MPreHeader\" style=\"padding:17px 30px 23px\"><div>&lt;-- Update the width and height when the final logo is available --&gt; <img width=\"0px\" height=\"0px\" src=\"\" style=\"float:left\"> </div><div class=\"MText\">Complete these 4 simple steps to get started.</div></div><div class=\"MHeader\"><div class=\"MTitle\">Hello, and welcome to Outlook.com </div><div class=\"MSubhead\" style=\"color:#ffffff; padding-top:15px\">To get started, let's set up your inbox so you can start emailing and more. </div></div><div class=\"MContent\" style=\"padding:22px 30px\"><div class=\"MPara\"><div class=\"MSubhead\">Bring in your email </div><div class=\"MText\">Have another email account like Gmail? Bring your email into Outlook.com so it's easier to keep up with all of your messages. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter1\">Set it up</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Connect to Facebook and Twitter </div><div class=\"MText\">See your friends' Facebook updates and Tweets in your inbox rather than ads, and keep all your contact information in sync so you never have to update your address book. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter2\">Connect now</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Import your contacts </div><div class=\"MText\">Save time hunting for email addresses. Quickly import your contacts from other services like Facebook, LinkedIn and Gmail. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter3\">Add contacts</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Get Outlook.com on your mobile phone </div><div class=\"MText\">It's quick and easy to set up Outlook.com on your mobile phone so you can access your email wherever you are. Outlook.com is available on Windows Phone, iPhone, Android and more. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter4\">Set it up</a> </div><div class=\"MSubhead\" style=\"padding-top:50px\">Sound easy? It is. Thanks for signing up. </div><div class=\"MText\" style=\"padding-bottom:35px\">The Outlook.com Team </div></div><div class=\"MFooter\"><div>Microsoft respects your privacy. To learn more, please read our online <a href=\"http://go.microsoft.com/fwlink/p/?LinkId=253457\">Privacy Statement</a>. </div><div class=\"MPara\">Microsoft Corporation, One Microsoft Way, Redmond, WA 98052-6399, USA © 2014 Microsoft Corporation. All rights reserved. </div></div></div><img alt=\"\" width=\"1\" height=\"1\" src=\"http://switch.atdmt.com/action?WL_WL_ZZ_ALL_FY09_HotmailMemberLetter\" style=\"display:none\"> </div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "Outlook.com Team",
+                    "address": "member_services@outlook.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7SqlZ\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC_hIg8pZ4JMoxc0AB3sVH_sAAAA=",
+              "createdDateTime": "2024-01-08T04:22:16Z",
+              "lastModifiedDateTime": "2024-01-08T04:23:02Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7SqlZ",
+              "categories": [],
+              "receivedDateTime": "2024-01-08T04:22:17Z",
+              "sentDateTime": "2024-01-08T04:22:16Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB153655285C4B5AC67A46CD90B06B2@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "RE: Getting started with your mail account",
+              "bodyPreview": "________________________________\r\nFrom: Outlook.com Team <member_services@outlook.com>\r\nSent: Sunday, March 16, 2014 10:48:03 AM\r\nTo: alexela8882@gmail.com <alexela8882@gmail.com>\r\nSubject: Getting started with your mail account\r\n\r\n<-- Update the width an",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c",
+              "conversationIndex": "AQHRSXeYxJU2jw+T8EK5lXSSJ+SO3LDhQZev",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC%2BhIg8pZ4JMoxc0AB3sVH%2BsAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\">\r\n<!--\r\n.MLetter\r\n\t{font-family:Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size:14px;\r\n\tcolor:#454545;\r\n\tline-height:normal;\r\n\tdirection:ltr;\r\n\tpadding:0px 2px}\r\n.MLetter .MText\r\n\t{font-size:14px;\r\n\tline-height:20px}\r\n.MLetter .MSubhead\r\n\t{font-family:'Segoe UI Web Semibold','Segoe UI Web Regular','Segoe UI','Helvetica Neue Medium',Arial;\r\n\tcolor:#0072C6;\r\n\tfont-size:19px;\r\n\tline-height:25px}\r\n.MLetter .MPreHeader\r\n\t{display:none}\r\n.MLetter .MPreHeader .MText\r\n\t{color:#ffffff}\r\n.MLetter .MHeader\r\n\t{background-color:#0072C6;\r\n\tcolor:#ffffff;\r\n\tpadding:50px 30px 50px}\r\n.MLetter .MHeader .MTitle\r\n\t{font-family:'Segoe UI Web Light','Segoe UI Light','Segoe UI Web Regular','Segoe UI','Helvetica Neue UltraLight',Arial;\r\n\tfont-size:40px;\r\n\tline-height:40px}\r\n.MLetter .MContent .MPara\r\n\t{padding-top:30px}\r\n.MLetter .MContent a\r\n\t{color:#0072C6;\r\n\ttext-decoration:none}\r\n.MLetter .MFooter\r\n\t{background-color:#bbbbbb;\r\n\tcolor:#ffffff;\r\n\tfont-family:Arial;\r\n\tfont-size:11px;\r\n\tpadding:30px}\r\n.MLetter .MFooter .MPara\r\n\t{padding-top:10px}\r\n.MLetter .MFooter a\r\n\t{color:#ffffff}\r\n-->\r\n</style></head><body><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Outlook.com Team &lt;member_services@outlook.com&gt;<br><b>Sent:</b> Sunday, March 16, 2014 10:48:03 AM<br><b>To:</b> alexela8882@gmail.com &lt;alexela8882@gmail.com&gt;<br><b>Subject:</b> Getting started with your mail account</font> <div>&nbsp;</div></div><div><div class=\"MLetter\"><div class=\"MPreHeader\" style=\"padding:17px 30px 23px\"><div>&lt;-- Update the width and height when the final logo is available --&gt; <img width=\"0px\" height=\"0px\" src=\"\" style=\"float:left\"> </div><div class=\"MText\">Complete these 4 simple steps to get started.</div></div><div class=\"MHeader\"><div class=\"MTitle\">Hello, and welcome to Outlook.com </div><div class=\"MSubhead\" style=\"color:#ffffff; padding-top:15px\">To get started, let's set up your inbox so you can start emailing and more. </div></div><div class=\"MContent\" style=\"padding:22px 30px\"><div class=\"MPara\"><div class=\"MSubhead\">Bring in your email </div><div class=\"MText\">Have another email account like Gmail? Bring your email into Outlook.com so it's easier to keep up with all of your messages. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter1\">Set it up</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Connect to Facebook and Twitter </div><div class=\"MText\">See your friends' Facebook updates and Tweets in your inbox rather than ads, and keep all your contact information in sync so you never have to update your address book. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter2\">Connect now</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Import your contacts </div><div class=\"MText\">Save time hunting for email addresses. Quickly import your contacts from other services like Facebook, LinkedIn and Gmail. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter3\">Add contacts</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Get Outlook.com on your mobile phone </div><div class=\"MText\">It's quick and easy to set up Outlook.com on your mobile phone so you can access your email wherever you are. Outlook.com is available on Windows Phone, iPhone, Android and more. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter4\">Set it up</a> </div><div class=\"MSubhead\" style=\"padding-top:50px\">Sound easy? It is. Thanks for signing up. </div><div class=\"MText\" style=\"padding-bottom:35px\">The Outlook.com Team </div></div><div class=\"MFooter\"><div>Microsoft respects your privacy. To learn more, please read our online <a href=\"http://go.microsoft.com/fwlink/p/?LinkId=253457\">Privacy Statement</a>. </div><div class=\"MPara\">Microsoft Corporation, One Microsoft Way, Redmond, WA 98052-6399, USA © 2014 Microsoft Corporation. All rights reserved. </div></div></div><img alt=\"\" width=\"1\" height=\"1\" src=\"http://switch.atdmt.com/action?WL_WL_ZZ_ALL_FY09_HotmailMemberLetter\" style=\"display:none\"> </div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "Outlook.com Team",
+                    "address": "member_services@outlook.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7SqmV\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC_hIg8pZ4JMoxc0AB3sVH-EAAAA=",
+              "createdDateTime": "2024-01-08T04:26:23Z",
+              "lastModifiedDateTime": "2024-01-08T04:26:42Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7SqmV",
+              "categories": [],
+              "receivedDateTime": "2024-01-08T04:26:24Z",
+              "sentDateTime": "2024-01-08T04:26:24Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB1536648A68D508FA0019CA4EB06B2@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "RE: Getting started with your mail account",
+              "bodyPreview": "Test reply\r\n________________________________\r\nFrom: Outlook.com Team <member_services@outlook.com>\r\nSent: Sunday, March 16, 2014 10:48:03 AM\r\nTo: alexela8882@gmail.com <alexela8882@gmail.com>\r\nSubject: Getting started with your mail account\r\n\r\n<-- Update ",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c",
+              "conversationIndex": "AQHRSXeYxJU2jw+T8EK5lXSSJ+SO3LDhQr08",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC%2BhIg8pZ4JMoxc0AB3sVH%2FEAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\">\r\n<!--\r\n.MLetter\r\n\t{font-family:Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size:14px;\r\n\tcolor:#454545;\r\n\tline-height:normal;\r\n\tdirection:ltr;\r\n\tpadding:0px 2px}\r\n.MLetter .MText\r\n\t{font-size:14px;\r\n\tline-height:20px}\r\n.MLetter .MSubhead\r\n\t{font-family:'Segoe UI Web Semibold','Segoe UI Web Regular','Segoe UI','Helvetica Neue Medium',Arial;\r\n\tcolor:#0072C6;\r\n\tfont-size:19px;\r\n\tline-height:25px}\r\n.MLetter .MPreHeader\r\n\t{display:none}\r\n.MLetter .MPreHeader .MText\r\n\t{color:#ffffff}\r\n.MLetter .MHeader\r\n\t{background-color:#0072C6;\r\n\tcolor:#ffffff;\r\n\tpadding:50px 30px 50px}\r\n.MLetter .MHeader .MTitle\r\n\t{font-family:'Segoe UI Web Light','Segoe UI Light','Segoe UI Web Regular','Segoe UI','Helvetica Neue UltraLight',Arial;\r\n\tfont-size:40px;\r\n\tline-height:40px}\r\n.MLetter .MContent .MPara\r\n\t{padding-top:30px}\r\n.MLetter .MContent a\r\n\t{color:#0072C6;\r\n\ttext-decoration:none}\r\n.MLetter .MFooter\r\n\t{background-color:#bbbbbb;\r\n\tcolor:#ffffff;\r\n\tfont-family:Arial;\r\n\tfont-size:11px;\r\n\tpadding:30px}\r\n.MLetter .MFooter .MPara\r\n\t{padding-top:10px}\r\n.MLetter .MFooter a\r\n\t{color:#ffffff}\r\n-->\r\n</style></head><body>Test reply <hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Outlook.com Team &lt;member_services@outlook.com&gt;<br><b>Sent:</b> Sunday, March 16, 2014 10:48:03 AM<br><b>To:</b> alexela8882@gmail.com &lt;alexela8882@gmail.com&gt;<br><b>Subject:</b> Getting started with your mail account</font> <div>&nbsp;</div></div><div><div class=\"MLetter\"><div class=\"MPreHeader\" style=\"padding:17px 30px 23px\"><div>&lt;-- Update the width and height when the final logo is available --&gt; <img width=\"0px\" height=\"0px\" src=\"\" style=\"float:left\"> </div><div class=\"MText\">Complete these 4 simple steps to get started.</div></div><div class=\"MHeader\"><div class=\"MTitle\">Hello, and welcome to Outlook.com </div><div class=\"MSubhead\" style=\"color:#ffffff; padding-top:15px\">To get started, let's set up your inbox so you can start emailing and more. </div></div><div class=\"MContent\" style=\"padding:22px 30px\"><div class=\"MPara\"><div class=\"MSubhead\">Bring in your email </div><div class=\"MText\">Have another email account like Gmail? Bring your email into Outlook.com so it's easier to keep up with all of your messages. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter1\">Set it up</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Connect to Facebook and Twitter </div><div class=\"MText\">See your friends' Facebook updates and Tweets in your inbox rather than ads, and keep all your contact information in sync so you never have to update your address book. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter2\">Connect now</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Import your contacts </div><div class=\"MText\">Save time hunting for email addresses. Quickly import your contacts from other services like Facebook, LinkedIn and Gmail. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter3\">Add contacts</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Get Outlook.com on your mobile phone </div><div class=\"MText\">It's quick and easy to set up Outlook.com on your mobile phone so you can access your email wherever you are. Outlook.com is available on Windows Phone, iPhone, Android and more. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter4\">Set it up</a> </div><div class=\"MSubhead\" style=\"padding-top:50px\">Sound easy? It is. Thanks for signing up. </div><div class=\"MText\" style=\"padding-bottom:35px\">The Outlook.com Team </div></div><div class=\"MFooter\"><div>Microsoft respects your privacy. To learn more, please read our online <a href=\"http://go.microsoft.com/fwlink/p/?LinkId=253457\">Privacy Statement</a>. </div><div class=\"MPara\">Microsoft Corporation, One Microsoft Way, Redmond, WA 98052-6399, USA © 2014 Microsoft Corporation. All rights reserved. </div></div></div><img alt=\"\" width=\"1\" height=\"1\" src=\"http://switch.atdmt.com/action?WL_WL_ZZ_ALL_FY09_HotmailMemberLetter\" style=\"display:none\"> </div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "alexela8882@gmail.com",
+                    "address": "alexela8882@gmail.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7Sqru\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC_hIg8pZ4JMoxc0AB3sVH-sAAAA=",
+              "createdDateTime": "2024-01-08T04:29:21Z",
+              "lastModifiedDateTime": "2024-01-08T04:43:17Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7Sqru",
+              "categories": [],
+              "receivedDateTime": "2024-01-08T04:29:22Z",
+              "sentDateTime": "2024-01-08T04:29:21Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB15367A58A19DDA347B555F33B06B2@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "RE: Getting started with your mail account",
+              "bodyPreview": "Test reply body\r\n\r\n________________________________\r\nFrom: Outlook.com Team <member_services@outlook.com>\r\nSent: Sunday, March 16, 2014 10:48:03 AM\r\nTo: alexela8882@gmail.com <alexela8882@gmail.com>\r\nSubject: Getting started with your mail account\r\n\r\n<-- ",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c",
+              "conversationIndex": "AQHRSXeYxJU2jw+T8EK5lXSSJ+SO3LDhQ5Fx",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC%2BhIg8pZ4JMoxc0AB3sVH%2FsAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\">\r\n<!--\r\n.MLetter\r\n\t{font-family:Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size:14px;\r\n\tcolor:#454545;\r\n\tline-height:normal;\r\n\tdirection:ltr;\r\n\tpadding:0px 2px}\r\n.MLetter .MText\r\n\t{font-size:14px;\r\n\tline-height:20px}\r\n.MLetter .MSubhead\r\n\t{font-family:'Segoe UI Web Semibold','Segoe UI Web Regular','Segoe UI','Helvetica Neue Medium',Arial;\r\n\tcolor:#0072C6;\r\n\tfont-size:19px;\r\n\tline-height:25px}\r\n.MLetter .MPreHeader\r\n\t{display:none}\r\n.MLetter .MPreHeader .MText\r\n\t{color:#ffffff}\r\n.MLetter .MHeader\r\n\t{background-color:#0072C6;\r\n\tcolor:#ffffff;\r\n\tpadding:50px 30px 50px}\r\n.MLetter .MHeader .MTitle\r\n\t{font-family:'Segoe UI Web Light','Segoe UI Light','Segoe UI Web Regular','Segoe UI','Helvetica Neue UltraLight',Arial;\r\n\tfont-size:40px;\r\n\tline-height:40px}\r\n.MLetter .MContent .MPara\r\n\t{padding-top:30px}\r\n.MLetter .MContent a\r\n\t{color:#0072C6;\r\n\ttext-decoration:none}\r\n.MLetter .MFooter\r\n\t{background-color:#bbbbbb;\r\n\tcolor:#ffffff;\r\n\tfont-family:Arial;\r\n\tfont-size:11px;\r\n\tpadding:30px}\r\n.MLetter .MFooter .MPara\r\n\t{padding-top:10px}\r\n.MLetter .MFooter a\r\n\t{color:#ffffff}\r\n-->\r\n</style></head><body><p><strong>Test reply body</strong></p><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Outlook.com Team &lt;member_services@outlook.com&gt;<br><b>Sent:</b> Sunday, March 16, 2014 10:48:03 AM<br><b>To:</b> alexela8882@gmail.com &lt;alexela8882@gmail.com&gt;<br><b>Subject:</b> Getting started with your mail account</font> <div>&nbsp;</div></div><div><div class=\"MLetter\"><div class=\"MPreHeader\" style=\"padding:17px 30px 23px\"><div>&lt;-- Update the width and height when the final logo is available --&gt; <img width=\"0px\" height=\"0px\" src=\"\" style=\"float:left\"> </div><div class=\"MText\">Complete these 4 simple steps to get started.</div></div><div class=\"MHeader\"><div class=\"MTitle\">Hello, and welcome to Outlook.com </div><div class=\"MSubhead\" style=\"color:#ffffff; padding-top:15px\">To get started, let's set up your inbox so you can start emailing and more. </div></div><div class=\"MContent\" style=\"padding:22px 30px\"><div class=\"MPara\"><div class=\"MSubhead\">Bring in your email </div><div class=\"MText\">Have another email account like Gmail? Bring your email into Outlook.com so it's easier to keep up with all of your messages. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter1\">Set it up</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Connect to Facebook and Twitter </div><div class=\"MText\">See your friends' Facebook updates and Tweets in your inbox rather than ads, and keep all your contact information in sync so you never have to update your address book. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter2\">Connect now</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Import your contacts </div><div class=\"MText\">Save time hunting for email addresses. Quickly import your contacts from other services like Facebook, LinkedIn and Gmail. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter3\">Add contacts</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Get Outlook.com on your mobile phone </div><div class=\"MText\">It's quick and easy to set up Outlook.com on your mobile phone so you can access your email wherever you are. Outlook.com is available on Windows Phone, iPhone, Android and more. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter4\">Set it up</a> </div><div class=\"MSubhead\" style=\"padding-top:50px\">Sound easy? It is. Thanks for signing up. </div><div class=\"MText\" style=\"padding-bottom:35px\">The Outlook.com Team </div></div><div class=\"MFooter\"><div>Microsoft respects your privacy. To learn more, please read our online <a href=\"http://go.microsoft.com/fwlink/p/?LinkId=253457\">Privacy Statement</a>. </div><div class=\"MPara\">Microsoft Corporation, One Microsoft Way, Redmond, WA 98052-6399, USA © 2014 Microsoft Corporation. All rights reserved. </div></div></div><img alt=\"\" width=\"1\" height=\"1\" src=\"http://switch.atdmt.com/action?WL_WL_ZZ_ALL_FY09_HotmailMemberLetter\" style=\"display:none\"> </div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "alexela8882@gmail.com",
+                    "address": "alexela8882@gmail.com"
+                  }
+                }
+              ],
+              "ccRecipients": [],
+              "bccRecipients": [],
+              "replyTo": [],
+              "flag": {
+                "flagStatus": "notFlagged"
+              }
+            },
+            {
+              "@odata.etag": "W/\"CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7Sqrr\"",
+              "id": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC_hIg8pZ4JMoxc0AB3sVH-oAAAA=",
+              "createdDateTime": "2024-01-08T04:30:25Z",
+              "lastModifiedDateTime": "2024-01-08T04:43:17Z",
+              "changeKey": "CQAAABYAAADHj2z6xAvoSIPKWeCTKMXNAAd7Sqrr",
+              "categories": [],
+              "receivedDateTime": "2024-01-08T04:30:26Z",
+              "sentDateTime": "2024-01-08T04:30:25Z",
+              "hasAttachments": false,
+              "internetMessageId": "<OSZP286MB15361FABD2016A5AF7C16288B06B2@OSZP286MB1536.JPNP286.PROD.OUTLOOK.COM>",
+              "subject": "RE: Getting started with your mail account",
+              "bodyPreview": "Test reply\r\n\r\n________________________________\r\nFrom: Outlook.com Team <member_services@outlook.com>\r\nSent: Sunday, March 16, 2014 10:48:03 AM\r\nTo: alexela8882@gmail.com <alexela8882@gmail.com>\r\nSubject: Getting started with your mail account\r\n\r\n<-- Updat",
+              "importance": "normal",
+              "parentFolderId": "AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoALgAAA5gv4R7x4ahGm9EJSYsudEEBAMePbPrEC_hIg8pZ4JMoxc0AAAIBCgAAAA==",
+              "conversationId": "AQQkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoAEADElTaPD5PwQrmVdJIn5I7c",
+              "conversationIndex": "AQHRSXeYxJU2jw+T8EK5lXSSJ+SO3LDhQ97b",
+              "isDeliveryReceiptRequested": false,
+              "isReadReceiptRequested": false,
+              "isRead": true,
+              "isDraft": false,
+              "webLink": "https://outlook.live.com/owa/?ItemID=AQMkADAwATM3ZmYAZS1iZDJlLWJiADgwLTAwAi0wMAoARgAAA5gv4R7x4ahGm9EJSYsudEEHAMePbPrEC%2BhIg8pZ4JMoxc0AAAIBCgAAAMePbPrEC%2BhIg8pZ4JMoxc0AB3sVH%2FoAAAA%3D&exvsurl=1&viewmodel=ReadMessageItem",
+              "inferenceClassification": "focused",
+              "body": {
+                "contentType": "html",
+                "content": "<html><head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"><style type=\"text/css\">\r\n<!--\r\n.MLetter\r\n\t{font-family:Tahoma,Verdana,Arial,sans-serif;\r\n\tfont-size:14px;\r\n\tcolor:#454545;\r\n\tline-height:normal;\r\n\tdirection:ltr;\r\n\tpadding:0px 2px}\r\n.MLetter .MText\r\n\t{font-size:14px;\r\n\tline-height:20px}\r\n.MLetter .MSubhead\r\n\t{font-family:'Segoe UI Web Semibold','Segoe UI Web Regular','Segoe UI','Helvetica Neue Medium',Arial;\r\n\tcolor:#0072C6;\r\n\tfont-size:19px;\r\n\tline-height:25px}\r\n.MLetter .MPreHeader\r\n\t{display:none}\r\n.MLetter .MPreHeader .MText\r\n\t{color:#ffffff}\r\n.MLetter .MHeader\r\n\t{background-color:#0072C6;\r\n\tcolor:#ffffff;\r\n\tpadding:50px 30px 50px}\r\n.MLetter .MHeader .MTitle\r\n\t{font-family:'Segoe UI Web Light','Segoe UI Light','Segoe UI Web Regular','Segoe UI','Helvetica Neue UltraLight',Arial;\r\n\tfont-size:40px;\r\n\tline-height:40px}\r\n.MLetter .MContent .MPara\r\n\t{padding-top:30px}\r\n.MLetter .MContent a\r\n\t{color:#0072C6;\r\n\ttext-decoration:none}\r\n.MLetter .MFooter\r\n\t{background-color:#bbbbbb;\r\n\tcolor:#ffffff;\r\n\tfont-family:Arial;\r\n\tfont-size:11px;\r\n\tpadding:30px}\r\n.MLetter .MFooter .MPara\r\n\t{padding-top:10px}\r\n.MLetter .MFooter a\r\n\t{color:#ffffff}\r\n-->\r\n</style></head><body><p><em><u>Test reply</u></em></p><hr tabindex=\"-1\" style=\"display:inline-block; width:98%\"><div id=\"divRplyFwdMsg\" dir=\"ltr\"><font face=\"Calibri, sans-serif\" color=\"#000000\" style=\"font-size:11pt\"><b>From:</b> Outlook.com Team &lt;member_services@outlook.com&gt;<br><b>Sent:</b> Sunday, March 16, 2014 10:48:03 AM<br><b>To:</b> alexela8882@gmail.com &lt;alexela8882@gmail.com&gt;<br><b>Subject:</b> Getting started with your mail account</font> <div>&nbsp;</div></div><div><div class=\"MLetter\"><div class=\"MPreHeader\" style=\"padding:17px 30px 23px\"><div>&lt;-- Update the width and height when the final logo is available --&gt; <img width=\"0px\" height=\"0px\" src=\"\" style=\"float:left\"> </div><div class=\"MText\">Complete these 4 simple steps to get started.</div></div><div class=\"MHeader\"><div class=\"MTitle\">Hello, and welcome to Outlook.com </div><div class=\"MSubhead\" style=\"color:#ffffff; padding-top:15px\">To get started, let's set up your inbox so you can start emailing and more. </div></div><div class=\"MContent\" style=\"padding:22px 30px\"><div class=\"MPara\"><div class=\"MSubhead\">Bring in your email </div><div class=\"MText\">Have another email account like Gmail? Bring your email into Outlook.com so it's easier to keep up with all of your messages. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter1\">Set it up</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Connect to Facebook and Twitter </div><div class=\"MText\">See your friends' Facebook updates and Tweets in your inbox rather than ads, and keep all your contact information in sync so you never have to update your address book. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter2\">Connect now</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Import your contacts </div><div class=\"MText\">Save time hunting for email addresses. Quickly import your contacts from other services like Facebook, LinkedIn and Gmail. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter3\">Add contacts</a> </div><div class=\"MPara\"><div class=\"MSubhead\">Get Outlook.com on your mobile phone </div><div class=\"MText\">It's quick and easy to set up Outlook.com on your mobile phone so you can access your email wherever you are. Outlook.com is available on Windows Phone, iPhone, Android and more. </div><a href=\"http://g.live.com/9wc9en-ph/w_letter4\">Set it up</a> </div><div class=\"MSubhead\" style=\"padding-top:50px\">Sound easy? It is. Thanks for signing up. </div><div class=\"MText\" style=\"padding-bottom:35px\">The Outlook.com Team </div></div><div class=\"MFooter\"><div>Microsoft respects your privacy. To learn more, please read our online <a href=\"http://go.microsoft.com/fwlink/p/?LinkId=253457\">Privacy Statement</a>. </div><div class=\"MPara\">Microsoft Corporation, One Microsoft Way, Redmond, WA 98052-6399, USA © 2014 Microsoft Corporation. All rights reserved. </div></div></div><img alt=\"\" width=\"1\" height=\"1\" src=\"http://switch.atdmt.com/action?WL_WL_ZZ_ALL_FY09_HotmailMemberLetter\" style=\"display:none\"> </div></body></html>"
+              },
+              "sender": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "outlook_0026BAB7A60B95ED@outlook.com"
+                }
+              },
+              "from": {
+                "emailAddress": {
+                  "name": "alexander flores",
+                  "address": "alexela8882@gmail.com"
+                }
+              },
+              "toRecipients": [
+                {
+                  "emailAddress": {
+                    "name": "alexela8882@gmail.com",
+                    "address": "alexela8882@gmail.com"
                   }
                 }
               ],
@@ -43083,7 +43872,7 @@
       ]
     }
   ],
-  "picklist":{
+  "picklist": {
     "account_type": {
       "values": [
         {
@@ -43802,8 +44591,8 @@
       ],
       "catSrcListName": null
     },
-    "account_currency":{
-      "values":[
+    "account_currency": {
+      "values": [
         {
           "_id": "5a7ff2c8678f716be22b37f2",
           "code": "AUD",
@@ -46458,10 +47247,10 @@
       "catSrcListName": null
     }
   },
-  "lookup":[
+  "lookup": [
     {
       "id": "lead_country_id",
-      "values":{
+      "values": {
         "data": [
           {
             "_id": "5a529aa4678f7138736cc162",
@@ -47718,7 +48507,7 @@
     },
     {
       "id": "lead_application_ids",
-      "values":{
+      "values": {
         "data": [
           {
             "_id": "5bb119aa678f7106595b0512",
@@ -47805,7 +48594,7 @@
     },
     {
       "id": "lead_product_category_ids",
-      "values":{
+      "values": {
         "data": [
           {
             "_id": "5b344ae8678f711dfc04ecd3",
@@ -48056,7 +48845,7 @@
     },
     {
       "id": "account_business_unit_ids",
-      "values":{
+      "values": {
         "data": [
           {
             "_id": "5b344ae1678f711dfc04ec3f",
@@ -48117,7 +48906,7 @@
     },
     {
       "id": "account_currency_id",
-      "values":{
+      "values": {
         "data": [
           {
             "_id": "5a7ff2c8678f716be22b37f2",
@@ -48268,7 +49057,7 @@
     },
     {
       "id": "account_billing_country_id",
-      "values":{
+      "values": {
         "data": [
           {
             "_id": "5a529aa4678f7138736cc162",
@@ -49525,7 +50314,7 @@
     },
     {
       "id": "account_shipping_country_id",
-      "values":{
+      "values": {
         "data": [
           {
             "_id": "5a529aa4678f7138736cc162",
@@ -50782,7 +51571,7 @@
     },
     {
       "id": "account_products_handled_id",
-      "values":{
+      "values": {
         "data": [
           {
             "_id": "5b344ae8678f711dfc04ecd3",
@@ -52150,7 +52939,7 @@
       }
     }
   ],
-  "lookup-paginated":[
+  "lookup-paginated": [
     {
       "_id": "5bb104ed678f71061f6451f5",
       "lastName": "Tronsal",
