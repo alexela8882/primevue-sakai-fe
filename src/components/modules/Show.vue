@@ -1,7 +1,7 @@
 <script setup>
 // imports
 import { storeToRefs } from 'pinia'
-import { onMounted, watch, ref, defineAsyncComponent } from 'vue'
+import { onMounted, watch, ref, computed, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { useConfirm } from "primevue/useconfirm"
 // stores
@@ -40,6 +40,7 @@ const {
   moduleLoading,
   collectionLoading,
   getModule,
+  getModules,
   getBaseModule,
   getCollection,
   getViewFilters,
@@ -47,7 +48,7 @@ const {
   getViewFilterIds,
   getViewFilter,
   getSearchKeyFieldIds } = storeToRefs(moduleStore)
-const { fetchModule, fetchBaseModule } = moduleStore
+const { fetchModule, fetchModules, fetchBaseModule } = moduleStore
 const { getTabs } = storeToRefs(tabStore)
 const { addTab,toggleWindows, maximizeTab } = tabStore
 const { setFormReset } = formDataStore

@@ -6,11 +6,15 @@ import { useRouter } from 'vue-router'
 // stores & composables
 import { useGeneralStore } from './stores/general'// stores
 import { useTabStore } from '@/stores/tabs/index'
+import { useModuleStore } from '@/stores/modules/index'
 
 // refs
 const router = useRouter()
 // stores & composables
+const moduleStore = useModuleStore()
 const tabStore = useTabStore()
+const { getModules } = storeToRefs(moduleStore)
+const { fetchModules } = moduleStore
 const { tabDialog, getMaximizedTab } = storeToRefs(tabStore)
 const generalStore = useGeneralStore()
 const { minimizeTab } = tabStore
@@ -19,6 +23,12 @@ const { formModalTrigger, popUpModalTrigger } = storeToRefs(generalStore)
 const FormDialog = defineAsyncComponent(() => import('@/components/dynamic/FormDialog.vue'))
 const PopUpDialog = defineAsyncComponent(() => import('@/components/dynamic/PopUpDialog.vue'))
 const GlobalDialog = defineAsyncComponent(() => import('@/components/dynamic/GlobalDialog.vue'))
+
+onMounted(async () => {
+  await fetchModules()
+
+  console.log(getModules.value)
+})
 
 </script>
 
