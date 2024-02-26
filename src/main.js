@@ -47,7 +47,7 @@ import {
   faMicrosoft as faMicrosoftBrand
 } from '@fortawesome/free-brands-svg-icons'
 
-axios.defaults.baseURL = 'http://localhost:80/api/'
+axios.defaults.baseURL = 'http://localhost/api/'
 axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 
 import PrimeVue from 'primevue/config'

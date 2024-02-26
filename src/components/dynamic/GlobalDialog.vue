@@ -98,6 +98,7 @@ const handleDragging = (event) => {
 }
 
 .custom-dialog {
+  min-height: 300px;
   width: 600px;
   background-color: #fff;
   border-radius: 8px;
@@ -105,8 +106,8 @@ const handleDragging = (event) => {
 }
 
 .custom-dialog-maximized {
-  width: 100vw;
-  height: 100vh;
+  width: 99vw;
+  height: 98vh;
   border-radius: 0;
   overflow-y: scroll;
 }

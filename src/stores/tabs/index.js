@@ -43,20 +43,25 @@ export const useTabStore = defineStore('tabStore', () => {
     return tabs.value = []
   }
   const maximizeTab = async (payload) => {
+    console.log(payload)
     tabs.value.map(tab => {
-      if (tab.name === payload.name) {
-        tab.maximized = true
-        tab.expanded = true
-      }
+      if (tab.name === payload.name) tab.maximized = true
       else tab.maximized = false
+
+      tab.expanded = false
     })
+
+    console.log(tabs.value)
 
     // open global dialog
     tabDialog.value = true
   }
   const minimizeTab = async () => {
     tabs.value.map(tab => {
-      if (tab.maximized) tab.maximized = false
+      if (tab.maximized) {
+        tab.maximized = false
+        tab.expanded = true
+      }
     })
 
     // close global dialog
@@ -110,31 +115,32 @@ export const useTabStore = defineStore('tabStore', () => {
 
     // If the selected item is not opened
     if (!itemToToggle.opened) {
-      setTimeout(() => {
-        // const index = tabs.value.findIndex(tab => tab.label === payload.label)
-        // if (index !== -1) {
-        //   tabs.value.unshift(tabs.value.splice(index, 1)[0])
-        // }
+      // const index = tabs.value.findIndex(tab => tab.label === payload.label)
+      // if (index !== -1) {
+      //   tabs.value.unshift(tabs.value.splice(index, 1)[0])
+      // }
 
-        const secondItem = tabs.value.find(item => item.opened && item.opened_order === 2)
-        if (secondItem) {
-          secondItem.opened = false
-          secondItem.opened_order = null
-        }
+      const secondItem = tabs.value.find(item => item.opened && item.opened_order === 2)
+      if (secondItem) {
+        secondItem.opened = false
+        secondItem.opened_order = null
+      }
 
-        const firstItem = tabs.value.find(item => item.opened && item.opened_order === 1)
-        if (firstItem) firstItem.opened_order = 2
+      const firstItem = tabs.value.find(item => item.opened && item.opened_order === 1)
+      if (firstItem) {
+        firstItem.opened_order = 2
+        firstItem.expanded = false
+      }
 
-        const newItem = tabs.value.find(item => item.name === itemToToggle.name)
-        newItem.opened = true
-        newItem.expanded = true
-        newItem.opened_order = 1
-        console.log(newItem)
+      const newItem = tabs.value.find(item => item.name === itemToToggle.name)
+      newItem.opened = true
+      if (newItem.mode !== 'modal') newItem.expanded = true
+      newItem.opened_order = 1
+      console.log(newItem)
 
-        console.log(tabs.value)
+      console.log(tabs.value)
 
-        xTabsLoading.value = false
-      }, 50)
+      xTabsLoading.value = false
     } else if(!itemToToggle.expanded){
       itemToToggle.expanded = true
       xTabsLoading.value = false
@@ -149,7 +155,10 @@ export const useTabStore = defineStore('tabStore', () => {
       tabs.value.unshift(tab)
 
       // toggle windows
-      if (window) toggleWindows(tab)
+      if (window) await toggleWindows(tab)
+
+      // tab mode
+      if (payload.mode === 'modal') await maximizeTab(tab) 
     }
 
     xTabsLoading.value = false

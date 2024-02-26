@@ -1,6 +1,6 @@
 // imports
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, shallowRef, computed } from 'vue'
 // import fs from 'fs'
 import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
@@ -249,13 +249,18 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // actions
   const fetchModules = async () => {
     modulesLoading.value = true
-    const res = await axios(`${jsonDbUrl.value}/modules`, {
+    // const res = await axios(`${jsonDbUrl.value}/modules`, {
+    //   method: 'GET',
+    //   headers: { 'Content-Type': 'application/json' }
+    // })
+
+    const res = await axios(`/modules`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
-      modules.value = res.data
+      modules.value = res.data.data
     }
     modulesLoading.value = false
   }
@@ -269,6 +274,15 @@ export const useModuleStore = defineStore('moduleStore', () => {
     if (res.status === 200) {
       baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
     }
+
+    if (modules) {
+      console.log(modules) // working
+      console.log(modules.value) // not working
+      console.log(modules.value.find(module => module._id === id))
+    }
+
+    // baseModule.value = modules.value.find(module => module._id === id)
+
     moduleLoading.value = false
   }
   const _fetchBaseModuleByField = async (payload) => {
@@ -317,11 +331,9 @@ export const useModuleStore = defineStore('moduleStore', () => {
               Object.assign(m, obj)
             }
           })
-          console.log(modules.value)
         } else return fetchedModule
       }
     } catch (error) {
-      console.log(error.response)
       module.value = {}
       collection.value = []
 

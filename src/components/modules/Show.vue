@@ -1,7 +1,7 @@
 <script setup>
 // imports
 import { storeToRefs } from 'pinia'
-import { onMounted, watch, ref, defineAsyncComponent } from 'vue'
+import { onMounted, watch, ref, computed, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { useConfirm } from "primevue/useconfirm"
 // stores
@@ -40,6 +40,7 @@ const {
   moduleLoading,
   collectionLoading,
   getModule,
+  getModules,
   getBaseModule,
   getCollection,
   getViewFilters,
@@ -47,9 +48,9 @@ const {
   getViewFilterIds,
   getViewFilter,
   getSearchKeyFieldIds } = storeToRefs(moduleStore)
-const { fetchModule, fetchBaseModule } = moduleStore
+const { fetchModule, fetchModules, fetchBaseModule } = moduleStore
 const { getTabs } = storeToRefs(tabStore)
-const { addTab,toggleWindows } = tabStore
+const { addTab,toggleWindows, maximizeTab } = tabStore
 const { setFormReset } = formDataStore
 // presets
 const tblMenu = ref(false)
@@ -115,23 +116,22 @@ const tblSettingsBtn = ref([
 ])
 
 // actions
-const createNewForm = (module) => {
+const createNewForm = async (module) => {
   let obj = Object.assign({}, {
     type: 'module-form',
     style: 'window',
     name: `${module.name}-window-create-form`,
     label: `${module.label} Form`,
     _module: module.name,
-    expanded: true,
+    expanded: false,
     opened: false,
+    mode: 'modal',
     opened_order: null
   })
-  const index = getTabs.value.findIndex(form => form.name === obj.name)
-  if (index === -1) {
-    addTab(obj, true)
-  }else{
-    confirmAddTab(module,index)
-  }
+  const index = getTabs.value.findIndex((tab, fx) => tab.name === obj.name)
+  if (index == -1) {
+    await addTab(obj, true)
+  } else confirmAddTab(module, index)
 }
 
 const confirmAddTab = (module,index) => {
