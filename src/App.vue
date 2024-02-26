@@ -3,6 +3,7 @@
 import { storeToRefs } from 'pinia'
 import { defineAsyncComponent, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import _ from 'lodash'
 // stores & composables
 import { useGeneralStore } from './stores/general'// stores
 import { useTabStore } from '@/stores/tabs/index'
@@ -27,13 +28,13 @@ const GlobalDialog = defineAsyncComponent(() => import('@/components/dynamic/Glo
 onMounted(async () => {
   await fetchModules()
 
-  console.log(getModules.value)
+  console.log('get modules',_.cloneDeep(getModules.value))
 })
 
 </script>
 
 <template>
-  <div class="mb-6 pb-6">
+  <div v-if="!_.isEmpty(getModules)" class="mb-6 pb-6">
     <router-view></router-view>
   </div>
 
