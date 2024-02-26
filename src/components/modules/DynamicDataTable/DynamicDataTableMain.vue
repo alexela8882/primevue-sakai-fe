@@ -2,14 +2,18 @@
 // -----------
 // imports
 // -----------
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch,defineAsyncComponent,provide } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
+import _ from 'lodash'
 // stores
 import { useModuleStore } from '../../../stores/modules/index'
 import { useModuleDynamicTableStore } from '../../../stores/modules/dynamictable/index'
 import router from '../../../router'
+
+//components
+const Field = defineAsyncComponent(() => import('@/components/modules/Form/Field.vue'))
 
 // defines
 const props = defineProps({
@@ -112,14 +116,20 @@ const perPageItems = ref([
   { label: '50', value: 50 }
 ])
 
+const tableFormData = ref({'values':{}})
+const tableFormChanged = ref({})
+const clonedData = ref()
 // actions
-const cellEditAction = (payload) => {
-  const cellModule = payload.relation && payload.relation.entity_id.name
+const cellEditAction = (data,payload) => {
+  // const cellModule = payload.relation && payload.relation.entity_id.name
   cellEdit.value = true
-
-  console.log(getEntity.value(cellModule))
-  fetchDropdownLists(getEntity.value(cellModule).name)
+  if(!_.has(tableFormData.value['values'],data['_id'])){
+    tableFormData.value['values'][data['_id']] = _.cloneDeep(data)
+  }
+  // console.log(getEntity.value(cellModule))
+  // fetchDropdownLists(getEntity.value(cellModule).name)
 }
+
 const paginate = async (event, jump) => {
   let page = 1
   if (!jump) {
@@ -147,14 +157,35 @@ const handleHoverIn = (event) => {
   leftShadowStyle.value = `${sameStyles} clip-path: inset(0px 0px 0px -15px);`
 }
 const onCellEditComplete = (event) => {
+  console.log('complete',event)
   cellEdit.value = false
   let { data, newValue, field } = event
-  data[field] = newValue
+  if(newValue!=tableFormData.value['values'][data['_id']][field]){
+      data[field] = tableFormData.value['values'][data['_id']][field]
+      if(!_.has(tableFormChanged.value,data['_id'])){
+        tableFormChanged.value[data['_id']] = [field]
+      }else{
+        if(!_.has(tableFormChanged.value[data['_id']],field)){
+          tableFormChanged.value[data['_id']].push(field)
+        }
+      }
+  }
+
+}
+
+const onCellEditCancelled = (event) =>{
+  console.log('cancelled',event)
+}
+
+const resetTableForm = () =>{
+  tableFormChanged.value = {}
+  tableFormData.value = {}
+  clonedData.value = _.cloneDeep(props.data)
 }
 
 // life cycles
 onMounted(async () => {
-  console.log(route.params)
+  clonedData.value = _.cloneDeep(props.data)
 })
 
 onClickOutside(listViewFilterRef, (event) => {
@@ -163,6 +194,7 @@ onClickOutside(listViewFilterRef, (event) => {
   }
 })
 
+provide('form', tableFormData)
 </script>
 
 <template>
@@ -176,8 +208,9 @@ onClickOutside(listViewFilterRef, (event) => {
     @cell-edit-complete="onCellEditComplete"
     @row-edit-save="onRowEditSave"
     @rowContextmenu="onRowContextMenu"
+    @cell-edit-cancel="onCellEditCancelled"
     tableClass="editable-cells-table"
-    :value="data"
+    :value="clonedData"
     :loading="collectionLoading"
     stripedRows
     stateStorage="local"
@@ -208,7 +241,7 @@ onClickOutside(listViewFilterRef, (event) => {
       :bodyClass="`text-color-secondary ${mode === 'edit' ? 'py-1' : 'py-2'}`"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
-        <div v-if="slotProps.data[col.name]">
+        <div v-if="slotProps.data[col.name]" :class="{'cell-edited':(_.find(tableFormChanged,function(f,k){ if(k==slotProps.data['_id'] && _.includes(f,col.name)){ return true}}))}">
           <div class="flex align-items-center justify-content-between">
             <div>
               <span v-if="col.relation">
@@ -227,14 +260,15 @@ onClickOutside(listViewFilterRef, (event) => {
               <span v-else>{{ slotProps.data[col.name] }}</span>
             </div>
             <div v-if="mode === 'edit'">
-              <i @click="cellEditAction(col)" class="edit-icon cursor-pointer pi pi-pencil ml-3"></i>
+              <i @click="cellEditAction(slotProps.data,col)" class="edit-icon cursor-pointer pi pi-pencil ml-3"></i>
             </div>
           </div>
         </div>
       </template>
       <template #editor="{ data, field }">
-        <div v-if="data[col.name]" style="overflow: scroll;">
-          <div v-if="col.relation">
+        <div v-if="data[col.name]">
+          <Field :config="col" :keyName="data['_id']" type="tableForm"/>
+          <!-- <div v-if="col.relation">
             <div
               v-for="(diplayFieldName, dfn) in col.relation.displayFieldName"
               :key="dfn">
@@ -260,10 +294,11 @@ onClickOutside(listViewFilterRef, (event) => {
             </div>
           </div>
           <div v-else>
+            
             <inputText
               v-model="data[col.name]"
               style="box-sizing: border-box; max-width: 100%;" />
-          </div>
+          </div> -->
         </div>
       </template>
     </Column>
@@ -325,6 +360,10 @@ onClickOutside(listViewFilterRef, (event) => {
     </Transition>
   </DataTable>
   <!-- <ContextMenu ref="cm" :model="menuModel" /> -->
+  <div v-if="!_.isEmpty(tableFormChanged)" style="width:100vw;position:fixed;bottom:0;left:0;height:54px;text-align:center;margin-left:90px;padding:12px" class="shadow-2 align-items-center">
+    <el-button @click="resetTableForm">Cancel</el-button>
+    <el-button type="primary">Save</el-button>
+  </div>
 </template>
 
 <style scoped>
@@ -384,5 +423,8 @@ onClickOutside(listViewFilterRef, (event) => {
   opacity: 1 !important;
   /* transform: translateX(0);
   transition: transform ease-in .2s; */
+}
+.cell-edited{
+  background: #f9e3b6;
 }
 </style>

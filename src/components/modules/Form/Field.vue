@@ -15,7 +15,9 @@
     const LookupField = defineAsyncComponent(() => import('@/components/modules/Form/LookupField.vue'))
 
     const props = defineProps({
-        config: Object
+        config: Object,
+        type: String,
+        keyName: String
     })
 
     const formDataStore = useFormDataStore()
@@ -47,17 +49,18 @@
 
 </script>
 <template>
+   
     <template v-if="config.field_type.name=='text'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
-            <label :for="config.name">{{ config.label }}</label>
-            <InputText v-model="form.values.main[config.name]" :id="config.name" />
+            <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
+            <InputText v-model="form.values[keyName][config.name]" :id="config.name" />
             <!-- <small></small> -->
         </div>
     </template>
     <template v-else-if="config.field_type.name=='number' || config.field_type.name=='percentage'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
-            <label :for="config.name">{{ config.label }}</label>
-            <InputNumber v-model="form.values.main[config.name]" inputId="config.name" 
+            <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
+            <InputNumber v-model="form.values[keyName][config.name]" inputId="config.name" 
             mode="decimal"
             :useGrouping="_.get(config.rules,'comma_separated',false)" 
             :suffix="(config.field_type.name=='percentage') ? '%' : ''"
@@ -69,18 +72,18 @@
     </template>
     <template v-else-if="config.field_type.name=='currency'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
-            <label :for="config.name">{{ config.label }}</label>
-            <InputNumber v-if="(_.get(form.values.main,config.currencySource.field+'.code','')=='')" v-model="form.values.main[config.name]" inputId="config.name" 
+            <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
+            <InputNumber v-if="(_.get(form.values[keyName],config.currencySource.field+'.code','')=='')" v-model="form.values[keyName][config.name]" inputId="config.name" 
             mode="decimal"
             :useGrouping="_.get(config.rules,'comma_separated',false)" 
             :minFractionDigits="_.get(config.rules,'decimal',null)" 
             :maxFractionDigits="_.get(config.rules,'decimal',null)" 
             :min="_.get(config.rules,'digits_between.min',null)" 
             :max="_.get(config.rules,'digits_between.max',null)" />
-            <InputNumber v-else v-model="form.values.main[config.name]" inputId="config.name" 
+            <InputNumber v-else v-model="form.values[keyName][config.name]" inputId="config.name" 
             mode="currency"
             :useGrouping="_.get(config.rules,'comma_separated',false)" 
-            :currency="(config.field_type.name=='currency') ? _.get(form.values.main,config.currencySource.field+'.code','') : ''"
+            :currency="(config.field_type.name=='currency') ? _.get(form.values[keyName],config.currencySource.field+'.code','') : ''"
             :currencyDisplay="_.get(config,'currencySource.concat','')"
             :minFractionDigits="_.get(config.rules,'decimal',null)" 
             :maxFractionDigits="_.get(config.rules,'decimal',null)" 
@@ -90,9 +93,9 @@
     </template>
     <template v-else-if="config.field_type.name=='date'">
         <div class="fieldInput flex flex-column" >
-        <label :for="config.name">{{ config.label }}</label>
-         <el-date-picker class="w-full"
-            v-model="form.values.main[config.name]"
+        <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
+        <el-date-picker class="w-full"
+            v-model="form.values[keyName][config.name]"
             clearable
             :type="_.get(config.rules,'date_selection','date')"
             :format="((_.get(config.rules,'date_selection','date') == 'month') ? 'MMM YYYY' : ((_.get(config.rules,'date_selection','date') == 'week') ?  'YYYY [w]ww' : 'MM/DD/YYYY'))"
@@ -102,7 +105,7 @@
     </template>
     <template v-else-if="config.field_type.name=='richTextBox'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
-            <label :for="config.name">{{ config.label }}</label>
+            <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <editor :api-key="tinyApiKey" :init="{
                 plugins: ['lists link image paste help wordcount table'],
                 menubar:false,
@@ -113,7 +116,7 @@
     </template>
     <template v-else-if="config.field_type.name=='longText'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
-            <label :for="config.name">{{ config.label }}</label>
+            <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <editor :api-key="tinyApiKey" :init="{
                 plugins: ['lists link image paste help wordcount'],
                 menubar:false,
@@ -124,24 +127,24 @@
     </template>
     <template v-else-if="config.field_type.name=='boolean'">
         <div class="fieldInput checkbox" :class="{'required': _.get(config.rules,'required',false)}">
-            <InputSwitch v-if="_.get(config.rules,'switch',false)"  v-model="form.values.main[config.name]" :inputId="config.name" />
-            <Checkbox v-else :inputId="config.name" v-model="form.values.main[config.name]" :binary="true"  />
-            <label :for="config.name">{{ config.label }}</label>
+            <InputSwitch v-if="_.get(config.rules,'switch',false)"  v-model="form.values[keyName][config.name]" :inputId="config.name" />
+            <Checkbox v-else :inputId="config.name" v-model="form.values[keyName][config.name]" :binary="true"  />
+            <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
         </div>
     </template>
     <template v-else-if="config.field_type.name=='picklist'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
-            <label :for="config.name">{{ config.label }}</label>
+            <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <div v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton',false) || _.get(config.rules,'radiobutton_inline',false)" :class="(_.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton_inline',false)) ? 'card flex flex-wrap justify-content-center gap-3': ''">
             <div  v-for="option of getPicklistByListName(config.listName)" :key="option._id" class="flex align-items-center" :class="(_.get(config.rules,'checkbox',false) || _.get(config.rules,'radiobutton',false)) ? 'mb-1 mt-1 ml-3' : ''">
-                <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values.main[config.name]" :inputId="option._id" name="category" :value="option" />
-                <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values.main[config.name]"/>
+                <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values[keyName][config.name]" :inputId="option._id" name="category" :value="option" />
+                <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values[keyName][config.name]"/>
                 <label :for="option._id" class="ml-1">{{ option.value }}</label>
             </div>
             </div>
-            <Listbox v-else-if="_.get(config.rules,'ss_list_view',false) || _.get(config.rules,'ms_list_view',false)" v-model="form.values.main[config.name]" :options="getPicklistByListName(config.listName)" :multiple="_.get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
+            <Listbox v-else-if="_.get(config.rules,'ss_list_view',false) || _.get(config.rules,'ms_list_view',false)" v-model="form.values[keyName][config.name]" :options="getPicklistByListName(config.listName)" :multiple="_.get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
             <el-select v-else 
-                v-model="form.values.main[config.name]"
+                v-model="form.values[keyName][config.name]"
                 class="w-full" :multiple="checkFieldIfMultipleSelect(config.rules)"
                 :collapse-tags="checkFieldIfMultipleSelect(config.rules)"
                 :collapse-tags-tooltip="checkFieldIfMultipleSelect(config.rules)"
@@ -153,15 +156,15 @@
                     :value="item"
                     />
             </el-select>
-            <!-- <Dropdown v-else-if="_.get(config.rules,'ss_dropdown',false)" v-model="form.values.main[config.name]" :options="getPicklistByListName(config.listName)" showClear filter  optionLabel="value" :placeholder="'Select '+ config.label" checkmark :highlightOnSelect="false" class="w-full" />
-            <MultiSelect v-else v-model="form.values.main[config.name]" display="chip" :options="getPicklistByListName(config.listName)" optionLabel="value" :placeholder="'Select '+ config.label" :selectionLimit="_.get(config.rules,'between.max',0)" class="w-full" /> -->
+            <!-- <Dropdown v-else-if="_.get(config.rules,'ss_dropdown',false)" v-model="form.values[keyName][config.name]" :options="getPicklistByListName(config.listName)" showClear filter  optionLabel="value" :placeholder="'Select '+ config.label" checkmark :highlightOnSelect="false" class="w-full" />
+            <MultiSelect v-else v-model="form.values[keyName][config.name]" display="chip" :options="getPicklistByListName(config.listName)" optionLabel="value" :placeholder="'Select '+ config.label" :selectionLimit="_.get(config.rules,'between.max',0)" class="w-full" /> -->
         </div>
     </template>
     <template v-else-if="config.field_type.name=='lookupModel'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
-            <label :for="config.name">{{ config.label }}</label>
+            <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <template v-if="_.get(config.rules,'ss_dropdown',false) || _.get(config.rules,'ms_dropdown',false)">
-                <el-select v-if="_.get(form.lookup,config.uniqueName + '.group',false)" v-model="form.values.main[config.name]" placeholder="Select" clearable filterable class="w-full">
+                <el-select v-if="_.get(form.lookup,config.uniqueName + '.group',false)" v-model="form.values[keyName][config.name]" placeholder="Select" clearable filterable class="w-full">
                     <el-option-group
                     v-for="group in _.get(form.lookup,config.uniqueName+'.options',[])"
                     :key="group.label"
@@ -176,7 +179,7 @@
                     </el-option-group>
                 </el-select>
                 <el-select v-else 
-                    v-model="form.values.main[config.name]"
+                    v-model="form.values[keyName][config.name]"
                     class="w-full"
                     placeholder="Select" clearable filterable>
                         <el-option
@@ -189,12 +192,12 @@
             </template>
             <div v-else-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton',false) || _.get(config.rules,'radiobutton_inline',false)" :class="(_.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton_inline',false)) ? 'card flex flex-wrap justify-content-center gap-3': ''">
                 <div  v-for="option of _.get(form.lookup,config.uniqueName+'.options',[])" :key="option._id" class="flex align-items-center" :class="(_.get(config.rules,'checkbox',false) || _.get(config.rules,'radiobutton',false)) ? 'mb-1 mt-1 ml-3' : ''">
-                    <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values.main[config.name]" :inputId="option._id" name="category" :value="option" />
-                    <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values.main[config.name]"/>
+                    <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values[keyName][config.name]" :inputId="option._id" name="category" :value="option" />
+                    <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values[keyName][config.name]"/>
                     <label :for="option._id" class="ml-1">{{ option.value }}</label>
                 </div>
             </div>
-            <Listbox v-else-if="_.get(config.rules,'ss_list_view',false) || _.get(config.rules,'ms_list_view',false)" v-model="form.values.main[config.name]" :options="_.get(form.lookup,config.uniqueName+'.options',[])" :multiple="_.get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
+            <Listbox v-else-if="_.get(config.rules,'ss_list_view',false) || _.get(config.rules,'ms_list_view',false)" v-model="form.values[keyName][config.name]" :options="_.get(form.lookup,config.uniqueName+'.options',[])" :multiple="_.get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
             <template v-else>
                 <LookupField :field="config"/>
             </template>
@@ -202,11 +205,12 @@
     </template>
     <template v-else>
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
-            <label :for="config.name">{{ config.label }}</label>
-            <InputText :id="config.name" v-model="form.values.main[config.name]" />
+            <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
+            <InputText :id="config.name" v-model="form.values[keyName][config.name]" />
             <!-- <small></small> -->
         </div>
     </template>
+
 </template>
 <style>
 .fieldInput.required input, .fieldInput.required .el-input__wrapper, .fieldInput.required .p-dropdown{

@@ -23,6 +23,7 @@ import TwoColumnList from '../../loading/TwoColumnList.vue'
 import { useModuleStore } from '../../../stores/modules'
 import { useModuleDetailStore } from '../../../stores/modules/detail'
 import { useModuleFileStore } from '../../../stores/modules/file'
+import { useTabStore } from '@/stores/tabs'
 
 // refs
 const linkedInquiryModule = ref(null)
@@ -43,6 +44,7 @@ const atShowRelatedLists = ref()
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
 const moduleFileStore = useModuleFileStore()
+const tabStore = useTabStore()
 const { fetchModule, fetchLinkedModuleData, fetchBaseModule } = moduleStore
 const { getModule, getLinkedModuleData, getBaseModule, getFieldDetailsById } = storeToRefs(moduleStore)
 const {
@@ -57,6 +59,8 @@ const {
 const { fetchItem, fetchItemRelatedList, fetchItemRelatedLists } = moduleDetailStore
 const { fileLoading, fileDialogSwitch, fileDialog, getFiles, getModuleFiles } = storeToRefs(moduleFileStore)
 const { addModuleFiles } = moduleFileStore
+const { addTab, toggleWindows} = tabStore
+const { getTabs } = storeToRefs(tabStore)
 // presets
 const bcrumbs = ref([
   {
@@ -149,6 +153,27 @@ const removeModuleFile = (payload) => {
   getModuleFiles.value.splice(index, 1)
 }
 
+// actions
+const createNewForm = (module) => {
+  let obj = Object.assign({}, {
+    type: 'module-form',
+    style: 'window',
+    name: `${module.name}-${route.params.pageid}-window-edit-form`,
+    label: `${module.label} Form`,
+    _module: module.name,
+    expanded: true,
+    opened: false,
+    opened_order: null
+  })
+  const index = getTabs.value.findIndex(form => form.name === obj.name)
+  if (index === -1) {
+    addTab(obj, true)
+  }else{
+    toggleWindows(getTabs.value[index])
+  }
+}
+
+
 // lifecycles
 watch(getRelatedLists, (newVal, oldVal) => {
   // console.log(newVal)
@@ -229,7 +254,7 @@ onMounted(async() => {
         </div>
 
         <div>
-          <Button label="Edit" size="large" class="px-6 border-round-xl"></Button>
+          <Button label="Edit" size="large" @click="createNewForm(getBaseModule)" class="px-6 border-round-xl"></Button>
         </div>
       </div>
 
