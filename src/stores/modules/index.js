@@ -1,6 +1,6 @@
 // imports
 import { defineStore } from 'pinia'
-import { ref, shallowRef, computed } from 'vue'
+import { ref, reactive, shallowRef, computed } from 'vue'
 // import fs from 'fs'
 import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
@@ -58,6 +58,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   })
 
   // states
+  const jsonModules = ref([])
   const modules = ref([])
   const modulesLoading = ref(false)
   const baseModule = ref({})
@@ -70,6 +71,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const getModule = computed(() => module.value)
   const getLinkedModuleData = computed(() => linkedModuleData.value)
   const getModules = computed(() => modules.value)
+  const getJsonModules = computed(() => jsonModules.value)
   const getCollection = computed(() => collection.value)
   const getCollectionById = computed(() => {
     return (id) => {
@@ -250,10 +252,10 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // actions
   const fetchModules = async () => {
     modulesLoading.value = true
-    // const res = await axios(`${jsonDbUrl.value}/modules`, {
-    //   method: 'GET',
-    //   headers: { 'Content-Type': 'application/json' }
-    // })
+    const jsonRes = await axios(`${jsonDbUrl.value}/modules`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
 
     const res = await axios(`${jsonDbUrl.value}/modules`, {
       method: 'GET',
@@ -263,6 +265,10 @@ export const useModuleStore = defineStore('moduleStore', () => {
     if (res.status === 200) {
       modules.value = res.data
       // modules.value = res.data.data
+    }
+
+    if (jsonRes.status === 200) {
+      jsonModules.value = jsonRes.data
     }
     modulesLoading.value = false
   }
@@ -278,11 +284,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
     //   baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
     // }
 
-    if (modules) {
-      console.log(_.cloneDeep(modules)) // working
-      console.log(modules.value) // not working
-      console.log(modules.value.find(module => module._id === id))
+    if (getModules && getModules.value) {
+      console.log(getModules.value)
     }
+    // console.log(getModules)
+    
+    // baseModule.value = getModules.value.find(module => module._id === id)
+
+    // console.log(getModules.value)
 
     baseModule.value = modules.value.find(module => module._id === id)
 
@@ -492,6 +501,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getModule,
     getLinkedModuleData,
     getModules,
+    getJsonModules,
     getCollection,
     getCollectionById,
     getViewFilters,

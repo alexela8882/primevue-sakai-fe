@@ -13,7 +13,7 @@ export const useMenuStore = defineStore('menuStore', () => {
   const baseStore = useBaseStore()
   const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
-  const { getModules } = storeToRefs(moduleStore)
+  const { getModules, getJsonModules } = storeToRefs(moduleStore)
 
   // states
   const isCollapse = ref(true)
@@ -38,8 +38,8 @@ export const useMenuStore = defineStore('menuStore', () => {
       })
 
       // get & insert modules
-      if (getModules.value) {
-        const filteredModule = getModules.value.filter(module => folder.modules.includes(module._id))
+      if (getJsonModules.value) {
+        const filteredModule = getJsonModules.value.filter(module => folder.modules.includes(module._id))
         if (filteredModule.length > 0) obj.items = filteredModule
 
         // include nested items in folders array
@@ -53,7 +53,7 @@ export const useMenuStore = defineStore('menuStore', () => {
             items: []
           })
 
-          const filteredModule2 = getModules.value.filter(module => folder2.modules.includes(module._id))
+          const filteredModule2 = getJsonModules.value.filter(module => folder2.modules.includes(module._id))
           if (filteredModule2.length > 0) obj2.items = filteredModule2
 
           obj.items.push(obj2)
@@ -65,7 +65,7 @@ export const useMenuStore = defineStore('menuStore', () => {
 
     let menuModules = []
     // re-structure modules into menu
-    getModules.value.map(module => {
+    getJsonModules.value.map(module => {
       let newModule = Object.assign({}, {
         _id: module._id,
         label: module.label,
@@ -117,7 +117,7 @@ export const useMenuStore = defineStore('menuStore', () => {
     })
 
     // filter out matching names from modules
-    const filteredModule = getModules.value.filter(module => !childItemNames.includes(module.name))
+    const filteredModule = getJsonModules.value.filter(module => !childItemNames.includes(module.name))
 
     // merge menu & filtered modules
     Array.prototype.push.apply(menus, filteredModule)
