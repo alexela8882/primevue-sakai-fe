@@ -100,10 +100,10 @@ const { getPicklist} = storeToRefs(formDataStore)
   function transformFormValues(fields,values,formPage){
     let formValues = {}
     if(_.isNil(formPage) || formPage=='create'){
-        formValues = getDefaultValue(fields,true)
+        formValues = getDefaultValue(fields,false)
     }else if(formPage=='show'){
         formValues = getModuleValues(fields,values,true)
-    }else if(formPage=='update'){
+    }else if(formPage=='edit'){
         formValues = getModuleValues(fields,values,false)
     }
     return formValues
@@ -155,7 +155,7 @@ const { getPicklist} = storeToRefs(formDataStore)
                     res[val.name] =  transformNumberCurrency(_.toNumber(values[val.name]),val.rules,displayValue)
                 }
               }else{
-                result[val.name] = 0
+                res[val.name] = 0
               }
         }else{
             res[val.name] = null

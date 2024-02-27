@@ -3,37 +3,42 @@
 import { storeToRefs } from 'pinia'
 import { defineAsyncComponent, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import _ from 'lodash'
 // stores & composables
 import { useGeneralStore } from './stores/general'// stores
 import { useTabStore } from '@/stores/tabs/index'
 import { useModuleStore } from '@/stores/modules/index'
+import { useBaseStore } from '@/stores/base'
 
 // refs
 const router = useRouter()
 // stores & composables
 const moduleStore = useModuleStore()
 const tabStore = useTabStore()
+const baseStore = useBaseStore()
 const { getModules } = storeToRefs(moduleStore)
 const { fetchModules } = moduleStore
 const { tabDialog, getMaximizedTab } = storeToRefs(tabStore)
 const generalStore = useGeneralStore()
 const { minimizeTab } = tabStore
 const { formModalTrigger, popUpModalTrigger } = storeToRefs(generalStore)
+const { setAuthuser } = baseStore
+const { getAuthUser } = storeToRefs(baseStore)
 
 const FormDialog = defineAsyncComponent(() => import('@/components/dynamic/FormDialog.vue'))
 const PopUpDialog = defineAsyncComponent(() => import('@/components/dynamic/PopUpDialog.vue'))
 const GlobalDialog = defineAsyncComponent(() => import('@/components/dynamic/GlobalDialog.vue'))
 
 onMounted(async () => {
+  await setAuthuser()
   await fetchModules()
-
-  console.log(getModules.value)
+  console.log('get modules',_.cloneDeep(getModules.value))
 })
 
 </script>
 
 <template>
-  <div class="mb-6 pb-6">
+  <div v-if="!_.isEmpty(getModules) && !_.isEmpty(getAuthUser)" class="mb-6 pb-6">
     <router-view></router-view>
   </div>
 

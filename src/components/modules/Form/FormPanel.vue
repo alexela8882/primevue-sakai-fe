@@ -25,7 +25,7 @@
             <h6 class="formSectionLabel">{{ section.sectionLabel }}</h6>
             <div class="grid">
                 <div  v-for="(col,colI) in section.field_ids" :key="colI" class="col flex flex-column gap-2">
-                    <Field v-for="field in col" :key="field" :config="find(form.fields,{'_id':field})"/>
+                    <Field v-for="field in col" :key="field" keyName="main" :config="find(form.fields,{'_id':field})"/>
                 </div>
             </div>
         </div>

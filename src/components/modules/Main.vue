@@ -32,7 +32,7 @@ const DataViewModules = defineAsyncComponent({
 })
 
 onMounted(() => {
-  fetchModules()
+  // fetchModules()
 })
 
 </script>

@@ -5,6 +5,7 @@ import { ref, reactive, shallowRef, computed } from 'vue'
 import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
 import { storeToRefs } from 'pinia'
+import _ from 'lodash'
 // stores
 import { useBaseStore } from '@/stores/base'
 
@@ -21,7 +22,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const toast = useToast()
   // stores
   const baseStore = useBaseStore()
-  const { jsonDbUrl } = storeToRefs(baseStore)
+  const { jsonDbUrl,getAuthUser } = storeToRefs(baseStore)
   // presets
   const perPageItems = ref([
     { label: '10', value: 10 },
@@ -68,6 +69,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // getters
   const getBaseModule = computed(() => baseModule.value)
   const getModule = computed(() => module.value)
+  const getModulesUserCanAccess = computed(() => {
+    return _.reduce(modules.value, function(res,v,i){
+      if(_.includes(_.get(getAuthUser.value,'permissions',[]),v.name+'.index')){
+        res.push(v._id)
+      }
+      return res
+    },[])
+  })
   const getLinkedModuleData = computed(() => linkedModuleData.value)
   const getModules = computed(() => modules.value)
   const getJsonModules = computed(() => jsonModules.value)
@@ -251,10 +260,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // actions
   const fetchModules = async () => {
     modulesLoading.value = true
-    const jsonRes = await axios(`${jsonDbUrl.value}/modules`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    })
 
     const res = await axios(`/modules`, {
       method: 'GET',
@@ -262,16 +267,15 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
 
     if (res.status === 200) {
+      // modules.value = res.data
       modules.value = res.data.data
     }
 
-    if (jsonRes.status === 200) {
-      jsonModules.value = jsonRes.data
-    }
     modulesLoading.value = false
   }
   const fetchBaseModule = async (id) => {
     moduleLoading.value = true
+    console.log('fetchBaseModule')
     const res = await axios(`${jsonDbUrl.value}/modules?_id=${id}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -281,7 +285,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
       baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
     }
 
-    // baseModule.value = modules.value.find(module => module._id === id)
+    baseModule.value = modules.value.find(module => module._id === id)
 
     moduleLoading.value = false
   }
@@ -498,6 +502,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getModule,
     getLinkedModuleData,
     getModules,
+    getModulesUserCanAccess,
     getJsonModules,
     getCollection,
     getCollectionById,

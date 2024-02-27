@@ -8,7 +8,7 @@
     import _ from 'lodash'
 
     import { useFormDataStore } from '../../../stores/forms'
-
+    import { useModuleDetailStore } from '../../../stores/modules/detail'
 
     const Field = defineAsyncComponent(() => import('@/components/modules/Form/Field.vue'))
     const FormPanel = defineAsyncComponent(() => import('@/components/modules/Form/FormPanel.vue'))
@@ -17,9 +17,11 @@
         config: Object
     })
     const formDataStore = useFormDataStore()
+    const moduleDetailStore = useModuleDetailStore()
     const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate } = helper();
     const { fetchPicklist, fetchLookup, saveForm, setFormReset } = formDataStore
     const { getCachedFormData,getFormReset } = storeToRefs(formDataStore)
+    const { getItem } = storeToRefs(moduleDetailStore)
     const tempFields = ref(_.fill(Array(10),1))
     const formLoading = ref(true)
     const formData = ref({
@@ -41,11 +43,12 @@
     
     onMounted(async () => {
         let tmpData = getCachedFormData.value(props.config.name)
-       
+        let formPage = (_.includes(props.config.name,'edit')) ? 'edit' : 'create'
         if(tmpData){
              formData.value =  _.merge(formData.value,_.cloneDeep(tmpData))
              if(props.config.name==getFormReset.value){
-                 formData.value.values.main = transformFormValues(props.config.module.fields)
+                 formData.value.values.main = transformFormValues(props.config.module.fields,getItem.value,formPage)
+                 
                 setFormReset("")
              }
              formLoading.value = false
@@ -55,9 +58,8 @@
             
             let listNames = getPicklistFields(props.config.module.fields)
             let lookupFields = getLookupFields(props.config.module.fields)
-    
             await fetchPicklistandLookup(listNames,lookupFields)
-            formData.value.values.main = transformFormValues(props.config.module.fields)
+            formData.value.values.main = transformFormValues(props.config.module.fields,getItem.value,formPage)
             initialize();
         }
     })
@@ -129,7 +131,7 @@
 <template>
     <Suspense v-if="!formLoading">       
         <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && config.style == 'window' ">
-            <Field v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id" :config="field"/>
+            <Field v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id" keyName="main" :config="field"/>
         </template>
         <template v-else>
             <FormPanel v-for="panel in _.filter(formData.panels, function(p){ if(!_.includes(hiddenPanels,p._id) && _.endsWith(p.controllerMethod,'@index') && ((config.style=='window' && p.quick) || config.style!='window' && !p.quick)){ return true;} })" :quickAdd="config.style == 'window'" :key="panel._id" :panel="panel"/>
