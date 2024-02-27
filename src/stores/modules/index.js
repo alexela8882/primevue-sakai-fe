@@ -253,14 +253,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const fetchModules = async () => {
     modulesLoading.value = true
 
-    const res = await axios(`${jsonDbUrl.value}/modules`, {
+    const res = await axios(`/modules`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
-      modules.value = res.data
-      // modules.value = res.data.data
+      // modules.value = res.data
+      modules.value = res.data.data
     }
 
     modulesLoading.value = false

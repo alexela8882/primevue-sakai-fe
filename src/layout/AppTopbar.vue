@@ -35,7 +35,6 @@ const fwMenu = ref(false)
 const newForms = ref([])
 const createNewItems = ref()
 const menu = ref()
-const authUser = ref()
 const toast = useToast()
 const confirm = useConfirm()
 const router = useRouter()
@@ -49,7 +48,7 @@ const moduleStore = useModuleStore()
 const tabStore = useTabStore()
 const formDataStore = useFormDataStore()
 const { getModules } = storeToRefs(moduleStore)
-const { configBar } = storeToRefs(baseStore)
+const { configBar,getAuthUser } = storeToRefs(baseStore)
 const { getTabs, tabsLoading } = storeToRefs(tabStore)
 const { toggleTabs, generateTabs, addTab, toggleWindows } = tabStore
 const { setFormReset } = formDataStore
@@ -457,11 +456,7 @@ const confirmAddTab = (module,index) => {
 const initialize = async () => {
   // create forms and tables
   getModules.value.map(module => {
-    if (
-      module.mainEntity === 'Account' ||
-      module.mainEntity === 'Lead' ||
-      module.mainEntity === 'SalesOpportunity'
-    ) {
+    if (_.includes(['Account','Contact','Lead','SalesOpportunity'],module.mainEntity) && !_.isNil(module.folder_id)) {    
       // create forms
       let formObj = Object.assign({}, {
         label: module.label,
@@ -504,13 +499,6 @@ const initialize = async () => {
 // lifecycles
 onMounted(async () => {
   bindOutsideClickListener()
-
-  // get auth user
-  await axios.get(`users/${localStorage.getItem('auth_id')}/get`).then((response) => {
-    authUser.value = response.data
-    console.log(authUser.value)
-  })
-
   // initialize
   initialize()
 })
@@ -562,7 +550,7 @@ watch(() => getModules.value, (newValue, oldValue) => {
       </span>
       <!-- <div class="flex align-items-center">
         <span>Hello!&nbsp;</span>
-        <span class="capitalize font-bold">{{ authUser && authUser.name }}</span>
+        <span class="capitalize font-bold">{{ getAuthUser.name }}</span>
       </div> -->
       <!-- <button @click="onTopBarMenuButton()" class="p-link layout-topbar-button">
         <i class="pi pi-calendar"></i>
