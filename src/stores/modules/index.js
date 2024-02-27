@@ -123,7 +123,9 @@ export const useModuleStore = defineStore('moduleStore', () => {
       const viewFilters = payload.module && payload.module.viewFilters
       const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload.id)
 
-      return getReconstructedViewFilter.value(viewFilter, payload.module)
+      const reconstructedViewFilter = getReconstructedViewFilter.value(viewFilter, payload.module)
+      console.log(reconstructedViewFilter)
+      return reconstructedViewFilter
     }
   })
 
@@ -196,7 +198,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   })
   const getKanbanData = computed(() => {
     return (payload) => {
-      const collectionData = module.value && module.value.collection.data
+      const collectionData = module.value && module.value.data
       const viewFilter = module.value && module.value.viewFilters.find(vFilter => vFilter._id === payload)
       const groupByField = module.value && module.value.fields.find(f => f._id === viewFilter.group_by)
 
@@ -263,15 +265,27 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // actions
   const fetchModules = async () => {
     modulesLoading.value = true
+    console.log('fetchModules')
 
+    // modules from BE api
     const res = await axios(`/modules`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
-      // modules.value = res.data
       modules.value = res.data.data
+    }
+
+    // modules from db3.json
+    const jsonRes = await axios(`${jsonDbUrl.value}/modules`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (jsonRes.status === 200) {
+      console.log(jsonRes)
+      jsonModules.value = jsonRes.data
     }
 
     modulesLoading.value = false
@@ -318,15 +332,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
     //   baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
     // }
 
-    if (getModules && getModules.value) {
-      console.log(getModules.value)
-    }
-    // console.log(getModules)
-    
-    // baseModule.value = getModules.value.find(module => module._id === id)
-
-    // console.log(getModules.value)
-
     baseModule.value = modules.value.find(module => module._id === id)
 
     moduleLoading.value = false
@@ -351,19 +356,28 @@ export const useModuleStore = defineStore('moduleStore', () => {
   }
   const fetchModule = async (moduleName, page, reuse) => {
     if (!reuse) collectionLoading.value = true
-    const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
+    // const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
+    const uri = page ? `${moduleName}-page-${page}` : `/modules/${moduleName}`
 
     try {
-      const res = await axios(`${jsonDbUrl.value}/${uri}`, {
+      // const res = await axios(`${jsonDbUrl.value}/${uri}`, {
+      //   method: 'GET',
+      //   headers: { 'Content-Type': 'application/json' }
+      // })
+      const res = await axios(`${uri}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
   
       if (res.status === 200) {
-        let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
+        // let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
+        let fetchedModule = res.data
+
+        console.log(fetchedModule)
+
         if (!reuse) {
           module.value = fetchedModule // insert module
-          collection.value = fetchedModule.collection // insert collection
+          collection.value = fetchedModule.data // insert collection
           collectionLoading.value = false
 
           // fill modules with fields & panels

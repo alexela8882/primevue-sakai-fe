@@ -24,6 +24,7 @@ export const useMenuStore = defineStore('menuStore', () => {
   // getters
   const getMenu = computed(() => menu.value)
   const sidebarMenu = computed(() => {
+    console.log(getJsonModules.value)
     const item = menu.value && menu.value
     const folders = item.top && item.top.folders
     let testNewFolders = []
