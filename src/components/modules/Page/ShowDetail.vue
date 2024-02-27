@@ -278,7 +278,7 @@ onMounted(async() => {
                               </div>
                             </div>
                             <div v-else>
-                              <Suspense v-if="section.field_ids.length > 0">
+                              <Suspense v-if="section.field_ids && section.field_ids.length > 0">
                                 <SectionFields :newModuleFields="localModule.fields" :fieldIds="section.field_ids" />
                                 <template #fallback>
                                   <TwoColumnList />
@@ -286,7 +286,7 @@ onMounted(async() => {
                               </Suspense>
                               <div v-if="section.additional_fields.length > 0">
                                 <div v-for="(addition_field, afx) in section.additional_fields" :key="afx">
-                                  <Suspense v-if="addition_field.ids.length > 0">
+                                  <Suspense v-if="addition_field.ids && addition_field.ids.length > 0">
                                     <SectionFields :newModuleFields="localModule.fields" :fieldIds="addition_field.ids" />
                                     <template #fallback>
                                       <TwoColumnList />

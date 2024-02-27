@@ -103,14 +103,18 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   // actions
   const fetchItem = async (payload) => {
     itemLoading.value = true
+    console.log(payload)
+    // const uri = `${jsonDbUrl.value}/${payload.name}-item?_id=${payload.pageid}`
+    const uri = `/modules/${payload.name}/${payload.pageid}`
 
-    const res = await axios(`${jsonDbUrl.value}/${payload.name}-item?_id=${payload.pageid}`, {
+    const res = await axios(uri, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
-      item.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
+      // item.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
+      item.value = res.data
     }
     itemLoading.value = false
   }

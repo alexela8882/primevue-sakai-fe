@@ -102,6 +102,7 @@ const tblSettingsBtn = ref([
   }, {
     label: 'Kanban view',
     icon: 'view_kanban',
+    disabled: true,
     command: (event) => {
       console.log(event)
       viewFilter.value.currentDisplay = 'kanban'
@@ -109,6 +110,7 @@ const tblSettingsBtn = ref([
   }, {
     label: 'Split view',
     icon: 'vertical_split',
+    disabled: true,
     command: (event) => {
       console.log(event)
     }
@@ -164,6 +166,10 @@ onMounted(async () => {
   await fetchBaseModule(route.params.id)
   await fetchModule(getBaseModule.value.name)
 
+  console.log(getBaseModule.value)
+  console.log(getModule.value)
+  console.log(getCollection.value)
+
   // pre-assignments
   viewFilter.value = getDefaultViewFilter.value
   selectedViewFilter.value = viewFilter.value._id
@@ -207,6 +213,7 @@ onMounted(async () => {
               <Dropdown
                 v-model="selectedViewFilter"
                 :options="getViewFilters"
+                :disabled="collectionLoading"
                 optionLabel="filterName"
                 optionValue="_id"
                 placeholder="Select View Filters"
@@ -214,6 +221,7 @@ onMounted(async () => {
               <MultiSelect
                 v-model="selectedSearchKeyIds"
                 :options="getModule.fields"
+                :disabled="collectionLoading"
                 filter
                 :showToggleAll="false"
                 optionLabel="label"
@@ -227,12 +235,14 @@ onMounted(async () => {
                 <i class="pi pi-search" />
                 <InputText
                   type="text"
+                  :disabled="collectionLoading"
                   class="border-round-xl border-primary w-full mb-2 md:mb-0"
                   placeholder="Search The List..." />
               </div>
               <div class="p-inputgroup flex-1 mb-2 md:mb-0">
                 <Button
                   @click="tblMenu2.toggle($event)"
+                  :disabled="collectionLoading"
                   type="button"
                   aria-haspopup="true"
                   aria-controls="tbl_overlay_menu2"
@@ -241,25 +251,26 @@ onMounted(async () => {
                     <div class="material-icons">{{ viewFilter.currentDisplay === 'table' ? 'table_chart' : 'view_kanban' }}</div>
                   </template>
                 </Button>
-                  <Menu
-                    ref="tblMenu2"
-                    id="tbl_overlay_menu2"
-                    class="mt-2"
-                    :model="tblSettingsBtn"
-                    :popup="true">
-                    <template #start>
-                      <div class="text-color-secondary p-2">VIEW SETTINGS</div>
-                    </template>
-                    <template #item="{ item, label, props }">
-                      <div class="flex align-items-center text-color-secondary p-2 cursor-pointer">
-                        <div class="material-icons mr-2">{{ item.icon }}</div>
-                        <div>{{ item.label }}</div>
-                      </div>
-                    </template>
-                  </Menu>
+                <Menu
+                  ref="tblMenu2"
+                  id="tbl_overlay_menu2"
+                  class="mt-2"
+                  :model="tblSettingsBtn"
+                  :popup="true">
+                  <template #start>
+                    <div class="text-color-secondary p-2">VIEW SETTINGS</div>
+                  </template>
+                  <template #item="{ item, label, props }">
+                    <div class="flex align-items-center text-color-secondary p-2 cursor-pointer">
+                      <div class="material-icons mr-2">{{ item.icon }}</div>
+                      <div>{{ item.label }}</div>
+                    </div>
+                  </template>
+                </Menu>
                 <Button
                   @click="tblMenu.toggle($event)"
                   :loading="viewFiltersDialogLoading"
+                  :disabled="collectionLoading"
                   type="button"
                   icon="pi pi-cog"
                   aria-haspopup="true"
@@ -283,11 +294,16 @@ onMounted(async () => {
                   </Menu>
                 <Button
                   @click="listViewFilterBar = true"
-                  :disabled="listViewFilterBar"
+                  :disabled="listViewFilterBar || collectionLoading"
                   icon="pi pi-filter"
                   aria-label="Submit"
                   class="list-view-filter-btn border-round-md mr-2" />
-                <Button class="border-round-md mr-2" icon="pi pi-plus" @click="createNewForm(getBaseModule)" :label="`New ${getBaseModule.label}`" />
+                <Button
+                  class="border-round-md mr-2"
+                  :disabled="collectionLoading"
+                  icon="pi pi-plus"
+                  @click="createNewForm(getBaseModule)"
+                  :label="`New ${getBaseModule.label}`" />
               </div>
             </div>
           </div>
@@ -295,7 +311,7 @@ onMounted(async () => {
       </div>
 
       <!-- DATATABLE -->
-      <Suspense v-if="viewFilter.currentDisplay === 'table'">
+      <Suspense v-if="viewFilter.currentDisplay === null || viewFilter.currentDisplay === 'table'">
         <DynamicDataTable
           mode="edit"
           :moduleId="getBaseModule._id"
@@ -303,8 +319,8 @@ onMounted(async () => {
           :moduleName="getBaseModule.name"
           :moduleLabel="getBaseModule.label"
           :fields="viewFilter.fields"
-          :data="getCollection.data"
-          :pagination="getCollection.meta && getCollection.meta.pagination"
+          :data="getModule.data"
+          :pagination="getModule.meta && getModule.meta.pagination"
           :collectionLoading="collectionLoading"
           :sidebar="listViewFilterBar"
           @toggle-sidebar="listViewFilterBar = !listViewFilterBar">
@@ -323,14 +339,15 @@ onMounted(async () => {
       </Suspense>
 
       <Suspense v-else-if="viewFilter.currentDisplay === 'kanban'">
-        <DynamicKanban
+        <pre>This feature will be added soon</pre>
+        <!-- <DynamicKanban
           :viewFilterId="viewFilter._id"
           :groupBy="viewFilter.group_by"
           :summarizeBy="viewFilter.summarize_by"
           :moduleName="getBaseModule.name"
           :moduleLabel="getBaseModule.label"
           :fields="viewFilter.fields"
-          :data="getCollection.data"
+          :data="getModule.data"
           :collectionLoading="collectionLoading"
           :sidebar="listViewFilterBar"
           @toggle-sidebar="listViewFilterBar = !listViewFilterBar">
@@ -342,7 +359,7 @@ onMounted(async () => {
               </template>
             </Suspense>
           </template>
-        </DynamicKanban>
+        </DynamicKanban> -->
         <template #fallback>
           <KanbanLoader />
         </template>
