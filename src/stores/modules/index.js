@@ -120,7 +120,9 @@ export const useModuleStore = defineStore('moduleStore', () => {
       const viewFilters = payload.module && payload.module.viewFilters
       const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload.id)
 
-      return getReconstructedViewFilter.value(viewFilter, payload.module)
+      const reconstructedViewFilter = getReconstructedViewFilter.value(viewFilter, payload.module)
+      console.log(reconstructedViewFilter)
+      return reconstructedViewFilter
     }
   })
 
