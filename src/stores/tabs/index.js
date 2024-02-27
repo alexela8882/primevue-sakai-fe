@@ -77,7 +77,7 @@ export const useTabStore = defineStore('tabStore', () => {
         ...payload,
         base_module: baseModule,
         module: Object.assign({}, {
-          data: moduleData.data,
+          collection: moduleData,
           fields: moduleData.fields,
           panels: moduleData.panels,
           viewFilterWithFields: viewFilterWithFields

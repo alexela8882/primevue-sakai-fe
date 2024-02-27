@@ -41,8 +41,8 @@ const props = defineProps({
           :moduleName="tab.base_module.name"
           :moduleLabel="tab.base_module.label"
           :fields="tab.module.viewFilterWithFields.fields"
-          :data="tab.module.data"
-          :pagination="tab.module.data.meta && tab.module.data.meta.pagination">
+          :data="tab.module.collection.data"
+          :pagination="tab.module.collection.meta && tab.module.collection.meta.pagination">
         </DynamicDataTable>
         <template #fallback>
           <DataTableLoader />
