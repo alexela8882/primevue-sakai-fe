@@ -46,7 +46,7 @@
     } 
 
     const fieldChange  = (field) =>{
-       validateField(props.config.keyName,field)
+       validateField(props.keyName,field)
     }
     onMounted(()=>{
         
@@ -59,7 +59,8 @@
     <template v-if="config.field_type.name=='text'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
-            <InputText v-model="form.values[keyName][config.name]" :id="config.name" @change="fieldChange(config.uniqueName)" />
+            <InputText v-model="form.values[keyName][config.name]" :id="config.name" :class="{'p-invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" @change="fieldChange(config)" />
+            <small class="errMsg" v-for="msg,i in _.get(form.errors[keyName],config.name,[])" :key="i">{{ msg }}</small>
         </div>
     </template>
     <template v-else-if="config.field_type.name=='number' || config.field_type.name=='percentage'">
@@ -244,5 +245,7 @@
 .fieldInput .el-input__wrapper:hover,.fieldInput .el-select .el-input__wrapper:hover{
     box-shadow: 0 0 0 1px rgb(0 0 0 / 87%) inset;
 }
-
+.fieldInput .errMsg{
+    color: #c13939;
+}
 </style>

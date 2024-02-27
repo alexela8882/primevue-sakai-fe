@@ -91,15 +91,15 @@ export const useFormDataStore = defineStore('formDataStore', () => {
       
       try {
         await new Promise(resolve => setTimeout(resolve, 2000));
-        const response = await axios.get(jsonDbUrl.value+'/lookup-paginated', {
-            headers: { 'Content-Type': 'application/json' },
-            params: { "_page": payload.page,"fieldId": payload.fieldId, "search": payload.search },
-            cancelToken: payload.cancelToken.token // Pass the cancel token to the request
-        });
-        // const response = await axios(`${jsonDbUrl.value}/lookup-paginated?_page=${payload.page}&fieldId=${payload.fieldId}`, {
+        const res = await axios(`${jsonDbUrl.value}/lookupPaginated`, {
+          method: 'GET',
+          params: { "_page": payload.page,"field-name": payload.fieldId, "search": payload.search },
+          headers: { 'Content-Type': 'application/json' }
+        })
+        // const res = await axios(`${jsonDbUrl.value}/lookupPaginated?_page=${payload.page}&field-name=${payload.fieldId}`, {
         //   method: 'GET',
-        //   headers: { 'Content-Type': 'application/json' },
-        // });
+        //   headers: { 'Content-Type': 'application/json' }
+        // })
         let meta = {
           "pagination": {
             "total": 50,
@@ -113,7 +113,9 @@ export const useFormDataStore = defineStore('formDataStore', () => {
             }
           }
         }
-        return {'values':response.data,'field':payload.fieldId,'meta':meta};
+        console.log(res)
+        // return {'values':response.data,'field':payload.fieldId,'meta':meta};
+        return {'values':res.data[0]['data'],'field':payload.fieldId,'meta':meta};
       } catch (error) {
         // if (axios.isCancel(error)) {
         //     console.log('Request canceled:', error.message);
