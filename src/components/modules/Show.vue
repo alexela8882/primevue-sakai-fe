@@ -313,6 +313,7 @@ onMounted(async () => {
       <!-- DATATABLE -->
       <Suspense v-if="viewFilter.currentDisplay === null || viewFilter.currentDisplay === 'table'">
         <DynamicDataTable
+          :key="getBaseModule._id"
           mode="edit"
           :moduleId="getBaseModule._id"
           :moduleEntityName="getBaseModule.mainEntity"
