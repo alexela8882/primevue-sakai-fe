@@ -189,9 +189,8 @@ const resetTableForm = () =>{
   clonedData.value = _.cloneDeep(props.data)
 }
 
-watch(() => getModule.value, (newVal, oldVal) => {
+watch(() => props.data, (newVal, oldVal) => {
   clonedData.value = newVal.data
-  console.log(newVal)
 })
 
 // life cycles
