@@ -4,7 +4,7 @@
     import { storeToRefs } from 'pinia'
     import { useToast } from "primevue/usetoast"
     import axios from 'axios'
-    import { get, find } from 'lodash'
+    import _ from 'lodash'
 
     import { useModuleStore } from '../../../stores/modules'
 
@@ -20,16 +20,18 @@
 
 </script>
 <template>
-    <div>
-        <div v-for="(section,sectioni) in panel.sections" :key="section._id" class="flex flex-column" :class="(sectioni > 1) ? 'mt-2' : ''">
-            <h6 class="formSectionLabel">{{ section.sectionLabel }}</h6>
+    <template v-for="(section,sectioni) in panel.sections" :key="section._id">
+        <div v-if="(quickAdd && section.quick) || !quickAdd"  class="flex flex-column px-3 py-2" :class="(sectioni > 1) ? 'mt-2' : ''">
+            <h6 class="formSectionLabel" v-if="section.sectionLabel">{{ section.sectionLabel }}</h6>
             <div class="grid">
                 <div  v-for="(col,colI) in section.field_ids" :key="colI" class="col flex flex-column gap-2">
-                    <Field v-for="field in col" :key="field" keyName="main" :config="find(form.fields,{'_id':field})"/>
+                    <template v-for="field in col" :key="field" >
+                        <Field v-if="(quickAdd && _.get(_.find(form.fields,{'_id':field}),'quick',false)) || !quickAdd" keyName="main" :config="_.find(form.fields,{'_id':field})"/>
+                    </template>
                 </div>
             </div>
         </div>
-    </div>
+    </template>
 </template>
 <style>
 .fieldInput.required input{

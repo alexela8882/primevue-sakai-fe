@@ -6,6 +6,7 @@
     import axios from 'axios'
     import _ from 'lodash'
     import helper from '@/mixins/Helper';
+    import validate from '@/mixins/Validate';
     
     import { useModuleStore } from '../../../stores/modules'
     import { useFormDataStore } from '../../../stores/forms'
@@ -23,6 +24,7 @@
     const formDataStore = useFormDataStore()
     const { getPicklistByListName } = storeToRefs(formDataStore)
     const { checkFieldIfMultipleSelect } = helper();
+    const { validateField } = validate();
 
     const value = ref()
     const tinyApiKey = ref('izbi1p0d9vddiqqrjjtgx2a6ech4jv2wqogrplsesugoa0gs')
@@ -42,6 +44,10 @@
             options.value = []
         }
     } 
+
+    const fieldChange  = (field) =>{
+       validateField(props.config.keyName,field)
+    }
     onMounted(()=>{
         
     })
@@ -53,8 +59,7 @@
     <template v-if="config.field_type.name=='text'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
-            <InputText v-model="form.values[keyName][config.name]" :id="config.name" />
-            <!-- <small></small> -->
+            <InputText v-model="form.values[keyName][config.name]" :id="config.name" @change="fieldChange(config.uniqueName)" />
         </div>
     </template>
     <template v-else-if="config.field_type.name=='number' || config.field_type.name=='percentage'">
