@@ -53694,7 +53694,7 @@
   "getModuleFields":[
     {
       "module-name": "leads",
-      "data":[
+      "data": [
         {
           "_id": "5c906a14a6ebc7193110ef9i",
           "name": "inquiry_id",
@@ -55245,8 +55245,8 @@
       ]
     },
     {
-      "module-name":"contacts",
-      "data":[
+      "module-name": "contacts",
+      "data": [
         {
           "_id": "5c906a12a6ebc7193110ebc9",
           "name": "business_unit_ids",
@@ -55265,7 +55265,7 @@
           "updated_at": "2019-03-19 04:03:30",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "ms_dropdown":true
+            "ms_dropdown": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -55322,7 +55322,7 @@
           "updated_at": "2019-03-19 04:03:30",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "ss_dropdown":true
+            "ss_dropdown": true
           },
           "field_type": {
             "name": "picklist",
@@ -55367,7 +55367,7 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "required":true
+            "required": true
           },
           "quick": true,
           "title": true,
@@ -55416,12 +55416,12 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "hide":true,
+            "hide": true,
             "between": {
               "min": 0,
               "max": 155
             },
-            "string":true
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -55447,7 +55447,7 @@
               "min": 0,
               "max": 155
             },
-            "string":true
+            "string": true
           },
           "searchKey": false,
           "quick": true,
@@ -55478,7 +55478,7 @@
               "min": 0,
               "max": 155
             },
-            "string":true
+            "string": true
           },
           "searchKey": false,
           "quick": true,
@@ -55503,8 +55503,8 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "required":true,
-            "ss_dropdown":true
+            "required": true,
+            "ss_dropdown": true
           },
           "searchKey": false,
           "field_type": {
@@ -55549,8 +55549,8 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "default_value":false,
-            "checkbox":true
+            "default_value": false,
+            "checkbox": true
           },
           "searchKey": false,
           "field_type": {
@@ -55574,7 +55574,7 @@
           "updated_at": "2019-03-19 04:03:30",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "ss_pop_up":true
+            "ss_pop_up": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -55623,12 +55623,12 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "email":true,
-            "between":{
+            "email": true,
+            "between": {
               "min": 10,
               "max": 100
             },
-            "required":true
+            "required": true
           },
           "searchKey": true,
           "field_type": {
@@ -55650,8 +55650,8 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "email":true,
-            "between":{
+            "email": true,
+            "between": {
               "min": 10,
               "max": 100
             }
@@ -55676,8 +55676,8 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "email":true,
-            "between":{
+            "email": true,
+            "between": {
               "min": 10,
               "max": 100
             }
@@ -55707,12 +55707,12 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "between":{
+            "between": {
               "min": 5,
               "max": 100
             },
-            "required":true,
-            "string":true
+            "required": true,
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -55739,7 +55739,7 @@
           "created_at": "2019-03-19 04:03:30",
           "rules": {
             "fax": true,
-            "between":{
+            "between": {
               "min": 0,
               "max": 155
             }
@@ -55768,11 +55768,11 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "between":{
+            "between": {
               "min": 0,
               "max": 155
             },
-            "string":true
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -55795,7 +55795,7 @@
           "updated_at": "2019-03-19 04:03:30",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "ss_pop_up":true
+            "ss_pop_up": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -55848,7 +55848,7 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "between":{
+            "between": {
               "min": 0,
               "max": 1000
             }
@@ -55874,11 +55874,11 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "between":{
+            "between": {
               "min": 0,
               "max": 155
             },
-            "string":true
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -55901,11 +55901,11 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "between":{
+            "between": {
               "min": 0,
               "max": 155
             },
-            "string":true
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -55928,11 +55928,11 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "between":{
+            "between": {
               "min": 0,
               "max": 155
             },
-            "string":true
+            "string": true
           },
           "searchKey": false,
           "field_type": {
@@ -55959,7 +55959,7 @@
           "updated_at": "2019-03-19 04:03:30",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "ss_dropdown":true
+            "ss_dropdown": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -56002,7 +56002,7 @@
           "updated_at": "2019-03-19 04:03:30",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "ms_dropdown":true
+            "ms_dropdown": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -56054,7 +56054,7 @@
           "created_at": "2019-03-19 04:03:30",
           "rules": {
             "ms_pop_up": true,
-            "required":true
+            "required": true
           },
           "searchKey": true,
           "field_type": {
@@ -56105,10 +56105,10 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "between":{
-                "min": 0,
-                "max": 2500
-              }
+            "between": {
+              "min": 0,
+              "max": 2500
+            }
           },
           "searchKey": false,
           "field_type": {
@@ -56131,29 +56131,29 @@
           "updated_at": "2019-03-19 04:03:30",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "auto_fill":[
-                [
-                  "firstName",
-                  "firstName"
-                ],
-                [
-                  "lastName",
-                  "lastName"
-                ],
-                [
-                  "email",
-                  "email"
-                ],
-                [
-                  "phoneNo",
-                  "phoneNo"
-                ]
+            "auto_fill": [
+              [
+                "firstName",
+                "firstName"
               ],
-            "hide_in":[
-                "create",
-                "update"
+              [
+                "lastName",
+                "lastName"
               ],
-            "ss_pop_up":true
+              [
+                "email",
+                "email"
+              ],
+              [
+                "phoneNo",
+                "phoneNo"
+              ]
+            ],
+            "hide_in": [
+              "create",
+              "update"
+            ],
+            "ss_pop_up": true
           },
           "field_type": {
             "name": "lookupModel",
@@ -56200,9 +56200,9 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "hide_in":[
-                "create",
-                "update"
+            "hide_in": [
+              "create",
+              "update"
             ],
             "date_format": "m/d/Y",
             "date_only": true
@@ -56230,9 +56230,9 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "hide_in":[
-                "create",
-                "update"
+            "hide_in": [
+              "create",
+              "update"
             ],
             "date_format": "m/d/Y",
             "date_only": true
@@ -56261,7 +56261,7 @@
           "updated_at": "2019-03-19 04:03:30",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "ss_pop_up":true,
+            "ss_pop_up": true,
             "hide_in": [
               "create",
               "update"
@@ -56309,7 +56309,7 @@
           "updated_at": "2019-03-19 04:03:30",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "ss_pop_up":true,
+            "ss_pop_up": true,
             "hide_in": [
               "create",
               "update"
@@ -56356,19 +56356,15 @@
           "updated_at": "2023-07-03 04:52:56",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "date_format":"m/d/Y",
+            "date_format": "m/d/Y",
             "hide_in": [
               "create",
               "update"
             ],
-            "date_only":true
+            "date_only": true
           },
-          "searchKey": false,
-          "field_type": {
-            "name": "date",
             "_id": "5c906a0ea6ebc7193110e732"
           },
-          "relation": null
         },
         {
           "_id": "5c906a12a6ebc7193110ec33",
@@ -56384,7 +56380,7 @@
           "updated_at": "2019-03-19 04:03:30",
           "created_at": "2019-03-19 04:03:30",
           "rules": {
-            "ss_pop_up":true,
+            "ss_pop_up": true,
             "hide_in": [
               "create",
               "update"
@@ -56459,7 +56455,7 @@
           "created_at": "2019-10-02 08:47:10",
           "rules": {
             "default_value": true,
-            "checkbox":true
+            "checkbox": true
           },
           "field_type": {
             "name": "boolean",
@@ -56481,7 +56477,7 @@
           "created_at": "2021-06-24 10:22:45",
           "rules": {
             "default_value": false,
-            "checkbox":true
+            "checkbox": true
           },
           "field_type": {
             "name": "boolean",
@@ -56503,7 +56499,7 @@
           "created_at": "2022-11-02 14:16:45",
           "rules": {
             "default_value": false,
-            "checkbox":true
+            "checkbox": true
           },
           "field_type": {
             "name": "boolean",
@@ -56515,7 +56511,7 @@
     },
     {
       "module-name": "accounts",
-      "data":[
+      "data": [
         {
           "_id": "5c906a14a6ebc7193110ef3i",
           "name": "amount",
@@ -58923,7 +58919,7 @@
   "getModulePanels":[
     {
       "module-name": "leads",
-      "data":[
+      "data": [
         {
           "_id": "5cfa070aa6ebc76edb3fa2f2",
           "panelName": "lead-panel-1",
@@ -59078,8 +59074,8 @@
       ]
     },
     {
-      "module-name":"contacts",
-      "data":[
+      "module-name": "contacts",
+      "data": [
         {
           "_id": "5cfa27c4a6ebc787575ff2a9",
           "panelName": "contact-panel-1",
@@ -59121,7 +59117,6 @@
                 ]
               ]
             }
-            
           ]
         },
         {
@@ -59193,7 +59188,7 @@
     },
     {
       "module-name": "accounts",
-      "data":[
+      "data": [
         {
           "_id": "5cfa27c4a6ebc787575ff2a2",
           "panelName": "account-panel-1",

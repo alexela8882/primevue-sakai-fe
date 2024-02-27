@@ -28,7 +28,6 @@
                     <template v-for="field in col" :key="field" >
                         <Field v-if="(quickAdd && _.get(_.find(form.fields,{'_id':field}),'quick',false)) || !quickAdd" keyName="main" :config="_.find(form.fields,{'_id':field})"/>
                     </template>
-                    
                 </div>
             </div>
         </div>

@@ -290,7 +290,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
     modulesLoading.value = false
   }
-
   const fetchModuleFields = async (module) => {
     const res = await axios(`${jsonDbUrl.value}/getModuleFields?module-name=${module}`, {
       method: 'GET',
@@ -320,7 +319,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
       }
     }
   }
-
 
   const fetchBaseModule = async (id) => {
     moduleLoading.value = true
@@ -575,6 +573,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     _getFieldDetailsById,
     getFieldDetailsById,
     getFieldDetailsByUname,
+    getModuleByName,
     _fetchModule,
     fetchModule,
     fetchLinkedModuleData,
@@ -585,7 +584,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
     addViewFilter,
     fetchModuleFields,
     fetchModulePanels,
-    getModuleByName,
 
     // specific functions for inquiry module
     convertMailboxToInquiry,

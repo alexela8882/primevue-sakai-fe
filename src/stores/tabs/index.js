@@ -18,7 +18,7 @@ export const useTabStore = defineStore('tabStore', () => {
   const baseStore = useBaseStore()
   const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
-  const {  _getViewFilter } = storeToRefs(moduleStore)
+  const {  _getViewFilter, getModuleByName } = storeToRefs(moduleStore)
   const { _fetchModule, fetchBaseModuleByField, _fetchBaseModuleByField } = moduleStore
 
   // states
@@ -152,9 +152,16 @@ export const useTabStore = defineStore('tabStore', () => {
 
     const index = tabs.value.findIndex(tab => tab.name === payload.name)
     if (index === -1) {
-      // const tab = await generateTab(payload)
-      tabs.value.unshift(payload)
-      console.log(payload)
+      let tab = null
+      if(payload.type=='module-form'){
+        tab = payload
+        tab['base_module'] = getModuleByName.value(tab._module)
+      }        
+      else
+        tab = await generateTab(payload)
+
+      tabs.value.unshift(tab)
+
       // toggle windows
       if (window) await toggleWindows(payload)
 
