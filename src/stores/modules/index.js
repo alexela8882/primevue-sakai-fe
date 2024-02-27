@@ -288,14 +288,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const fetchBaseModule = async (id) => {
     moduleLoading.value = true
     console.log('fetchBaseModule')
-    const res = await axios(`${jsonDbUrl.value}/modules?_id=${id}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    })
+    // const res = await axios(`${jsonDbUrl.value}/modules?_id=${id}`, {
+    //   method: 'GET',
+    //   headers: { 'Content-Type': 'application/json' }
+    // })
 
-    if (res.status === 200) {
-      baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
-    }
+    // if (res.status === 200) {
+    //   baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
+    // }
 
     baseModule.value = modules.value.find(module => module._id === id)
 
