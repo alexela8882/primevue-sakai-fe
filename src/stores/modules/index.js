@@ -260,15 +260,27 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // actions
   const fetchModules = async () => {
     modulesLoading.value = true
+    console.log('fetchModules')
 
+    // modules from BE api
     const res = await axios(`/modules`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
-      // modules.value = res.data
       modules.value = res.data.data
+    }
+
+    // modules from db3.json
+    const jsonRes = await axios(`${jsonDbUrl.value}/modules`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (jsonRes.status === 200) {
+      console.log(jsonRes)
+      jsonModules.value = jsonRes.data
     }
 
     modulesLoading.value = false
