@@ -151,14 +151,14 @@ export const useTabStore = defineStore('tabStore', () => {
 
     const index = tabs.value.findIndex(tab => tab.name === payload.name)
     if (index === -1) {
-      const tab = await generateTab(payload)
-      tabs.value.unshift(tab)
-
+      // const tab = await generateTab(payload)
+      tabs.value.unshift(payload)
+      console.log(payload)
       // toggle windows
-      if (window) await toggleWindows(tab)
+      if (window) await toggleWindows(payload)
 
       // tab mode
-      if (payload.mode === 'modal') await maximizeTab(tab) 
+      if (payload.mode === 'modal') await maximizeTab(payload) 
     }
 
     xTabsLoading.value = false

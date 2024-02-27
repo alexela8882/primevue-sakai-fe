@@ -4,6 +4,7 @@ import { ref, watch, onMounted, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
 import { useTabStore } from '@/stores/tabs/index'
+import { useModuleStore } from '@/stores/modules/index'
 // components
 const FloatingWindowContent = defineAsyncComponent(() => import('@/components/tabs/FloatingWindowContent.vue'))
 
@@ -14,6 +15,7 @@ const windowTabs = ref([])
 const openedWindowTabs = ref([])
 // stores
 const tabStore = useTabStore()
+const moduleStore = useModuleStore()
 const {
   tabDialog,
   xTabsLoading,
@@ -26,6 +28,7 @@ const {
   sortTabs,
   maximizeTab,
   minimizeTab } = tabStore
+const { getModuleByName } = storeToRefs(moduleStore)
 
 // actions
 const removeTabAction = async (tab) => {
@@ -111,7 +114,7 @@ watch(getTabs.value, (newVal, oldVal) => {
                   <div
                     v-if="tab.type === 'module-form' || tab.type === 'module'"
                     class="material-icons"
-                  >{{ tab.base_module.icon }}
+                  >{{ getModuleByName(tab._module).icon }}
                   </div>
                   <div v-if="tab.type === 'static-form'" :class="`pi pi-${tab.icon}`"></div>
                   <div>{{ tab.label }}</div>
@@ -122,7 +125,7 @@ watch(getTabs.value, (newVal, oldVal) => {
                 <div
                   v-if="tab.type === 'module-form' || tab.type === 'module'"
                   class="material-icons"
-                >{{ tab.base_module.icon }}
+                >{{ getModuleByName(tab._module).icon }}
                 </div>
                 <div v-if="tab.type === 'static-form'" :class="`pi pi-${tab.icon}`"></div>
                 <div>{{ tab.label }}</div>

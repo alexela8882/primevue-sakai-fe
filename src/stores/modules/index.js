@@ -69,6 +69,9 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // getters
   const getBaseModule = computed(() => baseModule.value)
   const getModule = computed(() => module.value)
+  const getModuleByName = computed(() => module => {
+    return _.find(modules.value,{'name':module})
+  })
   const getModulesUserCanAccess = computed(() => {
     return _.reduce(modules.value, function(res,v,i){
       if(_.includes(_.get(getAuthUser.value,'permissions',[]),v.name+'.index')){
@@ -273,6 +276,36 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
     modulesLoading.value = false
   }
+
+  const fetchModuleFields = async (module) => {
+    const res = await axios(`/getModuleFields?module-name=${module}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (res.status === 200) {
+      let index = _.findIndex(modules.value,{'name':module})
+      if(index > -1){
+        modules.value[index]['fields'] = res.data.data
+      }
+    }
+  }
+
+  const fetchModulePanels = async (module) => {
+    const res = await axios(`/getModulePanels?module-name=${module}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (res.status === 200) {
+      let index = _.findIndex(modules.value,{'name':module})
+      if(index > -1){
+        modules.value[index]['panels'] = res.data.data
+      }
+    }
+  }
+
+
   const fetchBaseModule = async (id) => {
     moduleLoading.value = true
     console.log('fetchBaseModule')
@@ -529,6 +562,9 @@ export const useModuleStore = defineStore('moduleStore', () => {
     fetchBaseModuleByField,
     fetchModules,
     addViewFilter,
+    fetchModuleFields,
+    fetchModulePanels,
+    getModuleByName,
 
     // specific functions for inquiry module
     convertMailboxToInquiry,

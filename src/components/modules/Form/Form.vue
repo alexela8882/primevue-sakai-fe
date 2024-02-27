@@ -9,6 +9,7 @@
 
     import { useFormDataStore } from '../../../stores/forms'
     import { useModuleDetailStore } from '../../../stores/modules/detail'
+    import { useModuleStore } from '../../../stores/modules/index'
 
     const Field = defineAsyncComponent(() => import('@/components/modules/Form/Field.vue'))
     const FormPanel = defineAsyncComponent(() => import('@/components/modules/Form/FormPanel.vue'))
@@ -18,10 +19,13 @@
     })
     const formDataStore = useFormDataStore()
     const moduleDetailStore = useModuleDetailStore()
+    const moduleStore = useModuleStore()
     const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate } = helper();
     const { fetchPicklist, fetchLookup, saveForm, setFormReset } = formDataStore
     const { getCachedFormData,getFormReset } = storeToRefs(formDataStore)
     const { getItem } = storeToRefs(moduleDetailStore)
+    const { fetchModuleFields, fetchModulePanels} = moduleStore
+    const { getModuleByName } = storeToRefs(moduleStore)
     const tempFields = ref(_.fill(Array(10),1))
     const formLoading = ref(true)
     const formData = ref({
@@ -47,19 +51,23 @@
         if(tmpData){
              formData.value =  _.merge(formData.value,_.cloneDeep(tmpData))
              if(props.config.name==getFormReset.value){
-                 formData.value.values.main = transformFormValues(props.config.module.fields,getItem.value,formPage)
+                 formData.value.values.main = transformFormValues(formData.value.fields,getItem.value,formPage)
                  
                 setFormReset("")
              }
              formLoading.value = false
         }else{
-            formData.value.fields = props.config.module.fields
-            formData.value.panels = props.config.module.panels
+            if(_.isEmpty(getModuleByName.value(props.config._module).fields))
+                await fetchModuleFields(props.config._module)
+            if(_.isEmpty(getModuleByName.value(props.config._module).panels))
+                await fetchModulePanels(props.config._module)
+            formData.value.fields = getModuleByName.value(props.config._module).fields
+            formData.value.panels = getModuleByName.value(props.config._module).panels
             
-            let listNames = getPicklistFields(props.config.module.fields)
-            let lookupFields = getLookupFields(props.config.module.fields)
+            let listNames = getPicklistFields(formData.value.fields)
+            let lookupFields = getLookupFields(formData.value.fields)
             await fetchPicklistandLookup(listNames,lookupFields)
-            formData.value.values.main = transformFormValues(props.config.module.fields,getItem.value,formPage)
+            formData.value.values.main = transformFormValues(formData.value.fields,getItem.value,formPage)
             initialize();
         }
     })
