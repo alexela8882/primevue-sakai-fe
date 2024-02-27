@@ -292,7 +292,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   }
 
   const fetchModuleFields = async (module) => {
-    const res = await axios(`/getModuleFields?module-name=${module}`, {
+    const res = await axios(`${jsonDbUrl.value}/getModuleFields?module-name=${module}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
@@ -300,13 +300,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
     if (res.status === 200) {
       let index = _.findIndex(modules.value,{'name':module})
       if(index > -1){
-        modules.value[index]['fields'] = res.data.data
+        modules.value[index]['fields'] = res.data[0]['data']
+        // modules.value[index]['fields'] = res.data.data
       }
     }
   }
 
   const fetchModulePanels = async (module) => {
-    const res = await axios(`/getModulePanels?module-name=${module}`, {
+    const res = await axios(`${jsonDbUrl.value}/getModulePanels?module-name=${module}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
@@ -314,7 +315,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
     if (res.status === 200) {
       let index = _.findIndex(modules.value,{'name':module})
       if(index > -1){
-        modules.value[index]['panels'] = res.data.data
+        modules.value[index]['panels'] = res.data[0]['data']
+        // modules.value[index]['panels'] = res.data.data
       }
     }
   }
