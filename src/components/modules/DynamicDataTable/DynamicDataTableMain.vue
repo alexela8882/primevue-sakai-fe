@@ -2,7 +2,7 @@
 // -----------
 // imports
 // -----------
-import { onMounted, ref, watch,defineAsyncComponent,provide } from 'vue'
+import { onMounted, ref, watch, defineAsyncComponent,provide } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
@@ -34,6 +34,7 @@ const props = defineProps({
 const emit = defineEmits(['toggle-sidebar'])
 
 // refs
+const pageOffset = ref(0)
 const listViewFilterRef = ref(null)
 const cellEdit = ref(false)
 const editingRows = ref([])
@@ -49,7 +50,7 @@ const menuSelectedData = ref()
 // stores
 const moduleStore = useModuleStore()
 const moduleDynamicTableStore = useModuleDynamicTableStore()
-const { getCollection, getBaseModule, getEntity } = storeToRefs(moduleStore)
+const { getModule, getCollection, getBaseModule, getEntity } = storeToRefs(moduleStore)
 const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 const { getDropdownLists, getDropdown } = storeToRefs(moduleDynamicTableStore)
 const { fetchDropdownLists } = moduleDynamicTableStore
@@ -129,15 +130,20 @@ const cellEditAction = (data,payload) => {
   // console.log(getEntity.value(cellModule))
   // fetchDropdownLists(getEntity.value(cellModule).name)
 }
-
-const paginate = async (event, jump) => {
+const paginate = async (event, jump, per_page) => {
   let page = 1
   if (!jump) {
     page = event.page + 1
+    pageOffset.value = event.page + 1
   } else page = props.pagination.current_page
 
   // re-fetch module & collection
-  await fetchModule(props.moduleName, page > 1 ? page : null)
+  await fetchModule(props.moduleName, page > 1 ? page : null, per_page)
+}
+const limitPage = async (e) => {
+  // re-fetch module & collection
+  const limit = e.value
+  await paginate(null, true, limit)
 }
 const onRowContextMenu = (event) => {
   // cm.value.show(event.originalEvent)
@@ -182,6 +188,10 @@ const resetTableForm = () =>{
   tableFormData.value = {}
   clonedData.value = _.cloneDeep(props.data)
 }
+
+watch(() => props.data, (newVal, oldVal) => {
+  clonedData.value = newVal.data
+})
 
 // life cycles
 onMounted(async () => {
@@ -328,6 +338,7 @@ provide('form', tableFormData)
           <div class="text-sm text-color-secondary">
             Items per page:
             <Dropdown
+              @change="limitPage($event, pagination.current_page)"
               v-model="pagination.per_page"
               :options="perPageItems"
               optionLabel="label"
@@ -341,7 +352,7 @@ provide('form', tableFormData)
           </div>
         </div>
         <Paginator
-          @page="paginate($event, false)"
+          @page="paginate($event, false, pagination.per_page)"
           template="JumpToPageDropdown PrevPageLink NextPageLink"
           :rows="pagination && pagination.per_page"
           :totalRecords="pagination && pagination.total"

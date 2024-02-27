@@ -74,7 +74,9 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   })
   const getItemValueByName = computed(() => {
     return (payload) => {
-      return item.value[payload]
+      // console.log(payload)
+      // console.log(item.value.data[payload])
+      return item.value.data[payload]
     }
   })
   const _getRelatedLists = computed(() => _relatedLists.value)
