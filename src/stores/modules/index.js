@@ -22,7 +22,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const toast = useToast()
   // stores
   const baseStore = useBaseStore()
-  const { jsonDbUrl } = storeToRefs(baseStore)
+  const { jsonDbUrl,getAuthUser } = storeToRefs(baseStore)
   // presets
   const perPageItems = ref([
     { label: '10', value: 10 },
@@ -69,6 +69,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // getters
   const getBaseModule = computed(() => baseModule.value)
   const getModule = computed(() => module.value)
+  const getModulesUserCanAccess = computed(() => {
+    return _.reduce(modules.value, function(res,v,i){
+      if(_.includes(_.get(getAuthUser.value,'permissions',[]),v.name+'.index')){
+        res.push(v._id)
+      }
+      return res
+    },[])
+  })
   const getLinkedModuleData = computed(() => linkedModuleData.value)
   const getModules = computed(() => modules.value)
   const getJsonModules = computed(() => jsonModules.value)
@@ -494,6 +502,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getModule,
     getLinkedModuleData,
     getModules,
+    getModulesUserCanAccess,
     getJsonModules,
     getCollection,
     getCollectionById,

@@ -47,7 +47,7 @@ const baseStore = useBaseStore()
 const moduleStore = useModuleStore()
 const tabStore = useTabStore()
 const formDataStore = useFormDataStore()
-const { getModules } = storeToRefs(moduleStore)
+const { getModules,getModulesUserCanAccess } = storeToRefs(moduleStore)
 const { configBar,getAuthUser } = storeToRefs(baseStore)
 const { getTabs, tabsLoading } = storeToRefs(tabStore)
 const { toggleTabs, generateTabs, addTab, toggleWindows } = tabStore
@@ -456,7 +456,7 @@ const confirmAddTab = (module,index) => {
 const initialize = async () => {
   // create forms and tables
   getModules.value.map(module => {
-    if (_.includes(['Account','Contact','Lead','SalesOpportunity'],module.mainEntity) && !_.isNil(module.folder_id)) {    
+    if (_.includes(['Account','Contact','Lead','SalesOpportunity'],module.mainEntity) && !_.isNil(module.folder_id) && _.includes(getModulesUserCanAccess.value,module._id)) {    
       // create forms
       let formObj = Object.assign({}, {
         label: module.label,

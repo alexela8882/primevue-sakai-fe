@@ -13,6 +13,7 @@ export const useBaseStore = defineStore('baseStore', () => {
 
   // getters
   const getAuthUser = computed(() => authUser.value)
+ 
   // actions
   const setAuthuser = async () => {
 
