@@ -163,10 +163,10 @@ export const useTabStore = defineStore('tabStore', () => {
       tabs.value.unshift(tab)
 
       // toggle windows
-      if (window) await toggleWindows(tab)
+      if (window) await toggleWindows(payload)
 
       // tab mode
-      if (payload.mode === 'modal') await maximizeTab(tab) 
+      if (payload.mode === 'modal') await maximizeTab(payload) 
     }
 
     xTabsLoading.value = false

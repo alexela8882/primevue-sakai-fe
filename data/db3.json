@@ -56363,12 +56363,8 @@
             ],
             "date_only": true
           },
-          "searchKey": false,
-          "field_type": {
-            "name": "date",
             "_id": "5c906a0ea6ebc7193110e732"
           },
-          "relation": null
         },
         {
           "_id": "5c906a12a6ebc7193110ec33",
