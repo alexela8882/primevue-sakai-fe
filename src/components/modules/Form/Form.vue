@@ -110,7 +110,6 @@
     const initialize  = () => {
         let quickAddFields = _.chain(formData.value.fields).filter({'quick':true}).map('_id').value()
         
-        console.log('initialize')
         //get quick add panels
         _.forEach(formData.value.panels, function(panel, panelI){
             formData.value.panels[panelI]['quick'] = false
@@ -134,19 +133,48 @@
 
         formLoading.value = false
     }
+
+    const resetForm  = () =>{
+       formLoading.value = true
+       let formPage = (_.includes(props.config.name,'edit')) ? 'edit' : 'create'
+       formData.value.values.main = transformFormValues(formData.value.fields,getItem.value,formPage) 
+       formLoading.value = false
+    }
     provide('form', formData)
 </script>
 <template>
     <Suspense v-if="!formLoading">       
-        <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && config.style == 'window' ">
+        <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && _.get(config,'maximized',false)==false">
             <Field v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id" keyName="main" :config="field"/>
         </template>
         <template v-else>
-            <FormPanel v-for="panel in _.filter(formData.panels, function(p){ if(!_.includes(hiddenPanels,p._id) && _.endsWith(p.controllerMethod,'@index') && ((config.style=='window' && p.quick) || config.style!='window' && !p.quick)){ return true;} })" :quickAdd="config.style == 'window'" :key="panel._id" :panel="panel"/>
+            <FormPanel v-for="panel in _.filter(formData.panels, function(p){ if(!_.includes(hiddenPanels,p._id) && _.endsWith(p.controllerMethod,'@index') && ((config.style=='window' && p.quick) || config.style!='window' && !p.quick)){ return true;} })"
+                :key="panel._id" 
+                :panel="panel"
+                :quickAdd="!_.get(config,'maximized',false)"
+             />
         </template>
+        
         <template #fallback>
            <Skeleton v-for="(item,index) in tempFields" :key="index" height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
         </template>
     </Suspense>
-    
+    <div class="formFooter">
+        <el-button @click="resetForm">Reset</el-button>
+        <el-button type="primary">Save</el-button>
+    </div>
 </template>
+<style>
+    .formFooter{
+        position: absolute;
+        bottom: 0px;
+        height: 54px;
+        text-align: right;
+        padding: 12px;
+        background-color: #f8f9fa;
+        left: 0;
+        border-top: 1px solid var(--surface-300);
+        width: calc(100% - 4px);
+        margin-left: 2px;
+    }
+</style>
