@@ -55,10 +55,8 @@ export const useFormDataStore = defineStore('formDataStore', () => {
     }
 
     const fetchPicklist = async (payload) => {
-        const res = await axios(`${jsonDbUrl.value}/picklist`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        })
+      let param = {'listName':payload}
+        const res = await axios.post(`/picklist`,param)
     
         if (res.status === 200) {
           const data = (res.data && res.data.length > 0) ? res.data[0] : res.data

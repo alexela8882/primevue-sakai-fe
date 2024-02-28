@@ -2,14 +2,16 @@ import { inject } from 'vue';
 import _ from 'lodash';
 import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia'
-
+import helper from '@/mixins/Helper';
 export default function validate() {
 
     const form = inject('form') 
+    const { checkFieldIfMultipleSelect } = helper();
 
     function validateField(keyName,field){
         let val = _.trim(form.value.values[keyName][field.name])
         form.value.errors[keyName][field.name] = []
+        console.log(field.name,field.rules,val)
         _.forEach(field.rules, function(ruleValue, ruleName){
             let msg = ''
             if(ruleName=='alpha'){
@@ -34,6 +36,14 @@ export default function validate() {
                 }
             }else if(ruleName=='required'){
                 msg = required(val,field)
+            }else if(ruleName=='required_if'){
+                if(_.isEmpty(val) || _.isNull(val)){
+                    msg = required_if(val,field,keyName)
+                }
+            }else if(ruleName=='required_unless'){
+                if(_.isEmpty(val) || _.isNull(val)){
+                    msg = required_unless(val,field,keyName)
+                }
             }else if(ruleName=='required_with'){
                 if(_.isEmpty(val) || _.isNull(val)){
                     msg = required_with(val,field,keyName)
@@ -121,12 +131,60 @@ export default function validate() {
     }
 
     function required_if(value,field,keyName){
-        
-        if(!_.isEmpty(givenFields)){
-            return "The "+ field.label +" field is required when "+ _.join(givenFields,', ') + " " +pronoun+"  value."
-        }else{
-            return ""
+        let anotherField = _.find(form.value.fields,{'name': field.rules.required_if.anotherField})
+        let pass = true
+        if(anotherField){
+            let anotherFieldValue = _.get(form.value.values[keyName],anotherField.name,"")
+            let multiple = checkFieldIfMultipleSelect(anotherField.rules)
+            console.log(anotherField.name, multiple, anotherFieldValue)
+            if(!_.isEmpty(anotherFieldValue) && !_.isNull(anotherFieldValue)){
+                if(anotherField.field_type.name=='lookupModel' || anotherField.field_type.name=='picklist'){
+                    if(multiple){
+                        pass = _.some(_.map(value,'value',[]), function(item){ if(_.includes(field.rules.required_if.values,item)){ return true; } })
+                    }else{
+                        console.log(field.rules.required_if.values==anotherFieldValue.value)
+                        pass = (field.rules.required_if.values == anotherFieldValue.value) ? true : false
+                    }
+                }else if(anotherFieldValue!=value){
+                    pass = false
+                }
+            }
+            let pronoun = (checkFieldIfMultipleSelect(anotherField.rules)) ? ' includes ' : ' is equal to ' 
+            if(!pass){
+                return "The "+ field.label +" field is required when "+ anotherField.label + " " +pronoun+"  "+_.join(field.rules.required_if.values,', ')
+            }else{
+                return ""
+            }
         }
+        return ""
+       
+    }
+
+    function required_unless(value,field,keyName){
+        let anotherField = _.find(form.value.fields,{'name': field.rules.required_unless.anotherField})
+        let pass = true
+        let multiple = checkFieldIfMultipleSelect(field.rules)
+        if(anotherField){
+            let anotherFieldValue = _.get(form.value.values[keyName],anotherField.name,"")
+            if(!_.isEmpty(anotherFieldValue) && !_.isNull(anotherFieldValue)){
+                if(anotherField.field_type.name=='lookupModel' || anotherField.field_type.name=='picklist'){
+                    if(multiple){
+                        pass = _.every(_.map(value,'value',[]), function(item){ if(!_.includes(field.rules.required_unless.values,item)){ return true; } })
+                    }else{
+                        pass = !_.includes(field.rules.required_unless.values,anotherFieldValue.value)
+                    }
+                }else if(anotherFieldValue!=value){
+                    pass = false
+                }
+            }
+            let pronoun = (checkFieldIfMultipleSelect(anotherField.rules)) ? ' includes ' : ' is equal to ' 
+            if(!pass){
+                return "The "+ field.label +" field is required unless "+ anotherField.label + " " +pronoun+"  "+_.join(field.rules.required_unless.values,', ')
+            }else{
+                return ""
+            }
+        }
+        return ""
     }
 
     function required_with(value,field,keyName){
@@ -142,6 +200,7 @@ export default function validate() {
         }else{
             let anotherField = _.find(form.value.fields,{'name': field.rules['required_with']})
             let anotherFieldValue = _.get(form.value.values[keyName],anotherField.name,"")
+            console.log(anotherField,anotherFieldValue)
             if(anotherField && !_.isEmpty(anotherFieldValue) && !_.isNil(anotherFieldValue)){
                 givenFields.push(anotherField.label)
             }

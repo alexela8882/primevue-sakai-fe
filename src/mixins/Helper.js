@@ -47,9 +47,9 @@ const { getPicklist} = storeToRefs(formDataStore)
             if(!hide){
                 let index = _.findIndex(res,{'label':category})
                 if(index > -1){
-                    res[index]['options'].push(_.merge(val,{'value':val.name}))
+                    res[index]['options'].push(_.merge(val,{'value':val.name,'poupDisplayValues':[val.name]}))
                 }else{
-                    res.push({'label':category,'options':[_.merge(val,{'value':val.name})]})
+                    res.push({'label':category,'options':[_.merge(val,{'value':val.name,'poupDisplayValues':[val.name]})]})
                 }
                 
             }
