@@ -143,25 +143,29 @@
     provide('form', formData)
 </script>
 <template>
-    <Suspense v-if="!formLoading">       
-        <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && _.get(config,'maximized',false)==false">
-            <Field v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id" keyName="main" :config="field"/>
-        </template>
-        <template v-else>
-            <FormPanel v-for="panel in _.filter(formData.panels, function(p){ if(!_.includes(hiddenPanels,p._id) && _.endsWith(p.controllerMethod,'@index') && ((config.style=='window' && p.quick) || config.style!='window' && !p.quick)){ return true;} })"
-                :key="panel._id" 
-                :panel="panel"
-                :quickAdd="!_.get(config,'maximized',false)"
-             />
-        </template>
-        
-        <template #fallback>
-           <Skeleton v-for="(item,index) in tempFields" :key="index" height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
-        </template>
-    </Suspense>
-    <div class="formFooter">
-        <el-button @click="resetForm">Reset</el-button>
-        <el-button type="primary">Save</el-button>
+    <div class="h-full p-3">
+        <Suspense v-if="!formLoading">       
+            <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && _.get(config,'maximized',false)==false">
+                <Field v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id" keyName="main" :config="field"/>
+            </template>
+            <template v-else>
+                <FormPanel v-for="panel in _.filter(formData.panels, function(p){ if(!_.includes(hiddenPanels,p._id) && _.endsWith(p.controllerMethod,'@index') && ((config.style=='window' && p.quick) || config.style!='window' && !p.quick)){ return true;} })"
+                    :key="panel._id" 
+                    :panel="panel"
+                    :quickAdd="!_.get(config,'maximized',false)"
+                />
+            </template>
+            
+            <template #fallback>
+            <Skeleton v-for="(item,index) in tempFields" :key="index" height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
+            </template>
+        </Suspense>
+    </div>
+    <div class="sticky bottom-0 right-0 py-2 surface-50">
+        <div class="flex justify-content-end gap-2 px-3 py-1">
+            <el-button @click="resetForm">Reset</el-button>
+            <el-button type="primary">Save</el-button>
+        </div>
     </div>
 </template>
 <style>
