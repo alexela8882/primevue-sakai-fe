@@ -202,6 +202,21 @@ export const useTabStore = defineStore('tabStore', () => {
       xTabsLoading.value = false
     }, 50)
   }
+  const updateTabByField = async (payload) => {
+    const tabName = payload.tab
+    const field = payload.field
+
+    if (field === 'module') {
+      const moduleName = payload.data.module
+      const page = payload.data.page
+      const per_page = payload.data.per_page
+      const fetchedModule = await _fetchModule(moduleName, page, per_page)
+
+      tabs.value.map(tab => {
+        if (tab.name === tabName) tab.module.collection = fetchedModule
+      })
+    }
+  }
 
   return {
     tabDialog,
@@ -217,6 +232,7 @@ export const useTabStore = defineStore('tabStore', () => {
     toggleWindows,
     addTab,
     removeTab,
+    updateTabByField,
     resetTabs,
     maximizeTab,
     minimizeTab

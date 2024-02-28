@@ -19,11 +19,13 @@ import DataTableLoader from '../modules/DynamicDataTable/Loaders/DataTableLoader
 import KanbanLoader from '../modules/DynamicDataTable/Loaders/KanbanLoader.vue'
 
 // refs
+const localLoading = ref(false)
+const localModule = ref()
 const viewFiltersDialogMode = ref('new')
 const listViewFilterBar = ref(false)
 const viewFiltersDialogComponentKey = ref(0)
 const route = useRoute()
-const viewFilter = ref([])
+const viewFilter = ref({})
 const selectedViewFilter = ref()
 const selectedFields = ref()
 const selectedSearchKeyIds = ref()
@@ -43,12 +45,15 @@ const {
   getModules,
   getBaseModule,
   getCollection,
+  _getViewFilters,
   getViewFilters,
+  _getDefaultViewFilter,
   getDefaultViewFilter,
-  getViewFilterIds,
+  _getViewFilterIds,
+  __getViewFilter,
   getViewFilter,
-  getSearchKeyFieldIds } = storeToRefs(moduleStore)
-const { fetchModule, fetchModules, fetchBaseModule } = moduleStore
+  _getSearchKeyFieldIds } = storeToRefs(moduleStore)
+const { _fetchModule, fetchModule, fetchModules, fetchBaseModule } = moduleStore
 const { getTabs } = storeToRefs(tabStore)
 const { addTab,toggleWindows, maximizeTab } = tabStore
 const { setFormReset } = formDataStore
@@ -118,6 +123,28 @@ const tblSettingsBtn = ref([
 ])
 
 // actions
+const paginate = async (payload) => {
+  localLoading.value = true
+
+  let page = 1
+  if (!payload.jump) {
+    page = payload.event.page + 1
+  } else page = localModule.meta && localModule.meta.pagination
+
+  // re-fetch module & collection
+  localModule.value = await _fetchModule(getBaseModule.value.name, page > 1 ? page : null, payload.per_page)
+  localLoading.value = false
+}
+const limitPage = async (e) => {
+  // re-fetch module & collection
+  const limit = e.value
+  const args = {
+    event: e, 
+    jump: true,
+    per_page: limit
+  }
+  await paginate(args)
+}
 const createNewForm = async (module) => {
   let obj = Object.assign({}, {
     type: 'module-form',
@@ -126,6 +153,7 @@ const createNewForm = async (module) => {
     label: `${module.label} Form`,
     _module: module.name,
     expanded: false,
+
     opened: false,
     mode: 'modal',
     opened_order: null
@@ -157,24 +185,33 @@ const confirmAddTab = (module,index) => {
   });
 };
 // lifescycles
-watch(selectedViewFilter, (newVal, oldVal) => {
-  if (newVal) viewFilter.value = getViewFilter.value(newVal)
-})
-
 onMounted(async () => {
+  localLoading.value = true
   // await fetchCollection(route.name.split('.')[0], 1)
   await fetchBaseModule(route.params.id)
-  await fetchModule(getBaseModule.value.name)
+  const fetchedModule = await _fetchModule(getBaseModule.value.name)
 
-  console.log(getBaseModule.value)
-  console.log(getModule.value)
-  console.log(getCollection.value)
+  localModule.value = fetchedModule
+
+  // console.log(getBaseModule.value)
+  // console.log(localModule.value)
+  // console.log(getCollection.value)
 
   // pre-assignments
-  viewFilter.value = getDefaultViewFilter.value
-  selectedViewFilter.value = viewFilter.value._id
-  selectedFields.value = getViewFilterIds.value
-  selectedSearchKeyIds.value = getSearchKeyFieldIds.value
+  viewFilter.value = computed(() => _getDefaultViewFilter.value(localModule.value))
+  selectedViewFilter.value = viewFilter.value && viewFilter.value.value._id
+  selectedFields.value = computed(() => _getViewFilterIds.value(localModule.value))
+  selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
+
+  localLoading.value = false
+})
+
+watch(selectedViewFilter, (newVal, oldVal) => {
+  if (newVal) viewFilter.value = __getViewFilter.value(newVal, localModule.value)
+})
+
+watch(selectedFields, (newVal, oldVal) => {
+  if (newVal) selectedFields.value = newVal.value
 })
 
 </script>
@@ -212,16 +249,16 @@ onMounted(async () => {
             <div>
               <Dropdown
                 v-model="selectedViewFilter"
-                :options="getViewFilters"
-                :disabled="collectionLoading"
+                :options="_getViewFilters(localModule)"
+                :disabled="localLoading"
                 optionLabel="filterName"
                 optionValue="_id"
                 placeholder="Select View Filters"
                 class="border-round-xl border-primary w-full md:w-12rem mr-2 mb-2 md:mb-0"/>
               <MultiSelect
                 v-model="selectedSearchKeyIds"
-                :options="getModule.fields"
-                :disabled="collectionLoading"
+                :options="localModule && localModule.fields"
+                :disabled="localLoading"
                 filter
                 :showToggleAll="false"
                 optionLabel="label"
@@ -235,14 +272,14 @@ onMounted(async () => {
                 <i class="pi pi-search" />
                 <InputText
                   type="text"
-                  :disabled="collectionLoading"
+                  :disabled="localLoading"
                   class="border-round-xl border-primary w-full mb-2 md:mb-0"
                   placeholder="Search The List..." />
               </div>
               <div class="p-inputgroup flex-1 mb-2 md:mb-0">
                 <Button
                   @click="tblMenu2.toggle($event)"
-                  :disabled="collectionLoading"
+                  :disabled="localLoading"
                   type="button"
                   aria-haspopup="true"
                   aria-controls="tbl_overlay_menu2"
@@ -270,7 +307,7 @@ onMounted(async () => {
                 <Button
                   @click="tblMenu.toggle($event)"
                   :loading="viewFiltersDialogLoading"
-                  :disabled="collectionLoading"
+                  :disabled="localLoading"
                   type="button"
                   icon="pi pi-cog"
                   aria-haspopup="true"
@@ -294,13 +331,13 @@ onMounted(async () => {
                   </Menu>
                 <Button
                   @click="listViewFilterBar = true"
-                  :disabled="listViewFilterBar || collectionLoading"
+                  :disabled="listViewFilterBar || localLoading"
                   icon="pi pi-filter"
                   aria-label="Submit"
                   class="list-view-filter-btn border-round-md mr-2" />
                 <Button
                   class="border-round-md mr-2"
-                  :disabled="collectionLoading"
+                  :disabled="localLoading"
                   icon="pi pi-plus"
                   @click="createNewForm(getBaseModule)"
                   :label="`New ${getBaseModule.label}`" />
@@ -311,60 +348,64 @@ onMounted(async () => {
       </div>
 
       <!-- DATATABLE -->
-      <Suspense v-if="viewFilter.currentDisplay === null || viewFilter.currentDisplay === 'table'">
-        <DynamicDataTable
-          :key="getBaseModule._id"
-          mode="edit"
-          :moduleId="getBaseModule._id"
-          :moduleEntityName="getBaseModule.mainEntity"
-          :moduleName="getBaseModule.name"
-          :moduleLabel="getBaseModule.label"
-          :fields="viewFilter.fields"
-          :data="getModule.data"
-          :pagination="getModule.meta && getModule.meta.pagination"
-          :collectionLoading="collectionLoading"
-          :sidebar="listViewFilterBar"
-          @toggle-sidebar="listViewFilterBar = !listViewFilterBar">
-          <template #list-view-filter>
-            <Suspense>
-              <listViewFilterContent :baseModule="getBaseModule" :module="getModule" />
-              <template #fallback>
-                <ListViewLoader />
-              </template>
-            </Suspense>
+      <div v-if="viewFilter">
+        <Suspense v-if="viewFilter.currentDisplay === null || viewFilter.currentDisplay === 'table'">
+          <DynamicDataTable
+            :key="getBaseModule._id"
+            mode="edit"
+            :moduleId="getBaseModule._id"
+            :moduleEntityName="getBaseModule.mainEntity"
+            :moduleName="getBaseModule.name"
+            :moduleLabel="getBaseModule.label"
+            :fields="viewFilter.fields"
+            :data="localModule.data"
+            :pagination="localModule.meta && localModule.meta.pagination"
+            :collectionLoading="localLoading"
+            :sidebar="listViewFilterBar"
+            @toggle-sidebar="listViewFilterBar = !listViewFilterBar"
+            @paginate="paginate"
+            @limit-page="limitPage">
+            <template #list-view-filter>
+              <Suspense>
+                <listViewFilterContent :baseModule="getBaseModule" :module="localModule" />
+                <template #fallback>
+                  <ListViewLoader />
+                </template>
+              </Suspense>
+            </template>
+          </DynamicDataTable>
+          <template #fallback>
+            <DataTableLoader />
           </template>
-        </DynamicDataTable>
-        <template #fallback>
-          <DataTableLoader />
-        </template>
-      </Suspense>
+        </Suspense>
 
-      <Suspense v-else-if="viewFilter.currentDisplay === 'kanban'">
-        <pre>This feature will be added soon</pre>
-        <!-- <DynamicKanban
-          :viewFilterId="viewFilter._id"
-          :groupBy="viewFilter.group_by"
-          :summarizeBy="viewFilter.summarize_by"
-          :moduleName="getBaseModule.name"
-          :moduleLabel="getBaseModule.label"
-          :fields="viewFilter.fields"
-          :data="getModule.data"
-          :collectionLoading="collectionLoading"
-          :sidebar="listViewFilterBar"
-          @toggle-sidebar="listViewFilterBar = !listViewFilterBar">
-          <template #list-view-filter>
-            <Suspense>
-              <listViewFilterContent :baseModule="getBaseModule" :module="getModule" />
-              <template #fallback>
-                <ListViewLoader />
-              </template>
-            </Suspense>
+        <Suspense v-else-if="viewFilter.currentDisplay === 'kanban'">
+          <pre>This feature will be added soon</pre>
+          <!-- <DynamicKanban
+            :viewFilterId="viewFilter._id"
+            :groupBy="viewFilter.group_by"
+            :summarizeBy="viewFilter.summarize_by"
+            :moduleName="getBaseModule.name"
+            :moduleLabel="getBaseModule.label"
+            :fields="viewFilter.fields"
+            :data="localModule.data"
+            :collectionLoading="localLoading"
+            :sidebar="listViewFilterBar"
+            @toggle-sidebar="listViewFilterBar = !listViewFilterBar">
+            <template #list-view-filter>
+              <Suspense>
+                <listViewFilterContent :baseModule="getBaseModule" :module="localModule" />
+                <template #fallback>
+                  <ListViewLoader />
+                </template>
+              </Suspense>
+            </template>
+          </DynamicKanban> -->
+          <template #fallback>
+            <KanbanLoader />
           </template>
-        </DynamicKanban> -->
-        <template #fallback>
-          <KanbanLoader />
-        </template>
-      </Suspense>
+        </Suspense>
+      </div>
     </div>
   </div>
 
@@ -374,7 +415,7 @@ onMounted(async () => {
     v-if="viewFiltersDialogSwitch"
     :mode="viewFiltersDialogMode"
     :selectedViewFilter="selectedViewFilter"
-    :module="getModule" />
+    :module="localModule" />
 </template>
 
 <style>

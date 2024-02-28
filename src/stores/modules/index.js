@@ -90,9 +90,21 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return data
     }
   })
+  const _getViewFilters = computed(() => {
+    return (payload) => {
+      return getViewFilters.value(payload)
+    }
+  })
   const getViewFilters = computed(() => {
-    const viewFilters = module.value.viewFilters
-    return viewFilters
+    return (payload) => {
+      let _module = null
+
+      if (payload) _module = payload
+      else _module = module.value
+
+      const viewFilters = _module.viewFilters
+      return viewFilters
+    }
   })
   const getEntity = computed(() => {
     return (payload) => {
@@ -110,14 +122,27 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return modules.value.find(module => module.name === payload)
     }
   })
-  const getDefaultViewFilter = computed(() => {
-    const moduleFields = module.value && module.value.fields
-    const viewFilters = module.value && module.value.viewFilters
-    const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter.isDefault)
-
-    return getReconstructedViewFilter.value(viewFilter)
+  const _getDefaultViewFilter = computed(() => {
+    return (payload) => {
+      return getDefaultViewFilter.value(payload)
+    }
   })
-  
+  const getDefaultViewFilter = computed(() => {
+    return (payload) => {
+      let _module = null
+
+      if (payload) _module = payload
+      else _module = module.value && module.value
+
+      const moduleFields = _module.fields
+      const viewFilters = _module.viewFilters
+      const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter.isDefault)
+
+      console.log(viewFilter)
+
+      return getReconstructedViewFilter.value(viewFilter, _module ? _module : null)
+    }
+  })
   const _getViewFilter = computed(() => {
     return (payload) => {
       const viewFilters = payload.module && payload.module.viewFilters
@@ -128,16 +153,24 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return reconstructedViewFilter
     }
   })
-
-  const getViewFilter = computed(() => {
-    return (payload) => {
-      const viewFilters = module.value && module.value.viewFilters
-      const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload)
-
-      return getReconstructedViewFilter.value(viewFilter, module.value)
+  const __getViewFilter = computed(() => {
+    return (id, _module) => {
+      return getViewFilter.value(id, _module)
     }
   })
-  
+  const getViewFilter = computed(() => {
+    return (payload, _module = null) => {
+      let __module = null
+
+      if (_module) __module = _module
+      else __module = module.value
+
+      const viewFilters = __module && __module.viewFilters
+      const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload)
+
+      return getReconstructedViewFilter.value(viewFilter, __module)
+    }
+  })
   const getReconstructedViewFilter = computed(() => {
     return (payload, _module) => {
       let moduleFields = null
@@ -163,6 +196,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
         fields: filteredFields
       })
 
+      console.log(finalViewFilter)
       return finalViewFilter
     }
   })
@@ -188,13 +222,24 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
     return fieldIds
   })
+  const _getSearchKeyFieldIds = computed(() => {
+    return (payload) => {
+      return getSearchKeyFieldIds.value(payload)
+    }
+  })
   const getSearchKeyFieldIds = computed(() => {
-    const fieldIds = []
-    const fields = module.value && module.value.fields
-    fields && fields.map(field => {
-      if (field.searchKey) fieldIds.push(field._id)
-    })
-    return fieldIds
+    return (payload) => {
+      let _module = null
+
+      if (payload) _module = payload
+      else _module = module.value
+      const fieldIds = []
+      const fields = _module && _module.fields
+      fields && fields.map(field => {
+        if (field.searchKey) fieldIds.push(field._id)
+      })
+      return fieldIds
+    }
   })
   const getKanbanData = computed(() => {
     return (payload) => {
@@ -405,8 +450,9 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
     console.log(module.value)
   }
-  const _fetchModule = async (payload) => {
-    return await fetchModule(payload, null, 0, true)
+  const _fetchModule = async (payload, page = null, limit = null) => {
+    const fetchedModule = await fetchModule(payload, page, limit, true)
+    return fetchedModule
   }
   const fetchLinkedModuleData = async (payload) => {
     try {
@@ -558,14 +604,18 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getJsonModules,
     getCollection,
     getCollectionById,
+    _getViewFilters,
     getViewFilters,
     getEntity,
     getEntityByName,
+    _getDefaultViewFilter,
     getDefaultViewFilter,
     _getViewFilter,
+    __getViewFilter,
     getViewFilter,
     _getViewFilterIds,
     getViewFilterIds,
+    _getSearchKeyFieldIds,
     getSearchKeyFieldIds,
     getKanbanData,
     _getFieldDetails,
