@@ -9,6 +9,7 @@ const DynamicForm = defineAsyncComponent(() => import('@/components/dynamic/Dyna
 // loaders
 import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
 // stores
+import { useTabStore } from '@/stores/tabs/index'
 import { useModuleStore } from '@/stores/modules/index'
 
 // defines
@@ -20,7 +21,9 @@ const props = defineProps({
 const localLoading = ref(false)
 const localModule = ref()
 // stores
+const tabStore = useTabStore()
 const moduleStore = useModuleStore()
+const { updateTabByField } = tabStore
 const { _fetchModule } = moduleStore
 
 // actions
@@ -33,7 +36,16 @@ const paginate = async (payload) => {
   } else page = props.tab.module.collection && props.tab.module.collection.pagination
 
   // re-fetch module & collection
-  localModule.value = await _fetchModule(props.tab.base_module.name, page > 1 ? page : null, payload.per_page)
+  // localModule.value = await _fetchModule(props.tab.base_module.name, page > 1 ? page : null, payload.per_page)
+  await updateTabByField({
+    tab: props.tab.name,
+    field: 'module',
+    data: {
+      module: props.tab.base_module.name,
+      page: page,
+      per_page: payload.per_page
+    }
+  })
   localLoading.value = false
 }
 const limitPage = async (e) => {
@@ -51,7 +63,7 @@ onMounted(async () => {
   localLoading.value = true
 
   localModule.value = await props.tab.module.collection
-  console.log(localModule.value)
+  console.log(props.tab.module.collection)
 
   localLoading.value = false
 })
@@ -84,9 +96,9 @@ onMounted(async () => {
           :moduleName="tab.base_module.name"
           :moduleLabel="tab.base_module.label"
           :fields="tab.module.viewFilterWithFields.fields"
-          :data="localModule && localModule.data"
+          :data="tab.module.collection && tab.module.collection.data"
           :collectionLoading="localLoading"
-          :pagination="localModule && (localModule.meta && localModule.meta.pagination)"
+          :pagination="tab.module.collection && (tab.module.collection.meta && tab.module.collection.meta.pagination)"
           @paginate="paginate"
           @limit-page="limitPage">
         </DynamicDataTable>
