@@ -17,6 +17,7 @@ const props = defineProps({
 })
 
 // refs
+const localLoading = ref(false)
 const localModule = ref()
 // stores
 const moduleStore = useModuleStore()
@@ -24,6 +25,8 @@ const { _fetchModule } = moduleStore
 
 // actions
 const paginate = async (payload) => {
+  localLoading.value = true
+
   let page = 1
   if (!payload.jump) {
     page = payload.event.page + 1
@@ -31,6 +34,7 @@ const paginate = async (payload) => {
 
   // re-fetch module & collection
   localModule.value = await _fetchModule(props.tab.base_module.name, page > 1 ? page : null, payload.per_page)
+  localLoading.value = false
 }
 const limitPage = async (e) => {
   // re-fetch module & collection
@@ -44,8 +48,12 @@ const limitPage = async (e) => {
 }
 
 onMounted(async () => {
+  localLoading.value = true
+
   localModule.value = await props.tab.module.collection
   console.log(localModule.value)
+
+  localLoading.value = false
 })
 </script>
 
@@ -77,6 +85,7 @@ onMounted(async () => {
           :moduleLabel="tab.base_module.label"
           :fields="tab.module.viewFilterWithFields.fields"
           :data="localModule && localModule.data"
+          :collectionLoading="localLoading"
           :pagination="localModule && (localModule.meta && localModule.meta.pagination)"
           @paginate="paginate"
           @limit-page="limitPage">

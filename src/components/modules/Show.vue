@@ -19,6 +19,7 @@ import DataTableLoader from '../modules/DynamicDataTable/Loaders/DataTableLoader
 import KanbanLoader from '../modules/DynamicDataTable/Loaders/KanbanLoader.vue'
 
 // refs
+const localLoading = ref(false)
 const localModule = ref()
 const viewFiltersDialogMode = ref('new')
 const listViewFilterBar = ref(false)
@@ -123,6 +124,8 @@ const tblSettingsBtn = ref([
 
 // actions
 const paginate = async (payload) => {
+  localLoading.value = true
+
   let page = 1
   if (!payload.jump) {
     page = payload.event.page + 1
@@ -130,6 +133,7 @@ const paginate = async (payload) => {
 
   // re-fetch module & collection
   localModule.value = await _fetchModule(getBaseModule.value.name, page > 1 ? page : null, payload.per_page)
+  localLoading.value = false
 }
 const limitPage = async (e) => {
   // re-fetch module & collection
@@ -182,6 +186,7 @@ const confirmAddTab = (module,index) => {
 };
 // lifescycles
 onMounted(async () => {
+  localLoading.value = true
   // await fetchCollection(route.name.split('.')[0], 1)
   await fetchBaseModule(route.params.id)
   const fetchedModule = await _fetchModule(getBaseModule.value.name)
@@ -197,6 +202,8 @@ onMounted(async () => {
   selectedViewFilter.value = viewFilter.value && viewFilter.value.value._id
   selectedFields.value = computed(() => _getViewFilterIds.value(localModule.value))
   selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
+
+  localLoading.value = false
 })
 
 watch(selectedViewFilter, (newVal, oldVal) => {
@@ -243,7 +250,7 @@ watch(selectedFields, (newVal, oldVal) => {
               <Dropdown
                 v-model="selectedViewFilter"
                 :options="_getViewFilters(localModule)"
-                :disabled="collectionLoading"
+                :disabled="localLoading"
                 optionLabel="filterName"
                 optionValue="_id"
                 placeholder="Select View Filters"
@@ -251,7 +258,7 @@ watch(selectedFields, (newVal, oldVal) => {
               <MultiSelect
                 v-model="selectedSearchKeyIds"
                 :options="localModule && localModule.fields"
-                :disabled="collectionLoading"
+                :disabled="localLoading"
                 filter
                 :showToggleAll="false"
                 optionLabel="label"
@@ -265,14 +272,14 @@ watch(selectedFields, (newVal, oldVal) => {
                 <i class="pi pi-search" />
                 <InputText
                   type="text"
-                  :disabled="collectionLoading"
+                  :disabled="localLoading"
                   class="border-round-xl border-primary w-full mb-2 md:mb-0"
                   placeholder="Search The List..." />
               </div>
               <div class="p-inputgroup flex-1 mb-2 md:mb-0">
                 <Button
                   @click="tblMenu2.toggle($event)"
-                  :disabled="collectionLoading"
+                  :disabled="localLoading"
                   type="button"
                   aria-haspopup="true"
                   aria-controls="tbl_overlay_menu2"
@@ -300,7 +307,7 @@ watch(selectedFields, (newVal, oldVal) => {
                 <Button
                   @click="tblMenu.toggle($event)"
                   :loading="viewFiltersDialogLoading"
-                  :disabled="collectionLoading"
+                  :disabled="localLoading"
                   type="button"
                   icon="pi pi-cog"
                   aria-haspopup="true"
@@ -324,13 +331,13 @@ watch(selectedFields, (newVal, oldVal) => {
                   </Menu>
                 <Button
                   @click="listViewFilterBar = true"
-                  :disabled="listViewFilterBar || collectionLoading"
+                  :disabled="listViewFilterBar || localLoading"
                   icon="pi pi-filter"
                   aria-label="Submit"
                   class="list-view-filter-btn border-round-md mr-2" />
                 <Button
                   class="border-round-md mr-2"
-                  :disabled="collectionLoading"
+                  :disabled="localLoading"
                   icon="pi pi-plus"
                   @click="createNewForm(getBaseModule)"
                   :label="`New ${getBaseModule.label}`" />
@@ -353,7 +360,7 @@ watch(selectedFields, (newVal, oldVal) => {
             :fields="viewFilter.fields"
             :data="localModule.data"
             :pagination="localModule.meta && localModule.meta.pagination"
-            :collectionLoading="collectionLoading"
+            :collectionLoading="localLoading"
             :sidebar="listViewFilterBar"
             @toggle-sidebar="listViewFilterBar = !listViewFilterBar"
             @paginate="paginate"
@@ -382,7 +389,7 @@ watch(selectedFields, (newVal, oldVal) => {
             :moduleLabel="getBaseModule.label"
             :fields="viewFilter.fields"
             :data="localModule.data"
-            :collectionLoading="collectionLoading"
+            :collectionLoading="localLoading"
             :sidebar="listViewFilterBar"
             @toggle-sidebar="listViewFilterBar = !listViewFilterBar">
             <template #list-view-filter>
