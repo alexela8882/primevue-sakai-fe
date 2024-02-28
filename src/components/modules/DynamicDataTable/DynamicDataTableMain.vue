@@ -31,9 +31,10 @@ const props = defineProps({
   fields: Array,
   collectionLoading: Boolean
 })
-const emit = defineEmits(['toggle-sidebar'])
+const emit = defineEmits(['toggle-sidebar', 'paginate', 'limit-page'])
 
 // refs
+const fetchedModule = ref()
 const pageOffset = ref(0)
 const listViewFilterRef = ref(null)
 const cellEdit = ref(false)
@@ -51,7 +52,7 @@ const menuSelectedData = ref()
 const moduleStore = useModuleStore()
 const moduleDynamicTableStore = useModuleDynamicTableStore()
 const { getModule, getCollection, getBaseModule, getEntity } = storeToRefs(moduleStore)
-const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
+const { _fetchModule, fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 const { getDropdownLists, getDropdown } = storeToRefs(moduleDynamicTableStore)
 const { fetchDropdownLists } = moduleDynamicTableStore
 // presets
@@ -131,19 +132,27 @@ const cellEditAction = (data,payload) => {
   // fetchDropdownLists(getEntity.value(cellModule).name)
 }
 const paginate = async (event, jump, per_page) => {
-  let page = 1
-  if (!jump) {
-    page = event.page + 1
-    pageOffset.value = event.page + 1
-  } else page = props.pagination.current_page
+  const args = {
+    event: event, 
+    jump: jump,
+    per_page: per_page
+  }
+  emit('paginate', args)
+  // let page = 1
+  // if (!jump) {
+  //   page = event.page + 1
+  //   pageOffset.value = event.page + 1
+  // } else page = props.pagination.current_page
 
-  // re-fetch module & collection
-  await fetchModule(props.moduleName, page > 1 ? page : null, per_page)
+  // // re-fetch module & collection
+  // fetchedModule.value = await _fetchModule(props.moduleName, page > 1 ? page : null, per_page)
+  // clonedData.value = fetchedModule.value.data
 }
 const limitPage = async (e) => {
+  emit('limit-page', e)
   // re-fetch module & collection
-  const limit = e.value
-  await paginate(null, true, limit)
+  // const limit = e.value
+  // await paginate(null, true, limit)
 }
 const onRowContextMenu = (event) => {
   // cm.value.show(event.originalEvent)
@@ -190,12 +199,13 @@ const resetTableForm = () =>{
 }
 
 watch(() => props.data, (newVal, oldVal) => {
-  clonedData.value = newVal.data
+  clonedData.value = newVal
 })
 
 // life cycles
 onMounted(async () => {
   clonedData.value = _.cloneDeep(props.data)
+  console.log(clonedData.value)
 })
 
 onClickOutside(listViewFilterRef, (event) => {
@@ -338,7 +348,7 @@ provide('form', tableFormData)
           <div class="text-sm text-color-secondary">
             Items per page:
             <Dropdown
-              @change="limitPage($event, pagination.current_page)"
+              @change="limitPage($event)"
               v-model="pagination.per_page"
               :options="perPageItems"
               optionLabel="label"
