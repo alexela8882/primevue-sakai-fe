@@ -143,7 +143,7 @@
     provide('form', formData)
 </script>
 <template>
-    <div class="h-full p-3">
+    <div class="relative min-h-full p-3">
         <Suspense v-if="!formLoading">       
             <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && _.get(config,'maximized',false)==false">
                 <Field v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id" keyName="main" :config="field"/>
