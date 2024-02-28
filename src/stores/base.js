@@ -16,7 +16,7 @@ export const useBaseStore = defineStore('baseStore', () => {
  
   // actions
   const setAuthuser = async () => {
-
+    
     const res = await axios(`user`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
@@ -24,7 +24,7 @@ export const useBaseStore = defineStore('baseStore', () => {
 
     if (res.status === 200) {
       authUser.value = res.data.data
-    }
+    }  
   }
 
 

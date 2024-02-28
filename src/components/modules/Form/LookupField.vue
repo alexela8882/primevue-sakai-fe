@@ -121,8 +121,21 @@ const checkBeforeClose = (index) =>{
             </template>
         </el-input>
         <div v-if="open" class="lookupOverlay p-overlaypanel p-component" :class="{ 'open' : open == true}">
-            <template v-if="fetching"><Skeleton v-for="(item,index) in _.fill(Array(10),'i')" :key="index" height="2rem" :width="90" class="m-2" borderRadius="5px"></Skeleton></template>
-            <Listbox v-else v-model="value" :multiple="multiple" :options="_.get(items,'options',[])" optionLabel="firstName" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
+            <template v-if="fetching"><Skeleton v-for="(item,index) in _.fill(Array(10),'i')" :key="index" height="2rem" width="100%" class="m-2" borderRadius="5px"></Skeleton></template>
+            <Listbox v-else-if="items.group" v-model="value" :multiple="multiple" :options="_.get(items,'options',[])" optionLabel="value" optionGroupLabel="label" optionGroupChildren="options" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
+                <template #option="slotProps">
+                    <div class="flex align-items-center">
+                        <div class="material-icons text-white mr-2" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
+                        <div>
+                            <template v-for="(val,i) in slotProps.option.poupDisplayValues" :key="i">
+                                <span v-if="i==0"  class="font-medium">{{ val }}</span>
+                                <div v-else class="text-sm text-color-secondary">{{  val }}</div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </Listbox>
+            <Listbox v-else v-model="value" :multiple="multiple" :options="_.get(items,'options',[])" optionLabel="value" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
                 <template #option="slotProps">
                     <div class="flex align-items-center">
                         <div class="material-icons text-white mr-2" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
