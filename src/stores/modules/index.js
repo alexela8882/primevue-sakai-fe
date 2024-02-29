@@ -273,7 +273,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
     return (payload) => {
       const fields = payload.module.fields
       const field = fields.find(fx => fx.name === payload.field)
-      console.log(payload)
       return field
     }
   })
@@ -287,7 +286,10 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const _getFieldDetailsById = computed(() => {
     return (payload) => { // supply `name` column from `fields` collection
       const fields = payload.fields
-      const field = fields && fields.find(fx => fx._id === payload._id)
+      const field = fields && fields.find(fx => fx._id == payload._id)
+      // console.log(fields)
+      // console.log(payload)
+      // console.log(field)
       return field
     }
   })
