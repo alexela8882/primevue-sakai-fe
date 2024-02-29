@@ -33,7 +33,7 @@ onMounted(async () => {
   if(localStorage.getItem('isAuthenticated')){
     await setAuthuser()
     await fetchModules()
-  }  
+  }
   
 })
 

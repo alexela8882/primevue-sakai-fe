@@ -27,7 +27,6 @@ export const useBaseStore = defineStore('baseStore', () => {
     }  
   }
 
-
   return {
     jsonDbUrl,
     backendUrl,
