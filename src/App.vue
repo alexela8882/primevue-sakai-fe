@@ -38,7 +38,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div v-if="!_.isEmpty(getModules) && !_.isEmpty(getAuthUser)" class="mb-6 pb-6">
+  <div class="mb-6 pb-6">
     <router-view></router-view>
   </div>
 
