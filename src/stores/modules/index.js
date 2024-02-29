@@ -5,7 +5,7 @@ import { ref, reactive, shallowRef, computed } from 'vue'
 import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
 import { storeToRefs } from 'pinia'
-import _ from 'lodash'
+import _, { filter } from 'lodash'
 // stores
 import { useBaseStore } from '@/stores/base'
 
@@ -149,11 +149,10 @@ export const useModuleStore = defineStore('moduleStore', () => {
       const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload.id)
 
       const reconstructedViewFilter = getReconstructedViewFilter.value(viewFilter, payload.module)
-      console.log(reconstructedViewFilter)
       return reconstructedViewFilter
     }
   })
-  const __getViewFilter = computed(() => {
+  const __getViewFilter = computed(() => { // re-constructed view filter
     return (id, _module) => {
       return getViewFilter.value(id, _module)
     }
@@ -196,7 +195,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
         fields: filteredFields
       })
 
-      console.log(finalViewFilter)
+      console.log(filteredFields)
       return finalViewFilter
     }
   })
