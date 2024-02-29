@@ -31,8 +31,8 @@ const GlobalDialog = defineAsyncComponent(() => import('@/components/dynamic/Glo
 
 onMounted(async () => {
   await setAuthuser()
-  await fetchModules()
-  console.log('get modules',_.cloneDeep(getModules.value))
+  // await fetchModules()
+  // console.log('get modules',_.cloneDeep(getModules.value))
 })
 
 </script>
