@@ -311,7 +311,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // actions
   const fetchModules = async () => {
     modulesLoading.value = true
-    console.log('fetchModules')
+    // console.log('fetchModules')
 
     // modules from BE api
     const res = await axios(`/modules`, {
@@ -368,7 +368,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
   const fetchBaseModule = async (id) => {
     moduleLoading.value = true
-    console.log('fetchBaseModule')
+    // console.log('fetchBaseModule')
     // const res = await axios(`${jsonDbUrl.value}/modules?_id=${id}`, {
     //   method: 'GET',
     //   headers: { 'Content-Type': 'application/json' }
@@ -378,7 +378,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     //   baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
     // }
 
-    baseModule.value = modules.value.find(module => module._id === id)
+    baseModule.value = getModules.value.find(module => module._id === id)
 
     moduleLoading.value = false
   }
