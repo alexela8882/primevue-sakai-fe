@@ -9,6 +9,7 @@ import AppLayout from '@/layout/AppLayout.vue'
 import { useLayout } from '@/layout/composables/layout'
 import { useBaseComposables } from '@/composables/base'
 import { useModuleStore } from '@/stores/modules'
+import { useBaseStore } from '@/stores/base'
 
 // refs
 // stores & components
@@ -278,16 +279,7 @@ router.beforeEach(async (to, from) => {
   // to.matched.some(record => record.meta.requiresAuth)
   console.log('router loading...')
 
-  const modules = computed(() => useModuleStore().getModules)
-  if (modules.value.length <= 0) {
-    console.log('fetching modules from routes js...')
-    await useModuleStore().fetchModules()
-    console.log('fetched modules from routes js')
-    console.log(modules.value)
-  } else {
-    console.log('get modules from routes js')
-    console.log(modules.value)
-  }
+ 
   routerLoading.value = true
   NProgress.start()
 
@@ -295,6 +287,20 @@ router.beforeEach(async (to, from) => {
   axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 
   const isAuthenticated = localStorage.getItem('isAuthenticated')
+
+  if(isAuthenticated){
+    const modules = computed(() => useModuleStore().getModules)
+    if (modules.value.length <= 0) {
+      console.log('fetching modules from routes js...')
+      await useModuleStore().fetchModules()
+      await useBaseStore().setAuthuser()
+      console.log('fetched modules from routes js')
+      console.log(modules.value)
+    } else {
+      console.log('get modules from routes js')
+      console.log(modules.value)
+    }
+  }
 
   axios.get('/user-configs/get-app-theme').then((response) => {
     // theme

@@ -30,7 +30,7 @@ const PopUpDialog = defineAsyncComponent(() => import('@/components/dynamic/PopU
 const GlobalDialog = defineAsyncComponent(() => import('@/components/dynamic/GlobalDialog.vue'))
 
 onMounted(async () => {
-  await setAuthuser()
+  // await setAuthuser()
   // await fetchModules()
   // console.log('get modules',_.cloneDeep(getModules.value))
 })
