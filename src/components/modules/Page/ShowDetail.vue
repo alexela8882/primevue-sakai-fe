@@ -54,6 +54,7 @@ const {
     getRelatedLists,
     _getRelatedOrderedLists,
     getRelatedListsByCname,
+    _getItemPanels,
     getItemPanels,
     getItemValueByName } = storeToRefs(moduleDetailStore)
 const { fetchItem, fetchItemRelatedList, fetchItemRelatedLists } = moduleDetailStore
@@ -113,7 +114,8 @@ const isElVisible = (el) => {
 }
 const checkElVisibility = () => {
   // console.log(document.getElementById('rl-panel-5cfa27c4a6ebc787575ff2a2'))
-  getItemPanels.value.map(panel => {
+  const panels = _getItemPanels.value(getModule.value.panels)
+  panels.map(panel => {
     const yourElement = document.getElementById(`rl-panel-${panel._id}`)
     // console.log(yourElement)
     if (isElVisible(yourElement)) {
@@ -195,9 +197,9 @@ onMounted(async() => {
   localItemLoading.value = itemLoading.value
   localBaseModule.value = getBaseModule.value
   localModule.value = getModule.value
-  localItemPanels.value = getItemPanels.value
+  localItemPanels.value = getItemPanels.value(null)
   localRelatedLists.value = getRelatedLists.value
-  atIndexRelatedLists.value = getItemPanels.value.filter(ip => ip.controllerMethod.includes('@index'))
+  atIndexRelatedLists.value = localItemPanels.value.filter(ip => ip.controllerMethod.includes('@index'))
   atShowRelatedLists.value = _getRelatedOrderedLists.value.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))
   linkedInquiryModule.value = getLinkedModuleData.value
 
