@@ -5,7 +5,7 @@ import { ref, reactive, shallowRef, computed } from 'vue'
 import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
 import { storeToRefs } from 'pinia'
-import _ from 'lodash'
+import _, { filter } from 'lodash'
 // stores
 import { useBaseStore } from '@/stores/base'
 
@@ -149,11 +149,10 @@ export const useModuleStore = defineStore('moduleStore', () => {
       const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload.id)
 
       const reconstructedViewFilter = getReconstructedViewFilter.value(viewFilter, payload.module)
-      console.log(reconstructedViewFilter)
       return reconstructedViewFilter
     }
   })
-  const __getViewFilter = computed(() => {
+  const __getViewFilter = computed(() => { // re-constructed view filter
     return (id, _module) => {
       return getViewFilter.value(id, _module)
     }
@@ -196,7 +195,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
         fields: filteredFields
       })
 
-      console.log(finalViewFilter)
+      console.log(filteredFields)
       return finalViewFilter
     }
   })
@@ -274,7 +273,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
     return (payload) => {
       const fields = payload.module.fields
       const field = fields.find(fx => fx.name === payload.field)
-      console.log(payload)
       return field
     }
   })
@@ -288,7 +286,10 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const _getFieldDetailsById = computed(() => {
     return (payload) => { // supply `name` column from `fields` collection
       const fields = payload.fields
-      const field = fields && fields.find(fx => fx._id === payload._id)
+      const field = fields && fields.find(fx => fx._id == payload._id)
+      // console.log(fields)
+      // console.log(payload)
+      // console.log(field)
       return field
     }
   })
@@ -310,7 +311,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // actions
   const fetchModules = async () => {
     modulesLoading.value = true
-    console.log('fetchModules')
+    // console.log('fetchModules')
 
     // modules from BE api
     const res = await axios(`/modules`, {
@@ -367,7 +368,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
   const fetchBaseModule = async (id) => {
     moduleLoading.value = true
-    console.log('fetchBaseModule')
+    // console.log('fetchBaseModule')
     // const res = await axios(`${jsonDbUrl.value}/modules?_id=${id}`, {
     //   method: 'GET',
     //   headers: { 'Content-Type': 'application/json' }
@@ -377,7 +378,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     //   baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
     // }
 
-    baseModule.value = modules.value.find(module => module._id === id)
+    baseModule.value = getModules.value.find(module => module._id === id)
 
     moduleLoading.value = false
   }

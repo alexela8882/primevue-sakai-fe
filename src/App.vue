@@ -30,17 +30,15 @@ const PopUpDialog = defineAsyncComponent(() => import('@/components/dynamic/PopU
 const GlobalDialog = defineAsyncComponent(() => import('@/components/dynamic/GlobalDialog.vue'))
 
 onMounted(async () => {
-  if(localStorage.getItem('isAuthenticated')){
-    await setAuthuser()
-    await fetchModules()
-  }
-  
+  await setAuthuser()
+  // await fetchModules()
+  // console.log('get modules',_.cloneDeep(getModules.value))
 })
 
 </script>
 
 <template>
-  <div v-if="!_.isEmpty(getModules) && !_.isEmpty(getAuthUser)" class="mb-6 pb-6">
+  <div class="mb-6 pb-6">
     <router-view></router-view>
   </div>
 

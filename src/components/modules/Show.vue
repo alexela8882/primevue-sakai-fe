@@ -9,16 +9,17 @@ import { useModuleStore } from '@/stores/modules/index'
 import { useTabStore } from '@/stores/tabs/index'
 import { useFormDataStore } from '@/stores/forms'
 // components
-const ViewFiltersDialog = defineAsyncComponent(() => import('../modules/ViewFiltersDialog/ViewFiltersDialogMain.vue'))
-const listViewFilterContent = defineAsyncComponent(() => import('../modules/DynamicDataTable/ListViewFilterContent.vue'))
-const DynamicDataTable = defineAsyncComponent(() => import('../modules/DynamicDataTable/DynamicDataTableMain.vue'))
-const DynamicKanban = defineAsyncComponent(() => import('../modules/DynamicKanban.vue'))
+const ViewFiltersDialog = defineAsyncComponent(() => import('@/components/modules/ViewFiltersDialog/ViewFiltersDialogMain.vue'))
+const listViewFilterContent = defineAsyncComponent(() => import('@/components/modules/DynamicDataTable/ListViewFilterContent.vue'))
+const DynamicDataTable = defineAsyncComponent(() => import('@/components/modules/DynamicDataTable/DynamicDataTableMain.vue'))
+const DynamicKanban = defineAsyncComponent(() => import('@/components/modules/DynamicKanban.vue'))
 // loaders
-import ListViewLoader from '../modules/DynamicDataTable/Loaders/ListViewLoader.vue'
-import DataTableLoader from '../modules/DynamicDataTable/Loaders/DataTableLoader.vue'
-import KanbanLoader from '../modules/DynamicDataTable/Loaders/KanbanLoader.vue'
+import ListViewLoader from '@/components/modules/DynamicDataTable/Loaders/ListViewLoader.vue'
+import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
+import KanbanLoader from '@/components/modules/DynamicDataTable/Loaders/KanbanLoader.vue'
 
 // refs
+const datatableLoading = ref(false)
 const localLoading = ref(false)
 const localModule = ref()
 const viewFiltersDialogMode = ref('new')
@@ -124,7 +125,7 @@ const tblSettingsBtn = ref([
 
 // actions
 const paginate = async (payload) => {
-  localLoading.value = true
+  datatableLoading.value = true
 
   let page = 1
   if (!payload.jump) {
@@ -133,7 +134,7 @@ const paginate = async (payload) => {
 
   // re-fetch module & collection
   localModule.value = await _fetchModule(getBaseModule.value.name, page > 1 ? page : null, payload.per_page)
-  localLoading.value = false
+  datatableLoading.value = false
 }
 const limitPage = async (e) => {
   // re-fetch module & collection
@@ -187,6 +188,7 @@ const confirmAddTab = (module,index) => {
 // lifescycles
 onMounted(async () => {
   localLoading.value = true
+  datatableLoading.value = true
   // await fetchCollection(route.name.split('.')[0], 1)
   await fetchBaseModule(route.params.id)
   const fetchedModule = await _fetchModule(getBaseModule.value.name)
@@ -204,6 +206,7 @@ onMounted(async () => {
   selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
 
   localLoading.value = false
+  datatableLoading.value = false
 })
 
 watch(selectedViewFilter, (newVal, oldVal) => {
@@ -250,7 +253,7 @@ watch(selectedFields, (newVal, oldVal) => {
               <Dropdown
                 v-model="selectedViewFilter"
                 :options="_getViewFilters(localModule)"
-                :disabled="localLoading"
+                :disabled="datatableLoading"
                 optionLabel="filterName"
                 optionValue="_id"
                 placeholder="Select View Filters"
@@ -258,7 +261,7 @@ watch(selectedFields, (newVal, oldVal) => {
               <MultiSelect
                 v-model="selectedSearchKeyIds"
                 :options="localModule && localModule.fields"
-                :disabled="localLoading"
+                :disabled="datatableLoading"
                 filter
                 :showToggleAll="false"
                 optionLabel="label"
@@ -272,14 +275,14 @@ watch(selectedFields, (newVal, oldVal) => {
                 <i class="pi pi-search" />
                 <InputText
                   type="text"
-                  :disabled="localLoading"
+                  :disabled="datatableLoading"
                   class="border-round-xl border-primary w-full mb-2 md:mb-0"
                   placeholder="Search The List..." />
               </div>
               <div class="p-inputgroup flex-1 mb-2 md:mb-0">
                 <Button
                   @click="tblMenu2.toggle($event)"
-                  :disabled="localLoading"
+                  :disabled="datatableLoading"
                   type="button"
                   aria-haspopup="true"
                   aria-controls="tbl_overlay_menu2"
@@ -307,7 +310,7 @@ watch(selectedFields, (newVal, oldVal) => {
                 <Button
                   @click="tblMenu.toggle($event)"
                   :loading="viewFiltersDialogLoading"
-                  :disabled="localLoading"
+                  :disabled="datatableLoading"
                   type="button"
                   icon="pi pi-cog"
                   aria-haspopup="true"
@@ -331,13 +334,13 @@ watch(selectedFields, (newVal, oldVal) => {
                   </Menu>
                 <Button
                   @click="listViewFilterBar = true"
-                  :disabled="listViewFilterBar || localLoading"
+                  :disabled="listViewFilterBar || datatableLoading"
                   icon="pi pi-filter"
                   aria-label="Submit"
                   class="list-view-filter-btn border-round-md mr-2" />
                 <Button
                   class="border-round-md mr-2"
-                  :disabled="localLoading"
+                  :disabled="datatableLoading"
                   icon="pi pi-plus"
                   @click="createNewForm(getBaseModule)"
                   :label="`New ${getBaseModule.label}`" />
@@ -347,8 +350,14 @@ watch(selectedFields, (newVal, oldVal) => {
         </div>
       </div>
 
-      <!-- DATATABLE -->
-      <div v-if="viewFilter">
+      <div
+        v-if="localLoading"
+        class="flex align-items-center justify-content-center"
+        style="height: 60vh !important;">
+        <ProgressSpinner />
+      </div>
+      <div v-else>
+        <!-- DATATABLE -->
         <Suspense v-if="viewFilter.currentDisplay === null || viewFilter.currentDisplay === 'table'">
           <DynamicDataTable
             :key="getBaseModule._id"
@@ -360,7 +369,7 @@ watch(selectedFields, (newVal, oldVal) => {
             :fields="viewFilter.fields"
             :data="localModule.data"
             :pagination="localModule.meta && localModule.meta.pagination"
-            :collectionLoading="localLoading"
+            :collectionLoading="datatableLoading"
             :sidebar="listViewFilterBar"
             @toggle-sidebar="listViewFilterBar = !listViewFilterBar"
             @paginate="paginate"
@@ -379,6 +388,7 @@ watch(selectedFields, (newVal, oldVal) => {
           </template>
         </Suspense>
 
+        <!-- KANBAN -->
         <Suspense v-else-if="viewFilter.currentDisplay === 'kanban'">
           <pre>This feature will be added soon</pre>
           <!-- <DynamicKanban

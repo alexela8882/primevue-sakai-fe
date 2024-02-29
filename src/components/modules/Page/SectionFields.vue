@@ -39,8 +39,6 @@ const fillFieldWithValues = (modelValue, id) => {
 
     console.log(index)
   } else fieldWithValues.value.push(obj)
-
-  console.log(fieldWithValues.value)
 }
 
 // this is for p-float-label bug fix only
@@ -110,6 +108,9 @@ watch(() => getFieldDetailsById.value, (newVal, oldVal) => {
               </small>
             </div>
           </div>
+        </div>
+        <div v-else>
+          <code>undefined {{ id }}</code>
         </div>
       </div>
     </div>

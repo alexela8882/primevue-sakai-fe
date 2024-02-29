@@ -371,6 +371,11 @@ provide('form', tableFormData)
         </Paginator>
       </div>
     </template>
+    <template #empty>
+      <div class="text-700">
+        No records found
+      </div>
+    </template>
     <Transition name="lvf-slide-fade">
       <div v-if="sidebar" ref="listViewFilterRef" class="ddt-slot-1 shadow-4 bg-white">
         <div style="overflow: scroll; max-height: 100%;">
