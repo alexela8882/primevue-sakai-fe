@@ -40,7 +40,9 @@ const {
   viewFilterData,
   perPageItems,
   getBaseModule,
-  getDefaultViewFilter,
+  _getDefaultViewFilter,
+  __getViewFilter,
+  _getViewFilters,
   getViewFilters,
   getReconstructedViewFilter
 } = storeToRefs(moduleStore)
@@ -61,6 +63,7 @@ const saveTableSettings = handleSubmit(values => {
   addViewFilter(values) // dummy store save
 })
 const tblSettingsAutoFill = (viewFilter) => {
+  console.log(viewFilter)
   setFieldValue('filterName', viewFilter.filterName)
   setFieldValue('sortField', viewFilter.sortField)
   setFieldValue('sortOrder', viewFilter.sortOrder)
@@ -72,12 +75,11 @@ const tblSettingsAutoFill = (viewFilter) => {
 // lifecycles
 onMounted(() => {
   viewFiltersDialogLoading.value = false
-  console.log(props.module.fields)
   localSelectedViewFilter.value = props.selectedViewFilter
 
   if (props.mode === 'new') {
     pickListTblFields.value = [props.module.fields, []]
-  } else if (props.mode === 'edit-table') tblSettingsAutoFill(getDefaultViewFilter.value)
+  } else if (props.mode === 'edit-table') tblSettingsAutoFill(_getDefaultViewFilter.value(props.module))
 })
 
 watch(pickListTblFields, (newVal, oldVal) => {
@@ -90,8 +92,8 @@ watch(pickListTblFields, (newVal, oldVal) => {
 
 watch(localSelectedViewFilter, (newVal, oldVal) => {
   if (props.mode === 'edit-table') {
-    const viewFilter = getViewFilters.value.find(vf => vf._id === newVal)
-    tblSettingsAutoFill(getReconstructedViewFilter.value(viewFilter))
+    const viewFilter = __getViewFilter.value(newVal, props.module)
+    tblSettingsAutoFill(viewFilter)
   }
 })
 
@@ -117,7 +119,7 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
         <span class="p-float-label">
           <Dropdown
             v-model="localSelectedViewFilter"
-            :options="getViewFilters"
+            :options="_getViewFilters(module)"
             optionLabel="filterName"
             optionValue="_id"
             class="w-full md:w-16rem mr-2" />

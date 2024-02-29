@@ -77,7 +77,7 @@ onMounted(async () => {
     <div v-if="tab.type === 'static-form'" class="py-5 h-full">
       <DynamicForm :key="tab.name" :form="tab.form" />
     </div>
-    <div v-else-if="tab.type === 'module-form'" class="p-3" style="padding-bottom:50px !important">
+    <div v-else-if="tab.type === 'module-form'" class="py-5 h-full">
       <Form :key="tab.name" :config="tab" />
       <!-- <GeneralForm
         :key="tab.name"

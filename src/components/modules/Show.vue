@@ -9,14 +9,14 @@ import { useModuleStore } from '@/stores/modules/index'
 import { useTabStore } from '@/stores/tabs/index'
 import { useFormDataStore } from '@/stores/forms'
 // components
-const ViewFiltersDialog = defineAsyncComponent(() => import('../modules/ViewFiltersDialog/ViewFiltersDialogMain.vue'))
-const listViewFilterContent = defineAsyncComponent(() => import('../modules/DynamicDataTable/ListViewFilterContent.vue'))
-const DynamicDataTable = defineAsyncComponent(() => import('../modules/DynamicDataTable/DynamicDataTableMain.vue'))
-const DynamicKanban = defineAsyncComponent(() => import('../modules/DynamicKanban.vue'))
+const ViewFiltersDialog = defineAsyncComponent(() => import('@/components/modules/ViewFiltersDialog/ViewFiltersDialogMain.vue'))
+const listViewFilterContent = defineAsyncComponent(() => import('@/components/modules/DynamicDataTable/ListViewFilterContent.vue'))
+const DynamicDataTable = defineAsyncComponent(() => import('@/components/modules/DynamicDataTable/DynamicDataTableMain.vue'))
+const DynamicKanban = defineAsyncComponent(() => import('@/components/modules/DynamicKanban.vue'))
 // loaders
-import ListViewLoader from '../modules/DynamicDataTable/Loaders/ListViewLoader.vue'
-import DataTableLoader from '../modules/DynamicDataTable/Loaders/DataTableLoader.vue'
-import KanbanLoader from '../modules/DynamicDataTable/Loaders/KanbanLoader.vue'
+import ListViewLoader from '@/components/modules/DynamicDataTable/Loaders/ListViewLoader.vue'
+import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
+import KanbanLoader from '@/components/modules/DynamicDataTable/Loaders/KanbanLoader.vue'
 
 // refs
 const localLoading = ref(false)
@@ -347,8 +347,14 @@ watch(selectedFields, (newVal, oldVal) => {
         </div>
       </div>
 
-      <!-- DATATABLE -->
-      <div v-if="viewFilter">
+      <div
+        v-if="localLoading"
+        class="flex align-items-center justify-content-center"
+        style="height: 60vh !important;">
+        <ProgressSpinner />
+      </div>
+      <div v-else>
+        <!-- DATATABLE -->
         <Suspense v-if="viewFilter.currentDisplay === null || viewFilter.currentDisplay === 'table'">
           <DynamicDataTable
             :key="getBaseModule._id"
@@ -379,6 +385,7 @@ watch(selectedFields, (newVal, oldVal) => {
           </template>
         </Suspense>
 
+        <!-- KANBAN -->
         <Suspense v-else-if="viewFilter.currentDisplay === 'kanban'">
           <pre>This feature will be added soon</pre>
           <!-- <DynamicKanban

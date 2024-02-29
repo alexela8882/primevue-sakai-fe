@@ -32,6 +32,8 @@ const {
   perPageItems,
   getBaseModule,
   getDefaultViewFilter,
+  __getViewFilter,
+  _getViewFilters,
   getViewFilters,
   getReconstructedViewFilter
 } = storeToRefs(moduleStore)
@@ -60,14 +62,12 @@ const kanbanSettingsAutoFill = (viewFilter) => {
 // lifecycles
 onMounted(() => {
   viewFiltersDialogLoading.value = false
-  console.log(getViewFilters.value)
   localSelectedViewFilter.value = props.selectedViewFilter
-
-  console.log(getBaseModule.value.fields)
+  console.log(localSelectedViewFilter.value)
 })
 
 watch(localSelectedViewFilter, (newVal, oldVal) => {
-  const viewFilter = getViewFilters.value.find(vf => vf._id === newVal)
+  const viewFilter = __getViewFilter.value(newVal, props.module)
   kanbanSettingsAutoFill(getReconstructedViewFilter.value(viewFilter))
 })
 

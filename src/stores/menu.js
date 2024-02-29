@@ -13,7 +13,7 @@ export const useMenuStore = defineStore('menuStore', () => {
   const baseStore = useBaseStore()
   const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
-  const { getModules, getJsonModules } = storeToRefs(moduleStore)
+  const { getModules, getJsonModules, getModulesUserCanAccess } = storeToRefs(moduleStore)
 
   // states
   const isCollapse = ref(true)
@@ -24,10 +24,11 @@ export const useMenuStore = defineStore('menuStore', () => {
   // getters
   const getMenu = computed(() => menu.value)
   const sidebarMenu = computed(() => {
-    console.log(getJsonModules.value)
+    const userAccessModules = getModulesUserCanAccess.value
     const item = menu.value && menu.value
     const folders = item.top && item.top.folders
     let testNewFolders = []
+
     const newFolders = folders && folders.map(folder => {
       let obj = Object.assign({}, {
         label: folder.label,
@@ -38,9 +39,11 @@ export const useMenuStore = defineStore('menuStore', () => {
         items: []
       })
 
+      const finalModules = getJsonModules.value.filter(module => userAccessModules.includes(module._id))
+
       // get & insert modules
-      if (getJsonModules.value) {
-        const filteredModule = getJsonModules.value.filter(module => folder.modules.includes(module._id))
+      if (finalModules) {
+        const filteredModule = finalModules.filter(module => folder.modules.includes(module._id))
         if (filteredModule.length > 0) obj.items = filteredModule
 
         // include nested items in folders array
@@ -54,7 +57,7 @@ export const useMenuStore = defineStore('menuStore', () => {
             items: []
           })
 
-          const filteredModule2 = getJsonModules.value.filter(module => folder2.modules.includes(module._id))
+          const filteredModule2 = finalModules.filter(module => folder2.modules.includes(module._id))
           if (filteredModule2.length > 0) obj2.items = filteredModule2
 
           obj.items.push(obj2)
