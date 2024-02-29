@@ -78,7 +78,6 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
       })
 
       // console.log(panels)
-      console.log(reconstructedPanels)
       return reconstructedPanels
     }
   })
@@ -115,7 +114,6 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   // actions
   const fetchItem = async (payload) => {
     itemLoading.value = true
-    console.log(payload)
     // const uri = `${jsonDbUrl.value}/${payload.name}-item?_id=${payload.pageid}`
     const uri = `/modules/${payload.name}/${payload.pageid}`
 
