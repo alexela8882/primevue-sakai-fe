@@ -46,7 +46,7 @@
     } 
 
     const fieldChange  = (field) =>{
-       validateField(null,field,props.keyName)
+       form.value.errors.main[field.name] = validateField(form.value.values[props.keyName],field,form.value.fields)
     }
     onMounted(()=>{
         
@@ -151,10 +151,12 @@
             <Listbox v-else-if="_.get(config.rules,'ss_list_view',false) || _.get(config.rules,'ms_list_view',false)" v-model="form.values[keyName][config.name]" :options="getPicklistByListName(config.listName)" :multiple="_.get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
             <el-select v-else 
                 v-model="form.values[keyName][config.name]"
+                :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}"
                 class="w-full" :multiple="checkFieldIfMultipleSelect(config.rules)"
                 :collapse-tags="checkFieldIfMultipleSelect(config.rules)"
                 :collapse-tags-tooltip="checkFieldIfMultipleSelect(config.rules)"
-                placeholder="Select" clearable filterable>
+                placeholder="Select" clearable filterable
+                @change="fieldChange(config)">
                     <el-option
                     v-for="item in getPicklistByListName(config.listName)"
                     :key="item._id"
@@ -162,6 +164,7 @@
                     :value="item"
                     />
             </el-select>
+            <small class="errMsg mt-1" v-for="msg,i in _.get(form.errors[keyName],config.name,[])" :key="i">{{ msg }}</small>
             <!-- <Dropdown v-else-if="_.get(config.rules,'ss_dropdown',false)" v-model="form.values[keyName][config.name]" :options="getPicklistByListName(config.listName)" showClear filter  optionLabel="value" :placeholder="'Select '+ config.label" checkmark :highlightOnSelect="false" class="w-full" />
             <MultiSelect v-else v-model="form.values[keyName][config.name]" display="chip" :options="getPicklistByListName(config.listName)" optionLabel="value" :placeholder="'Select '+ config.label" :selectionLimit="_.get(config.rules,'between.max',0)" class="w-full" /> -->
         </div>
@@ -170,12 +173,12 @@
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <template v-if="_.get(config.rules,'ss_dropdown',false) || _.get(config.rules,'ms_dropdown',false)">
-                <el-select v-if="getLookupOptions(config.uniqueName,'group')" v-model="form.values[keyName][config.name]" placeholder="Select" clearable filterable class="w-full">
+                <el-select v-if="getLookupOptions(config.uniqueName,'group')" v-model="form.values[keyName][config.name]" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" placeholder="Select" clearable filterable class="w-full">
                     <el-option-group
                     v-for="group in getLookupOptions(config.uniqueName,'options')"
                     :key="group.label"
                     :label="group.label"
-                    >
+                    @change="fieldChange(config)">
                     <el-option
                         v-for="item in group.options"
                         :key="item._id"
@@ -186,8 +189,9 @@
                 </el-select>
                 <el-select v-else 
                     v-model="form.values[keyName][config.name]"
-                    class="w-full"
-                    placeholder="Select" clearable filterable>
+                    class="w-full" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}"
+                    placeholder="Select" clearable filterable
+                    @change="fieldChange(config)">
                         <el-option
                         v-for="item in getLookupOptions(config.uniqueName,'options')"
                         :key="item._id"
@@ -244,6 +248,9 @@
 }
 .fieldInput .el-input__wrapper.is-focus,.fieldInput .el-select .el-input.is-focus .el-input__wrapper{
     box-shadow: inset 0 0 0 2px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5 !important;
+}
+.fieldInput .el-select.invalid .el-input__wrapper{
+    box-shadow: 0 0 0 1px #B00020 !important;
 }
 .fieldInput .el-input__wrapper:hover,.fieldInput .el-select .el-input__wrapper:hover{
     box-shadow: 0 0 0 1px rgb(0 0 0 / 87%) inset;
