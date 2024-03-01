@@ -6,6 +6,7 @@
     import axios from 'axios'
     import helper from '@/mixins/Helper';
     import _ from 'lodash'
+    import validate from '@/mixins/Validate';
 
     import { useFormDataStore } from '../../../stores/forms'
     import { useModuleDetailStore } from '../../../stores/modules/detail'
@@ -20,14 +21,17 @@
     const formDataStore = useFormDataStore()
     const moduleDetailStore = useModuleDetailStore()
     const moduleStore = useModuleStore()
-    const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate } = helper();
-    const { fetchPicklist, fetchLookup, saveForm, setFormReset } = formDataStore
+    const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate,transformForSaving } = helper();
+    const { fetchPicklist, fetchLookup, saveForm, setFormReset, saveFormValues } = formDataStore
     const { getCachedFormData,getFormReset } = storeToRefs(formDataStore)
     const { getItem } = storeToRefs(moduleDetailStore)
     const { fetchModuleFields, fetchModulePanels} = moduleStore
     const { getModuleByName } = storeToRefs(moduleStore)
+    const { validateForm, errorChecker } = validate();
+    const toast = useToast();
     const tempFields = ref(_.fill(Array(10),1))
     const formLoading = ref(true)
+    const formSaving = ref(false)
     const formData = ref({
         'fields':[],
         'panels':[],
@@ -44,7 +48,7 @@
     })
 
     const hiddenPanels = ref([])
-    
+    provide('form', formData)
     onMounted(async () => {
         let tmpData = getCachedFormData.value(props.config.name)
         let formPage = (_.includes(props.config.name,'edit')) ? 'edit' : 'create'
@@ -70,6 +74,7 @@
             await fetchPicklistandLookup(listNames,lookupFields)
             formData.value.values.main = transformFormValues(formData.value.fields,getItem.value,formPage)
             initialize();
+            formLoading.value = false
         }
     })
 
@@ -89,24 +94,29 @@
 
         if(picklist.length > 0){
             promises.push(fetchPicklist(picklist))
+            console.log('done all picklist')
         }
         if(lookup.length > 0){
             _.forEach(lookup, function(field){
-                promises.push(fetchLookups(field))
+                console.log('start lookup')
+                promises.push(fetchLookup(field))
+                console.log('end lookup')
             });
+            console.log('done all lookup')
         }
         await Promise.all(promises);
     }
 
-    const fetchLookups  = (field) =>{
-        return new Promise((resolve, reject) => {
-            const data = fetchLookup(field);
-            if(!_.has(formData.value.lookup,data['id'])){
-                formData.value.lookup[data['field']] = formatLookupOptions(_.cloneDeep(data),formData.value.fields)
-            };
-            resolve();
-       });
-    }
+    // const fetchLookups  = (field) =>{
+    //     return new Promise((resolve, reject) => {
+    //         let data = fetchLookup(field);
+    //         console.log(data)
+    //         if(!_.has(formData.value.lookup,field)){
+    //             formData.value.lookup[field] = formatLookupOptions(_.cloneDeep(data.values),formData.value.fields)
+    //         };
+    //         resolve();
+    //    });
+    // }
 
     const initialize  = () => {
         let quickAddFields = _.chain(formData.value.fields).filter({'quick':true}).map('_id').value()
@@ -131,8 +141,7 @@
                 }
             })
         })
-
-        formLoading.value = false
+        console.log('done initialize')
     }
 
     const resetForm  = () =>{
@@ -141,12 +150,32 @@
        formData.value.values.main = transformFormValues(formData.value.fields,getItem.value,formPage) 
        formLoading.value = false
     }
-    provide('form', formData)
+
+    const submitForm = async () =>{
+        let isModalForm = _.get(props.config,'maximized',false)
+        formSaving.value = true
+        formData.value.errors.main = validateForm(formData.value.values.main,formData.value.fields,isModalForm)
+        let noError = errorChecker(formData.value.errors.main)
+        console.log(formData.value.errors.main,noError)
+        if(noError){
+            let values = transformForSaving(formData.value.values.main,formData.value.fields, isModalForm)
+            console.log(values)
+            await saveFormValues(values,props.config.base_module)
+        }else{
+            toast.add({ severity: 'error', summary: 'Error Message', detail: 'Please check the form again', life: 3000 });
+            formSaving.value = false  
+        } 
+        
+    }
+    
 </script>
 <template>
     <div class="relative min-h-full p-3">
-        <template v-if="!formLoading">       
-            <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && _.get(config,'maximized',false)==false">
+        <template v-if="formLoading">
+            <Skeleton v-for="(item,index) in tempFields" :key="index" height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
+        </template>
+        <Suspense  v-if="!formLoading">
+          <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && _.get(config,'maximized',false)==false">
                 <Field v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id" keyName="main" :config="field"/>
             </template>
             <template v-else>
@@ -156,15 +185,17 @@
                     :quickAdd="!_.get(config,'maximized',false)"
                 />
             </template>
-        </template>
-        <template v-else>
+        <template #fallback>
             <Skeleton v-for="(item,index) in tempFields" :key="index" height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
         </template>
+        </Suspense>
+        
+
     </div>
     <div class="sticky bottom-0 right-0 py-2 surface-50">
         <div class="flex justify-content-end gap-2 px-3 py-1">
             <el-button @click="resetForm" :disabled="formLoading">Reset</el-button>
-            <el-button type="primary" :disabled="formLoading">Save</el-button>
+            <el-button type="primary" @click="submitForm" :disabled="formLoading">Save</el-button>
         </div>
     </div>
 </template>

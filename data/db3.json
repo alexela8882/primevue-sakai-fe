@@ -5176,7 +5176,7 @@
         "listName": "lead_source",
         "quick": true,
         "rules": {
-          "ms_dropdown": true,
+          "ss_dropdown": true,
           "required": true,
           "default_value": [
             "635b9fdba6ebc703445543b2"
@@ -48844,6 +48844,67 @@
       }
     },
     {
+      "id":"lead_business_unit_ids",
+      "values":{
+        "data":[
+          {
+            "_id": "5b344ae1678f711dfc04ec3f",
+            "name": "Scientific",
+            "level": 1,
+            "description": "This business unit is about Lab"
+          },
+          {
+            "_id": "5b344ae1678f711dfc04ec40",
+            "name": "Medical",
+            "level": 1,
+            "description": "This business unit is about Medical"
+          },
+          {
+            "_id": "5b344ae1678f711dfc04ec41",
+            "name": "Healthcare",
+            "level": 1,
+            "description": "This business unit is about Healthcare"
+          },
+          {
+            "_id": "5b344ae1678f711dfc04ec42",
+            "name": "TaPestle Rx",
+            "level": 2,
+            "description": "This business unit is about TaPestle Rx"
+          },
+          {
+            "_id": "5b344ae1678f711dfc04ec43",
+            "name": "VacciXcell",
+            "level": 2,
+            "description": "This business unit is about VacciXcell"
+          },
+          {
+            "_id": "5b344ae1678f711dfc04ec44",
+            "name": "Pharma",
+            "level": 2,
+            "description": "This business unit is about Pharma"
+          },
+          {
+            "_id": "5d36d395a6ebc7301e5601d2",
+            "name": "EVX",
+            "level": 1,
+            "description": "This business unit is about Esco Ventures X"
+          },
+          {
+            "_id": "5def391aa6ebc713b3192d42",
+            "name": "Esco Aster",
+            "level": 1,
+            "description": "This business unit is about Esco Aster"
+          },
+          {
+            "_id": "65446f08a6ebc73e95288cf2",
+            "name": "Service",
+            "level": 1,
+            "description": "This business unit is about Service"
+          }
+        ]
+      }
+    },
+    {
       "id": "account_business_unit_ids",
       "values": {
         "data": [
@@ -54079,7 +54140,7 @@
           "listName": "lead_source",
           "quick": true,
           "rules": {
-            "ms_dropdown": true,
+            "ss_dropdown": true,
             "required": true,
             "default_value": [
               "635b9fdba6ebc703445543b2"

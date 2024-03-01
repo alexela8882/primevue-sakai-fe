@@ -22,7 +22,7 @@
     })
 
     const formDataStore = useFormDataStore()
-    const { getPicklistByListName } = storeToRefs(formDataStore)
+    const { getPicklistByListName, getLookupOptions } = storeToRefs(formDataStore)
     const { checkFieldIfMultipleSelect } = helper();
     const { validateField } = validate();
 
@@ -46,7 +46,7 @@
     } 
 
     const fieldChange  = (field) =>{
-       validateField(props.keyName,field)
+       validateField(null,field,props.keyName)
     }
     onMounted(()=>{
         
@@ -170,9 +170,9 @@
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <template v-if="_.get(config.rules,'ss_dropdown',false) || _.get(config.rules,'ms_dropdown',false)">
-                <el-select v-if="_.get(form.lookup,config.uniqueName + '.group',false)" v-model="form.values[keyName][config.name]" placeholder="Select" clearable filterable class="w-full">
+                <el-select v-if="getLookupOptions(config.uniqueName,'group')" v-model="form.values[keyName][config.name]" placeholder="Select" clearable filterable class="w-full">
                     <el-option-group
-                    v-for="group in _.get(form.lookup,config.uniqueName+'.options',[])"
+                    v-for="group in getLookupOptions(config.uniqueName,'options')"
                     :key="group.label"
                     :label="group.label"
                     >
@@ -189,7 +189,7 @@
                     class="w-full"
                     placeholder="Select" clearable filterable>
                         <el-option
-                        v-for="item in _.get(form.lookup,config.uniqueName+'.options',[])"
+                        v-for="item in getLookupOptions(config.uniqueName,'options')"
                         :key="item._id"
                         :label="item.value"
                         :value="item"
@@ -197,15 +197,15 @@
                 </el-select>
             </template>
             <div v-else-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton',false) || _.get(config.rules,'radiobutton_inline',false)" :class="(_.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton_inline',false)) ? 'card flex flex-wrap justify-content-center gap-3': ''">
-                <div  v-for="option of _.get(form.lookup,config.uniqueName+'.options',[])" :key="option._id" class="flex align-items-center" :class="(_.get(config.rules,'checkbox',false) || _.get(config.rules,'radiobutton',false)) ? 'mb-1 mt-1 ml-3' : ''">
+                <div  v-for="option of getLookupOptions(config.uniqueName,'options')" :key="option._id" class="flex align-items-center" :class="(_.get(config.rules,'checkbox',false) || _.get(config.rules,'radiobutton',false)) ? 'mb-1 mt-1 ml-3' : ''">
                     <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values[keyName][config.name]" :inputId="option._id" name="category" :value="option" />
                     <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values[keyName][config.name]"/>
                     <label :for="option._id" class="ml-1">{{ option.value }}</label>
                 </div>
             </div>
-            <Listbox v-else-if="_.get(config.rules,'ss_list_view',false) || _.get(config.rules,'ms_list_view',false)" v-model="form.values[keyName][config.name]" :options="_.get(form.lookup,config.uniqueName+'.options',[])" :multiple="_.get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
+            <Listbox v-else-if="_.get(config.rules,'ss_list_view',false) || _.get(config.rules,'ms_list_view',false)" v-model="form.values[keyName][config.name]" :options="getLookupOptions(config.uniqueName,'options')" :multiple="_.get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
             <template v-else>
-                <LookupField :field="config"/>
+                <LookupField :field="config" :keyName="keyName" v-model="form.values[keyName][config.name]"/>
             </template>
         </div>
     </template>
@@ -219,6 +219,9 @@
 
 </template>
 <style>
+.fieldInput{
+    margin-top:5px;
+}
 .fieldInput.required input, .fieldInput.required .el-input__wrapper, .fieldInput.required .p-dropdown{
     border-left: 5px solid #f44336;
 }

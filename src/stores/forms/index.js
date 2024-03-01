@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
 import { storeToRefs } from 'pinia'
 import _ from 'lodash'
+import helper from '@/mixins/Helper';
 
 import { useBaseStore } from '@/stores/base'
 import { useModuleStore } from '@/stores/modules'
@@ -14,10 +15,12 @@ export const useFormDataStore = defineStore('formDataStore', () => {
     const moduleStore = useModuleStore()
     const { jsonDbUrl } = storeToRefs(baseStore)
     const { _fetchModule, fetchBaseModuleByField } = moduleStore
+    const { formatLookupOptions } = helper();
 
     //ref
     const forms = ref([])
     const picklist = ref([])
+    const lookupModel = ref({})
     const formReset = ref("")
     //getters
     const getForms = computed(() => forms.value)
@@ -28,6 +31,19 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         return _.get(picklist.value,attr,[])
       }
     })
+
+    const getLookupOptions = computed(() => {
+      return (field,attr) => {
+        let attribute = field+"."+attr;
+        if(attr=='group'){
+          return _.get(lookupModel.value,attribute,false)
+        }else{
+          return _.get(lookupModel.value,attribute,[])
+        }
+        
+      }
+    })
+
     const getCachedFormData = computed(() => {
       return (payload) => {
         if(_.endsWith(payload,'create-form')){
@@ -64,18 +80,34 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         }
     }
 
-    const fetchLookup = async (payload) => {
+    const fetchLookup = async (field) => {
       try {
-        const response = await axios(`${jsonDbUrl.value}/lookup/${payload}`, {
+        // await new Promise(resolve => setTimeout(resolve, 2000));
+        const response = await axios(`${jsonDbUrl.value}/lookup/${field.uniqueName}`, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
         });
-        return {'values':response.data.values.data,'field':payload};
+        lookupModel.value[field.uniqueName] = formatLookupOptions(_.cloneDeep(response.data.values.data),null,field) 
+        // return {'values':response.data.values.data,'field':payload}
       } catch (error) {
         console.error('Error fetching data:', error);
         throw error; // Re-throw the error so the caller can handle it if needed
       }
     }
+
+    // const fetchLookup = async (payload) => {
+    //   try {
+    //     await new Promise(resolve => setTimeout(resolve, 2000));
+    //     const response = await axios(`${jsonDbUrl.value}/lookup/${payload}`, {
+    //       method: 'GET',
+    //       headers: { 'Content-Type': 'application/json' },
+    //     });
+    //     return {'values':response.data.values.data,'field':payload}
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //     throw error; // Re-throw the error so the caller can handle it if needed
+    //   }
+    // }
 
     const fetchLookupPaginated = async (payload) => {
       // let cancelToken = null; // Variable to store the cancel token
@@ -129,19 +161,32 @@ export const useFormDataStore = defineStore('formDataStore', () => {
       formReset.value = payload
     }
 
+    const saveFormValues = async (values,module) =>{
+      try {
+        const response = await axios.post(`/modules/${module.name}`,values);
+        // return {'values':response.data.values.data,'field':payload};
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
     return {
         forms,
         picklist,
+        lookupModel,
         getForms,
         getPicklist,
         getPicklistByListName,
         getCachedFormData,
         getFormReset,
+        getLookupOptions,
         saveForm,
         generateForm,
         fetchPicklist,
         fetchLookup,
         fetchLookupPaginated,
-        setFormReset
+        setFormReset,
+        saveFormValues
     }
 })

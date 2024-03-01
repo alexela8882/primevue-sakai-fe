@@ -8,10 +8,18 @@ export default function validate() {
     const form = inject('form') 
     const { checkFieldIfMultipleSelect } = helper();
 
-    function validateField(keyName,field){
-        let val = _.trim(form.value.values[keyName][field.name])
-        form.value.errors[keyName][field.name] = []
-        console.log(field.name,field.rules,val)
+    function validateField(values,field,keyName){
+        let val = null
+        let errMsg = []
+        
+        if(!_.isUndefined(keyName)){
+            form.value.errors[keyName][field.name] = []
+            val = _.trim(form.value.values[keyName][field.name])
+        }else{
+            val = _.trim(values[field.name])
+        }
+            
+        console.log(values,field.name)
         _.forEach(field.rules, function(ruleValue, ruleName){
             let msg = ''
             if(ruleName=='alpha'){
@@ -64,11 +72,36 @@ export default function validate() {
                 msg = max(val,field,ruleValue)
             }
             if(msg){
-                form.value.errors[keyName][field.name].push(msg)
+                errMsg.push(msg)                
             }
         })
+        if(!_.isUndefined(keyName))
+            form.value.errors[keyName][field.name] = errMsg   
+        else
+            return errMsg
     }
 
+    function validateForm(values,fields,isModalForm){
+        let pass = {}
+        if(!isModalForm){
+            _.forEach(fields, function(f,i){
+                if(f.quick){
+                    pass[f.name] = validateField(values,f)
+                }
+            })
+        }
+        return pass
+    }
+
+    function errorChecker(errorMsgs){
+        let error  = true
+        _.forEach(errorMsgs, function(val,i){
+            if(val){
+                error =  false
+            }
+        })
+        return error
+    }
 
     //validation rules
 
@@ -265,6 +298,8 @@ export default function validate() {
     }
 
     return {
-        validateField
+        validateField,
+        validateForm,
+        errorChecker
     };
 }

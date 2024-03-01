@@ -20,7 +20,7 @@ const { getPicklist} = storeToRefs(formDataStore)
   function getLookupFields(fields){
     return _.reduce(fields, function(r,v,i){
         if(v.field_type.name=='lookupModel' && (_.get(v.rules,'ss_dropdown',false) || _.get(v.rules,'ms_dropdown',false) || _.get(v.rules,'ss_list_view',false) || _.get(v.rules,'checkbox',false) || _.get(v.rules,'checkbox_inline',false) || _.get(v.rules,'radiobutton',false) || _.get(v.rules,'radiobutton_inline',false))){
-            r.push(v.uniqueName)
+            r.push(v)
         }
         return r
     },[])
@@ -30,15 +30,14 @@ const { getPicklist} = storeToRefs(formDataStore)
   function formatLookupOptions(options,fields, field) {
     let group = false
     let category = "";
-    // console.log(options)
-    let newOptions = _.reduce(options.values, function(res,val,i){
+    let newOptions = _.reduce(options, function(res,val,i){
         if(val.level){
             group = true
             let hide = false
-            if(val.level==2 && _.get(options.values,i-1+'.level',0) == 1){
-                category = options.values[i-1]['name']
+            if(val.level==2 && _.get(options,i-1+'.level',0) == 1){
+                category = options[i-1]['name']
             }else if(val.level==1){
-                if(_.get(options.values,i+1+'.level',1) == 2){
+                if(_.get(options,i+1+'.level',1) == 2){
                     hide = true
                 }else{
                     category = ""
@@ -55,8 +54,10 @@ const { getPicklist} = storeToRefs(formDataStore)
             }
         }else{
             let theField = field
+            
             if(_.isNil(field))
                 theField = _.find(fields,{'uniqueName': options.field})
+
 
             if(theField){
                 let tmp = transformLookupValue(val,theField)
@@ -329,6 +330,28 @@ const { getPicklist} = storeToRefs(formDataStore)
     }
   }
 
+  function transformForSaving(values,fields,isModalForm){
+    let result = {}
+    _.forEach(fields, function(val,i){
+        if(_.has(values,val.name)){
+            if(isModalForm || (!isModalForm && val.quick)){
+                if(val.field_type.name=='lookupModel' || val.field_type.name=='picklist'){
+                    if(_.isArray(values[val.name])){
+                        result[val.name] = (!_.isEmpty(values[val.name]) && !_.isNull(values[val.name])) ? _.map(values[val.name],'_id') : null
+                    }else{
+                        result[val.name] = _.get(values,val.name+"._id",null)
+                    }
+                }else if(val.field_type.name=='date'){
+    
+                }else{
+                    result[val.name] = _.trim(values[val.name])
+                }
+            }
+        }
+    })
+    return result
+  }
+
   
 
   return {
@@ -339,6 +362,7 @@ const { getPicklist} = storeToRefs(formDataStore)
     transformNumberCurrency,
     transformDate,
     checkFieldIfMultipleSelect,
-    getModuleValues
+    getModuleValues,
+    transformForSaving
   };
 }

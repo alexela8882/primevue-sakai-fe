@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted, ref  } from "vue";
+import { onMounted, onUnmounted, ref, inject  } from "vue";
 import { storeToRefs } from 'pinia'
 import _ from 'lodash';
 import axios from 'axios'
@@ -32,8 +32,11 @@ const toggle = async (event) => {
 }
 
 const props = defineProps({
-    field: Object
+    field: Object,
+    keyName: String
 })
+
+const emit = defineEmits(['update:modelValue'])
 
 onMounted(() => {
     let vm = this;
@@ -65,7 +68,7 @@ const fetchData = async() =>{
     cancelToken = axios.CancelToken.source();
     try {
         let records = await fetchLookupPaginated({"fieldId":props.field.uniqueName,"page":page.value,"search":searchText.value,"cancelToken":cancelToken})
-        items.value = formatLookupOptions(records, [], props.field)
+        items.value = formatLookupOptions(records.values, [], props.field)
         pagination.value = _.cloneDeep(_.get(records,'meta.pagination',{}))
         fetching.value = false
         
@@ -96,18 +99,20 @@ const checkBeforeClose = (index) =>{
     if(!multiple.value){
         closePopup()
     }
+    // emit('update:modelValue',value.value)
 }
+const form = inject('form')
 </script>
 <template>
     <div class="lookupField" v-click-outside="closePopup">
-        <div v-if="!_.isEmpty(value)" class="selectedValue" :class="(!multiple) ? 'single flex align-items-center' : 'multiple'" @click="toggle">
+        <div v-if="!_.isEmpty(form.values[keyName][field.name])" class="selectedValue" :class="(!multiple) ? 'single flex align-items-center' : 'multiple'" @click="toggle">
             <template v-if="multiple">
                 <el-tag class="mr-1" closable v-for="(v,i) in value" :key="v.value" @close="removeSelected(i)">{{ v.value }}</el-tag>
             </template>
             <div v-else class="flex align-items-center" style="width:100%" >
                 <div class="material-icons text-white ml-2" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
                 <div class="flex justify-content-between" style="width:100%">
-                    <span class="flex flex-colum ml-2">{{ value.value }}</span>
+                    <span class="flex flex-colum ml-2">{{ form.values[keyName][field.name].value }}</span>
                     <span class="flex flex-colum mr-2" @click="removeSelected"><i class="pi pi-times"></i></span>
                 </div>
                 
@@ -122,7 +127,7 @@ const checkBeforeClose = (index) =>{
         </el-input>
         <div v-if="open" class="lookupOverlay p-overlaypanel p-component" :class="{ 'open' : open == true}">
             <template v-if="fetching"><Skeleton v-for="(item,index) in _.fill(Array(10),'i')" :key="index" height="2rem" width="100%" class="m-2" borderRadius="5px"></Skeleton></template>
-            <Listbox v-else-if="items.group" v-model="value" :multiple="multiple" :options="_.get(items,'options',[])" optionLabel="value" optionGroupLabel="label" optionGroupChildren="options" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
+            <Listbox v-else-if="items.group" v-model="form.values[keyName][field.name]" :multiple="multiple" :options="_.get(items,'options',[])" optionLabel="value" optionGroupLabel="label" optionGroupChildren="options" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
                 <template #option="slotProps">
                     <div class="flex align-items-center">
                         <div class="material-icons text-white mr-2" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
