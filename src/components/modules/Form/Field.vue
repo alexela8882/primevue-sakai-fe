@@ -59,7 +59,7 @@
     <template v-if="config.field_type.name=='text'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
-            <InputText v-model="form.values[keyName][config.name]" :id="config.name" :class="{'p-invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" @change="fieldChange(config)" />
+            <InputText v-model="form.values[keyName][config.name]" :id="config.name" :class="{'p-invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" :disabled="form.formSaving" @change="fieldChange(config)" />
             <small class="errMsg" v-for="msg,i in _.get(form.errors[keyName],config.name,[])" :key="i">{{ msg }}</small>
         </div>
     </template>
@@ -79,14 +79,16 @@
     <template v-else-if="config.field_type.name=='currency'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
-            <InputNumber v-if="(_.get(form.values[keyName],config.currencySource.field+'.code','')=='')" v-model="form.values[keyName][config.name]" inputId="config.name" 
+            <InputNumber v-if="(_.get(form.values[keyName],config.currencySource.field+'.code','')=='')" :disabled="form.formSaving" v-model="form.values[keyName][config.name]" inputId="config.name" 
             mode="decimal"
             :useGrouping="_.get(config.rules,'comma_separated',false)" 
             :minFractionDigits="_.get(config.rules,'decimal',null)" 
             :maxFractionDigits="_.get(config.rules,'decimal',null)" 
             :min="_.get(config.rules,'digits_between.min',null)" 
             :max="_.get(config.rules,'digits_between.max',null)" />
-            <InputNumber v-else v-model="form.values[keyName][config.name]" inputId="config.name" 
+            <InputNumber v-else v-model="form.values[keyName][config.name]" 
+            :disabled="form.formSaving"
+            inputId="config.name" 
             mode="currency"
             :useGrouping="_.get(config.rules,'comma_separated',false)" 
             :currency="(config.field_type.name=='currency') ? _.get(form.values[keyName],config.currencySource.field+'.code','') : ''"
@@ -100,7 +102,7 @@
     <template v-else-if="config.field_type.name=='date'">
         <div class="fieldInput flex flex-column" >
         <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
-        <el-date-picker class="w-full"
+        <el-date-picker class="w-full" :disabled="form.formSaving"
             v-model="form.values[keyName][config.name]"
             clearable
             :type="_.get(config.rules,'date_selection','date')"
@@ -133,8 +135,8 @@
     </template>
     <template v-else-if="config.field_type.name=='boolean'">
         <div class="fieldInput checkbox" :class="{'required': _.get(config.rules,'required',false)}">
-            <InputSwitch v-if="_.get(config.rules,'switch',false)"  v-model="form.values[keyName][config.name]" :inputId="config.name" />
-            <Checkbox v-else :inputId="config.name" v-model="form.values[keyName][config.name]" :binary="true"  />
+            <InputSwitch v-if="_.get(config.rules,'switch',false)"  v-model="form.values[keyName][config.name]" :disabled="form.formSaving" :inputId="config.name" />
+            <Checkbox v-else :inputId="config.name" v-model="form.values[keyName][config.name]" :binary="true" :disabled="form.formSaving"  />
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
         </div>
     </template>
@@ -143,12 +145,12 @@
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <div v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton',false) || _.get(config.rules,'radiobutton_inline',false)" :class="(_.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton_inline',false)) ? 'card flex flex-wrap justify-content-center gap-3': ''">
             <div  v-for="option of getPicklistByListName(config.listName)" :key="option._id" class="flex align-items-center" :class="(_.get(config.rules,'checkbox',false) || _.get(config.rules,'radiobutton',false)) ? 'mb-1 mt-1 ml-3' : ''">
-                <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values[keyName][config.name]" :inputId="option._id" name="category" :value="option" />
-                <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values[keyName][config.name]"/>
+                <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values[keyName][config.name]" :inputId="option._id" name="category" :value="option" :disabled="form.formSaving"/>
+                <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values[keyName][config.name]" :disabled="form.formSaving"/>
                 <label :for="option._id" class="ml-1">{{ option.value }}</label>
             </div>
             </div>
-            <Listbox v-else-if="_.get(config.rules,'ss_list_view',false) || _.get(config.rules,'ms_list_view',false)" v-model="form.values[keyName][config.name]" :options="getPicklistByListName(config.listName)" :multiple="_.get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
+            <Listbox v-else-if="_.get(config.rules,'ss_list_view',false) || _.get(config.rules,'ms_list_view',false)" v-model="form.values[keyName][config.name]" :disabled="form.formSaving" :options="getPicklistByListName(config.listName)" :multiple="_.get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
             <el-select v-else 
                 v-model="form.values[keyName][config.name]"
                 :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}"
@@ -156,6 +158,7 @@
                 :collapse-tags="checkFieldIfMultipleSelect(config.rules)"
                 :collapse-tags-tooltip="checkFieldIfMultipleSelect(config.rules)"
                 placeholder="Select" clearable filterable
+                :disabled="form.formSaving"
                 @change="fieldChange(config)">
                     <el-option
                     v-for="item in getPicklistByListName(config.listName)"
@@ -173,7 +176,7 @@
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <template v-if="_.get(config.rules,'ss_dropdown',false) || _.get(config.rules,'ms_dropdown',false)">
-                <el-select v-if="getLookupOptions(config.uniqueName,'group')" v-model="form.values[keyName][config.name]" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" placeholder="Select" clearable filterable class="w-full">
+                <el-select v-if="getLookupOptions(config.uniqueName,'group')" v-model="form.values[keyName][config.name]" :disabled="form.formSaving" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" placeholder="Select" clearable filterable class="w-full">
                     <el-option-group
                     v-for="group in getLookupOptions(config.uniqueName,'options')"
                     :key="group.label"
@@ -189,6 +192,7 @@
                 </el-select>
                 <el-select v-else 
                     v-model="form.values[keyName][config.name]"
+                    :disabled="form.formSaving"
                     class="w-full" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}"
                     placeholder="Select" clearable filterable
                     @change="fieldChange(config)">
@@ -202,8 +206,8 @@
             </template>
             <div v-else-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton',false) || _.get(config.rules,'radiobutton_inline',false)" :class="(_.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton_inline',false)) ? 'card flex flex-wrap justify-content-center gap-3': ''">
                 <div  v-for="option of getLookupOptions(config.uniqueName,'options')" :key="option._id" class="flex align-items-center" :class="(_.get(config.rules,'checkbox',false) || _.get(config.rules,'radiobutton',false)) ? 'mb-1 mt-1 ml-3' : ''">
-                    <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values[keyName][config.name]" :inputId="option._id" name="category" :value="option" />
-                    <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values[keyName][config.name]"/>
+                    <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values[keyName][config.name]" :inputId="option._id" name="category" :value="option" :disabled="form.formSaving" />
+                    <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values[keyName][config.name]" :disabled="form.formSaving"/>
                     <label :for="option._id" class="ml-1">{{ option.value }}</label>
                 </div>
             </div>

@@ -119,7 +119,7 @@ const form = inject('form')
             </div>
         </div>
         <el-input 
-            v-model="searchText" @click="toggle" @keyup="handleSearch" class="lookupInput"
+            v-model="searchText" @click="toggle" @keyup="handleSearch" class="lookupInput" :disabled="form.formSaving"
             placeholder="Please input">
             <template #append>
                 <el-button ><i class="pi pi-search"></i></el-button>

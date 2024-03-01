@@ -11,6 +11,7 @@
     import { useFormDataStore } from '../../../stores/forms'
     import { useModuleDetailStore } from '../../../stores/modules/detail'
     import { useModuleStore } from '../../../stores/modules/index'
+    import { useTabStore } from '@/stores/tabs/index'
 
     const Field = defineAsyncComponent(() => import('@/components/modules/Form/Field.vue'))
     const FormPanel = defineAsyncComponent(() => import('@/components/modules/Form/FormPanel.vue'))
@@ -21,11 +22,13 @@
     const formDataStore = useFormDataStore()
     const moduleDetailStore = useModuleDetailStore()
     const moduleStore = useModuleStore()
+    const tabStore = useTabStore()
     const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate,transformForSaving } = helper();
     const { fetchPicklist, fetchLookup, saveForm, setFormReset, saveFormValues } = formDataStore
     const { getCachedFormData,getFormReset } = storeToRefs(formDataStore)
     const { getItem } = storeToRefs(moduleDetailStore)
     const { fetchModuleFields, fetchModulePanels} = moduleStore
+    const { removeTab } = tabStore
     const { getModuleByName } = storeToRefs(moduleStore)
     const { validateForm, errorChecker } = validate();
     const toast = useToast();
@@ -44,7 +47,8 @@
             'main':{},
             'mutable':[]
         },
-        'formName':props.config.name
+        'formName':props.config.name,
+        'formSaving': false
     })
 
     const hiddenPanels = ref([])
@@ -153,19 +157,25 @@
 
     const submitForm = async () =>{
         let isModalForm = _.get(props.config,'maximized',false)
-        formSaving.value = true
+        formData.value.formSaving = true
         formData.value.errors.main = validateForm(formData.value.values.main,formData.value.fields,isModalForm)
         let noError = errorChecker(formData.value.errors.main)
-        console.log(formData.value.errors.main,noError)
         if(noError){
             let values = transformForSaving(formData.value.values.main,formData.value.fields, isModalForm)
-            console.log(values)
-            await saveFormValues(values,props.config.base_module)
+            let res = await saveFormValues(values,props.config.base_module)
+            if(res.status==200){
+                toast.add({ severity: 'success', summary: 'Success Message', detail: 'Record added', life: 3000 });
+                formData.value.formSaving = false  
+                removeTabAction(props.config)
+            }
         }else{
             toast.add({ severity: 'error', summary: 'Error Message', detail: 'Please check the form again', life: 3000 });
-            formSaving.value = false  
+            formData.value.formSaving = false  
         } 
         
+    }
+    const removeTabAction = async (tab) => {
+        await removeTab(tab)
     }
     
 </script>
@@ -194,8 +204,8 @@
     </div>
     <div class="sticky bottom-0 right-0 py-2 surface-50">
         <div class="flex justify-content-end gap-2 px-3 py-1">
-            <el-button @click="resetForm" :disabled="formLoading">Reset</el-button>
-            <el-button type="primary" @click="submitForm" :disabled="formLoading">Save</el-button>
+            <el-button @click="resetForm" :disabled="formLoading || formData.formSaving">Reset</el-button>
+            <el-button type="primary" @click="submitForm" :disabled="formLoading || formData.formSaving" :loading="formData.formSaving">Save</el-button>
         </div>
     </div>
 </template>
