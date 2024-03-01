@@ -5,21 +5,12 @@ import { storeToRefs } from 'pinia'
 import helper from '@/mixins/Helper';
 export default function validate() {
 
-    const form = inject('form') 
     const { checkFieldIfMultipleSelect } = helper();
 
-    function validateField(values,field,keyName){
-        let val = null
+    function validateField(values,field,fields){
+        let val =  _.trim(values[field.name])
         let errMsg = []
         
-        if(!_.isUndefined(keyName)){
-            form.value.errors[keyName][field.name] = []
-            val = _.trim(form.value.values[keyName][field.name])
-        }else{
-            val = _.trim(values[field.name])
-        }
-            
-        console.log(values,field.name)
         _.forEach(field.rules, function(ruleValue, ruleName){
             let msg = ''
             if(ruleName=='alpha'){
@@ -46,27 +37,27 @@ export default function validate() {
                 msg = required(val,field)
             }else if(ruleName=='required_if'){
                 if(_.isEmpty(val) || _.isNull(val)){
-                    msg = required_if(val,field,keyName)
+                    msg = required_if(val,field,fields,values)
                 }
             }else if(ruleName=='required_unless'){
                 if(_.isEmpty(val) || _.isNull(val)){
-                    msg = required_unless(val,field,keyName)
+                    msg = required_unless(val,field,fields,values)
                 }
             }else if(ruleName=='required_with'){
                 if(_.isEmpty(val) || _.isNull(val)){
-                    msg = required_with(val,field,keyName)
+                    msg = required_with(val,field,fields,values)
                 }
             }else if(ruleName=='required_with_all'){
                 if(_.isEmpty(val) || _.isNull(val)){
-                    msg = required_with_all(val,field,keyName)
+                    msg = required_with_all(val,field,fields,values)
                 }
             }else if(ruleName=='required_without'){
                 if(_.isEmpty(val) || _.isNull(val)){
-                    msg = required_without(val,field,keyName)
+                    msg = required_without(val,field,formFields,formValues)
                 }
             }else if(ruleName=='required_without_all'){
                 if(_.isEmpty(val) || _.isNull(val)){
-                    msg = required_without_all(val,field,keyName)
+                    msg = required_without_all(val,field,fields,values)
                 }
             }else if(ruleName=='max'){
                 msg = max(val,field,ruleValue)
@@ -75,10 +66,8 @@ export default function validate() {
                 errMsg.push(msg)                
             }
         })
-        if(!_.isUndefined(keyName))
-            form.value.errors[keyName][field.name] = errMsg   
-        else
-            return errMsg
+
+        return errMsg
     }
 
     function validateForm(values,fields,isModalForm){
@@ -86,7 +75,7 @@ export default function validate() {
         if(!isModalForm){
             _.forEach(fields, function(f,i){
                 if(f.quick){
-                    pass[f.name] = validateField(values,f)
+                    pass[f.name] = validateField(values,f,fields)
                 }
             })
         }
@@ -96,7 +85,8 @@ export default function validate() {
     function errorChecker(errorMsgs){
         let error  = true
         _.forEach(errorMsgs, function(val,i){
-            if(val){
+            if(!_.isEmpty(val)){
+                console.log('pasok',i)
                 error =  false
             }
         })
@@ -163,19 +153,17 @@ export default function validate() {
        return ""
     }
 
-    function required_if(value,field,keyName){
-        let anotherField = _.find(form.value.fields,{'name': field.rules.required_if.anotherField})
+    function required_if(value,field,formFields,formValues){
+        let anotherField = _.find(formFields,{'name': field.rules.required_if.anotherField})
         let pass = true
         if(anotherField){
-            let anotherFieldValue = _.get(form.value.values[keyName],anotherField.name,"")
+            let anotherFieldValue = _.get(formValues,anotherField.name,"")
             let multiple = checkFieldIfMultipleSelect(anotherField.rules)
-            console.log(anotherField.name, multiple, anotherFieldValue)
             if(!_.isEmpty(anotherFieldValue) && !_.isNull(anotherFieldValue)){
                 if(anotherField.field_type.name=='lookupModel' || anotherField.field_type.name=='picklist'){
                     if(multiple){
                         pass = _.some(_.map(value,'value',[]), function(item){ if(_.includes(field.rules.required_if.values,item)){ return true; } })
                     }else{
-                        console.log(field.rules.required_if.values==anotherFieldValue.value)
                         pass = (field.rules.required_if.values == anotherFieldValue.value) ? true : false
                     }
                 }else if(anotherFieldValue!=value){
@@ -193,12 +181,12 @@ export default function validate() {
        
     }
 
-    function required_unless(value,field,keyName){
-        let anotherField = _.find(form.value.fields,{'name': field.rules.required_unless.anotherField})
+    function required_unless(value,field,formFields,formValues){
+        let anotherField = _.find(formFields,{'name': field.rules.required_unless.anotherField})
         let pass = true
         let multiple = checkFieldIfMultipleSelect(field.rules)
         if(anotherField){
-            let anotherFieldValue = _.get(form.value.values[keyName],anotherField.name,"")
+            let anotherFieldValue = _.get(formValues,anotherField.name,"")
             if(!_.isEmpty(anotherFieldValue) && !_.isNull(anotherFieldValue)){
                 if(anotherField.field_type.name=='lookupModel' || anotherField.field_type.name=='picklist'){
                     if(multiple){
@@ -220,20 +208,19 @@ export default function validate() {
         return ""
     }
 
-    function required_with(value,field,keyName){
+    function required_with(value,field,formFields){
         let givenFields = [];
         if(_.isArray(field.rules['required_with'])){
             _.forEach(field.rules['required_with'], function(f){
-                let anotherField = _.find(form.value.fields,{'name': f})
-                let anotherFieldValue = _.get(form.value.values[keyName],anotherField.name,"")
+                let anotherField = _.find(formFields,{'name': f})
+                let anotherFieldValue = _.get(formValues,anotherField.name,"")
                 if(anotherField && !_.isEmpty(anotherFieldValue) && !_.isNull(anotherFieldValue)){
                     givenFields.push(anotherField.label)
                 }
             })
         }else{
-            let anotherField = _.find(form.value.fields,{'name': field.rules['required_with']})
-            let anotherFieldValue = _.get(form.value.values[keyName],anotherField.name,"")
-            console.log(anotherField,anotherFieldValue)
+            let anotherField = _.find(formFields,{'name': field.rules['required_with']})
+            let anotherFieldValue = _.get(formValues,anotherField.name,"")
             if(anotherField && !_.isEmpty(anotherFieldValue) && !_.isNil(anotherFieldValue)){
                 givenFields.push(anotherField.label)
             }
@@ -246,11 +233,11 @@ export default function validate() {
         }
     }
 
-    function required_with_all(value,field,keyName){
+    function required_with_all(value,field,formFields,formValues){
         let givenFields = [];
         _.forEach(field.rules['required_with_all'], function(f){
-            let anotherField = _.find(form.value.fields,{'name': f})
-            let anotherFieldValue = _.get(form.value.values[keyName],anotherField.name,"")
+            let anotherField = _.find(formFields,{'name': f})
+            let anotherFieldValue = _.get(formValues,anotherField.name,"")
             if(anotherField && !_.isEmpty(anotherFieldValue) && !_.isNil(anotherFieldValue)){
                 givenFields.push(anotherField.label)
             }
@@ -263,11 +250,11 @@ export default function validate() {
         }
     }
     
-    function required_without(value,field,keyName){
+    function required_without(value,field,formFields,formValues){
         let givenFields = [];
         _.forEach(field.rules['required_without'], function(f){
-            let anotherField = _.find(form.value.fields,{'name': f})
-            let anotherFieldValue = _.get(form.value.values[keyName],anotherField.name,"")
+            let anotherField = _.find(formFields,{'name': f})
+            let anotherFieldValue = _.get(formValues,anotherField.name,"")
             if(anotherField && (_.isEmpty(anotherFieldValue) || _.isNil(anotherFieldValue))){
                 givenFields.push(anotherField.label)
             }
@@ -280,11 +267,11 @@ export default function validate() {
         }
     }
 
-    function required_without_all(value,field,keyName){
+    function required_without_all(value,field,formFields,formValues){
         let givenFields = [];
         _.forEach(field.rules['required_without_all'], function(f){
-            let anotherField = _.find(form.value.fields,{'name': f})
-            let anotherFieldValue = _.get(form.value.values[keyName],anotherField.name,"")
+            let anotherField = _.find(formFields,{'name': f})
+            let anotherFieldValue = _.get(formValues,anotherField.name,"")
             if(anotherField && (_.isEmpty(anotherFieldValue) || _.isNil(anotherFieldValue))){
                 givenFields.push(anotherField.label)
             }
