@@ -269,7 +269,7 @@ watch(selectedFields, (newVal, oldVal) => {
                 dataKey="_id"
                 placeholder="Select Fields"
                 class="border-round-left-xl border-primary w-full md:w-12rem mb-2 md:mb-0" />
-              <div class="p-input-icon-right w-full ml-2 md:w-auto">
+              <div class="p-input-icon-right w-full ml-1 md:w-auto">
                 <i class="pi pi-search" />
                 <InputText
                   type="text"

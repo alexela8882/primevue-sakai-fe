@@ -48,7 +48,7 @@ onMounted(() => {
     <template #header>
       <div class="flex align-items-center text-2xl">
         <div class="material-icons mr-2">{{ mode === 'edit-table' ? 'table_chart' : 'view_kanban' }}</div>
-        <div>{{ mode === 'edit-table' ? 'Table' : 'Kanban' }} Settings &mdash; {{ getBaseModule.label }}</div>
+        <div>{{ (mode === 'edit-table' || mode === 'new') ? 'Table' : 'Kanban' }} Settings &mdash; {{ getBaseModule.label }}</div>
       </div>
     </template>
     <TableSettings

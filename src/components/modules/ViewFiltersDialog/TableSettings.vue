@@ -65,8 +65,9 @@ const saveTableSettings = handleSubmit(values => {
 const tblSettingsAutoFill = (viewFilter) => {
   console.log(viewFilter)
   setFieldValue('filterName', viewFilter.filterName)
-  setFieldValue('sortField', viewFilter.sortField)
+  setFieldValue('sortField', viewFilter.sortField ? viewFilter.sortField : 'created_at')
   setFieldValue('sortOrder', viewFilter.sortOrder)
+  setFieldValue('perPage', viewFilter.perPage ? viewFilter.perPage : 15)
   const filteredFields = props.module.fields.filter(item => !viewFilter.fields.some(removeItem => removeItem._id === item._id))
   pickListTblFields.value = [filteredFields, viewFilter.fields]
   setFieldValue('pickList', viewFilter.fields)
@@ -79,6 +80,9 @@ onMounted(() => {
 
   if (props.mode === 'new') {
     pickListTblFields.value = [props.module.fields, []]
+    setFieldValue('perPage', 15)
+    setFieldValue('sortOrder', 'ASC')
+    setFieldValue('sortField', 'created_at')
   } else if (props.mode === 'edit-table') tblSettingsAutoFill(_getDefaultViewFilter.value(props.module))
 })
 
@@ -138,7 +142,6 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
               optionValue="name"
               dataKey="_id"
               filter
-              placeholder="Select Field *"
               class="w-full md:w-12rem mr-2"
               :class="`${errors.sortField ? 'p-invalid' : 'border-primary'}`" />
             <label>Sort field *</label>
