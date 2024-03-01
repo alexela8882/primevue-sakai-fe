@@ -19,7 +19,6 @@ const props = defineProps({
 
 // refs
 const localLoading = ref(false)
-const localModule = ref()
 // stores
 const tabStore = useTabStore()
 const moduleStore = useModuleStore()
@@ -36,7 +35,6 @@ const paginate = async (payload) => {
   } else page = props.tab.module.collection && props.tab.module.collection.pagination
 
   // re-fetch module & collection
-  // localModule.value = await _fetchModule(props.tab.base_module.name, page > 1 ? page : null, payload.per_page)
   await updateTabByField({
     tab: props.tab.name,
     field: 'module',
@@ -60,12 +58,12 @@ const limitPage = async (e) => {
 }
 
 onMounted(async () => {
-  localLoading.value = true
+  // localLoading.value = true
 
-  localModule.value = await props.tab.module.collection
-  console.log(props.tab.module.collection)
+  // localModule.value = await props.tab.module.collection
+  // console.log(props.tab.module.collection)
 
-  localLoading.value = false
+  // localLoading.value = false
 })
 </script>
 
@@ -87,7 +85,6 @@ onMounted(async () => {
     </div>
     <div v-else-if="tab.type == 'module'" class="p-2">
       <Suspense v-if="tab.base_module">
-        <!-- <pre>{{ localModule.data }}</pre> -->
         <DynamicDataTable
           :key="tab.base_module._id"
           mode="view"
