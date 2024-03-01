@@ -268,17 +268,17 @@ watch(selectedFields, (newVal, oldVal) => {
                 optionValue="_id"
                 dataKey="_id"
                 placeholder="Select Fields"
-                class="border-round-xl border-primary w-full md:w-12rem mb-2 md:mb-0" />
-            </div>
-            <div class="md:flex align-items-center">
-              <div class="p-input-icon-left mr-2 w-full md:w-auto">
+                class="border-round-left-xl border-primary w-full md:w-12rem mb-2 md:mb-0" />
+              <div class="p-input-icon-right w-full ml-2 md:w-auto">
                 <i class="pi pi-search" />
                 <InputText
                   type="text"
                   :disabled="datatableLoading"
-                  class="border-round-xl border-primary w-full mb-2 md:mb-0"
+                  class="border-round-right-xl border-primary w-full mb-2 md:mb-0"
                   placeholder="Search The List..." />
               </div>
+            </div>
+            <div class="md:flex align-items-center">
               <div class="p-inputgroup flex-1 mb-2 md:mb-0">
                 <Button
                   @click="tblMenu2.toggle($event)"
