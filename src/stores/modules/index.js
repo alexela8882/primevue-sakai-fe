@@ -424,23 +424,25 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
         console.log(fetchedModule)
 
-        if (!reuse) {
-          module.value = fetchedModule // insert module
-          collection.value = fetchedModule.data // insert collection
-          collectionLoading.value = false
+        module.value = fetchedModule // insert module
+        collection.value = fetchedModule.data // insert collection
+        collectionLoading.value = false
 
-          // fill modules with fields & panels
-          modules.value.map(m => {
-            if (m.name === moduleName) {
-              let obj = Object.assign({}, {
-                ...m,
-                fields: fetchedModule.fields,
-                panels: fetchedModule.panels
-              })
-              Object.assign(m, obj)
-            }
-          })
-        } else return fetchedModule
+        // fill modules with fields & panels
+        modules.value.map(m => {
+          if (m.name === moduleName) {
+            let obj = Object.assign({}, {
+              ...m,
+              fields: fetchedModule.fields,
+              panels: fetchedModule.panels,
+              viewFilters: fetchedModule.viewFilters
+            })
+            Object.assign(m, obj)
+          }
+        })
+
+        console.log(modules.value)
+        return fetchedModule
       }
     } catch (error) {
       module.value = {}
@@ -448,8 +450,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
       collectionLoading.value = false
     }
-
-    console.log(module.value)
   }
   const _fetchModule = async (payload, page = null, limit = null) => {
     const fetchedModule = await fetchModule(payload, page, limit, true)
