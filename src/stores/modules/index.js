@@ -434,7 +434,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
             let obj = Object.assign({}, {
               ...m,
               fields: fetchedModule.fields,
-              panels: fetchedModule.panels
+              panels: fetchedModule.panels,
+              viewFilters: fetchedModule.viewFilters
             })
             Object.assign(m, obj)
           }
