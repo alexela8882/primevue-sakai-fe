@@ -60,12 +60,15 @@ const limitPage = async (e) => {
 }
 
 onMounted(async () => {
-  localLoading.value = true
+  if(props.tab.type !== 'module-form'){
+    localLoading.value = true
+    
+    localModule.value = await props.tab.module.collection
+    console.log(props.tab.module.collection)
 
-  localModule.value = await props.tab.module.collection
-  console.log(props.tab.module.collection)
-
-  localLoading.value = false
+    localLoading.value = false
+  }
+    
 })
 </script>
 
@@ -77,7 +80,7 @@ onMounted(async () => {
     <div v-if="tab.type === 'static-form'" class="py-5 h-full">
       <DynamicForm :key="tab.name" :form="tab.form" />
     </div>
-    <div v-else-if="tab.type === 'module-form'" class="py-5 h-full">
+    <div v-else-if="tab.type === 'module-form'" class="py-2 h-full">
       <Form :key="tab.name" :config="tab" />
       <!-- <GeneralForm
         :key="tab.name"

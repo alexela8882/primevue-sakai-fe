@@ -21,8 +21,8 @@
 </script>
 <template>
     <template v-for="(section,sectioni) in panel.sections" :key="section._id">
-        <div v-if="(quickAdd && section.quick) || !quickAdd"  class="flex flex-column px-3 py-2" :class="(sectioni > 1) ? 'mt-2' : ''">
-            <h6 class="formSectionLabel" v-if="section.sectionLabel">{{ section.sectionLabel }}</h6>
+        <div v-if="(quickAdd && section.quick) || !quickAdd"  class="flex flex-column px-1 py-2" :class="(sectioni > 1) ? 'mt-2' : ''">
+            <h6 class="formSectionLabel" v-if="section.label">{{ section.label }}</h6>
             <div class="grid">
                 <div  v-for="(col,colI) in section.field_ids" :key="colI" class="col flex flex-column gap-2">
                     <template v-for="field in col" :key="field" >
@@ -39,6 +39,6 @@
 }
 .formSectionLabel{
     background: #80808029;
-    padding:5px 2px;
+    padding:5px;
 }
 </style>

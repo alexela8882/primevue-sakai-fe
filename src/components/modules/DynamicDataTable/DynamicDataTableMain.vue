@@ -38,7 +38,7 @@ const fetchedModule = ref()
 const pageOffset = ref(0)
 const listViewFilterRef = ref(null)
 const cellEdit = ref(false)
-const editingRows = ref([])
+const cellEditing = ref({'rowIndex':null,'field':null})
 const route = useRoute()
 const rightShadowStyle = ref()
 const leftShadowStyle = ref()
@@ -118,19 +118,10 @@ const perPageItems = ref([
   { label: '50', value: 50 }
 ])
 
-const tableFormData = ref({'values':{}})
+const tableFormData = ref({'values':{},'errors':{}})
 const tableFormChanged = ref({})
 const clonedData = ref()
 // actions
-const cellEditAction = (data,payload) => {
-  // const cellModule = payload.relation && payload.relation.entity_id.name
-  cellEdit.value = true
-  if(!_.has(tableFormData.value['values'],data['_id'])){
-    tableFormData.value['values'][data['_id']] = _.cloneDeep(data)
-  }
-  // console.log(getEntity.value(cellModule))
-  // fetchDropdownLists(getEntity.value(cellModule).name)
-}
 const paginate = async (event, jump, per_page) => {
   const args = {
     event: event, 
@@ -171,25 +162,49 @@ const handleHoverIn = (event) => {
   rightShadowStyle.value = `${sameStyles} clip-path: inset(0px -15px 0px 0px);`
   leftShadowStyle.value = `${sameStyles} clip-path: inset(0px 0px 0px -15px);`
 }
+
+const cellEditAction = (data,payload) => {
+  cellEdit.value = true
+  if(!_.has(tableFormData.value['values'],data['_id'])){
+    tableFormData.value['values'][data['_id']] = _.cloneDeep(data)
+    tableFormData.value['errors'][data['_id']] = {}
+    tableFormData.value['errors'][data['_id']][payload.name] = []
+  }
+}
+
 const onCellEditComplete = (event) => {
   console.log('complete',event)
-  cellEdit.value = false
   let { data, newValue, field } = event
-  if(newValue!=tableFormData.value['values'][data['_id']][field]){
-      data[field] = tableFormData.value['values'][data['_id']][field]
-      if(!_.has(tableFormChanged.value,data['_id'])){
-        tableFormChanged.value[data['_id']] = [field]
-      }else{
-        if(!_.has(tableFormChanged.value[data['_id']],field)){
-          tableFormChanged.value[data['_id']].push(field)
+  if(!_.isEmpty(tableFormData.value.errors[data['_id']][field])){
+    cellEdit.value = true
+    editingRows.value = data
+  }else{
+      if(newValue!=tableFormData.value['values'][data['_id']][field]){
+        data[field] = tableFormData.value['values'][data['_id']][field]
+        if(!_.has(tableFormChanged.value,data['_id'])){
+          tableFormChanged.value[data['_id']] = [field]
+        }else{
+          if(!_.has(tableFormChanged.value[data['_id']],field)){
+            tableFormChanged.value[data['_id']].push(field)
+          }
         }
-      }
+    }
   }
-
 }
 
 const onCellEditCancelled = (event) =>{
   console.log('cancelled',event)
+}
+
+const cellDBLClick = (event) =>{
+  cellEditing.value.rowIndex = event.index
+  cellEditing.value.field = event.field
+  // cellEdit.value = true
+  if(!_.has(tableFormData.value['values'],event.data['_id'])){
+    tableFormData.value['values'][event.data['_id']] = _.cloneDeep(event.data)
+    tableFormData.value['errors'][event.data['_id']] = {}
+    tableFormData.value['errors'][event.data['_id']][event.field] = []
+  }
 }
 
 const resetTableForm = () =>{
@@ -214,6 +229,14 @@ onClickOutside(listViewFilterRef, (event) => {
   }
 })
 
+document.addEventListener('keydown', function(event) {
+  if (event.key === "Escape") {
+    // Handle the "Escape" key press
+    console.log("Escape key pressed");
+    // You can add your logic here to perform actions when "Escape" key is pressed
+  }
+});
+
 provide('form', tableFormData)
 </script>
 
@@ -223,10 +246,8 @@ provide('form', tableFormData)
   <DataTable
     v-model:selection="selectedData"
     v-model:contextMenuSelection="selectedContextData"
-    v-model:editingRows="editingRows"
     :editMode="cellEdit ? 'cell' : null"
     @cell-edit-complete="onCellEditComplete"
-    @row-edit-save="onRowEditSave"
     @rowContextmenu="onRowContextMenu"
     @cell-edit-cancel="onCellEditCancelled"
     tableClass="editable-cells-table"
@@ -261,9 +282,12 @@ provide('form', tableFormData)
       :bodyClass="`text-color-secondary ${mode === 'edit' ? 'py-1' : 'py-2'}`"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
-        <div v-if="slotProps.data[col.name]" :class="{'cell-edited':(_.find(tableFormChanged,function(f,k){ if(k==slotProps.data['_id'] && _.includes(f,col.name)){ return true}}))}">
+        <div v-if="cellEditing.rowIndex==slotProps.index && cellEditing.field==slotProps.field">
+          <Field :config="col" :keyName="slotProps.data['_id']" type="tableForm"/>
+        </div>
+        <div v-else @dblclick="cellDBLClick(slotProps)" :class="{'cell-edited':(_.find(tableFormChanged,function(f,k){ if(k==slotProps.data['_id'] && _.includes(f,col.name)){ return true}}))}">
           <div class="flex align-items-center justify-content-between">
-            <div>
+            <div v-if="slotProps.data[col.name]">
               <span v-if="col.relation">
                 <span
                   v-for="(diplayFieldName, dfn) in col.relation.displayFieldName"
@@ -284,41 +308,11 @@ provide('form', tableFormData)
             </div>
           </div>
         </div>
+        
       </template>
       <template #editor="{ data, field }">
         <div v-if="data[col.name]">
           <Field :config="col" :keyName="data['_id']" type="tableForm"/>
-          <!-- <div v-if="col.relation">
-            <div
-              v-for="(diplayFieldName, dfn) in col.relation.displayFieldName"
-              :key="dfn">
-              <div v-if="col.rules.ss_pop_up" class="flex align-items-center justify-content-center">
-                <div>
-                  <inputText
-                    v-model="data[col.name][diplayFieldName]"
-                    style="box-sizing: border-box; max-width: 100%;" />
-                </div>
-              </div>
-              <div v-if="col.rules.ss_dropdown" class="my-1">
-                <Dropdown
-                  v-model="data[col.name]['_id']"
-                  :options="getDropdown(getEntity(col.relation.entity_id.name).name) && getDropdown(getEntity(col.relation.entity_id.name).name).collection.data"
-                  optionLabel="name"
-                  optionValue="_id"
-                  :placeholder="`Select a ${col.relation.entity_id.name}`"
-                  class="border-round-xl border-primary w-full md:w-12rem mr-2 mb-2 md:mb-0"/>
-              </div>
-              <div v-else class="my-1">
-                Other edits here...
-              </div>
-            </div>
-          </div>
-          <div v-else>
-            
-            <inputText
-              v-model="data[col.name]"
-              style="box-sizing: border-box; max-width: 100%;" />
-          </div> -->
         </div>
       </template>
     </Column>

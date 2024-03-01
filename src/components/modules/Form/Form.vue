@@ -48,6 +48,7 @@
     onMounted(async () => {
         let tmpData = getCachedFormData.value(props.config.name)
         let formPage = (_.includes(props.config.name,'edit')) ? 'edit' : 'create'
+        console.log('mounted',formLoading.value)
         if(tmpData){
              formData.value =  _.merge(formData.value,_.cloneDeep(tmpData))
              if(props.config.name==getFormReset.value){
@@ -144,7 +145,7 @@
 </script>
 <template>
     <div class="relative min-h-full p-3">
-        <Suspense v-if="!formLoading">       
+        <template v-if="!formLoading">       
             <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && _.get(config,'maximized',false)==false">
                 <Field v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id" keyName="main" :config="field"/>
             </template>
@@ -155,16 +156,15 @@
                     :quickAdd="!_.get(config,'maximized',false)"
                 />
             </template>
-            
-            <template #fallback>
+        </template>
+        <template v-else>
             <Skeleton v-for="(item,index) in tempFields" :key="index" height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
-            </template>
-        </Suspense>
+        </template>
     </div>
     <div class="sticky bottom-0 right-0 py-2 surface-50">
         <div class="flex justify-content-end gap-2 px-3 py-1">
-            <el-button @click="resetForm">Reset</el-button>
-            <el-button type="primary">Save</el-button>
+            <el-button @click="resetForm" :disabled="formLoading">Reset</el-button>
+            <el-button type="primary" :disabled="formLoading">Save</el-button>
         </div>
     </div>
 </template>
