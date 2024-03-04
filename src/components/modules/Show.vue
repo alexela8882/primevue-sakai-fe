@@ -19,6 +19,7 @@ import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataT
 import KanbanLoader from '@/components/modules/DynamicDataTable/Loaders/KanbanLoader.vue'
 
 // refs
+const viewFiltersCount = ref(0)
 const moduleSearch = ref(null)
 const datatableLoading = ref(false)
 const localLoading = ref(false)
@@ -196,6 +197,7 @@ onMounted(async () => {
   const fetchedModule = await _fetchModule(getBaseModule.value.name)
 
   localModule.value = fetchedModule
+  viewFiltersCount.value = localModule.value.viewFilters.length
 
   // console.log(getBaseModule.value)
   // console.log(localModule.value)
@@ -221,9 +223,15 @@ watch(selectedFields, (newVal, oldVal) => {
 })
 
 watch(() => getModules.value, (newVal, oldVal) => {
-  // console.log(newVal)
-  const updatedModule = newVal.find(module => module._id === getBaseModule.value._id)
-  viewFilter.value = __getViewFilter.value(selectedViewFilter.value, updatedModule)
+  if (viewFiltersCount.value !== 0) {
+    let updatedModule = newVal.find(module => module._id === getBaseModule.value._id)
+
+    if (viewFiltersDialogMode.value === 'new') {
+      selectedViewFilter.value = updatedModule.viewFilters[updatedModule.viewFilters.length - 1]._id
+    }
+
+    viewFilter.value = __getViewFilter.value(selectedViewFilter.value, updatedModule)
+  }
 }, {
   deep: true // watch nested array
 })
