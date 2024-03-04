@@ -62,12 +62,13 @@ const saveTableSettings = handleSubmit(async values => {
   viewFiltersDialogLoading.value = true
 
   const payload = Object.assign({}, {
+    mode: props.mode,
     baseModule: props.baseModule,
     viewFilter: props.selectedViewFilter,
     type: 'table',
     data: values
   })
-  await addViewFilter(payload) // dummy store save
+  await addViewFilter(payload) // store save/update
 
   viewFiltersDialogLoading.value = false
   viewFiltersDialog.value = false

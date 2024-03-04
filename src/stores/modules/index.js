@@ -473,9 +473,19 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const addViewFilter = async (payload) => {
     // console.log(JSON.stringify(payload))
     let data = payload.data
+    let uriOptions = { uri: null, method: null }
+
+    if (payload.mode === 'new') {
+      uriOptions.uri = `/viewFilters`
+      uriOptions.method = 'POST'
+    } else {
+      uriOptions.uri = `/viewFilters/${payload.viewFilter}`
+      uriOptions.method = 'PATCH'
+    }
 
     const finalObject = Object.assign({}, {
       updateType: payload.type,
+      moduleName: payload.baseModule.name,
       filterName: data.filterName,
       pageSize: data.pageSize,
       fields: data.pickList,
@@ -486,27 +496,32 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
 
     // do backend codes here
-    const res = await axios(`/viewFilters/${payload.viewFilter}`, {
-      method: 'PATCH',
+    const res = await axios(uriOptions.uri, {
+      method: uriOptions.method,
       headers: { 'Content-Type': 'application/json' },
       data: finalObject
     })
 
     if (res && res.status === 200) {
-      // update module view filters
-      console.log(payload.baseModule)
-      modules.value.map(module => {
-        if (module._id === payload.baseModule._id) {
-          module.viewFilters.map(viewFilter => {
-            if (viewFilter._id === payload.viewFilter) {
-              Object.assign(viewFilter, res.data.viewFilter)
-              console.log(res.data.viewFilter)
-            }
-          })
-        }
-      })
-
-      console.log(modules.value)
+      if (payload.mode === 'new') {
+        // add new view filter into modules
+        modules.value.map(module => {
+          if (module._id === payload.baseModule._id) {
+            module.viewFilters.push(res.data.viewFilter)
+          }
+        })
+      } else {
+        // update module view filters
+        modules.value.map(module => {
+          if (module._id === payload.baseModule._id) {
+            module.viewFilters.map(viewFilter => {
+              if (viewFilter._id === payload.viewFilter) {
+                Object.assign(viewFilter, res.data.viewFilter)
+              }
+            })
+          }
+        })
+      }
 
       // toast
       toast.add({
