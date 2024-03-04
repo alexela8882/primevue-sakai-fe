@@ -10,7 +10,7 @@ export default function validate() {
     function validateField(values,field,fields){
         let val =  _.trim(values[field.name])
         let errMsg = []
-        
+
         _.forEach(field.rules, function(ruleValue, ruleName){
             let msg = ''
             if(ruleName=='alpha'){
@@ -98,7 +98,7 @@ export default function validate() {
     function alpha(value,field){
         var pattern = /^[a-zA-Z ]+$/i
         if(pattern.test(value) == false){
-            return "The "+ field +" may only contain letters."
+            return "The "+ field.label +" may only contain letters."
         }else{
             return ""
         }
@@ -107,7 +107,7 @@ export default function validate() {
     function alpha_numeric(value,field){
         var pattern = /((^[0-9]+[a-z]+)|(^[a-z]+[0-9]+))+[0-9a-z]+$/i
         if(pattern.test(value) == false){
-            return "The "+ field +" may only contain letters and numbers."
+            return "The "+ field.label +" may only contain letters and numbers."
         }else{
             return ""
         }
@@ -116,7 +116,7 @@ export default function validate() {
     function alpha_dash(value,field){
         var pattern = /^[a-zA-Z\- ]+$/i
         if(pattern.test(value) == false){
-            return "The "+ field +" may only contain letters, and dashes."
+            return "The "+ field.label +" may only contain letters, and dashes."
         }else{
             return ""
         }
@@ -125,7 +125,7 @@ export default function validate() {
     function email(value,field){
         var pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
         if(pattern.test(value) == false){
-            return "The "+ field +" must be a valid email address."
+            return "The "+ field.label +" must be a valid email address."
         }else{
             return ""
         }
@@ -134,7 +134,7 @@ export default function validate() {
     function title_case(value,field){
         var pattern = /^[A-Z][a-z]*(\s[A-Z][a-z]*)*$/
         if(pattern.test(value) == false){
-            return "The "+ field +" should be in title case."
+            return "The "+ field.label +" should be in title case."
         }else{
             return ""
         }

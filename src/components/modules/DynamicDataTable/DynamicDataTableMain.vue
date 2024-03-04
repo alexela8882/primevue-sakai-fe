@@ -40,7 +40,7 @@ const pageOffset = ref(0)
 const listViewFilterRef = ref(null)
 const fieldEditingRef = ref(null)
 const cellEdit = ref(false)
-const cellEditing = ref({'rowId':null,'field':null})
+const cellEditing = ref({'rowId':null,'field':null,'rowIndex':null,'columnIndex':null})
 const route = useRoute()
 const rightShadowStyle = ref()
 const leftShadowStyle = ref()
@@ -200,9 +200,12 @@ const onCellEditCancelled = (event) =>{
   console.log('cancelled',event)
 }
 
-const cellDBLClick = (event,field) =>{
+const cellDBLClick = (event,field,columnIndex) =>{
+  console.log(event)
   if(!_.includes(lockedFields.value,field.name)){
     cellEditing.value.rowId = event.data['_id']
+    cellEditing.value.rowIndex = event.index
+    cellEditing.value.columnIndex = columnIndex
     cellEditing.value.field = field
     if(!_.has(tableFormData.value['values'],event.data['_id'])){
       tableFormData.value['values'][event.data['_id']] = _.cloneDeep(event.data)
@@ -280,9 +283,13 @@ const onChangeField = () => {
               }
             }
         }
-         cellEditing.value = {'rowId':null,'field':null}
+         cellEditing.value = {'rowId':null,'field':null,'rowIndex':null,'columnIndex':null}
       }     
     }
+}
+
+const setClassName = () => {
+
 }
 
 provide('form', tableFormData)
@@ -317,22 +324,22 @@ provide('form', tableFormData)
       bodyClass="text-center py-1"
       selectionMode="multiple"></Column>
     <Column
-      v-for="col of fields"
+      v-for="(col,coli) of fields"
       :key="col._id"
       :field="col.name"
       :header="col.label"
       sortable
       sorticon="check"
       style="min-width: 200px !important;"
-      :bodyClass="`text-color-secondary ${mode === 'edit' ? 'py-1' : 'py-2'}`"
+      :bodyClass="`text-color-secondary`"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
         <div v-if="cellEditing.rowId==slotProps.data['_id'] && cellEditing.field.name==slotProps.field">
           <Field ref="fieldEditingRef" :config="col" :keyName="slotProps.data['_id']" :inline="true" type="tableForm"/>
         </div>
-        <div v-else @dblclick="cellDBLClick(slotProps,col)" :class="{'cell-edited':(_.find(tableFormChanged,function(f,k){ if(k==slotProps.data['_id'] && _.includes(f,col.name)){ return true}}))}">
-          <div class="flex align-items-center justify-content-between">
-            <div v-show="slotProps.data[col.name]">
+        <div v-else class="py-2" @dblclick="cellDBLClick(slotProps,col,coli)" :class="{'cell-edited':(_.find(tableFormChanged,function(f,k){ if(k==slotProps.data['_id'] && _.includes(f,col.name)){ return true}}))}">
+          <div class="flex align-items-center px-2" :class="(slotProps.data[col.name]) ? 'justify-content-between' : 'justify-content-end'">
+            <div v-if="slotProps.data[col.name]">
               <span v-if="col.relation">
                 <span
                   v-for="(diplayFieldName, dfn) in col.relation.displayFieldName"
@@ -485,5 +492,9 @@ provide('form', tableFormData)
 }
 .cell-edited{
   background: #f9e3b6;
+}
+.module-table td{
+  padding-bottom: 0px !important;
+  padding-top: 0px !important;
 }
 </style>
