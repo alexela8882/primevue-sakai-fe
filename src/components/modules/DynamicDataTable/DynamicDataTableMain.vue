@@ -8,6 +8,7 @@ import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import _ from 'lodash'
 import validate from '@/mixins/Validate';
+import helper from '@/mixins/Helper';
 // stores
 import { useModuleStore } from '../../../stores/modules/index'
 import { useModuleDynamicTableStore } from '../../../stores/modules/dynamictable/index'
@@ -58,6 +59,7 @@ const { _fetchModule, fetchModule, fetchBaseModule, fetchCollection } = moduleSt
 const { getDropdownLists, getDropdown } = storeToRefs(moduleDynamicTableStore)
 const { fetchDropdownLists } = moduleDynamicTableStore
 const { validateField, errorChecker } = validate();
+const { transformLookupValue } = helper();
 // presets
 const menuModel = ref([
   {label: 'View', icon: 'pi pi-fw pi-search', command: () => console.log(selectedContextData.value)},
@@ -208,7 +210,11 @@ const cellDBLClick = (event,field,columnIndex) =>{
     cellEditing.value.columnIndex = columnIndex
     cellEditing.value.field = field
     if(!_.has(tableFormData.value['values'],event.data['_id'])){
-      tableFormData.value['values'][event.data['_id']] = _.cloneDeep(event.data)
+      let tmpData = _.cloneDeep(event.data)
+      if(field.field_type.name=='lookupModel'){
+        tmpData[field.name] = transformLookupValue(tmpData[field.name],field)
+      }
+      tableFormData.value['values'][event.data['_id']] = _.cloneDeep(tmpData)
       tableFormData.value['errors'][event.data['_id']] = {}
       tableFormData.value['errors'][event.data['_id']][event.field] = []
     }
@@ -247,11 +253,11 @@ document.addEventListener('keydown', function(event) {
 });
 
 onClickOutside(fieldEditingRef, (event) => {
+  console.log(onClickOutside)
   console.log(event,event.target.classList)
-  if(_.includes(_.get(event,'target.parentElement.classList',[]),'el-select-dropdown__item')){
-    console.log('click select',tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name])
-    // onChangeField()    
-  // }else if (!_.includes(_.get(event,'target.classList',[]),'p-inputtext') && !_.includes(_.get(event,'target.classList',[]),'el-input__inner') && !_.includes(_.get(event,'target.classList',[]),'el-select-dropdown__item')) {
+  if(_.includes(_.get(event,'target.parentElement.classList',[]),'el-select-dropdown__item') || _.includes(_.get(event,'target.parentElement.classList',[]),'lookupInput') || _.includes(_.get(event,'target.parentElement.classList',[]),'lookupSelected')){
+    //select and lookup clicked
+   
   }else if(_.some(_.get(event,'target.classList',[]), function(c){ if(!_.includes(['p-inputtext','el-input__inner','el-select-dropdown__item','el-date-table-cell__text'],c)){ return true; } })){
     onChangeField()
   }else{

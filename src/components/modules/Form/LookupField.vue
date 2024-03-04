@@ -109,7 +109,7 @@ const form = inject('form')
             <template v-if="multiple">
                 <el-tag class="mr-1" closable v-for="(v,i) in value" :key="v.value" @close="removeSelected(i)">{{ v.value }}</el-tag>
             </template>
-            <div v-else class="flex align-items-center" style="width:100%" >
+            <div v-else class="flex align-items-center lookupSelected" style="width:100%" >
                 <div class="material-icons text-white ml-2" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
                 <div class="flex justify-content-between" style="width:100%">
                     <span class="flex flex-colum ml-2">{{ form.values[keyName][field.name].value }}</span>

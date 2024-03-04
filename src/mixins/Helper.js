@@ -434,6 +434,7 @@ const { getPicklist} = storeToRefs(formDataStore)
     checkFieldIfMultipleSelect,
     getModuleValues,
     transformForSaving,
-    getAllHiddenFieldsAndPanels
+    getAllHiddenFieldsAndPanels,
+    transformLookupValue
   };
 }
