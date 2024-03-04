@@ -7,6 +7,7 @@ import { onClickOutside } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import _ from 'lodash'
+import validate from '@/mixins/Validate';
 // stores
 import { useModuleStore } from '../../../stores/modules/index'
 import { useModuleDynamicTableStore } from '../../../stores/modules/dynamictable/index'
@@ -37,8 +38,9 @@ const emit = defineEmits(['toggle-sidebar', 'paginate', 'limit-page'])
 const fetchedModule = ref()
 const pageOffset = ref(0)
 const listViewFilterRef = ref(null)
+const fieldEditingRef = ref(null)
 const cellEdit = ref(false)
-const cellEditing = ref({'rowIndex':null,'field':null})
+const cellEditing = ref({'rowId':null,'field':null})
 const route = useRoute()
 const rightShadowStyle = ref()
 const leftShadowStyle = ref()
@@ -55,6 +57,7 @@ const { getModule, getCollection, getBaseModule, getEntity } = storeToRefs(modul
 const { _fetchModule, fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 const { getDropdownLists, getDropdown } = storeToRefs(moduleDynamicTableStore)
 const { fetchDropdownLists } = moduleDynamicTableStore
+const { validateField, errorChecker } = validate();
 // presets
 const menuModel = ref([
   {label: 'View', icon: 'pi pi-fw pi-search', command: () => console.log(selectedContextData.value)},
@@ -121,6 +124,7 @@ const perPageItems = ref([
 const tableFormData = ref({'values':{},'errors':{}})
 const tableFormChanged = ref({})
 const clonedData = ref()
+const lockedFields = ref(['owner_id','created_at','updated_at','created_by','updated_by'])
 // actions
 const paginate = async (event, jump, per_page) => {
   const args = {
@@ -196,15 +200,17 @@ const onCellEditCancelled = (event) =>{
   console.log('cancelled',event)
 }
 
-const cellDBLClick = (event) =>{
-  cellEditing.value.rowIndex = event.index
-  cellEditing.value.field = event.field
-  // cellEdit.value = true
-  if(!_.has(tableFormData.value['values'],event.data['_id'])){
-    tableFormData.value['values'][event.data['_id']] = _.cloneDeep(event.data)
-    tableFormData.value['errors'][event.data['_id']] = {}
-    tableFormData.value['errors'][event.data['_id']][event.field] = []
+const cellDBLClick = (event,field) =>{
+  if(!_.includes(lockedFields.value,field.name)){
+    cellEditing.value.rowId = event.data['_id']
+    cellEditing.value.field = field
+    if(!_.has(tableFormData.value['values'],event.data['_id'])){
+      tableFormData.value['values'][event.data['_id']] = _.cloneDeep(event.data)
+      tableFormData.value['errors'][event.data['_id']] = {}
+      tableFormData.value['errors'][event.data['_id']][event.field] = []
+    }
   }
+  
 }
 
 const resetTableForm = () =>{
@@ -232,10 +238,52 @@ onClickOutside(listViewFilterRef, (event) => {
 document.addEventListener('keydown', function(event) {
   if (event.key === "Escape") {
     // Handle the "Escape" key press
-    console.log("Escape key pressed");
-    // You can add your logic here to perform actions when "Escape" key is pressed
+    console.log("Escape key pressed",event);
+    onChangeField()
   }
 });
+
+onClickOutside(fieldEditingRef, (event) => {
+  console.log(event,event.target.classList)
+  if(_.includes(_.get(event,'target.parentElement.classList',[]),'el-select-dropdown__item')){
+    console.log('click select',tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name])
+    // onChangeField()    
+  // }else if (!_.includes(_.get(event,'target.classList',[]),'p-inputtext') && !_.includes(_.get(event,'target.classList',[]),'el-input__inner') && !_.includes(_.get(event,'target.classList',[]),'el-select-dropdown__item')) {
+  }else if(_.some(_.get(event,'target.classList',[]), function(c){ if(!_.includes(['p-inputtext','el-input__inner','el-select-dropdown__item','el-date-table-cell__text'],c)){ return true; } })){
+    onChangeField()
+  }else{
+    console.log('clicked inside field')
+  }
+})
+
+const onChangeField = () => {
+  if(cellEditing.value.rowId!=null){
+      let theField = _.find(getModule.value.fields,{'name':cellEditing.value.field.name})
+      tableFormData.value.errors[cellEditing.value.rowId][cellEditing.value.field.name] = validateField(tableFormData.value.values[cellEditing.value.rowId],theField,getModule.value.fields)
+      let noError = errorChecker(tableFormData.value.errors[cellEditing.value.rowId])
+
+      if(noError){
+        let index = _.findIndex(clonedData.value,{'_id':cellEditing.value.rowId})
+        if(tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name]!=clonedData.value[index][cellEditing.value.field.name]){
+          console.log(cellEditing.value.field, tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name])
+            if(cellEditing.value.field.field_type.name=='picklist'){
+              console.log('picklist changed',tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name]['value'])
+              clonedData.value[index][cellEditing.value.field.name] = tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name]['value']
+            }              
+            else
+              clonedData.value[index][cellEditing.value.field.name] = tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name]
+            if(!_.has(tableFormChanged.value,cellEditing.value.rowId)){
+              tableFormChanged.value[cellEditing.value.rowId] = [cellEditing.value.field.name]
+            }else{
+              if(!_.has(tableFormChanged.value[cellEditing.value.rowId],cellEditing.value.field.name)){
+                tableFormChanged.value[cellEditing.value.rowId].push(cellEditing.value.field.name)
+              }
+            }
+        }
+         cellEditing.value = {'rowId':null,'field':null}
+      }     
+    }
+}
 
 provide('form', tableFormData)
 </script>
@@ -246,11 +294,8 @@ provide('form', tableFormData)
   <DataTable
     v-model:selection="selectedData"
     v-model:contextMenuSelection="selectedContextData"
-    :editMode="cellEdit ? 'cell' : null"
-    @cell-edit-complete="onCellEditComplete"
     @rowContextmenu="onRowContextMenu"
-    @cell-edit-cancel="onCellEditCancelled"
-    tableClass="editable-cells-table"
+    tableClass="editable-cells-table module-table"
     :value="clonedData"
     :loading="collectionLoading"
     stripedRows
@@ -282,12 +327,12 @@ provide('form', tableFormData)
       :bodyClass="`text-color-secondary ${mode === 'edit' ? 'py-1' : 'py-2'}`"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
-        <div v-if="cellEditing.rowIndex==slotProps.index && cellEditing.field==slotProps.field">
-          <Field :config="col" :keyName="slotProps.data['_id']" type="tableForm"/>
+        <div v-if="cellEditing.rowId==slotProps.data['_id'] && cellEditing.field.name==slotProps.field">
+          <Field ref="fieldEditingRef" :config="col" :keyName="slotProps.data['_id']" :inline="true" type="tableForm"/>
         </div>
-        <div v-else @dblclick="cellDBLClick(slotProps)" :class="{'cell-edited':(_.find(tableFormChanged,function(f,k){ if(k==slotProps.data['_id'] && _.includes(f,col.name)){ return true}}))}">
+        <div v-else @dblclick="cellDBLClick(slotProps,col)" :class="{'cell-edited':(_.find(tableFormChanged,function(f,k){ if(k==slotProps.data['_id'] && _.includes(f,col.name)){ return true}}))}">
           <div class="flex align-items-center justify-content-between">
-            <div v-if="slotProps.data[col.name]">
+            <div v-show="slotProps.data[col.name]">
               <span v-if="col.relation">
                 <span
                   v-for="(diplayFieldName, dfn) in col.relation.displayFieldName"
@@ -303,17 +348,11 @@ provide('form', tableFormData)
               </span>
               <span v-else>{{ slotProps.data[col.name] }}</span>
             </div>
-            <div v-if="mode === 'edit'">
-              <i @click="cellEditAction(slotProps.data,col)" class="edit-icon cursor-pointer pi pi-pencil ml-3"></i>
-            </div>
+            <i v-if="!_.includes(lockedFields,col.name)" class="edit-icon cursor-pointer pi pi-pencil ml-3"></i>
+            <i v-else class="edit-icon cursor-pointer pi pi-lock ml-3"></i>
           </div>
         </div>
         
-      </template>
-      <template #editor="{ data, field }">
-        <div v-if="data[col.name]">
-          <Field :config="col" :keyName="data['_id']" type="tableForm"/>
-        </div>
       </template>
     </Column>
     <Column
@@ -439,7 +478,7 @@ provide('form', tableFormData)
   /* transform: translateX(-10px);
   transition: all ease-out .2s; */
 }
-.p-editable-column:hover .edit-icon {
+.module-table td:hover .edit-icon {
   opacity: 1 !important;
   /* transform: translateX(0);
   transition: transform ease-in .2s; */

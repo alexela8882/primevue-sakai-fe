@@ -26,7 +26,7 @@
             <div class="grid">
                 <div  v-for="(col,colI) in section.field_ids" :key="colI" class="col flex flex-column gap-2">
                     <template v-for="field in col" :key="field" >
-                        <Field v-if="(quickAdd && _.get(_.find(form.fields,{'_id':field}),'quick',false)) || !quickAdd" keyName="main" :config="_.find(form.fields,{'_id':field})"/>
+                        <Field v-if="((quickAdd && _.get(_.find(form.fields,{'_id':field}),'quick',false)) || !quickAdd) && !_.includes(form.hidden.fields,field.uniqueName)" :inline="false" keyName="main" :config="_.find(form.fields,{'_id':field})"/>
                     </template>
                 </div>
             </div>

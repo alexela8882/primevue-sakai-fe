@@ -23,7 +23,7 @@
     const moduleDetailStore = useModuleDetailStore()
     const moduleStore = useModuleStore()
     const tabStore = useTabStore()
-    const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate,transformForSaving } = helper();
+    const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate,transformForSaving,getAllHiddenFieldsAndPanels } = helper();
     const { fetchPicklist, fetchLookup, saveForm, setFormReset, saveFormValues } = formDataStore
     const { getCachedFormData,getFormReset } = storeToRefs(formDataStore)
     const { getItem } = storeToRefs(moduleDetailStore)
@@ -47,20 +47,24 @@
             'main':{},
             'mutable':[]
         },
+        'hidden':{
+            'fields':[],
+            'panels':[]
+        },
         'formName':props.config.name,
         'formSaving': false
     })
-
+    const formPage = ref()
     const hiddenPanels = ref([])
     provide('form', formData)
     onMounted(async () => {
         let tmpData = getCachedFormData.value(props.config.name)
-        let formPage = (_.includes(props.config.name,'edit')) ? 'edit' : 'create'
+        formPage.value = (_.includes(props.config.name,'edit')) ? 'edit' : 'create'
         console.log('mounted',formLoading.value)
         if(tmpData){
              formData.value =  _.merge(formData.value,_.cloneDeep(tmpData))
              if(props.config.name==getFormReset.value){
-                 formData.value.values.main = transformFormValues(formData.value.fields,getItem.value,formPage)
+                 formData.value.values.main = transformFormValues(formData.value.fields,getItem.value,formPage.value)
                  
                 setFormReset("")
              }
@@ -76,7 +80,7 @@
             let listNames = getPicklistFields(formData.value.fields)
             let lookupFields = getLookupFields(formData.value.fields)
             await fetchPicklistandLookup(listNames,lookupFields)
-            formData.value.values.main = transformFormValues(formData.value.fields,getItem.value,formPage)
+            formData.value.values.main = transformFormValues(formData.value.fields,getItem.value,formPage.value)
             initialize();
             formLoading.value = false
         }
@@ -103,7 +107,7 @@
         if(lookup.length > 0){
             _.forEach(lookup, function(field){
                 console.log('start lookup')
-                promises.push(fetchLookup(field))
+                // promises.push(fetchLookup(field))
                 console.log('end lookup')
             });
             console.log('done all lookup')
@@ -124,7 +128,7 @@
 
     const initialize  = () => {
         let quickAddFields = _.chain(formData.value.fields).filter({'quick':true}).map('_id').value()
-        
+        formData.value.hidden = getAllHiddenFieldsAndPanels(formData.value.panels,formData.value.fields,formData.value.values.main,formPage.value)
         //get quick add panels
         _.forEach(formData.value.panels, function(panel, panelI){
             formData.value.panels[panelI]['quick'] = false
@@ -185,11 +189,13 @@
             <Skeleton v-for="(item,index) in tempFields" :key="index" height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
         </template>
         <Suspense  v-if="!formLoading">
-          <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && _.get(config,'maximized',false)==false">
-                <Field v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id" keyName="main" :config="field"/>
+            <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && _.get(config,'maximized',false)==false">
+                <template v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id">
+                    <Field v-if="!_.includes(formData.hidden.fields,field.uniqueName)" keyName="main" :config="field"/>
+                </template>
             </template>
             <template v-else>
-                <FormPanel v-for="panel in _.filter(formData.panels, function(p){ if(!_.includes(hiddenPanels,p._id) && _.endsWith(p.controllerMethod,'@index') && ((config.style=='window' && p.quick) || config.style!='window' && !p.quick)){ return true;} })"
+                <FormPanel v-for="panel in _.filter(formData.panels, function(p){ if(!_.includes(formData.hidden.panels,p.panelName) && _.endsWith(p.controllerMethod,'@index') && ((config.style=='window' && p.quick) || config.style!='window' && !p.quick)){ return true;} })"
                     :key="panel._id" 
                     :panel="panel"
                     :quickAdd="!_.get(config,'maximized',false)"

@@ -18,10 +18,12 @@
     const props = defineProps({
         config: Object,
         type: String,
-        keyName: String
+        keyName: String,
+        inline: Boolean
     })
 
     const formDataStore = useFormDataStore()
+    const { fetchPicklist, fetchLookup  } = formDataStore
     const { getPicklistByListName, getLookupOptions } = storeToRefs(formDataStore)
     const { checkFieldIfMultipleSelect } = helper();
     const { validateField } = validate();
@@ -30,6 +32,7 @@
     const tinyApiKey = ref('izbi1p0d9vddiqqrjjtgx2a6ech4jv2wqogrplsesugoa0gs')
     const form = inject('form')
     const popupLoading = ref(false)
+    const picklistLoading = ref(false)
 
     const remoteLookupOptions = (query) => {
         if (query) {
@@ -46,10 +49,17 @@
     } 
 
     const fieldChange  = (field) =>{
-       form.value.errors.main[field.name] = validateField(form.value.values[props.keyName],field,form.value.fields)
+        if(!props.inline)
+            form.value.errors.main[field.name] = validateField(form.value.values[props.keyName],field,form.value.fields)
     }
-    onMounted(()=>{
-        
+    onMounted(async()=>{
+        if(props.inline && props.config.field_type.name=='picklist'){
+            picklistLoading.value = true
+            let data = getPicklistByListName.value(props.config.listName)
+            if(_.isEmpty(data))
+                await fetchPicklist([props.config.listName])
+            picklistLoading.value = false
+        }
     })
 
 
@@ -159,6 +169,7 @@
                 :collapse-tags-tooltip="checkFieldIfMultipleSelect(config.rules)"
                 placeholder="Select" clearable filterable
                 :disabled="form.formSaving"
+                :loading="picklistLoading"
                 @change="fieldChange(config)">
                     <el-option
                     v-for="item in getPicklistByListName(config.listName)"
@@ -166,6 +177,11 @@
                     :label="item.value"
                     :value="item"
                     />
+                    <template #loading>
+                        <svg class="circular" viewBox="0 0 50 50">
+                            <circle class="path" cx="25" cy="25" r="20" fill="none" />
+                        </svg>
+                    </template>
             </el-select>
             <small class="errMsg mt-1" v-for="msg,i in _.get(form.errors[keyName],config.name,[])" :key="i">{{ msg }}</small>
             <!-- <Dropdown v-else-if="_.get(config.rules,'ss_dropdown',false)" v-model="form.values[keyName][config.name]" :options="getPicklistByListName(config.listName)" showClear filter  optionLabel="value" :placeholder="'Select '+ config.label" checkmark :highlightOnSelect="false" class="w-full" />

@@ -19,7 +19,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
 
     //ref
     const forms = ref([])
-    const picklist = ref([])
+    const picklist = ref({})
     const lookupModel = ref({})
     const formReset = ref("")
     //getters
@@ -75,8 +75,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         const res = await axios.post(`/picklist`,param)
     
         if (res.status === 200) {
-          const data = (res.data && res.data.length > 0) ? res.data[0] : res.data
-          picklist.value = data
+          picklist.value = _.merge(picklist.value,res.data)
         }
     }
 

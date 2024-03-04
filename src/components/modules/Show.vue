@@ -338,7 +338,7 @@ watch(selectedFields, (newVal, oldVal) => {
                   icon="pi pi-filter"
                   aria-label="Submit"
                   class="list-view-filter-btn border-round-md mr-2" />
-                <Button
+                <Button v-if="getBaseModule.name!='salesquotes'"
                   class="border-round-md mr-2"
                   :disabled="datatableLoading"
                   icon="pi pi-plus"

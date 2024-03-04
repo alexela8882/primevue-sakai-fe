@@ -3,9 +3,11 @@ import _ from 'lodash';
 import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia'
 import { useFormDataStore } from '../stores/forms'
+import parsify from '@/mixins/Parsify';
 export default function helper() {
 
 const formDataStore = useFormDataStore()
+const { parseExpression } = parsify()
 const { getPicklist} = storeToRefs(formDataStore)
 
   function getPicklistFields(fields){
@@ -346,13 +348,81 @@ const { getPicklist} = storeToRefs(formDataStore)
                 }else{
                     result[val.name] = _.trim(values[val.name])
                 }
+            }else{
+
             }
         }
     })
     return result
   }
 
-  
+  function getAllHiddenFieldsAndPanels(panels,allfields,values,page){
+    let hidden = {'fields':[],'panels':[]}
+    _.forEach(panels, function(panel){
+        let result = null
+        if(!_.includes(panel.controllerMethod,'@show')){
+            if(_.has(panel,'hideIn')){
+                if(_.includes(panel.hideIn,page)){
+                    result = true;
+                }
+            }
+            if(_.get(panel,'rules.hide_if','') && result!=true){
+                var parseresult = parseExpression(panel['rules']['hide_if'],panel.entityName,values)
+                result = parseresult.value
+            }
+            if(_.get(panel,'rules.visible_if','') && result!=true){
+                var parseresult = parseExpression(panel['rules']['visible_if'],panel.entityName,values)
+                result = (parseresult.value) ? false : true
+            }
+            let panelFields = []
+            _.forEach(panel.sections, function(section){
+                let fields = (section.field_ids.length > 1) ? _.union(section.field_ids[0],section.field_ids[1]) : section.field_ids[0];
+                panelFields = _.union(panelFields,_.filter(allfields,function(f){ if(_.includes(fields,f._id)){ return true; }}))
+            })
+            if(result===true){
+                hidden.panels.push(panel.panelName)
+                hidden.fields = _.union(hidden.fields, _.map(panelFields,'uniqueName'))
+             }else{
+               let hFields = getHiddenFields(panelFields,panel.entityName,page,values)
+               hidden.fields = _.union(hidden.fields, hFields)
+             }
+        }
+    })
+    return hidden
+  }
+
+  function getHiddenFields(fields,entityName,page,values){
+    let hiddenFields = []
+    _.forEach(fields, function(field){
+        if(_.has(field.rules,'hideIn')){
+            if(_.includes(field.rules.hideIn,page)){
+                hiddenFields.push(field.uniqueName);
+            }
+        }
+        if(_.has(field.rules,'showIn')){
+            if(!_.includes(field.rules.showIn,page)){
+                hiddenFields.push(field.uniqueName);
+            }
+        }
+        if(_.get(field,'rules.hide_if','')){
+            let result = parseExpression(field.rules.hide_if,entityName,values)
+            if(result.value == true){
+              hiddenFields.push(field.uniqueName);
+            }else if(_.includes(hiddenFields,field.uniqueName)){
+              _.pull(hiddenFields,field.uniqueName);
+            }
+        }
+        if(_.get(field,'rules.visible_if','')){
+            let result = parseExpression(field.rules.visible_if,entityName,values)
+            if(result.value == false){
+              hiddenFields.push(field.uniqueName);
+            }else if(_.includes(hiddenFields,field.uniqueName)){
+              _.pull(hiddenFields,field.uniqueName);
+            }
+        }
+    })
+    return hiddenFields
+  }
 
   return {
     getPicklistFields,
@@ -363,6 +433,7 @@ const { getPicklist} = storeToRefs(formDataStore)
     transformDate,
     checkFieldIfMultipleSelect,
     getModuleValues,
-    transformForSaving
+    transformForSaving,
+    getAllHiddenFieldsAndPanels
   };
 }
