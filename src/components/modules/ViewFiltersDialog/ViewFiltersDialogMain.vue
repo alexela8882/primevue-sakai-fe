@@ -15,6 +15,7 @@ const saveLoading = ref(false)
 // stores
 const moduleStore = useModuleStore()
 const {
+  viewFiltersDialogLoading,
   viewFiltersDialog,
   getBaseModule,
   getViewFilters,
@@ -48,12 +49,13 @@ onMounted(() => {
     <template #header>
       <div class="flex align-items-center text-2xl">
         <div class="material-icons mr-2">{{ mode === 'edit-table' ? 'table_chart' : 'view_kanban' }}</div>
-        <div>{{ mode === 'edit-table' ? 'Table' : 'Kanban' }} Settings &mdash; {{ getBaseModule.label }}</div>
+        <div>{{ (mode === 'edit-table' || mode === 'new') ? 'Table' : 'Kanban' }} Settings &mdash; {{ getBaseModule.label }}</div>
       </div>
     </template>
     <TableSettings
       v-if="mode === 'new' || mode === 'edit-table'"
       :mode="mode"
+      :baseModule="getBaseModule"
       :module="module"
       :selectedViewFilter="selectedViewFilter"
       :saveTrigger="saveTableSettings"
@@ -62,6 +64,7 @@ onMounted(() => {
     <KanbanSettings
       v-if="mode === 'edit-kanban'"
       :mode="mode"
+      :baseModule="getBaseModule"
       :module="module"
       :selectedViewFilter="selectedViewFilter"
       :saveTrigger="saveKanbanSettings"
@@ -71,13 +74,14 @@ onMounted(() => {
         <Button
           @click="viewFiltersDialog = false"
           outlined
-          :disabled="saveLoading"
+          :disabled="saveLoading || viewFiltersDialogLoading"
           label="Cancel"
           class="border-round-3xl py-2 px-4 border-color-primary"
           size="small" />
         <Button
           @click="saveViewFilterData"
-          :loading="saveLoading"
+          :disabled="viewFiltersDialogLoading"
+          :loading="viewFiltersDialogLoading"
           label="Save"
           class="reddot-primary border-round-3xl py-2 px-4 text-surface-50" />
       </div>

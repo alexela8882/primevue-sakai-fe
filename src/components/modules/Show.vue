@@ -19,6 +19,7 @@ import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataT
 import KanbanLoader from '@/components/modules/DynamicDataTable/Loaders/KanbanLoader.vue'
 
 // refs
+const moduleSearch = ref(null)
 const datatableLoading = ref(false)
 const localLoading = ref(false)
 const localModule = ref()
@@ -185,6 +186,7 @@ const confirmAddTab = (module,index) => {
       }
   });
 };
+
 // lifescycles
 onMounted(async () => {
   localLoading.value = true
@@ -210,6 +212,7 @@ onMounted(async () => {
 })
 
 watch(selectedViewFilter, (newVal, oldVal) => {
+  console.log(localModule.value)
   if (newVal) viewFilter.value = __getViewFilter.value(newVal, localModule.value)
 })
 
@@ -217,10 +220,21 @@ watch(selectedFields, (newVal, oldVal) => {
   if (newVal) selectedFields.value = newVal.value
 })
 
+watch(() => getModules.value, (newVal, oldVal) => {
+  // console.log(newVal)
+  const updatedModule = newVal.find(module => module._id === getBaseModule.value._id)
+  viewFilter.value = __getViewFilter.value(selectedViewFilter.value, updatedModule)
+}, {
+  deep: true // watch nested array
+})
+
 </script>
 
 <template>
   <div class="mt-3">
+    <!-- <pre>{{ viewFilter }}</pre> -->
+    <!-- <pre>{{ localModule && localModule.viewFilters }}</pre> -->
+    <!-- <pre>{{ getModules && getModules.find(module => module.name === 'leads').viewFilters }}</pre> -->
     <div
       v-if="moduleLoading"
       class="flex align-items-center justify-content-center"
@@ -269,11 +283,12 @@ watch(selectedFields, (newVal, oldVal) => {
                 dataKey="_id"
                 placeholder="Select Fields"
                 class="border-round-left-xl border-primary w-full md:w-12rem mb-2 md:mb-0" />
-              <div class="p-input-icon-right w-full ml-2 md:w-auto">
+              <div class="p-input-icon-right w-full ml-1 md:w-auto">
                 <i class="pi pi-search" />
                 <InputText
+                  v-model="moduleSearch"
                   type="text"
-                  :disabled="datatableLoading"
+                  :disabled="datatableLoading || (selectedSearchKeyIds && selectedSearchKeyIds.length <= 0)"
                   class="border-round-right-xl border-primary w-full mb-2 md:mb-0"
                   placeholder="Search The List..." />
               </div>
