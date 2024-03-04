@@ -49,9 +49,15 @@ const props = defineProps({
 // actions
 const saveKanbanSettings = handleSubmit(values => {
   // alert(JSON.stringify(values, null, 2))
-  console.log(values)
   viewFiltersDialog.value = false
-  addViewFilter(values) // dummy store save
+
+  const payload = Object.assign({}, {
+    baseModule: props.baseModule,
+    viewFilter: props.selectedViewFilter,
+    type: 'table',
+    data: values
+  })
+  addViewFilter(payload) // dummy store save
 })
 const kanbanSettingsAutoFill = (viewFilter) => {
   console.log(viewFilter)

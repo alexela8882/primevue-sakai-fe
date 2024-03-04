@@ -15,6 +15,7 @@ const saveLoading = ref(false)
 // stores
 const moduleStore = useModuleStore()
 const {
+  viewFiltersDialogLoading,
   viewFiltersDialog,
   getBaseModule,
   getViewFilters,
@@ -54,6 +55,7 @@ onMounted(() => {
     <TableSettings
       v-if="mode === 'new' || mode === 'edit-table'"
       :mode="mode"
+      :baseModule="getBaseModule"
       :module="module"
       :selectedViewFilter="selectedViewFilter"
       :saveTrigger="saveTableSettings"
@@ -62,6 +64,7 @@ onMounted(() => {
     <KanbanSettings
       v-if="mode === 'edit-kanban'"
       :mode="mode"
+      :baseModule="getBaseModule"
       :module="module"
       :selectedViewFilter="selectedViewFilter"
       :saveTrigger="saveKanbanSettings"
@@ -71,13 +74,14 @@ onMounted(() => {
         <Button
           @click="viewFiltersDialog = false"
           outlined
-          :disabled="saveLoading"
+          :disabled="saveLoading || viewFiltersDialogLoading"
           label="Cancel"
           class="border-round-3xl py-2 px-4 border-color-primary"
           size="small" />
         <Button
           @click="saveViewFilterData"
-          :loading="saveLoading"
+          :disabled="viewFiltersDialogLoading"
+          :loading="viewFiltersDialogLoading"
           label="Save"
           class="reddot-primary border-round-3xl py-2 px-4 text-surface-50" />
       </div>

@@ -41,7 +41,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
       filterName: null,
       sortField: null,
       sortOrder: null,
-      perPage: null,
+      pageSize: null,
       fields: [],
       moduleName: null,
       isDefault: false
@@ -50,7 +50,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
       filterName: null,
       sortField: null,
       sortOrder: null,
-      perPage: null,
+      pageSize: null,
       fields: [],
       moduleName: null,
       isDefault: false
@@ -165,33 +165,23 @@ export const useModuleStore = defineStore('moduleStore', () => {
       else __module = module.value
 
       const viewFilters = __module && __module.viewFilters
-      const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload)
+      const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id == payload)
 
       return getReconstructedViewFilter.value(viewFilter, __module)
     }
   })
   const getReconstructedViewFilter = computed(() => {
     return (payload, _module) => {
+      console.log(payload)
       let moduleFields = null
       if (_module) moduleFields = _module.fields
       else moduleFields = module.value && module.value.fields
       const viewFilter = payload
 
-      const filteredFields = moduleFields && moduleFields.filter(field => viewFilter.fields.includes(field._id))
+      const filteredFields = moduleFields && moduleFields.filter(field => viewFilter && viewFilter.fields.includes(field._id))
 
       const finalViewFilter = Object.assign({}, {
-        _id: viewFilter && viewFilter._id,
-        filterLogic: viewFilter && viewFilter.filterLogic,
-        filterName: viewFilter && viewFilter.filterName,
-        filters: viewFilter && viewFilter.filters,
-        isDefault: viewFilter && viewFilter.isDefault,
-        currentDisplay: viewFilter && viewFilter.currentDisplay,
-        summarize_by: viewFilter && viewFilter.summarize_by,
-        group_by: viewFilter && viewFilter.group_by,
-        moduleName: viewFilter && viewFilter.moduleName,
-        query_id: viewFilter && viewFilter.query_id,
-        sortField: viewFilter && viewFilter.sortField,
-        sortOrder: viewFilter && viewFilter.sortOrder,
+        ...viewFilter,
         fields: filteredFields
       })
 
@@ -481,17 +471,58 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
   }
   const addViewFilter = async (payload) => {
-    console.log(JSON.stringify(payload))
+    // console.log(JSON.stringify(payload))
+    let data = payload.data
+
+    const finalObject = Object.assign({}, {
+      updateType: payload.type,
+      filterName: data.filterName,
+      pageSize: data.pageSize,
+      fields: data.pickList,
+      sortField: data.sortField,
+      sortOrder: data.sortOrder,
+      summarize_by: data.summarize_by,
+      group_by: data.group_by,
+    })
 
     // do backend codes here
-
-    // toast
-    toast.add({
-      severity: 'success',
-      summary: 'Success Message',
-      detail: 'New view filters successfully added',
-      life: 3000
+    const res = await axios(`/viewFilters/${payload.viewFilter}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      data: finalObject
     })
+
+    if (res && res.status === 200) {
+      // update module view filters
+      console.log(payload.baseModule)
+      modules.value.map(module => {
+        if (module._id === payload.baseModule._id) {
+          module.viewFilters.map(viewFilter => {
+            if (viewFilter._id === payload.viewFilter) {
+              Object.assign(viewFilter, res.data.viewFilter)
+              console.log(res.data.viewFilter)
+            }
+          })
+        }
+      })
+
+      console.log(modules.value)
+
+      // toast
+      toast.add({
+        severity: 'success',
+        summary: 'Success Message',
+        detail: res.data && res.data.message,
+        life: 3000
+      })
+    } else {
+      toast.add({
+        severity: 'error',
+        summary: 'Error Message',
+        detail: 'Error saving',
+        life: 3000
+      })
+    }
   }
 
   // specific actions for inquiry module
