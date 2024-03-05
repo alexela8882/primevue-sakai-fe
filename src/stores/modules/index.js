@@ -225,7 +225,24 @@ export const useModuleStore = defineStore('moduleStore', () => {
       const fieldIds = []
       const fields = _module && _module.fields
       fields && fields.map(field => {
-        if (field.searchKey) fieldIds.push(field._id)
+        if (field.searchKey) {
+          if (
+            field.field_type.name !== 'date' ||
+            field.field_type.name !== 'boolean' ||
+            field.field_type.name !== 'time' ||
+            field.field_type.name !== 'file' ||
+            field.field_type.name !== 'image' ||
+            field.field_type.name !== 'richTextbox' ||
+            field.field_type.name !== 'password' ||
+            field.field_type.name !== 'longText' ||
+            field.field_type.name !== 'number' ||
+            field.field_type.name !== 'currency' ||
+            field.field_type.name !== 'list' ||
+            field.field_type.name !== 'percentage'
+          ) {
+            fieldIds.push(field._id)
+          }
+        }
       })
       return fieldIds
     }
@@ -390,7 +407,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
       } else return data
     }
   }
-  const fetchModule = async (moduleName, viewfilter, page, limit = 0, reuse) => {
+  const fetchModule = async (moduleName, viewfilter = null, page = 1, limit = 25, reuse) => {
     if (!reuse) collectionLoading.value = true
     // const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
     const baseUri = `/modules/${moduleName}`
@@ -504,25 +521,25 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
 
     if (res && res.status === 200) {
-      if (payload.mode === 'new') {
-        // add new view filter into modules
-        modules.value.map(module => {
-          if (module._id === payload.baseModule._id) {
-            module.viewFilters.push(res.data.viewFilter)
-          }
-        })
-      } else {
-        // update module view filters
-        modules.value.map(module => {
-          if (module._id === payload.baseModule._id) {
-            module.viewFilters.map(viewFilter => {
-              if (viewFilter._id === payload.viewFilter) {
-                Object.assign(viewFilter, res.data.viewFilter)
-              }
-            })
-          }
-        })
-      }
+      // if (payload.mode === 'new') {
+      //   // add new view filter into modules
+      //   modules.value.map(module => {
+      //     if (module._id === payload.baseModule._id) {
+      //       module.viewFilters.push(res.data.viewFilter)
+      //     }
+      //   })
+      // } else {
+      //   // update module view filters
+      //   modules.value.map(module => {
+      //     if (module._id === payload.baseModule._id) {
+      //       module.viewFilters.map(viewFilter => {
+      //         if (viewFilter._id === payload.viewFilter) {
+      //           Object.assign(viewFilter, res.data.viewFilter)
+      //         }
+      //       })
+      //     }
+      //   })
+      // }
 
       // toast
       toast.add({
@@ -531,6 +548,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
         detail: res.data && res.data.message,
         life: 3000
       })
+
+      await _fetchModule(payload.baseModule.name, res.data.viewFilter._id)
     } else {
       toast.add({
         severity: 'error',

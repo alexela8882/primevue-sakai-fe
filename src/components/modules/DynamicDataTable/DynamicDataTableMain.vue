@@ -29,12 +29,14 @@ const props = defineProps({
   pageItems: Array,
   rows: Number,
   pages: Number,
+  viewFilter: Object,
   fields: Array,
   collectionLoading: Boolean
 })
 const emit = defineEmits(['toggle-sidebar', 'paginate', 'limit-page'])
 
 // refs
+const multiSortMeta = ref([{ field: 'email', order: -1 }])
 const fetchedModule = ref()
 const pageOffset = ref(0)
 const listViewFilterRef = ref(null)
@@ -298,6 +300,8 @@ provide('form', tableFormData)
 <template>
   <!-- Test
   {{ moduleEntityName }} {{ getBaseModule.mainEntity }} -->
+  <!-- <pre>{{ viewFilter.sortField }}</pre>
+  <pre>{{ viewFilter.sortOrder }}</pre> -->
   <DataTable
     v-model:selection="selectedData"
     v-model:contextMenuSelection="selectedContextData"
@@ -310,7 +314,9 @@ provide('form', tableFormData)
     :stateKey="`dt-state-${moduleLabel}`"
     resizableColumns
     columnResizeMode="fit"
-    sortMode="multiple"
+    sortMode="single"
+    :sortField="viewFilter.sortField"
+    :sortOrder="viewFilter.sortOrder === 'ASC' ? 1 : -1"
     removableSort
     scrollable
     scrollHeight="60vh"

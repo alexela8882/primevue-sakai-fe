@@ -228,7 +228,7 @@ watch(selectedFields, (newVal, oldVal) => {
   if (newVal) selectedFields.value = newVal.value
 })
 
-watch(() => getModules.value, (newVal, oldVal) => {
+watch(() => getModules.value, async (newVal, oldVal) => {
   if (viewFiltersCount.value !== 0) {
     let updatedModule = newVal.find(module => module._id === getBaseModule.value._id)
 
@@ -237,12 +237,17 @@ watch(() => getModules.value, (newVal, oldVal) => {
     }
 
     viewFilter.value = __getViewFilter.value(selectedViewFilter.value, updatedModule)
+    // await initialize(selectedViewFilter.value)
   }
 
   // reset
   viewFiltersDialogMode.value = null
 }, {
   deep: true // watch nested array
+})
+
+watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
+  if (newVal === null) await initialize(selectedViewFilter.value)
 })
 
 </script>
@@ -398,6 +403,7 @@ watch(() => getModules.value, (newVal, oldVal) => {
             :moduleEntityName="getBaseModule.mainEntity"
             :moduleName="getBaseModule.name"
             :moduleLabel="getBaseModule.label"
+            :viewFilter="viewFilter"
             :fields="viewFilter.fields"
             :data="localModule.data"
             :pagination="localModule.meta && localModule.meta.pagination"
