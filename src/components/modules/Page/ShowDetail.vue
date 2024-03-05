@@ -230,27 +230,27 @@ onMounted(async() => {
         <div class="flex">
           <div v-for="(field, fx) in localModule.fields" :key="fx">
             <div :class="`${localModule.fields.length === fx + 1 && 'mr-8'}`">
-              <div v-if="field.title" class="flex flex-column text-xl mr-4">
+              <div v-if="field.title" class="flex flex-column text-md mr-4">
                 <div v-if="field.groupWith">
                   <div>{{ field.groupLabel }}</div>
                   <div class="flex">
                     <div v-for="(groupField, gfx) in field.groupWith" :key="gfx">
-                      <div class="font-bold">{{ getItemValueByName(groupField) }}{{ field.fieldGlue === ' ' ? '&nbsp;' : field.fieldGlue }}</div>
+                      <div class="font-bold text-md">{{ getItemValueByName(groupField) }}{{ field.fieldGlue === ' ' ? '&nbsp;' : field.fieldGlue }}</div>
                     </div>
                   </div>
                 </div>
                 <div v-else>
                   <div>{{ field.label }}</div>
-                  <div class="font-bold">{{ getItemValueByName(field.name) }}</div>
+                  <div class="font-bold text-md">{{ getItemValueByName(field.name) }}</div>
                 </div>
               </div>
             </div>
           </div>
 
           <div v-for="(field, fx) in localModule.fields" :key="fx">
-            <div v-if="field.header" class="flex flex-column text-xl mx-4">
+            <div v-if="field.header" class="flex flex-column text-md mx-4">
               <div>{{ field.label }}</div>
-              <div class="font-bold">{{ getItemValueByName(field.name) ? getItemValueByName(field.name) : null }}</div>
+              <div class="font-bold text-md">{{ getItemValueByName(field.name) ? getItemValueByName(field.name) : null }}</div>
             </div>
           </div>
         </div>

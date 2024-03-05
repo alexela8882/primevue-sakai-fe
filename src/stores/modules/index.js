@@ -247,11 +247,24 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return fieldIds
     }
   })
+  const _getKanbanData = computed(() => {
+    return (payload) => {
+      return getKanbanData(payload)
+    }
+  })
   const getKanbanData = computed(() => {
     return (payload) => {
-      const collectionData = module.value && module.value.data
-      const viewFilter = module.value && module.value.viewFilters.find(vFilter => vFilter._id === payload)
-      const groupByField = module.value && module.value.fields.find(f => f._id === viewFilter.group_by)
+      let module = null
+
+      if (payload.module) module = payload.module
+      else module = module.value
+
+      const collectionData = module.data
+      const viewFilter = module.viewFilters.find(vFilter => vFilter._id === payload._id)
+      const groupByField = module.fields.find(f => f._id === viewFilter.group_by)
+
+      console.log(module)
+      console.log(groupByField)
 
       const groupByColumns = collectionData.map((cdata, idx) => cdata[groupByField.name])
       const uniqueGroupByColumns = [...new Set(groupByColumns)]
@@ -489,7 +502,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
   }
   const addViewFilter = async (payload) => {
-    // console.log(JSON.stringify(payload))
     let data = payload.data
     let uriOptions = { uri: null, method: null }
 

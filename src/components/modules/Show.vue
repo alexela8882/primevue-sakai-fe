@@ -110,7 +110,7 @@ const tblSettingsBtn = ref([
   }, {
     label: 'Kanban view',
     icon: 'view_kanban',
-    disabled: true,
+    disabled: false,
     command: (event) => {
       console.log(event)
       viewFilter.value.currentDisplay = 'kanban'
@@ -254,7 +254,6 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
 
 <template>
   <div class="mt-3">
-    <!-- <pre>{{ viewFilter }}</pre> -->
     <!-- <pre>{{ localModule && localModule.viewFilters }}</pre> -->
     <!-- <pre>{{ getModules && getModules.find(module => module.name === 'leads').viewFilters }}</pre> -->
     <div
@@ -285,7 +284,7 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
 
         <div v-else class="mt-2 mb-4">
           <div class="md:flex justify-content-between">
-            <div>
+            <div class="w-7">
               <Dropdown
                 v-model="selectedViewFilter"
                 :options="_getViewFilters(localModule)"
@@ -305,7 +304,7 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
                 dataKey="_id"
                 placeholder="Select Fields"
                 class="border-round-left-xl border-primary w-full md:w-12rem mb-2 md:mb-0" />
-              <div class="p-input-icon-right w-full ml-1 md:w-auto">
+              <div class="p-input-icon-right w-full ml-1 md:w-6">
                 <i class="pi pi-search" />
                 <InputText
                   v-model="moduleSearch"
@@ -325,7 +324,7 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
                   aria-controls="tbl_overlay_menu2"
                   class="material-icon border-round-md mr-2">
                   <template #icon>
-                    <div class="material-icons">{{ viewFilter.currentDisplay === 'table' ? 'table_chart' : 'view_kanban' }}</div>
+                    <div class="material-icons">{{ viewFilter.currentDisplay === null || viewFilter.currentDisplay === 'table' ? 'table_chart' : 'view_kanban' }}</div>
                   </template>
                 </Button>
                 <Menu
@@ -428,14 +427,15 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
 
         <!-- KANBAN -->
         <Suspense v-else-if="viewFilter.currentDisplay === 'kanban'">
-          <pre>This feature will be added soon</pre>
-          <!-- <DynamicKanban
+          <!-- <pre>This feature will be added soon</pre> -->
+          <DynamicKanban
             :viewFilterId="viewFilter._id"
             :groupBy="viewFilter.group_by"
             :summarizeBy="viewFilter.summarize_by"
             :moduleName="getBaseModule.name"
             :moduleLabel="getBaseModule.label"
             :fields="viewFilter.fields"
+            :module="localModule"
             :data="localModule.data"
             :collectionLoading="localLoading"
             :sidebar="listViewFilterBar"
@@ -448,7 +448,7 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
                 </template>
               </Suspense>
             </template>
-          </DynamicKanban> -->
+          </DynamicKanban>
           <template #fallback>
             <KanbanLoader />
           </template>

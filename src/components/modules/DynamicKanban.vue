@@ -14,6 +14,7 @@ import { useModuleStore } from '../../stores/modules/index'
 const props = defineProps({
   sidebar: Boolean,
   viewFilterId: String,
+  module: Object,
   moduleName: String,
   moduleLabel: String,
   data: Array,
@@ -31,7 +32,7 @@ const router = useRouter()
 const drag = ref(false)
 const kanbanData = ref([])
 const moduleStore = useModuleStore()
-const { getCollection, getKanbanData, getFieldDetails } = storeToRefs(moduleStore)
+const { getCollection, _getKanbanData, getKanbanData, getFieldDetails } = storeToRefs(moduleStore)
 const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 
 // actions
@@ -53,8 +54,7 @@ const navigateDetailPage = (data) => {
 }
 
 onMounted(() => {
-  kanbanData.value = getKanbanData.value(props.viewFilterId)
-  console.log(getKanbanData.value(props.viewFilterId))
+  kanbanData.value = getKanbanData.value({ _id: props.viewFilterId, module: props.module })
 })
 
 onClickOutside(listViewFilterRef, (event) => {

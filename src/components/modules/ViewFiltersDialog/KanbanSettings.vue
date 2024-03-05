@@ -8,6 +8,7 @@ import * as yup from 'yup'
 import { useModuleStore } from '@/stores/modules/index'
 
 // refs
+const availableFields = ref()
 const localSelectedViewFilter = ref(null)
 const {
   values,
@@ -41,23 +42,27 @@ const { addViewFilter } = moduleStore
 // defines
 const props = defineProps({
   mode: String,
+  baseModule: Object,
   module: Object,
   selectedViewFilter: String,
   saveTrigger: Number
 })
 
 // actions
-const saveKanbanSettings = handleSubmit(values => {
+const saveKanbanSettings = handleSubmit(async values => {
   // alert(JSON.stringify(values, null, 2))
   viewFiltersDialog.value = false
 
   const payload = Object.assign({}, {
     baseModule: props.baseModule,
     viewFilter: props.selectedViewFilter,
-    type: 'table',
+    type: 'kanban',
     data: values
   })
-  addViewFilter(payload) // dummy store save
+  await addViewFilter(payload) // store save
+
+  viewFiltersDialogLoading.value = false
+  viewFiltersDialog.value = false
 })
 const kanbanSettingsAutoFill = (viewFilter) => {
   console.log(viewFilter)
@@ -69,7 +74,10 @@ const kanbanSettingsAutoFill = (viewFilter) => {
 onMounted(() => {
   viewFiltersDialogLoading.value = false
   localSelectedViewFilter.value = props.selectedViewFilter
-  console.log(localSelectedViewFilter.value)
+  // console.log(localSelectedViewFilter.value)
+
+  const viewFilter = __getViewFilter.value(props.selectedViewFilter, props.module)
+  availableFields.value = viewFilter.fields
 })
 
 watch(localSelectedViewFilter, (newVal, oldVal) => {
@@ -89,7 +97,7 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
         <span class="p-float-label">
           <Dropdown
             v-bind="summarize_by"
-            :options="module.fields"
+            :options="availableFields"
             optionLabel="label"
             optionValue="name"
             filter
@@ -103,7 +111,7 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
         <span class="p-float-label">
           <Dropdown
             v-bind="group_by"
-            :options="module.fields"
+            :options="availableFields"
             optionLabel="label"
             optionValue="_id"
             filter
