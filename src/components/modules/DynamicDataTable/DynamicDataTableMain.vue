@@ -36,7 +36,7 @@ const props = defineProps({
 const emit = defineEmits(['toggle-sidebar', 'paginate', 'limit-page'])
 
 // refs
-const multiSortMeta = ref([{ field: 'email', order: -1 }])
+const multiSortMeta = ref([{ field: props.viewFilter.sortField, order: props.viewFilter.sortOrder === 'ASC' ? 1 : -1 }])
 const fetchedModule = ref()
 const pageOffset = ref(0)
 const listViewFilterRef = ref(null)
@@ -305,18 +305,15 @@ provide('form', tableFormData)
   <DataTable
     v-model:selection="selectedData"
     v-model:contextMenuSelection="selectedContextData"
+    v-model:multiSortMeta="multiSortMeta"
     @rowContextmenu="onRowContextMenu"
     tableClass="editable-cells-table module-table"
     :value="clonedData"
     :loading="collectionLoading"
     stripedRows
-    stateStorage="local"
-    :stateKey="`dt-state-${moduleLabel}`"
     resizableColumns
     columnResizeMode="fit"
-    sortMode="single"
-    :sortField="viewFilter.sortField"
-    :sortOrder="viewFilter.sortOrder === 'ASC' ? 1 : -1"
+    sortMode="multiple"
     removableSort
     scrollable
     scrollHeight="60vh"
