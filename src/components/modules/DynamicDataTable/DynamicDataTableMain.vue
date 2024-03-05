@@ -36,7 +36,14 @@ const props = defineProps({
 const emit = defineEmits(['toggle-sidebar', 'paginate', 'limit-page'])
 
 // refs
-const multiSortMeta = ref([{ field: props.viewFilter.sortField, order: props.viewFilter.sortOrder === 'ASC' ? 1 : -1 }])
+const multiSortMeta = ref([])
+if (props.viewFilter) {
+  let sort = Object.assign({}, {
+    field: props.viewFilter.sortField,
+    order: props.viewFilter.sortOrder == 'ASC' ? 1 : -1
+  })
+  multiSortMeta.value.push(sort)
+}
 const fetchedModule = ref()
 const pageOffset = ref(0)
 const listViewFilterRef = ref(null)
