@@ -390,13 +390,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
       } else return data
     }
   }
-  const fetchModule = async (moduleName, page, limit = 0, reuse) => {
+  const fetchModule = async (moduleName, viewfilter, page, limit = 0, reuse) => {
     if (!reuse) collectionLoading.value = true
     // const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
     const baseUri = `/modules/${moduleName}`
     const pageUri = page ? `?page=${page}` : '?page=1'
     const limitUri = limit ? `&limit=${limit}` : ''
-    const uri = `${baseUri}${pageUri}${limitUri}`
+    const viewFilterUri = viewfilter ? `&viewfilter=${viewfilter}` : ''
+    const uri = `${baseUri}${pageUri}${limitUri}${viewFilterUri}`
 
     try {
       // const res = await axios(`${jsonDbUrl.value}/${uri}`, {
@@ -441,8 +442,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
       collectionLoading.value = false
     }
   }
-  const _fetchModule = async (payload, page = null, limit = null) => {
-    const fetchedModule = await fetchModule(payload, page, limit, true)
+  const _fetchModule = async (payload, viewfilter = null, page = null, limit = null) => {
+    const fetchedModule = await fetchModule(payload, viewfilter, page, limit, true)
     return fetchedModule
   }
   const fetchLinkedModuleData = async (payload) => {

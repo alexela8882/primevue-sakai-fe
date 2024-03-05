@@ -135,7 +135,7 @@ const paginate = async (payload) => {
   } else page = localModule.meta && localModule.meta.pagination
 
   // re-fetch module & collection
-  localModule.value = await _fetchModule(getBaseModule.value.name, page > 1 ? page : null, payload.per_page)
+  localModule.value = await _fetchModule(getBaseModule.value.name, selectedViewFilter.value, page > 1 ? page : null, payload.per_page)
   datatableLoading.value = false
 }
 const limitPage = async (e) => {
@@ -188,13 +188,12 @@ const confirmAddTab = (module,index) => {
   });
 };
 
-// lifescycles
-onMounted(async () => {
+const initialize = async (vFilter) => {
   localLoading.value = true
   datatableLoading.value = true
   // await fetchCollection(route.name.split('.')[0], 1)
   await fetchBaseModule(route.params.id)
-  const fetchedModule = await _fetchModule(getBaseModule.value.name)
+  const fetchedModule = await _fetchModule(getBaseModule.value.name, selectedViewFilter.value && selectedViewFilter.value)
 
   localModule.value = fetchedModule
   viewFiltersCount.value = localModule.value.viewFilters.length
@@ -204,18 +203,25 @@ onMounted(async () => {
   // console.log(getCollection.value)
 
   // pre-assignments
-  viewFilter.value = computed(() => _getDefaultViewFilter.value(localModule.value))
-  selectedViewFilter.value = viewFilter.value && viewFilter.value.value._id
+  if (vFilter) viewFilter.value = __getViewFilter.value(vFilter, localModule.value)
+  else viewFilter.value = _getDefaultViewFilter.value(localModule.value)
+
+  selectedViewFilter.value = viewFilter.value && viewFilter.value._id
   selectedFields.value = computed(() => _getViewFilterIds.value(localModule.value))
   selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
 
   localLoading.value = false
   datatableLoading.value = false
+}
+
+// lifescycles
+onMounted(async () => {
+  await initialize(null)
 })
 
-watch(selectedViewFilter, (newVal, oldVal) => {
-  console.log(localModule.value)
-  if (newVal) viewFilter.value = __getViewFilter.value(newVal, localModule.value)
+watch(selectedViewFilter, async (newVal, oldVal) => {
+  // if (newVal) viewFilter.value = __getViewFilter.value(newVal, localModule.value)
+  await initialize(newVal)
 })
 
 watch(selectedFields, (newVal, oldVal) => {
@@ -232,6 +238,9 @@ watch(() => getModules.value, (newVal, oldVal) => {
 
     viewFilter.value = __getViewFilter.value(selectedViewFilter.value, updatedModule)
   }
+
+  // reset
+  viewFiltersDialogMode.value = null
 }, {
   deep: true // watch nested array
 })
