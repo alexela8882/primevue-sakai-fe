@@ -26,11 +26,12 @@ onMounted(async () => {
 
   // pre-assignments
   salesRelatedLists.value = _getRelatedOrderedLists.value.filter(orl => (orl.entityName === 'SalesOpportunity' || orl.entityName === 'SalesOpportunity'))
+  console.log(salesRelatedLists.value) // not working
 })
 </script>
 
 <template>
-  <RelatedListPanel :fromTab="true" :relatedLists="salesRelatedLists" />
+  <RelatedListPanel :fromTab="true" :relatedLists="_getRelatedOrderedLists.filter(orl => (orl.entityName === 'SalesOpportunity' || orl.entityName === 'SalesOpportunity'))" />
 </template>
 
 <style scoped>

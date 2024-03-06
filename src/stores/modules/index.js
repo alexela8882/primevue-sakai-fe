@@ -514,15 +514,9 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
 
     const finalObject = Object.assign({}, {
+      ...data,
       updateType: payload.type,
-      moduleName: payload.baseModule.name,
-      filterName: data.filterName,
-      pageSize: data.pageSize,
-      fields: data.pickList,
-      sortField: data.sortField,
-      sortOrder: data.sortOrder,
-      summarize_by: data.summarize_by,
-      group_by: data.group_by,
+      moduleName: payload.baseModule.name
     })
 
     // do backend codes here

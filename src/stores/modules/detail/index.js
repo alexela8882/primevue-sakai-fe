@@ -129,7 +129,9 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     itemLoading.value = false
   }
   const fetchItemRelatedList = async (payload) => {
-    const res = await axios(`${jsonDbUrl.value}/${payload.moduleName}-related?cname=${payload.panelName}`, {
+    const jsonUri = `${jsonDbUrl.value}/${payload.moduleName}-related?cname=${payload.panelName}`
+    const beUri = `/getShowRelatedList?module-name=${payload.moduleName}&base=${payload.base}&panel=${payload.panelId}`
+    const res = await axios(jsonUri, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     }).catch((err) => {
@@ -141,26 +143,35 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     } else relatedLists.value = [] // reset
   }
   const fetchItemRelatedLists = async (payload) => {
+    console.log(payload)
     relatedListLoading.value = true
 
-    const res = await axios(`${jsonDbUrl.value}/${payload.name}-related`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    }).catch((err) => {
-      console.log(err)
+    const moduleName = payload.moduleName
+    const base = payload.base
+    let relatedLists = payload.relatedLists
+
+    const jsonUri = `${jsonDbUrl.value}/${payload.name}-related`
+
+    relatedLists.map(async rl => {
+      const beUri = `/getShowRelatedList?module-name=${moduleName}&base=${base}&panel=${rl._id}`
+      const res = await axios(beUri, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      }).catch((err) => {
+        console.log(err)
+      })
+
+      if (res && res.status === 200) {
+        _relatedLists.value.push(res.data)
+      }
     })
 
-    if (res && res.status === 200) {
-      _relatedLists.value = res.data
-    } else {
-      console.log('err')
-      _relatedLists.value = [] // reset
-    }
     console.log(_relatedLists.value)
     relatedListLoading.value = false
   }
 
   return {
+    _relatedLists,
     itemLoading,
     relatedListLoading,
     item,

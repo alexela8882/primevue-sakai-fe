@@ -19,9 +19,11 @@ const {
   handleSubmit
 } = useForm({
   validationSchema: yup.object({
-    group_by: yup.string().label('Group By').required()
+    group_by: yup.string().label('Group By').required(),
+    title_ids: yup.array().label('Titles').required()
   })
 })
+const title_ids = defineComponentBinds('title_ids')
 const summarize_by = defineComponentBinds('summarize_by')
 const group_by = defineComponentBinds('group_by')
 // stores
@@ -65,7 +67,15 @@ const saveKanbanSettings = handleSubmit(async values => {
   viewFiltersDialog.value = false
 })
 const kanbanSettingsAutoFill = (viewFilter) => {
-  console.log(viewFilter)
+  let title_ids = []
+  if (viewFilter.title_ids && viewFilter.title_ids.length > 0) {
+    // check if title ids are present in view filter
+    title_ids = viewFilter.title_ids
+  } else { // else get default from field.title
+    title_ids = availableFields.value.filter(field => field.title).map(field => field._id)
+  }
+
+  setFieldValue('title_ids', title_ids)
   setFieldValue('summarize_by', viewFilter.summarize_by)
   setFieldValue('group_by', viewFilter.group_by)
 }
@@ -93,6 +103,21 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
 <template>
   <div class="flex flex-column gap-4">
     <div class="flex flex-column gap-4 mx-auto mt-6">
+      <div>
+        <span class="p-float-label">
+          <MultiSelect
+            v-bind="title_ids"
+            :options="availableFields"
+            optionLabel="label"
+            optionValue="_id"
+            filter
+            mutiple
+            class="w-full md:w-22rem mr-2"
+            :class="`${errors.title_ids ? 'p-invalid' : 'border-primary'}`" />
+          <label>Titles</label>
+        </span>
+        <div class="p-error text-sm my-2">{{ errors.title_ids || '&nbsp;' }}</div>
+      </div>
       <div>
         <span class="p-float-label">
           <Dropdown

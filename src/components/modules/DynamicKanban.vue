@@ -81,10 +81,14 @@ onClickOutside(listViewFilterRef, (event) => {
       <div
         v-for="(field, fx) in kanbanData"
         :key="fx"
-        class="col">
+        class="col w-3">
         <div
           style="position: sticky; top: 70px; z-index: 2;"
-          class="bg-white py-4 px-4 text-primary font-bold text-xl shadow-1">{{ field.label }}</div>
+          class="bg-white py-4 px-4 shadow-1">
+          <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis text-primary font-bold text-xl">
+            {{ field.label ? field.label : '&nbsp;' }}
+          </div>
+        </div>
         <draggable
           :list="field.data"
           :group="viewFilterId"

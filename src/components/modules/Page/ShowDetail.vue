@@ -39,7 +39,7 @@ const localItemPanels = ref()
 const localRelatedList = ref()
 const localRelatedLists = ref()
 const atIndexRelatedLists = ref()
-const atShowRelatedLists = ref()
+const atShowRelatedLists = ref([])
 // stores
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
@@ -51,6 +51,7 @@ const {
     itemLoading,
     relatedListLoading,
     getItem,
+    _relatedLists,
     getRelatedLists,
     _getRelatedOrderedLists,
     getRelatedListsByCname,
@@ -191,7 +192,22 @@ onMounted(async() => {
   await fetchLinkedModuleData(lmdParams)
 
   await fetchItem(route.params)
-  await fetchItemRelatedLists(route.params)
+
+  console.log(route.params)
+  console.log(getModule.value.relatedLists)
+
+  const payload = Object.assign({}, {
+    // for json db
+    id: route.params.id,
+    name: route.params.name,
+    pageid: route.params.pageid,
+
+    // for be db
+    moduleName: route.params.name,
+    base: route.params.pageid,
+    relatedLists: getModule.value.relatedLists
+  })
+  await fetchItemRelatedLists(payload)
 
   // pre-assignments
   localItemLoading.value = itemLoading.value
@@ -202,6 +218,10 @@ onMounted(async() => {
   atIndexRelatedLists.value = localItemPanels.value.filter(ip => ip.controllerMethod.includes('@index'))
   atShowRelatedLists.value = _getRelatedOrderedLists.value.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))
   linkedInquiryModule.value = getLinkedModuleData.value
+
+  console.log(_relatedLists.value)
+  console.log(_getRelatedOrderedLists.value)
+  console.log(atShowRelatedLists.value) // not working
 
   // other logics
   // Attach the scroll event listener to the window or container
@@ -215,6 +235,7 @@ onMounted(async() => {
 
 <template>
   <div>
+    <!-- <pre>{{ _getRelatedOrderedLists.map(i => i.entityName) }}</pre> -->
     <RdBreadCrumbs :bcrumbs="bcrumbs" />
 
     <div
@@ -259,6 +280,7 @@ onMounted(async() => {
           <Button label="Edit" size="large" @click="createNewForm(getBaseModule)" class="px-6 border-round-xl"></Button>
         </div>
       </div>
+
 
       <div class="grid">
         <div class="col-7">
@@ -326,8 +348,7 @@ onMounted(async() => {
                         </Panel>
                       </div>
                     </div>
-
-                    <RelatedListPanel :relatedLists="atShowRelatedLists" />
+                    <RelatedListPanel :relatedLists="_getRelatedOrderedLists.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))" />
                   </div>
                 </div>
               </TabPanel>

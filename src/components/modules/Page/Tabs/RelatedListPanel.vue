@@ -25,6 +25,7 @@ const props = defineProps({
 
 <template>
   <div>
+    <!-- <pre>{{ relatedLists }}</pre> -->
     <div v-if="relatedLists && relatedLists.length > 0">
       <div v-for="(panel, px) in relatedLists" :key="px" class="flex flex-column gap-4 mt-4">
         <Panel class="detail-page-panel">
@@ -43,7 +44,7 @@ const props = defineProps({
                   :moduleEntityName="panel.entityName"
                   :moduleName="_getRelatedListsByCname(panel.cname).link"
                   :moduleLabel="_getRelatedListsByCname(panel.cname).label"
-                  :fields="_getRelatedListsByCname(panel.cname).fields.data"
+                  :fields="_getRelatedListsByCname(panel.cname).fields"
                   :data="_getRelatedListsByCname(panel.cname).collection.data"
                   :pagination="_getRelatedListsByCname(panel.cname).collection.meta"
                   :collectionLoading="false">
