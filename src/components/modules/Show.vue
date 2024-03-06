@@ -30,6 +30,7 @@ const viewFiltersDialogComponentKey = ref(0)
 const route = useRoute()
 const viewFilter = ref({})
 const selectedViewFilter = ref()
+const selectedViewFilterId = ref()
 const selectedFields = ref()
 const selectedSearchKeyIds = ref()
 // stores
@@ -135,7 +136,7 @@ const paginate = async (payload) => {
   } else page = localModule.meta && localModule.meta.pagination
 
   // re-fetch module & collection
-  localModule.value = await _fetchModule(getBaseModule.value.name, selectedViewFilter.value, page > 1 ? page : null, payload.per_page)
+  localModule.value = await _fetchModule(getBaseModule.value.name, selectedViewFilterId.value, page > 1 ? page : null, payload.per_page)
   datatableLoading.value = false
 }
 const limitPage = async (e) => {
@@ -193,7 +194,11 @@ const initialize = async (vFilter) => {
   datatableLoading.value = true
   // await fetchCollection(route.name.split('.')[0], 1)
   await fetchBaseModule(route.params.id)
-  const fetchedModule = await _fetchModule(getBaseModule.value.name, selectedViewFilter.value && selectedViewFilter.value)
+  const moduleName = getBaseModule.value.name
+  const moduleVFilter = selectedViewFilterId.value && selectedViewFilterId.value
+  const modulePage = null
+  const moduleLimit = selectedViewFilter.value && selectedViewFilter.value.pageSize
+  const fetchedModule = await _fetchModule(moduleName, moduleVFilter, modulePage, moduleLimit)
 
   localModule.value = fetchedModule
   viewFiltersCount.value = localModule.value.viewFilters.length
@@ -206,7 +211,8 @@ const initialize = async (vFilter) => {
   if (vFilter) viewFilter.value = __getViewFilter.value(vFilter, localModule.value)
   else viewFilter.value = _getDefaultViewFilter.value(localModule.value)
 
-  selectedViewFilter.value = viewFilter.value && viewFilter.value._id
+  selectedViewFilter.value = viewFilter.value && viewFilter.value
+  selectedViewFilterId.value = selectedViewFilter.value._id
   selectedFields.value = computed(() => _getViewFilterIds.value(localModule.value))
   selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
 
@@ -214,12 +220,17 @@ const initialize = async (vFilter) => {
   datatableLoading.value = false
 }
 
+const getUpdatedModule = (payload) => {
+  let updatedModule = payload.find(module => module._id === getBaseModule.value._id)
+  return updatedModule
+}
+
 // lifescycles
 onMounted(async () => {
   await initialize(null)
 })
 
-watch(selectedViewFilter, async (newVal, oldVal) => {
+watch(selectedViewFilterId, async (newVal, oldVal) => {
   // if (newVal) viewFilter.value = __getViewFilter.value(newVal, localModule.value)
   await initialize(newVal)
 })
@@ -230,14 +241,15 @@ watch(selectedFields, (newVal, oldVal) => {
 
 watch(() => getModules.value, async (newVal, oldVal) => {
   if (viewFiltersCount.value !== 0) {
-    let updatedModule = newVal.find(module => module._id === getBaseModule.value._id)
+    let updatedModule = getUpdatedModule(newVal)
 
     if (viewFiltersDialogMode.value === 'new') {
-      selectedViewFilter.value = updatedModule.viewFilters[updatedModule.viewFilters.length - 1]._id
+      selectedViewFilter.value = updatedModule.viewFilters[updatedModule.viewFilters.length - 1]
+      selectedViewFilterId.value = selectedViewFilter.value._id
     }
 
-    viewFilter.value = __getViewFilter.value(selectedViewFilter.value, updatedModule)
-    // await initialize(selectedViewFilter.value)
+    viewFilter.value = __getViewFilter.value(selectedViewFilterId.value, updatedModule)
+    // await initialize(selectedViewFilterId.value)
   }
 
   // reset
@@ -247,7 +259,11 @@ watch(() => getModules.value, async (newVal, oldVal) => {
 })
 
 watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
-  if (newVal === null) await initialize(selectedViewFilter.value)
+  const updatedViewFilter = getBaseModule.value.viewFilters.find(filter => filter._id === selectedViewFilterId.value)
+  selectedViewFilter.value = updatedViewFilter
+  selectedViewFilterId.value = updatedViewFilter._id
+
+  if (newVal === null) await initialize(selectedViewFilterId.value)
 })
 
 </script>
@@ -286,7 +302,7 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
           <div class="md:flex justify-content-between">
             <div class="w-7">
               <Dropdown
-                v-model="selectedViewFilter"
+                v-model="selectedViewFilterId"
                 :options="_getViewFilters(localModule)"
                 :disabled="datatableLoading"
                 optionLabel="filterName"
@@ -462,7 +478,7 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
     :key="viewFiltersDialogComponentKey"
     v-if="viewFiltersDialogSwitch"
     :mode="viewFiltersDialogMode"
-    :selectedViewFilter="selectedViewFilter"
+    :selectedViewFilter="selectedViewFilterId"
     :module="localModule" />
 </template>
 

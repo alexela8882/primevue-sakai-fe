@@ -561,7 +561,12 @@ export const useModuleStore = defineStore('moduleStore', () => {
         life: 3000
       })
 
-      await _fetchModule(payload.baseModule.name, res.data.viewFilter._id)
+      const moduleName = payload.baseModule.name
+      const moduleVFilter = res.data.viewFilter._id
+      const modulePage = null
+      const moduleLimit = data.pageSize
+      console.log(moduleLimit)
+      await _fetchModule(moduleName, moduleVFilter, modulePage, moduleLimit)
     } else {
       toast.add({
         severity: 'error',
