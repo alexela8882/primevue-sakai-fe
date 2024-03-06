@@ -225,6 +225,12 @@ const getUpdatedModule = (payload) => {
   return updatedModule
 }
 
+const updateViewFilter = () => {
+  const updatedViewFilter = getBaseModule.value.viewFilters.find(filter => filter._id === selectedViewFilterId.value)
+  selectedViewFilter.value = updatedViewFilter
+  selectedViewFilterId.value = updatedViewFilter._id
+}
+
 // lifescycles
 onMounted(async () => {
   await initialize(null)
@@ -232,6 +238,7 @@ onMounted(async () => {
 
 watch(selectedViewFilterId, async (newVal, oldVal) => {
   // if (newVal) viewFilter.value = __getViewFilter.value(newVal, localModule.value)
+  updateViewFilter() // update view filter
   await initialize(newVal)
 })
 
@@ -259,10 +266,7 @@ watch(() => getModules.value, async (newVal, oldVal) => {
 })
 
 watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
-  const updatedViewFilter = getBaseModule.value.viewFilters.find(filter => filter._id === selectedViewFilterId.value)
-  selectedViewFilter.value = updatedViewFilter
-  selectedViewFilterId.value = updatedViewFilter._id
-
+  updateViewFilter() // update view filter
   if (newVal === null) await initialize(selectedViewFilterId.value)
 })
 
