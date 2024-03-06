@@ -114,7 +114,14 @@ const tblSettingsBtn = ref([
     disabled: false,
     command: (event) => {
       console.log(event)
-      viewFilter.value.currentDisplay = 'kanban'
+      if (viewFilter.value.group_by !== null) viewFilter.value.currentDisplay = 'kanban'
+      else {
+        viewFiltersDialogMode.value = 'edit-kanban'
+        viewFiltersDialogComponentKey.value += 1
+        viewFiltersDialogLoading.value = true
+        viewFiltersDialogSwitch.value = true
+        viewFiltersDialog.value = true
+      }
     }
   }, {
     label: 'Split view',
@@ -274,7 +281,6 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
 
 <template>
   <div class="mt-3">
-    <!-- <pre>{{ localModule && localModule.viewFilters }}</pre> -->
     <!-- <pre>{{ getModules && getModules.find(module => module.name === 'leads').viewFilters }}</pre> -->
     <div
       v-if="moduleLoading"
