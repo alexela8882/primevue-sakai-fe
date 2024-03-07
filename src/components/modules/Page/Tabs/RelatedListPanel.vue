@@ -1,6 +1,6 @@
 <script setup>
 // imports
-import { ref, defineProps, defineAsyncComponent } from 'vue'
+import { ref, defineProps, defineAsyncComponent, onMounted } from 'vue'
 // components
 const RelatedListPanelData = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/RelatedListPanelData.vue'))
 
@@ -9,12 +9,21 @@ const props = defineProps({
   relatedList: Object
 })
 
+const hasData = ref(false)
+
+onMounted(() => {
+  hasData.value = props.relatedList.collection && props.relatedList.collection.data.length <= 0
+})
+
 </script>
 
 <template>
-  <Panel class="detail-page-panel" toggleable>
+  <Panel class="detail-page-panel" :toggleable="!hasData">
     <template #icons>
-      <button class="p-panel-header-icon p-link mr-2 text-50" @click="toggle">
+      <button
+        v-if="!hasData"
+        class="p-panel-header-icon p-link mr-2 text-50"
+        @click="toggle">
         <span class="pi pi-cog"></span>
       </button>
       <Menu ref="menu" id="config_menu" :model="items" popup />
