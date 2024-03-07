@@ -9,20 +9,20 @@ import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
 const MailboxThreads = defineAsyncComponent(() =>
   import('@/components/outlookmails/MailboxThreads.vue')
 )
-const DynamicDataTable = defineAsyncComponent(() => import('../../modules/DynamicDataTable/dynamicdatatablemain.vue'))
-const SalesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/SalesTab.vue'))
-const ServicesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/ServicesTab.vue'))
-const RelatedListPanel = defineAsyncComponent(() => import('../../modules/Page/Tabs/RelatedListPanel.vue'))
-const SectionFields = defineAsyncComponent(() => import('../../modules/Page/SectionFields.vue'))
-const UploadFileContent = defineAsyncComponent(() => import('../../modules/Files/UploadFileContent.vue'))
+const DynamicDataTable = defineAsyncComponent(() => import('@/components/modules/DynamicDataTable/dynamicdatatablemain.vue'))
+const SalesTab = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/SalesTab.vue'))
+const ServicesTab = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/ServicesTab.vue'))
+const RelatedListPanel = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/RelatedListPanel.vue'))
+const SectionFields = defineAsyncComponent(() => import('@/components/modules/Page/SectionFields.vue'))
+const UploadFileContent = defineAsyncComponent(() => import('@/components/modules/Files/UploadFileContent.vue'))
 // loaders
-import DataTableLoader from '../../modules/DynamicDataTable/Loaders/DataTableLoader.vue'
-import SimpleLoader from '../../loading/Simple2.vue'
-import TwoColumnList from '../../loading/TwoColumnList.vue'
+import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
+import SimpleLoader from '@/components/loading/Simple2.vue'
+import TwoColumnList from '@/components/loading/TwoColumnList.vue'
 // stores
-import { useModuleStore } from '../../../stores/modules'
-import { useModuleDetailStore } from '../../../stores/modules/detail'
-import { useModuleFileStore } from '../../../stores/modules/file'
+import { useModuleStore } from '@/stores/modules'
+import { useModuleDetailStore } from '@/stores/modules/detail'
+import { useModuleFileStore } from '@/stores/modules/file'
 import { useTabStore } from '@/stores/tabs'
 
 // refs
@@ -39,7 +39,7 @@ const localItemPanels = ref()
 const localRelatedList = ref()
 const localRelatedLists = ref()
 const atIndexRelatedLists = ref()
-const atShowRelatedLists = ref()
+const atShowRelatedLists = ref([])
 // stores
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
@@ -51,6 +51,7 @@ const {
     itemLoading,
     relatedListLoading,
     getItem,
+    _relatedLists,
     getRelatedLists,
     _getRelatedOrderedLists,
     getRelatedListsByCname,
@@ -191,7 +192,22 @@ onMounted(async() => {
   await fetchLinkedModuleData(lmdParams)
 
   await fetchItem(route.params)
-  await fetchItemRelatedLists(route.params)
+
+  console.log(route.params)
+  console.log(getModule.value.relatedLists)
+
+  const payload = Object.assign({}, {
+    // for json db
+    id: route.params.id,
+    name: route.params.name,
+    pageid: route.params.pageid,
+
+    // for be db
+    moduleName: route.params.name,
+    base: route.params.pageid,
+    relatedLists: getModule.value.relatedLists
+  })
+  await fetchItemRelatedLists(payload)
 
   // pre-assignments
   localItemLoading.value = itemLoading.value
@@ -202,6 +218,10 @@ onMounted(async() => {
   atIndexRelatedLists.value = localItemPanels.value.filter(ip => ip.controllerMethod.includes('@index'))
   atShowRelatedLists.value = _getRelatedOrderedLists.value.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))
   linkedInquiryModule.value = getLinkedModuleData.value
+
+  console.log(_relatedLists.value)
+  console.log(_getRelatedOrderedLists.value)
+  console.log(atShowRelatedLists.value) // not working
 
   // other logics
   // Attach the scroll event listener to the window or container
@@ -215,6 +235,7 @@ onMounted(async() => {
 
 <template>
   <div>
+    <!-- <pre>{{ _getRelatedOrderedLists.map(i => i.entityName) }}</pre> -->
     <RdBreadCrumbs :bcrumbs="bcrumbs" />
 
     <div
@@ -230,27 +251,27 @@ onMounted(async() => {
         <div class="flex">
           <div v-for="(field, fx) in localModule.fields" :key="fx">
             <div :class="`${localModule.fields.length === fx + 1 && 'mr-8'}`">
-              <div v-if="field.title" class="flex flex-column text-xl mr-4">
+              <div v-if="field.title" class="flex flex-column text-md mr-4">
                 <div v-if="field.groupWith">
                   <div>{{ field.groupLabel }}</div>
                   <div class="flex">
                     <div v-for="(groupField, gfx) in field.groupWith" :key="gfx">
-                      <div class="font-bold">{{ getItemValueByName(groupField) }}{{ field.fieldGlue === ' ' ? '&nbsp;' : field.fieldGlue }}</div>
+                      <div class="font-bold text-md">{{ getItemValueByName(groupField) }}{{ field.fieldGlue === ' ' ? '&nbsp;' : field.fieldGlue }}</div>
                     </div>
                   </div>
                 </div>
                 <div v-else>
                   <div>{{ field.label }}</div>
-                  <div class="font-bold">{{ getItemValueByName(field.name) }}</div>
+                  <div class="font-bold text-md">{{ getItemValueByName(field.name) }}</div>
                 </div>
               </div>
             </div>
           </div>
 
           <div v-for="(field, fx) in localModule.fields" :key="fx">
-            <div v-if="field.header" class="flex flex-column text-xl mx-4">
+            <div v-if="field.header" class="flex flex-column text-md mx-4">
               <div>{{ field.label }}</div>
-              <div class="font-bold">{{ getItemValueByName(field.name) ? getItemValueByName(field.name) : null }}</div>
+              <div class="font-bold text-md">{{ getItemValueByName(field.name) ? getItemValueByName(field.name) : null }}</div>
             </div>
           </div>
         </div>
@@ -259,6 +280,7 @@ onMounted(async() => {
           <Button label="Edit" size="large" @click="createNewForm(getBaseModule)" class="px-6 border-round-xl"></Button>
         </div>
       </div>
+
 
       <div class="grid">
         <div class="col-7">
@@ -326,15 +348,26 @@ onMounted(async() => {
                         </Panel>
                       </div>
                     </div>
-
-                    <RelatedListPanel :relatedLists="atShowRelatedLists" />
+                    <div
+                      v-for="(relatedList, rlx) in _getRelatedOrderedLists.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))"
+                      :key="rlx">
+                      <div class="my-4">
+                        <RelatedListPanel :relatedList="relatedList" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </TabPanel>
               <TabPanel v-if="localBaseModule && localBaseModule.name === 'accounts'" header="Sales">
                 <div>
                   <Suspense v-if="tabIndex === 1">
-                    <SalesTab />
+                    <div
+                      v-for="(salesRelatedList, srlx) in _getRelatedOrderedLists.filter(orl => (orl.entityName === 'SalesOpportunity' || orl.entityName === 'SalesOpportunity'))"
+                      :key="srlx">
+                      <div class="my-4">
+                        <RelatedListPanel :relatedList="salesRelatedList" />
+                      </div>
+                    </div>
                     <template #fallback>
                       <SimpleLoader class="mt-4" />
                     </template>
@@ -344,7 +377,13 @@ onMounted(async() => {
               <TabPanel v-if="localBaseModule && localBaseModule.name === 'accounts'" header="Services">
                 <div>
                   <Suspense v-if="tabIndex === 2">
-                    <ServicesTab />
+                    <div
+                      v-for="(serviceRelatedList, srlx) in _getRelatedOrderedLists.filter(orl => (orl.entityName === 'DefectReport' || orl.entityName === 'ServiceJob' || orl.entityName === 'ServiceSchedule' || orl.entityName === 'BreakdownLog' || orl.entityName === 'ServiceReport'))"
+                      :key="srlx">
+                      <div class="my-4">
+                        <RelatedListPanel :relatedList="serviceRelatedList" />
+                      </div>
+                    </div>
                     <template #fallback>
                       <SimpleLoader class="mt-4" />
                     </template>

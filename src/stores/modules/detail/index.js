@@ -18,6 +18,7 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
   const { getBaseModule, getModule } = storeToRefs(moduleStore)
+  const { _fetchModule } = moduleStore
 
   // states
   const item = ref({})
@@ -88,6 +89,11 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
       return item.value.data[payload]
     }
   })
+  const _getRelatedList = computed(() => {
+    return (payload) => {
+      _relatedLists.value.find(list => list._id === payload)
+    }
+  })
   const _getRelatedLists = computed(() => _relatedLists.value)
   const _getRelatedOrderedLists = computed(() => {
     const sorted = _relatedLists.value.sort((a, b) => a.panelOrder - b.panelOrder)
@@ -129,7 +135,9 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     itemLoading.value = false
   }
   const fetchItemRelatedList = async (payload) => {
-    const res = await axios(`${jsonDbUrl.value}/${payload.moduleName}-related?cname=${payload.panelName}`, {
+    const jsonUri = `${jsonDbUrl.value}/${payload.moduleName}-related?cname=${payload.panelName}`
+    const beUri = `/getShowRelatedList?module-name=${payload.moduleName}&base=${payload.base}&panel=${payload.panelId}`
+    const res = await axios(jsonUri, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     }).catch((err) => {
@@ -141,9 +149,68 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     } else relatedLists.value = [] // reset
   }
   const fetchItemRelatedLists = async (payload) => {
+    console.log(payload)
     relatedListLoading.value = true
 
-    const res = await axios(`${jsonDbUrl.value}/${payload.name}-related`, {
+    const moduleName = payload.moduleName
+    const base = payload.base
+    let relatedLists = payload.relatedLists
+
+    const jsonUri = `${jsonDbUrl.value}/${payload.name}-related`
+
+    relatedLists.map(list => _relatedLists.value.push(list))
+
+    _relatedLists.value.map(async list => {
+      const beUri = `/getShowRelatedList?module-name=${moduleName}&base=${base}&panel=${list._id}`
+      const res = await axios(beUri, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      }).catch((err) => {
+        console.log(err)
+      })
+
+      if (res && res.status === 200) {
+        let data = res.data
+
+        // re-assign
+        Object.assign(list, {
+          ...list,
+          cname: data.cname,
+          label: data.label,
+          entityName: data.entityName,
+          link: data.link,
+          panelOrder: data.panelOrder,
+          mutable: data.mutable,
+          paginated: data.paginated,
+          buttons: data.buttons,
+          fields: data.fields,
+          collection: data.collection
+        })
+      } else {
+        Object.assign(list, {
+          ...list,
+          cname: null,
+          label: null,
+          entityName: null,
+          link: null,
+          panelOrder: null,
+          mutable: null,
+          paginated: null,
+          buttons: [],
+          fields: [],
+          collection: []
+        })
+      }
+    })
+
+    console.log(_relatedLists.value)
+    relatedListLoading.value = false
+  }
+  const paginateRelatedList = async (payload) => {
+    console.log(payload)
+
+    const beUri = `/getShowRelatedList?module-name=${payload.moduleName}&base=${payload.base}&panel=${payload.panel}&page=${payload.page}&limit=${payload.limit}`
+    const res = await axios(beUri, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     }).catch((err) => {
@@ -151,20 +218,26 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     })
 
     if (res && res.status === 200) {
-      _relatedLists.value = res.data
-    } else {
-      console.log('err')
-      _relatedLists.value = [] // reset
+      console.log(res.data)
+      // update matched related list
+      _relatedLists.value.map(list => {
+        if (list._id === payload.panel) {
+          console.log('matched')
+          Object.assign(list, res.data)
+        } else console.log('not matched')
+      })
     }
+
     console.log(_relatedLists.value)
-    relatedListLoading.value = false
   }
 
   return {
+    _relatedLists,
     itemLoading,
     relatedListLoading,
     item,
     getItem,
+    _getRelatedList,
     _getRelatedLists,
     _getRelatedOrderedLists,
     _getRelatedListsByCname,
@@ -176,6 +249,7 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     getItemValueByName,
     fetchItem,
     fetchItemRelatedList,
-    fetchItemRelatedLists
+    fetchItemRelatedLists,
+    paginateRelatedList
   }
 })

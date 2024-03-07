@@ -30,6 +30,7 @@ const viewFiltersDialogComponentKey = ref(0)
 const route = useRoute()
 const viewFilter = ref({})
 const selectedViewFilter = ref()
+const selectedViewFilterId = ref()
 const selectedFields = ref()
 const selectedSearchKeyIds = ref()
 // stores
@@ -110,10 +111,17 @@ const tblSettingsBtn = ref([
   }, {
     label: 'Kanban view',
     icon: 'view_kanban',
-    disabled: true,
+    disabled: false,
     command: (event) => {
       console.log(event)
-      viewFilter.value.currentDisplay = 'kanban'
+      if (viewFilter.value.group_by !== null) viewFilter.value.currentDisplay = 'kanban'
+      else {
+        viewFiltersDialogMode.value = 'edit-kanban'
+        viewFiltersDialogComponentKey.value += 1
+        viewFiltersDialogLoading.value = true
+        viewFiltersDialogSwitch.value = true
+        viewFiltersDialog.value = true
+      }
     }
   }, {
     label: 'Split view',
@@ -135,7 +143,7 @@ const paginate = async (payload) => {
   } else page = localModule.meta && localModule.meta.pagination
 
   // re-fetch module & collection
-  localModule.value = await _fetchModule(getBaseModule.value.name, page > 1 ? page : null, payload.per_page)
+  localModule.value = await _fetchModule(getBaseModule.value.name, selectedViewFilterId.value, page > 1 ? page : null, payload.per_page)
   datatableLoading.value = false
 }
 const limitPage = async (e) => {
@@ -188,13 +196,16 @@ const confirmAddTab = (module,index) => {
   });
 };
 
-// lifescycles
-onMounted(async () => {
+const initialize = async (vFilter) => {
   localLoading.value = true
   datatableLoading.value = true
   // await fetchCollection(route.name.split('.')[0], 1)
   await fetchBaseModule(route.params.id)
-  const fetchedModule = await _fetchModule(getBaseModule.value.name)
+  const moduleName = getBaseModule.value.name
+  const moduleVFilter = selectedViewFilterId.value && selectedViewFilterId.value
+  const modulePage = null
+  const moduleLimit = selectedViewFilter.value && selectedViewFilter.value.pageSize
+  const fetchedModule = await _fetchModule(moduleName, moduleVFilter, modulePage, moduleLimit)
 
   localModule.value = fetchedModule
   viewFiltersCount.value = localModule.value.viewFilters.length
@@ -204,44 +215,72 @@ onMounted(async () => {
   // console.log(getCollection.value)
 
   // pre-assignments
-  viewFilter.value = computed(() => _getDefaultViewFilter.value(localModule.value))
-  selectedViewFilter.value = viewFilter.value && viewFilter.value.value._id
+  if (vFilter) viewFilter.value = __getViewFilter.value(vFilter, localModule.value)
+  else viewFilter.value = _getDefaultViewFilter.value(localModule.value)
+
+  selectedViewFilter.value = viewFilter.value && viewFilter.value
+  selectedViewFilterId.value = selectedViewFilter.value._id
   selectedFields.value = computed(() => _getViewFilterIds.value(localModule.value))
   selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
 
   localLoading.value = false
   datatableLoading.value = false
+}
+
+const getUpdatedModule = (payload) => {
+  let updatedModule = payload.find(module => module._id === getBaseModule.value._id)
+  return updatedModule
+}
+
+const updateViewFilter = () => {
+  const updatedViewFilter = getBaseModule.value.viewFilters.find(filter => filter._id === selectedViewFilterId.value)
+  selectedViewFilter.value = updatedViewFilter
+  selectedViewFilterId.value = updatedViewFilter._id
+}
+
+// lifescycles
+onMounted(async () => {
+  await initialize(null)
 })
 
-watch(selectedViewFilter, (newVal, oldVal) => {
-  console.log(localModule.value)
-  if (newVal) viewFilter.value = __getViewFilter.value(newVal, localModule.value)
+watch(selectedViewFilterId, async (newVal, oldVal) => {
+  // if (newVal) viewFilter.value = __getViewFilter.value(newVal, localModule.value)
+  updateViewFilter() // update view filter
+  await initialize(newVal)
 })
 
 watch(selectedFields, (newVal, oldVal) => {
   if (newVal) selectedFields.value = newVal.value
 })
 
-watch(() => getModules.value, (newVal, oldVal) => {
+watch(() => getModules.value, async (newVal, oldVal) => {
   if (viewFiltersCount.value !== 0) {
-    let updatedModule = newVal.find(module => module._id === getBaseModule.value._id)
+    let updatedModule = getUpdatedModule(newVal)
 
     if (viewFiltersDialogMode.value === 'new') {
-      selectedViewFilter.value = updatedModule.viewFilters[updatedModule.viewFilters.length - 1]._id
+      selectedViewFilter.value = updatedModule.viewFilters[updatedModule.viewFilters.length - 1]
+      selectedViewFilterId.value = selectedViewFilter.value._id
     }
 
-    viewFilter.value = __getViewFilter.value(selectedViewFilter.value, updatedModule)
+    viewFilter.value = __getViewFilter.value(selectedViewFilterId.value, updatedModule)
+    // await initialize(selectedViewFilterId.value)
   }
+
+  // reset
+  viewFiltersDialogMode.value = null
 }, {
   deep: true // watch nested array
+})
+
+watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
+  updateViewFilter() // update view filter
+  if (newVal === null) await initialize(selectedViewFilterId.value)
 })
 
 </script>
 
 <template>
   <div class="mt-3">
-    <!-- <pre>{{ viewFilter }}</pre> -->
-    <!-- <pre>{{ localModule && localModule.viewFilters }}</pre> -->
     <!-- <pre>{{ getModules && getModules.find(module => module.name === 'leads').viewFilters }}</pre> -->
     <div
       v-if="moduleLoading"
@@ -271,9 +310,9 @@ watch(() => getModules.value, (newVal, oldVal) => {
 
         <div v-else class="mt-2 mb-4">
           <div class="md:flex justify-content-between">
-            <div>
+            <div class="w-7">
               <Dropdown
-                v-model="selectedViewFilter"
+                v-model="selectedViewFilterId"
                 :options="_getViewFilters(localModule)"
                 :disabled="datatableLoading"
                 optionLabel="filterName"
@@ -291,7 +330,7 @@ watch(() => getModules.value, (newVal, oldVal) => {
                 dataKey="_id"
                 placeholder="Select Fields"
                 class="border-round-left-xl border-primary w-full md:w-12rem mb-2 md:mb-0" />
-              <div class="p-input-icon-right w-full ml-1 md:w-auto">
+              <div class="p-input-icon-right w-full ml-1 md:w-6">
                 <i class="pi pi-search" />
                 <InputText
                   v-model="moduleSearch"
@@ -311,7 +350,7 @@ watch(() => getModules.value, (newVal, oldVal) => {
                   aria-controls="tbl_overlay_menu2"
                   class="material-icon border-round-md mr-2">
                   <template #icon>
-                    <div class="material-icons">{{ viewFilter.currentDisplay === 'table' ? 'table_chart' : 'view_kanban' }}</div>
+                    <div class="material-icons">{{ viewFilter.currentDisplay === null || viewFilter.currentDisplay === 'table' ? 'table_chart' : 'view_kanban' }}</div>
                   </template>
                 </Button>
                 <Menu
@@ -389,6 +428,7 @@ watch(() => getModules.value, (newVal, oldVal) => {
             :moduleEntityName="getBaseModule.mainEntity"
             :moduleName="getBaseModule.name"
             :moduleLabel="getBaseModule.label"
+            :viewFilter="viewFilter"
             :fields="viewFilter.fields"
             :data="localModule.data"
             :pagination="localModule.meta && localModule.meta.pagination"
@@ -413,14 +453,15 @@ watch(() => getModules.value, (newVal, oldVal) => {
 
         <!-- KANBAN -->
         <Suspense v-else-if="viewFilter.currentDisplay === 'kanban'">
-          <pre>This feature will be added soon</pre>
-          <!-- <DynamicKanban
+          <!-- <pre>This feature will be added soon</pre> -->
+          <DynamicKanban
             :viewFilterId="viewFilter._id"
             :groupBy="viewFilter.group_by"
             :summarizeBy="viewFilter.summarize_by"
             :moduleName="getBaseModule.name"
             :moduleLabel="getBaseModule.label"
             :fields="viewFilter.fields"
+            :module="localModule"
             :data="localModule.data"
             :collectionLoading="localLoading"
             :sidebar="listViewFilterBar"
@@ -433,7 +474,7 @@ watch(() => getModules.value, (newVal, oldVal) => {
                 </template>
               </Suspense>
             </template>
-          </DynamicKanban> -->
+          </DynamicKanban>
           <template #fallback>
             <KanbanLoader />
           </template>
@@ -447,7 +488,7 @@ watch(() => getModules.value, (newVal, oldVal) => {
     :key="viewFiltersDialogComponentKey"
     v-if="viewFiltersDialogSwitch"
     :mode="viewFiltersDialogMode"
-    :selectedViewFilter="selectedViewFilter"
+    :selectedViewFilter="selectedViewFilterId"
     :module="localModule" />
 </template>
 

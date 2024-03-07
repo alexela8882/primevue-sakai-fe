@@ -30,12 +30,21 @@ const props = defineProps({
   pageItems: Array,
   rows: Number,
   pages: Number,
+  viewFilter: Object,
   fields: Array,
   collectionLoading: Boolean
 })
 const emit = defineEmits(['toggle-sidebar', 'paginate', 'limit-page'])
 
 // refs
+const multiSortMeta = ref([])
+if (props.viewFilter) {
+  let sort = Object.assign({}, {
+    field: props.viewFilter.sortField,
+    order: props.viewFilter.sortOrder == 'ASC' ? 1 : -1
+  })
+  multiSortMeta.value.push(sort)
+}
 const fetchedModule = ref()
 const pageOffset = ref(0)
 const listViewFilterRef = ref(null)
@@ -321,16 +330,17 @@ provide('form', tableFormData)
 <template>
   <!-- Test
   {{ moduleEntityName }} {{ getBaseModule.mainEntity }} -->
+  <!-- <pre>{{ viewFilter.sortField }}</pre>
+  <pre>{{ viewFilter.sortOrder }}</pre> -->
   <DataTable
     v-model:selection="selectedData"
     v-model:contextMenuSelection="selectedContextData"
+    v-model:multiSortMeta="multiSortMeta"
     @rowContextmenu="onRowContextMenu"
     tableClass="editable-cells-table module-table"
     :value="clonedData"
     :loading="collectionLoading"
     stripedRows
-    stateStorage="local"
-    :stateKey="`dt-state-${moduleLabel}`"
     resizableColumns
     columnResizeMode="fit"
     sortMode="multiple"

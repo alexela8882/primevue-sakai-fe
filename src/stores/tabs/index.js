@@ -210,7 +210,7 @@ export const useTabStore = defineStore('tabStore', () => {
       const moduleName = payload.data.module
       const page = payload.data.page
       const per_page = payload.data.per_page
-      const fetchedModule = await _fetchModule(moduleName, page, per_page)
+      const fetchedModule = await _fetchModule(moduleName, null, page, per_page)
 
       tabs.value.map(tab => {
         if (tab.name === tabName) tab.module.collection = fetchedModule
