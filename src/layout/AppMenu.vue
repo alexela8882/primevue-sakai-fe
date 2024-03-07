@@ -24,7 +24,7 @@ const { fetchMenu, fetchMenu2 } = menuStore
 onMounted(async () => {
   await fetchMenu()
   // fetchMenu2()
-  await fetchModules()
+  // await fetchModules()
 })
 </script>
 

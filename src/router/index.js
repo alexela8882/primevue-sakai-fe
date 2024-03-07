@@ -1,4 +1,4 @@
-import { toRef } from 'vue'
+import { computed, toRef } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import auth from '@/middleware/auth'
 import axios from 'axios'
@@ -8,6 +8,8 @@ import AppLayout from '@/layout/AppLayout.vue'
 // stores & composables
 import { useLayout } from '@/layout/composables/layout'
 import { useBaseComposables } from '@/composables/base'
+import { useModuleStore } from '@/stores/modules'
+import { useBaseStore } from '@/stores/base'
 
 // refs
 // stores & components
@@ -272,10 +274,12 @@ const router = createRouter({
   ]
 });
 
-router.beforeEach((to, from) => {
+router.beforeEach(async (to, from) => {
   // instead of having to check every route record with
   // to.matched.some(record => record.meta.requiresAuth)
   console.log('router loading...')
+
+ 
   routerLoading.value = true
   NProgress.start()
 
@@ -283,6 +287,20 @@ router.beforeEach((to, from) => {
   axios.defaults.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`
 
   const isAuthenticated = localStorage.getItem('isAuthenticated')
+
+  if(isAuthenticated){
+    const modules = computed(() => useModuleStore().getModules)
+    if (modules.value.length <= 0) {
+      console.log('fetching modules from routes js...')
+      await useModuleStore().fetchModules()
+      await useBaseStore().setAuthuser()
+      console.log('fetched modules from routes js')
+      console.log(modules.value)
+    } else {
+      console.log('get modules from routes js')
+      console.log(modules.value)
+    }
+  }
 
   axios.get('/user-configs/get-app-theme').then((response) => {
     // theme

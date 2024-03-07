@@ -82,7 +82,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="relative h-full">
+  <div class="relative h-full px-3">
     <div>
       <DynamicFields
         :fields="form.fields"
@@ -92,8 +92,11 @@ onMounted(async () => {
         @validate-sync-func="validateSyncFunc()" />
     </div>
   </div>
-  <div class="sticky bottom-0 right-0 py-2 surface-0">
-    <Button @click="proceedAction" label="Save" />
+  <div class="sticky bottom-0 right-0 py-2 surface-50">
+    <div class="flex justify-content-end gap-2 px-3 py-1">
+      <Button label="Reset" outlined />
+      <Button @click="proceedAction" label="Save" size="large" />
+    </div>
   </div>
 </template>
 

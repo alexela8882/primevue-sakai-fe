@@ -18,6 +18,7 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
   const { getBaseModule, getModule } = storeToRefs(moduleStore)
+  const { _fetchModule } = moduleStore
 
   // states
   const item = ref({})
@@ -26,55 +27,71 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
 
   // getters
   const getItem = computed(() => item.value)
+  const _getItemPanels = computed(() => {
+    return (payload) => {
+      return getItemPanels.value(payload)
+    }
+  })
   const getItemPanels = computed(() => {
-    const panels = getModule.value.panels
+    return (payload) => {
+      let panels = null
 
-    // re-construct panels
-    const reconstructedPanels = panels.map((panel, px) => {
-      let panelObj = Object.assign({}, {
-        _id: panel._id,
-        controllerMethod: panel.controllerMethod,
-        entityName: panel.entityName,
-        highlight: panel.highlight,
-        label: panel.label,
-        mutable: panel.mutable,
-        panelName: panel.panelName,
-        sections: [],
-        tabKey: panel.tabKey
+      if (payload) panels = payload
+      else panels = getModule.value.panels
+
+      // re-construct panels
+      const reconstructedPanels = panels.map((panel, px) => {
+        let panelObj = Object.assign({}, {
+          _id: panel._id,
+          controllerMethod: panel.controllerMethod,
+          entityName: panel.entityName,
+          highlight: panel.highlight,
+          label: panel.label,
+          mutable: panel.mutable,
+          panelName: panel.panelName,
+          sections: [],
+          tabKey: panel.tabKey
+        })
+
+        return panelObj
       })
 
-      return panelObj
-    })
-
-    // re-construct sections
-    panels.map((panel, px) => {
-      panel.sections.filter((section, sx) => {
-        if (section.sectionLabel) {
-          let secObj = Object.assign({}, {
-            sectionLabel: section.sectionLabel,
-            row: section.row,
-            field_ids: section.field_ids,
-            additional_fields: []
-          })
-          reconstructedPanels[px].sections.push(secObj)
-        }
-        else {
-          const lastSection = reconstructedPanels[px].sections.slice(-1).pop()
-          if (lastSection) {
-            let additionalField = Object.assign({}, { ids: section.field_ids })
-            lastSection.additional_fields.push(additionalField)
+      // re-construct sections
+      panels.map((panel, px) => {
+        panel.sections.filter((section, sx) => {
+          if (section.label) {
+            let secObj = Object.assign({}, {
+              sectionLabel: section.label,
+              row: section.row,
+              field_ids: section.field_ids,
+              additional_fields: []
+            })
+            reconstructedPanels[px].sections.push(secObj)
           }
-        }
+          else {
+            const lastSection = reconstructedPanels[px].sections.slice(-1).pop()
+            if (lastSection) {
+              let additionalField = Object.assign({}, { ids: section.field_ids })
+              lastSection.additional_fields.push(additionalField)
+            }
+          }
+        })
       })
-    })
 
-    // console.log(panels)
-    console.log(reconstructedPanels)
-    return reconstructedPanels
+      // console.log(panels)
+      return reconstructedPanels
+    }
   })
   const getItemValueByName = computed(() => {
     return (payload) => {
-      return item.value[payload]
+      // console.log(payload)
+      // console.log(item.value.data[payload])
+      return item.value.data[payload]
+    }
+  })
+  const _getRelatedList = computed(() => {
+    return (payload) => {
+      _relatedLists.value.find(list => list._id === payload)
     }
   })
   const _getRelatedLists = computed(() => _relatedLists.value)
@@ -103,19 +120,24 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   // actions
   const fetchItem = async (payload) => {
     itemLoading.value = true
+    // const uri = `${jsonDbUrl.value}/${payload.name}-item?_id=${payload.pageid}`
+    const uri = `/modules/${payload.name}/${payload.pageid}`
 
-    const res = await axios(`${jsonDbUrl.value}/${payload.name}-item?_id=${payload.pageid}`, {
+    const res = await axios(uri, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
-      item.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
+      // item.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
+      item.value = res.data
     }
     itemLoading.value = false
   }
   const fetchItemRelatedList = async (payload) => {
-    const res = await axios(`${jsonDbUrl.value}/${payload.moduleName}-related?cname=${payload.panelName}`, {
+    const jsonUri = `${jsonDbUrl.value}/${payload.moduleName}-related?cname=${payload.panelName}`
+    const beUri = `/getShowRelatedList?module-name=${payload.moduleName}&base=${payload.base}&panel=${payload.panelId}`
+    const res = await axios(jsonUri, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     }).catch((err) => {
@@ -129,7 +151,65 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   const fetchItemRelatedLists = async (payload) => {
     relatedListLoading.value = true
 
-    const res = await axios(`${jsonDbUrl.value}/${payload.name}-related`, {
+    const moduleName = payload.moduleName
+    const base = payload.base
+    let relatedLists = payload.relatedLists
+
+    const jsonUri = `${jsonDbUrl.value}/${payload.name}-related`
+
+    relatedLists.map(list => _relatedLists.value.push(list))
+
+    _relatedLists.value.map(async list => {
+      const beUri = `/getShowRelatedList?module-name=${moduleName}&base=${base}&panel=${list._id}`
+      const res = await axios(beUri, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+      }).catch((err) => {
+        console.log(err)
+      })
+
+      if (res && res.status === 200) {
+        let data = res.data
+
+        // re-assign
+        Object.assign(list, {
+          ...list,
+          cname: data.cname,
+          label: data.label,
+          entityName: data.entityName,
+          link: data.link,
+          panelOrder: data.panelOrder,
+          mutable: data.mutable,
+          paginated: data.paginated,
+          buttons: data.buttons,
+          fields: data.fields,
+          collection: data.collection
+        })
+      } else {
+        Object.assign(list, {
+          ...list,
+          cname: null,
+          label: null,
+          entityName: null,
+          link: null,
+          panelOrder: null,
+          mutable: null,
+          paginated: null,
+          buttons: [],
+          fields: [],
+          collection: []
+        })
+      }
+    })
+
+    console.log(_relatedLists.value)
+    relatedListLoading.value = false
+  }
+  const paginateRelatedList = async (payload) => {
+    console.log(payload)
+
+    const beUri = `/getShowRelatedList?module-name=${payload.moduleName}&base=${payload.base}&panel=${payload.panel}&page=${payload.page}&limit=${payload.limit}`
+    const res = await axios(beUri, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     }).catch((err) => {
@@ -137,30 +217,38 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     })
 
     if (res && res.status === 200) {
-      _relatedLists.value = res.data
-    } else {
-      console.log('err')
-      _relatedLists.value = [] // reset
+      console.log(res.data)
+      // update matched related list
+      _relatedLists.value.map(list => {
+        if (list._id === payload.panel) {
+          console.log('matched')
+          Object.assign(list, res.data)
+        } else console.log('not matched')
+      })
     }
+
     console.log(_relatedLists.value)
-    relatedListLoading.value = false
   }
 
   return {
+    _relatedLists,
     itemLoading,
     relatedListLoading,
     item,
     getItem,
+    _getRelatedList,
     _getRelatedLists,
     _getRelatedOrderedLists,
     _getRelatedListsByCname,
     getRelatedLists,
     getRelatedOrderedLists,
     getRelatedListsByCname,
+    _getItemPanels,
     getItemPanels,
     getItemValueByName,
     fetchItem,
     fetchItemRelatedList,
-    fetchItemRelatedLists
+    fetchItemRelatedLists,
+    paginateRelatedList
   }
 })

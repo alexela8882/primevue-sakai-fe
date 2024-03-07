@@ -18,7 +18,7 @@ export const useTabStore = defineStore('tabStore', () => {
   const baseStore = useBaseStore()
   const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
-  const {  _getViewFilter } = storeToRefs(moduleStore)
+  const {  _getViewFilter, getModuleByName } = storeToRefs(moduleStore)
   const { _fetchModule, fetchBaseModuleByField, _fetchBaseModuleByField } = moduleStore
 
   // states
@@ -70,20 +70,21 @@ export const useTabStore = defineStore('tabStore', () => {
   const generateTab = async (payload) => {
     if ((payload.type === 'module' && payload.visible) || payload.type === 'module-form') {
       const baseModule = await _fetchBaseModuleByField({ field: 'name', value: payload._module })
-      const moduleData = await _fetchModule(payload._module)
+      const moduleData = await _fetchModule({moduleName: payload._module})
       const viewFilter = moduleData.viewFilters.find(vf => vf.isDefault === true)
       const viewFilterWithFields = _getViewFilter.value({ module: moduleData, id: viewFilter._id })
       let obj = Object.assign({}, {
         ...payload,
         base_module: baseModule,
         module: Object.assign({}, {
-          collection: moduleData.collection,
+          collection: moduleData,
           fields: moduleData.fields,
           panels: moduleData.panels,
           viewFilterWithFields: viewFilterWithFields
         })
       })
 
+      console.log(obj)
       return obj
     } else {
       return payload
@@ -151,14 +152,21 @@ export const useTabStore = defineStore('tabStore', () => {
 
     const index = tabs.value.findIndex(tab => tab.name === payload.name)
     if (index === -1) {
-      const tab = await generateTab(payload)
+      let tab = null
+      if(payload.type=='module-form'){
+        tab = payload
+        tab['base_module'] = getModuleByName.value(tab._module)
+      }        
+      else
+        tab = await generateTab(payload)
+
       tabs.value.unshift(tab)
 
       // toggle windows
-      if (window) await toggleWindows(tab)
+      if (window) await toggleWindows(payload)
 
       // tab mode
-      if (payload.mode === 'modal') await maximizeTab(tab) 
+      if (payload.mode === 'modal') await maximizeTab(payload) 
     }
 
     xTabsLoading.value = false
@@ -194,6 +202,25 @@ export const useTabStore = defineStore('tabStore', () => {
       xTabsLoading.value = false
     }, 50)
   }
+  const updateTabByField = async (payload) => {
+    const tabName = payload.tab
+    const field = payload.field
+
+    if (field === 'module') {
+      let _payload = Object.assign({}, {
+        moduleName: payload.data.module,
+        page: payload.data.page,
+        per_page: payload.data.per_page,
+        reuse: true
+      })
+
+      const fetchedModule = await _fetchModule(_payload)
+
+      tabs.value.map(tab => {
+        if (tab.name === tabName) tab.module.collection = fetchedModule
+      })
+    }
+  }
 
   return {
     tabDialog,
@@ -209,6 +236,7 @@ export const useTabStore = defineStore('tabStore', () => {
     toggleWindows,
     addTab,
     removeTab,
+    updateTabByField,
     resetTabs,
     maximizeTab,
     minimizeTab

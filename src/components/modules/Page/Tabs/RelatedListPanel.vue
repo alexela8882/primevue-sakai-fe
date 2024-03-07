@@ -1,68 +1,84 @@
 <script setup>
 // imports
-import { storeToRefs } from 'pinia'
-import { onMounted, ref, defineAsyncComponent } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { useModuleDetailStore } from '../../../../stores/modules/detail'
+import { ref, defineProps, defineAsyncComponent, onMounted } from 'vue'
 // components
-const DynamicDataTable = defineAsyncComponent(() => import('../../DynamicDataTable/dynamicdatatablemain.vue'))
-// loaders
-import DataTableLoader from '../../DynamicDataTable/Loaders/DataTableLoader.vue'
-
-// refs
-const route = useRoute()
-const router = useRouter()
-// stores
-const moduleDetailStore = useModuleDetailStore()
-const { _getRelatedListsByCname } = storeToRefs(moduleDetailStore)
+const RelatedListPanelData = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/RelatedListPanelData.vue'))
 
 // defines
 const props = defineProps({
-  fromTab: { type: Boolean, required: false, default: false },
-  relatedLists: Array
+  relatedList: Object
 })
+
+// refs
+const menu = ref()
+const hasData = ref(false)
+
+// actions
+const items = ref([
+  {
+    label: 'Refresh',
+    icon: 'pi pi-refresh'
+  },
+  {
+    label: 'Search',
+    icon: 'pi pi-search'
+  },
+  {
+    separator: true
+  },
+  {
+    label: 'Delete',
+    icon: 'pi pi-times'
+  }
+])
+
+const toggle = (event) => {
+  menu.value.toggle(event)
+}
+
+onMounted(() => {
+  hasData.value = props.relatedList.collection && props.relatedList.collection.data.length <= 0
+})
+
 </script>
 
 <template>
-  <div>
-    <div v-if="relatedLists && relatedLists.length > 0">
-      <div v-for="(panel, px) in relatedLists" :key="px" class="flex flex-column gap-4 mt-4">
-        <Panel class="detail-page-panel">
-          <template #header>
-            <div class="flex align-items-center justify-content-between w-full">
-              <div class="text-2xl font-bold">{{ panel.label }}</div>
-              <div class="material-icons cursor-pointer">playlist_add</div>
-            </div>
-          </template>
-          <div class="flex flex-column gap-4 mt-4">
-            <div v-if="_getRelatedListsByCname(panel.cname)">
-              <Suspense v-if="_getRelatedListsByCname(panel.cname)">
-                <DynamicDataTable
-                  mode="view"
-                  :moduleId="panel._id"
-                  :moduleEntityName="panel.entityName"
-                  :moduleName="_getRelatedListsByCname(panel.cname).link"
-                  :moduleLabel="_getRelatedListsByCname(panel.cname).label"
-                  :fields="_getRelatedListsByCname(panel.cname).fields.data"
-                  :data="_getRelatedListsByCname(panel.cname).collection.data"
-                  :pagination="_getRelatedListsByCname(panel.cname).collection.meta"
-                  :collectionLoading="false">
-                </DynamicDataTable>
-                <template #fallback>
-                  <DataTableLoader />
-                </template>
-              </Suspense>
-            </div>
-          </div>
-        </Panel>
+  <Panel class="detail-page-panel" :toggleable="!hasData">
+    <template #icons>
+      <button
+        v-if="!hasData"
+        class="p-panel-header-icon p-link mr-2 text-50"
+        @click="toggle">
+        <span class="pi pi-cog"></span>
+      </button>
+      <Menu ref="menu" id="config_menu" :model="items" popup />
+    </template>
+    <template #header>
+      <div class="text-2xl font-bold">{{ relatedList.label }}</div>
+    </template>
+    <div class="flex flex-column gap-4 mt-4">
+      <div v-if="relatedList.collection">
+        <RelatedListPanelData :relatedList="relatedList" />
+      </div>
+      <div v-else>
+        <div
+          class="flex align-items-center justify-content-center"
+          style="height: 100px !important;">
+          <ProgressSpinner
+            style="width: 50px; height: 50px"
+            strokeWidth="8"
+            fill="var(--surface-ground)"
+            animationDuration=".5s"
+            aria-label="Custom ProgressSpinner" />
+        </div>
       </div>
     </div>
-    <div v-else>
-      <div v-if="fromTab" class="mt-4 text-700">No data</div>
-    </div>
-  </div>
+  </Panel>
 </template>
 
-<style scoped>
+<style>
+.detail-page-panel.p-panel .p-panel-header .p-panel-header-icon {
+  color: var(--text-50) !important;
+}
 
 </style>

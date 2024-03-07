@@ -58,7 +58,7 @@ const submit = async () => {
     router.push({ path: '/' })
 
     localLoading.value = false
-    toast.add({ severity: 'success', summary: 'Success', detail: response.data.message, life: 3000 })
+    toast.add({ severity: 'success', summary: 'Success', detail: response.data.message, life: 3000 })    
   }).catch((error) => {
     if (error) {
       console.log(error)

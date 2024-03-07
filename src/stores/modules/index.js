@@ -1,10 +1,11 @@
 // imports
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { ref, reactive, shallowRef, computed } from 'vue'
 // import fs from 'fs'
 import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
 import { storeToRefs } from 'pinia'
+import _, { filter } from 'lodash'
 // stores
 import { useBaseStore } from '@/stores/base'
 
@@ -21,7 +22,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const toast = useToast()
   // stores
   const baseStore = useBaseStore()
-  const { jsonDbUrl } = storeToRefs(baseStore)
+  const { jsonDbUrl,getAuthUser } = storeToRefs(baseStore)
   // presets
   const perPageItems = ref([
     { label: '10', value: 10 },
@@ -40,7 +41,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
       filterName: null,
       sortField: null,
       sortOrder: null,
-      perPage: null,
+      pageSize: null,
       fields: [],
       moduleName: null,
       isDefault: false
@@ -49,7 +50,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
       filterName: null,
       sortField: null,
       sortOrder: null,
-      perPage: null,
+      pageSize: null,
       fields: [],
       moduleName: null,
       isDefault: false
@@ -57,6 +58,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   })
 
   // states
+  const jsonModules = ref([])
   const modules = ref([])
   const modulesLoading = ref(false)
   const baseModule = ref({})
@@ -67,8 +69,20 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // getters
   const getBaseModule = computed(() => baseModule.value)
   const getModule = computed(() => module.value)
+  const getModuleByName = computed(() => module => {
+    return _.find(modules.value,{'name':module})
+  })
+  const getModulesUserCanAccess = computed(() => {
+    return _.reduce(modules.value, function(res,v,i){
+      if(_.includes(_.get(getAuthUser.value,'permissions',[]),v.name+'.index')){
+        res.push(v._id)
+      }
+      return res
+    },[])
+  })
   const getLinkedModuleData = computed(() => linkedModuleData.value)
   const getModules = computed(() => modules.value)
+  const getJsonModules = computed(() => jsonModules.value)
   const getCollection = computed(() => collection.value)
   const getCollectionById = computed(() => {
     return (id) => {
@@ -76,9 +90,21 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return data
     }
   })
+  const _getViewFilters = computed(() => {
+    return (payload) => {
+      return getViewFilters.value(payload)
+    }
+  })
   const getViewFilters = computed(() => {
-    const viewFilters = module.value.viewFilters
-    return viewFilters
+    return (payload) => {
+      let _module = null
+
+      if (payload) _module = payload
+      else _module = module.value
+
+      const viewFilters = _module.viewFilters
+      return viewFilters
+    }
   })
   const getEntity = computed(() => {
     return (payload) => {
@@ -96,57 +122,70 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return modules.value.find(module => module.name === payload)
     }
   })
-  const getDefaultViewFilter = computed(() => {
-    const moduleFields = module.value && module.value.fields
-    const viewFilters = module.value && module.value.viewFilters
-    const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter.isDefault)
-
-    return getReconstructedViewFilter.value(viewFilter)
+  const _getDefaultViewFilter = computed(() => {
+    return (payload) => {
+      return getDefaultViewFilter.value(payload)
+    }
   })
-  
+  const getDefaultViewFilter = computed(() => {
+    return (payload) => {
+      let _module = null
+
+      if (payload) _module = payload
+      else _module = module.value && module.value
+
+      const moduleFields = _module.fields
+      const viewFilters = _module.viewFilters
+      const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter.isDefault)
+
+      console.log(viewFilter)
+
+      return getReconstructedViewFilter.value(viewFilter, _module ? _module : null)
+    }
+  })
   const _getViewFilter = computed(() => {
     return (payload) => {
       const viewFilters = payload.module && payload.module.viewFilters
       const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload.id)
 
-      return getReconstructedViewFilter.value(viewFilter, payload.module)
+      const reconstructedViewFilter = getReconstructedViewFilter.value(viewFilter, payload.module)
+      return reconstructedViewFilter
     }
   })
-
+  const __getViewFilter = computed(() => { // re-constructed view filter
+    return (id, _module) => {
+      return getViewFilter.value(id, _module)
+    }
+  })
   const getViewFilter = computed(() => {
-    return (payload) => {
-      const viewFilters = module.value && module.value.viewFilters
-      const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id === payload)
+    return (payload, _module = null) => {
+      let __module = null
 
-      return getReconstructedViewFilter.value(viewFilter, module.value)
+      if (_module) __module = _module
+      else __module = module.value
+
+      const viewFilters = __module && __module.viewFilters
+      const viewFilter = viewFilters && viewFilters.find(viewFilter => viewFilter._id == payload)
+
+      return getReconstructedViewFilter.value(viewFilter, __module)
     }
   })
-  
   const getReconstructedViewFilter = computed(() => {
     return (payload, _module) => {
+      console.log(payload)
       let moduleFields = null
       if (_module) moduleFields = _module.fields
       else moduleFields = module.value && module.value.fields
       const viewFilter = payload
 
-      const filteredFields = moduleFields && moduleFields.filter(field => viewFilter.fields.includes(field._id))
+      const filteredFields = moduleFields && moduleFields.filter(field => viewFilter && viewFilter.fields.includes(field._id))
 
       const finalViewFilter = Object.assign({}, {
-        _id: viewFilter && viewFilter._id,
-        filterLogic: viewFilter && viewFilter.filterLogic,
-        filterName: viewFilter && viewFilter.filterName,
-        filters: viewFilter && viewFilter.filters,
-        isDefault: viewFilter && viewFilter.isDefault,
-        currentDisplay: viewFilter && viewFilter.currentDisplay,
-        summarize_by: viewFilter && viewFilter.summarize_by,
-        group_by: viewFilter && viewFilter.group_by,
-        moduleName: viewFilter && viewFilter.moduleName,
-        query_id: viewFilter && viewFilter.query_id,
-        sortField: viewFilter && viewFilter.sortField,
-        sortOrder: viewFilter && viewFilter.sortOrder,
+        ...viewFilter,
         fields: filteredFields
       })
 
+      console.log(filteredFields)
       return finalViewFilter
     }
   })
@@ -172,19 +211,64 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
     return fieldIds
   })
-  const getSearchKeyFieldIds = computed(() => {
-    const fieldIds = []
-    const fields = module.value && module.value.fields
-    fields && fields.map(field => {
-      if (field.searchKey) fieldIds.push(field._id)
-    })
-    return fieldIds
+  const _getSearchFields = computed(() => {
+    return (payload) => {
+      return getSearchFields.value(payload)
+    }
+  })
+  const getSearchFields = computed(() => {
+    return (payload) => {
+      let _module = null
+
+      if (payload) _module = payload
+      else _module = module.value
+      const newFields = []
+
+      _module.fields.map(field => {
+        if (
+          field.field_type.name !== 'date' &&
+          field.field_type.name !== 'boolean' &&
+          field.field_type.name !== 'time' &&
+          field.field_type.name !== 'file' &&
+          field.field_type.name !== 'image' &&
+          field.field_type.name !== 'richTextbox' &&
+          field.field_type.name !== 'password' &&
+          field.field_type.name !== 'longText' &&
+          field.field_type.name !== 'number' &&
+          field.field_type.name !== 'currency' &&
+          field.field_type.name !== 'list' &&
+          field.field_type.name !== 'percentage'
+        ) {
+          newFields.push(field)
+        }
+      })
+      return newFields
+    }
+  })
+  const _getSearchKeyFieldIds = computed(() => {
+    return (payload) => {
+      let fields = getSearchFields.value(payload)
+      return fields.filter(field => field.searchKey).map(field => field._id)
+    }
+  })
+  const _getKanbanData = computed(() => {
+    return (payload) => {
+      return getKanbanData(payload)
+    }
   })
   const getKanbanData = computed(() => {
     return (payload) => {
-      const collectionData = module.value && module.value.collection.data
-      const viewFilter = module.value && module.value.viewFilters.find(vFilter => vFilter._id === payload)
-      const groupByField = module.value && module.value.fields.find(f => f._id === viewFilter.group_by)
+      let module = null
+
+      if (payload.module) module = payload.module
+      else module = module.value
+
+      const collectionData = module.data
+      const viewFilter = module.viewFilters.find(vFilter => vFilter._id === payload._id)
+      const groupByField = module.fields.find(f => f._id === viewFilter.group_by)
+
+      console.log(module)
+      console.log(groupByField)
 
       const groupByColumns = collectionData.map((cdata, idx) => cdata[groupByField.name])
       const uniqueGroupByColumns = [...new Set(groupByColumns)]
@@ -213,7 +297,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
     return (payload) => {
       const fields = payload.module.fields
       const field = fields.find(fx => fx.name === payload.field)
-      console.log(payload)
       return field
     }
   })
@@ -227,7 +310,10 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const _getFieldDetailsById = computed(() => {
     return (payload) => { // supply `name` column from `fields` collection
       const fields = payload.fields
-      const field = fields && fields.find(fx => fx._id === payload._id)
+      const field = fields && fields.find(fx => fx._id == payload._id)
+      // console.log(fields)
+      // console.log(payload)
+      // console.log(field)
       return field
     }
   })
@@ -249,26 +335,73 @@ export const useModuleStore = defineStore('moduleStore', () => {
   // actions
   const fetchModules = async () => {
     modulesLoading.value = true
-    const res = await axios(`${jsonDbUrl.value}/modules`, {
+    // console.log('fetchModules')
+
+    // modules from BE api
+    const res = await axios(`/modules`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
-      modules.value = res.data
+      modules.value = res.data.data
     }
+
+    // modules from db3.json
+    const jsonRes = await axios(`${jsonDbUrl.value}/modules`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (jsonRes.status === 200) {
+      console.log(jsonRes)
+      jsonModules.value = jsonRes.data
+    }
+
     modulesLoading.value = false
+  }
+  const fetchModuleFields = async (module) => {
+    const res = await axios(`/getModuleFields?module-name=${module}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (res.status === 200) {
+      let index = _.findIndex(modules.value,{'name':module})
+      if(index > -1){
+        // modules.value[index]['fields'] = res.data[0]['data']
+        modules.value[index]['fields'] = res.data.data
+      }
+    }
+  }
+  const fetchModulePanels = async (module) => {
+    const res = await axios(`/getModulePanels?module-name=${module}`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (res.status === 200) {
+      let index = _.findIndex(modules.value,{'name':module})
+      if(index > -1){
+        // modules.value[index]['panels'] = res.data[0]['data']
+        modules.value[index]['panels'] = res.data.data
+      }
+    }
   }
   const fetchBaseModule = async (id) => {
     moduleLoading.value = true
-    const res = await axios(`${jsonDbUrl.value}/modules?_id=${id}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    })
+    // console.log('fetchBaseModule')
+    // const res = await axios(`${jsonDbUrl.value}/modules?_id=${id}`, {
+    //   method: 'GET',
+    //   headers: { 'Content-Type': 'application/json' }
+    // })
 
-    if (res.status === 200) {
-      baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
-    }
+    // if (res.status === 200) {
+    //   baseModule.value = (res.data && res.data.length > 0) ? res.data[0] : res.data
+    // }
+
+    baseModule.value = getModules.value.find(module => module._id === id)
+
     moduleLoading.value = false
   }
   const _fetchBaseModuleByField = async (payload) => {
@@ -289,47 +422,81 @@ export const useModuleStore = defineStore('moduleStore', () => {
       } else return data
     }
   }
-  const fetchModule = async (moduleName, page, reuse) => {
-    if (!reuse) collectionLoading.value = true
-    const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
+  const fetchModule = async (payload) => {
+    if (!payload.reuse) collectionLoading.value = true
+    // const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
+    let baseUri = `/modules/${payload.moduleName}`
+    let pageUri = payload.page ? `?page=${payload.page}` : '?page=1'
+    let limitUri = payload.limit ? `&limit=${payload.limit}` : ''
+    let viewFilterUri = payload.viewfilter ? `&viewfilter=${payload.viewfilter}` : ''
+    let listOnlyUri = payload.listOnly ? `&listOnly` : ''
+    let searchUri = payload.search ? `&search=${payload.search}` : ''
+    let uri = `${baseUri}${pageUri}${limitUri}${viewFilterUri}${listOnlyUri}${searchUri}`
+
+    // search fields
+    let checkSearchFields = payload.searchFields && payload.searchFields.length > 0
+    if (checkSearchFields) {
+      payload.searchFields.map(field => {
+        const value = Object.values(field)[0]
+        uri += `&searchFields[]=${value}`
+      })
+    }
 
     try {
-      const res = await axios(`${jsonDbUrl.value}/${uri}`, {
+      // const res = await axios(`${jsonDbUrl.value}/${uri}`, {
+      //   method: 'GET',
+      //   headers: { 'Content-Type': 'application/json' }
+      // })
+      const res = await axios(`${uri}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
   
       if (res.status === 200) {
-        let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
-        if (!reuse) {
-          module.value = fetchedModule // insert module
-          collection.value = fetchedModule.collection // insert collection
-          collectionLoading.value = false
+        // let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
+        let fetchedModule = res.data
 
-          // fill modules with fields & panels
-          modules.value.map(m => {
-            if (m.name === moduleName) {
-              let obj = Object.assign({}, {
-                ...m,
-                fields: fetchedModule.fields,
-                panels: fetchedModule.panels
-              })
-              Object.assign(m, obj)
-            }
-          })
-          console.log(modules.value)
-        } else return fetchedModule
+        module.value = fetchedModule // insert module
+        collection.value = fetchedModule.data // insert collection
+        collectionLoading.value = false
+
+        let refetchedModule = null
+        // fill modules with fields & panels
+        modules.value.map(m => {
+          if (m.name === payload.moduleName) {
+            let obj = Object.assign({}, {
+              ...m,
+              data: fetchedModule.data,
+              meta: fetchedModule.meta,
+              fields: checkSearchFields ? m.fields : fetchedModule.fields,
+              panels: checkSearchFields ? m.panels : fetchedModule.panels,
+              viewFilters: checkSearchFields ? m.viewFilters : fetchedModule.viewFilters
+            })
+            Object.assign(m, obj)
+            refetchedModule = obj
+          }
+        })
+
+        return refetchedModule
       }
     } catch (error) {
-      console.log(error.response)
       module.value = {}
       collection.value = []
 
       collectionLoading.value = false
+
+      // toast
+      toast.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: error,
+        life: 3000
+      })
     }
   }
   const _fetchModule = async (payload) => {
-    return await fetchModule(payload, null, true)
+    let fetchedModule = await fetchModule(payload)
+    return fetchedModule
   }
   const fetchLinkedModuleData = async (payload) => {
     try {
@@ -357,17 +524,91 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
   }
   const addViewFilter = async (payload) => {
-    console.log(JSON.stringify(payload))
+    let data = payload.data
+    let uriOptions = { uri: null, method: null }
+
+    if (payload.mode === 'new') {
+      uriOptions.uri = `/viewFilters`
+      uriOptions.method = 'POST'
+    } else {
+      uriOptions.uri = `/viewFilters/${payload.viewFilter}`
+      uriOptions.method = 'PATCH'
+    }
+
+    const finalObject = Object.assign({}, {
+      ...data,
+      updateType: payload.type,
+      moduleName: payload.baseModule.name
+    })
 
     // do backend codes here
-
-    // toast
-    toast.add({
-      severity: 'success',
-      summary: 'Success Message',
-      detail: 'New view filters successfully added',
-      life: 3000
+    const res = await axios(uriOptions.uri, {
+      method: uriOptions.method,
+      headers: { 'Content-Type': 'application/json' },
+      data: finalObject
     })
+
+    if (res && res.status === 200) {
+      // if (payload.mode === 'new') {
+      //   // add new view filter into modules
+      //   modules.value.map(module => {
+      //     if (module._id === payload.baseModule._id) {
+      //       module.viewFilters.push(res.data.viewFilter)
+      //     }
+      //   })
+      // } else {
+      //   // update module view filters
+      //   modules.value.map(module => {
+      //     if (module._id === payload.baseModule._id) {
+      //       module.viewFilters.map(viewFilter => {
+      //         if (viewFilter._id === payload.viewFilter) {
+      //           Object.assign(viewFilter, res.data.viewFilter)
+      //         }
+      //       })
+      //     }
+      //   })
+      // }
+
+      // toast
+      toast.add({
+        severity: 'success',
+        summary: 'Success Message',
+        detail: res.data && res.data.message,
+        life: 3000
+      })
+
+      let _payload = Object.assign({}, {
+        moduleName: payload.baseModule.name,
+        viewFilter: res.data.viewFilter._id,
+        page: null,
+        limit: data.pageSize,
+        reuse: true
+      })
+
+      await _fetchModule(_payload)
+    } else {
+      toast.add({
+        severity: 'error',
+        summary: 'Error Message',
+        detail: 'Error saving',
+        life: 3000
+      })
+    }
+  }
+  const searchModule = async (payload) => {
+    let _payload = Object.assign({}, {
+      moduleName: payload.module,
+      listOnly: true,
+      viewFilter: payload.viewFilter,
+      page: 1,
+      limit: 25,
+      search: payload.search,
+      searchFields: payload.searchFields,
+      reuse: true
+    })
+
+    const fetchedModule = await _fetchModule(_payload)
+    return fetchedModule
   }
 
   // specific actions for inquiry module
@@ -477,23 +718,30 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getModule,
     getLinkedModuleData,
     getModules,
+    getModulesUserCanAccess,
+    getJsonModules,
     getCollection,
     getCollectionById,
+    _getViewFilters,
     getViewFilters,
     getEntity,
     getEntityByName,
+    _getDefaultViewFilter,
     getDefaultViewFilter,
     _getViewFilter,
+    __getViewFilter,
     getViewFilter,
     _getViewFilterIds,
     getViewFilterIds,
-    getSearchKeyFieldIds,
+    _getSearchFields,
+    _getSearchKeyFieldIds,
     getKanbanData,
     _getFieldDetails,
     getFieldDetails,
     _getFieldDetailsById,
     getFieldDetailsById,
     getFieldDetailsByUname,
+    getModuleByName,
     _fetchModule,
     fetchModule,
     fetchLinkedModuleData,
@@ -502,6 +750,9 @@ export const useModuleStore = defineStore('moduleStore', () => {
     fetchBaseModuleByField,
     fetchModules,
     addViewFilter,
+    fetchModuleFields,
+    fetchModulePanels,
+    searchModule,
 
     // specific functions for inquiry module
     convertMailboxToInquiry,

@@ -3,9 +3,11 @@ import _ from 'lodash';
 import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia'
 import { useFormDataStore } from '../stores/forms'
+import parsify from '@/mixins/Parsify';
 export default function helper() {
 
 const formDataStore = useFormDataStore()
+const { parseExpression } = parsify()
 const { getPicklist} = storeToRefs(formDataStore)
 
   function getPicklistFields(fields){
@@ -20,7 +22,7 @@ const { getPicklist} = storeToRefs(formDataStore)
   function getLookupFields(fields){
     return _.reduce(fields, function(r,v,i){
         if(v.field_type.name=='lookupModel' && (_.get(v.rules,'ss_dropdown',false) || _.get(v.rules,'ms_dropdown',false) || _.get(v.rules,'ss_list_view',false) || _.get(v.rules,'checkbox',false) || _.get(v.rules,'checkbox_inline',false) || _.get(v.rules,'radiobutton',false) || _.get(v.rules,'radiobutton_inline',false))){
-            r.push(v.uniqueName)
+            r.push(v)
         }
         return r
     },[])
@@ -30,15 +32,14 @@ const { getPicklist} = storeToRefs(formDataStore)
   function formatLookupOptions(options,fields, field) {
     let group = false
     let category = "";
-    // console.log(options)
-    let newOptions = _.reduce(options.values, function(res,val,i){
+    let newOptions = _.reduce(options, function(res,val,i){
         if(val.level){
             group = true
             let hide = false
-            if(val.level==2 && _.get(options.values,i-1+'.level',0) == 1){
-                category = options.values[i-1]['name']
+            if(val.level==2 && _.get(options,i-1+'.level',0) == 1){
+                category = options[i-1]['name']
             }else if(val.level==1){
-                if(_.get(options.values,i+1+'.level',1) == 2){
+                if(_.get(options,i+1+'.level',1) == 2){
                     hide = true
                 }else{
                     category = ""
@@ -47,16 +48,18 @@ const { getPicklist} = storeToRefs(formDataStore)
             if(!hide){
                 let index = _.findIndex(res,{'label':category})
                 if(index > -1){
-                    res[index]['options'].push(_.merge(val,{'value':val.name}))
+                    res[index]['options'].push(_.merge(val,{'value':val.name,'poupDisplayValues':[val.name]}))
                 }else{
-                    res.push({'label':category,'options':[_.merge(val,{'value':val.name})]})
+                    res.push({'label':category,'options':[_.merge(val,{'value':val.name,'poupDisplayValues':[val.name]})]})
                 }
                 
             }
         }else{
             let theField = field
+            
             if(_.isNil(field))
                 theField = _.find(fields,{'uniqueName': options.field})
+
 
             if(theField){
                 let tmp = transformLookupValue(val,theField)
@@ -68,7 +71,7 @@ const { getPicklist} = storeToRefs(formDataStore)
     return {'group':group,'options':newOptions}
   }
 
-  function transformLookupValue(option,field){
+  function transformLookupValue(option,field,displayValue){
     let fieldGlue = _.get(field,'fieldGlue',' ')
     let displayFieldName = _.get(field, 'relation.displayFieldName',[])
     let data = option
@@ -90,20 +93,27 @@ const { getPicklist} = storeToRefs(formDataStore)
         res.push(_.merge(val,{'value':_.join(_.values(_.pick(val,displayFieldName)), fieldGlue),'poupDisplayValues':poupDisplayValues}))
         return res
     },[])
-
-    if(!_.isArray(option))
-        return result[0]
-    else    
-        return result
+    if(displayValue){
+        if(!_.isArray(option))
+            return result[0]['value']
+        else    
+            return _.join(result,'value',', ')
+    }else{
+        if(!_.isArray(option))
+            return result[0]
+        else    
+            return result
+    }
+    
   }
 
   function transformFormValues(fields,values,formPage){
     let formValues = {}
     if(_.isNil(formPage) || formPage=='create'){
-        formValues = getDefaultValue(fields,true)
+        formValues = getDefaultValue(fields,false)
     }else if(formPage=='show'){
         formValues = getModuleValues(fields,values,true)
-    }else if(formPage=='update'){
+    }else if(formPage=='edit'){
         formValues = getModuleValues(fields,values,false)
     }
     return formValues
@@ -155,7 +165,7 @@ const { getPicklist} = storeToRefs(formDataStore)
                     res[val.name] =  transformNumberCurrency(_.toNumber(values[val.name]),val.rules,displayValue)
                 }
               }else{
-                result[val.name] = 0
+                res[val.name] = 0
               }
         }else{
             res[val.name] = null
@@ -329,7 +339,171 @@ const { getPicklist} = storeToRefs(formDataStore)
     }
   }
 
-  
+  function transformForSaving(values,fields,isModalForm){
+    let result = {}
+    _.forEach(fields, function(val,i){
+        if(_.has(values,val.name)){
+            if(isModalForm || (!isModalForm && val.quick)){
+                if(val.field_type.name=='lookupModel' || val.field_type.name=='picklist'){
+                    if(_.isArray(values[val.name])){
+                        result[val.name] = (!_.isEmpty(values[val.name]) && !_.isNull(values[val.name])) ? _.map(values[val.name],'_id') : null
+                    }else{
+                        result[val.name] = _.get(values,val.name+"._id",null)
+                    }
+                }else if(val.field_type.name=='date'){
+    
+                }else{
+                    result[val.name] = _.trim(values[val.name])
+                }
+            }else{
+
+            }
+        }
+    })
+    return result
+  }
+
+  function transformFieldForSaving(value,field){
+    console.log(field)
+    if(field.field_type.name=='lookupModel' || field.field_type.name=='picklist'){
+        if(_.isArray(value)){
+            return (!_.isEmpty(value) && !_.isNull(value)) ? _.map(value,'_id') : null
+        }else{
+            return value._id
+        }
+    }else if(field.field_type.name=='date'){
+
+    }else{
+        return _.trim(value)
+    }
+  }
+
+  function getAllHiddenFieldsAndPanels(panels,allfields,values,page){
+    let hidden = {'fields':[],'panels':[]}
+    _.forEach(panels, function(panel){
+        let result = null
+        if(!_.includes(panel.controllerMethod,'@show')){
+            if(_.has(panel.rules,'hide_in')){
+                if(_.includes(panel.rules.hide_in,page)){
+                    result = true;
+                }
+            }
+            if(_.has(panel.rules,'show_in')){
+                if(!_.includes(panel.rules.show_in,page)){
+                    result = true;
+                }
+            }
+            if(_.get(panel,'rules.hide_if','') && result!=true){
+                var parseresult = parseExpression(panel['rules']['hide_if'],panel.entityName,values)
+                result = parseresult.value
+            }
+            if(_.get(panel,'rules.visible_if','') && result!=true){
+                var parseresult = parseExpression(panel['rules']['visible_if'],panel.entityName,values)
+                result = (parseresult.value) ? false : true
+            }
+            let panelFields = []
+            _.forEach(panel.sections, function(section){
+                let fields = (section.field_ids.length > 1) ? _.union(section.field_ids[0],section.field_ids[1]) : section.field_ids[0];
+                panelFields = _.union(panelFields,_.filter(allfields,function(f){ if(_.includes(fields,f._id)){ return true; }}))
+            })
+            if(result===true){
+                hidden.panels.push(panel.panelName)
+                hidden.fields = _.union(hidden.fields, _.map(panelFields,'uniqueName'))
+             }else{
+               let hFields = getHiddenFields(panelFields,panel.entityName,page,values)
+               hidden.fields = _.union(hidden.fields, hFields)
+             }
+        }else{
+            if(_.has(panel.rules,'hide_in')){
+                if(_.includes(panel.rules.hide_in,page)){
+                    hidden.panels.push(panel.panelName)
+                }
+            }
+            if(_.has(panel.rules,'show_in')){
+                if(!_.includes(panel.rules.show_in,page)){
+                    hidden.panels.push(panel.panelName)
+                }
+            }
+        }
+    })
+    return hidden
+  }
+
+  function getHiddenFields(fields,entityName,page,values){
+    let hiddenFields = []
+    _.forEach(fields, function(field){
+        if(_.has(field.rules,'hide_in')){
+            if(_.includes(field.rules.hide_in,page)){
+                hiddenFields.push(field.uniqueName);
+            }
+        }
+        if(_.has(field.rules,'show_in')){
+            if(!_.includes(field.rules.show_in,page)){
+                hiddenFields.push(field.uniqueName);
+            }
+        }
+        if(_.get(field,'rules.hide_if','')){
+            let result = parseExpression(field.rules.hide_if,entityName,values)
+            if(result.value == true){
+              hiddenFields.push(field.uniqueName);
+            }else if(_.includes(hiddenFields,field.uniqueName)){
+              _.pull(hiddenFields,field.uniqueName);
+            }
+        }
+        if(_.get(field,'rules.visible_if','')){
+            let result = parseExpression(field.rules.visible_if,entityName,values)
+            if(result.value == false){
+              hiddenFields.push(field.uniqueName);
+            }else if(_.includes(hiddenFields,field.uniqueName)){
+              _.pull(hiddenFields,field.uniqueName);
+            }
+        }
+    })
+    return hiddenFields
+  }
+
+  function extractFieldinExpressionFormat(expression){
+    var string = []
+    var result = expression
+      if(_.includes(result,'=>')){
+        string = _.split(result,"=>")
+        result = string[1]
+      }
+      if(_.includes(result,'::')){
+        string = _.split(result,"::")
+        result = string[1]
+      }
+      if(_.includes(result,':')){
+        string = _.split(result,":")
+        result = string[1]
+      }
+      if(_.includes(result,'.')){
+        string = _.split(result,".")
+        result = string[0]
+      }
+      return result
+  }
+
+  function extractEntityinExpressionFormat(expression){
+    var string = []
+    var result = expression
+    if(_.includes(result,'=>')){
+      string = _.split(result,"=>")
+      result = string[1]
+    }
+    //console.log(result)
+    //console.log(_.includes(result,'::'))
+    if(_.includes(result,'::')){
+      string = _.split(result,"::")
+      result = string[0]
+    }else if(_.includes(result,':')){
+      string = _.split(result,":")
+      result = string[0]
+    }else{
+      result = ""
+    }
+    return result
+  }
 
   return {
     getPicklistFields,
@@ -339,6 +513,13 @@ const { getPicklist} = storeToRefs(formDataStore)
     transformNumberCurrency,
     transformDate,
     checkFieldIfMultipleSelect,
-    getModuleValues
+    getModuleValues,
+    transformForSaving,
+    transformFieldForSaving,
+    getAllHiddenFieldsAndPanels,
+    transformLookupValue,
+    extractFieldinExpressionFormat,
+    extractEntityinExpressionFormat,
+    getDefaultValue
   };
 }

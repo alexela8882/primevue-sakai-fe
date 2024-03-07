@@ -8,6 +8,7 @@ import * as yup from 'yup'
 import { useModuleStore } from '@/stores/modules/index'
 
 // refs
+const availableFields = ref()
 const localSelectedViewFilter = ref(null)
 const {
   values,
@@ -18,9 +19,11 @@ const {
   handleSubmit
 } = useForm({
   validationSchema: yup.object({
-    group_by: yup.string().label('Group By').required()
+    group_by: yup.string().label('Group By').required(),
+    title_ids: yup.array().label('Titles').required()
   })
 })
+const title_ids = defineComponentBinds('title_ids')
 const summarize_by = defineComponentBinds('summarize_by')
 const group_by = defineComponentBinds('group_by')
 // stores
@@ -32,6 +35,8 @@ const {
   perPageItems,
   getBaseModule,
   getDefaultViewFilter,
+  __getViewFilter,
+  _getViewFilters,
   getViewFilters,
   getReconstructedViewFilter
 } = storeToRefs(moduleStore)
@@ -39,20 +44,38 @@ const { addViewFilter } = moduleStore
 // defines
 const props = defineProps({
   mode: String,
+  baseModule: Object,
   module: Object,
   selectedViewFilter: String,
   saveTrigger: Number
 })
 
 // actions
-const saveKanbanSettings = handleSubmit(values => {
+const saveKanbanSettings = handleSubmit(async values => {
   // alert(JSON.stringify(values, null, 2))
-  console.log(values)
   viewFiltersDialog.value = false
-  addViewFilter(values) // dummy store save
+
+  const payload = Object.assign({}, {
+    baseModule: props.baseModule,
+    viewFilter: props.selectedViewFilter,
+    type: 'kanban',
+    data: values
+  })
+  await addViewFilter(payload) // store save
+
+  viewFiltersDialogLoading.value = false
+  viewFiltersDialog.value = false
 })
 const kanbanSettingsAutoFill = (viewFilter) => {
-  console.log(viewFilter)
+  let title_ids = []
+  if (viewFilter.title_ids && viewFilter.title_ids.length > 0) {
+    // check if title ids are present in view filter
+    title_ids = viewFilter.title_ids
+  } else { // else get default from field.title
+    title_ids = availableFields.value.filter(field => field.title).map(field => field._id)
+  }
+
+  setFieldValue('title_ids', title_ids)
   setFieldValue('summarize_by', viewFilter.summarize_by)
   setFieldValue('group_by', viewFilter.group_by)
 }
@@ -60,14 +83,15 @@ const kanbanSettingsAutoFill = (viewFilter) => {
 // lifecycles
 onMounted(() => {
   viewFiltersDialogLoading.value = false
-  console.log(getViewFilters.value)
   localSelectedViewFilter.value = props.selectedViewFilter
+  // console.log(localSelectedViewFilter.value)
 
-  console.log(getBaseModule.value.fields)
+  const viewFilter = __getViewFilter.value(props.selectedViewFilter, props.module)
+  availableFields.value = viewFilter.fields
 })
 
 watch(localSelectedViewFilter, (newVal, oldVal) => {
-  const viewFilter = getViewFilters.value.find(vf => vf._id === newVal)
+  const viewFilter = __getViewFilter.value(newVal, props.module)
   kanbanSettingsAutoFill(getReconstructedViewFilter.value(viewFilter))
 })
 
@@ -81,9 +105,24 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
     <div class="flex flex-column gap-4 mx-auto mt-6">
       <div>
         <span class="p-float-label">
+          <MultiSelect
+            v-bind="title_ids"
+            :options="availableFields"
+            optionLabel="label"
+            optionValue="_id"
+            filter
+            mutiple
+            class="w-full md:w-22rem mr-2"
+            :class="`${errors.title_ids ? 'p-invalid' : 'border-primary'}`" />
+          <label>Titles</label>
+        </span>
+        <div class="p-error text-sm my-2">{{ errors.title_ids || '&nbsp;' }}</div>
+      </div>
+      <div>
+        <span class="p-float-label">
           <Dropdown
             v-bind="summarize_by"
-            :options="module.fields"
+            :options="availableFields"
             optionLabel="label"
             optionValue="name"
             filter
@@ -97,7 +136,7 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
         <span class="p-float-label">
           <Dropdown
             v-bind="group_by"
-            :options="module.fields"
+            :options="availableFields"
             optionLabel="label"
             optionValue="_id"
             filter

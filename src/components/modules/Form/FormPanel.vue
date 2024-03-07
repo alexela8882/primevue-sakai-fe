@@ -4,7 +4,7 @@
     import { storeToRefs } from 'pinia'
     import { useToast } from "primevue/usetoast"
     import axios from 'axios'
-    import { get, find } from 'lodash'
+    import _ from 'lodash'
 
     import { useModuleStore } from '../../../stores/modules'
 
@@ -12,7 +12,8 @@
 
     const props = defineProps({
         panel: Object,
-        quickAdd: Boolean
+        quickAdd: Boolean,
+        module: String
     })
 
     const value = ref()
@@ -20,16 +21,18 @@
 
 </script>
 <template>
-    <div>
-        <div v-for="(section,sectioni) in panel.sections" :key="section._id" class="flex flex-column" :class="(sectioni > 1) ? 'mt-2' : ''">
-            <h6 class="formSectionLabel">{{ section.sectionLabel }}</h6>
+    <template v-for="(section,sectioni) in panel.sections" :key="section._id">
+        <div v-if="(quickAdd && section.quick) || !quickAdd"  class="flex flex-column px-1 py-2" :class="(sectioni > 1) ? 'mt-2' : ''">
+            <h6 class="formSectionLabel" v-if="section.label">{{ section.label }}</h6>
             <div class="grid">
                 <div  v-for="(col,colI) in section.field_ids" :key="colI" class="col flex flex-column gap-2">
-                    <Field v-for="field in col" :key="field" :config="find(form.fields,{'_id':field})"/>
+                    <template v-for="field in col" :key="field" >
+                        <Field v-if="((quickAdd && _.get(_.find(form.fields,{'_id':field}),'quick',false)) || !quickAdd) && !_.includes(form.hidden.fields,field.uniqueName)" :module="module" :inline="false" keyName="main" :config="_.find(form.fields,{'_id':field})"/>
+                    </template>
                 </div>
             </div>
         </div>
-    </div>
+    </template>
 </template>
 <style>
 .fieldInput.required input{
@@ -37,6 +40,6 @@
 }
 .formSectionLabel{
     background: #80808029;
-    padding:5px 2px;
+    padding:5px;
 }
 </style>

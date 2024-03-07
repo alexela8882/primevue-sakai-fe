@@ -5,6 +5,7 @@ import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
 import { storeToRefs } from 'pinia'
 import _ from 'lodash'
+import helper from '@/mixins/Helper';
 
 import { useBaseStore } from '@/stores/base'
 import { useModuleStore } from '@/stores/modules'
@@ -14,10 +15,12 @@ export const useFormDataStore = defineStore('formDataStore', () => {
     const moduleStore = useModuleStore()
     const { jsonDbUrl } = storeToRefs(baseStore)
     const { _fetchModule, fetchBaseModuleByField } = moduleStore
+    const { formatLookupOptions } = helper();
 
     //ref
     const forms = ref([])
-    const picklist = ref([])
+    const picklist = ref({})
+    const lookupModel = ref({})
     const formReset = ref("")
     //getters
     const getForms = computed(() => forms.value)
@@ -28,6 +31,19 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         return _.get(picklist.value,attr,[])
       }
     })
+
+    const getLookupOptions = computed(() => {
+      return (field,attr) => {
+        let attribute = field+"."+attr;
+        if(attr=='group'){
+          return _.get(lookupModel.value,attribute,false)
+        }else{
+          return _.get(lookupModel.value,attribute,[])
+        }
+        
+      }
+    })
+
     const getCachedFormData = computed(() => {
       return (payload) => {
         if(_.endsWith(payload,'create-form')){
@@ -55,31 +71,50 @@ export const useFormDataStore = defineStore('formDataStore', () => {
     }
 
     const fetchPicklist = async (payload) => {
-        const res = await axios(`${jsonDbUrl.value}/picklist`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
-        })
+      let param = {'listName':payload}
+        const res = await axios.post(`/picklist`,param)
     
         if (res.status === 200) {
-          const data = (res.data && res.data.length > 0) ? res.data[0] : res.data
-          picklist.value = data
+          picklist.value = _.merge(picklist.value,res.data)
         }
     }
 
-    const fetchLookup = async (payload) => {
+    const fetchLookup = async (moduleName,field) => {
       try {
-        const response = await axios(`${jsonDbUrl.value}/lookup/${payload}`, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        });
-        return {'values':response.data.values.data,'field':payload};
+        // await new Promise(resolve => setTimeout(resolve, 2000));
+        let param = {"moduleName":moduleName,"fieldId":field.uniqueName}
+        const response = await axios.post(`/lookup`,param); 
+        lookupModel.value[field.uniqueName] = formatLookupOptions(_.cloneDeep(response.data.values.data),null,field) 
+        // return {'values':response.data.values.data,'field':payload}
       } catch (error) {
         console.error('Error fetching data:', error);
         throw error; // Re-throw the error so the caller can handle it if needed
       }
     }
 
-    const fetchLookupPaginated = async (payload) => {
+    const fetchEntityFields = async (entity) => {
+      const res = await axios.get(`${jsonDbUrl.value}/efields?entity=${entity}`)
+  
+      if (res.status === 200) {
+         return res.data[0]['data']
+      }
+    }
+
+    // const fetchLookup = async (payload) => {
+    //   try {
+    //     await new Promise(resolve => setTimeout(resolve, 2000));
+    //     const response = await axios(`${jsonDbUrl.value}/lookup/${payload}`, {
+    //       method: 'GET',
+    //       headers: { 'Content-Type': 'application/json' },
+    //     });
+    //     return {'values':response.data.values.data,'field':payload}
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //     throw error; // Re-throw the error so the caller can handle it if needed
+    //   }
+    // }
+
+    const fetchLookupPaginated = async (params) => {
       // let cancelToken = null; // Variable to store the cancel token
       // // Cancel the previous request if it exists
       // if (cancelToken) {
@@ -90,30 +125,33 @@ export const useFormDataStore = defineStore('formDataStore', () => {
       // cancelToken = axios.CancelToken.source();
       
       try {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        const response = await axios.get(jsonDbUrl.value+'/lookup-paginated', {
-            headers: { 'Content-Type': 'application/json' },
-            params: { "_page": payload.page,"fieldId": payload.fieldId, "search": payload.search },
-            cancelToken: payload.cancelToken.token // Pass the cancel token to the request
-        });
-        // const response = await axios(`${jsonDbUrl.value}/lookup-paginated?_page=${payload.page}&fieldId=${payload.fieldId}`, {
+        // await new Promise(resolve => setTimeout(resolve, 2000));
+        const res = await axios(`/lookup`, {
+          method: 'POST',
+          // params: { "_page": payload.page,"field-name": payload.fieldId, "search": payload.search }, //db3
+          params: params,
+          headers: { 'Content-Type': 'application/json' }
+        })
+        // const res = await axios(`${jsonDbUrl.value}/lookupPaginated?_page=${payload.page}&field-name=${payload.fieldId}`, {
         //   method: 'GET',
-        //   headers: { 'Content-Type': 'application/json' },
-        // });
-        let meta = {
-          "pagination": {
-            "total": 50,
-            "count": 10,
-            "per_page": 10,
-            "current_page": payload.page,
-            "total_pages": 5,
-            "links": {
-              "previous": "http://reddotcrm.com/api/lookup?page=1",
-              "next": "http://reddotcrm.com/api/lookup?page=3"
-            }
-          }
-        }
-        return {'values':response.data,'field':payload.fieldId,'meta':meta};
+        //   headers: { 'Content-Type': 'application/json' }
+        // })
+        // let meta = {
+        //   "pagination": {
+        //     "total": 50,
+        //     "count": 10,
+        //     "per_page": 10,
+        //     "current_page": payload.page,
+        //     "total_pages": 5,
+        //     "links": {
+        //       "previous": "http://reddotcrm.com/api/lookup?page=1",
+        //       "next": "http://reddotcrm.com/api/lookup?page=3"
+        //     }
+        //   }
+        // }
+        console.log(res)
+        return res.data.values
+        // return {'values':res.data[0]['data'],'field':payload.fieldId,'meta':meta};
       } catch (error) {
         // if (axios.isCancel(error)) {
         //     console.log('Request canceled:', error.message);
@@ -129,19 +167,33 @@ export const useFormDataStore = defineStore('formDataStore', () => {
       formReset.value = payload
     }
 
+    const saveFormValues = async (values,module) =>{
+      try {
+        const response = await axios.post(`/modules/${module.name}`,values);
+        return response
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
     return {
         forms,
         picklist,
+        lookupModel,
         getForms,
         getPicklist,
         getPicklistByListName,
         getCachedFormData,
         getFormReset,
+        getLookupOptions,
         saveForm,
         generateForm,
         fetchPicklist,
         fetchLookup,
         fetchLookupPaginated,
-        setFormReset
+        setFormReset,
+        saveFormValues,
+        fetchEntityFields 
     }
 })

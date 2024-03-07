@@ -22,7 +22,7 @@ const {
     filterName: yup.string().label('Filter name').required(),
     sortField: yup.string().label('Sort field').required(),
     sortOrder: yup.string().label('Sort order').required(),
-    perPage: yup.string().label('Items per page').required(),
+    pageSize: yup.string().label('Items per page').required(),
     pickList: yup.array().label('Pick list fields').min(1, 'Please add at least 1 field').required()
   })
 })
@@ -30,7 +30,7 @@ const localSelectedViewFilter = ref(null)
 const filterName = defineComponentBinds('filterName')
 const sortField = defineComponentBinds('sortField')
 const sortOrder = defineComponentBinds('sortOrder')
-const perPage = defineComponentBinds('perPage')
+const pageSize = defineComponentBinds('pageSize')
 const pickList = defineComponentBinds('pickList')
 // stores
 const moduleStore = useModuleStore()
@@ -40,7 +40,9 @@ const {
   viewFilterData,
   perPageItems,
   getBaseModule,
-  getDefaultViewFilter,
+  _getDefaultViewFilter,
+  __getViewFilter,
+  _getViewFilters,
   getViewFilters,
   getReconstructedViewFilter
 } = storeToRefs(moduleStore)
@@ -48,36 +50,51 @@ const { addViewFilter } = moduleStore
 // defines
 const props = defineProps({
   mode: String,
+  baseModule: Object,
   module: Object,
   selectedViewFilter: String,
   saveTrigger: Number
 })
 
 // actions
-const saveTableSettings = handleSubmit(values => {
+const saveTableSettings = handleSubmit(async values => {
   // alert(JSON.stringify(values, null, 2))
-  console.log(values)
+  viewFiltersDialogLoading.value = true
+
+  const payload = Object.assign({}, {
+    mode: props.mode,
+    baseModule: props.baseModule,
+    viewFilter: props.selectedViewFilter,
+    type: 'table',
+    data: values
+  })
+  await addViewFilter(payload) // store save/update
+
+  viewFiltersDialogLoading.value = false
   viewFiltersDialog.value = false
-  addViewFilter(values) // dummy store save
 })
 const tblSettingsAutoFill = (viewFilter) => {
+  console.log(viewFilter)
   setFieldValue('filterName', viewFilter.filterName)
-  setFieldValue('sortField', viewFilter.sortField)
+  setFieldValue('sortField', viewFilter.sortField ? viewFilter.sortField : 'created_at')
   setFieldValue('sortOrder', viewFilter.sortOrder)
+  setFieldValue('pageSize', viewFilter.pageSize ? viewFilter.pageSize : 15)
   const filteredFields = props.module.fields.filter(item => !viewFilter.fields.some(removeItem => removeItem._id === item._id))
   pickListTblFields.value = [filteredFields, viewFilter.fields]
-  setFieldValue('pickList', viewFilter.fields)
+  setFieldValue('pickList', viewFilter.fields.map(field => field._id))
 }
 
 // lifecycles
 onMounted(() => {
   viewFiltersDialogLoading.value = false
-  console.log(props.module.fields)
   localSelectedViewFilter.value = props.selectedViewFilter
 
   if (props.mode === 'new') {
     pickListTblFields.value = [props.module.fields, []]
-  } else if (props.mode === 'edit-table') tblSettingsAutoFill(getDefaultViewFilter.value)
+    setFieldValue('pageSize', 15)
+    setFieldValue('sortOrder', 'ASC')
+    setFieldValue('sortField', 'created_at')
+  } else if (props.mode === 'edit-table') tblSettingsAutoFill(_getDefaultViewFilter.value(props.module))
 })
 
 watch(pickListTblFields, (newVal, oldVal) => {
@@ -90,8 +107,8 @@ watch(pickListTblFields, (newVal, oldVal) => {
 
 watch(localSelectedViewFilter, (newVal, oldVal) => {
   if (props.mode === 'edit-table') {
-    const viewFilter = getViewFilters.value.find(vf => vf._id === newVal)
-    tblSettingsAutoFill(getReconstructedViewFilter.value(viewFilter))
+    const viewFilter = __getViewFilter.value(newVal, props.module)
+    tblSettingsAutoFill(viewFilter)
   }
 })
 
@@ -117,7 +134,7 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
         <span class="p-float-label">
           <Dropdown
             v-model="localSelectedViewFilter"
-            :options="getViewFilters"
+            :options="_getViewFilters(module)"
             optionLabel="filterName"
             optionValue="_id"
             class="w-full md:w-16rem mr-2" />
@@ -136,7 +153,6 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
               optionValue="name"
               dataKey="_id"
               filter
-              placeholder="Select Field *"
               class="w-full md:w-12rem mr-2"
               :class="`${errors.sortField ? 'p-invalid' : 'border-primary'}`" />
             <label>Sort field *</label>
@@ -160,15 +176,15 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
       <div>
         <span class="p-float-label">
           <Dropdown
-            v-bind="perPage"
+            v-bind="pageSize"
             :options="perPageItems"
             optionLabel="label"
             optionValue="value"
             class="w-full md:w-12rem mr-2"
-            :class="`${errors.perPage ? 'p-invalid' : 'border-primary'}`" />
+            :class="`${errors.pageSize ? 'p-invalid' : 'border-primary'}`" />
           <label>Items per page *</label>
         </span>
-        <div class="p-error text-sm my-2">{{ errors.perPage || '&nbsp;' }}</div>
+        <div class="p-error text-sm my-2">{{ errors.pageSize || '&nbsp;' }}</div>
       </div>
     </div>
     <div

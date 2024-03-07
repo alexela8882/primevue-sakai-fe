@@ -14,6 +14,7 @@ import { useModuleStore } from '../../stores/modules/index'
 const props = defineProps({
   sidebar: Boolean,
   viewFilterId: String,
+  module: Object,
   moduleName: String,
   moduleLabel: String,
   data: Array,
@@ -31,7 +32,7 @@ const router = useRouter()
 const drag = ref(false)
 const kanbanData = ref([])
 const moduleStore = useModuleStore()
-const { getCollection, getKanbanData, getFieldDetails } = storeToRefs(moduleStore)
+const { getCollection, _getKanbanData, getKanbanData, getFieldDetails } = storeToRefs(moduleStore)
 const { fetchModule, fetchBaseModule, fetchCollection } = moduleStore
 
 // actions
@@ -53,8 +54,7 @@ const navigateDetailPage = (data) => {
 }
 
 onMounted(() => {
-  kanbanData.value = getKanbanData.value(props.viewFilterId)
-  console.log(getKanbanData.value(props.viewFilterId))
+  kanbanData.value = getKanbanData.value({ _id: props.viewFilterId, module: props.module })
 })
 
 onClickOutside(listViewFilterRef, (event) => {
@@ -81,10 +81,14 @@ onClickOutside(listViewFilterRef, (event) => {
       <div
         v-for="(field, fx) in kanbanData"
         :key="fx"
-        class="col">
+        class="col w-3">
         <div
           style="position: sticky; top: 70px; z-index: 2;"
-          class="bg-white py-4 px-4 text-primary font-bold text-xl shadow-1">{{ field.label }}</div>
+          class="bg-white py-4 px-4 shadow-1">
+          <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis text-primary font-bold text-xl">
+            {{ field.label ? field.label : '&nbsp;' }}
+          </div>
+        </div>
         <draggable
           :list="field.data"
           :group="viewFilterId"
