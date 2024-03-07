@@ -73354,5 +73354,719 @@
         }
       ]
     }
+  ],
+  "efields":[
+    {
+      "entity":"SalesOpptItem",
+      "data":[
+        {
+          "_id": "5c906a14a6ebc7193110ef15",
+          "name": "asServiceSales",
+          "label": "As Service Sales",
+          "uniqueName": "salesopptitem_as_service_sales",
+          "field_type_id": "5c906a0ea6ebc7193110e733",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-07-03 04:52:56",
+          "created_at": "2019-03-19 04:03:32",
+          "rules": {
+            "default_value": false,
+            "checkbox": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e733",
+            "name": "boolean"
+          },
+          "relation": null
+        },
+        {
+          "_id": "640155e7a6ebc70cf25c2302",
+          "name": "business_unit_ids",
+          "label": "Business Unit",
+          "uniqueName": "salesopptitem_business_unit_ids",
+          "field_type_id": "5c906a0ea6ebc7193110e738",
+          "created_by": null,
+          "updated_by": null,
+          "fieldGlue": " ",
+          "extraInfo": [
+            "level"
+          ],
+          "level": "level",
+          "quick": true,
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-03-03 02:05:27",
+          "created_at": "2023-03-03 02:05:27",
+          "rules": {
+            "ss_dropdown": true,
+            "required": true
+          },
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e738",
+            "name": "lookupModel"
+          },
+          "relation": {
+            "_id": "640155e7a6ebc70cf25c2305",
+            "method": "belongsTo",
+            "class": "App\\Models\\Company\\BusinessUnit",
+            "displayFieldName": [
+              "name"
+            ],
+            "foreign_key": "business_unit_ids",
+            "local_key": "_id",
+            "entity_id": "5c906a0fa6ebc7193110e7c9",
+            "popupDisplayFieldName": [
+              "name",
+              "description"
+            ],
+            "created_by": null,
+            "updated_by": null,
+            "field_id": "640155e7a6ebc70cf25c2302"
+          }
+        },
+        {
+          "_id": "5c906a14a6ebc7193110eeea",
+          "name": "product_id",
+          "label": "Product",
+          "uniqueName": "salesopptitem_product_id",
+          "field_type_id": "5c906a0ea6ebc7193110e738",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "fieldGlue": " ",
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2019-03-19 04:03:32",
+          "created_at": "2019-03-19 04:03:32",
+          "rules": {
+            "ss_pop_up": true,
+            "disable": true
+          },
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e738",
+            "name": "lookupModel"
+          },
+          "relation": {
+            "_id": "5c906a14a6ebc7193110eeed",
+            "method": "belongsTo",
+            "class": "App\\Models\\Product\\Product",
+            "displayFieldName": [
+              "name"
+            ],
+            "foreign_key": "product_id",
+            "local_key": "_id",
+            "entity_id": "5c906a0fa6ebc7193110e7be",
+            "popupDisplayFieldName": [
+              "name",
+              "modelCode",
+              "itemCode",
+              "product_type_id"
+            ],
+            "created_by": "5bb104d0678f71061f643d1a",
+            "updated_by": "5bb104d0678f71061f643d1a",
+            "field_id": "5c906a14a6ebc7193110eeea"
+          }
+        },
+        {
+          "_id": "6462d5d4a6ebc7566d4f8a92",
+          "name": "HSNCode",
+          "label": "HSN Code",
+          "uniqueName": "salesopptitem__h_s_n_code",
+          "field_type_id": "5c906a0ea6ebc7193110e73b",
+          "created_by": null,
+          "updated_by": null,
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-05-16 01:01:08",
+          "created_at": "2023-05-16 01:01:08",
+          "rules": {
+            "between": {
+              "min": 0,
+              "max": 155
+            },
+            "string": true
+          },
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e73b",
+            "name": "text"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a14a6ebc7193110eeee",
+          "name": "quantity",
+          "label": "Qty",
+          "uniqueName": "salesopptitem_quantity",
+          "field_type_id": "5c906a0ea6ebc7193110e73d",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-07-03 04:52:56",
+          "created_at": "2019-03-19 04:03:32",
+          "rules": {
+            "default_value": 1,
+            "decimal": 2,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e73d",
+            "name": "number"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a14a6ebc7193110eef2",
+          "name": "list_price_id",
+          "label": "List Price",
+          "uniqueName": "salesopptitem_list_price_id",
+          "field_type_id": "5c906a0ea6ebc7193110e738",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "fieldGlue": " ",
+          "filterQueryParams": [],
+          "filterQuery": "where(\"Price::active\", \"=\", true)->where(\"Price::currency_id\", \"=\", \"%SalesOpportunity::currency_id%\")->where(\"Price::pricebook_id\", \"=\", \"%SalesOpportunity::pricebook_id%\")->where(\"Price::product_id\", \"=\" , \"Product::_id\")->where(\"Product::active\", \"=\", true)",
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2020-06-01 03:31:44",
+          "created_at": "2019-03-19 04:03:32",
+          "rules": {
+            "auto_fill":[
+              [
+                "currency_id",
+                "currency_id"
+              ]
+            ],
+            "disable": true,
+            "ss_pop_up": true
+          },
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e738",
+            "name": "lookupModel"
+          },
+          "relation": {
+            "_id": "5c906a14a6ebc7193110eef6",
+            "method": "belongsTo",
+            "class": "App\\Models\\Product\\Price",
+            "displayFieldName": [
+              "price"
+            ],
+            "foreign_key": "list_price_id",
+            "local_key": "_id",
+            "entity_id": "5c906a0fa6ebc7193110e7df",
+            "popupDisplayFieldName": [
+              "product_id",
+              "price"
+            ],
+            "created_by": "5bb104d0678f71061f643d1a",
+            "updated_by": "5bb104d0678f71061f643d1a",
+            "field_id": "5c906a14a6ebc7193110eef2"
+          }
+        },
+        {
+          "_id": "5c906a14a6ebc7193110eefc",
+          "name": "salesPrice",
+          "label": "Sales Price",
+          "uniqueName": "salesopptitem_sales_price",
+          "field_type_id": "5c906a0ea6ebc7193110e73e",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "convertedField": "salesPrice_converted",
+          "currencySource": {
+            "type": "lookupModel",
+            "concat": "code",
+            "field": "currency_id",
+            "entity_id": "5c906a0fa6ebc7193110e7cb"
+          },
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-07-03 04:52:56",
+          "created_at": "2019-03-19 04:03:32",
+          "rules": {
+            "decimal": 2,
+            "comma_separated": true,
+            "digits_between": {
+              "min": 0,
+              "max": 15
+            }
+          },
+          "searchKey": false,
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e73e",
+            "name": "currency"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a14a6ebc7193110eef7",
+          "name": "discount",
+          "label": "Disc(%)",
+          "uniqueName": "salesopptitem_discount",
+          "field_type_id": "5c906a0ea6ebc7193110e743",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-07-03 04:52:56",
+          "created_at": "2019-03-19 04:03:32",
+          "rules": {
+            "decimal": 2
+          },
+          "searchKey": false,
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e743",
+            "name": "percentage"
+          },
+          "relation": null
+        },
+        {
+          "_id": "60d1a905a6ebc7a0cc32fc52",
+          "name": "vat",
+          "label": "Vat (%)",
+          "uniqueName": "salesopptitem_vat",
+          "field_type_id": "5c906a0ea6ebc7193110e743",
+          "created_by": null,
+          "updated_by": null,
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-06-30 10:29:44",
+          "created_at": "2021-06-22 09:10:29",
+          "rules": {
+            "digits_between":{
+              "min": 0,
+              "max": 100
+            },
+            "visible_if": "{branch_id.name} == \"Esco Bangladesh\" || {branch_id.name} == \"Esco Vietnam\""
+          },
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e743",
+            "name": "percentage"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a14a6ebc7193110ef04",
+          "name": "subTotal",
+          "label": "Sub Total",
+          "uniqueName": "salesopptitem_sub_total",
+          "field_type_id": "5c906a0fa6ebc7193110e7ac",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "convertedField": "subTotal_converted",
+          "formulaType": "currency",
+          "formulaExpression": "IF(branch_id._id==\"5badf748678f7111186ba26e\",ROUND(salesPrice - salesPrice * discount,0) * quantity,IF(branch_id._id==\"5f8510f0a6ebc7423b72d6f2\",ROUND(salesPrice - salesPrice * discount,0) * quantity,IF(branch_id._id==\"5bfcf6c9678f71594d642a86\",((salesPrice - (salesPrice * discount)) + ((salesPrice - (salesPrice * discount)) * vat)) * quantity,IF(branch_id._id==\"5badf748678f7111186ba268\",((salesPrice - (salesPrice * discount)) + ((salesPrice - (salesPrice * discount)) * vat)) * quantity,IF(branch_id._id==\"5c6a88e3a6ebc728735b9db2\",(salesPrice - salesPrice * (discount + commisionPercentDistributor)) * quantity,(salesPrice - salesPrice * discount) * quantity)))))",
+          "currencySource": {
+            "type": "lookupModel",
+            "concat": "code",
+            "field": "currency_id",
+            "entity_id": "5c906a0fa6ebc7193110e7cb"
+          },
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-07-03 04:52:56",
+          "created_at": "2019-03-19 04:03:32",
+          "rules": {
+            "decimal": 2,
+            "hide_if": "{branch_id.name} != \"ETI Lab & Medical\" && {branch_id.name} != \"ETI Healthcare\" && {branch_id.name} != \"Esco Taiwan\"",
+            "comma_separated": true
+          },
+          "hierarchy": 2,
+          "searchKey": false,
+          "field_type": {
+            "_id": "5c906a0fa6ebc7193110e7ac",
+            "name": "formula"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5e49c758a6ebc794b53a70c2",
+          "name": "commisionPercentDistributor",
+          "label": "Commision (%) due to ESCO subsidiaries or distributor",
+          "uniqueName": "salesopptitem_commision_percent_distributor",
+          "field_type_id": "5c906a0ea6ebc7193110e743",
+          "created_by": null,
+          "updated_by": null,
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2020-02-16 22:51:04",
+          "created_at": "2020-02-16 22:51:04",
+          "rules": {
+            "digits_between":{
+              "min": 0,
+              "max": 100
+            }
+          },
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e743",
+            "name": "percentage"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5e49c758a6ebc794b53a70c4",
+          "name": "commisionAmountDistributor",
+          "label": "Commision ($) due to ESCO subsidiaries or distributor",
+          "uniqueName": "salesopptitem_commision_amount_distributor",
+          "field_type_id": "5c906a0fa6ebc7193110e7ac",
+          "created_by": null,
+          "updated_by": null,
+          "convertedField": "commisionAmountDistributor_converted",
+          "formulaType": "currency",
+          "formulaExpression": "subTotal * commisionPercentDistributor",
+          "currencySource": {
+            "type": "lookupModel",
+            "concat": "code",
+            "field": "currency_id",
+            "entity_id": "5c906a0fa6ebc7193110e7cb"
+          },
+          "hierarchy": 15,
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2020-02-16 22:51:04",
+          "created_at": "2020-02-16 22:51:04",
+          "rules": {
+            "decimal": true,
+            "comma_separated": true,
+            "disable": true
+          },
+          "field_type": {
+            "_id": "5c906a0fa6ebc7193110e7ac",
+            "name": "formula"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5e49c759a6ebc794b53a70cc",
+          "name": "commisionPercentSalesAgent",
+          "label": "Commision (%) due to External sales agent/ consultant/ dealer",
+          "uniqueName": "salesopptitem_commision_percent_sales_agent",
+          "field_type_id": "5c906a0ea6ebc7193110e743",
+          "created_by": null,
+          "updated_by": null,
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2020-02-16 22:51:05",
+          "created_at": "2020-02-16 22:51:05",
+          "rules": {
+            "digits_between": {
+              "min": 0,
+              "max": 100
+            }
+          },
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e743",
+            "name": "percentage"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5e49c759a6ebc794b53a70ce",
+          "name": "commisionAmountSalesAgent",
+          "label": "Commision ($) due to External sales agent/ consultant/ dealer",
+          "uniqueName": "salesopptitem_commision_amount_sales_agent",
+          "field_type_id": "5c906a0fa6ebc7193110e7ac",
+          "created_by": null,
+          "updated_by": null,
+          "convertedField": "commisionAmountSalesAgent_converted",
+          "formulaType": "currency",
+          "formulaExpression": "subTotal * commisionPercentSalesAgent",
+          "currencySource": {
+            "type": "lookupModel",
+            "concat": "code",
+            "field": "currency_id",
+            "entity_id": "5c906a0fa6ebc7193110e7cb"
+          },
+          "hierarchy": 17,
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2020-02-16 22:51:05",
+          "created_at": "2020-02-16 22:51:05",
+          "rules": {
+            "decimal": true,
+            "comma_separated": true,
+            "disable": true
+          },
+          "field_type": {
+            "_id": "5c906a0fa6ebc7193110e7ac",
+            "name": "formula"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a14a6ebc7193110ef18",
+          "name": "status_id",
+          "label": "Status",
+          "uniqueName": "salesopptitem_status_id",
+          "field_type_id": "5c906a0ea6ebc7193110e737",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "listName": "oppt_item_status",
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2019-03-19 04:03:32",
+          "created_at": "2019-03-19 04:03:32",
+          "rules": {
+            "show_in":[
+              "show",
+              "update"
+            ],
+            "ss_drodown": true
+          },
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e737",
+            "name": "picklist"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a14a6ebc7193110ef1b",
+          "name": "inclusive_service_ids",
+          "label": "Inclusive Services",
+          "uniqueName": "salesopptitem_inclusive_service_ids",
+          "field_type_id": "5c906a0ea6ebc7193110e738",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "fieldGlue": " ",
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2019-03-19 04:03:32",
+          "created_at": "2019-03-19 04:03:32",
+          "rules": {
+            "ms_pop_up": true,
+            "disable": true
+          },
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e738",
+            "name": "lookupModel"
+          },
+          "relation": {
+            "_id": "5c906a14a6ebc7193110ef1e",
+            "method": "belongsToMany",
+            "class": "App\\Models\\Service\\Service",
+            "displayFieldName": [
+              "name"
+            ],
+            "foreign_key": "sales_oppt_item_ids",
+            "local_key": "inclusive_service_ids",
+            "entity_id": "5c906a0fa6ebc7193110e7e3",
+            "created_by": "5bb104d0678f71061f643d1a",
+            "updated_by": "5bb104d0678f71061f643d1a",
+            "field_id": "5c906a14a6ebc7193110ef1b"
+          }
+        },
+        {
+          "_id": "5c906a14a6ebc7193110ef23",
+          "name": "sort",
+          "label": "Order",
+          "uniqueName": "salesopptitem_sort",
+          "field_type_id": "5c906a0ea6ebc7193110e73d",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-07-03 04:52:56",
+          "created_at": "2019-03-19 04:03:32",
+          "rules": {
+            "hide_in": [
+              "create",
+              "update",
+              "show"
+            ],
+            "digits_between": true
+          },
+          "searchKey": false,
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e73d",
+            "name": "number"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5cade206a6ebc73c61791b8a",
+          "name": "discountedPriceRound",
+          "label": "Discounted Price (round off)",
+          "uniqueName": "salesopptitem_discounted_price_round",
+          "field_type_id": "5c906a0fa6ebc7193110e7ac",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "convertedField": "discountedPriceRound_converted",
+          "formulaType": "currency",
+          "formulaExpression": "ROUND(salesPrice - salesPrice * discount,0)",
+          "currencySource": {
+            "type": "lookupModel",
+            "concat": "code",
+            "field": "currency_id",
+            "entity_id": "5c906a0fa6ebc7193110e7cb"
+          },
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-07-03 04:52:56",
+          "created_at": "2019-04-10 12:31:02",
+          "rules": {
+            "hide_in": [
+              "show"
+            ],
+            "decimal": 2,
+            "comma_separated": true
+          },
+          "hierarchy": 10,
+          "searchKey": false,
+          "field_type": {
+            "_id": "5c906a0fa6ebc7193110e7ac",
+            "name": "formula"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5cade206a6ebc73c61791b93",
+          "name": "subTotalRound",
+          "label": "Sub Total (round off)",
+          "uniqueName": "salesopptitem_sub_total_round",
+          "field_type_id": "5c906a0fa6ebc7193110e7ac",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "convertedField": "subTotalRound_converted",
+          "formulaType": "currency",
+          "formulaExpression": "ROUND(discountedPriceRound * quantity ,0)",
+          "currencySource": {
+            "type": "lookupModel",
+            "concat": "code",
+            "field": "currency_id",
+            "entity_id": "5c906a0fa6ebc7193110e7cb"
+          },
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-07-03 04:52:56",
+          "created_at": "2019-04-10 12:31:02",
+          "rules": {
+            "decimal": 2,
+            "visible_if": "{branch_id._id} == \"5badf748678f7111186ba26e\" || {branch_id._id} == \"5bf35f47678f714d40561786\"",
+            "comma_separated": true
+          },
+          "hierarchy": 4,
+          "searchKey": false,
+          "field_type": {
+            "_id": "5c906a0fa6ebc7193110e7ac",
+            "name": "formula"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a17a6ebc7193110f2d2",
+          "name": "sales_quote_id",
+          "label": "Quotation Name",
+          "uniqueName": "salesopptitem_sales_quote_id",
+          "field_type_id": "5c906a0ea6ebc7193110e738",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "fieldGlue": " ",
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2019-03-19 04:03:35",
+          "created_at": "2019-03-19 04:03:35",
+          "rules": {
+            "ss_pop_up": true,
+            "hide_in":[
+              "create",
+              "update"
+            ]
+          },
+          "field_type": {
+            "_id": "5c906a0ea6ebc7193110e738",
+            "name": "lookupModel"
+          },
+          "relation": {
+            "_id": "5c906a17a6ebc7193110f2d5",
+            "method": "belongsTo",
+            "class": "App\\Models\\Customer\\SalesQuote",
+            "displayFieldName": [
+              "name",
+              "updated_at"
+            ],
+            "foreign_key": "sales_quote_id",
+            "local_key": "_id",
+            "entity_id": "5c906a0fa6ebc7193110e7d2",
+            "created_by": "5bb104d0678f71061f643d1a",
+            "updated_by": "5bb104d0678f71061f643d1a",
+            "field_id": "5c906a17a6ebc7193110f2d2"
+          }
+        },
+        {
+          "_id": "5cade206a6ebc73c61791b82",
+          "name": "discountPrice",
+          "label": "Discount Price",
+          "uniqueName": "salesopptitem_discount_price",
+          "field_type_id": "5c906a0fa6ebc7193110e7ac",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "convertedField": "discountPrice_converted",
+          "formulaType": "currency",
+          "formulaExpression": "salesPrice * discount * quantity",
+          "currencySource": {
+            "type": "lookupModel",
+            "concat": "code",
+            "field": "currency_id",
+            "entity_id": "5c906a0fa6ebc7193110e7cb"
+          },
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-07-03 04:52:56",
+          "created_at": "2019-04-10 12:31:02",
+          "rules": {
+            "decimal": true,
+            "comma_separated": true
+          },
+          "hierarchy": 8,
+          "searchKey": false,
+          "field_type": {
+            "_id": "5c906a0fa6ebc7193110e7ac",
+            "name": "formula"
+          },
+          "relation": null
+        },
+        {
+          "_id": "5c906a14a6ebc7193110ef0c",
+          "name": "discountedPrice",
+          "label": "Discounted Price",
+          "uniqueName": "salesopptitem_discounted_price",
+          "field_type_id": "5c906a0fa6ebc7193110e7ac",
+          "created_by": "5bb104d0678f71061f643d1a",
+          "updated_by": "5bb104d0678f71061f643d1a",
+          "convertedField": "discountedPrice_converted",
+          "formulaType": "currency",
+          "formulaExpression": "salesPrice - salesPrice * discount",
+          "currencySource": {
+            "type": "lookupModel",
+            "concat": "code",
+            "field": "currency_id",
+            "entity_id": "5c906a0fa6ebc7193110e7cb"
+          },
+          "active": true,
+          "entity_id": "5c906a0fa6ebc7193110e7cc",
+          "updated_at": "2023-07-03 04:52:56",
+          "created_at": "2019-03-19 04:03:32",
+          "rules": {
+            "hide_in": [
+              "show"
+            ],
+            "decimal": true,
+            "comma_separated": true
+          },
+          "hierarchy": 6,
+          "searchKey": false,
+          "field_type": {
+            "_id": "5c906a0fa6ebc7193110e7ac",
+            "name": "formula"
+          },
+          "relation": null
+        }
+      ]
+    }
   ]
 }

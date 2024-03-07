@@ -8,6 +8,7 @@ import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import _ from 'lodash'
 import validate from '@/mixins/Validate';
+import helper from '@/mixins/Helper';
 // stores
 import { useModuleStore } from '../../../stores/modules/index'
 import { useModuleDynamicTableStore } from '../../../stores/modules/dynamictable/index'
@@ -67,6 +68,7 @@ const { _fetchModule, fetchModule, fetchBaseModule, fetchCollection } = moduleSt
 const { getDropdownLists, getDropdown } = storeToRefs(moduleDynamicTableStore)
 const { fetchDropdownLists } = moduleDynamicTableStore
 const { validateField, errorChecker } = validate();
+const { transformLookupValue,transformFieldForSaving } = helper();
 // presets
 const menuModel = ref([
   {label: 'View', icon: 'pi pi-fw pi-search', command: () => console.log(selectedContextData.value)},
@@ -217,7 +219,11 @@ const cellDBLClick = (event,field,columnIndex) =>{
     cellEditing.value.columnIndex = columnIndex
     cellEditing.value.field = field
     if(!_.has(tableFormData.value['values'],event.data['_id'])){
-      tableFormData.value['values'][event.data['_id']] = _.cloneDeep(event.data)
+      let tmpData = _.cloneDeep(event.data)
+      if(field.field_type.name=='lookupModel'){
+        tmpData[field.name] = transformLookupValue(tmpData[field.name],field)
+      }
+      tableFormData.value['values'][event.data['_id']] = _.cloneDeep(tmpData)
       tableFormData.value['errors'][event.data['_id']] = {}
       tableFormData.value['errors'][event.data['_id']][event.field] = []
     }
@@ -256,12 +262,10 @@ document.addEventListener('keydown', function(event) {
 });
 
 onClickOutside(fieldEditingRef, (event) => {
-  console.log(event,event.target.classList)
-  if(_.includes(_.get(event,'target.parentElement.classList',[]),'el-select-dropdown__item')){
-    console.log('click select',tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name])
-    // onChangeField()    
-  // }else if (!_.includes(_.get(event,'target.classList',[]),'p-inputtext') && !_.includes(_.get(event,'target.classList',[]),'el-input__inner') && !_.includes(_.get(event,'target.classList',[]),'el-select-dropdown__item')) {
-  }else if(_.some(_.get(event,'target.classList',[]), function(c){ if(!_.includes(['p-inputtext','el-input__inner','el-select-dropdown__item','el-date-table-cell__text'],c)){ return true; } })){
+  let targetClass = _.get(event,'target.classList',[])
+  console.log(event.target.parentElement.className, targetClass)
+  if(!_.includes(targetClass,'p-inputtext') && !_.includes(targetClass,'el-input__inner') && !_.includes(targetClass,'el-select-dropdown__ite') && !_.includes(targetClass,'fieldInputSelection') && !_.includes(targetClass,'lookupSelected') && !_.includes(targetClass,'lookupInput') && !_.includes(targetClass,'lookupRemoveBtn') && !_.includes(targetClass,'lookupSelection') && event.target.parentElement.className!='el-icon el-select__caret el-select__icon'){
+    console.log('click outside')
     onChangeField()
   }else{
     console.log('clicked inside field')
@@ -271,13 +275,22 @@ onClickOutside(fieldEditingRef, (event) => {
 const onChangeField = () => {
   if(cellEditing.value.rowId!=null){
       let theField = _.find(getModule.value.fields,{'name':cellEditing.value.field.name})
+      console.log(tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name])
       tableFormData.value.errors[cellEditing.value.rowId][cellEditing.value.field.name] = validateField(tableFormData.value.values[cellEditing.value.rowId],theField,getModule.value.fields)
       let noError = errorChecker(tableFormData.value.errors[cellEditing.value.rowId])
 
       if(noError){
         let index = _.findIndex(clonedData.value,{'_id':cellEditing.value.rowId})
-        if(tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name]!=clonedData.value[index][cellEditing.value.field.name]){
-          console.log(cellEditing.value.field, tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name])
+        let valueEdited = tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name]
+        let oldValue = clonedData.value[index][cellEditing.value.field.name]
+        if(cellEditing.value.field.field_type.name=='picklist'){
+          valueEdited = (_.isArray(tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name])) ? _.join(_.map(tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name],'value'),", ") : tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name]['value']
+        }else if(cellEditing.value.field.field_type.name=='lookupModel'){
+          valueEdited = transformLookupValue(tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name],cellEditing.value.field,true)
+          oldValue = transformLookupValue(clonedData.value[index][cellEditing.value.field.name],cellEditing.value.field,true)
+        }
+        if(valueEdited!=oldValue){
+          console.log(cellEditing.value.field, valueEdited, oldValue)
             if(cellEditing.value.field.field_type.name=='picklist'){
               console.log('picklist changed',tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name]['value'])
               clonedData.value[index][cellEditing.value.field.name] = tableFormData.value.values[cellEditing.value.rowId][cellEditing.value.field.name]['value']
@@ -296,9 +309,19 @@ const onChangeField = () => {
       }     
     }
 }
+const savingRecords = ref(false)
+const saveEditedRecords = () => {
+  savingRecords.value = true
 
-const setClassName = () => {
-
+  let forSaving = _.reduce(tableFormChanged.value, function(res,val,k){
+    let tmp = {'_id':k}
+    _.forEach(val, function(f){
+      tmp[f] = transformFieldForSaving(tableFormData.value.values[k][f],_.find(props.fields,{'name':f}))
+    })
+    res.push(tmp)
+    return res
+  },[])
+  console.log(forSaving)
 }
 
 provide('form', tableFormData)
@@ -341,11 +364,11 @@ provide('form', tableFormData)
       sortable
       sorticon="check"
       style="min-width: 200px !important;"
-      :bodyClass="`text-color-secondary`"
+      :bodyClass="`text-color-secondary ${col.field_type.name=='lookupModel' ? 'lookupColumn' : ''}`"
       headerClass="bg-primary-100 text-color-secondary">
       <template #body="slotProps">
-        <div v-if="cellEditing.rowId==slotProps.data['_id'] && cellEditing.field.name==slotProps.field">
-          <Field ref="fieldEditingRef" :config="col" :keyName="slotProps.data['_id']" :inline="true" type="tableForm"/>
+        <div v-if="cellEditing.rowId==slotProps.data['_id'] && cellEditing.field.name==slotProps.field" style="white-space:normal;">
+          <Field ref="fieldEditingRef" :config="col" :keyName="slotProps.data['_id']" :inline="true" type="tableForm" :module="getBaseModule.name" @changeValue="onChangeField"/>
         </div>
         <div v-else class="py-2" @dblclick="cellDBLClick(slotProps,col,coli)" :class="{'cell-edited':(_.find(tableFormChanged,function(f,k){ if(k==slotProps.data['_id'] && _.includes(f,col.name)){ return true}}))}">
           <div class="flex align-items-center px-2" :class="(slotProps.data[col.name]) ? 'justify-content-between' : 'justify-content-end'">
@@ -438,7 +461,7 @@ provide('form', tableFormData)
   <!-- <ContextMenu ref="cm" :model="menuModel" /> -->
   <div v-if="!_.isEmpty(tableFormChanged)" style="width:100vw;position:fixed;bottom:0;left:0;height:54px;text-align:center;margin-left:90px;padding:12px" class="shadow-2 align-items-center">
     <el-button @click="resetTableForm">Cancel</el-button>
-    <el-button type="primary">Save</el-button>
+    <el-button type="primary" @click="saveEditedRecords">Save</el-button>
   </div>
 </template>
 
@@ -506,5 +529,8 @@ provide('form', tableFormData)
 .module-table td{
   padding-bottom: 0px !important;
   padding-top: 0px !important;
+}
+.module-table .lookupColumn{
+  overflow: visible !important;
 }
 </style>
