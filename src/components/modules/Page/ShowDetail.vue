@@ -9,20 +9,20 @@ import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
 const MailboxThreads = defineAsyncComponent(() =>
   import('@/components/outlookmails/MailboxThreads.vue')
 )
-const DynamicDataTable = defineAsyncComponent(() => import('../../modules/DynamicDataTable/dynamicdatatablemain.vue'))
-const SalesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/SalesTab.vue'))
-const ServicesTab = defineAsyncComponent(() => import('../../modules/Page/Tabs/ServicesTab.vue'))
-const RelatedListPanel = defineAsyncComponent(() => import('../../modules/Page/Tabs/RelatedListPanel.vue'))
-const SectionFields = defineAsyncComponent(() => import('../../modules/Page/SectionFields.vue'))
-const UploadFileContent = defineAsyncComponent(() => import('../../modules/Files/UploadFileContent.vue'))
+const DynamicDataTable = defineAsyncComponent(() => import('@/components/modules/DynamicDataTable/dynamicdatatablemain.vue'))
+const SalesTab = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/SalesTab.vue'))
+const ServicesTab = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/ServicesTab.vue'))
+const RelatedListPanel = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/RelatedListPanel.vue'))
+const SectionFields = defineAsyncComponent(() => import('@/components/modules/Page/SectionFields.vue'))
+const UploadFileContent = defineAsyncComponent(() => import('@/components/modules/Files/UploadFileContent.vue'))
 // loaders
-import DataTableLoader from '../../modules/DynamicDataTable/Loaders/DataTableLoader.vue'
-import SimpleLoader from '../../loading/Simple2.vue'
-import TwoColumnList from '../../loading/TwoColumnList.vue'
+import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
+import SimpleLoader from '@/components/loading/Simple2.vue'
+import TwoColumnList from '@/components/loading/TwoColumnList.vue'
 // stores
-import { useModuleStore } from '../../../stores/modules'
-import { useModuleDetailStore } from '../../../stores/modules/detail'
-import { useModuleFileStore } from '../../../stores/modules/file'
+import { useModuleStore } from '@/stores/modules'
+import { useModuleDetailStore } from '@/stores/modules/detail'
+import { useModuleFileStore } from '@/stores/modules/file'
 import { useTabStore } from '@/stores/tabs'
 
 // refs
@@ -348,14 +348,26 @@ onMounted(async() => {
                         </Panel>
                       </div>
                     </div>
-                    <RelatedListPanel :relatedLists="_getRelatedOrderedLists.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))" />
+                    <div
+                      v-for="(relatedList, rlx) in _getRelatedOrderedLists.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))"
+                      :key="rlx">
+                      <div class="my-4">
+                        <RelatedListPanel :relatedList="relatedList" />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </TabPanel>
               <TabPanel v-if="localBaseModule && localBaseModule.name === 'accounts'" header="Sales">
                 <div>
                   <Suspense v-if="tabIndex === 1">
-                    <SalesTab />
+                    <div
+                      v-for="(salesRelatedList, srlx) in _getRelatedOrderedLists.filter(orl => (orl.entityName === 'SalesOpportunity' || orl.entityName === 'SalesOpportunity'))"
+                      :key="srlx">
+                      <div class="my-4">
+                        <RelatedListPanel :relatedList="salesRelatedList" />
+                      </div>
+                    </div>
                     <template #fallback>
                       <SimpleLoader class="mt-4" />
                     </template>
@@ -365,7 +377,13 @@ onMounted(async() => {
               <TabPanel v-if="localBaseModule && localBaseModule.name === 'accounts'" header="Services">
                 <div>
                   <Suspense v-if="tabIndex === 2">
-                    <ServicesTab />
+                    <div
+                      v-for="(serviceRelatedList, srlx) in _getRelatedOrderedLists.filter(orl => (orl.entityName === 'DefectReport' || orl.entityName === 'ServiceJob' || orl.entityName === 'ServiceSchedule' || orl.entityName === 'BreakdownLog' || orl.entityName === 'ServiceReport'))"
+                      :key="srlx">
+                      <div class="my-4">
+                        <RelatedListPanel :relatedList="serviceRelatedList" />
+                      </div>
+                    </div>
                     <template #fallback>
                       <SimpleLoader class="mt-4" />
                     </template>
