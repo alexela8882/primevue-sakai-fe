@@ -10,7 +10,7 @@ export default function validate() {
     function validateField(values,field,fields){
         let val =  _.trim(values[field.name])
         let errMsg = []
-
+        console.log(val,field.name)
         _.forEach(field.rules, function(ruleValue, ruleName){
             let msg = ''
             if(ruleName=='alpha'){
@@ -61,6 +61,8 @@ export default function validate() {
                 }
             }else if(ruleName=='max'){
                 msg = max(val,field,ruleValue)
+            }else if(ruleName=='digits_between'){
+                msg = digits_between(val,field)
             }
             if(msg){
                 errMsg.push(msg)                
@@ -141,6 +143,7 @@ export default function validate() {
     }
 
     function required(value,field){
+        console.log(value,field.name)
        if(field.field_type.name!='file'){
             if((_.isEmpty(value) || _.isNull(value)) && (field.field_type.name!='number' && field.field_type.name!='currency')){
                 return "The "+ field.label +" field is required."
@@ -282,6 +285,23 @@ export default function validate() {
         }else{
             return ""
         }
+    }
+
+    function digits_between(value,field){
+        let digitCtr = value.length
+        let msg = ""
+        if(_.has(field.rules.digits_between,'min')){
+            if(digitCtr < field.rules.digits_between.min){
+                msg = "The "+ field.label +" should have minimum number of "+ field.rules.digits_between.min + " digit/s."
+            }
+        }
+        if(_.has(field.rules.digits_between,'max')){
+            if(digitCtr > field.rules.digits_between.max){
+                msg = "The "+ field.label +" should have maximum number of "+ field.rules.digits_between.max + " digit/s."
+            }
+        }
+        console.log('digitCtr',digitCtr)
+        return msg
     }
 
     return {

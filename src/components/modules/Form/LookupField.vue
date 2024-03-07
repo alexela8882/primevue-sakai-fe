@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import _ from 'lodash';
 import axios from 'axios'
 import helper from '@/mixins/Helper';
+import { useToast } from "primevue/usetoast"
 
 import { useModuleStore } from '../../../stores/modules'
 const moduleStore = useModuleStore()
@@ -13,7 +14,7 @@ import { useFormDataStore } from '../../../stores/forms'
 const formDataStore = useFormDataStore()
 const { fetchLookupPaginated } = formDataStore
 
-const { formatLookupOptions } = helper();
+const { formatLookupOptions,extractFieldinExpressionFormat,extractEntityinExpressionFormat } = helper();
 
 const entityModule = ref({});
 const value = ref()
@@ -30,13 +31,18 @@ const toggle = async (event) => {
         fetchData()
     }
 }
+const filters = ref([])
+const toast = useToast()
 
 const props = defineProps({
     field: Object,
-    keyName: String
+    keyName: String,
+    module: String,
+    inline: Boolean,
+    entity: String
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['changeValue'])
 
 onMounted(() => {
     let vm = this;
@@ -44,7 +50,20 @@ onMounted(() => {
         multiple.value = true
     }
     entityModule.value = _.find(getModules.value,{'mainEntity':props.field.relation.entity_id.name})
-
+    if(_.has(props.field,'filterQuery')){
+        var filter = props.field.filterQuery;
+        var query = filter.match(/(\%[a-zA-Z0-9_\:\.\#]*\%)/gi);
+        _.forEach(query, function(q){
+            var val = _.trim(q,'%')
+            var fieldName = extractFieldinExpressionFormat(val)
+            var entityName = extractEntityinExpressionFormat(val)
+            if(_.isEmpty(entityName)){
+                let tmp = _.find(getModules.value,{'name':props.module})
+                entityName = tmp.mainEntity
+            }
+            filters.value.push({'field':fieldName,'entity':entityName})
+        })
+    }
 })
 
 const changePage = async(p) => {
@@ -67,9 +86,26 @@ const fetchData = async() =>{
     // Create a new cancel token
     cancelToken = axios.CancelToken.source();
     try {
-        let records = await fetchLookupPaginated({"fieldId":props.field.uniqueName,"page":page.value,"search":searchText.value,"cancelToken":cancelToken})
-        items.value = formatLookupOptions(records.values, [], props.field)
-        pagination.value = _.cloneDeep(_.get(records,'meta.pagination',{}))
+        let params = {"fieldId":props.field.uniqueName,"page":page.value,"moduleName":props.module,"search":searchText.value,"cancelToken":cancelToken}
+        let err = []
+        if(!_.isEmpty(filters.value)){
+            
+            _.forEach(filters.value, function(f){
+                if(!_.isEmpty(form.value.values.main[f.field]) && !_.isNull(form.value.values.main[f.field])){
+                    let key = f.entity+"::"+f.field
+                    params[key] = (_.isArray(form.value.values.main[f.field])) ? _.map(form.value.values.main[f.field],'_id') : form.value.values.main[f.field]['_id']
+                }else{
+                    err.push(f.field)
+                }
+            })
+        }
+        if(_.isEmpty(err)){
+            let records = await fetchLookupPaginated(params)
+            items.value = formatLookupOptions(records.data, [], props.field)
+            pagination.value = _.cloneDeep(_.get(records,'meta.pagination',{}))
+        }else{
+            toast.add({ severity: 'error', summary: 'Error', detail: 'Please select '+_.join(err,', '), position:"top-center", life: 3000 });
+        }
         fetching.value = false
         
     } catch (error) {
@@ -87,33 +123,36 @@ const handleSearch = async () =>{
 
 const removeSelected = (index) =>{
     if(multiple.value){
-        _.remove(value.value, function(n,i){
+        _.remove(form.value.values[props.keyName][props.field.name], function(n,i){
             return i==index
         })
     }else{
-        value.value = {}
+        form.value.values[props.keyName][props.field.name] = null
     }
+    emit('changeValue')
+
 }
 
 const checkBeforeClose = (index) =>{
     if(!multiple.value){
         closePopup()
     }
+    emit('changeValue')
     // emit('update:modelValue',value.value)
 }
 const form = inject('form')
 </script>
 <template>
-    <div class="lookupField" v-click-outside="closePopup">
+    <div class="lookupField" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],field.name,[]))}" v-click-outside="closePopup">
         <div v-if="!_.isEmpty(form.values[keyName][field.name])" class="selectedValue" :class="(!multiple) ? 'single flex align-items-center' : 'multiple'" @click="toggle">
             <template v-if="multiple">
                 <el-tag class="mr-1" closable v-for="(v,i) in value" :key="v.value" @close="removeSelected(i)">{{ v.value }}</el-tag>
             </template>
             <div v-else class="flex align-items-center lookupSelected" style="width:100%" >
-                <div class="material-icons text-white ml-2" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
-                <div class="flex justify-content-between" style="width:100%">
-                    <span class="flex flex-colum ml-2">{{ form.values[keyName][field.name].value }}</span>
-                    <span class="flex flex-colum mr-2" @click="removeSelected"><i class="pi pi-times"></i></span>
+                <div class="material-icons text-white ml-2 lookupSelected" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
+                <div class="flex justify-content-between lookupSelected" style="width:100%">
+                    <span class="flex flex-colum ml-2 lookupSelected">{{ form.values[keyName][field.name].value }}</span>
+                    <span class="flex flex-colum mr-2 lookupRemoveBtn" @click="removeSelected"><i class="pi pi-times lookupRemoveBtn"></i></span>
                 </div>
                 
             </div>
@@ -125,29 +164,29 @@ const form = inject('form')
                 <el-button ><i class="pi pi-search"></i></el-button>
             </template>
         </el-input>
-        <div v-if="open" class="lookupOverlay p-overlaypanel p-component" :class="{ 'open' : open == true}">
-            <template v-if="fetching"><Skeleton v-for="(item,index) in _.fill(Array(10),'i')" :key="index" height="2rem" width="100%" class="m-2" borderRadius="5px"></Skeleton></template>
+        <div v-if="open" class="lookupOverlay p-overlaypanel p-component" :class="{ 'open' : open == true, 'w-full':!inline,'w-auto':inline}">
+            <template v-if="fetching"><Skeleton v-for="(item,index) in _.fill(Array(10),'i')" :key="index" height="2rem" :width="(inline) ? '300px': '100%'" class="m-2" borderRadius="5px"></Skeleton></template>
             <Listbox v-else-if="items.group" v-model="form.values[keyName][field.name]" :multiple="multiple" :options="_.get(items,'options',[])" optionLabel="value" optionGroupLabel="label" optionGroupChildren="options" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
                 <template #option="slotProps">
-                    <div class="flex align-items-center">
-                        <div class="material-icons text-white mr-2" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
-                        <div>
+                    <div class="flex align-items-center lookupSelection">
+                        <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
+                        <div class="lookupSelection">
                             <template v-for="(val,i) in slotProps.option.poupDisplayValues" :key="i">
-                                <span v-if="i==0"  class="font-medium">{{ val }}</span>
-                                <div v-else class="text-sm text-color-secondary">{{  val }}</div>
+                                <span v-if="i==0"  class="font-medium lookupSelection">{{ val }}</span>
+                                <div v-else class="text-sm text-color-secondary lookupSelection">{{  val }}</div>
                             </template>
                         </div>
                     </div>
                 </template>
             </Listbox>
-            <Listbox v-else v-model="value" :multiple="multiple" :options="_.get(items,'options',[])" optionLabel="value" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
+            <Listbox v-else v-model="form.values[keyName][field.name]" :multiple="multiple"  :options="_.get(items,'options',[])" optionLabel="value" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
                 <template #option="slotProps">
-                    <div class="flex align-items-center">
-                        <div class="material-icons text-white mr-2" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
-                        <div>
+                    <div class="flex align-items-center lookupSelection">
+                        <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
+                        <div class="lookupSelection">
                             <template v-for="(val,i) in slotProps.option.poupDisplayValues" :key="i">
-                                <span v-if="i==0"  class="font-medium">{{ val }}</span>
-                                <div v-else class="text-sm text-color-secondary">{{  val }}</div>
+                                <span v-if="i==0"  class="font-medium lookupSelection">{{ val }}</span>
+                                <div v-else class="text-sm text-color-secondary lookupSelection">{{  val }}</div>
                             </template>
                         </div>
                     </div>
@@ -184,13 +223,12 @@ const form = inject('form')
     -ms-transition: all 0.2s ease-in-out;
     -o-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
-    width: 100%;
     position: absolute;
     z-index: 2 !important;
     background-color: #fff;
     height: 0px;
     box-shadow: 0 2px 4px rgba(0,0,0,.12), 0 0 6px rgba(0,0,0,.04);
-    overflow-y: hidden;
+    overflow: hidden;
 }
 .lookupOverlay.open{
     height: auto;
