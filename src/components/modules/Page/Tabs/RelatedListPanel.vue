@@ -12,12 +12,15 @@ const props = defineProps({
 </script>
 
 <template>
-  <Panel class="detail-page-panel">
+  <Panel class="detail-page-panel" toggleable>
+    <template #icons>
+      <button class="p-panel-header-icon p-link mr-2 text-50" @click="toggle">
+        <span class="pi pi-cog"></span>
+      </button>
+      <Menu ref="menu" id="config_menu" :model="items" popup />
+    </template>
     <template #header>
-      <div class="flex align-items-center justify-content-between w-full">
-        <div class="text-2xl font-bold">{{ relatedList.label }}</div>
-        <div v-if="relatedList.collection" class="material-icons cursor-pointer">playlist_add</div>
-      </div>
+      <div class="text-2xl font-bold">{{ relatedList.label }}</div>
     </template>
     <div class="flex flex-column gap-4 mt-4">
       <div v-if="relatedList.collection">
@@ -39,6 +42,9 @@ const props = defineProps({
   </Panel>
 </template>
 
-<style scoped>
+<style>
+.detail-page-panel.p-panel .p-panel-header .p-panel-header-icon {
+  color: var(--text-50) !important;
+}
 
 </style>

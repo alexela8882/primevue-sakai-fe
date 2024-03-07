@@ -80,19 +80,24 @@ watch(() => _getRelatedLists.value, (newVal, oldVal) => {
 
 <template>
   <Suspense v-if="panelName">
-    <DynamicDataTable
-      mode="view"
-      :moduleId="relatedList._id"
-      :moduleEntityName="relatedList.entityName"
-      :moduleName="moduleName"
-      :moduleLabel="moduleLabel"
-      :fields="fields"
-      :data="data"
-      :pagination="pagination"
-      :collectionLoading="localLoading"
-      @paginate="paginate"
-      @limit-page="limitPage">
-    </DynamicDataTable>
+    <div>
+      <div v-if="data.length > 0">
+        <DynamicDataTable
+          mode="view"
+          :moduleId="relatedList._id"
+          :moduleEntityName="relatedList.entityName"
+          :moduleName="moduleName"
+          :moduleLabel="moduleLabel"
+          :fields="fields"
+          :data="data"
+          :pagination="pagination"
+          :collectionLoading="localLoading"
+          @paginate="paginate"
+          @limit-page="limitPage">
+        </DynamicDataTable>
+      </div>
+      <div v-else class="mb-2 text-600">No records found</div>
+    </div>
     <template #fallback>
       <DataTableLoader />
     </template>
