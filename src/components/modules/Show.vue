@@ -150,6 +150,8 @@ const paginate = async (payload) => {
     viewFilter: selectedViewFilterId.value,
     page: page > 1 ? page : null,
     limit: payload.per_page,
+    search: moduleSearch.value,
+    searchFields: generateSearchFields(),
     reuse: true
   })
 
@@ -248,27 +250,40 @@ const getUpdatedModule = (payload) => {
 
 const updateViewFilter = () => {
   const updatedViewFilter = getBaseModule.value.viewFilters.find(filter => filter._id === selectedViewFilterId.value)
+
   selectedViewFilter.value = updatedViewFilter
-  selectedViewFilterId.value = updatedViewFilter._id
+  selectedViewFilterId.value = updatedViewFilter && updatedViewFilter._id
 }
 
 const searchInput = async () => {
+  localLoading.value = true
+
   let payload = Object.assign({}, {
     module: getBaseModule.value.name,
     search: moduleSearch.value,
     viewFilter: selectedViewFilterId.value,
-    searchFields: []
-  })
-  selectedSearchKeyIds.value.map(field => {
-    let obj = Object.assign({}, {
-      'searchFields[]': field
-    })
-    payload.searchFields.push(obj)
+    searchFields: generateSearchFields()
   })
 
   // re-fetch module
   const fetchedModule = await searchModule(payload)
-  localModule.value = fetchedModule
+
+  // check first if fetching module was successful
+  if (fetchedModule) localModule.value = fetchedModule
+
+  localLoading.value = false
+}
+
+const generateSearchFields = () => {
+  let arr = []
+  selectedSearchKeyIds.value.map(field => {
+    let obj = Object.assign({}, {
+      'searchFields[]': field
+    })
+    arr.push(obj)
+  })
+
+  return arr
 }
 
 // lifescycles

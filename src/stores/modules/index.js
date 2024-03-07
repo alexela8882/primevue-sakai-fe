@@ -423,7 +423,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
   }
   const fetchModule = async (payload) => {
-    console.log(payload)
     if (!payload.reuse) collectionLoading.value = true
     // const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
     let baseUri = `/modules/${payload.moduleName}`
@@ -485,6 +484,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
       collection.value = []
 
       collectionLoading.value = false
+
+      // toast
+      toast.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: error,
+        life: 3000
+      })
     }
   }
   const _fetchModule = async (payload) => {
@@ -600,7 +607,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
       reuse: true
     })
 
-    return await _fetchModule(_payload)
+    const fetchedModule = await _fetchModule(_payload)
+    return fetchedModule
   }
 
   // specific actions for inquiry module
