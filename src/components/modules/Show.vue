@@ -215,9 +215,9 @@ const initialize = async (vFilter) => {
 
   let _payload = Object.assign({}, {
     moduleName: getBaseModule.value.name,
-    moduleVFilter: selectedViewFilterId.value && selectedViewFilterId.value,
-    modulePage: null,
-    moduleLimit: selectedViewFilter.value && selectedViewFilter.value.pageSize,
+    viewFilter: selectedViewFilterId.value && selectedViewFilterId.value,
+    page: null,
+    limit: selectedViewFilter.value && selectedViewFilter.value.pageSize,
     reuse: true
   })
   const fetchedModule = await _fetchModule(_payload)
