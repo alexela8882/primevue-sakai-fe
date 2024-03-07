@@ -40,7 +40,7 @@ const paginate = async (payload) => {
   let page = 1
   if (!payload.jump) {
     page = payload.event.page + 1
-  } else page = pagination.value
+  } else page = pagination.value.current_page
 
   // re-fetch module & collection
   await paginateRelatedList({
