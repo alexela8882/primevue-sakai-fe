@@ -186,7 +186,7 @@ watch(getRelatedLists, (newVal, oldVal) => {
 onMounted(async() => {
   // fetches
   await fetchBaseModule(route.params.id)
-  await fetchModule(route.params.name)
+  await fetchModule({moduleName: route.params.name})
 
   const lmdParams = { module: 'inquiries', link_field: 'link_id', link_id: route.params.pageid }
   await fetchLinkedModuleData(lmdParams)

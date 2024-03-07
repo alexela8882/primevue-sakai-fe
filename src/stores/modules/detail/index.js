@@ -149,7 +149,6 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     } else relatedLists.value = [] // reset
   }
   const fetchItemRelatedLists = async (payload) => {
-    console.log(payload)
     relatedListLoading.value = true
 
     const moduleName = payload.moduleName

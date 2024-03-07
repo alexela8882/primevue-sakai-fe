@@ -56,7 +56,7 @@ const limitPage = async (e) => {
   // re-fetch module & collection
   const limit = e.value
   const args = {
-    event: e, 
+    event: e,
     jump: true,
     per_page: limit
   }

@@ -211,40 +211,44 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
     return fieldIds
   })
-  const _getSearchKeyFieldIds = computed(() => {
+  const _getSearchFields = computed(() => {
     return (payload) => {
-      return getSearchKeyFieldIds.value(payload)
+      return getSearchFields.value(payload)
     }
   })
-  const getSearchKeyFieldIds = computed(() => {
+  const getSearchFields = computed(() => {
     return (payload) => {
       let _module = null
 
       if (payload) _module = payload
       else _module = module.value
-      const fieldIds = []
-      const fields = _module && _module.fields
-      fields && fields.map(field => {
-        if (field.searchKey) {
-          if (
-            field.field_type.name !== 'date' ||
-            field.field_type.name !== 'boolean' ||
-            field.field_type.name !== 'time' ||
-            field.field_type.name !== 'file' ||
-            field.field_type.name !== 'image' ||
-            field.field_type.name !== 'richTextbox' ||
-            field.field_type.name !== 'password' ||
-            field.field_type.name !== 'longText' ||
-            field.field_type.name !== 'number' ||
-            field.field_type.name !== 'currency' ||
-            field.field_type.name !== 'list' ||
-            field.field_type.name !== 'percentage'
-          ) {
-            fieldIds.push(field._id)
-          }
+      const newFields = []
+
+      _module.fields.map(field => {
+        if (
+          field.field_type.name !== 'date' &&
+          field.field_type.name !== 'boolean' &&
+          field.field_type.name !== 'time' &&
+          field.field_type.name !== 'file' &&
+          field.field_type.name !== 'image' &&
+          field.field_type.name !== 'richTextbox' &&
+          field.field_type.name !== 'password' &&
+          field.field_type.name !== 'longText' &&
+          field.field_type.name !== 'number' &&
+          field.field_type.name !== 'currency' &&
+          field.field_type.name !== 'list' &&
+          field.field_type.name !== 'percentage'
+        ) {
+          newFields.push(field)
         }
       })
-      return fieldIds
+      return newFields
+    }
+  })
+  const _getSearchKeyFieldIds = computed(() => {
+    return (payload) => {
+      let fields = getSearchFields.value(payload)
+      return fields.filter(field => field.searchKey).map(field => field._id)
     }
   })
   const _getKanbanData = computed(() => {
@@ -370,7 +374,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
       }
     }
   }
-
   const fetchModulePanels = async (module) => {
     const res = await axios(`/getModulePanels?module-name=${module}`, {
       method: 'GET',
@@ -385,7 +388,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
       }
     }
   }
-
   const fetchBaseModule = async (id) => {
     moduleLoading.value = true
     // console.log('fetchBaseModule')
@@ -420,14 +422,26 @@ export const useModuleStore = defineStore('moduleStore', () => {
       } else return data
     }
   }
-  const fetchModule = async (moduleName, viewfilter = null, page = 1, limit = 25, reuse) => {
-    if (!reuse) collectionLoading.value = true
+  const fetchModule = async (payload) => {
+    console.log(payload)
+    if (!payload.reuse) collectionLoading.value = true
     // const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
-    const baseUri = `/modules/${moduleName}`
-    const pageUri = page ? `?page=${page}` : '?page=1'
-    const limitUri = limit ? `&limit=${limit}` : ''
-    const viewFilterUri = viewfilter ? `&viewfilter=${viewfilter}` : ''
-    const uri = `${baseUri}${pageUri}${limitUri}${viewFilterUri}`
+    let baseUri = `/modules/${payload.moduleName}`
+    let pageUri = payload.page ? `?page=${payload.page}` : '?page=1'
+    let limitUri = payload.limit ? `&limit=${payload.limit}` : ''
+    let viewFilterUri = payload.viewfilter ? `&viewfilter=${payload.viewfilter}` : ''
+    let listOnlyUri = payload.listOnly ? `&listOnly` : ''
+    let searchUri = payload.search ? `&search=${payload.search}` : ''
+    let uri = `${baseUri}${pageUri}${limitUri}${viewFilterUri}${listOnlyUri}${searchUri}`
+
+    // search fields
+    let checkSearchFields = payload.searchFields && payload.searchFields.length > 0
+    if (checkSearchFields) {
+      payload.searchFields.map(field => {
+        const value = Object.values(field)[0]
+        uri += `&searchFields[]=${value}`
+      })
+    }
 
     try {
       // const res = await axios(`${jsonDbUrl.value}/${uri}`, {
@@ -443,27 +457,28 @@ export const useModuleStore = defineStore('moduleStore', () => {
         // let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
         let fetchedModule = res.data
 
-        console.log(fetchedModule)
-
         module.value = fetchedModule // insert module
         collection.value = fetchedModule.data // insert collection
         collectionLoading.value = false
 
+        let refetchedModule = null
         // fill modules with fields & panels
         modules.value.map(m => {
-          if (m.name === moduleName) {
+          if (m.name === payload.moduleName) {
             let obj = Object.assign({}, {
               ...m,
-              fields: fetchedModule.fields,
-              panels: fetchedModule.panels,
-              viewFilters: fetchedModule.viewFilters
+              data: fetchedModule.data,
+              meta: fetchedModule.meta,
+              fields: checkSearchFields ? m.fields : fetchedModule.fields,
+              panels: checkSearchFields ? m.panels : fetchedModule.panels,
+              viewFilters: checkSearchFields ? m.viewFilters : fetchedModule.viewFilters
             })
             Object.assign(m, obj)
+            refetchedModule = obj
           }
         })
 
-        console.log(modules.value)
-        return fetchedModule
+        return refetchedModule
       }
     } catch (error) {
       module.value = {}
@@ -472,8 +487,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
       collectionLoading.value = false
     }
   }
-  const _fetchModule = async (payload, viewfilter = null, page = null, limit = null) => {
-    const fetchedModule = await fetchModule(payload, viewfilter, page, limit, true)
+  const _fetchModule = async (payload) => {
+    let fetchedModule = await fetchModule(payload)
     return fetchedModule
   }
   const fetchLinkedModuleData = async (payload) => {
@@ -555,12 +570,15 @@ export const useModuleStore = defineStore('moduleStore', () => {
         life: 3000
       })
 
-      const moduleName = payload.baseModule.name
-      const moduleVFilter = res.data.viewFilter._id
-      const modulePage = null
-      const moduleLimit = data.pageSize
-      console.log(moduleLimit)
-      await _fetchModule(moduleName, moduleVFilter, modulePage, moduleLimit)
+      let _payload = Object.assign({}, {
+        moduleName: payload.baseModule.name,
+        viewFilter: res.data.viewFilter._id,
+        page: null,
+        limit: data.pageSize,
+        reuse: true
+      })
+
+      await _fetchModule(_payload)
     } else {
       toast.add({
         severity: 'error',
@@ -569,6 +587,20 @@ export const useModuleStore = defineStore('moduleStore', () => {
         life: 3000
       })
     }
+  }
+  const searchModule = async (payload) => {
+    let _payload = Object.assign({}, {
+      moduleName: payload.module,
+      listOnly: true,
+      viewFilter: payload.viewFilter,
+      page: 1,
+      limit: 25,
+      search: payload.search,
+      searchFields: payload.searchFields,
+      reuse: true
+    })
+
+    return await _fetchModule(_payload)
   }
 
   // specific actions for inquiry module
@@ -693,8 +725,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getViewFilter,
     _getViewFilterIds,
     getViewFilterIds,
+    _getSearchFields,
     _getSearchKeyFieldIds,
-    getSearchKeyFieldIds,
     getKanbanData,
     _getFieldDetails,
     getFieldDetails,
@@ -712,6 +744,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     addViewFilter,
     fetchModuleFields,
     fetchModulePanels,
+    searchModule,
 
     // specific functions for inquiry module
     convertMailboxToInquiry,

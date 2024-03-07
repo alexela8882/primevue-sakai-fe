@@ -32,6 +32,7 @@ const viewFilter = ref({})
 const selectedViewFilter = ref()
 const selectedViewFilterId = ref()
 const selectedFields = ref()
+const searchFields = ref()
 const selectedSearchKeyIds = ref()
 // stores
 const moduleStore = useModuleStore()
@@ -56,8 +57,9 @@ const {
   _getViewFilterIds,
   __getViewFilter,
   getViewFilter,
+  _getSearchFields,
   _getSearchKeyFieldIds } = storeToRefs(moduleStore)
-const { _fetchModule, fetchModule, fetchModules, fetchBaseModule } = moduleStore
+const { searchModule, _fetchModule, fetchModule, fetchModules, fetchBaseModule } = moduleStore
 const { getTabs } = storeToRefs(tabStore)
 const { addTab,toggleWindows, maximizeTab } = tabStore
 const { setFormReset } = formDataStore
@@ -143,7 +145,15 @@ const paginate = async (payload) => {
   } else page = localModule.meta && localModule.meta.pagination
 
   // re-fetch module & collection
-  localModule.value = await _fetchModule(getBaseModule.value.name, selectedViewFilterId.value, page > 1 ? page : null, payload.per_page)
+  let _payload = Object.assign({}, {
+    moduleName: getBaseModule.value.name,
+    viewFilter: selectedViewFilterId.value,
+    page: page > 1 ? page : null,
+    limit: payload.per_page,
+    reuse: true
+  })
+
+  localModule.value = await _fetchModule(_payload)
   datatableLoading.value = false
 }
 const limitPage = async (e) => {
@@ -174,7 +184,6 @@ const createNewForm = async (module) => {
     await addTab(obj, true)
   } else confirmAddTab(module, index)
 }
-
 const confirmAddTab = (module,index) => {
   confirm.require({
       group: 'templating',
@@ -194,18 +203,22 @@ const confirmAddTab = (module,index) => {
         toggleWindows(getTabs.value[index])
       }
   });
-};
+}
 
 const initialize = async (vFilter) => {
   localLoading.value = true
   datatableLoading.value = true
   // await fetchCollection(route.name.split('.')[0], 1)
   await fetchBaseModule(route.params.id)
-  const moduleName = getBaseModule.value.name
-  const moduleVFilter = selectedViewFilterId.value && selectedViewFilterId.value
-  const modulePage = null
-  const moduleLimit = selectedViewFilter.value && selectedViewFilter.value.pageSize
-  const fetchedModule = await _fetchModule(moduleName, moduleVFilter, modulePage, moduleLimit)
+
+  let _payload = Object.assign({}, {
+    moduleName: getBaseModule.value.name,
+    moduleVFilter: selectedViewFilterId.value && selectedViewFilterId.value,
+    modulePage: null,
+    moduleLimit: selectedViewFilter.value && selectedViewFilter.value.pageSize,
+    reuse: true
+  })
+  const fetchedModule = await _fetchModule(_payload)
 
   localModule.value = fetchedModule
   viewFiltersCount.value = localModule.value.viewFilters.length
@@ -221,6 +234,7 @@ const initialize = async (vFilter) => {
   selectedViewFilter.value = viewFilter.value && viewFilter.value
   selectedViewFilterId.value = selectedViewFilter.value._id
   selectedFields.value = computed(() => _getViewFilterIds.value(localModule.value))
+  searchFields.value = _getSearchFields.value(localModule.value)
   selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
 
   localLoading.value = false
@@ -236,6 +250,25 @@ const updateViewFilter = () => {
   const updatedViewFilter = getBaseModule.value.viewFilters.find(filter => filter._id === selectedViewFilterId.value)
   selectedViewFilter.value = updatedViewFilter
   selectedViewFilterId.value = updatedViewFilter._id
+}
+
+const searchInput = async () => {
+  let payload = Object.assign({}, {
+    module: getBaseModule.value.name,
+    search: moduleSearch.value,
+    viewFilter: selectedViewFilterId.value,
+    searchFields: []
+  })
+  selectedSearchKeyIds.value.map(field => {
+    let obj = Object.assign({}, {
+      'searchFields[]': field
+    })
+    payload.searchFields.push(obj)
+  })
+
+  // re-fetch module
+  const fetchedModule = await searchModule(payload)
+  localModule.value = fetchedModule
 }
 
 // lifescycles
@@ -321,7 +354,7 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
                 class="border-round-xl border-primary w-full md:w-12rem mr-2 mb-2 md:mb-0"/>
               <MultiSelect
                 v-model="selectedSearchKeyIds"
-                :options="localModule && localModule.fields"
+                :options="searchFields"
                 :disabled="datatableLoading"
                 filter
                 :showToggleAll="false"
@@ -333,6 +366,7 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
               <div class="p-input-icon-right w-full ml-1 md:w-6">
                 <i class="pi pi-search" />
                 <InputText
+                  @keypress.enter="searchInput()"
                   v-model="moduleSearch"
                   type="text"
                   :disabled="datatableLoading || (selectedSearchKeyIds && selectedSearchKeyIds.length <= 0)"

@@ -9,7 +9,32 @@ const props = defineProps({
   relatedList: Object
 })
 
+// refs
+const menu = ref()
 const hasData = ref(false)
+
+// actions
+const items = ref([
+  {
+    label: 'Refresh',
+    icon: 'pi pi-refresh'
+  },
+  {
+    label: 'Search',
+    icon: 'pi pi-search'
+  },
+  {
+    separator: true
+  },
+  {
+    label: 'Delete',
+    icon: 'pi pi-times'
+  }
+])
+
+const toggle = (event) => {
+  menu.value.toggle(event)
+}
 
 onMounted(() => {
   hasData.value = props.relatedList.collection && props.relatedList.collection.data.length <= 0
