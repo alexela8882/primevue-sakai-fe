@@ -455,7 +455,8 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
                         :disabled="datatableLoading"
                         multiple
                         collapse-tags
-                        collapse-tags-tooltip
+                        :max-collapse-tags="0"
+                        filterable
                         placeholder="Select Fields"
                         style="max-width: 150px">
                         <el-option
