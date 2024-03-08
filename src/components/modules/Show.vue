@@ -20,6 +20,7 @@ import KanbanLoader from '@/components/modules/DynamicDataTable/Loaders/KanbanLo
 
 // refs
 const viewFiltersCount = ref(0)
+const triggerSearchPopover = ref(false)
 const moduleSearch = ref(null)
 const datatableLoading = ref(false)
 const localLoading = ref(false)
@@ -33,6 +34,7 @@ const selectedViewFilter = ref()
 const selectedViewFilterId = ref()
 const selectedFields = ref()
 const searchFields = ref()
+const displaySearchFields = ref()
 const selectedSearchKeyIds = ref()
 // stores
 const moduleStore = useModuleStore()
@@ -58,8 +60,15 @@ const {
   __getViewFilter,
   getViewFilter,
   _getSearchFields,
-  _getSearchKeyFieldIds } = storeToRefs(moduleStore)
-const { searchModule, _fetchModule, fetchModule, fetchModules, fetchBaseModule } = moduleStore
+  _getSearchKeyFields,
+  _getSearchKeyFieldIds,
+  _getFieldDetailsById } = storeToRefs(moduleStore)
+const {
+  searchModule,
+  _fetchModule,
+  fetchModule,
+  fetchModules,
+  fetchBaseModule } = moduleStore
 const { getTabs } = storeToRefs(tabStore)
 const { addTab,toggleWindows, maximizeTab } = tabStore
 const { setFormReset } = formDataStore
@@ -272,6 +281,7 @@ const searchInput = async () => {
   if (fetchedModule) localModule.value = fetchedModule
 
   localLoading.value = false
+  triggerSearchPopover.value = false
 }
 
 const generateSearchFields = () => {
@@ -293,8 +303,12 @@ onMounted(async () => {
 
 watch(selectedViewFilterId, async (newVal, oldVal) => {
   // if (newVal) viewFilter.value = __getViewFilter.value(newVal, localModule.value)
-  updateViewFilter() // update view filter
-  await initialize(newVal)
+
+  if (newVal) {
+    console.log('view filter')
+    updateViewFilter() // update view filter
+    await initialize(newVal)
+  }
 })
 
 watch(selectedFields, (newVal, oldVal) => {
@@ -302,8 +316,8 @@ watch(selectedFields, (newVal, oldVal) => {
 })
 
 watch(() => getModules.value, async (newVal, oldVal) => {
-  if (viewFiltersCount.value !== 0) {
-    let updatedModule = getUpdatedModule(newVal)
+  let updatedModule = getUpdatedModule(newVal)
+  if (updatedModule.meta.per_page !== selectedViewFilter.value) {
 
     if (viewFiltersDialogMode.value === 'new') {
       selectedViewFilter.value = updatedModule.viewFilters[updatedModule.viewFilters.length - 1]
@@ -323,6 +337,20 @@ watch(() => getModules.value, async (newVal, oldVal) => {
 watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
   updateViewFilter() // update view filter
   if (newVal === null) await initialize(selectedViewFilterId.value)
+})
+
+watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
+  // reset
+  displaySearchFields.value = []
+
+  newVal.map(field => {
+    let obj = Object.assign({}, {
+      fields: localModule.value.fields,
+      _id: field
+    })
+    let newField = _getFieldDetailsById.value(obj)
+    displaySearchFields.value.push(newField.label)
+  })
 })
 
 </script>
@@ -357,17 +385,17 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
         </div>
 
         <div v-else class="mt-2 mb-4">
-          <div class="md:flex justify-content-between">
+          <div class="md:flex align-items-center justify-content-between gap-1">
             <div class="w-7">
-              <Dropdown
+              <!-- <Dropdown
                 v-model="selectedViewFilterId"
                 :options="_getViewFilters(localModule)"
                 :disabled="datatableLoading"
                 optionLabel="filterName"
                 optionValue="_id"
                 placeholder="Select View Filters"
-                class="border-round-xl border-primary w-full md:w-12rem mr-2 mb-2 md:mb-0"/>
-              <MultiSelect
+                class="border-round-xl border-primary w-full md:w-12rem mr-2 mb-2 md:mb-0"/> -->
+              <!-- <MultiSelect
                 v-model="selectedSearchKeyIds"
                 :options="searchFields"
                 :disabled="datatableLoading"
@@ -387,9 +415,59 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
                   :disabled="datatableLoading || (selectedSearchKeyIds && selectedSearchKeyIds.length <= 0)"
                   class="border-round-right-xl border-primary w-full mb-2 md:mb-0"
                   placeholder="Search The List..." />
-              </div>
+              </div> -->
+              <el-select
+                v-model="selectedViewFilterId"
+                collapse-tags
+                placeholder="Select View Filters"
+                style="max-width: 150px"
+                class="mr-2">
+                <el-option
+                  v-for="item in _getViewFilters(localModule)"
+                  :key="item._id"
+                  :label="item.filterName"
+                  :value="item._id"
+                />
+              </el-select>
+              <el-input
+                @keypress.enter="searchInput()"
+                @blur="triggerSearchPopover = false"
+                @focus="triggerSearchPopover = true"
+                v-model="moduleSearch"
+                placeholder="Search The List..."
+                style="max-width: 500px">
+                <template #prepend>
+                  <el-popover
+                    :visible="triggerSearchPopover"
+                    placement="bottom"
+                    :width="400">
+                    <div>
+                      <div class="text-xl mb-2">Will search through:</div>
+                      <div v-for="(field, fx) in displaySearchFields" :key="fx">
+                        <div class="text-sm">{{ field }}</div>
+                      </div>
+                    </div>
+                    <template #reference>
+                      <el-select
+                        v-model="selectedSearchKeyIds"
+                        multiple
+                        collapse-tags
+                        collapse-tags-tooltip
+                        placeholder="Select Fields"
+                        style="max-width: 150px">
+                        <el-option
+                          v-for="item in searchFields"
+                          :key="item._id"
+                          :label="item.label"
+                          :value="item._id"
+                        />
+                      </el-select>
+                    </template>
+                  </el-popover>
+                </template>
+              </el-input>
             </div>
-            <div class="md:flex align-items-center">
+            <div>
               <div class="p-inputgroup flex-1 mb-2 md:mb-0">
                 <Button
                   @click="tblMenu2.toggle($event)"
