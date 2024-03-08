@@ -222,7 +222,18 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
       if (payload) _module = payload
       else _module = module.value
-      const newFields = []
+
+      let newFields = []
+      // const defaultViewFilter = _module.viewFilters.find(filter => filter.isDefault)
+
+      // if (defaultViewFilter && defaultViewFilter.search_fields.length > 0) {
+      //   defaultViewFilter.search_fields.map(field => {
+      //     let _field = _getFieldDetailsById.value({ fields: _module.fields, _id: field })
+      //     newFields.push(_field)
+      //   })
+      // } else {
+        
+      // }
 
       _module.fields.map(field => {
         if (
@@ -242,6 +253,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
           newFields.push(field)
         }
       })
+
       return newFields
     }
   })
@@ -434,7 +446,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     let baseUri = `/modules/${payload.moduleName}`
     let pageUri = payload.page ? `?page=${payload.page}` : '?page=1'
     let limitUri = payload.limit ? `&limit=${payload.limit}` : ''
-    let viewFilterUri = payload.viewfilter ? `&viewfilter=${payload.viewfilter}` : ''
+    let viewFilterUri = payload.viewFilter ? `&viewfilter=${payload.viewFilter}` : ''
     let listOnlyUri = payload.listOnly ? `&listOnly` : ''
     let searchUri = payload.search ? `&search=${payload.search}` : ''
     let uri = `${baseUri}${pageUri}${limitUri}${viewFilterUri}${listOnlyUri}${searchUri}`
@@ -612,6 +624,16 @@ export const useModuleStore = defineStore('moduleStore', () => {
       searchFields: payload.searchFields,
       reuse: true
     })
+
+    // update view fiter search fields
+    let uri = `/viewFilters/${payload.viewFilter}`
+    const viewFiltersRes = await axios(uri, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      data: { _searchFields: payload.selectedSearchKeyIds }
+    })
+
+    console.log(viewFiltersRes)
 
     const fetchedModule = await _fetchModule(_payload)
     return fetchedModule

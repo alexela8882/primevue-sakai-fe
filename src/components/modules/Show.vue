@@ -246,7 +246,15 @@ const initialize = async (vFilter) => {
   selectedViewFilterId.value = selectedViewFilter.value._id
   selectedFields.value = computed(() => _getViewFilterIds.value(localModule.value))
   searchFields.value = _getSearchFields.value(localModule.value)
-  selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
+
+  let defaultViewFilter = localModule.value.viewFilters.find(filter => filter.isDefault)
+  
+  if (
+    defaultViewFilter &&
+    defaultViewFilter.search_fields &&
+    (defaultViewFilter.search_fields.length > 0)) {
+    selectedSearchKeyIds.value = defaultViewFilter.search_fields
+  } else selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
 
   localLoading.value = false
   datatableLoading.value = false
@@ -271,7 +279,8 @@ const searchInput = async () => {
     module: getBaseModule.value.name,
     search: moduleSearch.value,
     viewFilter: selectedViewFilterId.value,
-    searchFields: generateSearchFields()
+    searchFields: generateSearchFields(),
+    selectedSearchKeyIds: selectedSearchKeyIds.value
   })
 
   // re-fetch module
