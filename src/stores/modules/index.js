@@ -245,9 +245,15 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return newFields
     }
   })
-  const _getSearchKeyFieldIds = computed(() => {
+  const _getSearchKeyFields = computed(() => {
     return (payload) => {
       let fields = getSearchFields.value(payload)
+      return fields.filter(field => field.searchKey).map(field => field)
+    }
+  })
+  const _getSearchKeyFieldIds = computed(() => {
+    return (payload) => {
+      let fields = _getSearchKeyFields.value(payload)
       return fields.filter(field => field.searchKey).map(field => field._id)
     }
   })
@@ -734,6 +740,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     _getViewFilterIds,
     getViewFilterIds,
     _getSearchFields,
+    _getSearchKeyFields,
     _getSearchKeyFieldIds,
     getKanbanData,
     _getFieldDetails,
