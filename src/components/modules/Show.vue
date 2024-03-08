@@ -418,6 +418,7 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
               </div> -->
               <el-select
                 v-model="selectedViewFilterId"
+                :disabled="datatableLoading"
                 collapse-tags
                 placeholder="Select View Filters"
                 style="max-width: 150px"
@@ -434,6 +435,7 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
                 @blur="triggerSearchPopover = false"
                 @focus="triggerSearchPopover = true"
                 v-model="moduleSearch"
+                :disabled="datatableLoading"
                 placeholder="Search The List..."
                 style="max-width: 500px">
                 <template #prepend>
@@ -450,6 +452,7 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
                     <template #reference>
                       <el-select
                         v-model="selectedSearchKeyIds"
+                        :disabled="datatableLoading"
                         multiple
                         collapse-tags
                         collapse-tags-tooltip
