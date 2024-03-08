@@ -246,7 +246,15 @@ const initialize = async (vFilter) => {
   selectedViewFilterId.value = selectedViewFilter.value._id
   selectedFields.value = computed(() => _getViewFilterIds.value(localModule.value))
   searchFields.value = _getSearchFields.value(localModule.value)
-  selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
+
+  let defaultViewFilter = localModule.value.viewFilters.find(filter => filter.isDefault)
+  
+  if (
+    defaultViewFilter &&
+    defaultViewFilter.search_fields &&
+    (defaultViewFilter.search_fields.length > 0)) {
+    selectedSearchKeyIds.value = defaultViewFilter.search_fields
+  } else selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
 
   localLoading.value = false
   datatableLoading.value = false
@@ -271,7 +279,8 @@ const searchInput = async () => {
     module: getBaseModule.value.name,
     search: moduleSearch.value,
     viewFilter: selectedViewFilterId.value,
-    searchFields: generateSearchFields()
+    searchFields: generateSearchFields(),
+    selectedSearchKeyIds: selectedSearchKeyIds.value
   })
 
   // re-fetch module
@@ -418,6 +427,7 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
               </div> -->
               <el-select
                 v-model="selectedViewFilterId"
+                :disabled="datatableLoading"
                 collapse-tags
                 placeholder="Select View Filters"
                 style="max-width: 150px"
@@ -434,6 +444,7 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
                 @blur="triggerSearchPopover = false"
                 @focus="triggerSearchPopover = true"
                 v-model="moduleSearch"
+                :disabled="datatableLoading"
                 placeholder="Search The List..."
                 style="max-width: 500px">
                 <template #prepend>
@@ -450,9 +461,11 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
                     <template #reference>
                       <el-select
                         v-model="selectedSearchKeyIds"
+                        :disabled="datatableLoading"
                         multiple
                         collapse-tags
-                        collapse-tags-tooltip
+                        :max-collapse-tags="0"
+                        filterable
                         placeholder="Select Fields"
                         style="max-width: 150px">
                         <el-option
