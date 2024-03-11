@@ -10,6 +10,7 @@ export default function parsify() {
         }else {
             let formValues = {}
             formValues[entityName] = values
+            console.log(formValues)
             let evaluatedPostfix = evaluatePostfix(postfix, entityName, _.cloneDeep(formValues))
             if(evaluatedPostfix == false) {
                 result.message = "Postfix is not valid. Some given field maybe empty"
@@ -29,7 +30,9 @@ export default function parsify() {
         tokens.forEach(function(token){
             expression = expression.replace(token, "");
         });
-        let containsInvalidChars = /[^()+\-*/0-9.\s|\=\=|<|>|\<\=|\>\=|\!\=|\&\&|\|\||true|false|(empty*)|(\{a-zA-Z0-9_*\:\.})|(\"a-zA-Z0-9_\s*'\")]/gi.test(expression);
+        let containsInvalidChars = /[^()+\-*/0-9.\s|\,|\=\=|<|>|\<\=|\>\=|\!\=|\&\&|\|\||true|false|(empty*)|(\{a-zA-Z0-9_*\:\.})|(\"a-zA-Z0-9_\s*'\")]/gi.test(expression);
+        // console.log(expression.match(/[^()+\-*/0-9.\s|\,|\=\=|<|>|\<\=|\>\=|\!\=|\&\&|\|\||true|false|(empty*)|(\{a-zA-Z0-9_*\:\.})|(\"a-zA-Z0-9_\s*'\")]/gi))
+        // console.log(expression,tokens,containsInvalidChars)
         if (_.isArray(tokens) && !containsInvalidChars) {
             tokens.forEach((token, tIndex) => {
                 if(stack.length == 0) {
@@ -458,7 +461,31 @@ export default function parsify() {
           }
     }
 
+    function tokenize(expression) {
+      var tokens = infixToPostfix(expression)
+      return pullAllFields(tokens)
+    }
+    function pullAllFields(tokens) {
+      var fields = []
+      if(!_.isEmpty(tokens)){
+        tokens.forEach((token, index) => {
+          if(token.match(/(\{[a-zA-Z0-9_\:\.]*\})/gi)) {
+            fields.push(token)
+          }
+              
+       })
+      }
+ 
+         return fields
+    }
+
+    function pullAllFieldsInExpression(expression) {
+       return expression.match(/(\{[a-zA-Z0-9_\:\.]*\})/gi)
+    }
+
     return{
-        parseExpression
+        parseExpression,
+        tokenize,
+        pullAllFieldsInExpression
     }
 }

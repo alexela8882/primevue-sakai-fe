@@ -73508,7 +73508,7 @@
           "created_at": "2019-03-19 04:03:32",
           "rules": {
             "default_value": 1,
-            "decimal": 2,
+            "decimal": 0,
             "digits_between": {
               "min": 0,
               "max": 15

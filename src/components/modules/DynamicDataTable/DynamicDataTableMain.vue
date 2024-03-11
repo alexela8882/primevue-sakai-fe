@@ -12,6 +12,7 @@ import helper from '@/mixins/Helper';
 // stores
 import { useModuleStore } from '../../../stores/modules/index'
 import { useModuleDynamicTableStore } from '../../../stores/modules/dynamictable/index'
+import { useFormDataStore } from '../../../stores/forms'
 import router from '../../../router'
 
 //components
@@ -62,9 +63,11 @@ const selectedContextData = ref()
 const menuSelectedData = ref()
 // stores
 const moduleStore = useModuleStore()
+const formDataStore = useFormDataStore()
 const moduleDynamicTableStore = useModuleDynamicTableStore()
 const { getModule, getCollection, getBaseModule, getEntity } = storeToRefs(moduleStore)
 const { _fetchModule, fetchModule, fetchBaseModule, fetchCollection } = moduleStore
+const { massUpdateRecords } = formDataStore
 const { getDropdownLists, getDropdown } = storeToRefs(moduleDynamicTableStore)
 const { fetchDropdownLists } = moduleDynamicTableStore
 const { validateField, errorChecker } = validate();
@@ -310,7 +313,7 @@ const onChangeField = () => {
     }
 }
 const savingRecords = ref(false)
-const saveEditedRecords = () => {
+const saveEditedRecords = async() => {
   savingRecords.value = true
 
   let forSaving = _.reduce(tableFormChanged.value, function(res,val,k){
@@ -321,7 +324,12 @@ const saveEditedRecords = () => {
     res.push(tmp)
     return res
   },[])
-  console.log(forSaving)
+  let res = await massUpdateRecords(forSaving,getBaseModule.value.name)
+  if(res.status==200){
+    tableFormChanged.value = {}
+    tableFormData.value = {'values':{},'errors':{}}
+  }
+
 }
 
 provide('form', tableFormData)

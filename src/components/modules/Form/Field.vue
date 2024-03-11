@@ -22,8 +22,8 @@
         inline: Boolean,
         module: String,
         entity: String,
-        mutable: Boolean,
-        small: Boolean
+        small: Boolean,
+        formPage: String
     })
 
     const emit = defineEmits(['changeValue'])
@@ -31,7 +31,7 @@
     const formDataStore = useFormDataStore()
     const { fetchPicklist, fetchLookup  } = formDataStore
     const { getPicklistByListName, getLookupOptions } = storeToRefs(formDataStore)
-    const { checkFieldIfMultipleSelect } = helper();
+    const { checkFieldIfMultipleSelect,controllingFieldChecker,parseHiddenFields } = helper();
     const { validateField } = validate();
 
     const value = ref()
@@ -41,18 +41,24 @@
     const picklistLoading = ref(false)
 
     const fieldChange  = (field) =>{
-        if(!props.inline)
+        if(!props.inline){
             form.value.errors[props.keyName][field.name] = validateField(form.value.values[props.keyName],field,form.value.fields)
-        
-        emit('changeValue')
+            let result = controllingFieldChecker(field,form.value.fields,props.entity)
+            if(!_.isEmpty(result.visible_if) || !_.isEmpty(result.hide_if)){ 
+                let hiddenFields = parseHiddenFields(form.value.hidden.fields,result,props.entity,form.value.values.main)
+                form.value.hidden.fields = hiddenFields
+            }
+            if(!_.isEmpty(result.set_val_disable_if) || !_.isEmpty(result.disable_if)){ }
+        }
+            
+        emit('changeValue',field)
     }
     onMounted(async()=>{
         if(props.config.field_type.name=='picklist' && (_.get(props.config.rules,'ss_dropdown',false)!=true && _.get(props.config.rules,'ms_dropdown',false)!=true)){
-            picklistLoading.value = true
-            let data = getPicklistByListName.value(props.config.listName)
-            if(_.isEmpty(data))
-                await fetchPicklist([props.config.listName])
-            picklistLoading.value = false
+            fetchPicklistOptions(true)
+        }
+        if(props.config.field_type.name=='lookupModel' && (_.get(props.config.rules,'ss_pop_up',false)!=true && _.get(props.config.rules,'ms_pop_up',false)!=true && _.get(props.config.rules,'ss_dropdown',false)!=true && _.get(props.config.rules,'ms_dropdown',false)!=true)){
+           fetchLookupOptions(true)
         }
     })
 
@@ -70,7 +76,8 @@
         
     }
 
-    const fetchLookupOptions = async() => {
+    const fetchLookupOptions = async(val) => {
+        console.log('fetchLookupOptions')
         if(val){
             let data = getLookupOptions.value(props.config.uniqueName,'group')
            
@@ -88,7 +95,7 @@
     <template v-if="config.field_type.name=='text'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
-            <InputText v-model="form.values[keyName][config.name]" :id="config.name" :class="{'p-invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" :disabled="form.formSaving" @blur="fieldChange(config)" />
+            <InputText v-model="form.values[keyName][config.name]" :id="config.name" :class="{'p-invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" :disabled="form.formSaving || _.includes(form.disabled,config._id)" @blur="fieldChange(config)" />
             <small class="errMsg" v-for="msg,i in _.get(form.errors[keyName],config.name,[])" :key="i">{{ msg }}</small>
         </div>
     </template>
@@ -109,7 +116,7 @@
     <template v-else-if="config.field_type.name=='currency'">
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
-            <InputNumber v-if="(_.get(form.values[keyName],config.currencySource.field+'.code','')=='')" :disabled="form.formSaving" v-model="form.values[keyName][config.name]" inputId="config.name" 
+            <InputNumber v-if="(_.get(form.values[keyName],config.currencySource.field+'.code','')=='')" :disabled="form.formSaving || _.includes(form.disabled,config._id)" v-model="form.values[keyName][config.name]" inputId="config.name" 
             mode="decimal"
             :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}"
             :useGrouping="_.get(config.rules,'comma_separated',false)" 
@@ -117,7 +124,7 @@
             :maxFractionDigits="_.get(config.rules,'decimal',null)" 
             @blur="fieldChange(config)"/>
             <InputNumber v-else v-model="form.values[keyName][config.name]" 
-            :disabled="form.formSaving"
+            :disabled="form.formSaving || _.includes(form.disabled,config._id)"
             inputId="config.name" 
             mode="currency"
             :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}"
@@ -133,7 +140,7 @@
     <template v-else-if="config.field_type.name=='date'">
         <div class="fieldInput flex flex-column">
         <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
-        <el-date-picker class="w-full" :disabled="form.formSaving"
+        <el-date-picker class="w-full" :disabled="form.formSaving || _.includes(form.disabled,config._id)"
             v-model="form.values[keyName][config.name]"
             clearable
             :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[])),'required': _.get(config.rules,'required',false)}"
@@ -171,8 +178,8 @@
     </template>
     <template v-else-if="config.field_type.name=='boolean'">
         <div class="fieldInput checkbox" :class="{'required': _.get(config.rules,'required',false)}">
-            <InputSwitch v-if="_.get(config.rules,'switch',false)"  v-model="form.values[keyName][config.name]" :disabled="form.formSaving" :inputId="config.name" />
-            <Checkbox v-else :inputId="config.name" v-model="form.values[keyName][config.name]" :binary="true" :disabled="form.formSaving"  />
+            <InputSwitch v-if="_.get(config.rules,'switch',false)"  v-model="form.values[keyName][config.name]" :disabled="form.formSaving || _.includes(form.disabled,config._id)" :inputId="config.name" />
+            <Checkbox v-else :inputId="config.name" v-model="form.values[keyName][config.name]" :binary="true" :disabled="form.formSaving || _.includes(form.disabled,config._id)"  />
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
         </div>
     </template>
@@ -181,12 +188,12 @@
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <div v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton',false) || _.get(config.rules,'radiobutton_inline',false)" :class="(_.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton_inline',false)) ? 'card flex flex-wrap justify-content-center gap-3': ''">
             <div  v-for="option of getPicklistByListName(config.listName)" :key="option._id" class="flex align-items-center" :class="(_.get(config.rules,'checkbox',false) || _.get(config.rules,'radiobutton',false)) ? 'mb-1 mt-1 ml-3' : ''">
-                <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values[keyName][config.name]" :inputId="option._id" name="category" :value="option" :disabled="form.formSaving"/>
-                <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values[keyName][config.name]" :disabled="form.formSaving"/>
+                <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values[keyName][config.name]" :inputId="option._id" name="category" :value="option" :disabled="form.formSaving || _.includes(form.disabled,config._id)"/>
+                <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values[keyName][config.name]" :disabled="form.formSaving || _.includes(form.disabled,config._id)"/>
                 <label :for="option._id" class="ml-1">{{ option.value }}</label>
             </div>
             </div>
-            <Listbox v-else-if="_.get(config.rules,'ss_list_view',false) || _.get(config.rules,'ms_list_view',false)" v-model="form.values[keyName][config.name]" :disabled="form.formSaving" :options="getPicklistByListName(config.listName)" :multiple="_.get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
+            <Listbox v-else-if="_.get(config.rules,'ss_list_view',false) || _.get(config.rules,'ms_list_view',false)" v-model="form.values[keyName][config.name]" :disabled="form.formSaving || _.includes(form.disabled,config._id)" :options="getPicklistByListName(config.listName)" :multiple="_.get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
             <el-select v-else 
                 v-model="form.values[keyName][config.name]"
                 :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}"
@@ -194,7 +201,7 @@
                 :collapse-tags="checkFieldIfMultipleSelect(config.rules)"
                 :collapse-tags-tooltip="checkFieldIfMultipleSelect(config.rules)"
                 placeholder="Select" clearable filterable
-                :disabled="form.formSaving"
+                :disabled="form.formSaving || _.includes(form.disabled,config._id)"
                 :loading="picklistLoading"
                 :size="(small) ? 'small' : ''"
                 @visible-change="fetchPicklistOptions"
@@ -219,12 +226,13 @@
         <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <template v-if="_.get(config.rules,'ss_dropdown',false) || _.get(config.rules,'ms_dropdown',false)">
-                <el-select v-if="getLookupOptions(config.uniqueName,'group')" v-model="form.values[keyName][config.name]" :disabled="form.formSaving"  :loading="lookupLoading" :size="(small) ? 'small' : ''" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" placeholder="Select" clearable filterable class="w-full">
+                <el-select v-if="getLookupOptions(config.uniqueName,'group')" v-model="form.values[keyName][config.name]" :disabled="form.formSaving || _.includes(form.disabled,config._id)" :loading="lookupLoading" :size="(small) ? 'small' : ''" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" placeholder="Select" clearable filterable class="w-full"
+                    @change="fieldChange(config)"
+                    @visible-change="fetchLookupOptions">
                     <el-option-group
                     v-for="group in getLookupOptions(config.uniqueName,'options')"
                     :key="group.label"
-                    :label="group.label"
-                    @change="fieldChange(config)">
+                    :label="group.label">
                     <el-option
                         v-for="item in group.options"
                         :key="item._id"
@@ -235,12 +243,13 @@
                 </el-select>
                 <el-select v-else 
                     v-model="form.values[keyName][config.name]"
-                    :disabled="form.formSaving"
+                    :disabled="form.formSaving || _.includes(form.disabled,config._id)"
                     :loading="lookupLoading"
                     :size="(small) ? 'small' : ''"
                     class="w-full" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}"
                     placeholder="Select" clearable filterable
-                    @change="fieldChange(config)">
+                    @change="fieldChange(config)"
+                    @visible-change="fetchLookupOptions">                    
                         <el-option
                         v-for="item in getLookupOptions(config.uniqueName,'options')"
                         :key="item._id"
@@ -251,8 +260,8 @@
             </template>
             <div v-else-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton',false) || _.get(config.rules,'radiobutton_inline',false)" :class="(_.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton_inline',false)) ? 'card flex flex-wrap justify-content-center gap-3': ''">
                 <div  v-for="option of getLookupOptions(config.uniqueName,'options')" :key="option._id" class="flex align-items-center" :class="(_.get(config.rules,'checkbox',false) || _.get(config.rules,'radiobutton',false)) ? 'mb-1 mt-1 ml-3' : ''">
-                    <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values[keyName][config.name]" :inputId="option._id" name="category" :value="option" :disabled="form.formSaving" />
-                    <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values[keyName][config.name]" :disabled="form.formSaving"/>
+                    <Checkbox v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false)" v-model="form.values[keyName][config.name]" :inputId="option._id" name="category" :value="option" :disabled="form.formSaving || _.includes(form.disabled,config._id)" />
+                    <RadioButton v-else :inputId="option._id" name="dynamic" :value="option" v-model="form.values[keyName][config.name]" :disabled="form.formSaving || _.includes(form.disabled,config._id)"/>
                     <label :for="option._id" class="ml-1">{{ option.value }}</label>
                 </div>
             </div>
@@ -292,6 +301,9 @@
 .fieldInput .el-input, .fieldInput .el-input__wrapper{
     height: 36.5px;
     --el-input-border-color: rgba(0,0,0,0.38);
+}
+.fieldInput .el-input.el-input--small, .fieldInput .el-input--small .el-input__wrapper{
+    height: auto;
 }
 .fieldInput .el-input__wrapper.is-focus,.fieldInput .el-select .el-input.is-focus .el-input__wrapper{
     box-shadow: inset 0 0 0 2px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5 !important;

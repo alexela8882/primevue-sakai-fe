@@ -24,7 +24,7 @@
     const moduleDetailStore = useModuleDetailStore()
     const moduleStore = useModuleStore()
     const tabStore = useTabStore()
-    const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate,transformForSaving,getAllHiddenFieldsAndPanels } = helper();
+    const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate,transformForSaving,getAllHiddenFieldsAndPanels,controllingFieldChecker,getAllDisabledFields,checkSetValRule } = helper();
     const { fetchPicklist, fetchLookup, saveForm, setFormReset, saveFormValues } = formDataStore
     const { getCachedFormData,getFormReset } = storeToRefs(formDataStore)
     const { getItem } = storeToRefs(moduleDetailStore)
@@ -50,6 +50,7 @@
             'fields':[],
             'panels':[]
         },
+        'disabled':[],
         'formName':props.config.name,
         'formSaving': false
     })
@@ -57,9 +58,10 @@
     const hiddenPanels = ref([])
     provide('form', formData)
     onMounted(async () => {
+        console.log('mounted',formLoading.value)
         let tmpData = getCachedFormData.value(props.config.name)
         formPage.value = (_.includes(props.config.name,'edit')) ? 'edit' : 'create'
-        console.log('mounted',formLoading.value)
+        console.log('tmpData',tmpData)
         if(tmpData){
              formData.value =  _.merge(formData.value,_.cloneDeep(tmpData))
              if(props.config.name==getFormReset.value){
@@ -67,22 +69,26 @@
                  
                 setFormReset("")
              }
-             formLoading.value = false
         }else{
             if(_.isEmpty(getModuleByName.value(props.config._module).fields))
                 await fetchModuleFields(props.config._module)
             if(_.isEmpty(getModuleByName.value(props.config._module).panels))
                 await fetchModulePanels(props.config._module)
-            formData.value.fields = getModuleByName.value(props.config._module).fields
-            formData.value.panels = getModuleByName.value(props.config._module).panels
-            
+            let moduleData = getModuleByName.value(props.config._module)
+            formData.value.fields = moduleData.fields
+            formData.value.panels = moduleData.panels
+            let dF = _.find(formData.value.fields,{'name':"sales_type_id"})
+            if(dF){
+                let c = controllingFieldChecker(dF,formData.value.fields,getModuleByName.value(props.config._module).mainEntity)
+                console.log('form',c)
+            }
             // let listNames = getPicklistFields(formData.value.fields)
             // let lookupFields = getLookupFields(formData.value.fields)
             // await fetchPicklistandLookup(listNames,lookupFields)
-            formData.value.values.main = transformFormValues(formData.value.fields,getItem.value,formPage.value)
+            
             initialize();
-            formLoading.value = false
         }
+        formLoading.value = false
     })
 
     onBeforeUnmount(()=>{
@@ -114,20 +120,15 @@
         await Promise.all(promises);
     }
 
-    // const fetchLookups  = (field) =>{
-    //     return new Promise((resolve, reject) => {
-    //         let data = fetchLookup(field);
-    //         console.log(data)
-    //         if(!_.has(formData.value.lookup,field)){
-    //             formData.value.lookup[field] = formatLookupOptions(_.cloneDeep(data.values),formData.value.fields)
-    //         };
-    //         resolve();
-    //    });
-    // }
-
     const initialize  = () => {
         let quickAddFields = _.chain(formData.value.fields).filter({'quick':true}).map('_id').value()
+        let tmpValues = transformFormValues(formData.value.fields,getItem.value,getModuleByName.value(props.config._module).mainEntity,formPage.value)
+        let setVal = checkSetValRule(formData.value.fields,tmpValues,getModuleByName.value(props.config._module).mainEntity)
+        formData.value.values.main = _.merge(_.cloneDeep(tmpValues),_.cloneDeep(setVal))
+        console.log(tmpValues,setVal)
         formData.value.hidden = getAllHiddenFieldsAndPanels(formData.value.panels,formData.value.fields,formData.value.values.main,formPage.value)
+        formData.value.disabled = getAllDisabledFields(formData.value.fields,formData.value.values.main,formPage.value)
+        console.log('disabled',_.filter(formData.value.fields, function(f){ if(_.includes(formData.value.disabled,f._id)){ return true; }}))
         //get quick add panels
         _.forEach(formData.value.panels, function(panel, panelI){
             formData.value.panels[panelI]['quick'] = false
@@ -152,6 +153,7 @@
                 formData.value.errors[panel.panelName] = []
             }
         })
+        console.log(formLoading.value)
         console.log('done initialize')
     }
 
@@ -188,13 +190,10 @@
 </script>
 <template>
     <div class="relative min-h-full p-3">
-        <template v-if="formLoading">
-            <Skeleton v-for="(item,index) in tempFields" :key="index" height="2rem" class="mb-2" borderRadius="16px"></Skeleton>
-        </template>
         <Suspense  v-if="!formLoading">
             <template v-if="_.filter(formData.panels,{quick: true}).length == 1 && _.get(config,'maximized',false)==false">
                 <template v-for="field in _.filter(formData.fields,{'quick': true})" :key="field._id">
-                    <Field v-if="!_.includes(formData.hidden.fields,field.uniqueName)" keyName="main" :config="field" :module="config._module"/>
+                    <Field v-if="!_.includes(formData.hidden.fields,field._id)" keyName="main" :config="field" :module="config._module" :formPage="formPage"/>
                 </template>
             </template>
             <template v-else>
@@ -203,6 +202,7 @@
                     :panel="panel"
                     :quickAdd="!_.get(config,'maximized',false)"
                     :module="config._module"
+                    :formPage="formPage"
                 />
                 <template v-for="panel in _.filter(formData.panels, function(p){ if(!_.includes(formData.hidden.panels,p.panelName) &&_.endsWith(p.controllerMethod,'@show') && _.get(config,'maximized',false)==true){ return true;} })" :key="panel._id">
                     <template v-if="_.includes(['SalesOpptItem'], panel.entityName)">

@@ -13,12 +13,12 @@
     const props = defineProps({
         panel: Object,
         quickAdd: Boolean,
-        module: String
+        module: String,
+        formPage: String
     })
 
     const value = ref()
     const form = inject('form')
-
 </script>
 <template>
     <template v-for="(section,sectioni) in panel.sections" :key="section._id">
@@ -27,7 +27,13 @@
             <div class="grid">
                 <div  v-for="(col,colI) in section.field_ids" :key="colI" class="col flex flex-column gap-2">
                     <template v-for="field in col" :key="field" >
-                        <Field v-if="((quickAdd && _.get(_.find(form.fields,{'_id':field}),'quick',false)) || !quickAdd) && !_.includes(form.hidden.fields,field.uniqueName)" :module="module" :inline="false" keyName="main" :config="_.find(form.fields,{'_id':field})"/>
+                        <Field v-if="((quickAdd && _.get(_.find(form.fields,{'_id':field}),'quick',false)) || !quickAdd) && !_.includes(form.hidden.fields,field)" 
+                        :formPage="formPage" 
+                        :module="module" 
+                        :inline="false" 
+                        keyName="main" 
+                        :entity="panel.entityName"
+                        :config="_.find(form.fields,{'_id':field})"/>
                     </template>
                 </div>
             </div>
