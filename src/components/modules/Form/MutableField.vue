@@ -23,7 +23,8 @@
         inline: Boolean,
         module: String,
         entity: String,
-        mutableIndex: Number
+        mutableIndex: Number,
+        inputWidth: String
     })
 
     const emit = defineEmits(['changeValue'])
@@ -36,22 +37,8 @@
 
     const value = ref()
     const form = inject('form')
-    const popupLoading = ref(false)
+    const lookupLoading = ref(false)
     const picklistLoading = ref(false)
-
-    const remoteLookupOptions = (query) => {
-        if (query) {
-            popupLoading.value = true
-            setTimeout(() => {
-                popupLoading.value = false
-                options.value = list.value.filter((item) => {
-                    return item.label.toLowerCase().includes(query.toLowerCase())
-                })
-            }, 3000)
-        } else {
-            options.value = []
-        }
-    } 
 
     const fieldChange  = (field) =>{
         if(!props.inline)
@@ -69,20 +56,34 @@
         }
     })
 
-
+     const fetchLookupOptions = async(val) => {
+        console.log('fetchLookupOptions')
+        if(val){
+            let data = getLookupOptions.value(props.config.uniqueName,'group')
+           
+            if(_.isEmpty(data)){
+                lookupLoading.value = true
+                await fetchLookup(props.module,props.config)
+                lookupLoading.value = false
+            }
+            
+        }
+    }
 </script>
 <template>
    
     <template v-if="config.field_type.name=='text'">
-        <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
-            <InputText v-model="form.values[keyName][mutableIndex][config.name]" :id="config.name" :class="{'p-invalid': !_.isEmpty(_.get(form.errors[keyName][mutableIndex],config.name,[]))}" :disabled="form.formSaving" @change="fieldChange(config)" />
+        <div class="fieldInput mutableField flex flex-column" :class="{'required': _.get(config.rules,'required',false)}" :style="'width:' + inputWidth[config.name]">
+            <InputText v-model="form.values[keyName][mutableIndex][config.name]" :id="config.name"  size="small" :class="{'p-invalid': !_.isEmpty(_.get(form.errors[keyName][mutableIndex],config.name,[]))}" :disabled="form.formSaving" @change="fieldChange(config)" :style="'width:' + inputWidth[config.name]"/>
             <small class="errMsg" v-for="msg,i in _.get(form.errors[keyName][mutableIndex],config.name ,[])" :key="i">{{ msg }}</small>
         </div>
     </template>
     <template v-else-if="config.field_type.name=='number' || config.field_type.name=='percentage'">
-        <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput mutableField flex flex-column w-auto" :class="{'required': _.get(config.rules,'required',false)}">
             <InputNumber v-model="form.values[keyName][mutableIndex][config.name]" inputId="config.name" 
             mode="decimal"
+            class="w-auto"
+            size="small"
             :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName][mutableIndex],config.name,[]))}"
             :useGrouping="_.get(config.rules,'comma_separated',false)" 
             :suffix="(config.field_type.name=='percentage') ? '%' : ''"
@@ -93,10 +94,11 @@
         </div>
     </template>
     <template v-else-if="config.field_type.name=='currency'">
-        <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput mutableField flex flex-column" :class="{'required': _.get(config.rules,'required',false)}" :style="'width:' + inputWidth[config.name]">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <InputNumber v-if="(_.get(form.values[keyName][mutableIndex],config.currencySource.field+'.code','')=='')" :disabled="form.formSaving" v-model="form.values[keyName][mutableIndex][config.name]" inputId="config.name" 
             mode="decimal"
+            :style="'width:' + inputWidth[config.name]"
             :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName][mutableIndex],config.name,[]))}"
             :useGrouping="_.get(config.rules,'comma_separated',false)" 
             :minFractionDigits="_.get(config.rules,'decimal',null)" 
@@ -105,6 +107,7 @@
             <InputNumber v-else v-model="form.values[keyName][mutableIndex][config.name]" 
             :disabled="form.formSaving"
             inputId="config.name" 
+            :style="'width:' + inputWidth[config.name]"
             mode="currency"
             :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName][mutableIndex],config.name,[]))}"
             :useGrouping="_.get(config.rules,'comma_separated',false)" 
@@ -117,10 +120,10 @@
         </div>
     </template>
     <template v-else-if="config.field_type.name=='formula'">
-        <FormulaField :field="config" :keyName="keyName" :mutableIndex="mutableIndex" :module="module" :entity="entity"></FormulaField>
+        <FormulaField :field="config" :keyName="keyName" :mutableIndex="mutableIndex" :module="module" :entity="entity" :style="'width:' + inputWidth[config.name]"></FormulaField>
     </template>
     <template v-else-if="config.field_type.name=='date'">
-        <div class="fieldInput flex flex-column">
+        <div class="fieldInput mutableField flex flex-column" :style="'width:' + inputWidth[config.name]">
         <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
         <el-date-picker class="w-full" :disabled="form.formSaving"
             v-model="form.values[keyName][mutableIndex][config.name]"
@@ -135,14 +138,14 @@
         </div>
     </template>
     <template v-else-if="config.field_type.name=='boolean'">
-        <div class="fieldInput checkbox" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput checkbox" :class="{'required': _.get(config.rules,'required',false)}" :style="'width:' + inputWidth[config.name]">
             <InputSwitch v-if="_.get(config.rules,'switch',false)"  v-model="form.values[keyName][mutableIndex][config.name]" :disabled="form.formSaving" :inputId="config.name" />
             <Checkbox v-else :inputId="config.name" v-model="form.values[keyName][mutableIndex][config.name]" :binary="true" :disabled="form.formSaving"  />
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
         </div>
     </template>
     <template v-else-if="config.field_type.name=='picklist'">
-        <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput mutableField flex flex-column" :class="{'required': _.get(config.rules,'required',false)}" :style="'width:' + inputWidth[config.name]">
             <el-select
                 v-model="form.values[keyName][mutableIndex][config.name]"
                 :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName][mutableIndex],config.name,[]))}"
@@ -152,7 +155,6 @@
                 placeholder="Select" clearable filterable
                 :disabled="form.formSaving"
                 :loading="picklistLoading"
-                size="small"
                 @change="fieldChange(config)">
                     <el-option
                     v-for="item in getPicklistByListName(config.listName)"
@@ -171,14 +173,16 @@
             <small class="errMsg mt-1" v-for="msg,i in _.get(form.errors[keyName][mutableIndex],config.name,[])" :key="i">{{ msg }}</small></div>
     </template>
     <template v-else-if="config.field_type.name=='lookupModel'">
-        <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput mutableField flex flex-column" :class="{'required': _.get(config.rules,'required',false)}" :style="'width:' + inputWidth[config.name]">
             <template v-if="_.get(config.rules,'ss_dropdown',false) || _.get(config.rules,'ms_dropdown',false)">
-                <el-select v-if="getLookupOptions(config.uniqueName,'group')" v-model="form.values[keyName][mutableIndex][config.name]" :disabled="form.formSaving"  size="small" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName][mutableIndex],config.name,[]))}" placeholder="Select" clearable filterable class="w-full">
+                <el-select v-if="getLookupOptions(config.uniqueName,'group')" v-model="form.values[keyName][mutableIndex][config.name]" :disabled="form.formSaving"  :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName][mutableIndex],config.name,[]))}" placeholder="Select" clearable filterable class="w-full"
+                    :loading="lookupLoading" 
+                    @change="fieldChange(config)"
+                    @visible-change="fetchLookupOptions">
                     <el-option-group
                     v-for="group in getLookupOptions(config.uniqueName,'options')"
                     :key="group.label"
-                    :label="group.label"
-                    @change="fieldChange(config)">
+                    :label="group.label">
                     <el-option
                         v-for="item in group.options"
                         :key="item._id"
@@ -190,10 +194,11 @@
                 <el-select v-else 
                     v-model="form.values[keyName][mutableIndex][config.name]"
                     :disabled="form.formSaving"
-                     size="small"
                     class="w-full" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName][mutableIndex],config.name,[]))}"
-                    placeholder="Select" clearable filterable
-                    @change="fieldChange(config)">
+                    placeholder="Select" clearable filterable size="small"
+                    :loading="lookupLoading" 
+                    @change="fieldChange(config)"
+                    @visible-change="fetchLookupOptions">
                         <el-option
                         v-for="item in getLookupOptions(config.uniqueName,'options')"
                         :key="item._id"
@@ -209,10 +214,17 @@
         </div>
     </template>
     <template v-else>
-        <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput mutableField flex flex-column" :class="{'required': _.get(config.rules,'required',false)}" :style="'width:' + inputWidth[config.name]">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <InputText :id="config.name" v-model="form.values[keyName][mutableIndex][config.name]" />
         </div>
     </template>
 
 </template>
+<style>
+.fieldInput.mutableField .p-inputtext{
+    width: 100% !important;
+    font-size: 0.875rem;
+    padding: 0.4rem;
+}
+</style>

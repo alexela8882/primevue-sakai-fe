@@ -3,12 +3,15 @@ import _ from 'lodash';
 import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia'
 import { useFormDataStore } from '../stores/forms'
+import { useBaseStore } from '../stores/base'
 import parsify from '@/mixins/Parsify';
 export default function helper() {
 
 const formDataStore = useFormDataStore()
-const { parseExpression } = parsify()
+const baseStore = useBaseStore()
+const { parseExpression,tokenize,pullAllFieldsInExpression } = parsify()
 const { getPicklist} = storeToRefs(formDataStore)
+const { getAuthUser} = storeToRefs(baseStore)
 
   function getPicklistFields(fields){
     return _.reduce(fields, function(r,v,i){
@@ -108,8 +111,10 @@ const { getPicklist} = storeToRefs(formDataStore)
   }
 
   function transformFormValues(fields,values,formPage){
-    let formValues = {}
+    let formValues = {} 
+    console.log('getDefaultValue',formPage,fields)
     if(_.isNil(formPage) || formPage=='create'){
+       
         formValues = getDefaultValue(fields,false)
     }else if(formPage=='show'){
         formValues = getModuleValues(fields,values,true)
@@ -132,6 +137,8 @@ const { getPicklist} = storeToRefs(formDataStore)
             res[val.name] =  (_.get(val,'rules.default_value',false)) ? transformDate(val.rules.default_value,val.rules,displayValue) : null;
         }else if(val.field_type.name=='picklist'){
             res[val.name] = (_.get(val,'rules.default_value',false)) ? transformPicklistValue(val.rules,val.listName) : null
+        }else if(val.name=='owner_id'){
+            res[val.name] = _.merge(getAuthUser.value,{'value':getAuthUser.value.name})
         }else{
             res[val.name] = null
         }
@@ -408,7 +415,7 @@ const { getPicklist} = storeToRefs(formDataStore)
             })
             if(result===true){
                 hidden.panels.push(panel.panelName)
-                hidden.fields = _.union(hidden.fields, _.map(panelFields,'uniqueName'))
+                hidden.fields = _.union(hidden.fields, _.map(panelFields,'_id'))
              }else{
                let hFields = getHiddenFields(panelFields,panel.entityName,page,values)
                hidden.fields = _.union(hidden.fields, hFields)
@@ -434,32 +441,32 @@ const { getPicklist} = storeToRefs(formDataStore)
     _.forEach(fields, function(field){
         if(_.has(field.rules,'hide_in')){
             if(_.includes(field.rules.hide_in,page)){
-                hiddenFields.push(field.uniqueName);
+                hiddenFields.push(field._id);
             }
         }
         if(_.has(field.rules,'show_in')){
             if(!_.includes(field.rules.show_in,page)){
-                hiddenFields.push(field.uniqueName);
+                hiddenFields.push(field._id);
             }
         }
         if(_.get(field,'rules.hide_if','')){
             let result = parseExpression(field.rules.hide_if,entityName,values)
             if(result.value == true){
-              hiddenFields.push(field.uniqueName);
-            }else if(_.includes(hiddenFields,field.uniqueName)){
-              _.pull(hiddenFields,field.uniqueName);
+              hiddenFields.push(field._id);
+            }else if(_.includes(hiddenFields,field._id)){
+              _.pull(hiddenFields,field._id);
             }
         }
         if(_.get(field,'rules.visible_if','')){
             let result = parseExpression(field.rules.visible_if,entityName,values)
             if(result.value == false){
-              hiddenFields.push(field.uniqueName);
-            }else if(_.includes(hiddenFields,field.uniqueName)){
-              _.pull(hiddenFields,field.uniqueName);
+              hiddenFields.push(field._id);
+            }else if(_.includes(hiddenFields,field._id)){
+              _.pull(hiddenFields,field._id);
             }
         }
     })
-    return hiddenFields
+    return _.uniq(hiddenFields)
   }
 
   function extractFieldinExpressionFormat(expression){
@@ -505,6 +512,207 @@ const { getPicklist} = storeToRefs(formDataStore)
     return result
   }
 
+  function controllingFieldChecker(field, fields, entity){
+    let contolledFields = []
+    let result = {'visible_if':[],'hide_if':[],'set_val_if':[],'set_val_disable_if':[],'filtered_by':[]}
+    _.forEach(fields, function(f){
+        let tokens = []
+        console.log(f.name)
+        if(_.has(f.rules,'visible_if')){
+            tokens = pullAllFieldsInExpression(f.rules.visible_if)
+            console.log('visible_if',tokens)
+            _.forEach(tokens, function(t){
+                let e = extractEntityinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
+                let theField = extractFieldinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
+                if(e){
+                    if(theField==field.name && entity==e && !_.includes(contolledFields,f.name)){
+                        contolledFields.push(f.name)
+                        result.visible_if.push({'field':f._id,'expression':f.rules.visible_if})
+                    }
+                }else if(theField==field.name && !_.includes(contolledFields,f.name)){
+                    contolledFields.push(f.name)
+                    result.visible_if.push({'field':f._id,'expression':f.rules.visible_if})
+                }
+            })
+           
+        }
+        if(_.has(f.rules,'hide_if')){
+            tokens = pullAllFieldsInExpression(f.rules.hide_if)
+            console.log('hide_if',tokens)
+            _.forEach(tokens, function(t){
+                let e = extractEntityinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
+                let theField = extractFieldinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
+                if(e){
+                    if(theField==field.name && entity==e && !_.includes(contolledFields,f.name)){
+                        contolledFields.push(f.name)
+                        result.hide_if.push({'field':f._id,'expression':f.rules.hide_if})
+                    }
+                }else if(theField==field.name && !_.includes(contolledFields,f.name)){
+                    contolledFields.push(f.name)
+                    result.hide_if.push({'field':f._id,'expression':f.rules.hide_if})
+                }
+            })
+        }
+        if(_.has(f.rules,'set_val_if')){
+            tokens = pullAllFieldsInExpression(f.rules.set_val_if.expression)
+            console.log('set_val_if',tokens)
+            _.forEach(tokens, function(t){
+                let e = extractEntityinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
+                let theField = extractFieldinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
+                if(e){
+                    if(theField==field.name && entity==e && !_.includes(contolledFields,f.name)){
+                        contolledFields.push(f.name)
+                        result.set_val_if.push({'field':f._id,'expression':f.rules.set_val_if.expression,'value':f.rules.set_val_if.value})
+                    }
+                }else if(theField==field.name && !_.includes(contolledFields,f.name)){
+                    contolledFields.push(f.name)
+                    result.set_val_if.push({'field':f._id,'expression':f.rules.set_val_if.expression,'value':f.rules.set_val_if.value})
+                }
+            })
+        }
+        if(_.has(f.rules,'set_val_disable_if')){
+            tokens = pullAllFieldsInExpression(f.rules.set_val_disable_if.expression)
+            console.log('set_val_disable_if',tokens)
+            _.forEach(tokens, function(t){
+                let e = extractEntityinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
+                let theField = extractFieldinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
+                if(e){
+                    if(theField==field.name && entity==e && !_.includes(contolledFields,f.name)){
+                        contolledFields.push(f.name)
+                        result.set_val_disable_if.push({'field':f._id,'expression':f.rules.set_val_disable_if.expression,'value':f.rules.set_val_disable_if.value})
+                    }
+                }else if(theField==field.name && !_.includes(contolledFields,f.name)){
+                    contolledFields.push(f.name)
+                    result.set_val_disable_if.push({'field':f._id,'expression':f.rules.set_val_disable_if.expression,'value':f.rules.set_val_disable_if.value})
+                }
+            })
+        }
+        if(_.has(f.rules,'filtered_by')){
+           
+        }
+        if(_.has(f,'filterQuery')){
+           
+        }
+       
+    })
+    return result
+  }
+
+  function parseHiddenFields(fieldsHidden,rules,entityName,values){
+    let hiddenFields = _.cloneDeep(fieldsHidden)
+    if(!_.isEmpty(rules.visible_if)){
+        _.forEach(rules.visible_if,function(r){
+            let result = parseExpression(r.expression,entityName,values)
+            if(result.value == false){
+              hiddenFields.push(r.field);
+            }else if(_.includes(hiddenFields,r.field)){
+              _.pull(hiddenFields,r.field);
+            }
+        })
+    }
+    if(!_.isEmpty(rules.hide_if)){
+        _.forEach(rules.hide_if,function(r){
+            let result = parseExpression(r.expression,entityName,values)
+            if(result.value == true){
+                hiddenFields.push(r.field);
+              }else if(_.includes(hiddenFields,r.field)){
+                _.pull(hiddenFields,r.field);
+              }
+        })
+    }
+    return hiddenFields
+  }
+
+  function getAllDisabledFields(fields,values,entityName,formPage){
+    let disabledFields = []
+    _.forEach(fields, function(field){
+        if(_.has(field.rules,'hide_in')){
+            if(_.includes(field.rules.hide_in,formPage)){
+                disabledFields.push(field._id);
+            }
+        }
+        if(_.has(field.rules,'show_in')){
+            if(!_.includes(field.rules.show_in,formPage)){
+                disabledFields.push(field._id);
+            }
+        }
+        if(_.has(field.rules,'disable')){
+            if(field.rules.disable){
+                disabledFields.push(field._id);
+            }
+        }
+        if(_.get(field,'rules.set_val_disable_if','')){
+            let result = parseExpression(field.rules.set_val_disable_if.expression,entityName,values)
+            if(result.value == true){
+                disabledFields.push(field._id);
+            }else if(_.includes(disabledFields,field._id)){
+              _.pull(disabledFields,field._id);
+            }
+        }
+    })
+    return _.uniq(disabledFields)
+  }
+
+  function checkDisableRule(fields,values,entityName,formPage){
+    let hiddenFields = _.cloneDeep(fieldsHidden)
+    if(!_.isEmpty(rules.visible_if)){
+        _.forEach(rules.visible_if,function(r){
+            let result = parseExpression(r.expression,entityName,values)
+            if(result.value == false){
+              hiddenFields.push(r.field);
+            }else if(_.includes(hiddenFields,r.field)){
+              _.pull(hiddenFields,r.field);
+            }
+        })
+    }
+    if(!_.isEmpty(rules.hide_if)){
+        _.forEach(rules.hide_if,function(r){
+            let result = parseExpression(r.expression,entityName,values)
+            if(result.value == true){
+                hiddenFields.push(r.field);
+              }else if(_.includes(hiddenFields,r.field)){
+                _.pull(hiddenFields,r.field);
+              }
+        })
+    }
+    return hiddenFields
+  }
+
+  function checkSetValRule(fields,values,entityName){
+    let value = {}
+    if(_.isArray(fields)){
+        _.forEach(fields, function(field){
+            if(_.has(field.rules,'set_val_if')){
+                let result = parseExpression(field.rules.set_val_if.expression,entityName,values)
+                if(result.value == true){
+                    value[field.name] = field.rules.set_val_if.value
+                }
+            }
+            if(_.get(field,'rules.set_val_disable_if','')){
+                let result = parseExpression(field.rules.set_val_disable_if.expression,entityName,values)
+                if(result.value == true){
+                    value[field.name] = field.rules.set_val_disable_if.value
+                }
+            }
+        })
+    }else{
+        if(_.has(fields.rules,'set_val_if')){
+            let result = parseExpression(field.rules.set_val_if.expression,entityName,values)
+            if(result.value == true){
+                value[field.name] = field.rules.set_val_if.value
+            }
+        }
+        if(_.get(fields,'rules.set_val_disable_if','')){
+            let result = parseExpression(field.rules.set_val_disable_if.expression,entityName,values)
+            if(result.value == true){
+                value[field.name] = field.rules.set_val_disable_if.value
+            }
+        }
+    }
+
+    return value
+  }
+
   return {
     getPicklistFields,
     getLookupFields,
@@ -520,6 +728,11 @@ const { getPicklist} = storeToRefs(formDataStore)
     transformLookupValue,
     extractFieldinExpressionFormat,
     extractEntityinExpressionFormat,
-    getDefaultValue
+    getDefaultValue,
+    controllingFieldChecker,
+    parseHiddenFields,
+    getAllDisabledFields,
+    checkSetValRule,
+    checkDisableRule
   };
 }

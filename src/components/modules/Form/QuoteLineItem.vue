@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, onMounted, defineAsyncComponent, inject} from 'vue'
+    import { ref, onMounted, defineAsyncComponent, inject, watch, reactive} from 'vue'
     import { useRouter } from 'vue-router'
     import { storeToRefs } from 'pinia'
     import { useToast } from "primevue/usetoast"
@@ -27,7 +27,22 @@
     const selectedProducts = ref([])
     const hiddenFields = ref([])
     const defaultValue = ref({});
-
+    const columnWidth = ref({
+      "asServiceSales":"50px",
+      "business_unit_ids":"130px",
+      "itemCode":"100px",
+      "product_id":"270px",
+      "HSNCode":"80px",
+      "quantity":"80px",
+      "list_price_id":"50px",
+      "salesPrice":"130px",
+      "discount":"90px",
+      "subTotal":"130px",
+      "vat":"90px",
+      "status_id":"100px",
+      "commisionPercentSalesAgent":"130px",
+      "commisionAmountSalesAgent":"130px"
+    })
     const tempProducts = ref([
   {
     "_id": "5c0723dc678f7161775a1f41",
@@ -902,7 +917,7 @@
 ])
     onMounted(async()=>{ 
         if(props.formPage=='create'){
-            hiddenFields.value = ['status_id','sales_quote_id','currency_id','sort','inclusive_service_ids']
+            hiddenFields.value = ['status_id','sales_quote_id','currency_id','sort','inclusive_service_ids','commisionPercentDistributor','commisionAmountDistributor','commisionPercentSalesAgent','commisionAmountSalesAgent','discountedPriceRound','subTotalRound','discountPrice','discountedPrice']
         }else{
             hiddenFields.value = ['status_id','sales_quote_id','currency_id','sort','inclusive_service_ids']
         }
@@ -937,6 +952,7 @@
             tmp['salesPrice'] = p.price
             tmp['listPriceCopied'] = true
             tmp['listPrice'] = p.price
+            tmp['branch_id'] = form.value.values.main['branch_id']
             tmp['inclusive_service_ids'] = p.inclusiveServices
             form.value.values[props.panel.panelName].push(tmp)
         })
@@ -954,6 +970,39 @@
             }
         }
     }
+
+    const listPriceCopy = (index) => {
+      form.value.values[props.panel.panelName][index]['salesPrice'] = form.value.values[props.panel.panelName][index]['listPrice'] 
+    }
+
+    const computeTotal = (data) =>{
+      
+      let branch = _.get(form.value.values.main,'branch_id._id','')
+      let discount = data['discount']/100;
+      let discountedPrice = data['salesPrice'] - (data['salesPrice'] * discount);
+      if(branch=='5badf748678f7111186ba26e' || branch=='5f8510f0a6ebc7423b72d6f2'){
+        //Esco US & US Pharma
+        return _.round(discountedPrice,0) * data['quantity']
+      }else if(branch=='5bfcf6c9678f71594d642a86' || branch =='5badf748678f7111186ba268'){
+        // Bangladesh & Vietnam
+        let vat = data['vat']/100;
+        return (discountedPrice + (discountedPrice * vat)) * data['quantity']
+      }else if(branch=='5c6a88e3a6ebc728735b9db2'){
+        let commission = data['commisionPercentDistributor']/100
+        discountedPrice = data['salesPrice'] - (data['salesPrice'] * (discount + commission));
+        return discountedPrice * data['quantity']
+      }else{
+        return discountedPrice * data['quantity']
+      }
+    }
+
+    watch(form.value.values.main, (newV,oldV) =>{
+        _.forEach(form.value.values[props.panel.panelName], function(d,i){
+            if(!_.isEqual(d.branch_id,form.value.values.main.branch_id)){
+                form.value.values[props.panel.panelName][i]['branch_id'] = form.value.values.main.branch_id
+            }
+        })
+    })
 </script>
 <template>
 <div class="formSectionLabel flex align-items-center justify-content-between">
@@ -964,7 +1013,7 @@
       </template>
       <el-table :data="tempProducts" border stripe height="250" size="small" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="30" />
-        <el-table-column width="100" label="Item Code">
+        <el-table-column width="100" label="Item Code" >
             <template #default="scope">
                 {{ scope.row.product_id.itemCode}}
             </template>
@@ -979,7 +1028,7 @@
                 <div v-html="scope.row.product_id.name"></div>
             </template>
         </el-table-column>
-        <el-table-column width="250" label="Descriptin">
+        <el-table-column width="250" label="Description">
             <template #default="scope">
                 <div v-html="scope.row.product_id.description"></div>
             </template>
@@ -992,18 +1041,21 @@
       </div>
     </el-popover>
 </div>
- <DataTable :value="form.values[panel.panelName]" size="small" stripedRows  columnResizeMode="expand">
+ <DataTable :value="form.values[panel.panelName]" size="small" stripedRows  columnResizeMode="expand" tableStyle="min-width: 50rem">
     <template v-for="field in _.filter(fields, function(f){ if(!_.includes(hiddenFields,f.name)){ return true; } })" :key="field._id">
-        <Column :field="field.name" :header="field.label">
+        <Column :field="field.name" :header="field.label" :style="'width:' +columnWidth[field.name]">
         <template #body="slotProps">
             <template v-if="field.name=='product_id'">
                 <div v-html="slotProps.data.product_id.name"></div>
             </template>
             <template v-else-if="field.name=='list_price_id'">
-                <el-checkbox v-model="form.values[panel.panelName][slotProps.index]['listPriceCopied']" :disabled="form.values[panel.panelName][slotProps.index]['listPrice']==form.values[panel.panelName][slotProps.index]['salesPrice']" size="small" />
+                <el-checkbox v-model="form.values[panel.panelName][slotProps.index]['listPriceCopied']" :disabled="form.values[panel.panelName][slotProps.index]['listPrice']==form.values[panel.panelName][slotProps.index]['salesPrice']" @change="listPriceCopy(slotProps.index)" size="small" />
+            </template>
+            <template v-else-if="field.name=='subTotal'">
+                {{ computeTotal(slotProps.data) }}
             </template>
             <template v-else>
-                <MutableField  :config="field" :mutableIndex="slotProps.index" :keyName="panel.panelName" type="tableForm" :small="true" :module="module" @changeValue="fieldChange"/>
+                <MutableField  :config="field" :mutableIndex="slotProps.index" :keyName="panel.panelName" type="tableForm" :entity="panel.entityName" :module="module" :inputWidth="columnWidth[field.name]" @changeValue="fieldChange"/>
             </template>
         </template>
     </Column>

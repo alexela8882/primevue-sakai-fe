@@ -22,7 +22,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const toast = useToast()
   // stores
   const baseStore = useBaseStore()
-  const { jsonDbUrl,getAuthUser } = storeToRefs(baseStore)
+  const { jsonDbUrl, getAuthUser } = storeToRefs(baseStore)
   // presets
   const perPageItems = ref([
     { label: '10', value: 10 },
@@ -81,7 +81,30 @@ export const useModuleStore = defineStore('moduleStore', () => {
     },[])
   })
   const getLinkedModuleData = computed(() => linkedModuleData.value)
-  const getModules = computed(() => modules.value)
+  const getModules = computed(() => {
+    return getModulesWithPermissions.value(modules.value)
+  })
+  const getModulesWithPermissions = computed(() => {
+    return (modules) => {
+      let modulesWithPermissions = modules.map(module => {
+        const permissions = getAuthUser.value && getAuthUser.value.permissions
+          .filter(str => str.startsWith(module.name + "."))
+          .map(str => str.split('.')[1])
+  
+        let obj = Object.assign({}, {
+          ...module,
+          permissions: permissions
+        })
+        return obj
+      })
+      return modulesWithPermissions
+    }
+  })
+  const getModuleWithPermissions = computed(() => {
+    return (payload) => {
+      return getModules.value.find(module => module._id === payload._id)
+    }
+  })
   const getJsonModules = computed(() => jsonModules.value)
   const getCollection = computed(() => collection.value)
   const getCollectionById = computed(() => {
@@ -480,7 +503,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
 
         let refetchedModule = null
         // fill modules with fields & panels
-        modules.value.map(m => {
+        getModules.value.map(m => {
           if (m.name === payload.moduleName) {
             let obj = Object.assign({}, {
               ...m,
@@ -746,6 +769,8 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getModule,
     getLinkedModuleData,
     getModules,
+    getModulesWithPermissions,
+    getModuleWithPermissions,
     getModulesUserCanAccess,
     getJsonModules,
     getCollection,

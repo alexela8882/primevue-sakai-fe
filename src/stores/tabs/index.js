@@ -18,7 +18,7 @@ export const useTabStore = defineStore('tabStore', () => {
   const baseStore = useBaseStore()
   const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
-  const {  _getViewFilter, getModuleByName } = storeToRefs(moduleStore)
+  const {  _getViewFilter, getModuleByName, getModuleWithPermissions } = storeToRefs(moduleStore)
   const { _fetchModule, fetchBaseModuleByField, _fetchBaseModuleByField } = moduleStore
 
   // states
@@ -73,6 +73,7 @@ export const useTabStore = defineStore('tabStore', () => {
       const moduleData = await _fetchModule({moduleName: payload._module})
       const viewFilter = moduleData.viewFilters.find(vf => vf.isDefault === true)
       const viewFilterWithFields = _getViewFilter.value({ module: moduleData, id: viewFilter._id })
+      const permissions = getModuleWithPermissions.value(baseModule).permissions
       let obj = Object.assign({}, {
         ...payload,
         base_module: baseModule,
@@ -80,7 +81,8 @@ export const useTabStore = defineStore('tabStore', () => {
           collection: moduleData,
           fields: moduleData.fields,
           panels: moduleData.panels,
-          viewFilterWithFields: viewFilterWithFields
+          viewFilterWithFields: viewFilterWithFields,
+          permissions: permissions
         })
       })
 

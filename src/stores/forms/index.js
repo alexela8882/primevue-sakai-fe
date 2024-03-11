@@ -16,6 +16,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
     const { jsonDbUrl } = storeToRefs(baseStore)
     const { _fetchModule, fetchBaseModuleByField } = moduleStore
     const { formatLookupOptions } = helper();
+    const toast = useToast()
 
     //ref
     const forms = ref([])
@@ -177,6 +178,21 @@ export const useFormDataStore = defineStore('formDataStore', () => {
       }
     }
 
+    const massUpdateRecords = async (values,module) =>{
+      try {
+        let params = {'module-name': module,'items':values}
+        const response = await axios.patch(`/patchInlineUpdates`,params);
+        console.log(response)
+        if(response.status==200){
+          toast.add({ severity: 'success', summary: 'Success', detail: response.data.message, life: 3000 });
+        }
+        return response
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
     return {
         forms,
         picklist,
@@ -194,6 +210,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         fetchLookupPaginated,
         setFormReset,
         saveFormValues,
-        fetchEntityFields 
+        fetchEntityFields,
+        massUpdateRecords
     }
 })
