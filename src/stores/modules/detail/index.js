@@ -17,7 +17,7 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   const baseStore = useBaseStore()
   const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
-  const { getBaseModule, getModule } = storeToRefs(moduleStore)
+  const { getBaseModule, getModule, getModuleWithPermissions } = storeToRefs(moduleStore)
   const { _fetchModule } = moduleStore
 
   // states
@@ -198,7 +198,8 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
           paginated: null,
           buttons: [],
           fields: [],
-          collection: []
+          collection: [],
+          permissions: []
         })
       }
     })

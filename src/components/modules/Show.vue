@@ -266,6 +266,7 @@ const getUpdatedModule = (payload) => {
 }
 
 const updateViewFilter = () => {
+  console.log(getBaseModule.value)
   const updatedViewFilter = getBaseModule.value.viewFilters.find(filter => filter._id === selectedViewFilterId.value)
 
   selectedViewFilter.value = updatedViewFilter
@@ -567,6 +568,7 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
             :moduleId="getBaseModule._id"
             :moduleEntityName="getBaseModule.mainEntity"
             :moduleName="getBaseModule.name"
+            :modulePermissions="getBaseModule.permissions"
             :moduleLabel="getBaseModule.label"
             :viewFilter="viewFilter"
             :fields="viewFilter.fields"

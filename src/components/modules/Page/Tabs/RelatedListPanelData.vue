@@ -88,6 +88,7 @@ watch(() => _getRelatedLists.value, (newVal, oldVal) => {
           :moduleEntityName="relatedList.entityName"
           :moduleName="moduleName"
           :moduleLabel="moduleLabel"
+          :modulePermissions="[]"
           :fields="fields"
           :data="data"
           :pagination="pagination"

@@ -1,6 +1,7 @@
 <script setup>
 // imports
 import { ref, onMounted, defineProps, defineAsyncComponent } from 'vue'
+import { storeToRefs } from 'pinia'
 // components
 const Form = defineAsyncComponent(() => import('@/components/modules/Form/Form.vue'))
 const GeneralForm = defineAsyncComponent(() => import('@/components/modules/Form/GeneralForm.vue'))
@@ -23,6 +24,7 @@ const localLoading = ref(false)
 const tabStore = useTabStore()
 const moduleStore = useModuleStore()
 const { updateTabByField } = tabStore
+const { getModuleWithPermissions } = storeToRefs(moduleStore)
 const { _fetchModule } = moduleStore
 
 // actions
@@ -92,6 +94,7 @@ onMounted(async () => {
           :moduleEntityName="tab.base_module.mainEntity"
           :moduleName="tab.base_module.name"
           :moduleLabel="tab.base_module.label"
+          :modulePermissions="tab.module.permissions"
           :fields="tab.module.viewFilterWithFields.fields"
           :data="tab.module.collection && tab.module.collection.data"
           :collectionLoading="localLoading"
