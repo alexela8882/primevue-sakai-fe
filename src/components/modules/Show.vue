@@ -20,6 +20,7 @@ import KanbanLoader from '@/components/modules/DynamicDataTable/Loaders/KanbanLo
 
 // refs
 const viewFiltersCount = ref(0)
+const triggerSearchPopover = ref(false)
 const moduleSearch = ref(null)
 const datatableLoading = ref(false)
 const localLoading = ref(false)
@@ -32,6 +33,8 @@ const viewFilter = ref({})
 const selectedViewFilter = ref()
 const selectedViewFilterId = ref()
 const selectedFields = ref()
+const searchFields = ref()
+const displaySearchFields = ref()
 const selectedSearchKeyIds = ref()
 // stores
 const moduleStore = useModuleStore()
@@ -56,8 +59,16 @@ const {
   _getViewFilterIds,
   __getViewFilter,
   getViewFilter,
-  _getSearchKeyFieldIds } = storeToRefs(moduleStore)
-const { _fetchModule, fetchModule, fetchModules, fetchBaseModule } = moduleStore
+  _getSearchFields,
+  _getSearchKeyFields,
+  _getSearchKeyFieldIds,
+  _getFieldDetailsById } = storeToRefs(moduleStore)
+const {
+  searchModule,
+  _fetchModule,
+  fetchModule,
+  fetchModules,
+  fetchBaseModule } = moduleStore
 const { getTabs } = storeToRefs(tabStore)
 const { addTab,toggleWindows, maximizeTab } = tabStore
 const { setFormReset } = formDataStore
@@ -143,7 +154,17 @@ const paginate = async (payload) => {
   } else page = localModule.meta && localModule.meta.pagination
 
   // re-fetch module & collection
-  localModule.value = await _fetchModule(getBaseModule.value.name, selectedViewFilterId.value, page > 1 ? page : null, payload.per_page)
+  let _payload = Object.assign({}, {
+    moduleName: getBaseModule.value.name,
+    viewFilter: selectedViewFilterId.value,
+    page: page > 1 ? page : null,
+    limit: payload.per_page,
+    search: moduleSearch.value,
+    searchFields: generateSearchFields(),
+    reuse: true
+  })
+
+  localModule.value = await _fetchModule(_payload)
   datatableLoading.value = false
 }
 const limitPage = async (e) => {
@@ -174,7 +195,6 @@ const createNewForm = async (module) => {
     await addTab(obj, true)
   } else confirmAddTab(module, index)
 }
-
 const confirmAddTab = (module,index) => {
   confirm.require({
       group: 'templating',
@@ -194,18 +214,22 @@ const confirmAddTab = (module,index) => {
         toggleWindows(getTabs.value[index])
       }
   });
-};
+}
 
 const initialize = async (vFilter) => {
   localLoading.value = true
   datatableLoading.value = true
   // await fetchCollection(route.name.split('.')[0], 1)
   await fetchBaseModule(route.params.id)
-  const moduleName = getBaseModule.value.name
-  const moduleVFilter = selectedViewFilterId.value && selectedViewFilterId.value
-  const modulePage = null
-  const moduleLimit = selectedViewFilter.value && selectedViewFilter.value.pageSize
-  const fetchedModule = await _fetchModule(moduleName, moduleVFilter, modulePage, moduleLimit)
+
+  let _payload = Object.assign({}, {
+    moduleName: getBaseModule.value.name,
+    viewFilter: selectedViewFilterId.value && selectedViewFilterId.value,
+    page: null,
+    limit: selectedViewFilter.value && selectedViewFilter.value.pageSize,
+    reuse: true
+  })
+  const fetchedModule = await _fetchModule(_payload)
 
   localModule.value = fetchedModule
   viewFiltersCount.value = localModule.value.viewFilters.length
@@ -221,7 +245,16 @@ const initialize = async (vFilter) => {
   selectedViewFilter.value = viewFilter.value && viewFilter.value
   selectedViewFilterId.value = selectedViewFilter.value._id
   selectedFields.value = computed(() => _getViewFilterIds.value(localModule.value))
-  selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
+  searchFields.value = _getSearchFields.value(localModule.value)
+
+  let defaultViewFilter = localModule.value.viewFilters.find(filter => filter.isDefault)
+  
+  if (
+    defaultViewFilter &&
+    defaultViewFilter.search_fields &&
+    (defaultViewFilter.search_fields.length > 0)) {
+    selectedSearchKeyIds.value = defaultViewFilter.search_fields
+  } else selectedSearchKeyIds.value = _getSearchKeyFieldIds.value(localModule.value)
 
   localLoading.value = false
   datatableLoading.value = false
@@ -233,9 +266,44 @@ const getUpdatedModule = (payload) => {
 }
 
 const updateViewFilter = () => {
+  console.log(getBaseModule.value)
   const updatedViewFilter = getBaseModule.value.viewFilters.find(filter => filter._id === selectedViewFilterId.value)
+
   selectedViewFilter.value = updatedViewFilter
-  selectedViewFilterId.value = updatedViewFilter._id
+  selectedViewFilterId.value = updatedViewFilter && updatedViewFilter._id
+}
+
+const searchInput = async () => {
+  localLoading.value = true
+
+  let payload = Object.assign({}, {
+    module: getBaseModule.value.name,
+    search: moduleSearch.value,
+    viewFilter: selectedViewFilterId.value,
+    searchFields: generateSearchFields(),
+    selectedSearchKeyIds: selectedSearchKeyIds.value
+  })
+
+  // re-fetch module
+  const fetchedModule = await searchModule(payload)
+
+  // check first if fetching module was successful
+  if (fetchedModule) localModule.value = fetchedModule
+
+  localLoading.value = false
+  triggerSearchPopover.value = false
+}
+
+const generateSearchFields = () => {
+  let arr = []
+  selectedSearchKeyIds.value.map(field => {
+    let obj = Object.assign({}, {
+      'searchFields[]': field
+    })
+    arr.push(obj)
+  })
+
+  return arr
 }
 
 // lifescycles
@@ -245,8 +313,12 @@ onMounted(async () => {
 
 watch(selectedViewFilterId, async (newVal, oldVal) => {
   // if (newVal) viewFilter.value = __getViewFilter.value(newVal, localModule.value)
-  updateViewFilter() // update view filter
-  await initialize(newVal)
+
+  if (newVal) {
+    console.log('view filter')
+    updateViewFilter() // update view filter
+    await initialize(newVal)
+  }
 })
 
 watch(selectedFields, (newVal, oldVal) => {
@@ -254,8 +326,8 @@ watch(selectedFields, (newVal, oldVal) => {
 })
 
 watch(() => getModules.value, async (newVal, oldVal) => {
-  if (viewFiltersCount.value !== 0) {
-    let updatedModule = getUpdatedModule(newVal)
+  let updatedModule = getUpdatedModule(newVal)
+  if (updatedModule.meta.per_page !== selectedViewFilter.value) {
 
     if (viewFiltersDialogMode.value === 'new') {
       selectedViewFilter.value = updatedModule.viewFilters[updatedModule.viewFilters.length - 1]
@@ -275,6 +347,20 @@ watch(() => getModules.value, async (newVal, oldVal) => {
 watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
   updateViewFilter() // update view filter
   if (newVal === null) await initialize(selectedViewFilterId.value)
+})
+
+watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
+  // reset
+  displaySearchFields.value = []
+
+  newVal.map(field => {
+    let obj = Object.assign({}, {
+      fields: localModule.value.fields,
+      _id: field
+    })
+    let newField = _getFieldDetailsById.value(obj)
+    displaySearchFields.value.push(newField.label)
+  })
 })
 
 </script>
@@ -309,19 +395,19 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
         </div>
 
         <div v-else class="mt-2 mb-4">
-          <div class="md:flex justify-content-between">
+          <div class="md:flex align-items-center justify-content-between gap-1">
             <div class="w-7">
-              <Dropdown
+              <!-- <Dropdown
                 v-model="selectedViewFilterId"
                 :options="_getViewFilters(localModule)"
                 :disabled="datatableLoading"
                 optionLabel="filterName"
                 optionValue="_id"
                 placeholder="Select View Filters"
-                class="border-round-xl border-primary w-full md:w-12rem mr-2 mb-2 md:mb-0"/>
-              <MultiSelect
+                class="border-round-xl border-primary w-full md:w-12rem mr-2 mb-2 md:mb-0"/> -->
+              <!-- <MultiSelect
                 v-model="selectedSearchKeyIds"
-                :options="localModule && localModule.fields"
+                :options="searchFields"
                 :disabled="datatableLoading"
                 filter
                 :showToggleAll="false"
@@ -333,14 +419,69 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
               <div class="p-input-icon-right w-full ml-1 md:w-6">
                 <i class="pi pi-search" />
                 <InputText
+                  @keypress.enter="searchInput()"
                   v-model="moduleSearch"
                   type="text"
                   :disabled="datatableLoading || (selectedSearchKeyIds && selectedSearchKeyIds.length <= 0)"
                   class="border-round-right-xl border-primary w-full mb-2 md:mb-0"
                   placeholder="Search The List..." />
-              </div>
+              </div> -->
+              <el-select
+                v-model="selectedViewFilterId"
+                :disabled="datatableLoading"
+                collapse-tags
+                placeholder="Select View Filters"
+                style="max-width: 150px"
+                class="mr-2">
+                <el-option
+                  v-for="item in _getViewFilters(localModule)"
+                  :key="item._id"
+                  :label="item.filterName"
+                  :value="item._id"
+                />
+              </el-select>
+              <el-input
+                @keypress.enter="searchInput()"
+                @blur="triggerSearchPopover = false"
+                @focus="triggerSearchPopover = true"
+                v-model="moduleSearch"
+                :disabled="datatableLoading"
+                placeholder="Search The List..."
+                style="max-width: 500px">
+                <template #prepend>
+                  <el-popover
+                    :visible="triggerSearchPopover"
+                    placement="bottom"
+                    :width="400">
+                    <div>
+                      <div class="text-xl mb-2">Will search through:</div>
+                      <div v-for="(field, fx) in displaySearchFields" :key="fx">
+                        <div class="text-sm">{{ field }}</div>
+                      </div>
+                    </div>
+                    <template #reference>
+                      <el-select
+                        v-model="selectedSearchKeyIds"
+                        :disabled="datatableLoading"
+                        multiple
+                        collapse-tags
+                        :max-collapse-tags="0"
+                        filterable
+                        placeholder="Select Fields"
+                        style="max-width: 150px">
+                        <el-option
+                          v-for="item in searchFields"
+                          :key="item._id"
+                          :label="item.label"
+                          :value="item._id"
+                        />
+                      </el-select>
+                    </template>
+                  </el-popover>
+                </template>
+              </el-input>
             </div>
-            <div class="md:flex align-items-center">
+            <div>
               <div class="p-inputgroup flex-1 mb-2 md:mb-0">
                 <Button
                   @click="tblMenu2.toggle($event)"
@@ -427,6 +568,7 @@ watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
             :moduleId="getBaseModule._id"
             :moduleEntityName="getBaseModule.mainEntity"
             :moduleName="getBaseModule.name"
+            :modulePermissions="getBaseModule.permissions"
             :moduleLabel="getBaseModule.label"
             :viewFilter="viewFilter"
             :fields="viewFilter.fields"

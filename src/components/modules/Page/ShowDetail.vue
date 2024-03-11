@@ -40,6 +40,8 @@ const localRelatedList = ref()
 const localRelatedLists = ref()
 const atIndexRelatedLists = ref()
 const atShowRelatedLists = ref([])
+const salesRelatedLists = ref([])
+const serviceRelatedLists = ref([])
 // stores
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
@@ -186,15 +188,15 @@ watch(getRelatedLists, (newVal, oldVal) => {
 onMounted(async() => {
   // fetches
   await fetchBaseModule(route.params.id)
-  await fetchModule(route.params.name)
+  await fetchModule({moduleName: route.params.name})
 
   const lmdParams = { module: 'inquiries', link_field: 'link_id', link_id: route.params.pageid }
   await fetchLinkedModuleData(lmdParams)
 
   await fetchItem(route.params)
 
-  console.log(route.params)
-  console.log(getModule.value.relatedLists)
+  // console.log(route.params)
+  // console.log(getModule.value.relatedLists)
 
   const payload = Object.assign({}, {
     // for json db
@@ -217,11 +219,13 @@ onMounted(async() => {
   localRelatedLists.value = getRelatedLists.value
   atIndexRelatedLists.value = localItemPanels.value.filter(ip => ip.controllerMethod.includes('@index'))
   atShowRelatedLists.value = _getRelatedOrderedLists.value.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))
+  salesRelatedLists.value = _getRelatedOrderedLists.value.filter(orl => (orl.entityName === 'SalesOpportunity' || orl.entityName === 'SalesOpportunity'))
+  serviceRelatedLists.value = _getRelatedOrderedLists.value.filter(orl => (orl.entityName === 'DefectReport' || orl.entityName === 'ServiceJob' || orl.entityName === 'ServiceSchedule' || orl.entityName === 'BreakdownLog' || orl.entityName === 'ServiceReport'))
   linkedInquiryModule.value = getLinkedModuleData.value
 
-  console.log(_relatedLists.value)
-  console.log(_getRelatedOrderedLists.value)
-  console.log(atShowRelatedLists.value) // not working
+  // console.log(_relatedLists.value)
+  // console.log(_getRelatedOrderedLists.value)
+  // console.log(atShowRelatedLists.value) // not working
 
   // other logics
   // Attach the scroll event listener to the window or container
@@ -235,7 +239,6 @@ onMounted(async() => {
 
 <template>
   <div>
-    <!-- <pre>{{ _getRelatedOrderedLists.map(i => i.entityName) }}</pre> -->
     <RdBreadCrumbs :bcrumbs="bcrumbs" />
 
     <div
@@ -349,10 +352,10 @@ onMounted(async() => {
                       </div>
                     </div>
                     <div
-                      v-for="(relatedList, rlx) in _getRelatedOrderedLists.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))"
+                      v-for="(relatedList, rlx) in atShowRelatedLists"
                       :key="rlx">
                       <div class="my-4">
-                        <RelatedListPanel :relatedList="relatedList" />
+                        <RelatedListPanel :key="rlx" :relatedList="relatedList" />
                       </div>
                     </div>
                   </div>
@@ -362,10 +365,10 @@ onMounted(async() => {
                 <div>
                   <Suspense v-if="tabIndex === 1">
                     <div
-                      v-for="(salesRelatedList, srlx) in _getRelatedOrderedLists.filter(orl => (orl.entityName === 'SalesOpportunity' || orl.entityName === 'SalesOpportunity'))"
+                      v-for="(salesRelatedList, srlx) in salesRelatedLists"
                       :key="srlx">
                       <div class="my-4">
-                        <RelatedListPanel :relatedList="salesRelatedList" />
+                        <RelatedListPanel :key="srlx" :relatedList="salesRelatedList" />
                       </div>
                     </div>
                     <template #fallback>
@@ -376,12 +379,15 @@ onMounted(async() => {
               </TabPanel>
               <TabPanel v-if="localBaseModule && localBaseModule.name === 'accounts'" header="Services">
                 <div>
+                  <div v-if="serviceRelatedLists.length <= 0">
+                    <div class="mt-4 text-600">No records found</div>
+                  </div>
                   <Suspense v-if="tabIndex === 2">
                     <div
-                      v-for="(serviceRelatedList, srlx) in _getRelatedOrderedLists.filter(orl => (orl.entityName === 'DefectReport' || orl.entityName === 'ServiceJob' || orl.entityName === 'ServiceSchedule' || orl.entityName === 'BreakdownLog' || orl.entityName === 'ServiceReport'))"
+                      v-for="(serviceRelatedList, srlx) in serviceRelatedLists"
                       :key="srlx">
                       <div class="my-4">
-                        <RelatedListPanel :relatedList="serviceRelatedList" />
+                        <RelatedListPanel :key="srlx" :relatedList="serviceRelatedList" />
                       </div>
                     </div>
                     <template #fallback>

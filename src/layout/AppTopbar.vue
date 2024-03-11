@@ -455,7 +455,7 @@ const confirmAddTab = (module,index) => {
 
 const initialize = async () => {
   // create forms and tables
-  getModules.value.map(module => {
+  getModules.value && getModules.value.map(module => {
     if (_.includes(['Account','Contact','Lead','SalesOpportunity'],module.mainEntity) && !_.isNil(module.folder_id) && _.includes(getModulesUserCanAccess.value,module._id)) {    
       // create forms
       let formObj = Object.assign({}, {

@@ -17,7 +17,7 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   const baseStore = useBaseStore()
   const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
-  const { getBaseModule, getModule } = storeToRefs(moduleStore)
+  const { getBaseModule, getModule, getModuleWithPermissions } = storeToRefs(moduleStore)
   const { _fetchModule } = moduleStore
 
   // states
@@ -149,9 +149,9 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
     } else relatedLists.value = [] // reset
   }
   const fetchItemRelatedLists = async (payload) => {
-    console.log(payload)
     relatedListLoading.value = true
 
+    _relatedLists.value = [] // reset
     const moduleName = payload.moduleName
     const base = payload.base
     let relatedLists = payload.relatedLists
@@ -198,12 +198,12 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
           paginated: null,
           buttons: [],
           fields: [],
-          collection: []
+          collection: [],
+          permissions: []
         })
       }
     })
 
-    console.log(_relatedLists.value)
     relatedListLoading.value = false
   }
   const paginateRelatedList = async (payload) => {

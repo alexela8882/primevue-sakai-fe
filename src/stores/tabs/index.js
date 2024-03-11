@@ -18,7 +18,7 @@ export const useTabStore = defineStore('tabStore', () => {
   const baseStore = useBaseStore()
   const moduleStore = useModuleStore()
   const { jsonDbUrl } = storeToRefs(baseStore)
-  const {  _getViewFilter, getModuleByName } = storeToRefs(moduleStore)
+  const {  _getViewFilter, getModuleByName, getModuleWithPermissions } = storeToRefs(moduleStore)
   const { _fetchModule, fetchBaseModuleByField, _fetchBaseModuleByField } = moduleStore
 
   // states
@@ -70,9 +70,10 @@ export const useTabStore = defineStore('tabStore', () => {
   const generateTab = async (payload) => {
     if ((payload.type === 'module' && payload.visible) || payload.type === 'module-form') {
       const baseModule = await _fetchBaseModuleByField({ field: 'name', value: payload._module })
-      const moduleData = await _fetchModule(payload._module)
+      const moduleData = await _fetchModule({moduleName: payload._module})
       const viewFilter = moduleData.viewFilters.find(vf => vf.isDefault === true)
       const viewFilterWithFields = _getViewFilter.value({ module: moduleData, id: viewFilter._id })
+      const permissions = getModuleWithPermissions.value(baseModule).permissions
       let obj = Object.assign({}, {
         ...payload,
         base_module: baseModule,
@@ -80,7 +81,8 @@ export const useTabStore = defineStore('tabStore', () => {
           collection: moduleData,
           fields: moduleData.fields,
           panels: moduleData.panels,
-          viewFilterWithFields: viewFilterWithFields
+          viewFilterWithFields: viewFilterWithFields,
+          permissions: permissions
         })
       })
 
@@ -207,10 +209,14 @@ export const useTabStore = defineStore('tabStore', () => {
     const field = payload.field
 
     if (field === 'module') {
-      const moduleName = payload.data.module
-      const page = payload.data.page
-      const per_page = payload.data.per_page
-      const fetchedModule = await _fetchModule(moduleName, null, page, per_page)
+      let _payload = Object.assign({}, {
+        moduleName: payload.data.module,
+        page: payload.data.page,
+        per_page: payload.data.per_page,
+        reuse: true
+      })
+
+      const fetchedModule = await _fetchModule(_payload)
 
       tabs.value.map(tab => {
         if (tab.name === tabName) tab.module.collection = fetchedModule

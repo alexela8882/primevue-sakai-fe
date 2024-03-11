@@ -56,7 +56,7 @@ const limitPage = async (e) => {
   // re-fetch module & collection
   const limit = e.value
   const args = {
-    event: e, 
+    event: e,
     jump: true,
     per_page: limit
   }
@@ -88,6 +88,7 @@ watch(() => _getRelatedLists.value, (newVal, oldVal) => {
           :moduleEntityName="relatedList.entityName"
           :moduleName="moduleName"
           :moduleLabel="moduleLabel"
+          :modulePermissions="[]"
           :fields="fields"
           :data="data"
           :pagination="pagination"

@@ -6,6 +6,7 @@ import { onMounted, ref, watch, defineAsyncComponent,provide } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
+import { useToast } from 'primevue/usetoast'
 import _ from 'lodash'
 import validate from '@/mixins/Validate';
 import helper from '@/mixins/Helper';
@@ -25,6 +26,10 @@ const props = defineProps({
   moduleId: String,
   moduleEntityName: String,
   moduleName: String,
+  modulePermissions: {
+    type: Array,
+    default: []
+  },
   moduleLabel: String,
   data: Array,
   pagination: Object,
@@ -46,6 +51,7 @@ if (props.viewFilter) {
   })
   multiSortMeta.value.push(sort)
 }
+const toast = useToast()
 const fetchedModule = ref()
 const pageOffset = ref(0)
 const listViewFilterRef = ref(null)
@@ -82,43 +88,53 @@ const menuItems = ref([
     label: 'View',
     icon: 'pi pi-reply',
     command: (event) => {
-      console.log(event)
-      console.log(menuSelectedData.value)
-      // redirect to detail page
-      const routerObj = Object.assign({},
-        {
-          name: 'modules.pages.detail',
-          params: {
-            name: props.moduleName,
-            id: props.moduleId,
-            pageid: menuSelectedData.value._id
+      if (props.modulePermissions.includes("show")) {
+        // redirect to detail page
+        const routerObj = Object.assign({},
+          {
+            name: 'modules.pages.detail',
+            params: {
+              name: props.moduleName,
+              id: props.moduleId,
+              pageid: menuSelectedData.value._id
+            }
           }
-        }
-      )
-      router.push(routerObj)
+        )
+        router.push(routerObj)
+      } else {
+        // toast
+        toast.add({
+          severity: 'warn',
+          summary: 'Attention',
+          detail: "You don't have permission please contact administrator.",
+          life: 10000
+        })
+      }
     }
   }, {
     label: 'Change Owner',
     icon: 'pi pi-user',
     command: (event) => {
-      console.log(event)
-      console.log(menuSelectedData.value)
+      // console.log(event)
+      // console.log(menuSelectedData.value)
     },
     visible: props.moduleEntityName === getBaseModule.value.mainEntity
   }, {
     label: 'Update',
     icon: 'pi pi-refresh',
+    disabled: !props.modulePermissions.includes("update"),
     command: (event) => {
-      console.log(event)
-      console.log(menuSelectedData.value)
+      // console.log(event)
+      // console.log(menuSelectedData.value)
     },
     visible: props.moduleEntityName === getBaseModule.value.mainEntity
   }, {
     label: 'Delete',
     icon: 'pi pi-times',
+    disabled: !props.modulePermissions.includes("delete"),
     command: (event) => {
-      console.log(event)
-      console.log(menuSelectedData.value)
+      // console.log(event)
+      // console.log(menuSelectedData.value)
     },
     visible: props.moduleEntityName === getBaseModule.value.mainEntity
   }
