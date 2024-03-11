@@ -70,7 +70,7 @@ export const useTabStore = defineStore('tabStore', () => {
   const generateTab = async (payload) => {
     if ((payload.type === 'module' && payload.visible) || payload.type === 'module-form') {
       const baseModule = await _fetchBaseModuleByField({ field: 'name', value: payload._module })
-      const moduleData = await _fetchModule({moduleName: payload._module})
+      const moduleData = await _fetchModule({moduleName: payload._module, reuse: true})
       const viewFilter = moduleData.viewFilters.find(vf => vf.isDefault === true)
       const viewFilterWithFields = _getViewFilter.value({ module: moduleData, id: viewFilter._id })
       const permissions = getModuleWithPermissions.value(baseModule).permissions
