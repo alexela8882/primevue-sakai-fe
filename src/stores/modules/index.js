@@ -70,7 +70,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const getBaseModule = computed(() => baseModule.value)
   const getModule = computed(() => module.value)
   const getModuleByName = computed(() => module => {
-    return _.find(modules.value,{'name':module})
+    return _.find(getModules.value,{'name':module})
   })
   const getModulesUserCanAccess = computed(() => {
     return _.reduce(modules.value, function(res,v,i){
@@ -408,10 +408,10 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
 
     if (res.status === 200) {
-      let index = _.findIndex(modules.value,{'name':module})
+      let index = _.findIndex(getModules.value,{'name':module})
       if(index > -1){
         // modules.value[index]['fields'] = res.data[0]['data']
-        modules.value[index]['fields'] = res.data.data
+        getModules.value[index]['fields'] = res.data.data
       }
     }
   }
@@ -422,10 +422,10 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
 
     if (res.status === 200) {
-      let index = _.findIndex(modules.value,{'name':module})
+      let index = _.findIndex(getModules.value,{'name':module})
       if(index > -1){
         // modules.value[index]['panels'] = res.data[0]['data']
-        modules.value[index]['panels'] = res.data.data
+        getModules.value[index]['panels'] = res.data.data
       }
     }
   }
@@ -509,6 +509,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
               ...m,
               data: fetchedModule.data,
               meta: fetchedModule.meta,
+              permissions: m.permissions,
               fields: checkSearchFields ? m.fields : fetchedModule.fields,
               panels: checkSearchFields ? m.panels : fetchedModule.panels,
               viewFilters: checkSearchFields ? m.viewFilters : fetchedModule.viewFilters
@@ -518,6 +519,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
           }
         })
 
+        console.log(refetchedModule)
         return refetchedModule
       }
     } catch (error) {
