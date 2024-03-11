@@ -403,10 +403,10 @@ provide('form', tableFormData)
                   :key="dfn">
                   <span v-if="col.rules.ss_pop_up" class="mr-1">{{ slotProps.data[col.name][diplayFieldName] }}</span>
                   <span v-else-if="col.rules.ss_dropdown" class="mr-1">
-                    <a href="javascript:void(0);" style="color: red;">{{ slotProps.data[col.name][diplayFieldName] }}</a>
+                    <span>{{ slotProps.data[col.name][diplayFieldName] }}</span>
                   </span>
                   <span v-else class="mr-1">
-                    <a href="javascript:void(0);">{{ slotProps.data[col.name][diplayFieldName] }}</a>
+                    <span>{{ slotProps.data[col.name][diplayFieldName] }}</span>
                   </span>
                 </span>
               </span>
