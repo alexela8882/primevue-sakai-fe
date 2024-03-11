@@ -122,13 +122,12 @@
 
     const initialize  = () => {
         let quickAddFields = _.chain(formData.value.fields).filter({'quick':true}).map('_id').value()
-        let tmpValues = transformFormValues(formData.value.fields,getItem.value,getModuleByName.value(props.config._module).mainEntity,formPage.value)
+        let values = (formPage.value=='create') ? null : getItem.value
+        let tmpValues = transformFormValues(formData.value.fields,values,formPage.value)
         let setVal = checkSetValRule(formData.value.fields,tmpValues,getModuleByName.value(props.config._module).mainEntity)
         formData.value.values.main = _.merge(_.cloneDeep(tmpValues),_.cloneDeep(setVal))
-        console.log(tmpValues,setVal)
         formData.value.hidden = getAllHiddenFieldsAndPanels(formData.value.panels,formData.value.fields,formData.value.values.main,formPage.value)
         formData.value.disabled = getAllDisabledFields(formData.value.fields,formData.value.values.main,formPage.value)
-        console.log('disabled',_.filter(formData.value.fields, function(f){ if(_.includes(formData.value.disabled,f._id)){ return true; }}))
         //get quick add panels
         _.forEach(formData.value.panels, function(panel, panelI){
             formData.value.panels[panelI]['quick'] = false
