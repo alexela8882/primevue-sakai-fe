@@ -1,6 +1,6 @@
 <script setup>
 // imports
-import { ref, defineProps, defineAsyncComponent, onMounted } from 'vue'
+import { ref, defineProps, defineAsyncComponent, onMounted, onErrorCaptured } from 'vue'
 // components
 const RelatedListPanelData = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/RelatedListPanelData.vue'))
 
@@ -10,6 +10,7 @@ const props = defineProps({
 })
 
 // refs
+const componentError = ref(false)
 const menu = ref()
 const hasData = ref(false)
 
@@ -37,13 +38,25 @@ const toggle = (event) => {
 }
 
 onMounted(() => {
-  hasData.value = props.relatedList.collection && props.relatedList.collection.data.length <= 0
+  hasData.value = props.relatedList && (props.relatedList.collection && (props.relatedList.collection.data && props.relatedList.collection.data.length <= 0))
+})
+
+onErrorCaptured((err, vm, info) => {
+  // Handle the error gracefully
+  console.error('Error occurred in RelatedListPanel:', 'Error loading this component')
+  // console.error('Component:', vm)
+  // console.error('Additional information:', info)
+
+  componentError.value = true
+
+  // Prevent error from propagating further
+  return false
 })
 
 </script>
 
 <template>
-  <Panel class="detail-page-panel" :toggleable="!hasData">
+  <Panel v-if="!componentError" class="detail-page-panel" :toggleable="!hasData">
     <template #icons>
       <button
         v-if="!hasData"

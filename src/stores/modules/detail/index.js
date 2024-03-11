@@ -151,6 +151,7 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   const fetchItemRelatedLists = async (payload) => {
     relatedListLoading.value = true
 
+    _relatedLists.value = [] // reset
     const moduleName = payload.moduleName
     const base = payload.base
     let relatedLists = payload.relatedLists
@@ -202,7 +203,6 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
       }
     })
 
-    console.log(_relatedLists.value)
     relatedListLoading.value = false
   }
   const paginateRelatedList = async (payload) => {
