@@ -195,7 +195,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
   })
   const getReconstructedViewFilter = computed(() => {
     return (payload, _module) => {
-      console.log(payload)
       let moduleFields = null
       if (_module) moduleFields = _module.fields
       else moduleFields = module.value && module.value.fields
@@ -208,7 +207,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
         fields: filteredFields
       })
 
-      console.log(filteredFields)
       return finalViewFilter
     }
   })
@@ -519,7 +517,11 @@ export const useModuleStore = defineStore('moduleStore', () => {
           }
         })
 
-        console.log(refetchedModule)
+        // to trigger change in getModules getter
+        modules.value.map(module => {
+          if (module._id === refetchedModule._id) Object.assign(module, refetchedModule)
+        })
+
         return refetchedModule
       }
     } catch (error) {
@@ -594,14 +596,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
     if (res && res.status === 200) {
       // if (payload.mode === 'new') {
       //   // add new view filter into modules
-      //   modules.value.map(module => {
+      //   getModules.value.map(module => {
       //     if (module._id === payload.baseModule._id) {
       //       module.viewFilters.push(res.data.viewFilter)
       //     }
       //   })
       // } else {
       //   // update module view filters
-      //   modules.value.map(module => {
+      //   getModules.value.map(module => {
       //     if (module._id === payload.baseModule._id) {
       //       module.viewFilters.map(viewFilter => {
       //         if (viewFilter._id === payload.viewFilter) {
@@ -620,15 +622,16 @@ export const useModuleStore = defineStore('moduleStore', () => {
         life: 3000
       })
 
-      let _payload = Object.assign({}, {
-        moduleName: payload.baseModule.name,
-        viewFilter: res.data.viewFilter._id,
-        page: null,
-        limit: data.pageSize,
-        reuse: true
-      })
+      // let _payload = Object.assign({}, {
+      //   moduleName: payload.baseModule.name,
+      //   viewFilter: res.data.viewFilter._id,
+      //   page: null,
+      //   limit: data.pageSize,
+      //   reuse: true
+      // })
 
-      await _fetchModule(_payload)
+      // await _fetchModule(_payload)
+      return res.data
     } else {
       toast.add({
         severity: 'error',

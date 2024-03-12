@@ -26,11 +26,15 @@ const props = defineProps({
   selectedViewFilter: String,
   module: Object
 })
+const emit = defineEmits(['saved-viewfilter'])
 
 // actions
 const saveViewFilterData = () => {
   if (props.mode === 'new' || props.mode === 'edit-table') saveTableSettings.value++
   else if (props.mode === 'edit-kanban') saveKanbanSettings.value++
+}
+const savedViewfilter = (e) => {
+  emit('saved-viewfilter', e)
 }
 
 // lifecycles
@@ -59,7 +63,8 @@ onMounted(() => {
       :module="module"
       :selectedViewFilter="selectedViewFilter"
       :saveTrigger="saveTableSettings"
-      @save-loading="saveLoad(payload)" />
+      @save-loading="saveLoad(payload)"
+      @save-viewfilter="savedViewfilter($event)" />
 
     <KanbanSettings
       v-if="mode === 'edit-kanban'"
@@ -68,7 +73,8 @@ onMounted(() => {
       :module="module"
       :selectedViewFilter="selectedViewFilter"
       :saveTrigger="saveKanbanSettings"
-      @save-loading="saveLoad(payload)" />
+      @save-loading="saveLoad(payload)"
+      @save-viewfilter="savedViewfilter($event)" />
     <template #footer>
       <div class="flex align-items-center justify-content-end my-2">
         <Button
