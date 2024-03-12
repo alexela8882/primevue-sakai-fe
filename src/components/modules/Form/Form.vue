@@ -70,18 +70,14 @@
                 setFormReset("")
              }
         }else{
-            if(_.isEmpty(getModuleByName.value(props.config._module).fields))
+            let moduleData = _.cloneDeep(getModuleByName.value(props.config._module))
+            console.log('mounted',moduleData)
+            if(_.isEmpty(moduleData.fields))
                 await fetchModuleFields(props.config._module)
-            if(_.isEmpty(getModuleByName.value(props.config._module).panels))
+            if(_.isEmpty(moduleData.panels))
                 await fetchModulePanels(props.config._module)
-            let moduleData = getModuleByName.value(props.config._module)
-            formData.value.fields = moduleData.fields
+            formData.value.fields = moduleData.fields 
             formData.value.panels = moduleData.panels
-            let dF = _.find(formData.value.fields,{'name':"sales_type_id"})
-            if(dF){
-                let c = controllingFieldChecker(dF,formData.value.fields,getModuleByName.value(props.config._module).mainEntity)
-                console.log('form',c)
-            }
             // let listNames = getPicklistFields(formData.value.fields)
             // let lookupFields = getLookupFields(formData.value.fields)
             // await fetchPicklistandLookup(listNames,lookupFields)

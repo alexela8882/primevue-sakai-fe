@@ -1,20 +1,24 @@
 <script setup>
-import { onMounted, onUnmounted, ref, inject  } from "vue";
+import { onMounted, onUnmounted, ref, inject,defineAsyncComponent  } from "vue";
 import { storeToRefs } from 'pinia'
 import _ from 'lodash';
 import axios from 'axios'
 import helper from '@/mixins/Helper';
 import { useToast } from "primevue/usetoast"
+import { Search } from '@element-plus/icons-vue'
 
 import { useModuleStore } from '../../../stores/modules'
 const moduleStore = useModuleStore()
-const { getModules } = storeToRefs(moduleStore)
+const { getModules,getModuleByName } = storeToRefs(moduleStore)
+const { fetchModuleFields, fetchModulePanels} = moduleStore
 
 import { useFormDataStore } from '../../../stores/forms'
 const formDataStore = useFormDataStore()
 const { fetchLookupPaginated } = formDataStore
 
 const { formatLookupOptions,extractFieldinExpressionFormat,extractEntityinExpressionFormat } = helper();
+
+const AddableForm = defineAsyncComponent(() => import('@/components/modules/Form/AddableForm.vue'))
 
 const entityModule = ref({});
 const value = ref()
@@ -33,6 +37,7 @@ const toggle = async (event) => {
 }
 const filters = ref([])
 const toast = useToast()
+const addableFormVisible = ref(false)
 
 const props = defineProps({
     field: Object,
@@ -61,8 +66,16 @@ onMounted(() => {
                 let tmp = _.find(getModules.value,{'name':props.module})
                 entityName = tmp.mainEntity
             }
-            filters.value.push({'field':fieldName,'entity':entityName})
+            if(entityName==props.entity){
+                filters.value.push({'field':fieldName,'entity':entityName})
+            }
+            
         })
+    }
+    if(_.has(props.field,'rules.filtered_by')){
+        if(!_.isEmpty(props.field.rules.filtered_by)){
+            filters.value.push({'field':props.field.rules.filtered_by,'entity':props.entity})
+        }
     }
 })
 
@@ -140,6 +153,17 @@ const checkBeforeClose = (index) =>{
     emit('changeValue')
     // emit('update:modelValue',value.value)
 }
+
+const openAddableForm = async() =>{
+    addableFormVisible.value = true
+  
+    if(_.isEmpty(getModuleByName.value(props.field.addable.moduleName).fields))
+        await fetchModuleFields(props.field.addable.moduleName)
+    if(_.isEmpty(getModuleByName.value(props.field.addable.moduleName).panels))
+        await fetchModulePanels(props.field.addable.moduleName) 
+}
+
+
 const form = inject('form')
 </script>
 <template>
@@ -159,9 +183,10 @@ const form = inject('form')
         </div>
         <el-input 
             v-model="searchText" @click="toggle" @keyup="handleSearch" class="lookupInput" :disabled="form.formSaving"
-            placeholder="Please input">
-            <template #append>
-                <el-button ><i class="pi pi-search"></i></el-button>
+            placeholder="Please search here" :suffix-icon="Search">
+            <template v-if="field.addable"  #append>
+                <!-- <el-button ><i class="pi pi-search"></i></el-button> -->
+                <el-button ><i class="pi pi-plus" @click="openAddableForm"></i></el-button>
             </template>
         </el-input>
         <div v-if="open" class="lookupOverlay p-overlaypanel p-component" :class="{ 'open' : open == true, 'w-full':!inline,'w-auto':inline}">
@@ -206,6 +231,9 @@ const form = inject('form')
             </div>
         </div>
     </div>
+    <Dialog v-model:visible="addableFormVisible" modal header="Header" :style="{ width: '50vw' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+        <AddableForm :moduleName="field.addable.moduleName" formPage="create"></AddableForm>
+    </Dialog>
 </template>
 <style>
 .lookupField.p-overlaypanel .p-overlaypanel-content{

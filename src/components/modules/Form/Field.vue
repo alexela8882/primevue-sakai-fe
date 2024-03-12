@@ -31,7 +31,7 @@
     const formDataStore = useFormDataStore()
     const { fetchPicklist, fetchLookup  } = formDataStore
     const { getPicklistByListName, getLookupOptions } = storeToRefs(formDataStore)
-    const { checkFieldIfMultipleSelect,controllingFieldChecker,parseHiddenFields } = helper();
+    const { checkFieldIfMultipleSelect,controllingFieldChecker,parseHiddenFields,checkSetValRule } = helper();
     const { validateField } = validate();
 
     const value = ref()
@@ -44,11 +44,31 @@
         if(!props.inline){
             form.value.errors[props.keyName][field.name] = validateField(form.value.values[props.keyName],field,form.value.fields)
             let result = controllingFieldChecker(field,form.value.fields,props.entity)
+            console.log('fieldChange',field.name,result)
             if(!_.isEmpty(result.visible_if) || !_.isEmpty(result.hide_if)){ 
                 let hiddenFields = parseHiddenFields(form.value.hidden.fields,result,props.entity,form.value.values.main)
                 form.value.hidden.fields = hiddenFields
             }
-            if(!_.isEmpty(result.set_val_disable_if) || !_.isEmpty(result.disable_if)){ }
+            if(!_.isEmpty(result.set_val_disable_if) || !_.isEmpty(result.set_val_if)){ 
+                let setVal = checkSetValRule(result,form.value.values.main,props.entity)
+                if(!_.isEmpty(setVal.disabled)){
+                    form.value.disabled = _.union(form.value.disabled,setVal.disabled)
+                }
+                if(!_.isEmpty(setVal.removeDisabled)){
+
+                    form.value.disabled = _.pullAll(form.value.disabled,setVal.removeDisabled)
+                }
+                if(!_.isEmpty(setVal.values)){
+                    form.value.values.main = _.merge(form.value.values.main,setVal.values)
+                }
+            }
+            if(!_.isEmpty(result.filtered_by)){
+               
+                _.forEach(result.filtered_by, function(f){
+                     console.log(f)
+                    form.value.values.main[f] = null
+                })
+            }
         }
             
         emit('changeValue',field)

@@ -10,7 +10,7 @@ export default function validate() {
     function validateField(values,field,fields){
         let val =  _.trim(values[field.name])
         let errMsg = []
-        console.log(val,field.name)
+
         _.forEach(field.rules, function(ruleValue, ruleName){
             let msg = ''
             if(ruleName=='alpha'){
