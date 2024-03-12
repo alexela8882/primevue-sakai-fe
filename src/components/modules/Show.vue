@@ -319,7 +319,10 @@ onMounted(async () => {
 })
 
 watch(selectedViewFilterId, async (newVal, oldVal) => {
-  if (newVal) {
+  console.log(oldVal)
+  console.log(newVal)
+  if (oldVal) {
+    console.log('change view filter')
     viewFilter.value = __getViewFilter.value(newVal, localModule.value)
     await initialize(viewFilter.value)
   }

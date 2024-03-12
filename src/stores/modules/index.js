@@ -466,7 +466,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     // const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
     let baseUri = `/modules/${payload.moduleName}`
     let pageUri = payload.page ? `?page=${payload.page}` : '?page=1'
-    let limitUri = payload.limit ? `&limit=${payload.limit}` : ''
+    let limitUri = payload.limit ? `&pageSize=${payload.limit}` : ''
     let viewFilterUri = payload.viewFilter ? `&viewfilter=${payload.viewFilter}` : ''
     let listOnlyUri = payload.listOnly ? `&listOnly` : ''
     let searchUri = payload.search ? `&search=${payload.search}` : ''
