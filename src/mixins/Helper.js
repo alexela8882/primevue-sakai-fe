@@ -112,9 +112,8 @@ const { getAuthUser} = storeToRefs(baseStore)
 
   function transformFormValues(fields,values,formPage){
     let formValues = {} 
-    console.log('getDefaultValue',formPage,fields)
+
     if(_.isNil(formPage) || formPage=='create'){
-       
         formValues = getDefaultValue(fields,false)
     }else if(formPage=='show'){
         formValues = getModuleValues(fields,values,true)
@@ -139,6 +138,8 @@ const { getAuthUser} = storeToRefs(baseStore)
             res[val.name] = (_.get(val,'rules.default_value',false)) ? transformPicklistValue(val.rules,val.listName) : null
         }else if(val.name=='owner_id'){
             res[val.name] = _.merge(getAuthUser.value,{'value':getAuthUser.value.name})
+        }else if(val.name=='branch_id'){
+            res[val.name] = _.merge(getAuthUser.value.branch,{'value':getAuthUser.value.branch.name})
         }else{
             res[val.name] = null
         }

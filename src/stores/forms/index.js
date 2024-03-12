@@ -193,6 +193,16 @@ export const useFormDataStore = defineStore('formDataStore', () => {
       }
     }
 
+    const saveQuickAdd = async (values,module) =>{
+      try {
+        const response = await axios.post(`/quickadd/${module.mainEntity}`,values);
+        return response
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
     return {
         forms,
         picklist,
@@ -211,6 +221,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         setFormReset,
         saveFormValues,
         fetchEntityFields,
-        massUpdateRecords
+        massUpdateRecords,
+        saveQuickAdd
     }
 })

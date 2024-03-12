@@ -48,6 +48,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['changeValue'])
+const addableModule = ref(null)
 
 onMounted(() => {
     let vm = this;
@@ -155,12 +156,9 @@ const checkBeforeClose = (index) =>{
 }
 
 const openAddableForm = async() =>{
+    addableModule.value = getModuleByName.value(props.field.addable.moduleName)
     addableFormVisible.value = true
-  
-    if(_.isEmpty(getModuleByName.value(props.field.addable.moduleName).fields))
-        await fetchModuleFields(props.field.addable.moduleName)
-    if(_.isEmpty(getModuleByName.value(props.field.addable.moduleName).panels))
-        await fetchModulePanels(props.field.addable.moduleName) 
+   
 }
 
 
@@ -231,8 +229,8 @@ const form = inject('form')
             </div>
         </div>
     </div>
-    <Dialog v-model:visible="addableFormVisible" modal header="Header" :style="{ width: '50vw' }" :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
-        <AddableForm :moduleName="field.addable.moduleName" formPage="create"></AddableForm>
+    <Dialog v-if="field.addable" v-model:visible="addableFormVisible" modal :header="'New ' + _.startCase(_.get(addableModule,'name',''))" :style="{ width: '40vw' }" draggable :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+        <AddableForm :moduleName="field.addable.moduleName" formPage="create" @close="addableFormVisible=false"></AddableForm>
     </Dialog>
 </template>
 <style>

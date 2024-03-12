@@ -20,12 +20,15 @@
         moduleName: String,
         formPage: String
     })
+
+    const emit = defineEmits(['close'])
+
     const formDataStore = useFormDataStore()
     const moduleDetailStore = useModuleDetailStore()
     const moduleStore = useModuleStore()
     const tabStore = useTabStore()
     const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate,transformForSaving,getAllHiddenFieldsAndPanels,controllingFieldChecker,getAllDisabledFields,checkSetValRule } = helper();
-    const { fetchPicklist, fetchLookup, saveForm, setFormReset, saveFormValues } = formDataStore
+    const { fetchPicklist, fetchLookup, saveQuickAdd } = formDataStore
     const { getItem } = storeToRefs(moduleDetailStore)
     const { fetchModuleFields, fetchModulePanels} = moduleStore
     const { removeTab } = tabStore
@@ -56,7 +59,12 @@
     const hiddenPanels = ref([])
     provide('form', formData)
     onMounted(async () => {
-        let moduleData = getModuleByName.value(props.moduleName)
+       
+        if(_.isEmpty(getModuleByName.value(props.moduleName).fields))
+            await fetchModuleFields(props.moduleName)
+        if(_.isEmpty(getModuleByName.value(props.moduleName).panels))
+            await fetchModulePanels(props.moduleName) 
+        let moduleData = _.cloneDeep(getModuleByName.value(props.moduleName))
         formData.value.fields = moduleData.fields
         formData.value.panels = moduleData.panels
         initialize();
@@ -97,14 +105,6 @@
                 formData.value.errors[panel.panelName] = []
             }
         })
-        console.log(formLoading.value)
-    }
-
-    const resetForm  = () =>{
-       formLoading.value = true
-       let values = (props.formPage=='create') ? null : getItem.value
-       formData.value.values.main = transformFormValues(formData.value.fields,values,props.formPage) 
-       formLoading.value = false
     }
 
     const submitForm = async () =>{
@@ -113,7 +113,7 @@
         let noError = errorChecker(formData.value.errors.main)
         if(noError){
             let values = transformForSaving(formData.value.values.main,formData.value.fields, false)
-            let res = await saveFormValues(values,getModuleByName.value(props.moduleName))
+            let res = await saveQuickAdd(values,getModuleByName.value(props.moduleName))
             if(res.status==200){
                 toast.add({ severity: 'success', summary: 'Success Message', detail: 'Record added', life: 3000 });
                 formData.value.formSaving = false  
@@ -126,6 +126,9 @@
         
     }
 
+    const closeForm = () =>{
+        emit('close')
+    }
     
 </script>
 <template>
@@ -154,7 +157,7 @@
     </div>
     <div class="sticky bottom-0 right-0 py-2 surface-50">
         <div class="flex justify-content-end gap-2 px-3 py-1">
-            <el-button @click="resetForm" :disabled="formLoading || formData.formSaving">Reset</el-button>
+            <el-button @click="closeForm" :disabled="formLoading || formData.formSaving">Cancel</el-button>
             <el-button type="primary" @click="submitForm" :disabled="formLoading || formData.formSaving" :loading="formData.formSaving">Save</el-button>
         </div>
     </div>

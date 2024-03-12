@@ -70,12 +70,12 @@
                 setFormReset("")
              }
         }else{
-            let moduleData = _.cloneDeep(getModuleByName.value(props.config._module))
-            console.log('mounted',moduleData)
-            if(_.isEmpty(moduleData.fields))
+            // let moduleData = _.cloneDeep(getModuleByName.value(props.config._module))
+            if(_.isEmpty(getModuleByName.value(props.config._module).fields))
                 await fetchModuleFields(props.config._module)
-            if(_.isEmpty(moduleData.panels))
+            if(_.isEmpty(getModuleByName.value(props.config._module).panels))
                 await fetchModulePanels(props.config._module)
+            let moduleData = _.cloneDeep(getModuleByName.value(props.config._module))
             formData.value.fields = moduleData.fields 
             formData.value.panels = moduleData.panels
             // let listNames = getPicklistFields(formData.value.fields)
