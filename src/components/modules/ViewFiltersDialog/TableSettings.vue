@@ -55,6 +55,7 @@ const props = defineProps({
   selectedViewFilter: String,
   saveTrigger: Number
 })
+const emit = defineEmits(['save-viewfilter'])
 
 // actions
 const saveTableSettings = handleSubmit(async values => {
@@ -68,7 +69,8 @@ const saveTableSettings = handleSubmit(async values => {
     type: 'table',
     data: values
   })
-  await addViewFilter(payload) // store save/update
+  const res = await addViewFilter(payload) // store save/update
+  emit('save-viewfilter', res.viewFilter)
 
   viewFiltersDialogLoading.value = false
   viewFiltersDialog.value = false

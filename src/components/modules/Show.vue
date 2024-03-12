@@ -145,6 +145,13 @@ const tblSettingsBtn = ref([
 ])
 
 // actions
+const savedViewilterAction = async (e) => {
+  await initialize(e)
+}
+const savedKanbanAction = async (e) => {
+  console.log(e)
+  await initialize(e)
+}
 const paginate = async (payload) => {
   datatableLoading.value = true
 
@@ -224,9 +231,9 @@ const initialize = async (vFilter) => {
 
   let _payload = Object.assign({}, {
     moduleName: getBaseModule.value.name,
-    viewFilter: selectedViewFilterId.value && selectedViewFilterId.value,
+    viewFilter: vFilter ? vFilter._id : selectedViewFilterId.value && selectedViewFilterId.value,
     page: null,
-    limit: selectedViewFilter.value && selectedViewFilter.value.pageSize,
+    limit: vFilter ? vFilter.pageSize : selectedViewFilter.value && selectedViewFilter.value.pageSize,
     reuse: true
   })
   const fetchedModule = await _fetchModule(_payload)
@@ -239,7 +246,7 @@ const initialize = async (vFilter) => {
   // console.log(getCollection.value)
 
   // pre-assignments
-  if (vFilter) viewFilter.value = __getViewFilter.value(vFilter, localModule.value)
+  if (vFilter) viewFilter.value = __getViewFilter.value(vFilter._id, localModule.value)
   else viewFilter.value = _getDefaultViewFilter.value(localModule.value)
 
   selectedViewFilter.value = viewFilter.value && viewFilter.value
@@ -312,12 +319,9 @@ onMounted(async () => {
 })
 
 watch(selectedViewFilterId, async (newVal, oldVal) => {
-  // if (newVal) viewFilter.value = __getViewFilter.value(newVal, localModule.value)
-
   if (newVal) {
-    console.log('view filter')
-    updateViewFilter() // update view filter
-    await initialize(newVal)
+    viewFilter.value = __getViewFilter.value(newVal, localModule.value)
+    await initialize(viewFilter.value)
   }
 })
 
@@ -327,26 +331,20 @@ watch(selectedFields, (newVal, oldVal) => {
 
 watch(() => getModules.value, async (newVal, oldVal) => {
   let updatedModule = getUpdatedModule(newVal)
-  if (updatedModule.meta.per_page !== selectedViewFilter.value) {
 
+  if (viewFiltersDialogMode.value !== null) {
     if (viewFiltersDialogMode.value === 'new') {
       selectedViewFilter.value = updatedModule.viewFilters[updatedModule.viewFilters.length - 1]
-      selectedViewFilterId.value = selectedViewFilter.value._id
+    } else {
+      console.log('re-initialize')
+      selectedViewFilter.value = updatedModule.viewFilters.find(filter => filter._id === selectedViewFilterId.value)
     }
-
-    viewFilter.value = __getViewFilter.value(selectedViewFilterId.value, updatedModule)
-    // await initialize(selectedViewFilterId.value)
   }
 
   // reset
   viewFiltersDialogMode.value = null
 }, {
   deep: true // watch nested array
-})
-
-watch(() => viewFiltersDialogMode.value, async (newVal, oldVal) => {
-  updateViewFilter() // update view filter
-  if (newVal === null) await initialize(selectedViewFilterId.value)
 })
 
 watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
@@ -367,7 +365,6 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
 
 <template>
   <div class="mt-3">
-    <!-- <pre>{{ getModules && getModules.find(module => module.name === 'leads').viewFilters }}</pre> -->
     <div
       v-if="moduleLoading"
       class="flex align-items-center justify-content-center"
@@ -631,7 +628,8 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
     v-if="viewFiltersDialogSwitch"
     :mode="viewFiltersDialogMode"
     :selectedViewFilter="selectedViewFilterId"
-    :module="localModule" />
+    :module="localModule"
+    @saved-viewfilter="savedViewilterAction($event)" />
 </template>
 
 <style>

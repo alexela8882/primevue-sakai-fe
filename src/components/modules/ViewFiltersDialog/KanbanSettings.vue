@@ -49,11 +49,12 @@ const props = defineProps({
   selectedViewFilter: String,
   saveTrigger: Number
 })
+const emit = defineEmits(['save-viewfilter'])
 
 // actions
 const saveKanbanSettings = handleSubmit(async values => {
   // alert(JSON.stringify(values, null, 2))
-  viewFiltersDialog.value = false
+  viewFiltersDialogLoading.value = true
 
   const payload = Object.assign({}, {
     baseModule: props.baseModule,
@@ -61,7 +62,8 @@ const saveKanbanSettings = handleSubmit(async values => {
     type: 'kanban',
     data: values
   })
-  await addViewFilter(payload) // store save
+  const res = await addViewFilter(payload) // store save
+  emit('save-viewfilter', res.viewFilter)
 
   viewFiltersDialogLoading.value = false
   viewFiltersDialog.value = false
