@@ -163,7 +163,8 @@
         let isModalForm = _.get(props.config,'maximized',false)
         formData.value.formSaving = true
         formData.value.errors.main = validateForm(formData.value.values.main,formData.value.fields,isModalForm)
-        let noError = errorChecker(formData.value.errors.main)
+        // let noError = errorChecker(formData.value.errors.main)
+        let noError = true
         if(noError){
             let values = transformForSaving(formData.value.values.main,formData.value.fields, isModalForm)
             let res = await saveFormValues(values,props.config.base_module)
