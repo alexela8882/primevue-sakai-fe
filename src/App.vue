@@ -60,6 +60,8 @@ onMounted(async () => {
       <div class="fw-dialog-content"></div>
     </template>
   </GlobalDialog>
+
+  <el-backtop :right="10" :bottom="10" />
 </template>
 
 <style>
@@ -74,6 +76,14 @@ onMounted(async () => {
   background-color: rgba(155, 155, 155, 0.5);
   border-radius: 20px;
   border: transparent;
+}
+
+.el-backtop {
+  background-color: var(--primary-600) !important;
+}
+
+.el-backtop .el-icon {
+  color: var(--surface-100);
 }
 
 </style>
