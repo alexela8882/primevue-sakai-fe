@@ -515,12 +515,12 @@ const { getAuthUser} = storeToRefs(baseStore)
   function controllingFieldChecker(field, fields, entity){
     let contolledFields = []
     let result = {'visible_if':[],'hide_if':[],'set_val_if':[],'set_val_disable_if':[],'filtered_by':[]}
+
     _.forEach(fields, function(f){
         let tokens = []
-        console.log(f.name)
+
         if(_.has(f.rules,'visible_if')){
             tokens = pullAllFieldsInExpression(f.rules.visible_if)
-            console.log('visible_if',tokens)
             _.forEach(tokens, function(t){
                 let e = extractEntityinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
                 let theField = extractFieldinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
@@ -538,7 +538,6 @@ const { getAuthUser} = storeToRefs(baseStore)
         }
         if(_.has(f.rules,'hide_if')){
             tokens = pullAllFieldsInExpression(f.rules.hide_if)
-            console.log('hide_if',tokens)
             _.forEach(tokens, function(t){
                 let e = extractEntityinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
                 let theField = extractFieldinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
@@ -555,43 +554,60 @@ const { getAuthUser} = storeToRefs(baseStore)
         }
         if(_.has(f.rules,'set_val_if')){
             tokens = pullAllFieldsInExpression(f.rules.set_val_if.expression)
-            console.log('set_val_if',tokens)
             _.forEach(tokens, function(t){
                 let e = extractEntityinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
                 let theField = extractFieldinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
                 if(e){
                     if(theField==field.name && entity==e && !_.includes(contolledFields,f.name)){
                         contolledFields.push(f.name)
-                        result.set_val_if.push({'field':f._id,'expression':f.rules.set_val_if.expression,'value':f.rules.set_val_if.value})
+                        result.set_val_if.push({'field':f._id,'fieldName':f.name,'expression':f.rules.set_val_if.expression,'value':f.rules.set_val_if.value})
                     }
                 }else if(theField==field.name && !_.includes(contolledFields,f.name)){
                     contolledFields.push(f.name)
-                    result.set_val_if.push({'field':f._id,'expression':f.rules.set_val_if.expression,'value':f.rules.set_val_if.value})
+                    result.set_val_if.push({'field':f._id,'fieldName':f.name,'expression':f.rules.set_val_if.expression,'value':f.rules.set_val_if.value})
                 }
             })
         }
         if(_.has(f.rules,'set_val_disable_if')){
             tokens = pullAllFieldsInExpression(f.rules.set_val_disable_if.expression)
-            console.log('set_val_disable_if',tokens)
             _.forEach(tokens, function(t){
                 let e = extractEntityinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
                 let theField = extractFieldinExpressionFormat(_.chain(t).trimStart('{').trimEnd('}').value())
                 if(e){
                     if(theField==field.name && entity==e && !_.includes(contolledFields,f.name)){
                         contolledFields.push(f.name)
-                        result.set_val_disable_if.push({'field':f._id,'expression':f.rules.set_val_disable_if.expression,'value':f.rules.set_val_disable_if.value})
+                        result.set_val_disable_if.push({'field':f._id,'fieldName':f.name,'expression':f.rules.set_val_disable_if.expression,'value':f.rules.set_val_disable_if.value})
                     }
                 }else if(theField==field.name && !_.includes(contolledFields,f.name)){
                     contolledFields.push(f.name)
-                    result.set_val_disable_if.push({'field':f._id,'expression':f.rules.set_val_disable_if.expression,'value':f.rules.set_val_disable_if.value})
+                    result.set_val_disable_if.push({'field':f._id,'fieldName':f.name,'expression':f.rules.set_val_disable_if.expression,'value':f.rules.set_val_disable_if.value})
                 }
             })
         }
         if(_.has(f.rules,'filtered_by')){
+            if(f.rules.filtered_by==field.name){
+                if(!_.includes(result.filtered_by,f.name)){
+                    result.filtered_by.push(f.name)
+                }
+            }
            
         }
         if(_.has(f,'filterQuery')){
-           
+            var filter = f.filterQuery;
+            var query = filter.match(/(\%[a-zA-Z0-9_\:\.\#]*\%)/gi);
+            _.forEach(query, function(q){
+                var val = _.trim(q,'%')
+                var fieldName = extractFieldinExpressionFormat(val)
+                var entityName = extractEntityinExpressionFormat(val)
+                if(_.isEmpty(entityName)){
+                    entityName = entity
+                }
+                if(fieldName==field.name && entityName==entity){
+                    if(!_.includes(result.filtered_by,f.name)){
+                        result.filtered_by.push(f.name)
+                    }
+                }
+            })
         }
        
     })
@@ -653,35 +669,11 @@ const { getAuthUser} = storeToRefs(baseStore)
     return _.uniq(disabledFields)
   }
 
-  function checkDisableRule(fields,values,entityName,formPage){
-    let hiddenFields = _.cloneDeep(fieldsHidden)
-    if(!_.isEmpty(rules.visible_if)){
-        _.forEach(rules.visible_if,function(r){
-            let result = parseExpression(r.expression,entityName,values)
-            if(result.value == false){
-              hiddenFields.push(r.field);
-            }else if(_.includes(hiddenFields,r.field)){
-              _.pull(hiddenFields,r.field);
-            }
-        })
-    }
-    if(!_.isEmpty(rules.hide_if)){
-        _.forEach(rules.hide_if,function(r){
-            let result = parseExpression(r.expression,entityName,values)
-            if(result.value == true){
-                hiddenFields.push(r.field);
-              }else if(_.includes(hiddenFields,r.field)){
-                _.pull(hiddenFields,r.field);
-              }
-        })
-    }
-    return hiddenFields
-  }
 
-  function checkSetValRule(fields,values,entityName){
+  function checkSetValRule(data,values,entityName){
     let value = {}
-    if(_.isArray(fields)){
-        _.forEach(fields, function(field){
+    if(_.isArray(data)){
+        _.forEach(data, function(field){
             if(_.has(field.rules,'set_val_if')){
                 let result = parseExpression(field.rules.set_val_if.expression,entityName,values)
                 if(result.value == true){
@@ -696,17 +688,25 @@ const { getAuthUser} = storeToRefs(baseStore)
             }
         })
     }else{
-        if(_.has(fields.rules,'set_val_if')){
-            let result = parseExpression(field.rules.set_val_if.expression,entityName,values)
-            if(result.value == true){
-                value[field.name] = field.rules.set_val_if.value
-            }
+        value = {'values':{}, 'disabled':[],'removeDisabled':[]}
+        if(!_.isEmpty(data.set_val_if)){
+            _.forEach(data.set_val_if,function(r){
+                let result = parseExpression(r.expression,entityName,values)
+                if(result.value == true){
+                  value.values[r.fieldName] = r.value
+                }
+            })
         }
-        if(_.get(fields,'rules.set_val_disable_if','')){
-            let result = parseExpression(field.rules.set_val_disable_if.expression,entityName,values)
-            if(result.value == true){
-                value[field.name] = field.rules.set_val_disable_if.value
-            }
+        if(!_.isEmpty(data.set_val_disable_if)){
+            _.forEach(data.set_val_disable_if,function(r){
+                let result = parseExpression(r.expression,entityName,values)
+                if(result.value == true){
+                    value.values[r.fieldName] = r.value
+                    value.disabled.push(r.field)
+                }else{
+                    value.removeDisabled.push(r.field)
+                }
+            })
         }
     }
 
@@ -732,7 +732,6 @@ const { getAuthUser} = storeToRefs(baseStore)
     controllingFieldChecker,
     parseHiddenFields,
     getAllDisabledFields,
-    checkSetValRule,
-    checkDisableRule
+    checkSetValRule
   };
 }
