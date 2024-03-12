@@ -94,13 +94,13 @@ const fetchData = async() =>{
     fetching.value = true
     // Cancel the previous request if it exists
     if (cancelToken) {
-    cancelToken.cancel('Previous search canceled');
+        cancelToken.cancel('Previous search canceled');
     }
 
-    // Create a new cancel token
+    // // Create a new cancel token
     cancelToken = axios.CancelToken.source();
     try {
-        let params = {"fieldId":props.field.uniqueName,"page":page.value,"moduleName":props.module,"search":searchText.value,"cancelToken":cancelToken}
+        let params = {"fieldId":props.field.uniqueName,"page":page.value,"moduleName":props.module,"search":searchText.value}
         let err = []
         if(!_.isEmpty(filters.value)){
             
@@ -114,7 +114,12 @@ const fetchData = async() =>{
             })
         }
         if(_.isEmpty(err)){
-            let records = await fetchLookupPaginated(params)
+            let records = await fetchLookupPaginated(params,cancelToken)
+            // const res = await axios(`/lookup`, {
+            //     method: 'POST',
+            //     params: params,
+            //     headers: { 'Content-Type': 'application/json' }
+            // })
             items.value = formatLookupOptions(records.data, [], props.field)
             pagination.value = _.cloneDeep(_.get(records,'meta.pagination',{}))
         }else{
@@ -265,7 +270,7 @@ const form = inject('form')
 }
 .lookupField .selectedValue{
     position: absolute;
-    z-index: 2;
+    z-index: 1;
     
     background: white;
     top: 5px;
