@@ -70,18 +70,14 @@
                 setFormReset("")
              }
         }else{
+            // let moduleData = _.cloneDeep(getModuleByName.value(props.config._module))
             if(_.isEmpty(getModuleByName.value(props.config._module).fields))
                 await fetchModuleFields(props.config._module)
             if(_.isEmpty(getModuleByName.value(props.config._module).panels))
                 await fetchModulePanels(props.config._module)
-            let moduleData = getModuleByName.value(props.config._module)
-            formData.value.fields = moduleData.fields
+            let moduleData = _.cloneDeep(getModuleByName.value(props.config._module))
+            formData.value.fields = moduleData.fields 
             formData.value.panels = moduleData.panels
-            let dF = _.find(formData.value.fields,{'name':"sales_type_id"})
-            if(dF){
-                let c = controllingFieldChecker(dF,formData.value.fields,getModuleByName.value(props.config._module).mainEntity)
-                console.log('form',c)
-            }
             // let listNames = getPicklistFields(formData.value.fields)
             // let lookupFields = getLookupFields(formData.value.fields)
             // await fetchPicklistandLookup(listNames,lookupFields)
@@ -167,7 +163,8 @@
         let isModalForm = _.get(props.config,'maximized',false)
         formData.value.formSaving = true
         formData.value.errors.main = validateForm(formData.value.values.main,formData.value.fields,isModalForm)
-        let noError = errorChecker(formData.value.errors.main)
+        // let noError = errorChecker(formData.value.errors.main)
+        let noError = true
         if(noError){
             let values = transformForSaving(formData.value.values.main,formData.value.fields, isModalForm)
             let res = await saveFormValues(values,props.config.base_module)

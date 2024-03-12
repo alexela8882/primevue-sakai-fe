@@ -115,7 +115,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
     //   }
     // }
 
-    const fetchLookupPaginated = async (params) => {
+    const fetchLookupPaginated = async (params,cancelToken) => {
       // let cancelToken = null; // Variable to store the cancel token
       // // Cancel the previous request if it exists
       // if (cancelToken) {
@@ -131,6 +131,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
           method: 'POST',
           // params: { "_page": payload.page,"field-name": payload.fieldId, "search": payload.search }, //db3
           params: params,
+          cancelToken: cancelToken.token,
           headers: { 'Content-Type': 'application/json' }
         })
         // const res = await axios(`${jsonDbUrl.value}/lookupPaginated?_page=${payload.page}&field-name=${payload.fieldId}`, {
@@ -151,7 +152,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         //   }
         // }
         console.log(res)
-        return res.data.values
+        return (_.has(res.data,'values')) ? res.data.values : res.data
         // return {'values':res.data[0]['data'],'field':payload.fieldId,'meta':meta};
       } catch (error) {
         // if (axios.isCancel(error)) {
@@ -193,6 +194,16 @@ export const useFormDataStore = defineStore('formDataStore', () => {
       }
     }
 
+    const saveQuickAdd = async (values,module) =>{
+      try {
+        const response = await axios.post(`/quickadd/${module.mainEntity}`,values);
+        return response
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
     return {
         forms,
         picklist,
@@ -211,6 +222,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         setFormReset,
         saveFormValues,
         fetchEntityFields,
-        massUpdateRecords
+        massUpdateRecords,
+        saveQuickAdd
     }
 })
