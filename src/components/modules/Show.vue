@@ -474,6 +474,7 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
                           :key="item._id"
                           :label="item.label"
                           :value="item._id"
+                          :disabled="(selectedSearchKeyIds.length >= 3) && !selectedSearchKeyIds.includes(item._id)"
                         />
                       </el-select>
                     </template>
