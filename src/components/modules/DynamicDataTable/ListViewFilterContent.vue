@@ -1,8 +1,12 @@
 <script setup>
 // imports
 import { onMounted, ref } from 'vue'
+import { storeToRefs } from 'pinia'
+// stores
+import { useFormDataStore } from '@/stores/forms'
 
 // refs
+const localPickListLoading = ref(false)
 const filterByOwnerOverlay = ref(false)
 const filterByOwnerOverlay2 = ref(false)
 const filterByOwner = ref({
@@ -11,6 +15,10 @@ const filterByOwner = ref({
   fields: { mode: 'new', field: null, operator: null, value: null },
   default: { field: null, operator: null, value: null }
 })
+// stores
+const formDataStore = useFormDataStore()
+const { getPicklist } = storeToRefs(formDataStore)
+const { fetchPicklist } = formDataStore
 
 // defines
 const props = defineProps({
@@ -46,8 +54,14 @@ const filterByOwnerOverlayAction = () => {
 }
 
 // lifecycles
-onMounted(() => {
+onMounted(async () => {
   filterByOwner.value.name = `All ${props.baseModule.name}`
+
+  if (Object.keys(getPicklist.value).length === 0) {
+    localPickListLoading.value = true
+    await fetchPicklist('filter_operators')
+    localPickListLoading.value = false
+  }
 })
 
 </script>
@@ -89,16 +103,12 @@ onMounted(() => {
         <div class="text-xl text-color-secondary">Filter by Owner</div>
         <div class="flex flex-column gap-3">
           <div class="flex align-items-center">
-            <RadioButton v-model="filterByOwner.name" :inputId="`All ${baseModule.name}`" :value="`All ${baseModule.name}`" />
+            <RadioButton v-model="filterByOwner.name" :inputId="`All ${baseModule.name}`" :value="`all ${baseModule.name}`" />
             <label :for="`All ${baseModule.name}`" class="ml-2">All {{ baseModule.name }}</label>
           </div>
           <div class="flex align-items-center">
-            <RadioButton v-model="filterByOwner.name" :inputId="`My ${baseModule.name}`" :value="`My ${baseModule.name}`" />
+            <RadioButton v-model="filterByOwner.name" :inputId="`My ${baseModule.name}`" :value="`owned ${baseModule.name}`" />
             <label :for="`My ${baseModule.name}`" class="ml-2">My {{ baseModule.name }}</label>
-          </div>
-          <div class="flex align-items-center">
-            <RadioButton v-model="filterByOwner.name" :inputId="`My team's ${baseModule.name}`" :value="`My team's ${baseModule.name}`" />
-            <label :for="`My team's ${baseModule.name}`" class="ml-2">My team's {{ baseModule.name }}</label>
           </div>
           <div class="flex align-items-center justify-content-end">
             <Button @click="filterByOwnerOverlay = false" label="DONE" outlined size="large"></Button>
@@ -118,35 +128,50 @@ onMounted(() => {
             :options="module.fields"
             optionLabel="label"
             placeholder="Select a field"
-            class="w-full" />
+            class="w-full"
+            filter />
 
           <Dropdown
             v-model="filterByOwner.fields.operator"
-            :options="[
-              { label: 'equals', value: '=' },
-              { label: 'greater than', value: '>' },
-              { label: 'less than', value: '<' },
-              { label: 'contains', value: 'contains' },
-              { label: 'not contains', value: 'not_contains' }]"
+            :options="getPicklist.filter_operators && getPicklist.filter_operators.values"
             optionLabel="label"
+            optionValue="value"
             placeholder="Select an operator"
             class="w-full" />
 
-          <inputText v-model="filterByOwner.fields.value" />
+          <Checkbox
+            v-if="filterByOwner.fields.field && filterByOwner.fields.field.field_type.name === 'boolean'"
+            v-model="filterByOwner.fields.value"
+            binary variant="filled" />
+
+          <Calendar
+            v-else-if="filterByOwner.fields.field && filterByOwner.fields.field.field_type.name === 'date'"
+            v-model="filterByOwner.fields.value" />
+
+          <MultiSelect
+            v-else-if="filterByOwner.fields.field && (filterByOwner.fields.field.field_type.name === 'lookupModel' || filterByOwner.fields.field.field_type.name === 'picklist')"
+            v-model="filterByOwner.fields.value"
+            :options="cities"
+            optionLabel="name"
+            placeholder="Select Cities"
+            :maxSelectedLabels="3"
+            class="w-full md:w-20rem" />
+
+          <inputText v-else v-model="filterByOwner.fields.value" />
         </div>
         <div class="flex justify-content-end gap-2">
           <Button @click="filterByOwnerOverlay2 = false" outlined label="Cancel" severity="secondary" size="large" />
           <Button
             v-if="filterByOwner.fields.mode === 'new'"
             @click="saveFilterByOwner"
-            :disabled="!filterByOwner.fields.field || !filterByOwner.fields.operator || !filterByOwner.fields.value"
+            :disabled="!filterByOwner.fields.field || !filterByOwner.fields.operator"
             outlined
             label="Done"
             size="large" />
           <Button
             v-else
             @click="updateFilterByOwner(filterByOwner.fields)"
-            :disabled="!filterByOwner.fields.field || !filterByOwner.fields.operator || !filterByOwner.fields.value"
+            :disabled="!filterByOwner.fields.field || !filterByOwner.fields.operator"
             outlined
             label="Update"
             size="large" />
