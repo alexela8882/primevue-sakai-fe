@@ -267,8 +267,24 @@ onMounted(async () => {
 })
 
 onClickOutside(listViewFilterRef, (event) => {
-  if (event.target && event.target.attributes.class.value !== 'p-dropdown-item') {
-    emit('toggle-sidebar', false)
+  console.log(event.target && event.target.attributes.class.value)
+  if (event.target) {
+    if (
+      event.target.attributes.class &&
+      (
+        event.target.attributes.class.value === 'p-dropdown-item' ||
+        event.target.attributes.class.value === 'p-dropdown-filter p-inputtext p-component'
+      ) ||
+      (
+        event.target.attributes['data-pc-section'] &&
+        (
+          event.target.attributes['data-pc-section'].value === 'item' ||
+          event.target.attributes['data-pc-section'].value === 'daylabel'
+        )
+      )
+    ) {
+      return // prevent to push through
+    } else emit('toggle-sidebar', false)
   }
 })
 

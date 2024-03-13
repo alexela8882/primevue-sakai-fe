@@ -583,6 +583,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     const finalObject = Object.assign({}, {
       ...data,
       updateType: payload.type,
+      module_id: payload.baseModule._id,
       moduleName: payload.baseModule.name
     })
 
