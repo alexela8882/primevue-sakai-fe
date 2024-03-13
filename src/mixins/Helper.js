@@ -4,14 +4,17 @@ import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia'
 import { useFormDataStore } from '../stores/forms'
 import { useBaseStore } from '../stores/base'
+import { useModuleStore } from '../stores/modules'
 import parsify from '@/mixins/Parsify';
 export default function helper() {
 
 const formDataStore = useFormDataStore()
 const baseStore = useBaseStore()
+const moduleStore = useModuleStore()
 const { parseExpression,tokenize,pullAllFieldsInExpression } = parsify()
 const { getPicklist} = storeToRefs(formDataStore)
 const { getAuthUser} = storeToRefs(baseStore)
+const { getModules } = storeToRefs(moduleStore)
 
   function getPicklistFields(fields){
     return _.reduce(fields, function(r,v,i){
@@ -108,6 +111,28 @@ const { getAuthUser} = storeToRefs(baseStore)
             return result
     }
     
+  }
+
+  function transformLookupDisplay(value,field){
+    let fieldGlue = _.get(field,'fieldGlue',' ')
+    let displayFieldName = _.get(field, 'relation.displayFieldName',[])
+    let transformed = {'label':'','link':''}
+    let module = _.find(getModules.value, {'mainEntity':field.relation.entity.name})
+    let link = null;
+    if(module){
+        link = '/#/modules/page/' + module.name + '/' + module._id + '/detail-page/'
+    }
+    if(!_.isArray(value)){
+        transformed['label'] = _.join(_.values(_.pick(value,displayFieldName)), fieldGlue)
+        transformed['link'] = (link) ? link + value._id : null
+    }else{
+        _.forEach(value, function(val){
+            let valueLink = (link) ? link + val._id : null
+            transformed.push({'label': _.join(_.values(_.pick(val,displayFieldName)), fieldGlue),'link': valueLink})
+        })
+    }
+    return transformed
+
   }
 
   function transformFormValues(fields,values,formPage){
@@ -733,6 +758,7 @@ const { getAuthUser} = storeToRefs(baseStore)
     controllingFieldChecker,
     parseHiddenFields,
     getAllDisabledFields,
-    checkSetValRule
+    checkSetValRule,
+    transformLookupDisplay
   };
 }

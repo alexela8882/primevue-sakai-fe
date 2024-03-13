@@ -1009,7 +1009,7 @@
     <h6 class="mb-0" v-if="panel.sections[0].label">{{ panel.sections[0].label }}</h6>
     <el-popover placement="bottom-start" :width="880" trigger="click" @hide="addProductsToTable">
       <template #reference>
-        <el-button style="margin-right: 16px">Add Products</el-button>
+        <el-button style="margin-right: 16px" :disabled="form.formSaving">Add Products</el-button>
       </template>
       <el-table :data="tempProducts" border stripe height="250" size="small" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="30" />
