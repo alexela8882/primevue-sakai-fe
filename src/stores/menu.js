@@ -140,7 +140,10 @@ export const useMenuStore = defineStore('menuStore', () => {
   // actions
   const fetchMenu = async () => {
     menuLoading.value = true
-    const res = await axios(`${jsonDbUrl.value}/menu`, {
+
+    const jsonUri = `${jsonDbUrl.value}/menu`
+    const beUri = '/modules/menu'
+    const res = await axios(beUri, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
