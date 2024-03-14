@@ -30,6 +30,7 @@ const templatesLoading = ref(true)
 const fetchingCurrentTemplate = ref(false)
 const pageContent = ref({'headerPanel':[],'bodyPanel':[],'footerPanel':[]})
 
+
 onMounted(async() => {
     await fetchQuoteTemplates()
     await fetchQuoteTemplatesInfo(getItem.value.data._id)
@@ -68,8 +69,8 @@ const pdfLoaded = () =>{
 }
 
 const transformQuoteTemplate = async() =>{
-    let body = _.get(getCurrentTemplate.value,'pages.0.bodyPanel',[])
-   
+
+    let cur = _.get(getItem.value.data,'currency_id.code','')
     _.forEach(getCurrentTemplate.value.pages[0], function(panels,pageSection){
         let panel = []
         _.forEach(panels, function(p,panelIndex){
@@ -77,6 +78,7 @@ const transformQuoteTemplate = async() =>{
             _.forEach(p.sections, function(sec, secIndex){
                 let elements = []
                 _.forEach(sec.elements, function(el, elIndex){
+
                     if(el.elemType=='field'){
                         let field = {}
                         let values = {}
@@ -91,6 +93,7 @@ const transformQuoteTemplate = async() =>{
                             field = _.find(getModuleByName.value('salesquotes').fields,{'_id':el.value.source})
                             values = _.cloneDeep(getItem.value.data)
                         }
+
                         if(field){
                             if(!_.isEmpty(_.get(values,field.name,'')) && !_.isNull(_.get(values,field.name,''))){
                                 if(field.field_type.name=='lookupModel'){
@@ -99,6 +102,15 @@ const transformQuoteTemplate = async() =>{
                                 }else{
                                     elements.push({'elemType':el.elemType,'fieldType':field.field_type.name,'label':el.label.value,'value': values[field.name]})
                                 }
+                            }else if(_.includes(['percentage','number','currency','formula','rollUpSummary'],field.field_type.name)){
+                                let numberVal = (_.isString(values[field.name])) ? _.toNumber(values[field.name]) : ((_.isNumber(values[field.name])) ? values[field.name] : 0)
+                                if(field.field_type.name=='percentage') {
+                                    let tmp =  numberVal * 100
+                                    numberVal = tmp+"%"
+                                }else{
+                                    numberVal =  ((field.field_type.name=='currency' || _.get(field,'formulaType','')=='currency') && cur) ? cur + " " + transformNumberCurrency(numberVal,field.rules,true) : transformNumberCurrency(numberVal,field.rules,true)
+                                }
+                                elements.push({'elemType':el.elemType,'fieldType':field.field_type.name,'label':el.label.value,'value': numberVal})
                             }
                         }
                     }else if(el.elemType=='groupField'){
@@ -136,12 +148,13 @@ const transformQuoteTemplate = async() =>{
                                 if(field.field_type.name=='lookupModel'){
                                     fields.push({'name':field.name,'field':field,'label':f.label,'width':f.width,'displayFieldName':f.displayFieldName[0]})
                                 }else{
-                                    fields.push({'name':field.name,'field':field,'label':f.label,'width':f.width,'displayFieldName':field.name})
+                                    
+                                    let label = ((field.field_type.name=='currency' || _.get(field,'formulaType','')=='currency') && cur) ? f.label + " ("+cur+")" : f.label
+                                    fields.push({'name':field.name,'field':field,'label':label,'width':f.width,'displayFieldName':field.name})
                                 }
                                 
                             }
                         })
-                        
 
                         let values = _.find(_getRelatedLists.value,{'cname':'salesopptitem-panel-2'})
                         let products = _.cloneDeep(getQuoteInfo.value['Product'].collection)
@@ -157,28 +170,18 @@ const transformQuoteTemplate = async() =>{
                                             tmpRow[f.displayFieldName] = prod[f.displayFieldName]
                                         }
                                     }else if(_.includes(['percentage','number','currency','formula','rollUpSummary'],f.field.field_type.name)){
-                                        if(_.isNumber(item[f.name])){
-                                            if(f.field.field_type.name=='percentage') {
-                                                let tmp =  item[f.name] * 100
-                                                tmpRow[f.name] = tmp+"%"
-                                            }else{
-                                                tmpRow[f.name] =  transformNumberCurrency(item[f.name],f.rules,true)
-                                            }
-                                        }else if(_.isString(item[f.name])){
-                                            if(f.field.field_type.name=='percentage') {
-                                                let tmp =  _.toNumber(item[f.name]) * 100
-                                                tmpRow[f.name] = tmp+"%"
-                                            }else{
-                                                tmpRow[f.name] =  transformNumberCurrency(_.toNumber(item[f.name]),f.rules,true)
-                                            }
+                                        tmpRow[f.name] = (_.isString(item[f.name])) ? _.toNumber(item[f.name]) : ((_.isNumber(item[f.name])) ? item[f.name] : 0)
+                                       
+                                        if(f.field.field_type.name=='percentage') {
+                                            let tmp =  tmpRow[f.name] * 100
+                                            tmpRow[f.name] = tmp+"%"
                                         }else{
-                                            tmpRow[f.name] = 0
+                                            tmpRow[f.name] =  transformNumberCurrency(tmpRow[f.name],f.field.rules,true)
                                         }
                                     }else{
                                         tmpRow[f.name] = item[f.name]
                                     }
                                 })
-                                console.log(tmpRow)
                                 opptItems.push(tmpRow)
                             })
                         }
