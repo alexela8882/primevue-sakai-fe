@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import { onMounted, ref, watch, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from "primevue/usetoast"
+import helper from '@/mixins/Helper';
 // components
 import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
 const MailboxThreads = defineAsyncComponent(() =>
@@ -15,6 +16,7 @@ const ServicesTab = defineAsyncComponent(() => import('@/components/modules/Page
 const RelatedListPanel = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/RelatedListPanel.vue'))
 const SectionFields = defineAsyncComponent(() => import('@/components/modules/Page/SectionFields.vue'))
 const UploadFileContent = defineAsyncComponent(() => import('@/components/modules/Files/UploadFileContent.vue'))
+const QuotePDFPreview = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/QuotePDFPreview.vue'))
 // loaders
 import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
 import SimpleLoader from '@/components/loading/Simple2.vue'
@@ -65,6 +67,7 @@ const { fileLoading, fileDialogSwitch, fileDialog, getFiles, getModuleFiles } = 
 const { addModuleFiles } = moduleFileStore
 const { addTab, toggleWindows} = tabStore
 const { getTabs } = storeToRefs(tabStore)
+const { transformLookupDisplay, checkFieldIfMultipleSelect } = helper();
 // presets
 const bcrumbs = ref([
   {
@@ -274,7 +277,19 @@ onMounted(async() => {
           <div v-for="(field, fx) in localModule.fields" :key="fx">
             <div v-if="field.header" class="flex flex-column text-md mx-4">
               <div>{{ field.label }}</div>
-              <div class="font-bold text-md">{{ getItemValueByName(field.name) ? getItemValueByName(field.name) : null }}</div>
+              <div v-if="getItemValueByName(field.name)" class="font-bold text-md">
+                <template v-if="field.field_type.name=='lookupModel'">
+                  <template v-if="checkFieldIfMultipleSelect(field.rules)">
+                    <a v-for="val in getItemValueByName(field.name)" :key="val._id" :href="transformLookupDisplay(val,field).link" target="_blank">{{ transformLookupDisplay(val,field).label }}</a>
+                  </template>
+                  <template v-else>
+                    <a :href="transformLookupDisplay(getItemValueByName(field.name),field).link" target="_blank">{{ transformLookupDisplay(getItemValueByName(field.name),field).label }}</a>
+                  </template>
+                </template>
+                <template v-else>
+                  {{ getItemValueByName(field.name) }}
+                </template>
+              </div>
             </div>
           </div>
         </div>
@@ -400,6 +415,9 @@ onMounted(async() => {
                 <div>
                   <MailboxThreads :threads="linkedInquiryModule.conversations.slice().reverse()" />
                 </div>
+              </TabPanel>
+              <TabPanel v-if="localBaseModule && localBaseModule.name === 'salesquotes'" header="Quote PDF">
+                <QuotePDFPreview/>
               </TabPanel>
             </TabView>
           </div>

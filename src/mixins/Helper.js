@@ -4,14 +4,17 @@ import dayjs from 'dayjs';
 import { storeToRefs } from 'pinia'
 import { useFormDataStore } from '../stores/forms'
 import { useBaseStore } from '../stores/base'
+import { useModuleStore } from '../stores/modules'
 import parsify from '@/mixins/Parsify';
 export default function helper() {
 
 const formDataStore = useFormDataStore()
 const baseStore = useBaseStore()
+const moduleStore = useModuleStore()
 const { parseExpression,tokenize,pullAllFieldsInExpression } = parsify()
 const { getPicklist} = storeToRefs(formDataStore)
 const { getAuthUser} = storeToRefs(baseStore)
+const { getModules } = storeToRefs(moduleStore)
 
   function getPicklistFields(fields){
     return _.reduce(fields, function(r,v,i){
@@ -110,6 +113,43 @@ const { getAuthUser} = storeToRefs(baseStore)
     
   }
 
+  function transformLookupDisplay(value,field){
+    let fieldGlue = _.get(field,'fieldGlue',' ')
+    let displayFieldName = _.get(field, 'relation.displayFieldName',[])
+    let transformed = null
+    let module = _.find(getModules.value, {'mainEntity':field.relation.entity.name})
+    let link = null;
+    if(module){
+        link = '/#/modules/page/' + module.name + '/' + module._id + '/detail-page/'
+    }
+    if(!_.isArray(value)){
+        transformed = {'label':'','link':''}
+        if(!_.isNull(value) && !_.isEmpty(value)){
+            transformed['label'] = _.join(_.values(_.pick(value,displayFieldName)), fieldGlue)
+            transformed['link'] = (link) ? link + value._id : null
+        }
+    }else{
+        transformed = []
+        if(!_.isNull(value) && !_.isEmpty(value)){
+            _.forEach(value, function(val){
+                let valueLink = (link) ? link + val._id : null
+                transformed.push({'label': _.join(_.values(_.pick(val,displayFieldName)), fieldGlue),'link': valueLink})
+            })
+        }
+    }
+    return transformed
+
+  }
+
+  function checkIfHasModule(field){
+    let module = _.find(getModules.value, {'mainEntity':field.relation.entity.name})
+
+    if(module)
+        return (!_.includes(['users','employees'],module.name)) ? true : false
+    else
+        return false
+  }
+  
   function transformFormValues(fields,values,formPage){
     let formValues = {} 
 
@@ -165,16 +205,16 @@ const { getAuthUser} = storeToRefs(baseStore)
                 }else{
                     res[val.name] =  transformNumberCurrency(values[val.name],val.rules,displayValue)
                 }
-              }else if(_.isString(values[val.name])){
+            }else if(_.isString(values[val.name])){
                 if(val.field_type.name=='percentage') {
                     let tmp =  _.toNumber(values[val.name]) * 100
                     res[val.name] = (displayValue) ? tmp+"%" : tmp
                 }else{
                     res[val.name] =  transformNumberCurrency(_.toNumber(values[val.name]),val.rules,displayValue)
                 }
-              }else{
+            }else{
                 res[val.name] = 0
-              }
+            }
         }else{
             res[val.name] = null
         }
@@ -315,7 +355,7 @@ const { getAuthUser} = storeToRefs(baseStore)
   }
 
   function checkFieldIfMultipleSelect(rules){
-    if(_.get(rules,'ms_dropdown',false) || _.get(rules,'checkbox',false) || _.get(rules,'checkbox_inline',false) || _.get(rules,'ms_list_view',false)){
+    if(_.get(rules,'ms_pop_up',false) ||  _.get(rules,'ms_dropdown',false) || _.get(rules,'checkbox',false) || _.get(rules,'checkbox_inline',false) || _.get(rules,'ms_list_view',false)){
         return true
     }
     return false
@@ -733,6 +773,8 @@ const { getAuthUser} = storeToRefs(baseStore)
     controllingFieldChecker,
     parseHiddenFields,
     getAllDisabledFields,
-    checkSetValRule
+    checkSetValRule,
+    transformLookupDisplay,
+    checkIfHasModule
   };
 }

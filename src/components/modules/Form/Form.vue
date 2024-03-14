@@ -72,7 +72,7 @@
         }else{
             // let moduleData = _.cloneDeep(getModuleByName.value(props.config._module))
             if(_.isEmpty(getModuleByName.value(props.config._module).fields))
-                await fetchModuleFields(props.config._module)
+                await fetchModuleFields(getModuleByName.value(props.config._module).mainEntity)
             if(_.isEmpty(getModuleByName.value(props.config._module).panels))
                 await fetchModulePanels(props.config._module)
             let moduleData = _.cloneDeep(getModuleByName.value(props.config._module))

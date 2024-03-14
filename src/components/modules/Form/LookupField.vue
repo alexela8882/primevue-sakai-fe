@@ -10,7 +10,6 @@ import { Search } from '@element-plus/icons-vue'
 import { useModuleStore } from '../../../stores/modules'
 const moduleStore = useModuleStore()
 const { getModules,getModuleByName } = storeToRefs(moduleStore)
-const { fetchModuleFields, fetchModulePanels} = moduleStore
 
 import { useFormDataStore } from '../../../stores/forms'
 const formDataStore = useFormDataStore()

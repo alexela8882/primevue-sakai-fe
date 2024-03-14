@@ -22,6 +22,26 @@ export const useMenuStore = defineStore('menuStore', () => {
   const menuLoading = ref(false)
 
   // getters
+  const getNewSidebarMenu = computed(() => {
+    let menuData = menu.value && menu.value.data
+    const folders = menuData && menuData.folders
+    const modules = menuData && menuData.modules
+
+    // console.log(folders)
+    // console.log(modules)
+
+    let mergedMenu = []
+    // merge
+    if (folders && modules) {
+      mergedMenu = [...folders, ...modules]
+    }
+    // sort
+    mergedMenu.sort((a, b) => a.order - b.order)
+
+    // console.log(mergedMenu)
+
+    return mergedMenu
+  })
   const getMenu = computed(() => menu.value)
   const sidebarMenu = computed(() => {
     const userAccessModules = getModulesUserCanAccess.value
@@ -39,7 +59,7 @@ export const useMenuStore = defineStore('menuStore', () => {
         items: []
       })
 
-      const finalModules = getJsonModules.value.filter(module => userAccessModules.includes(module._id))
+      const finalModules = getModules.value.filter(module => userAccessModules.includes(module._id))
 
       // get & insert modules
       if (finalModules) {
@@ -69,7 +89,7 @@ export const useMenuStore = defineStore('menuStore', () => {
 
     let menuModules = []
     // re-structure modules into menu
-    getJsonModules.value.map(module => {
+    getModules.value.map(module => {
       let newModule = Object.assign({}, {
         _id: module._id,
         label: module.label,
@@ -121,7 +141,7 @@ export const useMenuStore = defineStore('menuStore', () => {
     })
 
     // filter out matching names from modules
-    const filteredModule = getJsonModules.value.filter(module => !childItemNames.includes(module.name))
+    const filteredModule = getModules.value.filter(module => !childItemNames.includes(module.name))
 
     // merge menu & filtered modules
     Array.prototype.push.apply(menus, filteredModule)
@@ -140,14 +160,17 @@ export const useMenuStore = defineStore('menuStore', () => {
   // actions
   const fetchMenu = async () => {
     menuLoading.value = true
-    const res = await axios(`${jsonDbUrl.value}/menu`, {
+
+    const jsonUri = `${jsonDbUrl.value}/menu`
+    const beUri = '/modules/menu'
+    const res = await axios(beUri, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
       menu.value = res.data
-      // console.log(res.data)
+      console.log(res.data)
     }
     menuLoading.value = false
   }
@@ -169,6 +192,7 @@ export const useMenuStore = defineStore('menuStore', () => {
   return {
     isCollapse,
     getMenu,
+    getNewSidebarMenu,
     sidebarMenu,
     sidebarMenu2,
     menuLoading,

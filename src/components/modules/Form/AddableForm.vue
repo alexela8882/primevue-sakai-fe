@@ -61,7 +61,7 @@
     onMounted(async () => {
        
         if(_.isEmpty(getModuleByName.value(props.moduleName).fields))
-            await fetchModuleFields(props.moduleName)
+            await fetchModuleFields(getModuleByName.value(props.moduleName).mainEntity)
         if(_.isEmpty(getModuleByName.value(props.moduleName).panels))
             await fetchModulePanels(props.moduleName) 
         let moduleData = _.cloneDeep(getModuleByName.value(props.moduleName))

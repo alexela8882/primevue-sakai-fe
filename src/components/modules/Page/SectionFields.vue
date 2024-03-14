@@ -2,17 +2,24 @@
 // imports
 import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+import _ from 'lodash';
 // stores
 import { useModuleStore } from '@/stores/modules'
 import { useModuleDetailStore } from '@/stores/modules/detail'
+import helper from '@/mixins/Helper';
+
 
 // refs
 const fieldWithValues = ref([])
+const op = ref();
+const currentLookupValues = ref([]);
+const currentLookupDisplay = ref([]);
 // stores
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
 const { _getFieldDetailsById, getFieldDetailsById } = storeToRefs(moduleStore)
 const { getItemValueByName } = storeToRefs(moduleDetailStore)
+const { transformLookupDisplay, checkFieldIfMultipleSelect,checkIfHasModule } = helper();
 
 // defines
 const props = defineProps({
@@ -41,6 +48,13 @@ const fillFieldWithValues = (modelValue, id) => {
   } else fieldWithValues.value.push(obj)
 }
 
+const toggleLookupPanel = (values,field) => {
+  currentLookupValues.value = values
+  currentLookupDisplay.value = field.relation.displayFieldName
+  console.log(values)
+  op.value.toggle(event);
+}
+
 // this is for p-float-label bug fix only
 watch(() => getFieldDetailsById.value, (newVal, oldVal) => {
   console.log(newVal)
@@ -58,8 +72,28 @@ watch(() => getFieldDetailsById.value, (newVal, oldVal) => {
         <div v-if="_getFieldDetailsById({ fields: newModuleFields, _id: id })" :class="`${mode === 'view' && 'border-bottom-1 border-200'}`">
           <div v-if="mode === 'view'" class="flex align-items-start gap-4">
             <div class="white-space-nowrap">{{ _getFieldDetailsById({ fields: newModuleFields, _id: id }).label }}</div>
-            <div v-if="_getFieldDetailsById({ fields: newModuleFields, _id: id }).relation" class="flex gap-2">
-              <div v-for="(displayField, dfx) in _getFieldDetailsById({ fields: newModuleFields, _id: id }).relation.displayFieldName" :key="dfx" class="font-bold">
+            <div v-if="_getFieldDetailsById({ fields: newModuleFields, _id: id }).field_type.name=='lookupModel'">
+                  <template v-if="checkFieldIfMultipleSelect(_getFieldDetailsById({ fields: newModuleFields, _id: id }).rules)">
+                    <template v-for="(val,index) in transformLookupDisplay(getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name),_getFieldDetailsById({ fields: newModuleFields, _id: id }))" :key="index">
+                      <a v-if="checkIfHasModule(_getFieldDetailsById({ fields: newModuleFields, _id: id })) && index < 10" :href="val.link" target="_blank">
+                        <Tag rounded  class="white-space-nowrap px-3 m-1" severity="info" :value="val.label"></Tag>
+                      </a>
+                      <Tag v-else-if="index < 10" rounded class="white-space-nowrap px-3 m-1" severity="info" :value="val.label"></Tag>
+                    </template>
+                    <Tag v-if="transformLookupDisplay(getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name),_getFieldDetailsById({ fields: newModuleFields, _id: id })).length > 10"
+                      rounded class="white-space-nowrap px-3 m-1 cursor-pointer" severity="info" @click="toggleLookupPanel(getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name),_getFieldDetailsById({ fields: newModuleFields, _id: id }))" aria-haspopup="true" aria-controls="overlay_panel">
+                      + {{ transformLookupDisplay(getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name),_getFieldDetailsById({ fields: newModuleFields, _id: id })).length - 10 }}
+                    </Tag>
+                  </template>
+                  <template v-else>
+                    <a v-if="checkIfHasModule(_getFieldDetailsById({ fields: newModuleFields, _id: id }))"  :href="transformLookupDisplay(getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name),_getFieldDetailsById({ fields: newModuleFields, _id: id })).link" target="_blank">
+                        {{ transformLookupDisplay(getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name),_getFieldDetailsById({ fields: newModuleFields, _id: id })).label }}
+                    </a>
+                    <span v-else>{{ transformLookupDisplay(getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name),_getFieldDetailsById({ fields: newModuleFields, _id: id })).label }}</span>
+                  </template>
+            </div>
+            <!-- <div v-if="_getFieldDetailsById({ fields: newModuleFields, _id: id }).relation" class="flex gap-2">
+              <div  v-for="(displayField, dfx) in _getFieldDetailsById({ fields: newModuleFields, _id: id }).relation.displayFieldName" :key="dfx" class="font-bold">
                 <div v-if="getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name)">
                   <div v-if="typeof getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name) === 'object' &&
                               !Array.isArray(getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name)) &&
@@ -77,7 +111,7 @@ watch(() => getFieldDetailsById.value, (newVal, oldVal) => {
                 </div>
                 <div v-else></div>
               </div>
-            </div>
+            </div> -->
             <div v-else class="flex gap-4 font-bold">
               <div v-if="Array.isArray(getItemValueByName(_getFieldDetailsById({ fields: newModuleFields, _id: id }).name))">
                 <Tag
@@ -114,6 +148,11 @@ watch(() => getFieldDetailsById.value, (newVal, oldVal) => {
         </div>
       </div>
     </div>
+    <OverlayPanel ref="op" appendTo="body">
+      <DataTable :value="currentLookupValues" stripedRows  :paginator="true" :rows="10">
+          <Column v-for="f in currentLookupDisplay" :key="f" :field="f" :header="_.startCase(f)" sortable></Column>
+      </DataTable>
+  </OverlayPanel>
   </div>
 </template>
 

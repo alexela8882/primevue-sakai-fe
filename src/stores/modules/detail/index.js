@@ -101,6 +101,7 @@ export const useModuleDetailStore = defineStore('moduleDetailStore', () => {
   })
   const _getRelatedListsByCname = computed(() => {
     return (payload) => {
+      console.log(payload)
       const relatedList = _getRelatedLists.value.find(rl => rl.cname === payload)
       return relatedList
     }
