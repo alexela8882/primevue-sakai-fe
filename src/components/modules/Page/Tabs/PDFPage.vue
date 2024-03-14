@@ -35,7 +35,22 @@ onMounted(()=>{
                                     <template v-else-if="el.elemType=='richTextbox'">
                                         <div v-html="el.value"></div>
                                     </template>
-                                    <template v-else-if="el.elemType=='mutable'"></template>
+                                    <template v-else-if="el.elemType=='mutable'">
+                                        <table class="mutableTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Item No</th>
+                                                    <th v-for="field in el.fields" :key="field.field" :style="{'width': field.width + '%'}">{{ field.label }}</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="(item,itemIndex) in el.values" :key="itemIndex" :class="{ 'odd' : itemIndex % 2 == 1 }">
+                                                    <td>{{ itemIndex+1 }}</td>
+                                                    <td v-for="field in el.fields" :key="field.field" :style="{'text-align':((_.includes(['percentage','number'],field.fieldType)) ? 'center': ((_.includes(['formula','rollUpSummary','currency'],field.fieldType)) ? 'right' : 'left'))}"><div v-html="item[field.displayFieldName]"></div></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </template>
                                     <div class="flex flex-row" v-else>
                                         <p class="pdfLabel" :style="{'width': ((panel.sections.length == 1) ? '20' : _.get(sec,'width.firstColumn','40')) + '%'}">{{ el.label }}</p>
                                         <p class="pdfValue" :style="{'width':((panel.sections.length == 1) ? '80' : _.get(sec,'width.secondColumn','60')) + '%'}" v-html="el.value"></p>
@@ -75,5 +90,29 @@ onMounted(()=>{
 .pdfValue,.pdfLabel{
     word-wrap: break-word;
     margin-bottom: 0px;
+}
+.pdfPreview .mutableTable{
+    border-spacing: 0;
+    border-collapse: collapse;
+    font-size:11px;
+}
+.pdfPreview .mutableTable th{
+    background-color: #00467f;
+    color: #fff;
+    border:1px solid;
+    text-align: center;
+    padding:2px;
+    vertical-align: middle;
+    margin:0;
+    word-wrap: break-word;
+}
+.pdfPreview .mutableTable td{
+    word-wrap: break-word;
+    hyphens: auto;
+    border-right: 1px solid rgba(0, 0, 0, 0.30);
+    padding: 0 5px;
+}
+.pdfPreview .mutableTable .odd{
+    background-color: rgba(0, 0, 0, 0.1);
 }
 </style>

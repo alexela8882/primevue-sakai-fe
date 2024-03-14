@@ -18,11 +18,11 @@ const moduleStore = useModuleStore()
 const baseStore = useBaseStore()
 const { fetchQuoteTemplates,fetchQuoteTemplatesInfo,fetchQuoteTemplate } = quotePDF
 const { getTemplates,getCurrentTemplate,getQuoteInfo } = storeToRefs(quotePDF)
-const { getItem } = storeToRefs(moduleDetailStore)
+const { getItem, _getRelatedLists } = storeToRefs(moduleDetailStore)
 const { fetchModuleFields } = moduleStore
 const { getEntityFields,getModuleByName } = storeToRefs(moduleStore)
 const { getAuthUser } = storeToRefs(baseStore)
-const { transformLookupDisplay } = helper()
+const { transformLookupDisplay, transformNumberCurrency } = helper()
 
 
 const selectedTemplate = ref(null)
@@ -133,10 +133,57 @@ const transformQuoteTemplate = async() =>{
                         _.forEach(el.fields, function(f){
                             let field = _.find(getEntityFields.value('SalesOpptItem'),{'_id':f.fieldID})
                             if(field){
-                                fields.push({'field':field.name,'label':f.label,'width':f.width,'displayFieldName':f.displayFieldName})
+                                if(field.field_type.name=='lookupModel'){
+                                    fields.push({'name':field.name,'field':field,'label':f.label,'width':f.width,'displayFieldName':f.displayFieldName[0]})
+                                }else{
+                                    fields.push({'name':field.name,'field':field,'label':f.label,'width':f.width,'displayFieldName':field.name})
+                                }
+                                
                             }
                         })
-                        elements.push({'elemType':el.elemType,'type': el.type,'style': el.style,'fields':fields})
+                        
+
+                        let values = _.find(_getRelatedLists.value,{'cname':'salesopptitem-panel-2'})
+                        let products = _.cloneDeep(getQuoteInfo.value['Product'].collection)
+
+                        let opptItems = []
+                        if(values){
+                            _.forEach(_.get(values,'collection.data',[]),function(item){
+                                let tmpRow = {}
+                                _.forEach(fields, function(f){
+                                    if(f.name=='product_id'){
+                                        let prod = _.find(products, {'_id':item['product_id']['_id']})
+                                        if(prod){
+                                            tmpRow[f.displayFieldName] = prod[f.displayFieldName]
+                                        }
+                                    }else if(_.includes(['percentage','number','currency','formula','rollUpSummary'],f.field.field_type.name)){
+                                        if(_.isNumber(item[f.name])){
+                                            if(f.field.field_type.name=='percentage') {
+                                                let tmp =  item[f.name] * 100
+                                                tmpRow[f.name] = tmp+"%"
+                                            }else{
+                                                tmpRow[f.name] =  transformNumberCurrency(item[f.name],f.rules,true)
+                                            }
+                                        }else if(_.isString(item[f.name])){
+                                            if(f.field.field_type.name=='percentage') {
+                                                let tmp =  _.toNumber(item[f.name]) * 100
+                                                tmpRow[f.name] = tmp+"%"
+                                            }else{
+                                                tmpRow[f.name] =  transformNumberCurrency(_.toNumber(item[f.name]),f.rules,true)
+                                            }
+                                        }else{
+                                            tmpRow[f.name] = 0
+                                        }
+                                    }else{
+                                        tmpRow[f.name] = item[f.name]
+                                    }
+                                })
+                                console.log(tmpRow)
+                                opptItems.push(tmpRow)
+                            })
+                        }
+                        elements.push({'elemType':el.elemType,'type': el.type,'fields':fields,'values':opptItems})
+                        
                     }else if(el.elemType=='label'){
                         elements.push({'elemType':el.elemType,'value': el.value,'style': el.style})
                     }else if(el.elemType=='richTextbox'){
@@ -184,3 +231,11 @@ const transformQuoteTemplate = async() =>{
         </div>
     </template>
 </template>
+<style>
+.pdfPreview{
+    border-radius: 0;
+    overflow: auto;
+    height: calc(100vh - 300px);
+    background:rgb(220, 220, 220);
+}
+</style>

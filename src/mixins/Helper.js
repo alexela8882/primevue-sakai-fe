@@ -124,14 +124,18 @@ const { getModules } = storeToRefs(moduleStore)
     }
     if(!_.isArray(value)){
         transformed = {'label':'','link':''}
-        transformed['label'] = _.join(_.values(_.pick(value,displayFieldName)), fieldGlue)
-        transformed['link'] = (link) ? link + value._id : null
+        if(!_.isNull(value) && !_.isEmpty(value)){
+            transformed['label'] = _.join(_.values(_.pick(value,displayFieldName)), fieldGlue)
+            transformed['link'] = (link) ? link + value._id : null
+        }
     }else{
         transformed = []
-        _.forEach(value, function(val){
-            let valueLink = (link) ? link + val._id : null
-            transformed.push({'label': _.join(_.values(_.pick(val,displayFieldName)), fieldGlue),'link': valueLink})
-        })
+        if(!_.isNull(value) && !_.isEmpty(value)){
+            _.forEach(value, function(val){
+                let valueLink = (link) ? link + val._id : null
+                transformed.push({'label': _.join(_.values(_.pick(val,displayFieldName)), fieldGlue),'link': valueLink})
+            })
+        }
     }
     return transformed
 
@@ -201,16 +205,16 @@ const { getModules } = storeToRefs(moduleStore)
                 }else{
                     res[val.name] =  transformNumberCurrency(values[val.name],val.rules,displayValue)
                 }
-              }else if(_.isString(values[val.name])){
+            }else if(_.isString(values[val.name])){
                 if(val.field_type.name=='percentage') {
                     let tmp =  _.toNumber(values[val.name]) * 100
                     res[val.name] = (displayValue) ? tmp+"%" : tmp
                 }else{
                     res[val.name] =  transformNumberCurrency(_.toNumber(values[val.name]),val.rules,displayValue)
                 }
-              }else{
+            }else{
                 res[val.name] = 0
-              }
+            }
         }else{
             res[val.name] = null
         }
