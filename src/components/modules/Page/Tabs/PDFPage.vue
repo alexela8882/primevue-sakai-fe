@@ -45,15 +45,15 @@ onMounted(()=>{
                                             </thead>
                                             <tbody>
                                                 <tr v-for="(item,itemIndex) in el.values" :key="itemIndex" :class="{ 'odd' : itemIndex % 2 == 1 }">
-                                                    <td>{{ itemIndex+1 }}</td>
-                                                    <td v-for="field in el.fields" :key="field.field" :style="{'text-align':((_.includes(['percentage','number'],field.fieldType)) ? 'center': ((_.includes(['formula','rollUpSummary','currency'],field.fieldType)) ? 'right' : 'left'))}"><div v-html="item[field.displayFieldName]"></div></td>
+                                                    <td style="text-align:center">{{ itemIndex+1 }}</td>
+                                                    <td v-for="field in el.fields" :key="field.field" :style="{'text-align':((_.includes(['percentage','number'],field.field.field_type.name)) ? 'center': ((_.includes(['formula','rollUpSummary','currency'],field.field.field_type.name)) ? 'right' : 'left'))}"><div v-html="item[field.displayFieldName]"></div></td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </template>
                                     <div class="flex flex-row" v-else>
-                                        <p class="pdfLabel" :style="{'width': ((panel.sections.length == 1) ? '20' : _.get(sec,'width.firstColumn','40')) + '%'}">{{ el.label }}</p>
-                                        <p class="pdfValue" :style="{'width':((panel.sections.length == 1) ? '80' : _.get(sec,'width.secondColumn','60')) + '%'}" v-html="el.value"></p>
+                                        <p class="pdfLabel" :style="{'width': ((panel.sections.length == 1) ? ((_.get(sec,'width.firstColumn','40')==40) ? '20' : _.get(sec,'width.firstColumn','40')) : _.get(sec,'width.firstColumn','40')) + '%'}">{{ el.label }}</p>
+                                        <p class="pdfValue" :style="{'width':((panel.sections.length == 1) ? ((_.get(sec,'width.secondColumn','60')==60) ? '80' : _.get(sec,'width.secondColumn','60') ) : _.get(sec,'width.secondColumn','60')) + '%'}" v-html="el.value"></p>
                                     </div>
                                 </template>
                             </div>
