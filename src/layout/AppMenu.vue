@@ -30,6 +30,7 @@ onMounted(async () => {
 
 <template>
   <div>
+    <!-- <pre>{{ getMenu.data.folders }}</pre> -->
     <div v-if="menuLoading">
       <div>
         <ul class="m-0 p-0 list-none">
@@ -45,11 +46,12 @@ onMounted(async () => {
       <div @click="isCollapse = !isCollapse" class="cursor-pointer my-3 w-100 flex justify-content-center">
         <div class="material-icons text-white">menu</div>
       </div>
-      <!-- <el-menu
+      <el-menu
+        v-if="getMenu.data"
         class="custom-menu"
         :collapse="isCollapse"
         background-color="transparent">
-        <el-sub-menu v-for="(menu, mn) in sidebarMenu2" :index="`${mn}`" :key="mn">
+        <el-sub-menu v-for="(menu, mn) in getMenu.data.folders" :index="`${mn}`" :key="mn">
           <template #title>
             <div class="material-icons text-white">{{ menu.icon }}</div>
             <div v-if="!isCollapse" class="ml-3 text-white">{{ menu.label }}</div>
@@ -57,12 +59,12 @@ onMounted(async () => {
           <el-menu-item
             v-if="menu.modules && menu.modules.length > 0"
             v-for="(submodule, sm) in menu.modules"
-            @click="$router.push(`/${submodule.name}/${submodule._id}`)"
+            @click="$router.push(`/modules/${submodule.name}/${submodule._id}`)"
             :key="`${mn}${sm}`"
             :index="`${mn}${sm}`">{{ submodule.label }}</el-menu-item>
           <el-menu-item
             v-else
-            @click="$router.push(`/${menu.name}/${menu._id}`)"
+            @click="$router.push(`/modules/${menu.name}/${menu._id}`)"
             :index="`${mn}`">{{ menu.label }}</el-menu-item>
           <el-sub-menu
             v-if="menu.folders && menu.folders.length > 0"
@@ -74,13 +76,13 @@ onMounted(async () => {
               v-for="(foldermodule, fm) in subfolder.modules"
               :key="`${mn}${sm}${fm}`"
               :index="`${mn}${sm}${fm}`"
-              @click="$router.push(`/${foldermodule.name}/${foldermodule._id}`)">
+              @click="$router.push(`/modules/${foldermodule.name}/${foldermodule._id}`)">
               {{ foldermodule.label }}
             </el-menu-item>
           </el-sub-menu>
         </el-sub-menu>
-      </el-menu> -->
-      <el-menu
+      </el-menu>
+      <!-- <el-menu
         class="custom-menu"
         :collapse="isCollapse"
         background-color="transparent">
@@ -99,7 +101,7 @@ onMounted(async () => {
             :key="sm"
             :index="`${mn}${sm}`">{{ submenu.label }}</el-menu-item>
         </el-sub-menu>
-      </el-menu>
+      </el-menu> -->
     </div>
   </div>
 </template>
