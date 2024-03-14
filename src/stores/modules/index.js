@@ -65,6 +65,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const module = ref({})
   const linkedModuleData = ref(null)
   const collection = ref({})
+  const entityFields = ref({})
 
   // getters
   const getBaseModule = computed(() => baseModule.value)
@@ -370,6 +371,14 @@ export const useModuleStore = defineStore('moduleStore', () => {
       return field
     }
   })
+  const getEntityFields = computed(() => {
+    return (entity) => { 
+      let fields = []
+      if(_.has(entityFields.value,entity))
+        fields = entityFields.value[entity]
+      return fields
+    }
+  })
 
   // actions
   const fetchModules = async () => {
@@ -400,16 +409,17 @@ export const useModuleStore = defineStore('moduleStore', () => {
     modulesLoading.value = false
   }
   const fetchModuleFields = async (module) => {
-    const res = await axios(`/getModuleFields?module-name=${module}`, {
+    const res = await axios(`/getModuleFields?entity-name=${module}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
-      let index = _.findIndex(getModules.value,{'name':module})
+      let index = _.findIndex(getModules.value,{'mainEntity':module})
       if(index > -1){
-        // modules.value[index]['fields'] = res.data[0]['data']
         getModules.value[index]['fields'] = res.data.data
+      }else{
+        entityFields.value[module] = res.data.data
       }
     }
   }
@@ -802,6 +812,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     getFieldDetailsById,
     getFieldDetailsByUname,
     getModuleByName,
+    getEntityFields,
     _fetchModule,
     fetchModule,
     fetchLinkedModuleData,

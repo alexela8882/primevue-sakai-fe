@@ -11,9 +11,13 @@ export const useQuotePDF = defineStore('quotePDF', () => {
 
     //ref
     const templates = ref([])
+    const currentTemplate = ref([])
+    const quoteInfo = ref({})
 
     //getters
     const getTemplates = computed(() => templates.value)
+    const getCurrentTemplate = computed(() => currentTemplate.value)
+    const getQuoteInfo = computed(() => quoteInfo.value)
 
     //actions
     const fetchQuoteTemplates = async()=>{
@@ -24,8 +28,30 @@ export const useQuotePDF = defineStore('quotePDF', () => {
         }
     }
 
+    const fetchQuoteTemplate = async(id)=>{
+        const res = await axios.get(`/quotationtemplates/${id}`)
+  
+        if (res.status === 200) {
+            currentTemplate.value = res.data
+        }
+    }
+
+    const fetchQuoteTemplatesInfo = async(id)=>{
+        let param = {'_id':id}
+        console.log(param)
+        const res = await axios.get(`/quotationtemplates/getInfo/${id}`)
+  
+        if (res.status === 200) {
+            quoteInfo.value = res.data
+        }
+    }
+
     return{
         getTemplates,
-        fetchQuoteTemplates
+        getQuoteInfo,
+        getCurrentTemplate,
+        fetchQuoteTemplates,
+        fetchQuoteTemplate,
+        fetchQuoteTemplatesInfo
     }
 })
