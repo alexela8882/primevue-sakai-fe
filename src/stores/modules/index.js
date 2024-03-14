@@ -579,6 +579,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
   }
   const addViewFilter = async (payload) => {
+    console.log(payload)
     let data = payload.data
     let uriOptions = { uri: null, method: null }
 
