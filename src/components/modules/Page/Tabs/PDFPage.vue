@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, onUnmounted, ref, inject,defineAsyncComponent, watch  } from "vue";
+import { onMounted, onUnmounted, ref, computed, inject,defineAsyncComponent, watch  } from "vue";
 import { storeToRefs } from 'pinia'
 import _ from 'lodash';
 
@@ -9,6 +9,10 @@ const props = defineProps({
     selectedTemplate: Object,
     pageContent: Object
 })
+
+const vietHanoi = computed(() => '/images/letterhead/Esco Vietnam - Hanoi header.png')
+const escoQuotation = computed(() => '/images/letterhead/esco-quotation-template-header-01-01.png')
+const escoMedical = computed(() => '/images/letterhead/esco-medical-letterhead.jpg')
 
 onMounted(()=>{
     emit('mounted')
@@ -20,9 +24,9 @@ onMounted(()=>{
             <div :class="pageSectionKey">
                 <div v-for="(panel,panelIndex) in pageSection" :key="'panel_' + panelIndex">
                     <div v-if="pageSectionKey=='headerPanel' && panelIndex==0" class='pdf-panel' style="width:100%">
-                        <img v-if="_.includes(selectedTemplate,'Sanjay') || _.includes(selectedTemplate,'Stasys Polimaitis') || _.includes(selectedTemplate,'Ludek Homola') || _.includes(selectedTemplate,'Ana Sousa Lopes') || _.includes(selectedTemplate,'Morten Kristensen') ||  _.includes(selectedTemplate,'Jesper') || _.includes(selectedTemplate,'Makky') || selectedTemplate=='ETI-Medical Quote'" src="/images/letterhead/esco-medical-letterhead.jpg" style="width: 100%; display: block;"/>
-                        <img v-else-if="_.includes(selectedTemplate,'Vietnam - Hanoi') || _.includes(selectedTemplate,'Vietnam -  Hanoi Service Quote')" src="/images/letterhead/Esco Vietnam - Hanoi header.png" style="width: 98%; display: block; margin:0px;"/>
-                        <img v-else-if="!_.includes(selectedTemplate,'Pradana Indah Cemerlang') && !_.includes(selectedTemplate,'Esco Farma Lab')" src="/images/letterhead/esco-quotation-template-header-01-01.png" style="width: 100%; display: block;"/>
+                        <img v-if="_.includes(selectedTemplate,'Sanjay') || _.includes(selectedTemplate,'Stasys Polimaitis') || _.includes(selectedTemplate,'Ludek Homola') || _.includes(selectedTemplate,'Ana Sousa Lopes') || _.includes(selectedTemplate,'Morten Kristensen') ||  _.includes(selectedTemplate,'Jesper') || _.includes(selectedTemplate,'Makky') || selectedTemplate=='ETI-Medical Quote'" :src="escoMedical" style="width: 100%; display: block;"/>
+                        <img v-else-if="_.includes(selectedTemplate,'Vietnam - Hanoi') || _.includes(selectedTemplate,'Vietnam -  Hanoi Service Quote')" :src="vietHanoi" style="width: 98%; display: block; margin:0px;"/>
+                        <img v-else-if="!_.includes(selectedTemplate,'Pradana Indah Cemerlang') && !_.includes(selectedTemplate,'Esco Farma Lab')" :src="escoQuotation" style="width: 100%; display: block;"/>
                     </div>
                     <div class="panelLabel" v-if="panel.label">{{ panel.label }}</div>
                     <div class="flex flex-wrap m-2">
@@ -79,7 +83,7 @@ onMounted(()=>{
 }
 .pdfPreview .panelLabel{
     background-color: rgba(0, 0, 0, 0.1);
-    padding: 0px 5px;
+    padding: 3px 5px;
     margin-top: 20px;
     font-weight: bold;
 }

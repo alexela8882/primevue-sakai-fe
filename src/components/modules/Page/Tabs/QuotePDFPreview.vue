@@ -30,6 +30,7 @@ const templatesLoading = ref(true)
 const fetchingCurrentTemplate = ref(false)
 const pageContent = ref({'headerPanel':[],'bodyPanel':[],'footerPanel':[]})
 
+
 onMounted(async() => {
     await fetchQuoteTemplates()
     await fetchQuoteTemplatesInfo(getItem.value.data._id)
