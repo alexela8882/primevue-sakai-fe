@@ -14,6 +14,7 @@ const {
   isCollapse,
   menuLoading,
   getMenu,
+  getNewSidebarMenu,
   sidebarMenu,
   sidebarMenu2
 } = storeToRefs(menuStore)
@@ -30,7 +31,7 @@ onMounted(async () => {
 
 <template>
   <div>
-    <!-- <pre>{{ getMenu.data.folders }}</pre> -->
+    <!-- <pre>{{ getNewSidebarMenu }}</pre> -->
     <div v-if="menuLoading">
       <div>
         <ul class="m-0 p-0 list-none">
@@ -47,11 +48,11 @@ onMounted(async () => {
         <div class="material-icons text-white">menu</div>
       </div>
       <el-menu
-        v-if="getMenu.data"
+        v-if="getNewSidebarMenu"
         class="custom-menu"
         :collapse="isCollapse"
         background-color="transparent">
-        <el-sub-menu v-for="(menu, mn) in getMenu.data.folders" :index="`${mn}`" :key="mn">
+        <el-sub-menu v-for="(menu, mn) in getNewSidebarMenu" :index="`${mn}`" :key="mn">
           <template #title>
             <div class="material-icons text-white">{{ menu.icon }}</div>
             <div v-if="!isCollapse" class="ml-3 text-white">{{ menu.label }}</div>

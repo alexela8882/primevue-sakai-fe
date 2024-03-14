@@ -22,6 +22,26 @@ export const useMenuStore = defineStore('menuStore', () => {
   const menuLoading = ref(false)
 
   // getters
+  const getNewSidebarMenu = computed(() => {
+    let menuData = menu.value && menu.value.data
+    const folders = menuData && menuData.folders
+    const modules = menuData && menuData.modules
+
+    // console.log(folders)
+    // console.log(modules)
+
+    let mergedMenu = []
+    // merge
+    if (folders && modules) {
+      mergedMenu = [...folders, ...modules]
+    }
+    // sort
+    mergedMenu.sort((a, b) => a.order - b.order)
+
+    // console.log(mergedMenu)
+
+    return mergedMenu
+  })
   const getMenu = computed(() => menu.value)
   const sidebarMenu = computed(() => {
     const userAccessModules = getModulesUserCanAccess.value
@@ -150,7 +170,7 @@ export const useMenuStore = defineStore('menuStore', () => {
 
     if (res.status === 200) {
       menu.value = res.data
-      // console.log(res.data)
+      console.log(res.data)
     }
     menuLoading.value = false
   }
@@ -172,6 +192,7 @@ export const useMenuStore = defineStore('menuStore', () => {
   return {
     isCollapse,
     getMenu,
+    getNewSidebarMenu,
     sidebarMenu,
     sidebarMenu2,
     menuLoading,
