@@ -267,18 +267,40 @@ onMounted(async () => {
 })
 
 onClickOutside(listViewFilterRef, (event) => {
-  console.log(event.target && event.target.attributes.class.value)
+  // console.log(event.target && event.target.attributes.class.value)
+  // console.log(event.target && event.target.attributes['data-pc-section'].value)
   if (event.target) {
     if (
       event.target.attributes.class &&
       (
         event.target.attributes.class.value === 'p-dropdown-item' ||
-        event.target.attributes.class.value === 'p-dropdown-filter p-inputtext p-component'
+        event.target.attributes.class.value === 'p-dropdown-filter p-inputtext p-component' ||
+        event.target.attributes.class.value === 'p-checkbox-box' ||
+        event.target.attributes.class.value === 'p-checkbox-box p-focus' ||
+        event.target.attributes.class.value === 'p-icon p-checkbox-icon undefined' ||
+        event.target.attributes.class.value === 'p-multiselect-header' ||
+        event.target.attributes.class.value === 'p-multiselect-empty-message' ||
+        event.target.attributes.class.value === 'p-icon p-multiselect-close-icon' ||
+        event.target.attributes.class.value === 'p-multiselect-close p-link' ||
+        event.target.attributes.class.value === 'p-datepicker-other-month' ||
+        event.target.attributes.class.value === 'p-datepicker-header' ||
+        event.target.attributes.class.value === 'p-monthpicker-month' ||
+        event.target.attributes.class.value === 'p-datepicker-month p-link' ||
+        event.target.attributes.class.value === 'p-yearpicker-year' ||
+        event.target.attributes.class.value === 'p-datepicker-year p-link' ||
+        event.target.attributes.class.value === 'p-icon p-datepicker-prev-icon' ||
+        event.target.attributes.class.value === 'p-icon p-datepicker-next-icon' ||
+        event.target.attributes.class.value === 'p-datepicker-prev p-link' ||
+        event.target.attributes.class.value === 'p-datepicker-next p-link' ||
+        event.target.attributes.class.value === 'p-datepicker p-component p-ripple-disabled' ||
+        event.target.attributes.class.value === 'p-datepicker-group'
       ) ||
       (
         event.target.attributes['data-pc-section'] &&
         (
           event.target.attributes['data-pc-section'].value === 'item' ||
+          event.target.attributes['data-pc-section'].value === 'filterinput' ||
+          event.target.attributes['data-pc-section'].value === 'option' ||
           event.target.attributes['data-pc-section'].value === 'daylabel'
         )
       )
@@ -368,10 +390,7 @@ provide('form', tableFormData)
 </script>
 
 <template>
-  <!-- Test
-  {{ moduleEntityName }} {{ getBaseModule.mainEntity }} -->
-  <!-- <pre>{{ viewFilter.sortField }}</pre>
-  <pre>{{ viewFilter.sortOrder }}</pre> -->
+  <!-- <pre>{{ viewFilter }}</pre> -->
   <DataTable
     v-model:selection="selectedData"
     v-model:contextMenuSelection="selectedContextData"
