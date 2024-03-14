@@ -116,16 +116,18 @@ const { getModules } = storeToRefs(moduleStore)
   function transformLookupDisplay(value,field){
     let fieldGlue = _.get(field,'fieldGlue',' ')
     let displayFieldName = _.get(field, 'relation.displayFieldName',[])
-    let transformed = {'label':'','link':''}
+    let transformed = null
     let module = _.find(getModules.value, {'mainEntity':field.relation.entity.name})
     let link = null;
     if(module){
         link = '/#/modules/page/' + module.name + '/' + module._id + '/detail-page/'
     }
     if(!_.isArray(value)){
+        transformed = {'label':'','link':''}
         transformed['label'] = _.join(_.values(_.pick(value,displayFieldName)), fieldGlue)
         transformed['link'] = (link) ? link + value._id : null
     }else{
+        transformed = []
         _.forEach(value, function(val){
             let valueLink = (link) ? link + val._id : null
             transformed.push({'label': _.join(_.values(_.pick(val,displayFieldName)), fieldGlue),'link': valueLink})
@@ -135,6 +137,15 @@ const { getModules } = storeToRefs(moduleStore)
 
   }
 
+  function checkIfHasModule(field){
+    let module = _.find(getModules.value, {'mainEntity':field.relation.entity.name})
+
+    if(module)
+        return (!_.includes(['users','employees'],module.name)) ? true : false
+    else
+        return false
+  }
+  
   function transformFormValues(fields,values,formPage){
     let formValues = {} 
 
@@ -340,7 +351,7 @@ const { getModules } = storeToRefs(moduleStore)
   }
 
   function checkFieldIfMultipleSelect(rules){
-    if(_.get(rules,'ms_dropdown',false) || _.get(rules,'checkbox',false) || _.get(rules,'checkbox_inline',false) || _.get(rules,'ms_list_view',false)){
+    if(_.get(rules,'ms_pop_up',false) ||  _.get(rules,'ms_dropdown',false) || _.get(rules,'checkbox',false) || _.get(rules,'checkbox_inline',false) || _.get(rules,'ms_list_view',false)){
         return true
     }
     return false
@@ -759,6 +770,7 @@ const { getModules } = storeToRefs(moduleStore)
     parseHiddenFields,
     getAllDisabledFields,
     checkSetValRule,
-    transformLookupDisplay
+    transformLookupDisplay,
+    checkIfHasModule
   };
 }
