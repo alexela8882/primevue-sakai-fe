@@ -28,7 +28,7 @@ onMounted(()=>{
                         <img v-else-if="_.includes(selectedTemplate,'Vietnam - Hanoi') || _.includes(selectedTemplate,'Vietnam -  Hanoi Service Quote')" :src="vietHanoi" style="width: 98%; display: block; margin:0px;"/>
                         <img v-else-if="!_.includes(selectedTemplate,'Pradana Indah Cemerlang') && !_.includes(selectedTemplate,'Esco Farma Lab')" :src="escoQuotation" style="width: 100%; display: block;"/>
                     </div>
-                    <div class="panelLabel" style="background-color: #dfdede;padding: 3px 5px;margin-top: 20px;" v-if="panel.label"><b>{{ panel.label }}</b></div>
+                    <div class="panelLabel" style="background-color: #dfdede;padding: 3px 5px;margin-top: 20px; font-weight:600" v-if="panel.label">{{ panel.label }}</div>
                     <div class="flex flex-wrap m-2">
                         <div class="pdfColumn" style="flex-basis:0; flex-grow: 1;" v-for="(sec,secIndex) in panel.sections" :key="'sec_' + secIndex">
                             <div class="flex flex-column w-full" :style="{'text-align' : _.get(sec,'alignment','left')}">

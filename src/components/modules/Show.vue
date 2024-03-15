@@ -143,6 +143,7 @@ const tblSettingsBtn = ref([
     }
   }
 ])
+const searchDropdownOpen = ref(false)
 
 // actions
 const savedViewilterAction = async (e) => {
@@ -458,9 +459,11 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
                         multiple
                         collapse-tags
                         :max-collapse-tags="0"
-                        filterable
+                        :filterable="(searchDropdownOpen) ? true : false"
                         placeholder="Select Fields"
-                        style="max-width: 150px">
+                        style="max-width: 150px"
+                        :style="(searchDropdownOpen) ? 'width:150px' : 'width:75px'"
+                        @visible-change="function(val){ searchDropdownOpen = val }">
                         <el-option
                           v-for="item in searchFields"
                           :key="item._id"

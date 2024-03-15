@@ -12,7 +12,6 @@ import { useBaseStore } from '@/stores/base'
 import { jsPDF } from "jspdf";
 
 const PDFPage = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/PDFPage.vue'))
-const LookupField = defineAsyncComponent(() => import('@/components/modules/Form/LookupField.vue'))
 
 const quotePDF = useQuotePDF()
 const moduleDetailStore = useModuleDetailStore()
