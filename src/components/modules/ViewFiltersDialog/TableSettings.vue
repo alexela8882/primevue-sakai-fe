@@ -23,7 +23,7 @@ const {
     sortField: yup.string().label('Sort field').required(),
     sortOrder: yup.string().label('Sort order').required(),
     pageSize: yup.string().label('Items per page').required(),
-    pickList: yup.array().label('Pick list fields').min(1, 'Please add at least 1 field').required()
+    pickList: yup.array().label('Pick list fields').min(2, 'Please add at least 2 field').required()
   })
 })
 const localSelectedViewFilter = ref(null)

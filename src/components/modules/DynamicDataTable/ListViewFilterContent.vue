@@ -14,6 +14,7 @@ const props = defineProps({
 const emit = defineEmits(['apply-filters'])
 
 // refs
+const applyFiltersLoading = ref(false)
 const localSaveLoading = ref(false)
 const localPickListLoading = ref(false)
 const filterByOwnerOverlay = ref(false)
@@ -120,6 +121,13 @@ const _fetchPickList = async (payload) => {
 const fieldChange = (e) => {
   // reset data value
   filterByOwner.value.data.value = null
+}
+const applyFilters = () => {
+  applyFiltersLoading.value = true
+
+  emit('apply-filters', selectedViewFilter.value)
+
+  applyFiltersLoading.value = false
 }
 
 // lifecycles
@@ -321,7 +329,10 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
     </template>
     <template #footer>
       <div class="sticky top-0">
-        <Button @click="emit('apply-filters', selectedViewFilter)" label="Apply filter" />
+        <Button
+          @click="applyFilters()"
+          :loading="applyFiltersLoading"
+          label="Apply filter" />
       </div>
     </template>
   </Card>
