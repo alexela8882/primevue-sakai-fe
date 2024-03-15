@@ -47,14 +47,14 @@ const props = defineProps({
     entity: String,
     formField: Boolean,
     modelValue: Array,
-    optionValue: String
+    optionValue: String,
+    onLoad: Boolean
 })
 
 const emit = defineEmits(['changeValue','update:modelValue',])
 const addableModule = ref(null)
 
 onMounted(() => {
-    console.log(props.modelValue)
     let vm = this;
     if(_.get(props.field,'rules.ms_pop_up',false)){
         multiple.value = true
@@ -85,6 +85,10 @@ onMounted(() => {
             filters.value.push({'field':props.field.rules.filtered_by,'entity':props.entity})
         }
     }
+
+    // fetch data onload
+    console.log(props.onLoad)
+    if (props.onLoad) fetchData()
 })
 
 const changePage = async(p) => {
@@ -133,7 +137,7 @@ const fetchData = async() =>{
             items.value = formatLookupOptions(records.data, [], props.field)
             pagination.value = _.cloneDeep(_.get(records,'meta.pagination',{}))
 
-            selectedValues.value = items.value.options.filter(option => props.modelValue.includes(option._id))
+            selectedValues.value = items.value.options.filter(option => props.modelValue && props.modelValue.includes(option._id))
             value.value = selectedValues.value
         }else{
             toast.add({ severity: 'error', summary: 'Error', detail: 'Please select '+_.join(err,', '), position:"top-center", life: 3000 });

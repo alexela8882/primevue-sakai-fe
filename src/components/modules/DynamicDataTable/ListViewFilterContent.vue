@@ -208,7 +208,7 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
                 <div v-if="filter.isNull">
                   Null
                 </div>
-                <div v-else>
+                <div v-else class="flex flex-wrap">
                   <div v-if="
                     _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'text' ||
                     _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'boolean' ||
@@ -317,6 +317,7 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
                 :inline="true"
                 :module="module.name"
                 optionValue="_id"
+                :onLoad="true"
                 :entity="filterByOwner.data.field.entity.name" />
             </div>
 
