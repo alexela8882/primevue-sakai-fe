@@ -21,9 +21,9 @@ const filterByOwnerOverlay = ref(false)
 const filterByOwnerOverlay2 = ref(false)
 const selectedViewFilter = ref(props.module.viewFilters.find(filter => filter.isDefault))
 const filterByOwner = ref({
-  query_type: null,
+  queryType: null,
   mode: 'edit',
-  query_type: selectedViewFilter.value.query_type,
+  queryType: selectedViewFilter.value.queryType,
   filters: selectedViewFilter.value.filters,
   data: { mode: 'new', uuid: null, field: null, operator: null, value: null, isNull: false },
   default: { uuid: null, field: null, operator: null, value: null, isNull: false }
@@ -75,7 +75,7 @@ const saveFilterByOwner = async () => {
     type: 'filters',
     data: {
       mode: filterByOwner.value.data.mode,
-      query_type: filterByOwner.value.query_type,
+      queryType: filterByOwner.value.queryType,
       filters: reconstructedValues
     }
   })
@@ -122,10 +122,23 @@ const fieldChange = (e) => {
   // reset data value
   filterByOwner.value.data.value = null
 }
-const applyFilters = () => {
+const applyFilters = async () => {
   applyFiltersLoading.value = true
 
-  emit('apply-filters', selectedViewFilter.value)
+  const payload = Object.assign({}, {
+    mode: filterByOwner.value.mode,
+    baseModule: props.baseModule,
+    viewFilter: props.module.viewFilters.find(filter => filter.isDefault)._id,
+    type: 'filters',
+    data: {
+      queryType: filterByOwner.value.queryType
+    }
+  })
+  const res = await addViewFilter(payload) // store save/update
+  
+  if (res && res.status === 200) {
+    emit('apply-filters', selectedViewFilter.value)
+  }
 
   applyFiltersLoading.value = false
 }
@@ -174,7 +187,7 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
             @click="filterByOwnerOverlayAction"
             class="flex flex-column gap-2 p-3 border-1 border-400 hover:border-600 hover:surface-100 border-round-md cursor-pointer">
             <div>Filter by</div>
-            <div class="text-lg text-800">{{ filterByOwner.query_type }}</div>
+            <div class="text-lg text-800">{{ filterByOwner.queryType }}</div>
           </div>
 
           <div
@@ -239,11 +252,11 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
           <div class="text-xl text-color-secondary">Filter by</div>
           <div class="flex flex-column gap-3">
             <div class="flex align-items-center">
-              <RadioButton v-model="filterByOwner.query_type" :inputId="`All ${baseModule.name}`" value="all" />
+              <RadioButton v-model="filterByOwner.queryType" :inputId="`All ${baseModule.name}`" value="all" />
               <label :for="`All ${baseModule.name}`" class="ml-2">All {{ baseModule.name }}</label>
             </div>
             <div class="flex align-items-center">
-              <RadioButton v-model="filterByOwner.query_type" :inputId="`My ${baseModule.name}`" value="owned" />
+              <RadioButton v-model="filterByOwner.queryType" :inputId="`My ${baseModule.name}`" value="owned" />
               <label :for="`My ${baseModule.name}`" class="ml-2">My {{ baseModule.name }}</label>
             </div>
             <div class="flex align-items-center justify-content-end">
