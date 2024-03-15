@@ -148,10 +148,6 @@ const tblSettingsBtn = ref([
 const savedViewilterAction = async (e) => {
   await initialize(e)
 }
-const savedKanbanAction = async (e) => {
-  console.log(e)
-  await initialize(e)
-}
 const paginate = async (payload) => {
   datatableLoading.value = true
 
@@ -272,14 +268,6 @@ const getUpdatedModule = (payload) => {
   return updatedModule
 }
 
-const updateViewFilter = () => {
-  console.log(getBaseModule.value)
-  const updatedViewFilter = getBaseModule.value.viewFilters.find(filter => filter._id === selectedViewFilterId.value)
-
-  selectedViewFilter.value = updatedViewFilter
-  selectedViewFilterId.value = updatedViewFilter && updatedViewFilter._id
-}
-
 const searchInput = async () => {
   localLoading.value = true
 
@@ -311,6 +299,10 @@ const generateSearchFields = () => {
   })
 
   return arr
+}
+
+const applyFilters = async (e) => {
+  await initialize(e)
 }
 
 // lifescycles
@@ -582,7 +574,7 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
             @limit-page="limitPage">
             <template #list-view-filter>
               <Suspense>
-                <listViewFilterContent :baseModule="getBaseModule" :module="localModule" />
+                <listViewFilterContent @apply-filters="applyFilters($event)" :baseModule="getBaseModule" :module="localModule" />
                 <template #fallback>
                   <ListViewLoader />
                 </template>
