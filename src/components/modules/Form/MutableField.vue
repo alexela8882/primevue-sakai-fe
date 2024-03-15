@@ -208,7 +208,7 @@
                 </el-select>
             </template>
             <template v-else>
-                <LookupField :field="config" :keyName="keyName" :inline="inline" :module="module" :entity="entity"  @changeValue="fieldChange(config)"/>
+                <LookupField :field="config" :keyName="keyName" :inline="inline" :module="module" :formField="true" :entity="entity"  @changeValue="fieldChange(config)"/>
             </template>
             <small class="errMsg" v-for="msg,i in _.get(form.errors[keyName][mutableIndex],config.name,[])" :key="i">{{ msg }}</small>
         </div>

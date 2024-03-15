@@ -37,21 +37,29 @@ const toggle = async (event) => {
 const filters = ref([])
 const toast = useToast()
 const addableFormVisible = ref(false)
+const selectedValues = ref([])
 
 const props = defineProps({
     field: Object,
     keyName: String,
     module: String,
     inline: Boolean,
-    entity: String
+    entity: String,
+    formField: Boolean,
+    modelValue: Array,
+    optionValue: String,
+    onLoad: Boolean
 })
 
-const emit = defineEmits(['changeValue'])
+const emit = defineEmits(['changeValue','update:modelValue',])
 const addableModule = ref(null)
 
 onMounted(() => {
     let vm = this;
     if(_.get(props.field,'rules.ms_pop_up',false)){
+        multiple.value = true
+    }
+    if(!props.formField){
         multiple.value = true
     }
     entityModule.value = _.find(getModules.value,{'mainEntity':props.field.relation.entity_id.name})
@@ -77,6 +85,10 @@ onMounted(() => {
             filters.value.push({'field':props.field.rules.filtered_by,'entity':props.entity})
         }
     }
+
+    // fetch data onload
+    console.log(props.onLoad)
+    if (props.onLoad) fetchData()
 })
 
 const changePage = async(p) => {
@@ -101,7 +113,10 @@ const fetchData = async() =>{
     try {
         let params = {"fieldId":props.field.uniqueName,"page":page.value,"moduleName":props.module,"search":searchText.value}
         let err = []
-        if(!_.isEmpty(filters.value)){
+        if(!props.formField){
+            params['forReport'] = true
+        }
+        if(!_.isEmpty(filters.value) && props.formField){
             
             _.forEach(filters.value, function(f){
                 if(!_.isEmpty(form.value.values.main[f.field]) && !_.isNull(form.value.values.main[f.field])){
@@ -121,6 +136,9 @@ const fetchData = async() =>{
             // })
             items.value = formatLookupOptions(records.data, [], props.field)
             pagination.value = _.cloneDeep(_.get(records,'meta.pagination',{}))
+
+            selectedValues.value = items.value.options.filter(option => props.modelValue && props.modelValue.includes(option._id))
+            value.value = selectedValues.value
         }else{
             toast.add({ severity: 'error', summary: 'Error', detail: 'Please select '+_.join(err,', '), position:"top-center", life: 3000 });
         }
@@ -141,9 +159,15 @@ const handleSearch = async () =>{
 
 const removeSelected = (index) =>{
     if(multiple.value){
-        _.remove(form.value.values[props.keyName][props.field.name], function(n,i){
-            return i==index
-        })
+       if(props.formField){
+            _.remove(form.value.values[props.keyName][props.field.name], function(n,i){
+                return i==index
+            })
+       }else{
+            _.remove(value.value, function(n,i){
+                return i==index
+            })
+       }
     }else{
         form.value.values[props.keyName][props.field.name] = null
     }
@@ -155,8 +179,16 @@ const checkBeforeClose = (index) =>{
     if(!multiple.value){
         closePopup()
     }
+    if(!props.formField) {
+        let finalValue = null
+
+        if (props.optionValue) finalValue = value.value.map(val => val[props.optionValue])
+        else finalValue = value.value
+
+        emit('update:modelValue', finalValue)
+    }
+
     emit('changeValue')
-    // emit('update:modelValue',value.value)
 }
 
 const openAddableForm = async() =>{
@@ -164,12 +196,11 @@ const openAddableForm = async() =>{
     addableFormVisible.value = true
    
 }
+const form = (props.formField) ? inject('form') : {}
 
-
-const form = inject('form')
 </script>
 <template>
-    <div class="lookupField" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],field.name,[]))}" v-click-outside="closePopup">
+    <div v-if="formField" class="lookupField" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],field.name,[]))}" v-click-outside="closePopup">
         <div v-if="!_.isEmpty(form.values[keyName][field.name])" class="selectedValue" :class="(!multiple) ? 'single flex align-items-center' : 'multiple'" @click="toggle">
             <template v-if="multiple">
                 <el-tag class="mr-1" closable v-for="(v,i) in value" :key="v.value" @close="removeSelected(i)">{{ v.value }}</el-tag>
@@ -207,6 +238,56 @@ const form = inject('form')
                 </template>
             </Listbox>
             <Listbox v-else v-model="form.values[keyName][field.name]" :multiple="multiple"  :options="_.get(items,'options',[])" optionLabel="value" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
+                <template #option="slotProps">
+                    <div class="flex align-items-center lookupSelection">
+                        <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
+                        <div class="lookupSelection">
+                            <template v-for="(val,i) in slotProps.option.poupDisplayValues" :key="i">
+                                <span v-if="i==0"  class="font-medium lookupSelection">{{ val }}</span>
+                                <div v-else class="text-sm text-color-secondary lookupSelection">{{  val }}</div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </Listbox>
+            <div class="flex justify-content-center">
+                <div class="flex flex-column mt-1">
+                    <el-pagination
+                small
+                background
+                layout="prev, pager, next"
+                :default-page-size="10"
+                :current-page="page"
+                :total="_.get(pagination,'total',0)"
+                @current-change="changePage"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div v-else class="lookupField"  v-click-outside="closePopup">
+        <div v-if="!_.isEmpty(value)" class="selectedValue multiple" @click="toggle">
+            <el-tag class="mr-1" closable v-for="(v,i) in value" :key="v.value" @close="removeSelected(i)">{{ v.value }}</el-tag>
+        </div>
+        <el-input 
+            v-model="searchText" @click="toggle" @keyup="handleSearch" class="lookupInput" 
+            placeholder="Please search here" :suffix-icon="Search">
+        </el-input>
+        <div v-if="open" class="lookupOverlay p-overlaypanel p-component" :class="{ 'open' : open == true, 'w-full':!inline,'w-auto':inline}">
+            <template v-if="fetching"><Skeleton v-for="(item,index) in _.fill(Array(10),'i')" :key="index" height="2rem" :width="(inline) ? '300px': '100%'" class="m-2" borderRadius="5px"></Skeleton></template>
+            <Listbox v-else-if="items.group" v-model="value" :multiple="true" :options="_.get(items,'options',[])" optionLabel="value" optionGroupLabel="label" optionGroupChildren="options" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
+                <template #option="slotProps">
+                    <div class="flex align-items-center lookupSelection">
+                        <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
+                        <div class="lookupSelection">
+                            <template v-for="(val,i) in slotProps.option.poupDisplayValues" :key="i">
+                                <span v-if="i==0"  class="font-medium lookupSelection">{{ val }}</span>
+                                <div v-else class="text-sm text-color-secondary lookupSelection">{{  val }}</div>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </Listbox>
+            <Listbox v-else v-model="value" :multiple="true"  :options="_.get(items,'options',[])" optionLabel="value" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
                 <template #option="slotProps">
                     <div class="flex align-items-center lookupSelection">
                         <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>

@@ -287,7 +287,7 @@
             </div>
             <Listbox v-else-if="_.get(config.rules,'ss_list_view',false) || _.get(config.rules,'ms_list_view',false)" v-model="form.values[keyName][config.name]" :options="getLookupOptions(config.uniqueName,'options')" :multiple="_.get(config.rules,'ms_list_view',false)" optionLabel="value" class="w-full mt-2 mb-2" />
             <template v-else>
-                <LookupField :field="config" :keyName="keyName" :inline="inline" :module="module" :entity="entity"  @changeValue="fieldChange(config)"/>
+                <LookupField :field="config" :keyName="keyName" :inline="inline" :module="module" :entity="entity" :formField="true"  @changeValue="fieldChange(config)"/>
             </template>
             <small class="errMsg" v-for="msg,i in _.get(form.errors[keyName],config.name,[])" :key="i">{{ msg }}</small>
         </div>

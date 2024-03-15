@@ -9,8 +9,10 @@ import { useModuleDetailStore } from '@/stores/modules/detail'
 import { useModuleStore } from '@/stores/modules/index'
 import { useQuotePDF } from '@/stores/modules/detail/quotepdf'
 import { useBaseStore } from '@/stores/base'
+import { jsPDF } from "jspdf";
 
 const PDFPage = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/PDFPage.vue'))
+const LookupField = defineAsyncComponent(() => import('@/components/modules/Form/LookupField.vue'))
 
 const quotePDF = useQuotePDF()
 const moduleDetailStore = useModuleDetailStore()
@@ -32,6 +34,7 @@ const pageContent = ref({'headerPanel':[],'bodyPanel':[],'footerPanel':[]})
 
 
 onMounted(async() => {
+    
     await fetchQuoteTemplates()
     await fetchQuoteTemplatesInfo(getItem.value.data._id)
 
@@ -45,7 +48,6 @@ onMounted(async() => {
     if(_.isEmpty(getEntityFields.value('User')))
         await fetchModuleFields("User")
 
-    
     templatesLoading.value = false
 })
 
@@ -205,6 +207,34 @@ const transformQuoteTemplate = async() =>{
     })
 }
 
+const downloadPDF = async() =>{
+    var element = document.getElementById('pdfContent');
+    // html2pdf(element);
+    // var opt = {
+    //     margin:       [getCurrentTemplate.value.config.top,getCurrentTemplate.value.config.left,getCurrentTemplate.value.config.bottom,getCurrentTemplate.value.config.right],
+    //     filename:     'myfile.pdf',
+    //     image:        { type: 'jpeg', quality: 0.95 },
+    //     html2canvas:  { scale: 1 },
+    //     jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    // };
+    // console.log(opt)
+    // html2pdf().set(opt).from(element.innerHTML).save();
+    var doc = new jsPDF();
+
+    doc.html(element, {
+        callback: function(doc) {
+            // Save the PDF
+            doc.save('sample-document.pdf');
+        },
+        margin: [getCurrentTemplate.value.config.top,getCurrentTemplate.value.config.right,getCurrentTemplate.value.config.bottom,getCurrentTemplate.value.config.left],
+        x: 15,
+        y: 15,
+        width: 180, //target width in the PDF document
+        windowWidth: 780 //window width in CSS pixels
+    });
+
+}
+
 </script>
 <template>
     <div
@@ -218,14 +248,15 @@ const transformQuoteTemplate = async() =>{
             <Dropdown v-model="selectedTemplate" :options="getTemplates" filter optionLabel="name" placeholder="Select a template" class="w-full md:w-14rem" @change="changeTemplate"/>
             <div class="flex">
                 <Button icon="pi pi-save" rounded aria-label="Save" />
-                <Button  icon="pi pi-download" rounded  class="ml-2" aria-label="Download" />
+                <Button  icon="pi pi-download" rounded  class="ml-2" aria-label="Download" @click="downloadPDF"/>
                 <Button icon="pi pi-envelope" rounded class="ml-2" aria-label="Email" />
             </div>
+            
         </div>
-        <div class="pdfPreview w-full mt-2 card flex">
+        <div id="pdfContainer" class="pdfPreview w-full mt-2 card flex">
              <div
                 v-if="fetchingCurrentTemplate"
-                class="flex align-items-center justify-content-center"
+                class="flex align-items-center justify-content-center w-full"
                 style="height: 60vh !important;">
                 <ProgressSpinner />
             </div>
