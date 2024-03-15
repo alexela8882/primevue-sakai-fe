@@ -1,6 +1,6 @@
 <script setup>
 // imports
-import { onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
 import { useFormDataStore } from '@/stores/forms'
@@ -51,7 +51,8 @@ const editFilterByOwner = (filter, fx) => {
     uuid: filter.uuid,
     field: filterField,
     operator: filterOperator,
-    value: filter.values
+    value: filter.values,
+    isNull: filter.isNull
   })
 
   filterByOwner.value.data.mode = 'edit'
@@ -65,7 +66,8 @@ const saveFilterByOwner = async () => {
     uuid: filterByOwner.value.data.uuid,
     field_id: filterByOwner.value.data.field._id,
     operator_id: filterByOwner.value.data.operator._id,
-    values: filterByOwner.value.data.field.field_type.name === 'text' ? [filterByOwner.value.data.value] : filterByOwner.value.data.value
+    values: filterByOwner.value.data.value,
+    isNull: filterByOwner.value.data.isNull
   })
 
   const payload = Object.assign({}, {
@@ -85,9 +87,6 @@ const saveFilterByOwner = async () => {
     if (payload.data.mode === 'new') insertFilter(res.data)
     else updateFilter(res.data.filters[0])
   }
-
-  // filterByOwnerOverlay2.value = !filterByOwnerOverlay2.value
-  // filterByOwner.value.filters.push(filterByOwner.value.fields)
 }
 const insertFilter = (payload) => {
   if (filterByOwner.value.filters instanceof Array) {
@@ -106,10 +105,6 @@ const updateFilter = (payload) => {
   })
 
   localSaveLoading.value = false
-}
-const updateFilterByOwner = (filter) => {
-  // filterByOwnerOverlay2.value = !filterByOwnerOverlay2.value
-  // filterByOwner.value.filters[filter.index] = Object.assign({}, filter)
 }
 const filterByOwnerOverlayAction = () => {
   filterByOwnerOverlay.value = true
@@ -181,6 +176,7 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
   <Card style="overflow: hidden" class="">
     <template #title>Filters</template>
     <template #content>
+      <!-- <pre>{{ filterByOwner.filters }}</pre> -->
       <div>
         <div class="relative flex flex-column gap-4 text-600">
           <div
@@ -206,34 +202,39 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
               <div v-if="getPicklist.filter_operators" class="font-italic">
                 {{ getPicklist.filter_operators.values.find(op => op._id === filter.operator_id).label }}
               </div>
-              <div class="flex flex-wrap mt-2">
-                <div
-                  v-for="(val, vx) in filter.values"
-                  :key="vx"
-                  severity="secondary"
-                  class="text-xs white-space-nowrap">
-                  <div v-if="_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'text'">
-                    {{ val }}
-                  </div>
-                  <div v-if="_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'boolean'">
-                    Test
-                  </div>
+              <div class="flex flex-wrap mt-2 text-xs white-space-nowrap">
+                <div v-if="filter.isNull">
+                  Null
+                </div>
+                <div v-else>
                   <div v-if="
-                        _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'picklist' ||
-                        _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'lookupModel'
-                      "
-                    class=""
+                    _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'text' ||
+                    _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'boolean' ||
+                    _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'date'
+                  ">
+                    {{ filter.values }}
+                  </div>
+                  <div
+                    v-else-if="
+                      _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'picklist' ||
+                      _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'lookupModel'
+                    "
+                    v-for="(val, vx) in filter.values"
+                    :key="vx"
+                    severity="secondary"
                   >
-                    {{
-                      _getFieldDetailsById({
-                        fields: getPicklist[_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).listName] && getPicklist[_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).listName].values,
-                        _id: val
-                      }) &&
-                      _getFieldDetailsById({
-                        fields: getPicklist[_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).listName] && getPicklist[_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).listName].values,
-                        _id: val
-                      }).value
-                    }},&nbsp;
+                    <div>
+                      {{
+                        _getFieldDetailsById({
+                          fields: getPicklist[_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).listName] && getPicklist[_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).listName].values,
+                          _id: val
+                        }) &&
+                        _getFieldDetailsById({
+                          fields: getPicklist[_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).listName] && getPicklist[_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).listName].values,
+                          _id: val
+                        }).value
+                      }},&nbsp;
+                    </div>
                   </div>
                 </div>
               </div>
@@ -242,7 +243,7 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
 
           <div class="flex justify-content-between">
             <a @click="addFilterByOwner()" href="javascript:void(0);">add filter</a>
-            <a @click="filterByOwner.filters = []" href="javascript:void(0);">remove all</a>
+            <!-- <a @click="filterByOwner.filters = []" href="javascript:void(0);">remove all</a> -->
           </div>
         </div>
       </div>
@@ -272,8 +273,6 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
             {{ filterByOwner.data.mode == 'new' ? 'Add filter' : 'Edit filter' }}
           </div>
           <div class="flex flex-column gap-3">
-            <!-- <pre>{{ getPicklist && getPicklist[filterByOwner.data.field && filterByOwner.data.field.listName] }}</pre>
-            {{ filterByOwner.data.field && filterByOwner.data.field.listName }} -->
             <Dropdown
               v-model="filterByOwner.data.field"
               @change="fieldChange($event)"
@@ -290,14 +289,22 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
               placeholder="Select an operator"
               class="w-full" />
 
-            <Checkbox
-              v-if="filterByOwner.data.field && filterByOwner.data.field.field_type.name === 'boolean'"
-              v-model="filterByOwner.data.value"
-              binary variant="filled" />
+            <div v-if="filterByOwner.data.field && filterByOwner.data.field.field_type.name === 'boolean'">
+              <Checkbox
+                v-model="filterByOwner.data.value"
+                binary
+                variant="filled"
+                inputId="isBool"
+                :disabled="filterByOwner.data.isNull" />
+              <label for="isBool" class="ml-2">
+                {{ filterByOwner.data.value instanceof Array ? filterByOwner.data.value[0] : filterByOwner.data.value }}
+              </label>
+            </div>
 
             <Calendar
               v-else-if="filterByOwner.data.field && filterByOwner.data.field.field_type.name === 'date'"
-              v-model="filterByOwner.data.value" />
+              v-model="filterByOwner.data.value"
+              :disabled="filterByOwner.data.isNull" />
 
             <MultiSelect
               v-else-if="filterByOwner.data.field && (filterByOwner.data.field.field_type.name === 'lookupModel' || filterByOwner.data.field.field_type.name === 'picklist')"
@@ -307,9 +314,21 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
               optionValue="_id"
               placeholder="Select"
               :maxSelectedLabels="3"
+              :disabled="filterByOwner.data.isNull"
               class="w-full" />
 
-            <inputText v-else v-model="filterByOwner.data.value" />
+            <inputText v-else v-model="filterByOwner.data.value" :disabled="filterByOwner.data.isNull" />
+
+            <div>
+              <Checkbox
+                v-model="filterByOwner.data.isNull"
+                binary
+                variant="filled"
+                inputId="isNull" />
+              <label for="isNull" class="ml-2">
+                Is Null
+              </label>
+            </div>
           </div>
           <div class="flex justify-content-end gap-2">
             <!-- {{ filterByOwner.data && filterByOwner.data.operator }} -->
@@ -319,15 +338,15 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
               outlined
               label="Cancel"
               severity="secondary"
-              size="large" />
+              size="small" />
             <Button
               v-if="filterByOwner.data.mode === 'new'"
-              @click="saveFilterByOwner"
+              @click="saveFilterByOwner()"
               :disabled="!filterByOwner.data.field || !filterByOwner.data.operator || localSaveLoading"
               :loading="localSaveLoading"
               outlined
               label="Done"
-              size="large" />
+              size="small" />
             <Button
               v-else
               @click="saveFilterByOwner()"
@@ -335,7 +354,7 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
               :loading="localSaveLoading"
               outlined
               label="Update"
-              size="large" />
+              size="small" />
           </div>
         </div>
       </Teleport>
@@ -345,7 +364,8 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
         <Button
           @click="applyFilters()"
           :loading="applyFiltersLoading"
-          label="Apply filter" />
+          label="Apply filter"
+          size="small" />
       </div>
     </template>
   </Card>
