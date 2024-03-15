@@ -396,15 +396,15 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
 
     // modules from db3.json
-    const jsonRes = await axios(`${jsonDbUrl.value}/modules`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    })
+    // const jsonRes = await axios(`${jsonDbUrl.value}/modules`, {
+    //   method: 'GET',
+    //   headers: { 'Content-Type': 'application/json' }
+    // })
 
-    if (jsonRes.status === 200) {
-      console.log(jsonRes)
-      jsonModules.value = jsonRes.data
-    }
+    // if (jsonRes.status === 200) {
+    //   console.log(jsonRes)
+    //   jsonModules.value = jsonRes.data
+    // }
 
     modulesLoading.value = false
   }
