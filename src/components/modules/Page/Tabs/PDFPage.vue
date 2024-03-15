@@ -28,9 +28,9 @@ onMounted(()=>{
                         <img v-else-if="_.includes(selectedTemplate,'Vietnam - Hanoi') || _.includes(selectedTemplate,'Vietnam -  Hanoi Service Quote')" :src="vietHanoi" style="width: 98%; display: block; margin:0px;"/>
                         <img v-else-if="!_.includes(selectedTemplate,'Pradana Indah Cemerlang') && !_.includes(selectedTemplate,'Esco Farma Lab')" :src="escoQuotation" style="width: 100%; display: block;"/>
                     </div>
-                    <div class="panelLabel" v-if="panel.label">{{ panel.label }}</div>
+                    <div class="panelLabel" style="background-color: #dfdede;padding: 3px 5px;margin-top: 20px;" v-if="panel.label"><b>{{ panel.label }}</b></div>
                     <div class="flex flex-wrap m-2">
-                        <div class="pdfColumn" v-for="(sec,secIndex) in panel.sections" :key="'sec_' + secIndex">
+                        <div class="pdfColumn" style="flex-basis:0; flex-grow: 1;" v-for="(sec,secIndex) in panel.sections" :key="'sec_' + secIndex">
                             <div class="flex flex-column w-full" :style="{'text-align' : _.get(sec,'alignment','left')}">
                                 <template v-for="(el,elIndex) in sec.elements" :key="'el' + elIndex">
                                     <template v-if="el.elemType=='label'">
@@ -40,24 +40,24 @@ onMounted(()=>{
                                         <div v-html="el.value"></div>
                                     </template>
                                     <template v-else-if="el.elemType=='mutable'">
-                                        <table class="mutableTable">
+                                        <table class="mutableTable" style="border-spacing: 0; border-collapse: collapse; font-size:11px;">
                                             <thead>
                                                 <tr>
-                                                    <th>Item No</th>
-                                                    <th v-for="field in el.fields" :key="field.field" :style="{'width': field.width + '%'}">{{ field.label }}</th>
+                                                    <th style="background-color: #00467f; color: #fff; border:1px solid; text-align: center; padding:2px; vertical-align: middle; margin:0; word-wrap: break-word;">Item No</th>
+                                                    <th v-for="field in el.fields" :key="field.field" style="background-color: #00467f; color: #fff; border:1px solid; text-align: center; padding:2px; vertical-align: middle; margin:0; word-wrap: break-word;" :style="{'width': field.width + '%'}">{{ field.label }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr v-for="(item,itemIndex) in el.values" :key="itemIndex" :class="{ 'odd' : itemIndex % 2 == 1 }">
-                                                    <td style="text-align:center">{{ itemIndex+1 }}</td>
-                                                    <td v-for="field in el.fields" :key="field.field" :style="{'text-align':((_.includes(['percentage','number'],field.field.field_type.name)) ? 'center': ((_.includes(['formula','rollUpSummary','currency'],field.field.field_type.name)) ? 'right' : 'left'))}"><div v-html="item[field.displayFieldName]"></div></td>
+                                                <tr v-for="(item,itemIndex) in el.values" :key="itemIndex" :class="{ 'odd' : itemIndex % 2 == 1 }" :style="(itemIndex % 2 == 1) ? 'background-color: rgba(0, 0, 0, 0.1);' : ''">
+                                                    <td style="text-align:center word-wrap: break-word; hyphens: auto; border-right: 1px solid rgba(0, 0, 0, 0.30); padding: 0 5px;">{{ itemIndex+1 }}</td>
+                                                    <td v-for="field in el.fields" :key="field.field" style="word-wrap: break-word; hyphens: auto; border-right: 1px solid rgba(0, 0, 0, 0.30); padding: 0 5px;" :style="{'text-align':((_.includes(['percentage','number'],field.field.field_type.name)) ? 'center': ((_.includes(['formula','rollUpSummary','currency'],field.field.field_type.name)) ? 'right' : 'left'))}"><div v-html="item[field.displayFieldName]"></div></td>
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </template>
                                     <div class="flex flex-row" v-else>
-                                        <p class="pdfLabel" :style="{'width': ((panel.sections.length == 1) ? ((_.get(sec,'width.firstColumn','40')==40) ? '20' : _.get(sec,'width.firstColumn','40')) : _.get(sec,'width.firstColumn','40')) + '%'}">{{ el.label }}</p>
-                                        <p class="pdfValue" :style="{'width':((panel.sections.length == 1) ? ((_.get(sec,'width.secondColumn','60')==60) ? '80' : _.get(sec,'width.secondColumn','60') ) : _.get(sec,'width.secondColumn','60')) + '%'}" v-html="el.value"></p>
+                                        <p class="pdfLabel" style="word-wrap: break-word; margin-bottom: 0px;" :style="{'width': ((panel.sections.length == 1) ? ((_.get(sec,'width.firstColumn','40')==40) ? '20' : _.get(sec,'width.firstColumn','40')) : _.get(sec,'width.firstColumn','40')) + '%'}">{{ el.label }}</p>
+                                        <p class="pdfValue" style="word-wrap: break-word; margin-bottom: 0px;" :style="{'width':((panel.sections.length == 1) ? ((_.get(sec,'width.secondColumn','60')==60) ? '80' : _.get(sec,'width.secondColumn','60') ) : _.get(sec,'width.secondColumn','60')) + '%'}" v-html="el.value"></p>
                                     </div>
                                 </template>
                             </div>
@@ -82,7 +82,7 @@ onMounted(()=>{
     margin: auto;
 }
 .pdfPreview .panelLabel{
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #dfdede;
     padding: 3px 5px;
     margin-top: 20px;
     font-weight: bold;

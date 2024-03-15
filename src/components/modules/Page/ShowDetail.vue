@@ -262,13 +262,13 @@ onMounted(async() => {
                   <div>{{ field.groupLabel }}</div>
                   <div class="flex">
                     <div v-for="(groupField, gfx) in field.groupWith" :key="gfx">
-                      <div class="font-bold text-md">{{ getItemValueByName(groupField) }}{{ field.fieldGlue === ' ' ? '&nbsp;' : field.fieldGlue }}</div>
+                      <div class="font-semibold text-md">{{ getItemValueByName(groupField) }}{{ field.fieldGlue === ' ' ? '&nbsp;' : field.fieldGlue }}</div>
                     </div>
                   </div>
                 </div>
                 <div v-else>
                   <div>{{ field.label }}</div>
-                  <div class="font-bold text-md">{{ getItemValueByName(field.name) }}</div>
+                  <div class="font-semibold text-md">{{ getItemValueByName(field.name) }}</div>
                 </div>
               </div>
             </div>
@@ -277,7 +277,7 @@ onMounted(async() => {
           <div v-for="(field, fx) in localModule.fields" :key="fx">
             <div v-if="field.header" class="flex flex-column text-md mx-4">
               <div>{{ field.label }}</div>
-              <div v-if="getItemValueByName(field.name)" class="font-bold text-md">
+              <div v-if="getItemValueByName(field.name)" class="font-semibold text-md">
                 <template v-if="field.field_type.name=='lookupModel'">
                   <template v-if="checkFieldIfMultipleSelect(field.rules)">
                     <a v-for="val in getItemValueByName(field.name)" :key="val._id" :href="transformLookupDisplay(val,field).link" target="_blank">{{ transformLookupDisplay(val,field).label }}</a>
