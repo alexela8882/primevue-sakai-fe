@@ -73,11 +73,13 @@ export const useFormDataStore = defineStore('formDataStore', () => {
 
     const fetchPicklist = async (payload) => {
       let param = {'listName':payload}
+      if (param.listName) {
         const res = await axios.post(`/picklist`,param)
     
         if (res.status === 200) {
           picklist.value = _.merge(picklist.value,res.data)
         }
+      }
     }
 
     const fetchLookup = async (moduleName,field) => {
