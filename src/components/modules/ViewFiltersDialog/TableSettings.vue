@@ -23,6 +23,7 @@ const {
     sortField: yup.string().label('Sort field').required(),
     sortOrder: yup.string().label('Sort order').required(),
     pageSize: yup.string().label('Items per page').required(),
+    queryType: yup.string().label('Query Type').required(),
     pickList: yup.array().label('Pick list fields').min(2, 'Please add at least 2 field').required()
   })
 })
@@ -31,6 +32,7 @@ const filterName = defineComponentBinds('filterName')
 const sortField = defineComponentBinds('sortField')
 const sortOrder = defineComponentBinds('sortOrder')
 const pageSize = defineComponentBinds('pageSize')
+const queryType = defineComponentBinds('queryType')
 const pickList = defineComponentBinds('pickList')
 // stores
 const moduleStore = useModuleStore()
@@ -81,6 +83,7 @@ const tblSettingsAutoFill = (viewFilter) => {
   setFieldValue('sortField', viewFilter.sortField ? viewFilter.sortField : 'created_at')
   setFieldValue('sortOrder', viewFilter.sortOrder)
   setFieldValue('pageSize', viewFilter.pageSize ? viewFilter.pageSize : 15)
+  setFieldValue('queryType', viewFilter.queryType ? viewFilter.queryType : 'all')
   const filteredFields = props.module.fields.filter(item => !viewFilter.fields.some(removeItem => removeItem._id === item._id))
   pickListTblFields.value = [filteredFields, viewFilter.fields]
   setFieldValue('pickList', viewFilter.fields.map(field => field._id))
@@ -93,6 +96,7 @@ onMounted(() => {
 
   if (props.mode === 'new') {
     pickListTblFields.value = [props.module.fields, []]
+    setFieldValue('queryType', 'all')
     setFieldValue('pageSize', 15)
     setFieldValue('sortOrder', 'ASC')
     setFieldValue('sortField', 'created_at')
@@ -132,16 +136,18 @@ watch(() => props.saveTrigger, (newVal, oldVal) => {
         </span>
         <div class="p-error text-sm my-2">{{ errors.filterName || '&nbsp;' }}</div>
       </div>
-      <div class="hidden" v-if="mode === 'edit-table'">
+      <div>
         <span class="p-float-label">
           <Dropdown
-            v-model="localSelectedViewFilter"
-            :options="_getViewFilters(module)"
-            optionLabel="filterName"
-            optionValue="_id"
+            v-bind="queryType"
+            :class="`${errors.queryType ? 'p-invalid' : 'border-primary'}`"
+            :options="[{ label: 'All', value: 'all' }, { label: 'Owned', value: 'owned' }]"
+            optionLabel="label"
+            optionValue="value"
             class="w-full md:w-16rem mr-2" />
-          <label>View filters</label>
+          <label>Query type</label>
         </span>
+        <div class="p-error text-sm my-2">{{ errors.queryType || '&nbsp;' }}</div>
       </div>
     </div>
     <div class="flex align-items-center justify-content-between">
