@@ -235,7 +235,7 @@ const initialize = async (vFilter) => {
   const fetchedModule = await _fetchModule(_payload)
 
   localModule.value = fetchedModule
-  viewFiltersCount.value = localModule.value.viewFilters.length
+  viewFiltersCount.value = localModule.value.viewFilters && localModule.value.viewFilters.length
 
   // console.log(getBaseModule.value)
   // console.log(localModule.value)
@@ -329,7 +329,7 @@ watch(() => getModules.value, async (newVal, oldVal) => {
 
   if (viewFiltersDialogMode.value !== null) {
     if (viewFiltersDialogMode.value === 'new') {
-      selectedViewFilter.value = updatedModule.viewFilters[updatedModule.viewFilters.length - 1]
+      selectedViewFilter.value = updatedModule.viewFilters[updatedModule.viewFilters && updatedModule.viewFilters.length - 1]
     } else {
       console.log('re-initialize')
       selectedViewFilter.value = updatedModule.viewFilters.find(filter => filter._id === selectedViewFilterId.value)
