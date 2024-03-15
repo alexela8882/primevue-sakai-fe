@@ -1,10 +1,12 @@
 <script setup>
 // imports
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 // stores
 import { useFormDataStore } from '@/stores/forms'
 import { useModuleStore } from '@/stores/modules'
+// components
+const LookupField = defineAsyncComponent(() => import('@/components/modules/Form/LookupField.vue'))
 
 // defines
 const props = defineProps({
@@ -306,8 +308,20 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
               v-model="filterByOwner.data.value"
               :disabled="filterByOwner.data.isNull" />
 
+            <div v-if="filterByOwner.data.field && filterByOwner.data.field.field_type.name === 'lookupModel'">
+              <LookupField
+                v-model="filterByOwner.data.value"
+                :field="filterByOwner.data.field"
+                keyName=""
+                :formField="false"
+                :inline="true"
+                :module="module.name"
+                optionValue="_id"
+                :entity="filterByOwner.data.field.entity.name" />
+            </div>
+
             <MultiSelect
-              v-else-if="filterByOwner.data.field && (filterByOwner.data.field.field_type.name === 'lookupModel' || filterByOwner.data.field.field_type.name === 'picklist')"
+              v-else-if="filterByOwner.data.field && filterByOwner.data.field.field_type.name === 'picklist'"
               v-model="filterByOwner.data.value"
               :options="getPicklist[filterByOwner.data.field.listName] && getPicklist[filterByOwner.data.field.listName].values"
               optionLabel="value"
@@ -317,7 +331,9 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
               :disabled="filterByOwner.data.isNull"
               class="w-full" />
 
-            <inputText v-else v-model="filterByOwner.data.value" :disabled="filterByOwner.data.isNull" />
+            <inputText
+              v-else-if="filterByOwner.data.field && filterByOwner.data.field.field_type.name === 'text'"
+              v-model="filterByOwner.data.value" :disabled="filterByOwner.data.isNull" />
 
             <div>
               <Checkbox

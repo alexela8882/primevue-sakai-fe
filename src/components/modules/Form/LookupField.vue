@@ -37,6 +37,7 @@ const toggle = async (event) => {
 const filters = ref([])
 const toast = useToast()
 const addableFormVisible = ref(false)
+const selectedValues = ref([])
 
 const props = defineProps({
     field: Object,
@@ -45,13 +46,15 @@ const props = defineProps({
     inline: Boolean,
     entity: String,
     formField: Boolean,
-    modelValue: Array
+    modelValue: Array,
+    optionValue: String
 })
 
-const emit = defineEmits(['changeValue','update:modelValue'])
+const emit = defineEmits(['changeValue','update:modelValue',])
 const addableModule = ref(null)
 
 onMounted(() => {
+    console.log(props.modelValue)
     let vm = this;
     if(_.get(props.field,'rules.ms_pop_up',false)){
         multiple.value = true
@@ -129,6 +132,9 @@ const fetchData = async() =>{
             // })
             items.value = formatLookupOptions(records.data, [], props.field)
             pagination.value = _.cloneDeep(_.get(records,'meta.pagination',{}))
+
+            selectedValues.value = items.value.options.filter(option => props.modelValue.includes(option._id))
+            value.value = selectedValues.value
         }else{
             toast.add({ severity: 'error', summary: 'Error', detail: 'Please select '+_.join(err,', '), position:"top-center", life: 3000 });
         }
@@ -169,10 +175,16 @@ const checkBeforeClose = (index) =>{
     if(!multiple.value){
         closePopup()
     }
-    if(!props.formField)
-        emit('update:modelValue',value.value)
+    if(!props.formField) {
+        let finalValue = null
 
-    emit('changeValue') 
+        if (props.optionValue) finalValue = value.value.map(val => val[props.optionValue])
+        else finalValue = value.value
+
+        emit('update:modelValue', finalValue)
+    }
+
+    emit('changeValue')
 }
 
 const openAddableForm = async() =>{
