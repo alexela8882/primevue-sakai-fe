@@ -12,6 +12,7 @@ import { useBaseStore } from '@/stores/base'
 import { jsPDF } from "jspdf";
 
 const PDFPage = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/PDFPage.vue'))
+const LookupField = defineAsyncComponent(() => import('@/components/modules/Form/LookupField.vue'))
 
 const quotePDF = useQuotePDF()
 const moduleDetailStore = useModuleDetailStore()
@@ -33,6 +34,7 @@ const pageContent = ref({'headerPanel':[],'bodyPanel':[],'footerPanel':[]})
 
 
 onMounted(async() => {
+    
     await fetchQuoteTemplates()
     await fetchQuoteTemplatesInfo(getItem.value.data._id)
 
@@ -46,7 +48,6 @@ onMounted(async() => {
     if(_.isEmpty(getEntityFields.value('User')))
         await fetchModuleFields("User")
 
-    
     templatesLoading.value = false
 })
 
@@ -250,6 +251,7 @@ const downloadPDF = async() =>{
                 <Button  icon="pi pi-download" rounded  class="ml-2" aria-label="Download" @click="downloadPDF"/>
                 <Button icon="pi pi-envelope" rounded class="ml-2" aria-label="Email" />
             </div>
+            
         </div>
         <div id="pdfContainer" class="pdfPreview w-full mt-2 card flex">
              <div
