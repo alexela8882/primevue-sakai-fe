@@ -53,7 +53,7 @@ const editFilterByOwner = (filter, fx) => {
     uuid: filter.uuid,
     field: filterField,
     operator: filterOperator,
-    value: filter.values.map(val => val._id),
+    value: Array.isArray(filter.values) ? filter.values.map(val => val._id) : filter.values,
     isNull: filter.isNull
   })
 
