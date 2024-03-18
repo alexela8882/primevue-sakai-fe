@@ -86,11 +86,12 @@ const saveFilterByOwner = async () => {
 
   const res = await addViewFilter(payload) // store save/update
   if (res && res.status === 200) {
-    if (payload.data.mode === 'new') insertFilter(res.data)
+    if (payload.data.mode === 'new') insertFilter(res.data.filters[0])
     else updateFilter(res.data.filters[0])
   }
 }
 const insertFilter = (payload) => {
+  console.log(payload)
   if (filterByOwner.value.filters instanceof Array) {
     filterByOwner.value.filters.push(payload)
   } else {
@@ -201,14 +202,17 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
                 {{ filter.operator.label }}
               </div>
               <div class="flex flex-wrap mt-2 text-xs white-space-nowrap">
-                <div v-if="filter.isNull">
-                  Null
-                </div>
-                <div v-else class="flex flex-wrap">
-                  <div v-for="(val, vx) in filter.values" :key="vx">
-                    {{ val.label }}{{ filter.values.length -1 !== vx ? ',&nbsp;' : ''}}
+                <div v-if="Array.isArray(filter.values)">
+                  <div v-if="filter.isNull">
+                    Null
+                  </div>
+                  <div v-else class="flex flex-wrap">
+                    <div v-for="(val, vx) in filter.values" :key="vx">
+                      {{ val.label }}{{ filter.values.length -1 !== vx ? ',&nbsp;' : ''}}
+                    </div>
                   </div>
                 </div>
+                <div v-else>{{ filter.values }}</div>
               </div>
             </div>
           </div>
