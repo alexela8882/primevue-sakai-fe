@@ -30,7 +30,8 @@ const selectedTemplate = ref(null)
 const templatesLoading = ref(true)
 const fetchingCurrentTemplate = ref(false)
 const pageContent = ref({'headerPanel':[],'bodyPanel':[],'footerPanel':[]})
-
+const sectionHeight = ref({'headerPanel':null,'bodyPanel':null,'footerPanel':null})
+const pages = ref([{'page':1}])
 
 onMounted(async() => {
     
@@ -60,13 +61,42 @@ const changeTemplate = async() =>{
 
 
 const pdfLoaded = () =>{
-    const myDiv = document.getElementById("pdfContent");
-    console.log(myDiv)
-    // Get the height of the div
-   if(myDiv){
-     const divHeight = myDiv.offsetHeight;
-    console.log(divHeight)
-   }
+    let myDiv = document.getElementById("headerPanel");
+    if(myDiv){
+        sectionHeight.value.headerPanel = myDiv.offsetHeight;
+    }
+    myDiv = document.getElementById("bodyPanel");
+    if(myDiv){
+        sectionHeight.value.bodyPanel = myDiv.offsetHeight;
+    }
+    myDiv = document.getElementById("footerPanel");
+    if(myDiv){
+        sectionHeight.value.footerPanel = myDiv.offsetHeight;
+    }
+    let pdfHeight = 1145
+    let bodyHeight = pdfHeight - sectionHeight.value.headerPanel - sectionHeight.value.footerPanel
+    let page = Math.ceil(sectionHeight.value.bodyPanel/950)
+    let ctr = 0
+    console.log(page)
+    console.log(sectionHeight.value.bodyPanel)
+    _.forEach(_.fill(Array(page),'1'), function(p){
+        let index = _.findIndex(pages.value,{'page':ctr+1})
+        if(index > -1){
+            let h = ((bodyHeight * ctr) + bodyHeight) + 'px'
+            let m = bodyHeight * ctr
+            let margin = (m > 0) ? "-" + m + 'px' : ''
+            pages.value[ctr]['height'] = h
+            pages.value[ctr]['margin'] = margin
+        }else{
+            let h = ((bodyHeight * ctr) + bodyHeight) + 'px'
+            let m = bodyHeight * ctr
+            let margin = (m > 0) ? "-" + m + 'px' : ''
+            pages.value.push({'page':ctr+1,'height':h,'margin':margin})
+        }           
+
+        console.log(_.cloneDeep(pages.value))
+        ctr++;
+    })
 }
 
 const transformQuoteTemplate = async() =>{
@@ -207,7 +237,7 @@ const transformQuoteTemplate = async() =>{
 }
 
 const downloadPDF = async() =>{
-    var element = document.getElementById('pdfContent');
+    var element = document.getElementById('bodyPanel');
     // html2pdf(element);
     // var opt = {
     //     margin:       [getCurrentTemplate.value.config.top,getCurrentTemplate.value.config.left,getCurrentTemplate.value.config.bottom,getCurrentTemplate.value.config.right],
@@ -223,6 +253,20 @@ const downloadPDF = async() =>{
     doc.html(element, {
         callback: function(doc) {
             // Save the PDF
+            var pageCount = doc.internal.getNumberOfPages(); // Get total number of pages
+            console.log(pageCount);
+            for (var i = 1; i <= pageCount; i++) {
+                doc.setPage(i); // Set the current page
+                const pageSize = doc.internal.pageSize;
+                const footer = `Page ${i} of ${pageCount}`;
+                const pageWidth = pageSize.width ? pageSize.width : pageSize.getWidth();
+                const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
+                const header = 'Report 2014';
+                console.log(pageHeight,pageSize.height,pageSize.getHeight())
+                console.log(pageWidth,pageSize.width,pageSize.getWidth())
+                // doc.text(10, doc.internal.pageSize.height - 10, "Footer Text - Page " + i); // Add footer text
+                doc.text(footer, 0, pageHeight - 15, { baseline: 'bottom' });
+            }
             doc.save('sample-document.pdf');
         },
         margin: [getCurrentTemplate.value.config.top,getCurrentTemplate.value.config.right,getCurrentTemplate.value.config.bottom,getCurrentTemplate.value.config.left],
@@ -232,6 +276,111 @@ const downloadPDF = async() =>{
         windowWidth: 780 //window width in CSS pixels
     });
 
+}
+const data = ref([
+  { name: 'Item 1', quantity: 25 },
+  { name: 'Item 2', quantity: 49 },
+  { name: 'Item 3', quantity: 19 },
+  { name: 'Item 4', quantity: 9 },
+  { name: 'Item 5', quantity: 6 },
+  { name: 'Item 6', quantity: 3 },
+  { name: 'Item 7', quantity: 36 },
+  { name: 'Item 8', quantity: 13 },
+  { name: 'Item 9', quantity: 12 },
+  { name: 'Item 10', quantity: 28 },
+  { name: 'Item 11', quantity: 19 },
+  { name: 'Item 12', quantity: 34 },
+  { name: 'Item 13', quantity: 17 },
+  { name: 'Item 14', quantity: 42 },
+  { name: 'Item 15', quantity: 32 },
+  { name: 'Item 16', quantity: 30 },
+  { name: 'Item 17', quantity: 5 },
+  { name: 'Item 18', quantity: 38 },
+  { name: 'Item 19', quantity: 1 },
+  { name: 'Item 20', quantity: 10 },
+  { name: 'Item 21', quantity: 37 },
+  { name: 'Item 22', quantity: 42 },
+  { name: 'Item 23', quantity: 23 },
+  { name: 'Item 24', quantity: 44 },
+  { name: 'Item 25', quantity: 43 },
+  { name: 'Item 26', quantity: 4 },
+  { name: 'Item 27', quantity: 7 },
+  { name: 'Item 28', quantity: 16 },
+  { name: 'Item 29', quantity: 27 },
+  { name: 'Item 30', quantity: 20 },
+  { name: 'Item 31', quantity: 8 },
+  { name: 'Item 32', quantity: 39 },
+  { name: 'Item 33', quantity: 43 },
+  { name: 'Item 34', quantity: 21 },
+  { name: 'Item 35', quantity: 39 },
+  { name: 'Item 36', quantity: 26 },
+  { name: 'Item 37', quantity: 39 },
+  { name: 'Item 38', quantity: 32 },
+  { name: 'Item 39', quantity: 34 },
+  { name: 'Item 40', quantity: 1 },
+  { name: 'Item 41', quantity: 34 },
+  { name: 'Item 42', quantity: 4 },
+  { name: 'Item 43', quantity: 19 },
+  { name: 'Item 44', quantity: 12 },
+  { name: 'Item 45', quantity: 1 },
+  { name: 'Item 46', quantity: 37 },
+  { name: 'Item 47', quantity: 2 },
+  { name: 'Item 48', quantity: 28 },
+  { name: 'Item 49', quantity: 22 },
+  { name: 'Item 50', quantity: 2 },
+])
+
+const downloadPDF2 = async() =>{
+    const doc = new jsPDF();
+    const pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+    const pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
+    const lineHeight = 8;
+    const startingHeight = 10;
+    let currentHeight = createPdfHeader(doc);
+     let currentPage = 1;
+    for (let item of data.value) {
+        if (currentHeight > pageHeight - 30) {
+            doc.addPage();
+            currentPage++;
+            currentHeight = createPdfHeader(doc);
+        }
+        doc.setFontSize(12);
+        doc.text(item.name, 10, currentHeight);
+        doc.text(`${item.quantity}`, pageWidth - 10, currentHeight, {
+        align: 'right',
+        });
+        currentHeight += lineHeight;
+    }
+     createPdfFooter(doc, currentPage);
+    window.open(doc.output('bloburl'));
+}
+
+const createPdfHeader = (doc) => {
+  const pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
+  const startingHeight = 10;
+  let currentHeight = startingHeight;
+  doc.setFontSize(20);
+  doc.text('Packing List', pageWidth / 2, currentHeight, { align: 'center' });
+  currentHeight += 10;
+  doc.line(10, currentHeight, pageWidth - 10, currentHeight);
+  return currentHeight + 10;
+}
+
+const createPdfFooter = (doc,numberOfPages) => {
+  for (let i = 1; i <= numberOfPages; i++) {
+    doc.setPage(i);
+    doc.line(
+      10,
+      doc.internal.pageSize.height - 20,
+      doc.internal.pageSize.width - 10,
+      doc.internal.pageSize.height - 20
+    );
+    doc.text(
+      `Page ${i} of ${numberOfPages}`,
+      10,
+      doc.internal.pageSize.height - 10
+    );
+  }
 }
 
 </script>
@@ -243,7 +392,8 @@ const downloadPDF = async() =>{
       <ProgressSpinner />
     </div>
     <template v-if="!templatesLoading">
-        <div class="flex justify-content-between">
+         <Button  icon="pi pi-download" rounded  class="ml-2" aria-label="Download" @click="downloadPDF2"/>
+        <!-- <div class="flex justify-content-between">
             <Dropdown v-model="selectedTemplate" :options="getTemplates" filter optionLabel="name" placeholder="Select a template" class="w-full md:w-14rem" @change="changeTemplate"/>
             <div class="flex">
                 <Button icon="pi pi-save" rounded aria-label="Save" />
@@ -259,9 +409,9 @@ const downloadPDF = async() =>{
                 style="height: 60vh !important;">
                 <ProgressSpinner />
             </div>
-            <PDFPage v-if="selectedTemplate && !fetchingCurrentTemplate" :selectedTemplate="selectedTemplate" :pageContent="pageContent" @mounted="pdfLoaded"/>
+            <PDFPage v-if="selectedTemplate && !fetchingCurrentTemplate" :selectedTemplate="selectedTemplate" :pageContent="pageContent" :pages="pages" @mounted="pdfLoaded"/>
             
-        </div>
+        </div> -->
     </template>
 </template>
 <style>
