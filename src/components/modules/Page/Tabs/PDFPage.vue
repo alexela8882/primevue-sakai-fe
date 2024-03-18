@@ -49,7 +49,7 @@ onMounted(()=>{
                                             </thead>
                                             <tbody>
                                                 <tr v-for="(item,itemIndex) in el.values" :key="itemIndex" :class="{ 'odd' : itemIndex % 2 == 1 }" :style="(itemIndex % 2 == 1) ? 'background-color: rgba(0, 0, 0, 0.1);' : ''">
-                                                    <td style="text-align:center word-wrap: break-word; hyphens: auto; border-right: 1px solid rgba(0, 0, 0, 0.30); padding: 0 5px;">{{ itemIndex+1 }}</td>
+                                                    <td style="text-align:center; word-wrap: break-word; hyphens: auto; border-right: 1px solid rgba(0, 0, 0, 0.30); padding: 0 5px;">{{ itemIndex+1 }}</td>
                                                     <td v-for="field in el.fields" :key="field.field" style="word-wrap: break-word; hyphens: auto; border-right: 1px solid rgba(0, 0, 0, 0.30); padding: 0 5px;" :style="{'text-align':((_.includes(['percentage','number'],field.field.field_type.name)) ? 'center': ((_.includes(['formula','rollUpSummary','currency'],field.field.field_type.name)) ? 'right' : 'left'))}"><div v-html="item[field.displayFieldName]"></div></td>
                                                 </tr>
                                             </tbody>
