@@ -643,6 +643,7 @@ export const useModuleStore = defineStore('moduleStore', () => {
       // })
 
       // await _fetchModule(_payload)
+      console.log(res.data.data)
       return res.data
     } else {
       toast.add({
