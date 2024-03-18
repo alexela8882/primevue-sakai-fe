@@ -143,6 +143,7 @@ const tblSettingsBtn = ref([
     }
   }
 ])
+const searchDropdownOpen = ref(false)
 
 // actions
 const savedViewilterAction = async (e) => {
@@ -235,7 +236,7 @@ const initialize = async (vFilter) => {
   const fetchedModule = await _fetchModule(_payload)
 
   localModule.value = fetchedModule
-  viewFiltersCount.value = localModule.value.viewFilters.length
+  viewFiltersCount.value = localModule.value.viewFilters && localModule.value.viewFilters.length
 
   // console.log(getBaseModule.value)
   // console.log(localModule.value)
@@ -329,7 +330,7 @@ watch(() => getModules.value, async (newVal, oldVal) => {
 
   if (viewFiltersDialogMode.value !== null) {
     if (viewFiltersDialogMode.value === 'new') {
-      selectedViewFilter.value = updatedModule.viewFilters[updatedModule.viewFilters.length - 1]
+      selectedViewFilter.value = updatedModule.viewFilters[updatedModule.viewFilters && updatedModule.viewFilters.length - 1]
     } else {
       console.log('re-initialize')
       selectedViewFilter.value = updatedModule.viewFilters.find(filter => filter._id === selectedViewFilterId.value)
@@ -458,9 +459,11 @@ watch(() => selectedSearchKeyIds.value, async (newVal, oldVal) => {
                         multiple
                         collapse-tags
                         :max-collapse-tags="0"
-                        filterable
+                        :filterable="(searchDropdownOpen) ? true : false"
                         placeholder="Select Fields"
-                        style="max-width: 150px">
+                        style="max-width: 150px"
+                        :style="(searchDropdownOpen) ? 'width:150px' : 'width:75px'"
+                        @visible-change="function(val){ searchDropdownOpen = val }">
                         <el-option
                           v-for="item in searchFields"
                           :key="item._id"

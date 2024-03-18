@@ -28,7 +28,7 @@ onMounted(()=>{
                         <img v-else-if="_.includes(selectedTemplate,'Vietnam - Hanoi') || _.includes(selectedTemplate,'Vietnam -  Hanoi Service Quote')" :src="vietHanoi" style="width: 98%; display: block; margin:0px;"/>
                         <img v-else-if="!_.includes(selectedTemplate,'Pradana Indah Cemerlang') && !_.includes(selectedTemplate,'Esco Farma Lab')" :src="escoQuotation" style="width: 100%; display: block;"/>
                     </div>
-                    <div class="panelLabel" style="background-color: #dfdede;padding: 3px 5px;margin-top: 20px;" v-if="panel.label"><b>{{ panel.label }}</b></div>
+                    <div class="panelLabel" style="background-color: #dfdede;padding: 3px 5px;margin-top: 20px; font-weight:600" v-if="panel.label">{{ panel.label }}</div>
                     <div class="flex flex-wrap m-2">
                         <div class="pdfColumn" style="flex-basis:0; flex-grow: 1;" v-for="(sec,secIndex) in panel.sections" :key="'sec_' + secIndex">
                             <div class="flex flex-column w-full" :style="{'text-align' : _.get(sec,'alignment','left')}">
@@ -49,7 +49,7 @@ onMounted(()=>{
                                             </thead>
                                             <tbody>
                                                 <tr v-for="(item,itemIndex) in el.values" :key="itemIndex" :class="{ 'odd' : itemIndex % 2 == 1 }" :style="(itemIndex % 2 == 1) ? 'background-color: rgba(0, 0, 0, 0.1);' : ''">
-                                                    <td style="text-align:center word-wrap: break-word; hyphens: auto; border-right: 1px solid rgba(0, 0, 0, 0.30); padding: 0 5px;">{{ itemIndex+1 }}</td>
+                                                    <td style="text-align:center; word-wrap: break-word; hyphens: auto; border-right: 1px solid rgba(0, 0, 0, 0.30); padding: 0 5px;">{{ itemIndex+1 }}</td>
                                                     <td v-for="field in el.fields" :key="field.field" style="word-wrap: break-word; hyphens: auto; border-right: 1px solid rgba(0, 0, 0, 0.30); padding: 0 5px;" :style="{'text-align':((_.includes(['percentage','number'],field.field.field_type.name)) ? 'center': ((_.includes(['formula','rollUpSummary','currency'],field.field.field_type.name)) ? 'right' : 'left'))}"><div v-html="item[field.displayFieldName]"></div></td>
                                                 </tr>
                                             </tbody>
