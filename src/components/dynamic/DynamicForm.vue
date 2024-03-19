@@ -1,21 +1,21 @@
 <script setup>
 // imports
-import { ref, defineProps, onMounted, defineAsyncComponent, defineEmits } from 'vue'
+import { ref, watch, onMounted, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
-// stores
-import { useActivityLogStore } from '@/stores/statics/activitylogs'
 // components
 const DynamicFields = defineAsyncComponent(() => import('@/components/dynamic/DynamicFields.vue'))
 
 // defines
 const props = defineProps({
-  form: Object
+  form: Object,
+  loading: Boolean,
+  response: String
 })
+const emit = defineEmits(['save-action'])
 
 // refs
-const saveLoading = ref(false)
 const moduleValidationSchemes = ref({})
 const moduleValidationInputs = ref({})
 const atIndexRelatedLists = ref([])
@@ -29,27 +29,27 @@ const {
   isSubmitting,
   setFieldValue,
   handleSubmit,
+  resetForm,
   meta
 } = useForm({})
-// stores
-const activityLogStore = useActivityLogStore()
-const { saveActivityLog } = activityLogStore
 
 // actions
 const proceedAction = async () => {
-  saveLoading.value = true
-
   const res = await validateSyncFunc()
   if (!res.inner) {
-    let finalValues = {}
-    if (props.form.prevalue) finalValues = { ...values, ...props.form.prevalue } 
-    else finalValues = values
+    let _values = {}
+    if (props.form.prevalue) _values = { ...values, ...props.form.prevalue }
+    else _values = values
 
-    await saveActivityLog(finalValues)
+    let finalValues = Object.assign({}, {
+      be_nec: props.form.be_nec,
+      fields: _values
+    })
+
+    // emit action
+    emit('save-action', finalValues)
 
   } else console.log('error')
-
-  saveLoading.value = false
 }
 const validateSyncFunc = handleSubmit((values, actions) => {
   // update errors
@@ -92,8 +92,13 @@ const initialize = async () => {
   moduleValidationSchemes.value = yup.object(testConst)
 }
 
+// lifecycles
 onMounted(async () => {
   await initialize()
+})
+
+watch(() => props.response, (newVal, oldVal) => {
+  if (newVal) resetForm()
 })
 </script>
 
@@ -105,18 +110,18 @@ onMounted(async () => {
         :moduleValidationInputs="moduleValidationInputs"
         :moduleValidationErrors="errors"
         :moduleValidationMeta="meta"
-        :loading="saveLoading"
+        :loading="loading"
         @validate-sync-func="validateSyncFunc()" />
     </div>
   </div>
   <div class="sticky bottom-0 right-0 py-2 surface-50">
     <div class="flex justify-content-end gap-2 px-3 py-1">
-      <Button label="Reset" :disabled="saveLoading" outlined />
+      <Button @click="resetForm()" label="Reset" :disabled="loading" outlined />
       <Button
         @click="proceedAction()"
-        :disabled="saveLoading"
-        :loading="saveLoading"
-        :label="`${saveLoading ? 'Saving...' : 'Save'}`"
+        :disabled="loading"
+        :loading="loading"
+        :label="`${loading ? 'Saving...' : 'Save'}`"
         size="large"
       ></Button>
     </div>

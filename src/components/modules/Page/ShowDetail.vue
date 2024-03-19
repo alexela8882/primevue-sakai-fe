@@ -146,6 +146,10 @@ const createActivityLog = (payload) => {
     icon: payload.icon,
     form: {
       data: payload.form,
+      be_nec: {
+        method: 'POST',
+        uri: '/activity-logs',
+      },
       prevalue: {
         log_type: payload.type,
         module_id: localBaseModule.value._id,
