@@ -1,0 +1,102 @@
+{
+  "data": {
+    "fields":[
+      {
+        "label":"Subject",
+        "name":"subject",
+        "uniqueName":"task_subject",
+        "type":"text",
+        "rules":{
+          "required":true
+        },
+        "data":{
+          "value":null
+        }
+      }, {
+        "label":"Type",
+        "name":"type_id",
+        "uniqueName":"task_type_id",
+        "type":"picklist",
+        "items": [
+          { "label": "Meeting with Customer", "name": "meeting_with_customer" },
+          { "label": "Customer Visit", "name": "customer_visit" }
+        ],
+        "rules":{
+          "required":true
+        },
+        "data":{
+          "value":null
+        }
+      }, {
+        "label":"Due Date",
+        "name":"date",
+        "uniqueName":"task_date",
+        "type":"date",
+        "rules":{
+          "required":true
+        },
+        "data":{
+          "value":null
+        }
+      }, {
+        "label":"Status",
+        "name":"status",
+        "uniqueName":"task_status",
+        "type":"picklist",
+        "items":[
+          {
+            "label":"Pending",
+            "name":"pending"
+          }, {
+            "label":"Cancelled",
+            "name":"cancelled"
+          }, {
+            "label":"Completed",
+            "name":"completed"
+          }
+        ],
+        "rules":{
+          "required":true
+        },
+        "data":{
+          "value":null
+        }
+      }, {
+        "label":"Remarks",
+        "name":"remarks",
+        "uniqueName":"task_remarks",
+        "type":"text",
+        "rules":{
+          "required":true
+        },
+        "data":{
+          "value":null
+        }
+      }, {
+        "label":"Linked To",
+        "name":"link_id",
+        "uniqueName":"task_link_id",
+        "type":"related",
+        "hide": true,
+        "rules":{
+          "required": false
+        },
+        "data": {
+          "value": null
+        }
+      }, {
+        "label":"Module",
+        "name":"module_id",
+        "uniqueName":"task_module_id",
+        "type":"related",
+        "hide": true,
+        "rules":{
+          "required": false
+        },
+        "data":{
+          "value": null
+        }
+      }
+    ]
+  }
+}

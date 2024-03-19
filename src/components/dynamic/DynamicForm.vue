@@ -1,6 +1,6 @@
 <script setup>
 // imports
-import { ref, defineProps, onMounted, defineAsyncComponent, defineEmits } from 'vue'
+import { ref, watch, onMounted, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
@@ -9,8 +9,11 @@ const DynamicFields = defineAsyncComponent(() => import('@/components/dynamic/Dy
 
 // defines
 const props = defineProps({
-  form: Object
+  form: Object,
+  loading: Boolean,
+  response: String
 })
+const emit = defineEmits(['save-action'])
 
 // refs
 const moduleValidationSchemes = ref({})
@@ -26,14 +29,27 @@ const {
   isSubmitting,
   setFieldValue,
   handleSubmit,
+  resetForm,
   meta
 } = useForm({})
 
 // actions
 const proceedAction = async () => {
   const res = await validateSyncFunc()
-  if (!res.inner) console.log('passed')
-  else console.log('error')
+  if (!res.inner) {
+    let _values = {}
+    if (props.form.prevalue) _values = { ...values, ...props.form.prevalue }
+    else _values = values
+
+    let finalValues = Object.assign({}, {
+      be_nec: props.form.be_nec,
+      fields: _values
+    })
+
+    // emit action
+    emit('save-action', finalValues)
+
+  } else console.log('error')
 }
 const validateSyncFunc = handleSubmit((values, actions) => {
   // update errors
@@ -58,10 +74,10 @@ const validateSyncFunc = handleSubmit((values, actions) => {
 })
 const initialize = async () => {
   // add collection item for filling field data
-  props.form.fields.map(field => Object.assign(field, { ...field, data: { value: null } }))
+  props.form.data.fields.map(field => Object.assign(field, { ...field, data: { value: null } }))
   // generate dynamic fields for validation
   const testConst = {}
-  props.form.fields.map(field => {
+  props.form.data.fields.map(field => {
     if (field.rules && field.rules.required) {
       testConst[field.name] = yup.string().label(field.label).required()
     } else {
@@ -76,8 +92,13 @@ const initialize = async () => {
   moduleValidationSchemes.value = yup.object(testConst)
 }
 
+// lifecycles
 onMounted(async () => {
   await initialize()
+})
+
+watch(() => props.response, (newVal, oldVal) => {
+  if (newVal) resetForm()
 })
 </script>
 
@@ -85,17 +106,24 @@ onMounted(async () => {
   <div class="relative h-full px-3">
     <div>
       <DynamicFields
-        :fields="form.fields"
+        :fields="form.data.fields"
         :moduleValidationInputs="moduleValidationInputs"
         :moduleValidationErrors="errors"
         :moduleValidationMeta="meta"
+        :loading="loading"
         @validate-sync-func="validateSyncFunc()" />
     </div>
   </div>
   <div class="sticky bottom-0 right-0 py-2 surface-50">
     <div class="flex justify-content-end gap-2 px-3 py-1">
-      <Button label="Reset" outlined />
-      <Button @click="proceedAction" label="Save" size="large" />
+      <Button @click="resetForm()" label="Reset" :disabled="loading" outlined />
+      <Button
+        @click="proceedAction()"
+        :disabled="loading"
+        :loading="loading"
+        :label="`${loading ? 'Saving...' : 'Save'}`"
+        size="large"
+      ></Button>
     </div>
   </div>
 </template>

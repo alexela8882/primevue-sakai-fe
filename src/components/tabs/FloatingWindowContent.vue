@@ -12,6 +12,7 @@ import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataT
 // stores
 import { useTabStore } from '@/stores/tabs/index'
 import { useModuleStore } from '@/stores/modules/index'
+import { useActivityLogStore } from '@/stores/statics/activitylogs'
 
 // defines
 const props = defineProps({
@@ -20,14 +21,25 @@ const props = defineProps({
 
 // refs
 const localLoading = ref(false)
+const dynamicFormRes = ref()
 // stores
+const activityLogStore = useActivityLogStore()
 const tabStore = useTabStore()
 const moduleStore = useModuleStore()
+const { saveActivityLog } = activityLogStore
 const { updateTabByField } = tabStore
 const { getModuleWithPermissions } = storeToRefs(moduleStore)
 const { _fetchModule } = moduleStore
 
 // actions
+const saveDForm = async (payload) => {
+  localLoading.value = true
+
+  const res = await saveActivityLog(payload)
+  dynamicFormRes.value = res
+
+  localLoading.value = false
+}
 const paginate = async (payload) => {
   localLoading.value = true
 
@@ -75,7 +87,13 @@ onMounted(async () => {
       <component :is="tab.component"></component>
     </div>
     <div v-if="tab.type === 'static-form'" class="py-5 h-full">
-      <DynamicForm :key="tab.name" :form="tab.form" />
+      <DynamicForm
+        :key="tab.name"
+        :form="tab.form"
+        :loading="localLoading"
+        :response="dynamicFormRes"
+        @save-action="saveDForm($event)">
+      </DynamicForm>
     </div>
     <div v-else-if="tab.type === 'module-form'" class="py-2 h-full">
       <Form :key="tab.name" :config="tab" />
