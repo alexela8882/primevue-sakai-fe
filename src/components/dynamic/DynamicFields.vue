@@ -15,7 +15,7 @@ const props = defineProps({
 <template>
   <div>
     <div class="grid">
-      <div v-for="(field, fx) in fields" :key="fx" class="md:col-6">
+      <div v-for="(field, fx) in fields.filter(f => !f.hide)" :key="fx" class="md:col-6">
         <div v-if="field.type === 'text'">
           <span class="p-float-label">
             <InputText

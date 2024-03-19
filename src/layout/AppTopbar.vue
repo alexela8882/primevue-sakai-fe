@@ -27,6 +27,8 @@ import { useFormDataStore } from '@/stores/forms'
 const FloatingWindow = defineAsyncComponent(() =>
   import('@/components/tabs/FloatingWindow.vue')
 )
+// services
+import DynamicFormService from '@/service/DynamicFormService'
 
 // -----------
 // refs
@@ -42,6 +44,8 @@ const outsideClickListener = ref(null)
 const topbarMenuActive = ref(false)
 const isAuthenticated = localStorage.getItem('isAuthenticated')
 const { layoutConfig, onMenuToggle } = useLayout()
+// services
+const dynamicFormService = new DynamicFormService()
 // stores & composables
 const baseStore = useBaseStore()
 const moduleStore = useModuleStore()
@@ -107,217 +111,11 @@ const staticForms = ref([
   {
     label: 'Task',
     name: 'task',
-    icon: 'pi pi-calendar',
-    form: {
-      fields: [
-        {
-          label: 'Subject',
-          name: 'subject',
-          uniqueName: 'task_subject',
-          type: 'text',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Type',
-          name: 'type_id',
-          uniqueName: 'task_type_id',
-          type: 'picklist',
-          items: [
-            { label: 'Verbal', name: 'verbal' },
-            { label: 'Call', name: 'call' },
-            { label: 'E-mail', name: 'email,' },
-            { label: 'Send Quotation', name: 'send_quotation,' }
-          ],
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Due Date',
-          name: 'date',
-          uniqueName: 'task_date',
-          type: 'date',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Status',
-          name: 'status',
-          uniqueName: 'task_status',
-          type: 'picklist',
-          items: [
-            { label: 'Pending', name: 'pending' },
-            { label: 'Cancelled', name: 'cancelled' },
-            { label: 'Completed', name: 'completed' }
-          ],
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Remarks',
-          name: 'remarks',
-          uniqueName: 'task_remarks',
-          type: 'text',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Linked To',
-          name: 'link_id',
-          uniqueName: 'task_link_id',
-          type: 'related',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Module',
-          name: 'module_id',
-          uniqueName: 'task_module_id',
-          type: 'related',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }
-      ]
-    }
+    icon: 'pi pi-calendar'
   }, {
     label: 'Event',
     name: 'event',
-    icon: 'pi pi-book',
-    form: {
-      fields: [
-        {
-          label: 'Subject',
-          name: 'subject',
-          uniqueName: 'event_subject',
-          type: 'text',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Type',
-          name: 'type_id',
-          uniqueName: 'event_type_id',
-          type: 'picklist',
-          items: [
-            { label: 'Meeting with Customer', name: 'meeting_with_customer' },
-            { label: 'Customer Visit', name: 'customer_visit' }
-          ],
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Event Date',
-          name: 'date',
-          uniqueName: 'event_date',
-          type: 'date',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Status',
-          name: 'status',
-          uniqueName: 'event_status',
-          type: 'picklist',
-          items: [
-            { label: 'Pending', name: 'pending' },
-            { label: 'Cancelled', name: 'cancelled' },
-            { label: 'Completed', name: 'completed' }
-          ],
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Start Time',
-          name: 'startTime',
-          uniqueName: 'event_starttime',
-          type: 'time',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'End Time',
-          name: 'endTime',
-          uniqueName: 'event_endtime',
-          type: 'time',
-          rules: {
-            required: false,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Remarks',
-          name: 'remarks',
-          uniqueName: 'event_remarks',
-          type: 'text',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Linked To',
-          name: 'link_id',
-          uniqueName: 'event_link_id',
-          type: 'related',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }, {
-          label: 'Module',
-          name: 'module_id',
-          uniqueName: 'event_module_id',
-          type: 'related',
-          rules: {
-            required: true,
-          },
-          data: {
-            value: null
-          }
-        }
-      ]
-    }
+    icon: 'pi pi-book'
   }
 ])
 
@@ -378,14 +176,14 @@ const logout = () => {
   router.push({name: 'login'})
   toast.add({ severity: 'success', summary: 'Success', detail: 'Logged out successfully', life: 3000 })
 }
-const createStaticForm = (sform) => {
+const createStaticForm = async (sform, serviceForm) => {
   let obj = Object.assign({}, {
     type: 'static-form',
     style: 'window',
     name: `${sform.name}-window-sform`,
     label: sform.label,
     icon: sform.icon,
-    form: sform.form,
+    form: { data: serviceForm },
     expanded: true,
     opened: false,
     opened_order: null
@@ -486,9 +284,13 @@ const initialize = async () => {
     let sformObj = Object.assign({}, {
       label: sform.label,
       icon: sform.icon,
-      form: sform.form,
-      command: () => {
-        createStaticForm(sform)
+      command: async () => {
+        // get form from service
+        let serviceForm = null
+        let activityForm = sform.name === 'task' ? 'getTaskForm' : 'getEventForm'
+        await dynamicFormService[activityForm]().then((d) => serviceForm = d)
+
+        createStaticForm(sform, serviceForm)
       }
     })
     let fwSForm = floatingItems.value.find(fw => fw.label == 'Activity')

@@ -58,10 +58,10 @@ const validateSyncFunc = handleSubmit((values, actions) => {
 })
 const initialize = async () => {
   // add collection item for filling field data
-  props.form.fields.map(field => Object.assign(field, { ...field, data: { value: null } }))
+  props.form.data.fields.map(field => Object.assign(field, { ...field, data: { value: null } }))
   // generate dynamic fields for validation
   const testConst = {}
-  props.form.fields.map(field => {
+  props.form.data.fields.map(field => {
     if (field.rules && field.rules.required) {
       testConst[field.name] = yup.string().label(field.label).required()
     } else {
@@ -85,7 +85,7 @@ onMounted(async () => {
   <div class="relative h-full px-3">
     <div>
       <DynamicFields
-        :fields="form.fields"
+        :fields="form.data.fields"
         :moduleValidationInputs="moduleValidationInputs"
         :moduleValidationErrors="errors"
         :moduleValidationMeta="meta"
