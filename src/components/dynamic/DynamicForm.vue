@@ -4,6 +4,8 @@ import { ref, defineProps, onMounted, defineAsyncComponent, defineEmits } from '
 import { storeToRefs } from 'pinia'
 import { useForm } from 'vee-validate'
 import * as yup from 'yup'
+// stores
+import { useActivityLogStore } from '@/stores/statics/activitylogs'
 // components
 const DynamicFields = defineAsyncComponent(() => import('@/components/dynamic/DynamicFields.vue'))
 
@@ -13,6 +15,7 @@ const props = defineProps({
 })
 
 // refs
+const saveLoading = ref(false)
 const moduleValidationSchemes = ref({})
 const moduleValidationInputs = ref({})
 const atIndexRelatedLists = ref([])
@@ -28,12 +31,25 @@ const {
   handleSubmit,
   meta
 } = useForm({})
+// stores
+const activityLogStore = useActivityLogStore()
+const { saveActivityLog } = activityLogStore
 
 // actions
 const proceedAction = async () => {
+  saveLoading.value = true
+
   const res = await validateSyncFunc()
-  if (!res.inner) console.log('passed')
-  else console.log('error')
+  if (!res.inner) {
+    let finalValues = {}
+    if (props.form.prevalue) finalValues = { ...values, ...props.form.prevalue } 
+    else finalValues = values
+
+    await saveActivityLog(finalValues)
+
+  } else console.log('error')
+
+  saveLoading.value = false
 }
 const validateSyncFunc = handleSubmit((values, actions) => {
   // update errors
@@ -89,13 +105,20 @@ onMounted(async () => {
         :moduleValidationInputs="moduleValidationInputs"
         :moduleValidationErrors="errors"
         :moduleValidationMeta="meta"
+        :loading="saveLoading"
         @validate-sync-func="validateSyncFunc()" />
     </div>
   </div>
   <div class="sticky bottom-0 right-0 py-2 surface-50">
     <div class="flex justify-content-end gap-2 px-3 py-1">
-      <Button label="Reset" outlined />
-      <Button @click="proceedAction" label="Save" size="large" />
+      <Button label="Reset" :disabled="saveLoading" outlined />
+      <Button
+        @click="proceedAction()"
+        :disabled="saveLoading"
+        :loading="saveLoading"
+        :label="`${saveLoading ? 'Saving...' : 'Save'}`"
+        size="large"
+      ></Button>
     </div>
   </div>
 </template>

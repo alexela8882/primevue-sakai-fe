@@ -90,22 +90,23 @@
         "type":"related",
         "hide": true,
         "rules":{
-            "required":true
+            "required": false
         },
         "data":{
-            "value":null
+            "value": null
         }
-      }, {
+      },
+      {
         "label":"Module",
         "name":"module_id",
         "uniqueName":"task_module_id",
         "type":"related",
         "hide": true,
         "rules":{
-            "required":true
+          "required": false
         },
         "data":{
-            "value":null
+          "value": null
         }
       }
     ]

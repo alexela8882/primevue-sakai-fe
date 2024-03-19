@@ -79,10 +79,10 @@
         "type":"related",
         "hide": true,
         "rules":{
-          "required":true
+          "required": false
         },
-        "data":{
-          "value":null
+        "data": {
+          "value": null
         }
       }, {
         "label":"Module",
@@ -91,10 +91,10 @@
         "type":"related",
         "hide": true,
         "rules":{
-          "required":true
+          "required": false
         },
         "data":{
-          "value":null
+          "value": null
         }
       }
     ]

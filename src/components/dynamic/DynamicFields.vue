@@ -8,8 +8,10 @@ const props = defineProps({
   fields: Array,
   moduleValidationInputs: Object,
   moduleValidationErrors: Object,
-  moduleValidationMeta: Object
+  moduleValidationMeta: Object,
+  loading: Boolean
 })
+
 </script>
 
 <template>
@@ -21,6 +23,7 @@ const props = defineProps({
             <InputText
               v-bind="moduleValidationInputs[field.name]"
               @update:modelValue="$emit('validate-sync-func')"
+              :disabled="loading"
               class="w-full"
               :class="`${field.rules.required && 'border-left-3 border-red-600'}`"
             />
@@ -35,6 +38,7 @@ const props = defineProps({
             <Calendar
               v-bind="moduleValidationInputs[field.name]"
               @update:modelValue="$emit('validate-sync-func')"
+              :disabled="loading"
               class="w-full"
               :pt="{ input: { class: `${field.rules.required && 'border-left-3 border-red-600'}` } }"
             />
@@ -49,6 +53,7 @@ const props = defineProps({
             <Calendar
               v-bind="moduleValidationInputs[field.name]"
               @update:modelValue="$emit('validate-sync-func')"
+              :disabled="loading"
               timeOnly
               class="w-full"
               :pt="{ input: { class: `${field.rules.required && 'border-left-3 border-red-600'}` } }"
@@ -64,6 +69,7 @@ const props = defineProps({
             <Dropdown
               v-bind="moduleValidationInputs[field.name]"
               @update:modelValue="$emit('validate-sync-func')"
+              :disabled="loading"
               :options="field.items"
               optionLabel="label"
               optionValue="name"
@@ -81,6 +87,7 @@ const props = defineProps({
             <Dropdown
               v-bind="moduleValidationInputs[field.name]"
               @update:modelValue="$emit('validate-sync-func')"
+              :disabled="loading"
               :options="field.items"
               optionLabel="label"
               optionValue="name"

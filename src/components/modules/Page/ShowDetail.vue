@@ -115,7 +115,6 @@ const activityLogItems = ref([
             type: 'task',
             form: form
           })
-          console.log(payload)
           createActivityLog(payload)
         }
       }, {
@@ -130,7 +129,6 @@ const activityLogItems = ref([
             type: 'event',
             form: form
           })
-          console.log(payload)
           createActivityLog(payload)
         }
       }
@@ -143,14 +141,15 @@ const createActivityLog = (payload) => {
   let obj = Object.assign({}, {
     type: 'static-form',
     style: 'window',
-    name: `${route.params.name}-window-sform`,
+    name: `${payload.type}-window-sform`,
     label: `New ${payload.type} (${localBaseModule.value.label})`,
     icon: payload.icon,
     form: {
       data: payload.form,
       prevalue: {
+        log_type: payload.type,
         module_id: localBaseModule.value._id,
-        record_id: route.params.pageid
+        link_id: route.params.pageid
       }
     },
     expanded: true,
