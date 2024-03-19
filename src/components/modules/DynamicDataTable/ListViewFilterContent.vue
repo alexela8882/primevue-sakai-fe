@@ -212,7 +212,7 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
                     </div>
                   </div>
                 </div>
-                <div v-else>{{ filter.values }}</div>
+                <div v-else>{{ filter.isNull ? 'Null' : filter.values }}</div>
               </div>
             </div>
           </div>
