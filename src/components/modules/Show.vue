@@ -162,7 +162,7 @@ const paginate = async (payload) => {
     moduleName: getBaseModule.value.name,
     viewFilter: selectedViewFilterId.value,
     page: page > 1 ? page : null,
-    limit: payload.per_page,
+    per_page: payload.per_page,
     search: moduleSearch.value,
     searchFields: generateSearchFields(),
     reuse: true
@@ -175,7 +175,7 @@ const limitPage = async (e) => {
   // re-fetch module & collection
   const limit = e.value
   const args = {
-    event: e, 
+    event: e,
     jump: true,
     per_page: limit
   }
@@ -230,7 +230,7 @@ const initialize = async (vFilter) => {
     moduleName: getBaseModule.value.name,
     viewFilter: vFilter ? vFilter._id : selectedViewFilterId.value && selectedViewFilterId.value,
     page: null,
-    limit: vFilter ? vFilter.pageSize : selectedViewFilter.value && selectedViewFilter.value.pageSize,
+    per_page: vFilter ? vFilter.pageSize : selectedViewFilter.value && selectedViewFilter.value.pageSize,
     reuse: true
   })
   const fetchedModule = await _fetchModule(_payload)

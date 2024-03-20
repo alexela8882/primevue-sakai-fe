@@ -46,7 +46,7 @@ const paginate = async (payload) => {
   let page = 1
   if (!payload.jump) {
     page = payload.event.page + 1
-  } else page = props.tab.module.collection && props.tab.module.collection.pagination
+  } else page = props.tab.module.collection && props.tab.module.collection.meta.pagination.current_page
 
   // re-fetch module & collection
   await updateTabByField({
@@ -64,10 +64,13 @@ const limitPage = async (e) => {
   // re-fetch module & collection
   const limit = e.value
   const args = {
-    event: e, 
+    event: e,
+    page: 1,
     jump: true,
-    per_page: limit
+    per_page: limit,
+    limit: true
   }
+  console.log(args.per_page)
   await paginate(args)
 }
 
