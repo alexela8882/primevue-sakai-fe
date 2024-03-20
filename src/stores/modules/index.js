@@ -102,8 +102,19 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
   })
   const getModuleWithPermissions = computed(() => {
-    return (payload) => {
-      return getModules.value.find(module => module._id === payload._id)
+    return (payload, field = null) => {
+      console.log(payload)
+      console.log(field)
+      let result = null
+
+      if (!field) result = getModules.value.find(module => module._id === payload._id)
+      else {
+        if (getModules.value.find(module => module._id === payload._id)) {
+          result = getModules.value.find(module => module._id === payload._id)[field]
+        } result = []
+      }
+
+      return result
     }
   })
   const getJsonModules = computed(() => jsonModules.value)
@@ -458,25 +469,26 @@ export const useModuleStore = defineStore('moduleStore', () => {
   }
   const fetchBaseModuleByField = async (payload, reuse) => {
     if (!reuse) moduleLoading.value = true
-    const res = await axios(`${jsonDbUrl.value}/modules?${payload.field}=${payload.value}`, {
+    const res = await axios(`/modules?${payload.field}=${payload.value}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' }
     })
 
     if (res.status === 200) {
-      const data = (res.data && res.data.length > 0) ? res.data[0] : res.data
+      console.log(res)
       if (!reuse) {
-        baseModule.value = data
+        baseModule.value = res.data.data
         moduleLoading.value = false
-      } else return data
+      } else return res.data.data
     }
   }
   const fetchModule = async (payload) => {
+    console.log(payload)
     if (!payload.reuse) collectionLoading.value = true
     // const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
     let baseUri = `/modules/${payload.moduleName}`
     let pageUri = payload.page ? `?page=${payload.page}` : '?page=1'
-    let limitUri = payload.limit ? `&pageSize=${payload.limit}` : ''
+    let limitUri = payload.per_page ? `&pageSize=${payload.per_page}` : ''
     let viewFilterUri = payload.viewFilter ? `&viewfilter=${payload.viewFilter}` : ''
     let listOnlyUri = payload.listOnly ? `&listOnly` : ''
     let searchUri = payload.search ? `&search=${payload.search}` : ''
@@ -555,13 +567,13 @@ export const useModuleStore = defineStore('moduleStore', () => {
   }
   const fetchLinkedModuleData = async (payload) => {
     try {
-      const res = await axios(`${jsonDbUrl.value}/${payload.module}`, {
+      const res = await axios(`/${payload.module}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
       })
   
       if (res.status === 200) {
-        let fetchedModule = (res.data && res.data.length > 0) ? res.data[0] : res.data
+        let fetchedModule = res.data.data
         // linkedModuleData.value = fetchedModule // insert module
         if (fetchedModule.collection) {
           const data = fetchedModule.collection.data.find(d => d[payload.link_field] == payload.link_id)

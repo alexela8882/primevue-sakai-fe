@@ -153,7 +153,7 @@ const createActivityLog = (payload) => {
       prevalue: {
         log_type: payload.type,
         module_id: localBaseModule.value._id,
-        link_id: route.params.pageid
+        record_id: route.params.pageid
       }
     },
     expanded: true,
@@ -262,7 +262,7 @@ onMounted(async() => {
   await fetchBaseModule(route.params.id)
   await fetchModule({moduleName: route.params.name})
 
-  const lmdParams = { module: 'inquiries', link_field: 'link_id', link_id: route.params.pageid }
+  const lmdParams = { module: 'inquiries', link_field: 'record_id', record_id: route.params.pageid }
   await fetchLinkedModuleData(lmdParams)
 
   await fetchItem(route.params)

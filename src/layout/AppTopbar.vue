@@ -88,6 +88,7 @@ const floatingItems = ref([
       {
         label: 'Tabs',
         icon: 'pi pi-clone',
+        disabled: true,
         command: () => {
           router.push({ name: 'test-pages.tabs' })
         }
@@ -111,11 +112,13 @@ const staticForms = ref([
   {
     label: 'Task',
     name: 'task',
-    icon: 'pi pi-calendar'
+    icon: 'pi pi-calendar',
+    disabled: true
   }, {
     label: 'Event',
     name: 'event',
-    icon: 'pi pi-book'
+    icon: 'pi pi-book',
+    disabled: true
   }
 ])
 
@@ -284,6 +287,7 @@ const initialize = async () => {
     let sformObj = Object.assign({}, {
       label: sform.label,
       icon: sform.icon,
+      disabled: sform.disabled,
       command: async () => {
         // get form from service
         let serviceForm = null
