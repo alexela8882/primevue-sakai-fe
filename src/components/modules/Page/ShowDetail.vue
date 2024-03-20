@@ -26,6 +26,7 @@ import { useModuleStore } from '@/stores/modules'
 import { useModuleDetailStore } from '@/stores/modules/detail'
 import { useModuleFileStore } from '@/stores/modules/file'
 import { useTabStore } from '@/stores/tabs'
+import { useActivityLogStore } from '@/stores/statics/activitylogs'
 // services
 import DynamicFormService from '@/service/DynamicFormService'
 
@@ -50,10 +51,13 @@ const serviceRelatedLists = ref([])
 // services
 const dynamicFormService = new DynamicFormService()
 // stores
+const activityLogStore = useActivityLogStore()
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
 const moduleFileStore = useModuleFileStore()
 const tabStore = useTabStore()
+const { fetchActivityLogsByRecord } = activityLogStore
+const { getActivityLogsByRecord } = storeToRefs(activityLogStore)
 const { fetchModule, fetchLinkedModuleData, fetchBaseModule } = moduleStore
 const { getModule, getLinkedModuleData, getBaseModule, getFieldDetailsById } = storeToRefs(moduleStore)
 const {
@@ -266,6 +270,7 @@ onMounted(async() => {
   await fetchLinkedModuleData(lmdParams)
 
   await fetchItem(route.params)
+  await fetchActivityLogsByRecord(route.params.pageid)
 
   // console.log(route.params)
   // console.log(getModule.value.relatedLists)
@@ -526,25 +531,29 @@ onMounted(async() => {
               </div>
               <div class="flex flex-column gap-1 mb-6">
                 <Panel
-                  v-for="(dummy, dmx) in ['October 2023', 'November 2023', 'December 2023']"
-                  :key="dmx"
+                  v-for="(log, lx) in getActivityLogsByRecord"
+                  :key="lx"
                   toggleable
                   collapsed
                   class="activity-panel">
                   <template #header>
                     <div class="text-sm text-900">
-                      <span v-if="dmx === 0">This months</span>
+                      <!-- <span>This months</span> -->
                     </div>
                   </template>
                   <template #togglericon>
                     <font-awesome-icon icon="fa-solid fa-caret-down" style="font-size: 1.5rem;"></font-awesome-icon>
                   </template>
                   <template #icons>
-                    <div class="text-sm text-900 ml-2">{{ dummy }}</div>
+                    <div class="text-sm text-900 ml-2">{{ log.created_at }}</div>
                   </template>
                   <p class="m-0 mt-3">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    <ul>
+                      <li>{{ log.subject }}</li>
+                      <li>{{ log.status }}</li>
+                      <li>{{ log.remarks }}</li>
+                      <li>{{ log.date }}</li>
+                    </ul>
                   </p>
                 </Panel>
               </div>

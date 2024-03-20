@@ -12,9 +12,11 @@ export const useActivityLogStore = defineStore('activityLogStore', () => {
   const jsonDbUrl = ref('http://localhost:3000')
   const backendUrl = ref('http://localhost/api')
   const activity_logs = ref([])
+  const activity_logs_by_record = ref([])
 
   // getters
   const getActivityLogs = computed(() => activity_logs.value)
+  const getActivityLogsByRecord = computed(() => activity_logs_by_record.value)
 
   // actions
   const saveActivityLog = async (payload) => {
@@ -27,7 +29,9 @@ export const useActivityLogStore = defineStore('activityLogStore', () => {
     })
 
     if (res && res.status === 200) {
-      console.log(res)
+      // push new item
+      activity_logs_by_record.value.push(res.data.data)
+
       // toast
       toast.add({
         severity: 'success',
@@ -39,9 +43,24 @@ export const useActivityLogStore = defineStore('activityLogStore', () => {
       return _method
     }
   }
+  const fetchActivityLogsByRecord = async (payload) => {
+    const uri = `/activity-logs/by-record/${payload}`
+
+    const res = await axios(uri, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' }
+    })
+
+    if (res && res.status === 200) {
+      activity_logs_by_record.value = res.data.data
+      return res.data
+    }
+  }
 
   return {
     saveActivityLog,
-    getActivityLogs
+    fetchActivityLogsByRecord,
+    getActivityLogs,
+    getActivityLogsByRecord
   }
 })
