@@ -21,6 +21,7 @@
     const moduleStore = useModuleStore()
     const formDataStore = useFormDataStore()
     const { fetchModuleFields  } = moduleStore
+    const { getEntityFields } = storeToRefs(moduleStore)
     const { fetchLookupPaginated } = formDataStore
     const { getDefaultValue } = helper();
 
@@ -29,11 +30,13 @@
     const toast = useToast();
     const selectedProducts = ref([])
     const hiddenFields = ref([])
+    const displayFields = ref([])
     const defaultValue = ref({});
     const columnWidth = ref({
       "asServiceSales":"50px",
       "business_unit_ids":"130px",
       "itemCode":"100px",
+      "modelCode":"100px",
       "product_id":"270px",
       "HSNCode":"80px",
       "quantity":"80px",
@@ -925,12 +928,26 @@
   }
 ])
     onMounted(async()=>{ 
+        
+
+        if(_.isEmpty(getEntityFields.value('SalesOpptItem')))
+          await fetchModuleFields("SalesOpptItem")
+  
+        fields.value = getEntityFields.value('SalesOpptItem')
         if(props.formPage=='create'){
-            hiddenFields.value = ['status_id','sales_quote_id','currency_id','sort','inclusive_service_ids','commisionPercentDistributor','commisionAmountDistributor','commisionPercentSalesAgent','commisionAmountSalesAgent','discountedPriceRound','subTotalRound','discountPrice','discountedPrice']
+            displayFields.value = _.reduce(['asServiceSales','business_unit_ids','product_id','HSNCode','quantity','list_price_id','salesPrice','discount','vat','subTotal'], function(res,v,i){
+              res.push(_.find(fields.value,{'name':v}))
+              return res
+            },[])
+            hiddenFields.value = _(fields.value).filter(function(f){ if(!_.includes(['product_id','list_price_id','salesPrice','vat','quantity','discount','subTotal','asServiceSales'],f.name)){ return true; } }).map('name').value()
         }else{
-            hiddenFields.value = ['status_id','sales_quote_id','currency_id','sort','inclusive_service_ids']
+            displayFields.value = _.reduce(['status_id','asServiceSales','business_unit_ids','product_id','HSNCode','quantity','list_price_id','salesPrice','discount','vat','subTotal'], function(res,v,i){
+              res.push(_.find(fields.value,{'name':v}))
+              return res
+            },[])
+            hiddenFields.value = _(fields.value).filter(function(f){ if(!_.includes(['product_id','list_price_id','salesPrice','vat','quantity','discount','subTotal','asServiceSales','status_id'],f.name)){ return true; } }).map('name').value()
         }
-        fields.value = await fetchModuleFields("SalesOpptItem")
+
         defaultValue.value = getDefaultValue(fields.value,false)
         form.value.values[props.panel.panelName] = []
     })
@@ -963,6 +980,7 @@
             tmp['listPrice'] = p.price
             tmp['branch_id'] = form.value.values.main['branch_id']
             tmp['inclusive_service_ids'] = p.inclusiveServices
+            console.log(tmp)
             form.value.values[props.panel.panelName].push(tmp)
         })
         selectedProducts.value = []
@@ -1037,8 +1055,6 @@
 
                 items.value = records.data
                 pagination.value = _.cloneDeep(_.get(records,'meta.pagination',{}))
-
-                selectedProducts.value = items.value.filter(option => props.modelValue && props.modelValue.includes(option._id))
                 fetching.value = false
             }else{
                 modalVisible.value = false
@@ -1121,23 +1137,34 @@
     </el-popover>
 </div>
  <DataTable :value="form.values[panel.panelName]" size="small" stripedRows  columnResizeMode="expand" tableStyle="min-width: 50rem">
-    <template v-for="field in _.filter(fields, function(f){ if(!_.includes(hiddenFields,f.name)){ return true; } })" :key="field._id">
-        <Column :field="field.name" :header="field.label" :style="'width:' +columnWidth[field.name]">
-        <template #body="slotProps">
-            <template v-if="field.name=='product_id'">
-                <div v-html="slotProps.data.product_id.name"></div>
+
+    <template v-for="field in displayFields" :key="field._id">
+      <Column v-if="field.name=='product_id'" header="Item Code" :style="'width:' +columnWidth['itemCode']">
+            <template #body="slotProps">
+                {{ slotProps.data.product_id.itemCode }}
             </template>
-            <template v-else-if="field.name=='list_price_id'">
-                <el-checkbox v-model="form.values[panel.panelName][slotProps.index]['listPriceCopied']" :disabled="form.values[panel.panelName][slotProps.index]['listPrice']==form.values[panel.panelName][slotProps.index]['salesPrice']" @change="listPriceCopy(slotProps.index)" size="small" />
+      </Column>
+      <Column v-if="field.name=='product_id'" header="Model Code" :style="'width:' +columnWidth['modelCode']">
+            <template #body="slotProps">
+                {{ slotProps.data.product_id.modelCode }}
             </template>
-            <template v-else-if="field.name=='subTotal'">
-                {{ computeTotal(slotProps.data) }}
-            </template>
-            <template v-else>
-                <MutableField  :config="field" :mutableIndex="slotProps.index" :keyName="panel.panelName" type="tableForm" :entity="panel.entityName" :module="module" :inputWidth="columnWidth[field.name]" @changeValue="fieldChange"/>
-            </template>
-        </template>
-    </Column>
+      </Column>
+      <Column :field="field.name" :header="field.label" :style="'width:' +columnWidth[field.name]">
+          <template #body="slotProps">
+              <template v-if="field.name=='product_id'">
+                  <div v-html="slotProps.data.product_id.name"></div>
+              </template>
+              <template v-else-if="field.name=='list_price_id'">
+                  <el-checkbox v-model="form.values[panel.panelName][slotProps.index]['listPriceCopied']" :disabled="form.values[panel.panelName][slotProps.index]['listPrice']==form.values[panel.panelName][slotProps.index]['salesPrice']" @change="listPriceCopy(slotProps.index)" size="small" />
+              </template>
+              <template v-else-if="field.name=='subTotal'">
+                  {{ computeTotal(slotProps.data) }}
+              </template>
+              <template v-else>
+                  <MutableField  :config="field" :mutableIndex="slotProps.index" :keyName="panel.panelName" type="tableForm" :entity="panel.entityName" :module="module" :inputWidth="columnWidth[field.name]" @changeValue="fieldChange"/>
+              </template>
+          </template>
+      </Column>
     </template>
     
 </DataTable>
