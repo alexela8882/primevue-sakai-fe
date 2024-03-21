@@ -2,6 +2,7 @@
 // imports
 import { computed, onMounted, ref, watch, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useConfirm } from "primevue/useconfirm"
 // stores
 import { useFormDataStore } from '@/stores/forms'
 import { useModuleStore } from '@/stores/modules'
@@ -16,6 +17,7 @@ const props = defineProps({
 const emit = defineEmits(['apply-filters'])
 
 // refs
+const confirm = useConfirm()
 const applyFiltersLoading = ref(false)
 const localSaveLoading = ref(false)
 const localPickListLoading = ref(false)
@@ -39,6 +41,35 @@ const { getPicklist } = storeToRefs(formDataStore)
 const { fetchPicklist } = formDataStore
 
 // actions
+const deleteFilter = (event, payload) => {
+  confirm.require({
+    message: 'Are you sure you want to proceed?',
+    header: 'Confirmation',
+    icon: 'pi pi-exclamation-triangle',
+    rejectClass: 'p-button-secondary p-button-outlined',
+    rejectLabel: 'Cancel',
+    acceptLabel: 'Proceed',
+    accept: () => {
+      proceedDeleteFilter(payload)
+    },
+    reject: () => {
+      console.log('Cancel deletion')
+    }
+  })
+}
+const proceedDeleteFilter = async (payload) => {
+  const _payload = Object.assign({}, {
+    mode: 'delete',
+    baseModule: props.baseModule,
+    viewFilter: props.module.viewFilters.find(filter => filter.isDefault)._id,
+    type: 'filters',
+    data: {
+      mode: 'delete',
+      filters: [payload.uuid]
+    }
+  })
+  await addViewFilter(_payload)
+}
 const addFilterByOwner = () => {
   filterByOwner.value.data = Object.assign({}, filterByOwner.value.default)
   filterByOwner.value.data.mode = 'new'
@@ -87,7 +118,8 @@ const saveFilterByOwner = async () => {
   const res = await addViewFilter(payload) // store save/update
   if (res && res.status === 200) {
     if (payload.data.mode === 'new') insertFilter(res.data.filters[0])
-    else updateFilter(res.data.filters[0])
+    else if (payload.data.mode === 'edit') updateFilter(res.data.filters[0])
+    else if (payload.data.mode === 'delete') console.log('delete filters')
   }
 }
 const insertFilter = (payload) => {
@@ -196,7 +228,16 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
             @click="editFilterByOwner(filter, fx)"
             :key="fx"
             class="flex flex-column gap-2 p-3 border-1 border-400 hover:border-600 bg-orange-100 hover:bg-orange-200 border-round-md cursor-pointer">
-            <div>{{ filter.field.label }}</div>
+            <div class="flex justify-content-between align-items-center">
+              <div>{{ filter.field.label }}</div>
+              <div>
+                <Button
+                  @click.stop="deleteFilter($event, filter)"
+                  icon="pi pi-trash"
+                  severity="danger"
+                  text rounded />
+              </div>
+            </div>
             <div class="text-lg text-800">
               <div v-if="getPicklist.filter_operators" class="font-italic">
                 {{ filter.operator.label }}

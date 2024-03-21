@@ -545,16 +545,14 @@ onMounted(async() => {
                     <font-awesome-icon icon="fa-solid fa-caret-down" style="font-size: 1.5rem;"></font-awesome-icon>
                   </template>
                   <template #icons>
-                    <div class="text-sm text-900 ml-2">{{ log.created_at }}</div>
+                    <div class="text-sm text-900 ml-2">{{ log.created_at_mdy }}</div>
                   </template>
-                  <p class="m-0 mt-3">
-                    <ul>
-                      <li>{{ log.subject }}</li>
-                      <li>{{ log.status }}</li>
-                      <li>{{ log.remarks }}</li>
-                      <li>{{ log.date }}</li>
-                    </ul>
-                  </p>
+                  <div class="m-0 mt-3">
+                    <div>{{ log.subject }} ({{ log.status }})</div>
+                    <div>{{ log.type_id }}</div>
+                    <div>{{ log.remarks }}</div>
+                    <div>{{ log.date_mdy }} ({{ log.date_dfh }})</div>
+                  </div>
                 </Panel>
               </div>
             </div>
