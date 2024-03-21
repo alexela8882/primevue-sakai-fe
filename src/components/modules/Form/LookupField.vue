@@ -20,7 +20,7 @@ const { formatLookupOptions,extractFieldinExpressionFormat,extractEntityinExpres
 const AddableForm = defineAsyncComponent(() => import('@/components/modules/Form/AddableForm.vue'))
 
 const entityModule = ref({});
-const value = ref()
+const value = ref([])
 const searchText = ref("")
 const items = ref({})
 const pagination = ref({})
@@ -54,19 +54,23 @@ const props = defineProps({
     multiple: Boolean
 })
 
-const emit = defineEmits(['changeValue','update:modelValue',])
+const emit = defineEmits(['changeValue','update:modelValue'])
 const addableModule = ref(null)
 
 onMounted(() => {
     let vm = this;
+    multiple.value = props.multiple
     if(_.get(props.field,'rules.ms_pop_up',false)){
         multiple.value = true
     }
     if(!props.formField){
         multiple.value = true
     }
-    if(_.has(props,'multiple')){
-        multiple.value = props.multiple
+    if(!_.isEmpty(props.modelValue) && !_.isNull(props.modelValue) && !props.formField){
+        value.value = _.reduce(props.modelValue, function(r,v,i){
+            r.push(_.merge(v,{'value':v.label}))
+            return r
+        },[])
     }
     entityModule.value = _.find(getModules.value,{'mainEntity':props.field.relation.entity_id.name})
     if(_.has(props.field,'filterQuery')){
@@ -143,8 +147,8 @@ const fetchData = async() =>{
             items.value = formatLookupOptions(records.data, [], props.field)
             pagination.value = _.cloneDeep(_.get(records,'meta.pagination',{}))
 
-            selectedValues.value = items.value.options.filter(option => props.modelValue && props.modelValue.includes(option._id))
-            value.value = selectedValues.value
+            selectedValues.value = _.filter(items.value.options, function(o){ if(_.includes(_.map(value.value,'_id'),o._id)){ return true; }})
+            // value.value = selectedValues.value
         }else{
             toast.add({ severity: 'error', summary: 'Error', detail: 'Please select '+_.join(err,', '), position:"top-center", life: 3000 });
         }
@@ -163,7 +167,7 @@ const handleSearch = async () =>{
     await fetchData()
 }
 
-const removeSelected = (index) =>{
+const removeSelected = (index,id) =>{
     if((!_.get(form.value,'formSaving',false) && !_.includes(_.get(form.value,'disabled',[]),props.field._id)) || !props.formField){
         if(multiple.value){
             if(props.formField){
@@ -171,9 +175,13 @@ const removeSelected = (index) =>{
                         return i==index
                     })
             }else{
-                    _.remove(value.value, function(n,i){
+                    _.remove(selectedValues.value, function(n,i){
                         return i==index
                     })
+                    _.remove(value.value, function(v,i){
+                        return v._id == id
+                    })
+                    emit('update:modelValue', value.value)
             }
         }else{
             if(props.formField){
@@ -194,12 +202,14 @@ const checkBeforeClose = (index) =>{
         closePopup()
     }
     if(!props.formField) {
-        let finalValue = null
-
-        if (props.optionValue) finalValue = value.value.map(val => val[props.optionValue])
-        else finalValue = value.value
-
-        emit('update:modelValue', finalValue)
+        let newlyAdded = _.filter(selectedValues.value, function(v){ if(!_.includes(_.map(value.value,'_id'),v._id)){ return true;}})
+        let removed = _.chain(value.value).filter(function(v){ if(!_.includes(_.map(selectedValues.value,'_id'),v._id)){ return true;}}).filter(function(v){ if(_.includes(_.map(items.value.options,'_id'),v._id)){ return true;}}).map('_id').value()
+        console.log('removed',removed)
+        _.remove(value.value, function(v,i){
+            return _.includes(removed,v._id)
+        })
+        value.value = _.concat(value.value, newlyAdded)
+        emit('update:modelValue', value.value)
     }
 
     emit('changeValue')
@@ -218,7 +228,7 @@ const form = (props.formField) ? inject('form') : {}
     <div v-if="formField" class="lookupField" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],field.name,[]))}" v-click-outside="closePopup">
         <div v-if="!_.isEmpty(form.values[keyName][field.name])" class="selectedValue" :class="(!multiple) ? 'single flex align-items-center' : 'multiple'" @click="toggle">
             <template v-if="multiple">
-                <el-tag class="mr-1" v-for="(v,i) in value" :key="v.value" @close="removeSelected(i)" :closable="!form.formSaving && !_.includes(form.disabled,field._id)">{{ v.value }}</el-tag>
+                <el-tag class="mr-1" v-for="(v,i) in value" :key="v.value" @close="removeSelected(i,v._id)" :closable="!form.formSaving && !_.includes(form.disabled,field._id)">{{ v.value }}</el-tag>
             </template>
             <div v-else class="flex align-items-center lookupSelected" style="width:100%" >
                 <div class="material-icons text-white ml-2 lookupSelected" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
@@ -281,15 +291,15 @@ const form = (props.formField) ? inject('form') : {}
     </div>
     <div v-else class="lookupField"  v-click-outside="closePopup">
         <div v-if="!_.isEmpty(value)" class="selectedValue multiple" @click="toggle">
-            <el-tag class="mr-1" closable v-for="(v,i) in value" :key="v.value" @close="removeSelected(i)">{{ v.value }}</el-tag>
+            <el-tag class="mr-1 mb-1" :closable="!open" v-for="(v,i) in value" :key="v.value" @close="removeSelected(i,v._id)">{{ v.value }}</el-tag>
         </div>
         <el-input 
-            v-model="searchText" @click="toggle" @keyup="handleSearch" class="lookupInput" 
+            v-model="searchText" @click="toggle" clearable @keyup="handleSearch" class="lookupInput" 
             placeholder="Please search here" :suffix-icon="Search">
         </el-input>
         <div v-if="open" class="lookupOverlay p-overlaypanel p-component" :class="{ 'open' : open == true, 'w-full':!inline,'w-auto':inline}">
             <template v-if="fetching"><Skeleton v-for="(item,index) in _.fill(Array(10),'i')" :key="index" height="2rem" :width="(inline) ? '300px': '100%'" class="m-2" borderRadius="5px"></Skeleton></template>
-            <Listbox v-else-if="items.group" v-model="value" :multiple="true" :options="_.get(items,'options',[])" optionLabel="value" optionGroupLabel="label" optionGroupChildren="options" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
+            <Listbox v-else-if="items.group" v-model="selectedValues" :multiple="true" dataKey="_id" :options="_.get(items,'options',[])" optionLabel="value" optionGroupLabel="label" optionGroupChildren="options" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
                 <template #option="slotProps">
                     <div class="flex align-items-center lookupSelection">
                         <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
@@ -302,7 +312,7 @@ const form = (props.formField) ? inject('form') : {}
                     </div>
                 </template>
             </Listbox>
-            <Listbox v-else v-model="value" :multiple="true"  :options="_.get(items,'options',[])" optionLabel="value" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
+            <Listbox v-else v-model="selectedValues" :multiple="true" dataKey="_id"  :options="_.get(items,'options',[])" optionLabel="value" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
                 <template #option="slotProps">
                     <div class="flex align-items-center lookupSelection">
                         <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
@@ -367,7 +377,7 @@ const form = (props.formField) ? inject('form') : {}
     padding:0px 10px;
 }
 .lookupField .selectedValue{
-    position: absolute;
+    /* position: absolute; */
     z-index: 1;
     
     background: white;
@@ -385,10 +395,10 @@ const form = (props.formField) ? inject('form') : {}
 .lookupField .selectedValue.multiple{
     width: calc(100% - 40px);
     display: block;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    /* overflow: hidden;
+    text-overflow: ellipsis; */
 }
 .lookupField .selectedValue .pi-times{
     cursor: pointer;

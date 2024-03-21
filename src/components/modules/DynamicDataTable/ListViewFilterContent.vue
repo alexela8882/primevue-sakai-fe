@@ -2,6 +2,7 @@
 // imports
 import { computed, onMounted, ref, watch, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
+import _ from 'lodash'
 // stores
 import { useFormDataStore } from '@/stores/forms'
 import { useModuleStore } from '@/stores/modules'
@@ -53,7 +54,7 @@ const editFilterByOwner = (filter, fx) => {
     uuid: filter.uuid,
     field: filterField,
     operator: filterOperator,
-    value: Array.isArray(filter.values) ? filter.values.map(val => val._id) : filter.values,
+    value: (filterField.field_type.name=='picklist' && _.isArray(filter.values)) ? _.map(filter.values,'_id') : filter.values,
     isNull: filter.isNull
   })
 
@@ -68,7 +69,7 @@ const saveFilterByOwner = async () => {
     uuid: filterByOwner.value.data.uuid,
     field_id: filterByOwner.value.data.field._id,
     operator_id: filterByOwner.value.data.operator._id,
-    values: filterByOwner.value.data.value,
+    values: (_.isArray(filterByOwner.value.data.value)) ? ((_.has(filterByOwner.value.data.value,'0._id')) ? _.map(filterByOwner.value.data.value,'_id'): filterByOwner.value.data.value) : filterByOwner.value.data.value,
     isNull: filterByOwner.value.data.isNull
   })
 
