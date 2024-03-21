@@ -12,6 +12,7 @@
     import { useModuleDetailStore } from '../../../stores/modules/detail'
     import { useModuleStore } from '../../../stores/modules/index'
     import { useTabStore } from '@/stores/tabs/index'
+    import { useBaseStore } from '../../../stores/base'
 
     const Field = defineAsyncComponent(() => import('@/components/modules/Form/Field.vue'))
     const FormPanel = defineAsyncComponent(() => import('@/components/modules/Form/FormPanel.vue'))
@@ -24,6 +25,7 @@
     const moduleDetailStore = useModuleDetailStore()
     const moduleStore = useModuleStore()
     const tabStore = useTabStore()
+    const baseStore = useBaseStore()
     const { formatLookupOptions, getPicklistFields, getLookupFields,transformFormValues,transformDate,transformForSaving,getAllHiddenFieldsAndPanels,controllingFieldChecker,getAllDisabledFields,checkSetValRule } = helper();
     const { fetchPicklist, fetchLookup, saveForm, setFormReset, saveFormValues } = formDataStore
     const { getCachedFormData,getFormReset } = storeToRefs(formDataStore)
@@ -31,6 +33,7 @@
     const { fetchModuleFields, fetchModulePanels} = moduleStore
     const { removeTab } = tabStore
     const { getModuleByName } = storeToRefs(moduleStore)
+    const { getAuthUser } = storeToRefs(baseStore)
     const { validateForm, errorChecker } = validate();
     const toast = useToast();
     const tempFields = ref(_.fill(Array(10),1))
@@ -60,7 +63,7 @@
     onMounted(async () => {
         console.log('mounted',formLoading.value)
         let tmpData = getCachedFormData.value(props.config.name)
-        formPage.value = (_.includes(props.config.name,'edit')) ? 'edit' : 'create'
+        formPage.value = (_.includes(props.config.name,'edit')) ? 'update' : 'create'
         console.log('tmpData',tmpData)
         if(tmpData){
              formData.value =  _.merge(formData.value,_.cloneDeep(tmpData))
@@ -118,12 +121,31 @@
 
     const initialize  = () => {
         let quickAddFields = _.chain(formData.value.fields).filter({'quick':true}).map('_id').value()
-        let values = (formPage.value=='create') ? null : getItem.value
+        let values = (formPage.value=='create') ? null : getItem.value.data
+        console.log(values)
         let tmpValues = transformFormValues(formData.value.fields,values,formPage.value)
         let setVal = checkSetValRule(formData.value.fields,tmpValues,getModuleByName.value(props.config._module).mainEntity)
         formData.value.values.main = _.merge(_.cloneDeep(tmpValues),_.cloneDeep(setVal))
         formData.value.hidden = getAllHiddenFieldsAndPanels(formData.value.panels,formData.value.fields,formData.value.values.main,formPage.value)
         formData.value.disabled = getAllDisabledFields(formData.value.fields,formData.value.values.main,formPage.value)
+
+        //disable fields
+        if(props.config._module=='defectreports' && formPage.value=='update'){
+        //   var rps = _.find(vm.connectedEntity(),['entityName',"RPWorkOrder"]);
+        //   if(!_.isUndefined(rps)){
+        //     if(!_.isEmpty(rps.collection.data)){
+        //         formData.value.disabled = _.union(formData.value.disabled,['defectreport_product_unit_id','defectreport_end_user_id'])
+        //     }
+        //   }
+        }
+        if(props.config._module=='rpworkorders' && (!_.includes(getAuthUser.value.roles,'rpwo_operator') && !_.includes(getAuthUser.value.roles,'crm_admin'))){
+          formData.value.disabled = _.union(formData.value.disabled,['rpworkorder_operator_status_id'])
+        }
+        if(props.config._module=='salesopportunities' && formPage.value=='update'){
+            let f = _.find(formData.value.fields,{'uniqueName':'salesopportunity_account_id'})
+            formData.value.disabled = _.union(formData.value.disabled,[f._id])
+        }
+
         //get quick add panels
         _.forEach(formData.value.panels, function(panel, panelI){
             formData.value.panels[panelI]['quick'] = false
@@ -154,7 +176,7 @@
 
     const resetForm  = () =>{
        formLoading.value = true
-       let formPage = (_.includes(props.config.name,'edit')) ? 'edit' : 'create'
+       let formPage = (_.includes(props.config.name,'edit')) ? 'update' : 'create'
        formData.value.values.main = transformFormValues(formData.value.fields,getItem.value,formPage) 
        formLoading.value = false
     }
@@ -162,9 +184,9 @@
     const submitForm = async () =>{
         let isModalForm = _.get(props.config,'maximized',false)
         formData.value.formSaving = true
-        formData.value.errors.main = validateForm(formData.value.values.main,formData.value.fields,isModalForm)
-        // let noError = errorChecker(formData.value.errors.main)
-        let noError = true
+        formData.value.errors.main = validateForm(formData.value.values.main,formData.value.fields,formData.value.hidden.fields,isModalForm)
+        let noError = errorChecker(formData.value.errors.main)
+        // let noError = true
         if(noError){
             let values = transformForSaving(formData.value.values.main,formData.value.fields, isModalForm)
             let res = await saveFormValues(values,props.config.base_module)
@@ -200,11 +222,13 @@
                     :module="config._module"
                     :formPage="formPage"
                 />
-                <template v-for="panel in _.filter(formData.panels, function(p){ if(!_.includes(formData.hidden.panels,p.panelName) &&_.endsWith(p.controllerMethod,'@show') && _.get(config,'maximized',false)==true){ return true;} })" :key="panel._id">
-                    <template v-if="_.includes(['SalesOpptItem'], panel.entityName)">
-                        <div v-for="section in panel.sections" :key="section._id" class="flex flex-column px-1 py-2 mt-2" >
-                            <QuoteLineItem v-if="panel.entityName=='SalesOpptItem'" :panel="panel" :module="config._module" :formPage="formPage"></QuoteLineItem>
-                        </div>
+                <template v-if="formPage=='create'">
+                    <template v-for="panel in _.filter(formData.panels, function(p){ if(!_.includes(formData.hidden.panels,p.panelName) &&_.endsWith(p.controllerMethod,'@show') && _.get(config,'maximized',false)==true){ return true;} })" :key="panel._id">
+                        <template v-if="_.includes(['SalesOpptItem'], panel.entityName)">
+                            <div v-for="section in panel.sections" :key="section._id" class="flex flex-column px-1 py-2 mt-2" >
+                                <QuoteLineItem v-if="panel.entityName=='SalesOpptItem'" :panel="panel" :module="config._module" :formPage="formPage"></QuoteLineItem>
+                            </div>
+                        </template>
                     </template>
                 </template>
             </template>
@@ -217,8 +241,9 @@
     </div>
     <div class="sticky bottom-0 right-0 py-2 surface-50">
         <div class="flex justify-content-end gap-2 px-3 py-1">
-            <el-button @click="resetForm" :disabled="formLoading || formData.formSaving">Reset</el-button>
-            <el-button type="primary" @click="submitForm" :disabled="formLoading || formData.formSaving" :loading="formData.formSaving">Save</el-button>
+            <el-button v-if="formPage=='create'" @click="resetForm" :disabled="formLoading || formData.formSaving">Reset</el-button>
+            <el-button v-else @click="resetForm" :disabled="formLoading || formData.formSaving">Cancel</el-button>
+            <el-button type="primary" @click="submitForm" :disabled="formLoading || formData.formSaving" :loading="formData.formSaving"><template v-if="formPage=='create'">Save</template><template v-else>Update</template></el-button>
         </div>
     </div>
 </template>

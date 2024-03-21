@@ -109,7 +109,7 @@
 
     const submitForm = async () =>{
         formData.value.formSaving = true
-        formData.value.errors.main = validateForm(formData.value.values.main,formData.value.fields,false)
+        formData.value.errors.main = validateForm(formData.value.values.main,formData.value.fields,formData.value.hidden.fields,false)
         let noError = errorChecker(formData.value.errors.main)
         if(noError){
             let values = transformForSaving(formData.value.values.main,formData.value.fields, false)

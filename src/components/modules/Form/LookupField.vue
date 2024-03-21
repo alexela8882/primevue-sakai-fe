@@ -29,9 +29,11 @@ const page = ref(1)
 const fetching = ref(true)
 const multiple = ref(false)
 const toggle = async (event) => {
-    if(!open.value){
-        open.value = true
-        fetchData()
+    if((!_.get(form.value,'formSaving',false) && !_.includes(_.get(form.value,'disabled',[]),props.field._id)) || !props.formField){
+        if(!open.value){
+            open.value = true
+            fetchData()
+        }
     }
 }
 const filters = ref([])
@@ -48,7 +50,8 @@ const props = defineProps({
     formField: Boolean,
     modelValue: Array,
     optionValue: String,
-    onLoad: Boolean
+    onLoad: Boolean,
+    multiple: Boolean
 })
 
 const emit = defineEmits(['changeValue','update:modelValue',])
@@ -61,6 +64,9 @@ onMounted(() => {
     }
     if(!props.formField){
         multiple.value = true
+    }
+    if(_.has(props,'multiple')){
+        multiple.value = props.multiple
     }
     entityModule.value = _.find(getModules.value,{'mainEntity':props.field.relation.entity_id.name})
     if(_.has(props.field,'filterQuery')){
@@ -158,20 +164,28 @@ const handleSearch = async () =>{
 }
 
 const removeSelected = (index) =>{
-    if(multiple.value){
-       if(props.formField){
-            _.remove(form.value.values[props.keyName][props.field.name], function(n,i){
-                return i==index
-            })
-       }else{
-            _.remove(value.value, function(n,i){
-                return i==index
-            })
-       }
-    }else{
-        form.value.values[props.keyName][props.field.name] = null
+    if((!_.get(form.value,'formSaving',false) && !_.includes(_.get(form.value,'disabled',[]),props.field._id)) || !props.formField){
+        if(multiple.value){
+            if(props.formField){
+                    _.remove(form.value.values[props.keyName][props.field.name], function(n,i){
+                        return i==index
+                    })
+            }else{
+                    _.remove(value.value, function(n,i){
+                        return i==index
+                    })
+            }
+        }else{
+            if(props.formField){
+                form.value.values[props.keyName][props.field.name] = null
+            }else{
+                value.value = null
+            }
+            
+        }
+        emit('changeValue')
     }
-    emit('changeValue')
+    
 
 }
 
@@ -192,9 +206,10 @@ const checkBeforeClose = (index) =>{
 }
 
 const openAddableForm = async() =>{
-    addableModule.value = getModuleByName.value(props.field.addable.moduleName)
-    addableFormVisible.value = true
-   
+    if((!_.get(form.value,'formSaving',false) && !_.includes(_.get(form.value,'disabled',[]),props.field._id)) || !props.formField){
+        addableModule.value = getModuleByName.value(props.field.addable.moduleName)
+        addableFormVisible.value = true
+    }
 }
 const form = (props.formField) ? inject('form') : {}
 
@@ -203,23 +218,23 @@ const form = (props.formField) ? inject('form') : {}
     <div v-if="formField" class="lookupField" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],field.name,[]))}" v-click-outside="closePopup">
         <div v-if="!_.isEmpty(form.values[keyName][field.name])" class="selectedValue" :class="(!multiple) ? 'single flex align-items-center' : 'multiple'" @click="toggle">
             <template v-if="multiple">
-                <el-tag class="mr-1" closable v-for="(v,i) in value" :key="v.value" @close="removeSelected(i)">{{ v.value }}</el-tag>
+                <el-tag class="mr-1" v-for="(v,i) in value" :key="v.value" @close="removeSelected(i)" :closable="!form.formSaving && !_.includes(form.disabled,field._id)">{{ v.value }}</el-tag>
             </template>
             <div v-else class="flex align-items-center lookupSelected" style="width:100%" >
                 <div class="material-icons text-white ml-2 lookupSelected" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
-                <div class="flex justify-content-between lookupSelected" style="width:100%">
+                <div class="flex justify-content-between align-items-center lookupSelected" style="width:100%">
                     <span class="flex flex-colum ml-2 lookupSelected">{{ form.values[keyName][field.name].value }}</span>
-                    <span class="flex flex-colum mr-2 lookupRemoveBtn" @click="removeSelected"><i class="pi pi-times lookupRemoveBtn"></i></span>
+                    <span v-if="!form.formSaving && !_.includes(form.disabled,field._id)" class="flex flex-colum mr-2 lookupRemoveBtn" @click="removeSelected"><i class="pi pi-times lookupRemoveBtn"></i></span>
                 </div>
                 
             </div>
         </div>
         <el-input 
-            v-model="searchText" @click="toggle" @keyup="handleSearch" class="lookupInput" :disabled="form.formSaving"
+            v-model="searchText" @click="toggle" @keyup="handleSearch" class="lookupInput" :disabled="form.formSaving || _.includes(form.disabled,field._id)"
             placeholder="Please search here" :suffix-icon="Search">
             <template v-if="field.addable"  #append>
                 <!-- <el-button ><i class="pi pi-search"></i></el-button> -->
-                <el-button ><i class="pi pi-plus" @click="openAddableForm"></i></el-button>
+                <el-button :class="{'disabled': form.formSaving || _.includes(form.disabled,field._id)}"><i class="pi pi-plus" @click="openAddableForm"></i></el-button>
             </template>
         </el-input>
         <div v-if="open" class="lookupOverlay p-overlaypanel p-component" :class="{ 'open' : open == true, 'w-full':!inline,'w-auto':inline}">
@@ -345,6 +360,9 @@ const form = (props.formField) ? inject('form') : {}
     height: auto;
     min-height: 50px;
 }
+.lookupField .lookupInput{
+    font-size:12px;
+}
 .lookupField .lookupInput .el-input-group__append{
     padding:0px 10px;
 }
@@ -359,8 +377,10 @@ const form = (props.formField) ? inject('form') : {}
 }
 .lookupField .selectedValue.single{
     width: calc(100% - 45px);
-    border: 1px solid #bfbbbb;
+    border: 1px solid #cdcdcd;
     border-radius: 4px;
+    margin-left:10px;
+    background: #f1f1f1;
 }
 .lookupField .selectedValue.multiple{
     width: calc(100% - 40px);
@@ -375,5 +395,18 @@ const form = (props.formField) ? inject('form') : {}
 }
 .lookupField .selectedValue .material-icons{
     font-size: 18px;
+}
+.lookupField .lookupInput.is-disabled .el-input-group__append{
+    box-shadow:  0 1px 0 0 #ddd inset,0 -1px 0 0 #ddd inset,-1px 0 0 0 #ddd inset;
+}
+.lookupField .lookupInput.is-disabled .el-input-group__append i{
+    color: #ddd;
+}
+.lookupField .lookupRemoveBtn{
+    font-size: 10px;
+}
+.lookupField .lookupRemoveBtn:hover{
+    color: #3F51B5;
+    font-weight: 600;
 }
 </style>

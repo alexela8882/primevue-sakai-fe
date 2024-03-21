@@ -8,26 +8,54 @@ const emit = defineEmits(['mounted'])
 const props = defineProps({
     selectedTemplate: Object,
     pageContent: Object,
-    pages: Array
+    pages: Array,
+    numberofPages: Number
 })
 
 const vietHanoi = computed(() => '/images/letterhead/Esco Vietnam - Hanoi header.png')
 const escoQuotation = computed(() => '/images/letterhead/esco-quotation-template-header-01-01.png')
 const escoMedical = computed(() => '/images/letterhead/esco-medical-letterhead.jpg')
-
+const panelStyle = ref({'headerPanel':'background:white;position:relative;padding-bottom:15px','bodyPanel':'overflow:hidden;position:relative;background:white','footerPanel':'padding-top:15px;position:relative;background:white'})
 onMounted(()=>{
-    
+
+
 })
 
+const getSectionStyle = (section,page) =>{
+    let style = ''
+    console.log(page)
+    if(section=='headerPanel'){
+        style = "background:white;position:relative;"
+    }
+
+    if(section=='bodyPanel'){
+        style='overflow:hidden;position:relative'
+        if(_.has(page,'height')){
+            style += ";height"+page.height
+        }
+        if(_.has(page,'margin')){
+            style += ";margin-top"+page.margin
+        }
+    }
+
+    if(section=='footerPanel'){
+        style='margin-top:15px'
+    }
+
+    return style
+}
+
 const loadImage = () =>{
-    emit('mounted')
+    if(!_.has(props.pages,'0.height')){
+        emit('mounted')
+    }
 }
 </script>
 <template>
-    <div id="pdfContent" class="flex-none shrink-0">
-        <div class="pdfPage shadow-2">
+    <!-- <div id="pdfContent" class="flex-none shrink-0">
+        <div  style="height:1305px;overflow:hidden"  class="pdfPage shadow-2" >
             <template v-for="(pageSection,pageSectionKey) in pageContent" :key="pageSectionKey">
-                <div :class="pageSectionKey" :id="pageSectionKey" :style="(pageSectionKey=='footerPanel') ? 'margin-top:15px'  : ''">
+                <div :class="pageSectionKey" :id="pageSectionKey" >
                     <div v-for="(panel,panelIndex) in pageSection" :key="'panel_' + panelIndex">
                         <div v-if="pageSectionKey=='headerPanel' && panelIndex==0" class='pdf-panel' style="width:100%">
                             <img v-if="_.includes(selectedTemplate,'Sanjay') || _.includes(selectedTemplate,'Stasys Polimaitis') || _.includes(selectedTemplate,'Ludek Homola') || _.includes(selectedTemplate,'Ana Sousa Lopes') || _.includes(selectedTemplate,'Morten Kristensen') ||  _.includes(selectedTemplate,'Jesper') || _.includes(selectedTemplate,'Makky') || selectedTemplate=='ETI-Medical Quote'" :src="escoMedical" style="width: 100%; display: block;" @load="loadImage"/>
@@ -69,16 +97,17 @@ const loadImage = () =>{
                                 </div>
                             </div>
                         </div>
+                        <div class="page-break"></div>
                     </div>
-                    <p class="pageNo" v-if="pageSectionKey=='footerPanel'">1</p>
                 </div>
             </template>
         </div>
-    </div>
-    <!-- <div id="pdfContent" class="flex-none shrink-0 shadow-2">
-        <div v-for="p in pages" :key="p" style="height:1305px;overflow:hidden" class="pdfPage shadow-2" >
+    </div> -->
+    <div id="pdfContent" class="flex-none shrink-0">
+        <!-- <div v-for="(p,i) in pages" :key="i" style="height:1125px;overflow:hidden" :style="{'z-index':pages.length - p.page}" class="pdfPage shadow-2" > -->
+        <div v-for="(p,i) in pages" :key="i" class="pdfPage shadow-2" >
             <template v-for="(pageSection,pageSectionKey) in pageContent" :key="pageSectionKey">
-                <div :class="pageSectionKey" :id="pageSectionKey" :style="(pageSectionKey=='footerPanel') ? 'margin-top:15px'  : ((pageSectionKey=='bodyPanel') ? ((_.has(p,'height')) ? 'height:'+p.height+';margin-top:'+p.margin+';overflow:hidden' : '') : '')">
+                <div :class="pageSectionKey" :id="(p.page==1) ? pageSectionKey : ''" :style="((pageSectionKey=='bodyPanel') ? panelStyle[pageSectionKey] + ';height:' + p.height+ ';margin-top:' + p.margin + ';z-index:1' + (pages.length - p.page) : ((pageSectionKey=='headerPanel') ? panelStyle[pageSectionKey] + ';z-index:2' + (pages.length - p.page) : panelStyle[pageSectionKey] + ';z-index:3' + (pages.length - p.page)))">
                     <div v-for="(panel,panelIndex) in pageSection" :key="'panel_' + panelIndex">
                         <div v-if="pageSectionKey=='headerPanel' && panelIndex==0" class='pdf-panel' style="width:100%">
                             <img v-if="_.includes(selectedTemplate,'Sanjay') || _.includes(selectedTemplate,'Stasys Polimaitis') || _.includes(selectedTemplate,'Ludek Homola') || _.includes(selectedTemplate,'Ana Sousa Lopes') || _.includes(selectedTemplate,'Morten Kristensen') ||  _.includes(selectedTemplate,'Jesper') || _.includes(selectedTemplate,'Makky') || selectedTemplate=='ETI-Medical Quote'" :src="escoMedical" style="width: 100%; display: block;" @load="loadImage"/>
@@ -120,12 +149,13 @@ const loadImage = () =>{
                                 </div>
                             </div>
                         </div>
+                        <div class="page-break"></div>
                     </div>
                     <p class="pageNo" v-if="pageSectionKey=='footerPanel'">{{ p.page }}</p>
                 </div>
             </template>
         </div>
-    </div> -->
+    </div>
 </template>
 <style>
 .pdfPreview{
@@ -138,12 +168,13 @@ const loadImage = () =>{
     background: white;
     width: 65rem;
     /* padding:2rem 3rem; */
-    padding:80px 60px;
+    padding:0px 60px;
     margin: auto;
     overflow: hidden;
     margin-top:15px;
-    border-top:80px solid white;
-    padding-top: 0px !important;
+    border-top:40px solid white;
+    border-bottom:40px solid white;
+    /* padding-top: 0px !important; */
 }
 .pdfPreview div.pdfPage .headerPanel{
     background: white;
