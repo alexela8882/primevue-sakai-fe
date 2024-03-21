@@ -2,6 +2,7 @@
 // imports
 import { ref, watch, onMounted, defineAsyncComponent } from 'vue'
 import { storeToRefs } from 'pinia'
+import _ from 'lodash'
 // stores
 import { useTabStore } from '@/stores/tabs/index'
 import { useModuleStore } from '@/stores/modules/index'
@@ -118,7 +119,7 @@ watch(getTabs.value, (newVal, oldVal) => {
                   </div>
                   <div v-if="tab.type === 'static-form'" :class="`pi pi-${tab.icon}`"></div>
                   <div>{{ tab.label }}</div>
-                  <div v-if="tab.type === 'module-form'">(New)</div>
+                  <div v-if="tab.type === 'module-form'"><template v-if="_.includes(tab.name,'create')">(New)</template><template v-else>(Edit)</template></div>
                 </div>
               </Teleport>
               <div class="flex align-items-center gap-2 text-xl font-bold">
@@ -129,7 +130,7 @@ watch(getTabs.value, (newVal, oldVal) => {
                 </div>
                 <div v-if="tab.type === 'static-form'" :class="`pi pi-${tab.icon}`"></div>
                 <div>{{ tab.label }}</div>
-                <div v-if="tab.type === 'module-form'">(New)</div>
+                <div v-if="tab.type === 'module-form'"><template v-if="_.includes(tab.name,'create')">(New)</template><template v-else>(Edit)</template></div>
               </div>
             </template>
             <div

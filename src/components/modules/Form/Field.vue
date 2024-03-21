@@ -31,7 +31,7 @@
     const formDataStore = useFormDataStore()
     const { fetchPicklist, fetchLookup  } = formDataStore
     const { getPicklistByListName, getLookupOptions } = storeToRefs(formDataStore)
-    const { checkFieldIfMultipleSelect,controllingFieldChecker,parseHiddenFields,checkSetValRule } = helper();
+    const { checkFieldIfMultipleSelect,controllingFieldChecker,parseHiddenFields,checkSetValRule,applyAutofill } = helper();
     const { validateField } = validate();
 
     const value = ref()
@@ -44,7 +44,7 @@
         if(!props.inline){
             form.value.errors[props.keyName][field.name] = validateField(form.value.values[props.keyName],field,form.value.fields)
             let result = controllingFieldChecker(field,form.value.fields,props.entity)
-            console.log('fieldChange',field.name,result)
+            console.log('fieldChange',field,result)
             if(!_.isEmpty(result.visible_if) || !_.isEmpty(result.hide_if)){ 
                 let hiddenFields = parseHiddenFields(form.value.hidden.fields,result,props.entity,form.value.values.main)
                 form.value.hidden.fields = hiddenFields
@@ -63,11 +63,34 @@
                 }
             }
             if(!_.isEmpty(result.filtered_by)){
-               
                 _.forEach(result.filtered_by, function(f){
-                     console.log(f)
                     form.value.values.main[f] = null
                 })
+            }
+            if(_.has(field.rules,'auto_fill')){
+                let checker = true
+                _.forEach(field.rules.auto_fill, function(autofill){
+                    //checks if all values exists in lookupModel field value
+                    if(!_.has(form.value.values[props.keyName][field.name],autofill[0])){
+                        checker = false
+                    }
+                })
+                console.log(checker)
+                if(checker){
+                    //proceed with autofill since all values exists
+                     _.forEach(field.rules.auto_fill, function(autofill){
+                        //check if field exists in form
+                        console.log(autofill,form.value.values[props.keyName])
+                       if(_.has(form.value.values[props.keyName],autofill[1])){
+                            console.log(_.has(form.value.values[props.keyName],autofill[1]))
+                            let f = _.find(form.value.fields,{'name':autofill[1]})
+                            console.log(f)
+                            form.value.values[props.keyName][f.name] = applyAutofill(f,form.value.values[props.keyName][field.name],autofill[0])
+                       }
+                    })
+                }else{
+                    //fetch autofill values
+                }
             }
         }
             
@@ -172,14 +195,14 @@
             <small class="errMsg" v-for="msg,i in _.get(form.errors[keyName],config.name,[])" :key="i">{{ msg }}</small>
         </div>
     </template>
-    <template v-else-if="config.field_type.name=='richTextBox'">
+    <template v-else-if="config.field_type.name=='richTextbox'">
         <div class="fieldInput flex flex-column" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[])),'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
-            <editor class="required" :api-key="tinyApiKey" :init="{
+            <editor v-model="form.values[keyName][config.name]" :api-key="tinyApiKey" :init="{
                 plugins: ['lists link image paste help wordcount table'],
                 menubar:false,
                 toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | image table'
-            }">
+            }" :disabled="form.formSaving || _.includes(form.disabled,config._id)">
             </editor>
             <small class="errMsg" v-for="msg,i in _.get(form.errors[keyName],config.name,[])" :key="i">{{ msg }}</small>
         </div>
@@ -187,11 +210,11 @@
     <template v-else-if="config.field_type.name=='longText'">
         <div class="fieldInput flex flex-column" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[])),'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
-            <editor :api-key="tinyApiKey" :init="{
+            <editor :api-key="tinyApiKey" v-model="form.values[keyName][config.name]" :init="{
                 plugins: ['lists link image paste help wordcount'],
                 menubar:false,
                 toolbar: 'undo redo | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent'
-            }">
+            }" :disabled="form.formSaving || _.includes(form.disabled,config._id)">
             </editor>
             <small class="errMsg" v-for="msg,i in _.get(form.errors[keyName],config.name,[])" :key="i">{{ msg }}</small>
         </div>
@@ -224,6 +247,7 @@
                 :disabled="form.formSaving || _.includes(form.disabled,config._id)"
                 :loading="picklistLoading"
                 :size="(small) ? 'small' : ''"
+                value-key="_id"
                 @visible-change="fetchPicklistOptions"
                 @change="fieldChange(config)">
                     <el-option
@@ -248,6 +272,7 @@
             <template v-if="_.get(config.rules,'ss_dropdown',false) || _.get(config.rules,'ms_dropdown',false)">
                 <el-select v-if="getLookupOptions(config.uniqueName,'group')" v-model="form.values[keyName][config.name]" :disabled="form.formSaving || _.includes(form.disabled,config._id)" :loading="lookupLoading" :size="(small) ? 'small' : ''" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" placeholder="Select" clearable filterable class="w-full"
                     @change="fieldChange(config)"
+                    value-key="_id"
                     @visible-change="fetchLookupOptions">
                     <el-option-group
                     v-for="group in getLookupOptions(config.uniqueName,'options')"
@@ -265,6 +290,7 @@
                     v-model="form.values[keyName][config.name]"
                     :disabled="form.formSaving || _.includes(form.disabled,config._id)"
                     :loading="lookupLoading"
+                    value-key="_id"
                     :size="(small) ? 'small' : ''"
                     class="w-full" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}"
                     placeholder="Select" clearable filterable
@@ -302,10 +328,10 @@
 
 </template>
 <style>
-.fieldInput.required input, .fieldInput.required .el-input__wrapper, .fieldInput.required .p-dropdown, .fieldInput .el-date-editor.required .el-input__wrapper{
-    border-left: 5px solid #f44336;
+.fieldInput.required input, .fieldInput.required .el-input__wrapper, .fieldInput.required .p-dropdown, .fieldInput .el-date-editor.required .el-input__wrapper, .fieldInput.fieldInput.required .el-select .el-select__wrapper{
+    border-left: 5px solid #f44336 !important;
 }
-.fieldInput.required .el-select .el-input__wrapper input,.fieldInput.required .lookupField .el-input__wrapper input,.fieldInput.required .el-select .el-select__tags input{
+.fieldInput.required .el-select .el-input__wrapper input,.fieldInput.required .lookupField .el-input__wrapper input,.fieldInput.required .el-select .el-select__tags input, .fieldInput.required .el-select .el-select__input-wrapper input{
     border-left: 0px !important;
 }
 .fieldInput.required .p-inputtext:enabled:focus{
@@ -318,14 +344,16 @@
 .fieldInput.checkbox label{
     margin-left:10px;
 }
-.fieldInput .el-input, .fieldInput .el-input__wrapper{
-    height: 36.5px;
-    --el-input-border-color: rgba(0,0,0,0.38);
+.fieldInput .el-input, .fieldInput .el-input__wrapper, .fieldInput .el-select .el-select__wrapper{
+    box-shadow: 0 0 0 1px rgba(0,0,0,0.38) inset;
+}
+.p-inputtext, .fieldInput .el-input, .fieldInput .el-input__wrapper, .fieldInput .el-select .el-select__wrapper{
+    height: 32px;
 }
 .fieldInput .el-input.el-input--small, .fieldInput .el-input--small .el-input__wrapper{
     height: auto;
 }
-.fieldInput .el-input__wrapper.is-focus,.fieldInput .el-select .el-input.is-focus .el-input__wrapper{
+.fieldInput .el-input__wrapper.is-focus,.fieldInput .el-select .el-select__wrapper.is-focused{
     box-shadow: inset 0 0 0 2px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5, inset 0 0 0 1px #3F51B5 !important;
 }
 .fieldInput .el-select.invalid .el-input__wrapper,.fieldInput .el-date-editor.invalid .el-input__wrapper{
@@ -337,7 +365,7 @@
 .fieldInput.invalid .tox.tox-tinymce, .fieldInput .p-inputnumber.invalid .p-inputtext{
     border-color:#B00020 !important;
 }
-.fieldInput .el-input__wrapper:hover,.fieldInput .el-select .el-input__wrapper:hover{
+.fieldInput .el-input__wrapper:hover,.fieldInput .el-select .el-select__wrapper:hover{
     box-shadow: 0 0 0 1px rgb(0 0 0 / 87%) inset;
 }
 .fieldInput .errMsg{

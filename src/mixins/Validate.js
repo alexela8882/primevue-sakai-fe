@@ -72,11 +72,17 @@ export default function validate() {
         return errMsg
     }
 
-    function validateForm(values,fields,isModalForm){
+    function validateForm(values,fields,hiddenFields,isModalForm){
         let pass = {}
         if(!isModalForm){
             _.forEach(fields, function(f,i){
                 if(f.quick){
+                    pass[f.name] = validateField(values,f,fields)
+                }
+            })
+        }else{
+            _.forEach(fields, function(f,i){
+                if(!_.includes(hiddenFields,f._id)){
                     pass[f.name] = validateField(values,f,fields)
                 }
             })
@@ -88,7 +94,6 @@ export default function validate() {
         let error  = true
         _.forEach(errorMsgs, function(val,i){
             if(!_.isEmpty(val)){
-                console.log('pasok',i)
                 error =  false
             }
         })
@@ -165,17 +170,18 @@ export default function validate() {
             if(!_.isEmpty(anotherFieldValue) && !_.isNull(anotherFieldValue)){
                 if(anotherField.field_type.name=='lookupModel' || anotherField.field_type.name=='picklist'){
                     if(multiple){
-                        pass = _.some(_.map(value,'value',[]), function(item){ if(_.includes(field.rules.required_if.values,item)){ return true; } })
+                        pass = !_.some(_.map(value,'value',[]), function(item){ if(_.includes(field.rules.required_if.values,item)){ return true; } })
                     }else{
-                        pass = (field.rules.required_if.values == anotherFieldValue.value) ? true : false
+                        pass = (field.rules.required_if.values == anotherFieldValue.value) ? false : true
                     }
-                }else if(anotherFieldValue!=value){
+                }else if(anotherFieldValue==value){
                     pass = false
                 }
             }
             let pronoun = (checkFieldIfMultipleSelect(anotherField.rules)) ? ' includes ' : ' is equal to ' 
+            let anotherFieldValues = (checkFieldIfMultipleSelect(anotherField.rules)) ? _.join(field.rules.required_if.values,', ') : field.rules.required_if.values
             if(!pass){
-                return "The "+ field.label +" field is required when "+ anotherField.label + " " +pronoun+"  "+_.join(field.rules.required_if.values,', ')
+                return "The "+ field.label +" field is required when "+ anotherField.label + " " +pronoun+"  "+ anotherFieldValues
             }else{
                 return ""
             }

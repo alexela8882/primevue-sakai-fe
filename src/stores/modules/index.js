@@ -618,26 +618,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
 
     if (res && res.status === 200) {
-      // if (payload.mode === 'new') {
-      //   // add new view filter into modules
-      //   getModules.value.map(module => {
-      //     if (module._id === payload.baseModule._id) {
-      //       module.viewFilters.push(res.data.viewFilter)
-      //     }
-      //   })
-      // } else {
-      //   // update module view filters
-      //   getModules.value.map(module => {
-      //     if (module._id === payload.baseModule._id) {
-      //       module.viewFilters.map(viewFilter => {
-      //         if (viewFilter._id === payload.viewFilter) {
-      //           Object.assign(viewFilter, res.data.viewFilter)
-      //         }
-      //       })
-      //     }
-      //   })
-      // }
-
       // toast
       toast.add({
         severity: 'success',
@@ -645,17 +625,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
         detail: res.data && res.data.message,
         life: 3000
       })
-
-      // let _payload = Object.assign({}, {
-      //   moduleName: payload.baseModule.name,
-      //   viewFilter: res.data.viewFilter._id,
-      //   page: null,
-      //   limit: data.pageSize,
-      //   reuse: true
-      // })
-
-      // await _fetchModule(_payload)
-      console.log(res.data.data)
       return res.data
     } else {
       toast.add({

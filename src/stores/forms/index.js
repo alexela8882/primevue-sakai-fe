@@ -172,8 +172,21 @@ export const useFormDataStore = defineStore('formDataStore', () => {
     }
 
     const saveFormValues = async (values,module) =>{
+
+      let url = `/modules/${module.name}`
+      let method = "POST"
+
+      if(_.has(values,'_id')){
+        url += `/${values['_id']}`
+        method = "PATCH"
+      }
+        
       try {
-        const response = await axios.post(`/modules/${module.name}`,values);
+        // const response = await axios.post(url,values);
+        const response = await axios(url, {
+          method: method,
+          data: values
+        })
         return response
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -206,6 +219,24 @@ export const useFormDataStore = defineStore('formDataStore', () => {
       }
     }
 
+    const transferOpportunity = async (values,id) =>{
+
+      let url = `/modules/salesopportunities/transfer/${id}`
+      let method = "POST"
+        
+      try {
+        // const response = await axios.post(url,values);
+        const response = await axios(url, {
+          method: method,
+          data: values
+        })
+        return response
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
     return {
         forms,
         picklist,
@@ -225,6 +256,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         saveFormValues,
         fetchEntityFields,
         massUpdateRecords,
-        saveQuickAdd
+        saveQuickAdd,
+        transferOpportunity
     }
 })
