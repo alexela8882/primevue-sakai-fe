@@ -28,8 +28,11 @@ import { useModuleStore } from '@/stores/modules'
 import { useModuleDetailStore } from '@/stores/modules/detail'
 import { useModuleFileStore } from '@/stores/modules/file'
 import { useTabStore } from '@/stores/tabs'
+// services
+import DynamicFormService from '@/service/DynamicFormService'
 
 // refs
+const activity_menu = ref()
 const linkedInquiryModule = ref(null)
 const fileMenu = ref()
 const toast = useToast()
@@ -47,6 +50,8 @@ const atShowRelatedLists = ref([])
 const salesRelatedLists = ref([])
 const serviceRelatedLists = ref([])
 const itemRefetch = ref(false) //boolean for detecting if record detail fetching is triggered
+// services
+const dynamicFormService = new DynamicFormService()
 // stores
 const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
@@ -128,8 +133,72 @@ const actionsMenuItems = ref([
       
 ])
 const dialogVisible = ref({'visible': false, 'title': '', 'form': ''})
+const activityLogItems = ref([
+  {
+    label: 'Select',
+    items: [
+      {
+        label: 'Task',
+        icon: 'pi pi-calendar',
+        command: async () => {
+          let form = Object.assign({}, {})
+          await dynamicFormService.getTaskForm().then((d) => form = d) // get form from service
+
+          const payload = Object.assign({}, {
+            icon: 'pi pi-calendar',
+            type: 'task',
+            form: form
+          })
+          createActivityLog(payload)
+        }
+      }, {
+        label: 'Event',
+        icon: 'pi pi-book',
+        command: async () => {
+          let form = Object.assign({}, {})
+          await dynamicFormService.getEventForm().then((d) => form = d) // get form from service
+
+          const payload = Object.assign({}, {
+            icon: 'pi pi-book',
+            type: 'event',
+            form: form
+          })
+          createActivityLog(payload)
+        }
+      }
+    ]
+  }
+])
 
 // actions
+const createActivityLog = (payload) => {
+  let obj = Object.assign({}, {
+    type: 'static-form',
+    style: 'window',
+    name: `${payload.type}-window-sform`,
+    label: `New ${payload.type} (${localBaseModule.value.label})`,
+    icon: payload.icon,
+    form: {
+      data: payload.form,
+      be_nec: {
+        method: 'POST',
+        uri: '/activity-logs',
+      },
+      prevalue: {
+        log_type: payload.type,
+        module_id: localBaseModule.value._id,
+        link_id: route.params.pageid
+      }
+    },
+    expanded: true,
+    opened: false,
+    opened_order: null
+  })
+  const index = getTabs.value.findIndex(form => form.name === obj.name)
+  if (index === -1) {
+    addTab(obj, true)
+  }
+}
 const tabChanged = (e) => {
   tabIndex.value = e.index
 }
@@ -299,6 +368,7 @@ onMounted(async() => {
 
 <template>
   <div>
+    <!-- <pre>{{ localModule }}</pre> -->
     <RdBreadCrumbs :bcrumbs="bcrumbs" />
 
     <div
@@ -490,12 +560,26 @@ onMounted(async() => {
               <div class="p-3">
                 <div class="flex align-items-center justify-content-between">
                   <div class="text-xl font-bold text-primary">Activity</div>
-                  <div>
-                    <div class="p-inputgroup">
-                      <Dropdown
-                        placeholder="Filters"
-                        class="border-round-xl border-primary w-full md:w-12rem"/>
-                      <Button label="add activity" class="ml-3 border-round-xl px-4"></Button>
+                  <div class="flex align-items-center gap-4">
+                    <Dropdown
+                      placeholder="Filters"
+                      class="border-round-xl border-primary w-full md:w-12rem"
+                    ></Dropdown>
+                    <div>
+                      <Button
+                        icon="pi pi-plus"
+                        text
+                        rounded
+                        @click="activity_menu.toggle($event)"
+                        aria-haspopup="true"
+                        aria-controls="overlay_menu_activity"
+                      ></Button>
+                      <Menu
+                        ref="activity_menu"
+                        id="overlay_menu_activity"
+                        :model="activityLogItems"
+                        :popup="true"
+                      ></Menu>
                     </div>
                   </div>
                 </div>

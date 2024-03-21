@@ -46,14 +46,14 @@ const addFilterByOwner = () => {
   filterByOwnerOverlay2.value = true
 }
 const editFilterByOwner = (filter, fx) => {
-  let filterField = _getFieldDetailsById.value({ fields: props.module.fields, _id: filter.field_id })
-  let filterOperator = _getFieldDetailsById.value({ fields: getPicklist.value && getPicklist.value.filter_operators.values, _id: filter.operator_id })
+  let filterField = _getFieldDetailsById.value({ fields: props.module.fields, _id: filter.field._id })
+  let filterOperator = _getFieldDetailsById.value({ fields: getPicklist.value && getPicklist.value.filter_operators.values, _id: filter.operator._id })
 
   Object.assign(filterByOwner.value.data, {
     uuid: filter.uuid,
     field: filterField,
     operator: filterOperator,
-    value: filter.values,
+    value: Array.isArray(filter.values) ? filter.values.map(val => val._id) : filter.values,
     isNull: filter.isNull
   })
 
@@ -86,11 +86,12 @@ const saveFilterByOwner = async () => {
 
   const res = await addViewFilter(payload) // store save/update
   if (res && res.status === 200) {
-    if (payload.data.mode === 'new') insertFilter(res.data)
+    if (payload.data.mode === 'new') insertFilter(res.data.filters[0])
     else updateFilter(res.data.filters[0])
   }
 }
 const insertFilter = (payload) => {
+  console.log(payload)
   if (filterByOwner.value.filters instanceof Array) {
     filterByOwner.value.filters.push(payload)
   } else {
@@ -102,6 +103,7 @@ const insertFilter = (payload) => {
   localSaveLoading.value = false
 }
 const updateFilter = (payload) => {
+  console.log(filterByOwner.value.data.field)
   filterByOwner.value.filters.map(filter => {
     if (filter.uuid === payload.uuid) Object.assign(filter, payload)
   })
@@ -154,7 +156,7 @@ onMounted(async () => {
     filterByOwner.value.filters.length > 0
   ) {
     filterByOwner.value.filters.map(filter => {
-      const field = _getFieldDetailsById.value({ fields: props.module.fields, _id: filter.field_id })
+      const field = _getFieldDetailsById.value({ fields: props.module.fields, _id: filter.field._id })
       _fetchPickList(field.listName)
     })
   }
@@ -178,7 +180,7 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
   <Card style="overflow: hidden" class="">
     <template #title>Filters</template>
     <template #content>
-      <!-- <pre>{{ filterByOwner.filters }}</pre> -->
+      <!-- <pre>{{ filterByOwner.data.value }}</pre> -->
       <div>
         <div class="relative flex flex-column gap-4 text-600">
           <div
@@ -194,51 +196,23 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
             @click="editFilterByOwner(filter, fx)"
             :key="fx"
             class="flex flex-column gap-2 p-3 border-1 border-400 hover:border-600 bg-orange-100 hover:bg-orange-200 border-round-md cursor-pointer">
-            <div>
-              {{ _getFieldDetailsById({
-                  fields: module.fields,
-                  _id: filter.field_id
-                }).label
-              }}</div>
+            <div>{{ filter.field.label }}</div>
             <div class="text-lg text-800">
               <div v-if="getPicklist.filter_operators" class="font-italic">
-                {{ getPicklist.filter_operators.values.find(op => op._id === filter.operator_id).label }}
+                {{ filter.operator.label }}
               </div>
               <div class="flex flex-wrap mt-2 text-xs white-space-nowrap">
-                <div v-if="filter.isNull">
-                  Null
-                </div>
-                <div v-else class="flex flex-wrap">
-                  <div v-if="
-                    _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'text' ||
-                    _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'boolean' ||
-                    _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'date'
-                  ">
-                    {{ filter.values }}
+                <div v-if="Array.isArray(filter.values)">
+                  <div v-if="filter.isNull">
+                    Null
                   </div>
-                  <div
-                    v-else-if="
-                      _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'picklist' ||
-                      _getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).field_type.name === 'lookupModel'
-                    "
-                    v-for="(val, vx) in filter.values"
-                    :key="vx"
-                    severity="secondary"
-                  >
-                    <div>
-                      {{
-                        _getFieldDetailsById({
-                          fields: getPicklist[_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).listName] && getPicklist[_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).listName].values,
-                          _id: val
-                        }) &&
-                        _getFieldDetailsById({
-                          fields: getPicklist[_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).listName] && getPicklist[_getFieldDetailsById({ fields: module.fields, _id: filter.field_id }).listName].values,
-                          _id: val
-                        }).value
-                      }},&nbsp;
+                  <div v-else class="flex flex-wrap">
+                    <div v-for="(val, vx) in filter.values" :key="vx">
+                      {{ val.label }}{{ filter.values.length -1 !== vx ? ',&nbsp;' : ''}}
                     </div>
                   </div>
                 </div>
+                <div v-else>{{ filter.isNull ? 'Null' : filter.values }}</div>
               </div>
             </div>
           </div>

@@ -8,19 +8,22 @@ const props = defineProps({
   fields: Array,
   moduleValidationInputs: Object,
   moduleValidationErrors: Object,
-  moduleValidationMeta: Object
+  moduleValidationMeta: Object,
+  loading: Boolean
 })
+
 </script>
 
 <template>
   <div>
     <div class="grid">
-      <div v-for="(field, fx) in fields" :key="fx" class="md:col-6">
+      <div v-for="(field, fx) in fields.filter(f => !f.hide)" :key="fx" class="md:col-6">
         <div v-if="field.type === 'text'">
           <span class="p-float-label">
             <InputText
               v-bind="moduleValidationInputs[field.name]"
               @update:modelValue="$emit('validate-sync-func')"
+              :disabled="loading"
               class="w-full"
               :class="`${field.rules.required && 'border-left-3 border-red-600'}`"
             />
@@ -35,6 +38,7 @@ const props = defineProps({
             <Calendar
               v-bind="moduleValidationInputs[field.name]"
               @update:modelValue="$emit('validate-sync-func')"
+              :disabled="loading"
               class="w-full"
               :pt="{ input: { class: `${field.rules.required && 'border-left-3 border-red-600'}` } }"
             />
@@ -49,6 +53,7 @@ const props = defineProps({
             <Calendar
               v-bind="moduleValidationInputs[field.name]"
               @update:modelValue="$emit('validate-sync-func')"
+              :disabled="loading"
               timeOnly
               class="w-full"
               :pt="{ input: { class: `${field.rules.required && 'border-left-3 border-red-600'}` } }"
@@ -64,6 +69,7 @@ const props = defineProps({
             <Dropdown
               v-bind="moduleValidationInputs[field.name]"
               @update:modelValue="$emit('validate-sync-func')"
+              :disabled="loading"
               :options="field.items"
               optionLabel="label"
               optionValue="name"
@@ -81,6 +87,7 @@ const props = defineProps({
             <Dropdown
               v-bind="moduleValidationInputs[field.name]"
               @update:modelValue="$emit('validate-sync-func')"
+              :disabled="loading"
               :options="field.items"
               optionLabel="label"
               optionValue="name"
