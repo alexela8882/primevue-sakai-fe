@@ -39,6 +39,7 @@ export const useActivityLogStore = defineStore('activityLogStore', () => {
         // console.log(newItemDate)
         // console.log(newItem)
         // console.log(index)
+        getActivityLogsByRecord.value[index].count++
         getActivityLogsByRecord.value[index].items.push(newItem)
       }
 
