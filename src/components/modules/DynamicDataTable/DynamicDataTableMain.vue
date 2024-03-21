@@ -267,7 +267,7 @@ onMounted(async () => {
 })
 
 onClickOutside(listViewFilterRef, (event) => {
-  // console.log(event.target && event.target.attributes.class.value)
+  console.log(event.target && event.target.attributes.class.value)
   // console.log(event.target && event.target.attributes['data-pc-section'].value)
   if (event.target) {
     if (
@@ -293,7 +293,16 @@ onClickOutside(listViewFilterRef, (event) => {
         event.target.attributes.class.value === 'p-datepicker-prev p-link' ||
         event.target.attributes.class.value === 'p-datepicker-next p-link' ||
         event.target.attributes.class.value === 'p-datepicker p-component p-ripple-disabled' ||
-        event.target.attributes.class.value === 'p-datepicker-group'
+        event.target.attributes.class.value === 'p-datepicker-group' ||
+        event.target.attributes.class.value === 'p-dialog-header' ||
+        event.target.attributes.class.value === 'p-dialog-title' ||
+        event.target.attributes.class.value === 'p-dialog-footer' ||
+        event.target.attributes.class.value === 'p-confirm-dialog-message' ||
+        event.target.attributes.class.value === 'p-icon p-dialog-header-close-icon' ||
+        event.target.attributes.class.value === 'p-confirm-dialog-icon pi pi-exclamation-triangle' ||
+        event.target.attributes.class.value === 'p-dialog-mask p-component-overlay p-component-overlay-enter' ||
+        event.target.attributes.class.value === 'p-button-label' ||
+        event.target.attributes.class.value === 'p-button p-component p-confirm-dialog-reject p-button-secondary p-button-outlined'
       ) ||
       (
         event.target.attributes['data-pc-section'] &&

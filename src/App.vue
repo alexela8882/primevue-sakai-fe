@@ -3,7 +3,7 @@
 import { storeToRefs } from 'pinia'
 import { defineAsyncComponent, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
-import _ from 'lodash'
+import { useConfirm } from "primevue/useconfirm"
 // stores & composables
 import { useGeneralStore } from './stores/general'// stores
 import { useTabStore } from '@/stores/tabs/index'
@@ -11,6 +11,7 @@ import { useModuleStore } from '@/stores/modules/index'
 import { useBaseStore } from '@/stores/base'
 
 // refs
+const confirm = useConfirm()
 const router = useRouter()
 // stores & composables
 const moduleStore = useModuleStore()
@@ -60,6 +61,8 @@ onMounted(async () => {
       <div class="fw-dialog-content"></div>
     </template>
   </GlobalDialog>
+
+  <ConfirmDialog></ConfirmDialog>
 
   <el-backtop :right="10" :bottom="10" />
 </template>
