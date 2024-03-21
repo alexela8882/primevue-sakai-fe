@@ -4,7 +4,6 @@ import { storeToRefs } from 'pinia'
 import { defineAsyncComponent, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useConfirm } from "primevue/useconfirm"
-import _ from 'lodash'
 // stores & composables
 import { useGeneralStore } from './stores/general'// stores
 import { useTabStore } from '@/stores/tabs/index'

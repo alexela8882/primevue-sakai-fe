@@ -30,7 +30,17 @@ export const useActivityLogStore = defineStore('activityLogStore', () => {
 
     if (res && res.status === 200) {
       // push new item
-      activity_logs_by_record.value.push(res.data.data)
+      if (activity_logs_by_record.value && activity_logs_by_record.value.length <= 0) {
+        activity_logs_by_record.value = res.data.data
+      } else {
+        const newItemDate = res.data.data && res.data.data[0].date
+        const newItem = res.data.data && res.data.data[0].items[0]
+        const index = getActivityLogsByRecord.value.findIndex(record => record.date === newItemDate)
+        // console.log(newItemDate)
+        // console.log(newItem)
+        // console.log(index)
+        getActivityLogsByRecord.value[index].items.push(newItem)
+      }
 
       // toast
       toast.add({

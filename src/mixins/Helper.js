@@ -157,8 +157,9 @@ const { getModules } = storeToRefs(moduleStore)
         formValues = getDefaultValue(fields,false)
     }else if(formPage=='show'){
         formValues = getModuleValues(fields,values,true)
-    }else if(formPage=='edit'){
+    }else if(formPage=='update'){
         formValues = getModuleValues(fields,values,false)
+        formValues['_id'] = values['_id']
     }
     return formValues
   }
@@ -194,6 +195,8 @@ const { getModules } = storeToRefs(moduleStore)
                 res[val.name] =  transformDate(values[val.name],val.rules,displayValue)
             }else if(val.field_type.name=='picklist'){
                 res[val.name] = (displayValue) ? values[val.name] : transformPicklistValue(val.rules,val.listName,values[val.name])
+            }else if(val.field_type.name=='lookupModel'){
+                res[val.name] = (displayValue) ? transformLookupDisplay(values[val.name],val) : transformLookupValue(values[val.name],val,displayValue)
             }else{
                 res[val.name] = values[val.name]
             }
@@ -408,6 +411,9 @@ const { getModules } = storeToRefs(moduleStore)
             }
         }
     })
+    if(_.has(values,'_id')){
+        result['_id'] = values['_id']
+    }
     return result
   }
 
@@ -636,6 +642,7 @@ const { getModules } = storeToRefs(moduleStore)
         if(_.has(f,'filterQuery')){
             var filter = f.filterQuery;
             var query = filter.match(/(\%[a-zA-Z0-9_\:\.\#]*\%)/gi);
+            console.log('filterQuery',query)
             _.forEach(query, function(q){
                 var val = _.trim(q,'%')
                 var fieldName = extractFieldinExpressionFormat(val)
@@ -643,6 +650,7 @@ const { getModules } = storeToRefs(moduleStore)
                 if(_.isEmpty(entityName)){
                     entityName = entity
                 }
+                console.log(fieldName==field.name && entityName==entity)
                 if(fieldName==field.name && entityName==entity){
                     if(!_.includes(result.filtered_by,f.name)){
                         result.filtered_by.push(f.name)
@@ -754,6 +762,47 @@ const { getModules } = storeToRefs(moduleStore)
     return value
   }
 
+  function applyAutofill(field,value,sourceField){
+    let result = null
+    if(!_.isNil(value[sourceField]) && !_.isEmpty(value[sourceField])){
+        if(field.field_type.name=='date' || field.field_type.name=='date_time'){
+            result =  transformDate(value[sourceField],field.rules,false)
+        }else if(field.field_type.name=='picklist'){
+            result = transformPicklistValue(field.rules,field.listName,value[sourceField])
+        }else if(field.field_type.name=='lookupModel'){
+            result = transformLookupValue(value[sourceField],field,false)
+        }else{
+            if(sourceField=='firstName' && _.has(value,'fullName')){
+                result = value['fullName']
+            }else if(sourceField=='firstName' && _.has(value,'lastName')){
+                result = value[sourceField] + " " + value['lastName']
+            }else{
+                result = value[sourceField]
+            }
+           
+        }
+    }else if(field.field_type.name=='percentage' || field.field_type.name=='number' || field.field_type.name=='currency' || field.field_type.name=='formula' || field.field_type.name=='rollUpSummary'){
+        if(_.isNumber(value[sourceField])){
+            if(field.field_type.name=='percentage') {
+                result =  value[sourceField] * 100
+            }else{
+                result =  transformNumberCurrency(value[sourceField],field.rules,false)
+            }
+        }else if(_.isString(value[sourceField])){
+            if(field.field_type.name=='percentage') {
+                result =  _.toNumber(value[sourceField]) * 100
+            }else{
+                result =  transformNumberCurrency(_.toNumber(value[sourceField]),field.rules,false)
+            }
+        }else{
+            result = 0
+        }
+    }else{
+        result = null
+    }
+    return result
+  }
+
   return {
     getPicklistFields,
     getLookupFields,
@@ -775,6 +824,7 @@ const { getModules } = storeToRefs(moduleStore)
     getAllDisabledFields,
     checkSetValRule,
     transformLookupDisplay,
-    checkIfHasModule
+    checkIfHasModule,
+    applyAutofill
   };
 }

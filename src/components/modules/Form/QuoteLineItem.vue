@@ -7,6 +7,7 @@
     import _ from 'lodash'
     import helper from '@/mixins/Helper';
 
+    import { useModuleStore } from '../../../stores/modules'
     import { useFormDataStore } from '../../../stores/forms'
 
     const MutableField = defineAsyncComponent(() => import('@/components/modules/Form/MutableField.vue'))
@@ -17,8 +18,10 @@
         formPage: String
     })
 
+    const moduleStore = useModuleStore()
     const formDataStore = useFormDataStore()
-    const { fetchEntityFields  } = formDataStore
+    const { fetchModuleFields  } = moduleStore
+    const { fetchLookupPaginated } = formDataStore
     const { getDefaultValue } = helper();
 
     const fields = ref([])
@@ -43,6 +46,12 @@
       "commisionPercentSalesAgent":"130px",
       "commisionAmountSalesAgent":"130px"
     })
+    const page = ref(1)
+    const searchText = ref("")
+    const fetching = ref(false)
+    const items = ref([])
+    const pagination = ref({})
+    const modalVisible = ref(false)
     const tempProducts = ref([
   {
     "_id": "5c0723dc678f7161775a1f41",
@@ -921,7 +930,7 @@
         }else{
             hiddenFields.value = ['status_id','sales_quote_id','currency_id','sort','inclusive_service_ids']
         }
-        fields.value = await fetchEntityFields("SalesOpptItem")
+        fields.value = await fetchModuleFields("SalesOpptItem")
         defaultValue.value = getDefaultValue(fields.value,false)
         form.value.values[props.panel.panelName] = []
     })
@@ -996,6 +1005,62 @@
       }
     }
 
+    let cancelToken = null; // Variable to store the cancel token
+    const fetchProducts = async() =>{
+        fetching.value = true
+        // Cancel the previous request if it exists
+        if (cancelToken) {
+            cancelToken.cancel('Previous search canceled');
+        }
+
+        // // Create a new cancel token
+        cancelToken = axios.CancelToken.source();
+        try {
+            let params = {"fieldId":"salesopptitem_list_price_id","page":page.value,"moduleName":'salesopportunities',"search":searchText.value}
+            let err = []
+            if(!_.isEmpty(form.value.values.main)){
+                if(!_.isEmpty(form.value.values.main['currency_id']) && !_.isNull(form.value.values.main['currency_id'])){
+                  params['SalesOpportunity::currency_id'] = form.value.values.main['currency_id']['_id']
+                }else{
+                  err.push("Currency")
+                }
+
+                if(!_.isEmpty(form.value.values.main['pricebook_id']) && !_.isNull(form.value.values.main['pricebook_id'])){
+                  params['SalesOpportunity::pricebook_id'] = form.value.values.main['pricebook_id']['_id']
+                }else{
+                  err.push("Pricebook")
+                }
+            }
+            if(_.isEmpty(err)){
+                modalVisible.value = true
+                let records = await fetchLookupPaginated(params,cancelToken)
+
+                items.value = records.data
+                pagination.value = _.cloneDeep(_.get(records,'meta.pagination',{}))
+
+                selectedProducts.value = items.value.filter(option => props.modelValue && props.modelValue.includes(option._id))
+                fetching.value = false
+            }else{
+                modalVisible.value = false
+                toast.add({ severity: 'error', summary: 'Error', detail: 'Please select '+_.join(err,', '), position:"top-center", life: 3000 });
+                fetching.value = false
+            }
+            
+            
+        } catch (error) {
+            if (axios.isCancel(error)) {
+                console.log('Request canceled:', error.message);
+            } else {
+                console.error('Error fetching data:', error);
+            }
+        } 
+    }
+
+    const changePage = async(p) => {
+        page.value = p
+        fetchProducts()
+    }
+
     watch(form.value.values.main, (newV,oldV) =>{
         _.forEach(form.value.values[props.panel.panelName], function(d,i){
             if(!_.isEqual(d.branch_id,form.value.values.main.branch_id)){
@@ -1007,38 +1072,52 @@
 <template>
 <div class="formSectionLabel flex align-items-center justify-content-between">
     <h6 class="mb-0" v-if="panel.sections[0].label">{{ panel.sections[0].label }}</h6>
-    <el-popover placement="bottom-start" :width="880" trigger="click" @hide="addProductsToTable">
+    <el-popover :visible="modalVisible" placement="bottom-start" :width="880" trigger="click" @hide="addProductsToTable" >
       <template #reference>
-        <el-button style="margin-right: 16px" :disabled="form.formSaving">Add Products</el-button>
+        <el-button style="margin-right: 16px" :disabled="form.formSaving" @click="fetchProducts">Add Products</el-button>
       </template>
-      <el-table :data="tempProducts" border stripe height="250" size="small" @selection-change="handleSelectionChange">
-        <el-table-column type="selection" width="30" />
-        <el-table-column width="100" label="Item Code" >
-            <template #default="scope">
-                {{ scope.row.product_id.itemCode}}
-            </template>
-        </el-table-column>
-        <el-table-column width="120" label="Model Code">
-            <template #default="scope">
-                {{ scope.row.product_id.modelCode}}
-            </template>
-        </el-table-column>
-        <el-table-column width="250" label="Product">
-            <template #default="scope">
-                <div v-html="scope.row.product_id.name"></div>
-            </template>
-        </el-table-column>
-        <el-table-column width="250" label="Description">
-            <template #default="scope">
-                <div v-html="scope.row.product_id.description"></div>
-            </template>
-        </el-table-column>
-        <el-table-column width="100" prop="price" label="Price" />
-      </el-table>
-      <div class="flex align-items-center justify-content-between mt-2">
-        <el-pagination background layout="prev, pager, next" small :total="1000" />
-        <el-button stype="primary" size="small">OK</el-button>
+      <div
+        v-if="_.isEmpty(items)"
+        class="flex align-items-center justify-content-center">
+        <ProgressSpinner />
       </div>
+      <template  v-else>
+        <el-table :data="items" border stripe height="250" size="small" @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="30" />
+          <el-table-column width="100" label="Item Code" >
+              <template #default="scope">
+                  {{ scope.row.product_id.itemCode}}
+              </template>
+          </el-table-column>
+          <el-table-column width="120" label="Model Code">
+              <template #default="scope">
+                  {{ scope.row.product_id.modelCode}}
+              </template>
+          </el-table-column>
+          <el-table-column width="250" label="Product">
+              <template #default="scope">
+                  <div v-html="scope.row.product_id.name"></div>
+              </template>
+          </el-table-column>
+          <el-table-column width="250" label="Description">
+              <template #default="scope">
+                  <div v-html="scope.row.product_id.description"></div>
+              </template>
+          </el-table-column>
+          <el-table-column width="100" prop="price" label="Price" />
+        </el-table>
+        <div class="flex align-items-center justify-content-between mt-2">
+          <el-pagination
+                small
+                background
+                layout="prev, pager, next"
+                :default-page-size="50"
+                :current-page="page"
+                :total="_.get(pagination,'total',0)"
+                @current-change="changePage"/>
+          <el-button stype="primary" size="small" @click="modalVisible=false">OK</el-button>
+        </div>
+      </template>
     </el-popover>
 </div>
  <DataTable :value="form.values[panel.panelName]" size="small" stripedRows  columnResizeMode="expand" tableStyle="min-width: 50rem">

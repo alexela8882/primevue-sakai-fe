@@ -5,6 +5,7 @@ import { onMounted, ref, watch, defineAsyncComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useToast } from "primevue/usetoast"
 import helper from '@/mixins/Helper';
+import _ from 'lodash';
 // components
 import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
 const MailboxThreads = defineAsyncComponent(() =>
@@ -17,6 +18,7 @@ const RelatedListPanel = defineAsyncComponent(() => import('@/components/modules
 const SectionFields = defineAsyncComponent(() => import('@/components/modules/Page/SectionFields.vue'))
 const UploadFileContent = defineAsyncComponent(() => import('@/components/modules/Files/UploadFileContent.vue'))
 const QuotePDFPreview = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/QuotePDFPreview.vue'))
+const TransferOpportunity = defineAsyncComponent(() => import('@/components/modules/Form/TransferOpportunity.vue'))
 // loaders
 import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
 import SimpleLoader from '@/components/loading/Simple2.vue'
@@ -48,6 +50,7 @@ const atIndexRelatedLists = ref()
 const atShowRelatedLists = ref([])
 const salesRelatedLists = ref([])
 const serviceRelatedLists = ref([])
+const itemRefetch = ref(false) //boolean for detecting if record detail fetching is triggered
 // services
 const dynamicFormService = new DynamicFormService()
 // stores
@@ -103,6 +106,37 @@ const fileMenuItems = ref([
     ]
   }
 ])
+const actionsMenu = ref()
+const actionsMenuItems = ref([
+  {
+    label:"Actions",
+    items:[
+      {
+          label: 'Clone with products',
+          icon: 'pi pi-clone'
+      },
+      {
+          label: 'Clone without products',
+          icon: 'pi pi-clone'
+      },
+      {
+          label: 'Transfer Opportunity',
+          icon: 'pi pi-refresh',
+          command: () => { showTransferForm() }
+      },
+      {
+          label: 'Generate Service Jobs',
+          icon: 'pi pi-car'
+      },
+      {
+          label: 'Delete',
+          icon: 'pi pi-trash'
+      }
+    ]
+  }
+      
+])
+const dialogVisible = ref({'visible': false, 'title': '', 'form': ''})
 const activityLogItems = ref([
   {
     label: 'Select',
@@ -235,23 +269,46 @@ const removeModuleFile = (payload) => {
 }
 
 // actions
-const createNewForm = (module) => {
+const editForm = async (module) => {
   let obj = Object.assign({}, {
     type: 'module-form',
     style: 'window',
-    name: `${module.name}-${route.params.pageid}-window-edit-form`,
+    name: `${module.name}-window-edit-form`,
     label: `${module.label} Form`,
     _module: module.name,
-    expanded: true,
+    expanded: false,
+
     opened: false,
+    mode: 'modal',
     opened_order: null
   })
-  const index = getTabs.value.findIndex(form => form.name === obj.name)
-  if (index === -1) {
-    addTab(obj, true)
-  }else{
-    toggleWindows(getTabs.value[index])
+
+  const index = getTabs.value.findIndex((tab, fx) => tab.name === obj.name)
+  if (index == -1) {
+    await addTab(obj, true)
+  } else confirmAddTab(module, index)
+}
+
+const toggleActions = (event) =>{
+  actionsMenu.value.toggle(event);
+}
+//Transfer Opportunity
+const showTransferForm = async() =>{
+  dialogVisible.value.visible = true
+  dialogVisible.value.title = "Transfer Opportunity"
+  dialogVisible.value.form = "transfer"
+}
+//Closing Dialog used by other forms depends on module
+const closeDialog = async() =>{
+  if(dialogVisible.value.form == "transfer"){
+    itemRefetch.value = true
+    await fetchItem(route.params)
+    setTimeout(()=>{
+      itemRefetch.value = false
+    },3000)
+    
   }
+  dialogVisible.value = {'visible': false, 'title': '', 'form': ''}
 }
 
 
@@ -370,7 +427,9 @@ onMounted(async() => {
         </div>
 
         <div>
-          <Button label="Edit" size="large" @click="createNewForm(getBaseModule)" class="px-6 border-round-xl"></Button>
+          <Button label="Edit"  @click="editForm(localBaseModule)" class="px-3 border-round-md mr-2"></Button>
+          <Button type="button" icon="pi pi-ellipsis-v" @click="toggleActions" aria-haspopup="true" aria-controls="overlay_menu" />
+          <Menu ref="actionsMenu" class="px-2" id="overlay_menu" :model="actionsMenuItems" :popup="true" />
         </div>
       </div>
 
@@ -420,12 +479,13 @@ onMounted(async() => {
                               </div>
                             </div>
                             <div v-else>
-                              <Suspense v-if="section.field_ids && section.field_ids.length > 0">
+                              <template v-if="section.field_ids && section.field_ids.length > 0 && !itemRefetch">
                                 <SectionFields :newModuleFields="localModule.fields" :fieldIds="section.field_ids" />
-                                <template #fallback>
+                                
+                              </template>
+                              <template v-else>
                                   <TwoColumnList />
                                 </template>
-                              </Suspense>
                               <div v-if="section.additional_fields.length > 0">
                                 <div v-for="(addition_field, afx) in section.additional_fields" :key="afx">
                                   <Suspense v-if="addition_field.ids && addition_field.ids.length > 0">
@@ -530,7 +590,16 @@ onMounted(async() => {
                 </div>
               </div>
               <div class="flex flex-column gap-1 mb-6">
+                <div v-if="getActivityLogsByRecord && getActivityLogsByRecord.length <= 0">
+                  <div class="p-3">
+                    No activity logs.
+                    Click on
+                    <code class="text-primary-300">plus</code>
+                    icon to create.
+                  </div>
+                </div>
                 <Panel
+                  v-else
                   v-for="(log, lx) in getActivityLogsByRecord"
                   :key="lx"
                   toggleable
@@ -538,20 +607,30 @@ onMounted(async() => {
                   class="activity-panel">
                   <template #header>
                     <div class="text-sm text-900">
-                      <!-- <span>This months</span> -->
+                      <div class="flex justify-content-between align-items-center gap-2">
+                        <div>{{ log.date_phrase }}</div>
+                        <Badge :value="log.count" class="text-100 surface-600"></Badge>
+                      </div>
                     </div>
                   </template>
                   <template #togglericon>
                     <font-awesome-icon icon="fa-solid fa-caret-down" style="font-size: 1.5rem;"></font-awesome-icon>
                   </template>
                   <template #icons>
-                    <div class="text-sm text-900 ml-2">{{ log.created_at_mdy }}</div>
+                    <div class="text-sm text-900 ml-2">{{ log.date_mdy }}</div>
                   </template>
                   <div class="m-0 mt-3">
-                    <div>{{ log.subject }} ({{ log.status }})</div>
-                    <div>{{ log.type_id }}</div>
-                    <div>{{ log.remarks }}</div>
-                    <div>{{ log.date_mdy }} ({{ log.date_dfh }})</div>
+                    <div v-for="(item, ix) in log.items" :key="ix">
+                      <div class="my-5">
+                        <div class="flex justify-content-between align-items-center">
+                          <div>{{ item.subject }} ({{ item.status }})</div>
+                          <div class="text-xs text-600">{{ item.updated_at_dfh }}</div>
+                        </div>
+                        <div>{{ item.type_id }}</div>
+                        <div>{{ item.remarks }}</div>
+                        <div>{{ item.date_mdy }} ({{ item.date_dfh }})</div>
+                      </div>
+                    </div>
                   </div>
                 </Panel>
               </div>
@@ -643,8 +722,11 @@ onMounted(async() => {
         </div>
       </div>
     </div>
-
+    
     <UploadFileContent :module="localModule" />
+    <Dialog v-model:visible="dialogVisible.visible" modal :header="dialogVisible.title" :style="{ width: '40vw'}"  :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
+        <TransferOpportunity v-if="dialogVisible.form=='transfer'" :record="getItem.data" @closeForm="closeDialog"></TransferOpportunity>
+    </Dialog>
   </div>
 </template>
 
