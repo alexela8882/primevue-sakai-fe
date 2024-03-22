@@ -19,6 +19,7 @@ const emit = defineEmits(['apply-filters'])
 
 // refs
 const confirm = useConfirm()
+const deleteFilterLoading = ref(false)
 const applyFiltersLoading = ref(false)
 const localSaveLoading = ref(false)
 const localPickListLoading = ref(false)
@@ -51,25 +52,55 @@ const deleteFilter = (event, payload) => {
     rejectLabel: 'Cancel',
     acceptLabel: 'Proceed',
     accept: () => {
-      proceedDeleteFilter(payload)
+      proceedDeleteFilter([payload.uuid])
     },
     reject: () => {
       console.log('Cancel deletion')
     }
   })
 }
-const proceedDeleteFilter = async (payload) => {
+const removeAllFilters = () => {
+  confirm.require({
+    message: 'You are about to remove all filters.',
+    header: 'Confirmation',
+    icon: 'pi pi-exclamation-triangle',
+    rejectClass: 'p-button-secondary p-button-outlined',
+    rejectLabel: 'Cancel',
+    acceptLabel: 'Proceed',
+    accept: async () => {
+      const uuids = selectedViewFilter.value.filters.map(filter => filter.uuid)
+      await proceedDeleteFilter(uuids)
+    },
+    reject: () => {
+      console.log('Cancel remove all')
+    }
+  })
+}
+const proceedDeleteFilter = async (uuids) => {
+  deleteFilterLoading.value = true
+
   const _payload = Object.assign({}, {
     mode: 'delete',
     baseModule: props.baseModule,
-    viewFilter: props.module.viewFilters.find(filter => filter.isDefault)._id,
+    viewFilter: selectedViewFilter.value._id,
     type: 'filters',
     data: {
       mode: 'delete',
-      filters: [payload.uuid]
+      queryType: filterByOwner.value.queryType,
+      filters: uuids
     }
   })
-  await addViewFilter(_payload)
+
+  const res = await addViewFilter(_payload)
+  let filters = res.data
+
+  // splice matching filters
+  let finalFilters = filterByOwner.value.filters.filter(filter => !filters.includes(filter.uuid))
+  filterByOwner.value.filters = finalFilters
+
+  // reset
+  filterByOwnerOverlay2.value = false
+  deleteFilterLoading.value = false
 }
 const addFilterByOwner = () => {
   filterByOwner.value.data = Object.assign({}, filterByOwner.value.default)
@@ -120,7 +151,6 @@ const saveFilterByOwner = async () => {
   if (res && res.status === 200) {
     if (payload.data.mode === 'new') insertFilter(res.data.filters[0])
     else if (payload.data.mode === 'edit') updateFilter(res.data.filters[0])
-    else if (payload.data.mode === 'delete') console.log('delete filters')
   }
 }
 const insertFilter = (payload) => {
@@ -132,11 +162,12 @@ const insertFilter = (payload) => {
     filterByOwner.value.filters.push(payload)
   }
 
+  console.log(filterByOwner.value.filters)
+
   filterByOwnerOverlay2.value = !filterByOwnerOverlay2.value
   localSaveLoading.value = false
 }
 const updateFilter = (payload) => {
-  console.log(filterByOwner.value.data.field)
   filterByOwner.value.filters.map(filter => {
     if (filter.uuid === payload.uuid) Object.assign(filter, payload)
   })
@@ -223,45 +254,47 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
             <div class="text-lg text-800">{{ filterByOwner.queryType }}</div>
           </div>
 
-          <div
-            v-if="filterByOwner.filters instanceof Array && filterByOwner.filters.length >= 1"
-            v-for="(filter, fx) in filterByOwner.filters"
-            @click="editFilterByOwner(filter, fx)"
-            :key="fx"
-            class="flex flex-column gap-2 p-3 border-1 border-400 hover:border-600 bg-orange-100 hover:bg-orange-200 border-round-md cursor-pointer">
-            <div class="flex justify-content-between align-items-center">
-              <div>{{ filter.field.label }}</div>
-              <div>
-                <Button
-                  @click.stop="deleteFilter($event, filter)"
-                  icon="pi pi-trash"
-                  severity="danger"
-                  text rounded />
-              </div>
-            </div>
-            <div class="text-lg text-800">
-              <div v-if="getPicklist.filter_operators" class="font-italic">
-                {{ filter.operator.label }}
-              </div>
-              <div class="flex flex-wrap mt-2 text-xs white-space-nowrap">
-                <div v-if="Array.isArray(filter.values)">
-                  <div v-if="filter.isNull">
-                    Null
+          <BlockUI :blocked="deleteFilterLoading">
+            <div
+              v-if="filterByOwner.filters instanceof Array && filterByOwner.filters.length >= 1"
+              v-for="(filter, fx) in filterByOwner.filters"
+              @click="editFilterByOwner(filter, fx)"
+              :key="fx"
+              class="flex flex-column gap-2 p-3 border-1 border-400 hover:border-600 bg-orange-100 hover:bg-orange-200 border-round-md cursor-pointer my-2">
+              <div class="flex justify-content-between text-lg text-800">
+                <div>
+                  <div class="text-600">{{ filter.field.label }}</div>
+                  <div v-if="getPicklist.filter_operators" class="font-italic">
+                    {{ filter.operator.label }}
                   </div>
-                  <div v-else class="flex flex-wrap">
-                    <div v-for="(val, vx) in filter.values" :key="vx">
-                      {{ val.label }}{{ filter.values.length -1 !== vx ? ',&nbsp;' : ''}}
+                  <div class="flex flex-wrap text-xs white-space-nowrap mt-1">
+                    <div v-if="Array.isArray(filter.values)">
+                      <div v-if="filter.isNull">
+                        Null
+                      </div>
+                      <div v-else class="flex flex-wrap">
+                        <div v-for="(val, vx) in filter.values" :key="vx">
+                          {{ val.label }}{{ filter.values.length -1 !== vx ? ',&nbsp;' : ''}}
+                        </div>
+                      </div>
                     </div>
+                    <div v-else>{{ filter.isNull ? 'Null' : filter.values }}</div>
                   </div>
                 </div>
-                <div v-else>{{ filter.isNull ? 'Null' : filter.values }}</div>
+                <div>
+                  <Button
+                    @click.stop="deleteFilter($event, filter)"
+                    icon="pi pi-trash"
+                    severity="danger"
+                    text rounded />
+                </div>
               </div>
             </div>
-          </div>
+          </BlockUI>
 
           <div class="flex justify-content-between">
             <a @click="addFilterByOwner()" href="javascript:void(0);">add filter</a>
-            <!-- <a @click="filterByOwner.filters = []" href="javascript:void(0);">remove all</a> -->
+            <a @click="removeAllFilters()" href="javascript:void(0);">remove all</a>
           </div>
         </div>
       </div>
