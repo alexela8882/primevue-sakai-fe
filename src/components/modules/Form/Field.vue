@@ -136,14 +136,14 @@
 <template>
    
     <template v-if="config.field_type.name=='text'">
-        <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput formInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <InputText v-model="form.values[keyName][config.name]" :id="config.name" :class="{'p-invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" :disabled="form.formSaving || _.includes(form.disabled,config._id)" @blur="fieldChange(config)" />
             <small class="errMsg" v-for="msg,i in _.get(form.errors[keyName],config.name,[])" :key="i">{{ msg }}</small>
         </div>
     </template>
     <template v-else-if="config.field_type.name=='number' || config.field_type.name=='percentage'">
-        <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput formInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <InputNumber v-model="form.values[keyName][config.name]" inputId="config.name" 
             mode="decimal"
@@ -157,7 +157,7 @@
         </div>
     </template>
     <template v-else-if="config.field_type.name=='currency'">
-        <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput formInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <InputNumber v-if="(_.get(form.values[keyName],config.currencySource.field+'.code','')=='')" :disabled="form.formSaving || _.includes(form.disabled,config._id)" v-model="form.values[keyName][config.name]" inputId="config.name" 
             mode="decimal"
@@ -181,7 +181,7 @@
         </div>
     </template>
     <template v-else-if="config.field_type.name=='date'">
-        <div class="fieldInput flex flex-column">
+        <div class="fieldInput formInput flex flex-column">
         <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
         <el-date-picker class="w-full" :disabled="form.formSaving || _.includes(form.disabled,config._id)"
             v-model="form.values[keyName][config.name]"
@@ -196,7 +196,7 @@
         </div>
     </template>
     <template v-else-if="config.field_type.name=='richTextbox'">
-        <div class="fieldInput flex flex-column" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[])),'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput formInput flex flex-column" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[])),'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <editor v-model="form.values[keyName][config.name]" :api-key="tinyApiKey" :init="{
                 plugins: ['lists link image paste help wordcount table'],
@@ -208,7 +208,7 @@
         </div>
     </template>
     <template v-else-if="config.field_type.name=='longText'">
-        <div class="fieldInput flex flex-column" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[])),'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput formInput flex flex-column" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[])),'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <editor :api-key="tinyApiKey" v-model="form.values[keyName][config.name]" :init="{
                 plugins: ['lists link image paste help wordcount'],
@@ -220,14 +220,14 @@
         </div>
     </template>
     <template v-else-if="config.field_type.name=='boolean'">
-        <div class="fieldInput checkbox" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput formInput checkbox" :class="{'required': _.get(config.rules,'required',false)}">
             <InputSwitch v-if="_.get(config.rules,'switch',false)"  v-model="form.values[keyName][config.name]" :disabled="form.formSaving || _.includes(form.disabled,config._id)" :inputId="config.name" />
             <Checkbox v-else :inputId="config.name" v-model="form.values[keyName][config.name]" :binary="true" :disabled="form.formSaving || _.includes(form.disabled,config._id)"  />
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
         </div>
     </template>
     <template v-else-if="config.field_type.name=='picklist'">
-        <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput formInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <div v-if="_.get(config.rules,'checkbox',false) || _.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton',false) || _.get(config.rules,'radiobutton_inline',false)" :class="(_.get(config.rules,'checkbox_inline',false) || _.get(config.rules,'radiobutton_inline',false)) ? 'card flex flex-wrap justify-content-center gap-3': ''">
             <div  v-for="option of getPicklistByListName(config.listName)" :key="option._id" class="flex align-items-center" :class="(_.get(config.rules,'checkbox',false) || _.get(config.rules,'radiobutton',false)) ? 'mb-1 mt-1 ml-3' : ''">
@@ -255,7 +255,7 @@
                     :key="item._id"
                     :label="item.value"
                     :value="item">
-                    <span class="fieldInputSelection">{{ item.value }}</span>
+                    <span class="fieldInput formInputSelection">{{ item.value }}</span>
                     </el-option>
                     
                     <template #loading>
@@ -267,7 +267,7 @@
             <small class="errMsg mt-1" v-for="msg,i in _.get(form.errors[keyName],config.name,[])" :key="i">{{ msg }}</small></div>
     </template>
     <template v-else-if="config.field_type.name=='lookupModel'">
-        <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput formInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <template v-if="_.get(config.rules,'ss_dropdown',false) || _.get(config.rules,'ms_dropdown',false)">
                 <el-select v-if="getLookupOptions(config.uniqueName,'group')" v-model="form.values[keyName][config.name]" :disabled="form.formSaving || _.includes(form.disabled,config._id)" :loading="lookupLoading" :size="(small) ? 'small' : ''" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],config.name,[]))}" placeholder="Select" clearable filterable class="w-full"
@@ -319,7 +319,7 @@
         </div>
     </template>
     <template v-else>
-        <div class="fieldInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
+        <div class="fieldInput formInput flex flex-column" :class="{'required': _.get(config.rules,'required',false)}">
             <label :for="config.name" v-if="type!='tableForm'">{{ config.label }}</label>
             <InputText :id="config.name" v-model="form.values[keyName][config.name]" />
             <!-- <small></small> -->
@@ -347,7 +347,7 @@
 .fieldInput .el-input, .fieldInput .el-input__wrapper, .fieldInput .el-select .el-select__wrapper{
     box-shadow: 0 0 0 1px rgba(0,0,0,0.38) inset;
 }
-.p-inputtext, .fieldInput .el-input, .fieldInput .el-input__wrapper, .fieldInput .el-select .el-select__wrapper{
+.fieldInput.formInput .p-inputtext, .fieldInput.formInput .el-input, .fieldInput.formInput .el-input__wrapper, .fieldInput.formInput .el-select .el-select__wrapper{
     height: 32px;
 }
 .fieldInput .el-input.el-input--small, .fieldInput .el-input--small .el-input__wrapper{

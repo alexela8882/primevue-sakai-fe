@@ -39,7 +39,7 @@ const toggle = async (event) => {
 const filters = ref([])
 const toast = useToast()
 const addableFormVisible = ref(false)
-const selectedValues = ref([])
+const selectedValues = ref(null)
 
 const props = defineProps({
     field: Object,
@@ -60,12 +60,14 @@ const addableModule = ref(null)
 onMounted(() => {
     let vm = this;
     multiple.value = props.multiple
+    
     if(_.get(props.field,'rules.ms_pop_up',false)){
         multiple.value = true
     }
     if(!props.formField){
         multiple.value = true
     }
+    selectedValues.value = (props.formField) ? (multiple.value) ? [] : {} : []
     if(!_.isEmpty(props.modelValue) && !_.isNull(props.modelValue) && !props.formField){
         value.value = _.reduce(props.modelValue, function(r,v,i){
             r.push(_.merge(v,{'value':v.label}))
@@ -139,16 +141,16 @@ const fetchData = async() =>{
         }
         if(_.isEmpty(err)){
             let records = await fetchLookupPaginated(params,cancelToken)
-            // const res = await axios(`/lookup`, {
-            //     method: 'POST',
-            //     params: params,
-            //     headers: { 'Content-Type': 'application/json' }
-            // })
             items.value = formatLookupOptions(records.data, [], props.field)
             pagination.value = _.cloneDeep(_.get(records,'meta.pagination',{}))
-
-            selectedValues.value = _.filter(items.value.options, function(o){ if(_.includes(_.map(value.value,'_id'),o._id)){ return true; }})
-            // value.value = selectedValues.value
+            if(props.formField){
+                if(multiple.value)
+                    selectedValues.value = _.filter(items.value.options, function(o){ if(_.includes(_.map(form.value.values[props.keyName][props.field.name],'_id'),o._id)){ return true; }})
+                else if(!_.isEmpty(form.value.values[props.keyName][props.field.name]))
+                    selectedValues.value = _.find(items.value.options, function(o){ if(form.value.values[props.keyName][props.field.name]['_id']==o._id){ return true; }})
+            }                
+            else
+                selectedValues.value = _.filter(items.value.options, function(o){ if(_.includes(_.map(value.value,'_id'),o._id)){ return true; }})
         }else{
             toast.add({ severity: 'error', summary: 'Error', detail: 'Please select '+_.join(err,', '), position:"top-center", life: 3000 });
         }
@@ -171,8 +173,11 @@ const removeSelected = (index,id) =>{
     if((!_.get(form.value,'formSaving',false) && !_.includes(_.get(form.value,'disabled',[]),props.field._id)) || !props.formField){
         if(multiple.value){
             if(props.formField){
-                    _.remove(form.value.values[props.keyName][props.field.name], function(n,i){
+                    _.remove(selectedValues.value, function(n,i){
                         return i==index
+                    })
+                    _.remove(form.value.values[props.keyName][props.field.name], function(v,i){
+                        return v._id == id
                     })
             }else{
                     _.remove(selectedValues.value, function(n,i){
@@ -199,19 +204,34 @@ const removeSelected = (index,id) =>{
 
 const checkBeforeClose = (index) =>{
     if(!multiple.value){
+        //formField = true
+        form.value.values[props.keyName][props.field.name] = selectedValues.value
         closePopup()
+    }else{
+        if(!props.formField) {
+            let newlyAdded = _.filter(selectedValues.value, function(v){ if(!_.includes(_.map(value.value,'_id'),v._id)){ return true;}})
+            let removed = _.chain(value.value).filter(function(v){ if(!_.includes(_.map(selectedValues.value,'_id'),v._id)){ return true;}}).filter(function(v){ if(_.includes(_.map(items.value.options,'_id'),v._id)){ return true;}}).map('_id').value()
+            if(!_.isEmpty(removed)){
+                _.remove(value.value, function(v,i){
+                    return _.includes(removed,v._id)
+                })
+            }
+            value.value = _.concat(value.value, newlyAdded)
+            emit('update:modelValue', value.value)
+        }else{
+            let newlyAdded = _.filter(selectedValues.value, function(v){ if(!_.includes(_.map(form.value.values[props.keyName][props.field.name],'_id'),v._id)){ return true;}})
+            let removed = _.chain(form.value.values[props.keyName][props.field.name]).filter(function(v){ if(!_.includes(_.map(selectedValues.value,'_id'),v._id)){ return true;}}).filter(function(v){ if(_.includes(_.map(items.value.options,'_id'),v._id)){ return true;}}).map('_id').value()
+            if(!_.isEmpty(removed)){
+                _.remove(form.value.values[props.keyName][props.field.name], function(v,i){
+                    return _.includes(removed,v._id)
+                })
+            }
+            if(_.isNull(form.value.values[props.keyName][props.field.name])){
+                form.value.values[props.keyName][props.field.name] = []
+            }
+            form.value.values[props.keyName][props.field.name] = _.concat(form.value.values[props.keyName][props.field.name], newlyAdded)
+        }
     }
-    if(!props.formField) {
-        let newlyAdded = _.filter(selectedValues.value, function(v){ if(!_.includes(_.map(value.value,'_id'),v._id)){ return true;}})
-        let removed = _.chain(value.value).filter(function(v){ if(!_.includes(_.map(selectedValues.value,'_id'),v._id)){ return true;}}).filter(function(v){ if(_.includes(_.map(items.value.options,'_id'),v._id)){ return true;}}).map('_id').value()
-        console.log('removed',removed)
-        _.remove(value.value, function(v,i){
-            return _.includes(removed,v._id)
-        })
-        value.value = _.concat(value.value, newlyAdded)
-        emit('update:modelValue', value.value)
-    }
-
     emit('changeValue')
 }
 
@@ -225,7 +245,7 @@ const form = (props.formField) ? inject('form') : {}
 
 </script>
 <template>
-    <div v-if="formField" class="lookupField" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],field.name,[]))}" v-click-outside="closePopup">
+    <!-- <div class="lookupField" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],'errors.'+keyName+'.'+field.name,[]))}" v-click-outside="closePopup">
         <div v-if="!_.isEmpty(form.values[keyName][field.name])" class="selectedValue" :class="(!multiple) ? 'single flex align-items-center' : 'multiple'" @click="toggle">
             <template v-if="multiple">
                 <el-tag class="mr-1" v-for="(v,i) in value" :key="v.value" @close="removeSelected(i,v._id)" :closable="!form.formSaving && !_.includes(form.disabled,field._id)">{{ v.value }}</el-tag>
@@ -242,14 +262,13 @@ const form = (props.formField) ? inject('form') : {}
         <el-input 
             v-model="searchText" @click="toggle" @keyup="handleSearch" class="lookupInput" :disabled="form.formSaving || _.includes(form.disabled,field._id)"
             placeholder="Please search here" :suffix-icon="Search">
-            <template v-if="field.addable"  #append>
-                <!-- <el-button ><i class="pi pi-search"></i></el-button> -->
+            <template v-if="field.addable && formField" #append>
                 <el-button :class="{'disabled': form.formSaving || _.includes(form.disabled,field._id)}"><i class="pi pi-plus" @click="openAddableForm"></i></el-button>
             </template>
         </el-input>
         <div v-if="open" class="lookupOverlay p-overlaypanel p-component" :class="{ 'open' : open == true, 'w-full':!inline,'w-auto':inline}">
             <template v-if="fetching"><Skeleton v-for="(item,index) in _.fill(Array(10),'i')" :key="index" height="2rem" :width="(inline) ? '300px': '100%'" class="m-2" borderRadius="5px"></Skeleton></template>
-            <Listbox v-else-if="items.group" v-model="form.values[keyName][field.name]" :multiple="multiple" :options="_.get(items,'options',[])" optionLabel="value" optionGroupLabel="label" optionGroupChildren="options" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
+            <Listbox v-else-if="items.group" v-model="selectedValues" :multiple="multiple" dataKey="_id" :options="_.get(items,'options',[])" optionLabel="value" optionGroupLabel="label" optionGroupChildren="options" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
                 <template #option="slotProps">
                     <div class="flex align-items-center lookupSelection">
                         <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
@@ -262,7 +281,7 @@ const form = (props.formField) ? inject('form') : {}
                     </div>
                 </template>
             </Listbox>
-            <Listbox v-else v-model="form.values[keyName][field.name]" :multiple="multiple"  :options="_.get(items,'options',[])" optionLabel="value" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
+            <Listbox v-else v-model="selectedValues" :multiple="multiple" dataKey="_id" :options="_.get(items,'options',[])" optionLabel="value" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
                 <template #option="slotProps">
                     <div class="flex align-items-center lookupSelection">
                         <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
@@ -288,18 +307,37 @@ const form = (props.formField) ? inject('form') : {}
                 </div>
             </div>
         </div>
-    </div>
-    <div v-else class="lookupField"  v-click-outside="closePopup">
-        <div v-if="!_.isEmpty(value)" class="selectedValue multiple" @click="toggle">
-            <el-tag class="mr-1 mb-1" :closable="!open" v-for="(v,i) in value" :key="v.value" @close="removeSelected(i,v._id)">{{ v.value }}</el-tag>
-        </div>
+    </div> -->
+    <div class="lookupField" :class="{'invalid': !_.isEmpty(_.get(form,'errors.'+keyName+'.'+field.name,[]))}"  v-click-outside="closePopup">
+        <template v-if="formField">
+            <div v-if="!_.isEmpty(form.values[keyName][field.name])" class="selectedValue" :class="(!multiple) ? 'single flex align-items-center' : 'multiple'" @click="toggle">
+                <template v-if="multiple">
+                    <el-tag class="mr-1 mb-1" :closable="!open && !form.formSaving && !_.includes(form.disabled,field._id)" v-for="(v,i) in form.values[keyName][field.name]" :key="v.value" @close="removeSelected(i,v._id)">{{ v.value }}</el-tag>
+                </template>
+                <div v-else class="flex align-items-center lookupSelected" style="width:100%" >
+                    <div class="material-icons text-white ml-2 lookupSelected" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
+                    <div class="flex justify-content-between align-items-center lookupSelected" style="width:100%">
+                        <span class="flex flex-colum ml-2 lookupSelected">{{ form.values[keyName][field.name].value }}</span>
+                        <span v-if="!form.formSaving && !_.includes(form.disabled,field._id)" class="flex flex-colum mr-2 lookupRemoveBtn" @click="removeSelected"><i class="pi pi-times lookupRemoveBtn"></i></span>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template v-else>
+            <div v-if="!_.isEmpty(value)" class="selectedValue multiple" @click="toggle">
+                <el-tag class="mr-1 mb-1" :closable="!open" v-for="(v,i) in value" :key="v.value" @close="removeSelected(i,v._id)">{{ v.value }}</el-tag>
+            </div>
+        </template>
         <el-input 
-            v-model="searchText" @click="toggle" clearable @keyup="handleSearch" class="lookupInput" 
+            v-model="searchText" @click="toggle" clearable @keyup="handleSearch" class="lookupInput"  :disabled="_.get(form,'formSaving',false) || _.includes(_.get(form,'disabled',[]),field._id)"
             placeholder="Please search here" :suffix-icon="Search">
+            <template v-if="field.addable && formField" #append>
+                <el-button :class="{'disabled': form.formSaving || _.includes(form.disabled,field._id)}"><i class="pi pi-plus" @click="openAddableForm"></i></el-button>
+            </template>
         </el-input>
         <div v-if="open" class="lookupOverlay p-overlaypanel p-component" :class="{ 'open' : open == true, 'w-full':!inline,'w-auto':inline}">
             <template v-if="fetching"><Skeleton v-for="(item,index) in _.fill(Array(10),'i')" :key="index" height="2rem" :width="(inline) ? '300px': '100%'" class="m-2" borderRadius="5px"></Skeleton></template>
-            <Listbox v-else-if="items.group" v-model="selectedValues" :multiple="true" dataKey="_id" :options="_.get(items,'options',[])" optionLabel="value" optionGroupLabel="label" optionGroupChildren="options" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
+            <Listbox v-else-if="items.group" v-model="selectedValues" :multiple="multiple" dataKey="_id" :options="_.get(items,'options',[])" optionLabel="value" optionGroupLabel="label" optionGroupChildren="options" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
                 <template #option="slotProps">
                     <div class="flex align-items-center lookupSelection">
                         <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
@@ -312,7 +350,7 @@ const form = (props.formField) ? inject('form') : {}
                     </div>
                 </template>
             </Listbox>
-            <Listbox v-else v-model="selectedValues" :multiple="true" dataKey="_id"  :options="_.get(items,'options',[])" optionLabel="value" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
+            <Listbox v-else v-model="selectedValues" :multiple="multiple" dataKey="_id"  :options="_.get(items,'options',[])" optionLabel="value" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
                 <template #option="slotProps">
                     <div class="flex align-items-center lookupSelection">
                         <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
@@ -331,7 +369,7 @@ const form = (props.formField) ? inject('form') : {}
                 small
                 background
                 layout="prev, pager, next"
-                :default-page-size="10"
+                :default-page-size="_.get(pagination,'per_page',10)"
                 :current-page="page"
                 :total="_.get(pagination,'total',0)"
                 @current-change="changePage"/>
@@ -377,13 +415,15 @@ const form = (props.formField) ? inject('form') : {}
     padding:0px 10px;
 }
 .lookupField .selectedValue{
-    /* position: absolute; */
     z-index: 1;
     
     background: white;
     top: 5px;
-    height: calc(100% - 10px);
+    /* height: calc(100% - 10px); */
     margin-left: 5px;
+}
+.lookupField .selectedValue.single{
+    position: absolute;
 }
 .lookupField .selectedValue.single{
     width: calc(100% - 45px);
@@ -391,6 +431,7 @@ const form = (props.formField) ? inject('form') : {}
     border-radius: 4px;
     margin-left:10px;
     background: #f1f1f1;
+    position:absolute;
 }
 .lookupField .selectedValue.multiple{
     width: calc(100% - 40px);

@@ -10,7 +10,7 @@ export default function parsify() {
         }else {
             let formValues = {}
             formValues[entityName] = values
-            console.log(formValues)
+
             let evaluatedPostfix = evaluatePostfix(postfix, entityName, _.cloneDeep(formValues))
             if(evaluatedPostfix == false) {
                 result.message = "Postfix is not valid. Some given field maybe empty"
