@@ -118,6 +118,7 @@ onMounted(async () => {
           :modulePermissions="tab.module.permissions"
           :fields="tab.module.viewFilterWithFields.fields"
           :data="tab.module.collection && tab.module.collection.data"
+          :viewFilter="tab.module.viewFilterWithFields"
           :collectionLoading="localLoading"
           :pagination="tab.module.collection && (tab.module.collection.meta && tab.module.collection.meta.pagination)"
           @paginate="paginate"
