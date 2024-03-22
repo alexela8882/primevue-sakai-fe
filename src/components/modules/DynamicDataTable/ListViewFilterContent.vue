@@ -319,11 +319,13 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
       </Teleport>
 
       <Teleport :to="`${filterByOwnerOverlay2 ? '.ddt-div-1' : '.hidden-div'}`">
-        <div class="filter-by-owner flex flex-column p-3 text-600 gap-3">
-          <div class="text-xl font-bold text-color-secondary">
-            {{ filterByOwner.data.mode == 'new' ? 'Add filter' : 'Edit filter' }}
+        <div class="filter-by-owner flex flex-column text-600 gap-3 overflow-y-scroll overflow-x-hidden h-full">
+          <div style="z-index: 99 !important;" class="sticky top-0 p-3 surface-0 border-bottom-1 border-200">
+            <div class="text-xl font-bold text-color-secondary">
+              {{ filterByOwner.data.mode == 'new' ? 'Add filter' : 'Edit filter' }}
+            </div>
           </div>
-          <div class="flex flex-column gap-3">
+          <div class="flex flex-column gap-3 p-3 mb-8">
             <Dropdown
               v-model="filterByOwner.data.field"
               @change="fieldChange($event)"
@@ -396,31 +398,35 @@ watch(() => filterByOwner.value, (newVal, oldVal) => {
               </label>
             </div>
           </div>
-          <div class="flex justify-content-end gap-2">
-            <!-- {{ filterByOwner.data && filterByOwner.data.operator }} -->
-            <Button
-              @click="filterByOwnerOverlay2 = false"
-              :disabled="localSaveLoading"
-              outlined
-              label="Cancel"
-              severity="secondary"
-              size="small" />
-            <Button
-              v-if="filterByOwner.data.mode === 'new'"
-              @click="saveFilterByOwner()"
-              :disabled="!filterByOwner.data.field || !filterByOwner.data.operator || localSaveLoading"
-              :loading="localSaveLoading"
-              outlined
-              label="Done"
-              size="small" />
-            <Button
-              v-else
-              @click="saveFilterByOwner()"
-              :disabled="!filterByOwner.data.field || !filterByOwner.data.operator || localSaveLoading"
-              :loading="localSaveLoading"
-              outlined
-              label="Update"
-              size="small" />
+          <div class="absolute bottom-0 w-full p-3 surface-0 border-top-1 border-200">
+            <div>
+              <div class="flex justify-content-end gap-2">
+                <!-- {{ filterByOwner.data && filterByOwner.data.operator }} -->
+                <Button
+                  @click="filterByOwnerOverlay2 = false"
+                  :disabled="localSaveLoading"
+                  outlined
+                  label="Cancel"
+                  severity="secondary"
+                  size="small" />
+                <Button
+                  v-if="filterByOwner.data.mode === 'new'"
+                  @click="saveFilterByOwner()"
+                  :disabled="!filterByOwner.data.field || !filterByOwner.data.operator || localSaveLoading"
+                  :loading="localSaveLoading"
+                  outlined
+                  label="Done"
+                  size="small" />
+                <Button
+                  v-else
+                  @click="saveFilterByOwner()"
+                  :disabled="!filterByOwner.data.field || !filterByOwner.data.operator || localSaveLoading"
+                  :loading="localSaveLoading"
+                  outlined
+                  label="Update"
+                  size="small" />
+              </div>
+            </div>
           </div>
         </div>
       </Teleport>
