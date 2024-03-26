@@ -96,7 +96,7 @@ const { getModules } = storeToRefs(moduleStore)
                 }
             }
         })
-        res.push(_.merge(val,{'value':_.join(_.values(_.pick(val,displayFieldName)), fieldGlue),'poupDisplayValues':poupDisplayValues}))
+        res.push(_.merge(val,{'value':_.join(_.filter(_.values(_.pick(val,displayFieldName)),function(v){ if(!_.isObject(v) && !_.isArray(v)){ return true; }}), fieldGlue),'poupDisplayValues':poupDisplayValues}))
         return res
     },[])
     if(displayValue){

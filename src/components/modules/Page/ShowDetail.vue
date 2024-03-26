@@ -19,6 +19,7 @@ const SectionFields = defineAsyncComponent(() => import('@/components/modules/Pa
 const UploadFileContent = defineAsyncComponent(() => import('@/components/modules/Files/UploadFileContent.vue'))
 const QuotePDFPreview = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/QuotePDFPreview.vue'))
 const TransferOpportunity = defineAsyncComponent(() => import('@/components/modules/Form/TransferOpportunity.vue'))
+const UpdatePricelists = defineAsyncComponent(() => import('@/components/modules/Form/UpdatePricelists.vue'))
 // loaders
 import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
 import SimpleLoader from '@/components/loading/Simple2.vue'
@@ -109,28 +110,52 @@ const fileMenuItems = ref([
 const actionsMenu = ref()
 const actionsMenuItems = ref([
   {
-    label:"Actions",
-    items:[
+    'module':'salesopportunities',
+    'menu': [
       {
-          label: 'Clone with products',
-          icon: 'pi pi-clone'
-      },
+        label:"Actions",
+        items:[
+          {
+              label: 'Clone with products',
+              icon: 'pi pi-clone'
+          },
+          {
+              label: 'Clone without products',
+              icon: 'pi pi-clone'
+          },
+          {
+              label: 'Transfer Opportunity',
+              icon: 'pi pi-refresh',
+              command: () => { showDialogForm('Transfer Opportunity','transfer') }
+          },
+          {
+              label: 'Generate Service Jobs',
+              icon: 'pi pi-car'
+          },
+          {
+              label: 'Delete',
+              icon: 'pi pi-trash'
+          }
+        ]
+    }
+    ]
+  },
+  {
+    'module':'pricebooks',
+    'menu': [
       {
-          label: 'Clone without products',
-          icon: 'pi pi-clone'
-      },
-      {
-          label: 'Transfer Opportunity',
-          icon: 'pi pi-refresh',
-          command: () => { showTransferForm() }
-      },
-      {
-          label: 'Generate Service Jobs',
-          icon: 'pi pi-car'
-      },
-      {
-          label: 'Delete',
-          icon: 'pi pi-trash'
+        label:"Actions",
+        items:[
+          {
+              label: 'Update pricelists',
+              icon: 'pi pi-pencil',
+              command: () => { showDialogForm('Update Pricelists','update-pricelists') }
+          },
+          {
+              label: 'Update formula',
+              icon: 'pi pi-pencil'
+          },
+        ]
       }
     ]
   }
@@ -293,10 +318,10 @@ const toggleActions = (event) =>{
   actionsMenu.value.toggle(event);
 }
 //Transfer Opportunity
-const showTransferForm = async() =>{
+const showDialogForm = async(title,form) =>{
   dialogVisible.value.visible = true
-  dialogVisible.value.title = "Transfer Opportunity"
-  dialogVisible.value.form = "transfer"
+  dialogVisible.value.title = title
+  dialogVisible.value.form = form
 }
 //Closing Dialog used by other forms depends on module
 const closeDialog = async() =>{
@@ -327,7 +352,7 @@ onMounted(async() => {
   await fetchLinkedModuleData(lmdParams)
 
   await fetchItem(route.params)
-  await fetchActivityLogsByRecord(route.params.pageid)
+  // await fetchActivityLogsByRecord(route.params.pageid)
 
   // console.log(route.params)
   // console.log(getModule.value.relatedLists)
@@ -428,8 +453,10 @@ onMounted(async() => {
 
         <div>
           <Button label="Edit"  @click="editForm(localBaseModule)" class="px-3 border-round-md mr-2"></Button>
-          <Button type="button" icon="pi pi-ellipsis-v" @click="toggleActions" aria-haspopup="true" aria-controls="overlay_menu" />
-          <Menu ref="actionsMenu" class="px-2" id="overlay_menu" :model="actionsMenuItems" :popup="true" />
+          <template v-if="_.includes(_.map(actionsMenuItems,'module'),localBaseModule.name)">
+            <Button type="button" icon="pi pi-ellipsis-v" @click="toggleActions" aria-haspopup="true" aria-controls="overlay_menu" />
+            <Menu ref="actionsMenu" class="px-2" id="overlay_menu" :model="_.find(actionsMenuItems,{'module':localBaseModule.name}).menu" :popup="true" />
+          </template>
         </div>
       </div>
 
@@ -726,6 +753,7 @@ onMounted(async() => {
     <UploadFileContent :module="localModule" />
     <Dialog v-model:visible="dialogVisible.visible" modal :header="dialogVisible.title" :style="{ width: '40vw'}"  :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
         <TransferOpportunity v-if="dialogVisible.form=='transfer'" :record="getItem.data" @closeForm="closeDialog"></TransferOpportunity>
+        <UpdatePricelists v-if="dialogVisible.form=='update-pricelists'" :record="getItem.data" @closeForm="closeDialog"></UpdatePricelists>
     </Dialog>
   </div>
 </template>

@@ -205,7 +205,8 @@ const createNewForm = (module) => {
     _module: module.name,
     expanded: true,
     opened: false,
-    opened_order: null
+    opened_order: null,
+    modalWidth: (_.includes(['salesopportunities','salesquotes'],module.name)) ? '1200px' : '900px'
   })
   const index = getTabs.value.findIndex(form => form.name === obj.name)
   if (index === -1) {

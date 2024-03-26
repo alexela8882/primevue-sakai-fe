@@ -3,7 +3,7 @@
     <transition name="custom-dialog-transition">
       <div :class="['custom-dialog', { 'custom-dialog-maximized': maximized }]"
            ref="dialog"
-           :style="{ top: dialogTop + 'px', left: dialogLeft + 'px' }">
+           :style="{ top: dialogTop + 'px', left: dialogLeft + 'px' , width: (modalWidth) ? modalWidth : '900px'}">
         <div class="flex justify-content-between custom-dialog-header"
              ref="header"
              @mousedown="startDragging"
@@ -32,7 +32,7 @@
 <script setup>
 import { ref, computed, defineProps, defineEmits } from 'vue';
 
-const props = defineProps(['visible', 'title', 'icon']);
+const props = defineProps(['visible', 'title', 'icon', 'modalWidth']);
 
 const emit = defineEmits(['close']);
 

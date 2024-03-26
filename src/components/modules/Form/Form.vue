@@ -128,7 +128,14 @@
         formData.value.values.main = _.merge(_.cloneDeep(tmpValues),_.cloneDeep(setVal))
         formData.value.hidden = getAllHiddenFieldsAndPanels(formData.value.panels,formData.value.fields,formData.value.values.main,formPage.value)
         formData.value.disabled = getAllDisabledFields(formData.value.fields,formData.value.values.main,formPage.value)
-
+        if(props.config._module=='pricebooks'){
+            let pricelistField = _.find(formData.value.fields,{'name':'pricelist_ids'})
+            if(pricelistField){
+                if(!_.includes(formData.value.hidden.fields,pricelistField._id)){
+                    formData.value.hidden.fields.push(pricelistField._id)
+                }
+            }
+        }
         //disable fields
         if(props.config._module=='defectreports' && formPage.value=='update'){
         //   var rps = _.find(vm.connectedEntity(),['entityName',"RPWorkOrder"]);

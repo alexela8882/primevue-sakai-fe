@@ -4,6 +4,7 @@ import { ref, computed } from 'vue'
 import axios from 'axios'
 import { useToast } from 'primevue/usetoast'
 import { useModuleDetailStore } from '../../../stores/modules/detail'
+import _ from 'lodash'
 
 export const useQuotePDF = defineStore('quotePDF', () => {
 
@@ -46,12 +47,27 @@ export const useQuotePDF = defineStore('quotePDF', () => {
         }
     }
 
+    const generateQuotePdf = async(payload)=>{
+
+        const res = await axios.post(`/generate-pdf`,payload)
+  
+        if (res.status === 200) {
+            let fname = _.split(res.data.filename,'_')
+
+            let filename = res.data.filename
+            let version = filename.match(/_v\d+/i)
+            // var param = {'api':'/api/download-pdf/','filename':res.data.filename,'download_filename': fname,'fileType':'pdf'}
+            console.log(fname[0]+version[0])
+        }
+    }
+
     return{
         getTemplates,
         getQuoteInfo,
         getCurrentTemplate,
         fetchQuoteTemplates,
         fetchQuoteTemplate,
-        fetchQuoteTemplatesInfo
+        fetchQuoteTemplatesInfo,
+        generateQuotePdf
     }
 })

@@ -237,6 +237,24 @@ export const useFormDataStore = defineStore('formDataStore', () => {
       }
     }
 
+    const updatePricebookPricelists = async (values,id) =>{
+
+      let url = `/modules/pricebooks/${id}/patchAddPricelist`
+      let method = "PATCH"
+        
+      try {
+        // const response = await axios.post(url,values);
+        const response = await axios(url, {
+          method: method,
+          data: values
+        })
+        return response
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
     return {
         forms,
         picklist,
@@ -257,6 +275,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         fetchEntityFields,
         massUpdateRecords,
         saveQuickAdd,
-        transferOpportunity
+        transferOpportunity,
+        updatePricebookPricelists
     }
 })
