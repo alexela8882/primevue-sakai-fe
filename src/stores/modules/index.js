@@ -475,11 +475,12 @@ export const useModuleStore = defineStore('moduleStore', () => {
     })
 
     if (res.status === 200) {
-      console.log(res)
+      // console.log(payload)
+      // console.log(res.data && res.data.data.find(d => d.name === payload.value))
       if (!reuse) {
-        baseModule.value = res.data.data
+        baseModule.value = res.data && res.data.data.find(d => d.name === payload.value)
         moduleLoading.value = false
-      } else return res.data.data
+      } else return res.data && res.data.data.find(d => d.name === payload.value)
     }
   }
   const fetchModule = async (payload) => {
@@ -591,7 +592,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
   }
   const addViewFilter = async (payload) => {
-    console.log(payload)
     let data = payload.data
     let uriOptions = { uri: null, method: null }
 
