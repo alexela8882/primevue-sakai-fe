@@ -142,7 +142,7 @@ const fetchData = async() =>{
         if(_.isEmpty(err)){
             let records = await fetchLookupPaginated(params,cancelToken)
             items.value = formatLookupOptions(records.data, [], props.field)
-            pagination.value = _.cloneDeep(_.get(records,'meta.pagination',{}))
+            pagination.value = _.isNull(_.get(records,'meta.pagination.current_page',null)) ?  null: _.cloneDeep(_.get(records,'meta.pagination',{}))
             if(props.formField){
                 if(multiple.value)
                     selectedValues.value = _.filter(items.value.options, function(o){ if(_.includes(_.map(form.value.values[props.keyName][props.field.name],'_id'),o._id)){ return true; }})
@@ -206,6 +206,7 @@ const checkBeforeClose = (index) =>{
     if(!multiple.value){
         //formField = true
         form.value.values[props.keyName][props.field.name] = selectedValues.value
+        console.log(form.value.values[props.keyName][props.field.name])
         closePopup()
     }else{
         if(!props.formField) {
@@ -245,74 +246,14 @@ const form = (props.formField) ? inject('form') : {}
 
 </script>
 <template>
-    <!-- <div class="lookupField" :class="{'invalid': !_.isEmpty(_.get(form.errors[keyName],'errors.'+keyName+'.'+field.name,[]))}" v-click-outside="closePopup">
-        <div v-if="!_.isEmpty(form.values[keyName][field.name])" class="selectedValue" :class="(!multiple) ? 'single flex align-items-center' : 'multiple'" @click="toggle">
-            <template v-if="multiple">
-                <el-tag class="mr-1" v-for="(v,i) in value" :key="v.value" @close="removeSelected(i,v._id)" :closable="!form.formSaving && !_.includes(form.disabled,field._id)">{{ v.value }}</el-tag>
-            </template>
-            <div v-else class="flex align-items-center lookupSelected" style="width:100%" >
-                <div class="material-icons text-white ml-2 lookupSelected" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
-                <div class="flex justify-content-between align-items-center lookupSelected" style="width:100%">
-                    <span class="flex flex-colum ml-2 lookupSelected">{{ form.values[keyName][field.name].value }}</span>
-                    <span v-if="!form.formSaving && !_.includes(form.disabled,field._id)" class="flex flex-colum mr-2 lookupRemoveBtn" @click="removeSelected"><i class="pi pi-times lookupRemoveBtn"></i></span>
-                </div>
-                
-            </div>
-        </div>
-        <el-input 
-            v-model="searchText" @click="toggle" @keyup="handleSearch" class="lookupInput" :disabled="form.formSaving || _.includes(form.disabled,field._id)"
-            placeholder="Please search here" :suffix-icon="Search">
-            <template v-if="field.addable && formField" #append>
-                <el-button :class="{'disabled': form.formSaving || _.includes(form.disabled,field._id)}"><i class="pi pi-plus" @click="openAddableForm"></i></el-button>
-            </template>
-        </el-input>
-        <div v-if="open" class="lookupOverlay p-overlaypanel p-component" :class="{ 'open' : open == true, 'w-full':!inline,'w-auto':inline}">
-            <template v-if="fetching"><Skeleton v-for="(item,index) in _.fill(Array(10),'i')" :key="index" height="2rem" :width="(inline) ? '300px': '100%'" class="m-2" borderRadius="5px"></Skeleton></template>
-            <Listbox v-else-if="items.group" v-model="selectedValues" :multiple="multiple" dataKey="_id" :options="_.get(items,'options',[])" optionLabel="value" optionGroupLabel="label" optionGroupChildren="options" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
-                <template #option="slotProps">
-                    <div class="flex align-items-center lookupSelection">
-                        <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
-                        <div class="lookupSelection">
-                            <template v-for="(val,i) in slotProps.option.poupDisplayValues" :key="i">
-                                <span v-if="i==0"  class="font-medium lookupSelection">{{ val }}</span>
-                                <div v-else class="text-sm text-color-secondary lookupSelection">{{  val }}</div>
-                            </template>
-                        </div>
-                    </div>
-                </template>
-            </Listbox>
-            <Listbox v-else v-model="selectedValues" :multiple="multiple" dataKey="_id" :options="_.get(items,'options',[])" optionLabel="value" @update:modelValue="checkBeforeClose" listStyle="max-height:300px">
-                <template #option="slotProps">
-                    <div class="flex align-items-center lookupSelection">
-                        <div class="material-icons text-white mr-2 lookupSelection" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
-                        <div class="lookupSelection">
-                            <template v-for="(val,i) in slotProps.option.poupDisplayValues" :key="i">
-                                <span v-if="i==0"  class="font-medium lookupSelection">{{ val }}</span>
-                                <div v-else class="text-sm text-color-secondary lookupSelection">{{  val }}</div>
-                            </template>
-                        </div>
-                    </div>
-                </template>
-            </Listbox>
-            <div class="flex justify-content-center">
-                <div class="flex flex-column mt-1">
-                    <el-pagination
-                small
-                background
-                layout="prev, pager, next"
-                :default-page-size="10"
-                :current-page="page"
-                :total="_.get(pagination,'total',0)"
-                @current-change="changePage"/>
-                </div>
-            </div>
-        </div>
-    </div> -->
     <div class="lookupField" :class="{'invalid': !_.isEmpty(_.get(form,'errors.'+keyName+'.'+field.name,[]))}"  v-click-outside="closePopup">
         <template v-if="formField">
             <div v-if="!_.isEmpty(form.values[keyName][field.name])" class="selectedValue" :class="(!multiple) ? 'single flex align-items-center' : 'multiple'" @click="toggle">
                 <template v-if="multiple">
-                    <el-tag class="mr-1 mb-1" :closable="!open && !form.formSaving && !_.includes(form.disabled,field._id)" v-for="(v,i) in form.values[keyName][field.name]" :key="v.value" @close="removeSelected(i,v._id)">{{ v.value }}</el-tag>
+                    <el-tag class="mr-1 mb-1" :closable="!open && !form.formSaving && !_.includes(form.disabled,field._id)" v-for="(v,i) in form.values[keyName][field.name]" :key="v.value" @close="removeSelected(i,v._id)">
+                        <template v-if="field.name=='unit_id'">{{ v.poupDisplayValues['serialNo']}}</template>
+                        <template v-else>{{ v.value }}</template>
+                    </el-tag>
                 </template>
                 <div v-else class="flex align-items-center lookupSelected" style="width:100%" >
                     <div class="material-icons text-white ml-2 lookupSelected" :style="'background:'+ _.get(entityModule,'color','#0091D0')">{{ _.get(entityModule,'icon','person') }}</div>
@@ -365,7 +306,7 @@ const form = (props.formField) ? inject('form') : {}
             </Listbox>
             <div class="flex justify-content-center">
                 <div class="flex flex-column mt-1">
-                    <el-pagination
+                    <el-pagination v-if="pagination"
                 small
                 background
                 layout="prev, pager, next"

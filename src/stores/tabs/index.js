@@ -150,7 +150,7 @@ export const useTabStore = defineStore('tabStore', () => {
   }
   const addTab = async (payload, window = false) => {
     xTabsLoading.value = true
-    console.log('addTab',payload)
+
     const index = tabs.value.findIndex(tab => tab.name === payload.name)
     if (index === -1) {
       let tab = null

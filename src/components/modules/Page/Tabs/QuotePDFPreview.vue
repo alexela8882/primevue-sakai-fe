@@ -12,12 +12,13 @@ import { useBaseStore } from '@/stores/base'
 import { jsPDF } from "jspdf";
 
 const PDFPage = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/PDFPage.vue'))
+const DomPDFViewer = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/DomPDFViewer.vue'))
 
 const quotePDF = useQuotePDF()
 const moduleDetailStore = useModuleDetailStore()
 const moduleStore = useModuleStore()
 const baseStore = useBaseStore()
-const { fetchQuoteTemplates,fetchQuoteTemplatesInfo,fetchQuoteTemplate } = quotePDF
+const { fetchQuoteTemplates,fetchQuoteTemplatesInfo,fetchQuoteTemplate,generateQuotePdf } = quotePDF
 const { getTemplates,getCurrentTemplate,getQuoteInfo } = storeToRefs(quotePDF)
 const { getItem, _getRelatedLists } = storeToRefs(moduleDetailStore)
 const { fetchModuleFields } = moduleStore
@@ -285,33 +286,28 @@ const downloadPDF = () => {
     jsPdf.html(htmlElement, opt);
 }
 
-const downloadPDF2 = () =>{
-    const pdfDoc = new jsPDF('p', 'pt', 'a4');
-    const options = {
-        pdfDoc: pdfDoc,
-        component: $('#DataGrid').dxDataGrid('instance')
-    };
-
-    exportDataGrid(options).then(() => {
-          pdfDoc.setFontSize(12);
-          const pageCount = pdfDoc.internal.getNumberOfPages();
-          for(let i = 1; i <= pageCount; i++) {
-            pdfDoc.setPage(i);
-            const pageSize = pdfDoc.internal.pageSize;
-            const pageWidth = pageSize.width ? pageSize.width : pageSize.getWidth();
-            const pageHeight = pageSize.height ? pageSize.height : pageSize.getHeight();
-            const header = 'Report 2014';
-            const footer = `Page ${i} of ${pageCount}`;
-
-            // Header
-            pdfDoc.text(header, 40, 15, { baseline: 'top' });
-
-            // Footer
-            pdfDoc.text(footer, pageWidth / 2 - (pdfDoc.getTextWidth(footer) / 2), pageHeight - 15, { baseline: 'bottom' });
+const downloadDomPDF = async() => {
+    let param = {
+        'body':document.getElementById('bodyPanel').innerHTML,
+        'bodyStyle':null,
+        'header':document.getElementById('headerPanel').innerHTML,
+        'headerStyle':null,
+        'footer':document.getElementById('footerPanel').innerHTML,
+        'footerStyle':null,
+        'download':true,
+        'save':true,
+        'sales_quote_id':getItem.value.data._id,
+        'class':null,
+        'config':{
+            'footer':null,
+            'header':null,
+            'top':null,
+            'left':null,
+            'bottom':null,
+            'right':null
         }
-      }).then(() => {
-        pdfDoc.save('filePDF.pdf');
-      });
+    }
+    await generateQuotePdf(param)
 }
 
 
@@ -324,12 +320,11 @@ const downloadPDF2 = () =>{
       <ProgressSpinner />
     </div>
     <template v-if="!templatesLoading">
-         <Button  icon="pi pi-download" rounded  class="ml-2" aria-label="Download" @click="downloadPDF2"/>
         <div class="flex justify-content-between">
             <Dropdown v-model="selectedTemplate" :options="getTemplates" filter optionLabel="name" placeholder="Select a template" class="w-full md:w-14rem" @change="changeTemplate"/>
             <div class="flex">
                 <Button icon="pi pi-save" rounded aria-label="Save" />
-                <Button  icon="pi pi-download" rounded  class="ml-2" aria-label="Download" @click="downloadPDF"/>
+                <Button  icon="pi pi-download" rounded  class="ml-2" aria-label="Download" @click="downloadDomPDF"/>
                 <Button icon="pi pi-envelope" rounded class="ml-2" aria-label="Email" />
             </div>
             
@@ -341,8 +336,8 @@ const downloadPDF2 = () =>{
                 style="height: 60vh !important;">
                 <ProgressSpinner />
             </div>
-            <PDFPage v-if="selectedTemplate && !fetchingCurrentTemplate" :selectedTemplate="selectedTemplate" :pageContent="pageContent" :pages="pages" :numberofPages="pages.length" @mounted="pdfLoaded"/>
-            
+            <!-- <PDFPage v-if="selectedTemplate && !fetchingCurrentTemplate" :selectedTemplate="selectedTemplate" :pageContent="pageContent" :pages="pages" :numberofPages="pages.length" @mounted="pdfLoaded"/> -->
+            <DomPDFViewer v-if="selectedTemplate && !fetchingCurrentTemplate" :selectedTemplate="selectedTemplate" :pageContent="pageContent" :pages="pages" :numberofPages="pages.length" @mounted="pdfLoaded"></DomPDFViewer>
         </div>
     </template>
 </template>

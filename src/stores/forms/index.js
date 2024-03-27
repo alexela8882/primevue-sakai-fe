@@ -237,6 +237,96 @@ export const useFormDataStore = defineStore('formDataStore', () => {
       }
     }
 
+    const updatePricebookPricelists = async (values,id) =>{
+
+      let url = `/modules/pricebooks/${id}/patchAddPricelist`
+      let method = "PATCH"
+        
+      try {
+        // const response = await axios.post(url,values);
+        const response = await axios(url, {
+          method: method,
+          data: values
+        })
+        return response
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
+    const updatePricebookFormula = async (values,id) =>{
+
+      let url = `/modules/pricebooks/${id}/patchAddFormula`
+      let method = "PATCH"
+        
+      try {
+        // const response = await axios.post(url,values);
+        const response = await axios(url, {
+          method: method,
+          data: values
+        })
+        return response
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
+    const computePricebookListPrice = async (values,id) =>{
+
+      let url = `/modules/pricebooks/${id}/postComputePrice`
+      let method = "POST"
+        
+      try {
+        // const response = await axios.post(url,values);
+        const response = await axios(url, {
+          method: method,
+          data: values
+        })
+        return response
+      } catch (error) {
+        console.error('Error computing list price:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
+    const applyPricebookListPrice = async (values,id) =>{
+
+      let url = `/modules/pricebooks/${id}/postApplyComputePrice`
+      let method = "POST"
+        
+      try {
+        // const response = await axios.post(url,values);
+        const response = await axios(url, {
+          method: method,
+          data: values
+        })
+        return response
+      } catch (error) {
+        console.error('Error applying computed list price:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
+    const cancelPricebookListPrice = async (values,id) =>{
+
+      let url = `/modules/pricebooks/${id}/postCancelComputePrice`
+      let method = "POST"
+        
+      try {
+        // const response = await axios.post(url,values);
+        const response = await axios(url, {
+          method: method,
+          data: values
+        })
+        return response
+      } catch (error) {
+        console.error('Error deleting computed list price:', error);
+        throw error; // Re-throw the error so the caller can handle it if needed
+      }
+    }
+
     return {
         forms,
         picklist,
@@ -257,6 +347,11 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         fetchEntityFields,
         massUpdateRecords,
         saveQuickAdd,
-        transferOpportunity
+        transferOpportunity,
+        updatePricebookPricelists,
+        updatePricebookFormula,
+        computePricebookListPrice,
+        applyPricebookListPrice,
+        cancelPricebookListPrice
     }
 })

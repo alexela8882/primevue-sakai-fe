@@ -82,6 +82,7 @@ watch(() => folderMessageReplyLoading.value, (newVal, oldVal) => {
 
 onMounted(() => {
   // fetchConversationMessages(props.message, props.token)
+  console.log(props.token)
 })
 </script>
 

@@ -87,7 +87,7 @@ const { fetchModule, convertMailboxToInquiry, insertModuleFromMailbox } = module
 const initialize = async () => {
   convertMailboxLoading.value = false
 
-  await fetchModule(props.convertModule.name)
+  await fetchModule({moduleName: props.convertModule.name})
 
   newModuleFields.value = getModule.value.fields
   // add collection item for filling field data

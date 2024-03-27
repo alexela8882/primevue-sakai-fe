@@ -484,7 +484,6 @@ export const useModuleStore = defineStore('moduleStore', () => {
     }
   }
   const fetchModule = async (payload) => {
-    console.log(payload)
     if (!payload.reuse) collectionLoading.value = true
     // const uri = page ? `${moduleName}-page-${page}` : `${moduleName}`
     let baseUri = `/modules/${payload.moduleName}`

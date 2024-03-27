@@ -205,7 +205,6 @@ onMounted(async () => {
     <Splitter>
       <SplitterPanel class="flex" :size="5">
         <div style="height: 85vh !important; overflow-y: scroll;">
-          <!-- <pre>{{ getSkipValue }}</pre> -->
           <div>
             <div class="flex flex-column gap-3 m-3">
               <div class="flex align-items-center justify-content-between">

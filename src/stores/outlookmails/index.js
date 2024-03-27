@@ -139,6 +139,8 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
 
     const response = await fetchMsGraph.value(payload)
 
+    console.log(response)
+
     if (response.value) {
       // get new response value
       const newResValue = await fetchMailboxInInquiries(response.value)
@@ -230,23 +232,21 @@ export const useOutlookMailStore = defineStore('outlookMailStore', () => {
   }
   const fetchMailboxInInquiries = async (payload) => {
     // fetch modules
-    await fetchModule('inquiries')
+    await fetchModule({moduleName: 'inquiries'})
 
-    const inquiryMailboxIds = getCollection.value.data.map(gc => gc.email_id)
+    const inquiryMailboxIds = getCollection.value.data ? getCollection.value.data.map(gc => gc.email_id) : []
 
     // console.log(payload)
     // console.log(getCollection.value)
 
     // append new key to tag as 'converted to inquiry'
     const newResValue = payload.map(item => {
-      const email_id = item.id
-      const collection = getCollection.value.data.find(d => d.email_id == email_id)
-      const inquiry_id = collection && collection._id
-
-      if (inquiryMailboxIds.includes(item.id)) {
+      if (inquiryMailboxIds.length > 0 && inquiryMailboxIds.includes(item.id)) {
+        const email_id = item.id
+        const collection = getCollection.value.data.find(d => d.email_id == email_id)
+        const inquiry_id = collection && collection._id
         return { ...item, convertedToInquiry: true, inquiry_id: inquiry_id }
-      }
-      return item
+      } else return item
     })
 
     return newResValue

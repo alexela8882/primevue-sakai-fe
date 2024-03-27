@@ -4,6 +4,7 @@ import { storeToRefs } from 'pinia'
 import { onMounted, watch, ref, computed, defineAsyncComponent } from 'vue'
 import { useRoute } from 'vue-router'
 import { useConfirm } from "primevue/useconfirm"
+import _ from 'lodash'
 // stores
 import { useModuleStore } from '@/stores/modules/index'
 import { useTabStore } from '@/stores/tabs/index'
@@ -189,7 +190,7 @@ const createNewForm = async (module) => {
     label: `${module.label} Form`,
     _module: module.name,
     expanded: false,
-
+    modalWidth: (_.includes(['salesopportunities','salesquotes'],module.name)) ? '1200px' : '900px',
     opened: false,
     mode: 'modal',
     opened_order: null
