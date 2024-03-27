@@ -14,6 +14,7 @@ const MailboxMessage = defineAsyncComponent(() =>
 )
 
 // refs
+const inquiryRequiredFields = ref([])
 const msgraphLogicMessage = ref()
 const msgraphErrorMessage = ref()
 const searchFolder = ref()
@@ -40,7 +41,7 @@ const {
   fetchMailFolderMessages,
   folderMailMessagesNavigate,
   fetchConversationMessages } = outlookMailStore
-const { fetchBaseModuleByField } = moduleStore
+const { _fetchBaseModuleByField } = moduleStore
 
 // MSAL SETUP
 const msalConfig = {
@@ -182,13 +183,16 @@ onMounted(async () => {
   initializeMsGraph()
 
   // fetch inquiry module
-  await fetchBaseModuleByField({ field: 'name', value: 'inquiries' })
-  inquiryModuleInfo.value = getBaseModule.value
+  const res = await _fetchBaseModuleByField({ field: 'name', value: 'inquiries' })
+  inquiryModuleInfo.value = res
+
+  inquiryRequiredFields.value = inquiryModuleInfo.value.fields && inquiryModuleInfo.value.fields.filter(field => field.rules.required).map(field => field.name)
 })
 
 </script>
 
 <template>
+  {{ inquiryRequiredFields }}
   <div v-if="msgraphErrorMessage" class="flex justify-content-center" style="height: 60vh !important;">
     <div class="flex flex-column align-items-center justify-content-center text-center mt-n6">
       <div>{{ msgraphErrorMessage }}</div>

@@ -469,19 +469,26 @@ export const useModuleStore = defineStore('moduleStore', () => {
   }
   const fetchBaseModuleByField = async (payload, reuse) => {
     if (!reuse) moduleLoading.value = true
-    const res = await axios(`/modules?${payload.field}=${payload.value}`, {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' }
-    })
+    // console.log(getModules.value)
+    
+    if (!reuse) {
+      baseModule.value = getModules.value && getModules.value.find(d => d.name === payload.value)
+      moduleLoading.value = false
+    } else return getModules.value && getModules.value.find(d => d.name === payload.value)
 
-    if (res.status === 200) {
-      // console.log(payload)
-      // console.log(res.data && res.data.data.find(d => d.name === payload.value))
-      if (!reuse) {
-        baseModule.value = res.data && res.data.data.find(d => d.name === payload.value)
-        moduleLoading.value = false
-      } else return res.data && res.data.data.find(d => d.name === payload.value)
-    }
+    // const res = await axios(`/modules?${payload.field}=${payload.value}`, {
+    //   method: 'GET',
+    //   headers: { 'Content-Type': 'application/json' }
+    // })
+
+    // if (res.status === 200) {
+    //   // console.log(payload)
+    //   // console.log(res.data && res.data.data.find(d => d.name === payload.value))
+    //   if (!reuse) {
+    //     baseModule.value = res.data && res.data.data.find(d => d.name === payload.value)
+    //     moduleLoading.value = false
+    //   } else return res.data && res.data.data.find(d => d.name === payload.value)
+    // }
   }
   const fetchModule = async (payload) => {
     if (!payload.reuse) collectionLoading.value = true
@@ -664,10 +671,13 @@ export const useModuleStore = defineStore('moduleStore', () => {
   const convertMailboxToInquiry = async (payload) => {
     convertMailboxLoading.value = true
 
+    console.log(payload)
+
     const uri = 'inquiries'
     const getRes = await axios(`/modules/${uri}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 'Content-Type': 'application/json' },
+      data: payload
     })
 
     console.log(getRes)
