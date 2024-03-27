@@ -12,16 +12,18 @@ import { useOutlookMailStore } from '@/stores/outlookmails'
 import TwoColumnList from '@/components/loading/TwoColumnList.vue'
 // components
 const SectionFields = defineAsyncComponent(() => import('@/components/modules/Page/SectionFields.vue'))
+const Form = defineAsyncComponent(() => import('@/components/modules/Form/Form.vue'))
 
 // defines
 const props = defineProps({
-  token: Object,
+  token: String,
   convertModule: Object,
   mailboxMessage: Object
 })
 const emit = defineEmits(['update-timeout'])
 
 // refs
+const reconstructedCollection = ref([])
 const testValidationSchema = ref({
   test: 'initial value'
 })
@@ -82,12 +84,52 @@ const { getItemPanels, getRelatedListsByCname } = storeToRefs(moduleDetailStore)
 const { getMailFolderMessages, getConversationMessages } = storeToRefs(outlookMailStore)
 const { fetchConversationMessages } = outlookMailStore
 const { fetchModule, convertMailboxToInquiry, insertModuleFromMailbox } = moduleStore
+// presets
+const testTab = ref({
+  "type": "module-form",
+  "style": "window",
+  "name": "leads-window-create-form",
+  "label": "Leads Form",
+  "_module": "leads",
+  "expanded": true,
+  "opened": true,
+  "opened_order": 1,
+  "modalWidth": "900px",
+  "base_module": {
+    "_id": "5c906a1ba6ebc7193110f8b4",
+    "name": "leads",
+    "label": "Leads",
+    "icon": "trending_up",
+    "route": null,
+    "color": "rgba(76, 175, 80, 0.7)",
+    "description": "",
+    "order": 2,
+    "folder_id": "5c906a1ba6ebc7193110f893",
+    "mainEntity": "Lead",
+    "permissions": [
+      "index",
+      "create",
+      "show",
+      "delete",
+      "update",
+      "convert",
+      "index",
+      "create",
+      "show",
+      "delete",
+      "update",
+      "convert"
+    ]
+  }
+})
 
 // actions
 const initialize = async () => {
   convertMailboxLoading.value = false
 
   await fetchModule({moduleName: props.convertModule.name})
+
+  reconstructedCollection.value = getModule.value.data.filter(module => module.owner_id !== null)
 
   newModuleFields.value = getModule.value.fields
   // add collection item for filling field data
@@ -169,7 +211,6 @@ const proceedConvertMailbox = async (module) => {
   await fetchConversationMessages(props.mailboxMessage, props.token)
 
   data = Object.assign({}, {
-    _id: `${Date.now()}`,
     owner_id: localStorage.getItem('auth_id'),
     source_id: 'Email',
     dateRequested: "01-06-2024",
@@ -255,7 +296,7 @@ const validateSyncFunc = handleSubmit((values, actions) => {
 })
 const proceedConvertMailboxToInquiry = async (data) => {
   const res = await convertMailboxToInquiry(data)
-  
+
   if (res && res.status === 200) {
     const inquiry_id = res.data.collection.data.find(d => d.email_id == data.email_id)._id
 
@@ -290,7 +331,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- <pre>{{ mailboxMessage }}</pre> -->
+  <!-- <pre>{{ reconstructedCollection }}</pre> -->
   <div>
     <!-- <pre>{{ getEntityByName(convertModule.name) }}</pre> -->
     <div class="flex flex-column gap-3 m-4">
@@ -300,17 +341,12 @@ onMounted(() => {
       </div>
       <Dropdown
         v-model="selectedModule"
-        :options="getCollection.data"
-        optionLabel="owner_id.email"
+        :options="reconstructedCollection"
+        optionLabel="owner_id.firstName"
         optionvalue="_id"
         filter
         placeholder="Select"
         class="w-full">
-        <template #option="slotProps">
-          <div class="flex align-items-center">
-            <div>{{ slotProps.option.owner_id.email }} ({{ slotProps.option.company }})</div>
-          </div>
-        </template>
       </Dropdown>
 
       <div v-if="selectedModule">
@@ -335,7 +371,8 @@ onMounted(() => {
 
       <div>
         <h3>Quick add</h3>
-        <div class="text-l text-700 font-bold bg-primary-50 p-2 mb-4">All required fields</div>
+        <!-- <Form :config="testTab"></Form> -->
+        <!-- <div class="text-l text-700 font-bold bg-primary-50 p-2 mb-4">All required fields</div>
         <div class="grid">
           <div v-for="(requiredField, rfx) in requiredFields" :key="rfx" class="col-6">
             <span class="p-float-label">
@@ -351,10 +388,10 @@ onMounted(() => {
               {{ errors[requiredField.uniqueName] }}
             </small>
           </div>
-        </div>
+        </div> -->
 
-        <h3>Detailed add</h3>
-        <div v-for="(panel, px) in atIndexRelatedLists" :key="px" class="flex flex-column gap-1">
+        <!-- <h3>Detailed add</h3> -->
+        <!-- <div v-for="(panel, px) in atIndexRelatedLists" :key="px" class="flex flex-column gap-1">
           <div v-for="(section, sx) in panel.sections" :key="sx" :class="`${sx !== 0 && 'mt-4'}`">
             <div>
               <div>
@@ -400,11 +437,11 @@ onMounted(() => {
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
-    <Teleport v-if="!timeout" to=".mailbox-dialog-footer">
+    <Teleport to=".mailbox-dialog-footer">
       <div class="p-2 border-top-1 border-200">
         <div class="flex align-items-center justify-content-end my-2 gap-2">
           <Button

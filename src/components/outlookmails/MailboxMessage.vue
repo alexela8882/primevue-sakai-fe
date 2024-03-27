@@ -179,6 +179,9 @@ onMounted(() => {
 </template>
 
 <style>
+.p-dialog-mask:has(> .convert-mailbox-dialog) {
+  z-index: 2000 !important;
+}
 .convert-mailbox-dialog .p-dialog-header {
   background-color: var(--primary-color);
   color: var(--surface-a);

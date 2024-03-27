@@ -665,41 +665,45 @@ export const useModuleStore = defineStore('moduleStore', () => {
     convertMailboxLoading.value = true
 
     const uri = 'inquiries'
-    const getRes = await axios(`${jsonDbUrl.value}/${uri}`, {
-      method: 'GET',
+    const getRes = await axios(`/modules/${uri}`, {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' }
     })
 
-    let updatedJson = getRes.data.collection.data.push(payload)
-    updatedJson = JSON.stringify(getRes.data)
+    console.log(getRes)
 
-    try {
-      const res = await axios(`${jsonDbUrl.value}/${uri}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        data: updatedJson
-      })
+    convertMailboxLoading.value = false
 
-      if (res && res.status === 200) {
-        // toast
-        toast.add({
-          severity: 'success',
-          summary: 'Success Message',
-          detail: 'Convert successful',
-          life: 3000
-        })
+    // let updatedJson = getRes.data.collection.data.push(payload)
+    // updatedJson = JSON.stringify(getRes.data)
 
-        convertMailboxLoading.value = true
-        convertMailboxDialog.value = false
+    // try {
+    //   const res = await axios(`/modules/${uri}`, {
+    //     method: 'PUT',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     data: updatedJson
+    //   })
 
-        return res
-      }
-    } catch (error) {
-      console.log(error)
+    //   if (res && res.status === 200) {
+    //     // toast
+    //     toast.add({
+    //       severity: 'success',
+    //       summary: 'Success Message',
+    //       detail: 'Convert successful',
+    //       life: 3000
+    //     })
 
-      convertMailboxLoading.value = true
-      convertMailboxDialog.value = false
-    }
+    //     convertMailboxLoading.value = true
+    //     convertMailboxDialog.value = false
+
+    //     return res
+    //   }
+    // } catch (error) {
+    //   console.log(error)
+
+    //   convertMailboxLoading.value = true
+    //   convertMailboxDialog.value = false
+    // }
   }
   const insertModuleFromMailbox = async (payload) => {
     convertMailboxLoading.value = true
