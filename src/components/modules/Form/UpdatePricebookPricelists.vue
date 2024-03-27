@@ -33,7 +33,7 @@ const pricelistField = ref({})
 onMounted( async()=>{
     loading.value = true
     pricelistField.value = _.find(getModuleByName.value('pricebooks').fields,{'name':'pricelist_ids'})
-    // pricelistIds.value = transformLookupValue(props.record['pricelist_ids'],pricelistField.value,false)
+    pricelistIds.value = transformLookupValue(props.record['pricelist_ids'],pricelistField.value,false)
     loading.value = false
 })
 

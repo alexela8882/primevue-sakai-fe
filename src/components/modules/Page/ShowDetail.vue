@@ -6,6 +6,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useToast } from "primevue/usetoast"
 import helper from '@/mixins/Helper';
 import _ from 'lodash';
+import { ElMessageBox } from 'element-plus'
 // components
 import RdBreadCrumbs from '../../RdBreadCrumbs.vue'
 const MailboxThreads = defineAsyncComponent(() =>
@@ -19,7 +20,8 @@ const SectionFields = defineAsyncComponent(() => import('@/components/modules/Pa
 const UploadFileContent = defineAsyncComponent(() => import('@/components/modules/Files/UploadFileContent.vue'))
 const QuotePDFPreview = defineAsyncComponent(() => import('@/components/modules/Page/Tabs/QuotePDFPreview.vue'))
 const TransferOpportunity = defineAsyncComponent(() => import('@/components/modules/Form/TransferOpportunity.vue'))
-const UpdatePricelists = defineAsyncComponent(() => import('@/components/modules/Form/UpdatePricelists.vue'))
+const UpdatePricebookPricelists = defineAsyncComponent(() => import('@/components/modules/Form/UpdatePricebookPricelists.vue'))
+const UpdatePricebookFormula = defineAsyncComponent(() => import('@/components/modules/Form/UpdatePricebookFormula.vue'))
 // loaders
 import DataTableLoader from '@/components/modules/DynamicDataTable/Loaders/DataTableLoader.vue'
 import SimpleLoader from '@/components/loading/Simple2.vue'
@@ -30,6 +32,7 @@ import { useModuleDetailStore } from '@/stores/modules/detail'
 import { useModuleFileStore } from '@/stores/modules/file'
 import { useTabStore } from '@/stores/tabs'
 import { useActivityLogStore } from '@/stores/statics/activitylogs'
+import { useFormDataStore } from '@/stores/forms'
 // services
 import DynamicFormService from '@/service/DynamicFormService'
 
@@ -60,6 +63,7 @@ const moduleStore = useModuleStore()
 const moduleDetailStore = useModuleDetailStore()
 const moduleFileStore = useModuleFileStore()
 const tabStore = useTabStore()
+const formDataStore = useFormDataStore()
 const { fetchActivityLogsByRecord } = activityLogStore
 const { getActivityLogsByRecord } = storeToRefs(activityLogStore)
 const { fetchModule, fetchLinkedModuleData, fetchBaseModule } = moduleStore
@@ -80,6 +84,7 @@ const { fileLoading, fileDialogSwitch, fileDialog, getFiles, getModuleFiles } = 
 const { addModuleFiles } = moduleFileStore
 const { addTab, toggleWindows} = tabStore
 const { getTabs } = storeToRefs(tabStore)
+const { computePricebookListPrice, applyPricebookListPrice, cancelPricebookListPrice } = formDataStore
 const { transformLookupDisplay, checkFieldIfMultipleSelect } = helper();
 // presets
 const bcrumbs = ref([
@@ -149,11 +154,27 @@ const actionsMenuItems = ref([
           {
               label: 'Update pricelists',
               icon: 'pi pi-pencil',
-              command: () => { showDialogForm('Update Pricelists','update-pricelists') }
+              command: () => { showDialogForm('Update Pricelists','update-pricebook-pricelists') }
           },
           {
               label: 'Update formula',
-              icon: 'pi pi-pencil'
+              icon: 'pi pi-pencil',
+              command: () => { showDialogForm('Update Formula','update-pricebook-formula') }
+          },
+          {
+              label: 'Compute list price',
+              icon: 'pi pi-pencil',
+              command: () => { showConfirm('System will compute list price for all products based on formula. Please confirm to proceed.','compute-list-price') }
+          },
+          {
+              label: 'Apply computed list price',
+              icon: 'pi pi-pencil',
+              command: () => { showConfirm('System will apply computed list price for all products. Please confirm to proceed.','apply-temp-price') }
+          },
+          {
+              label: 'Delete temporary price',
+              icon: 'pi pi-pencil',
+              command: () => { showConfirm('System will delete computed list price. Please confirm to proceed.','cancel-temp-price') }
           },
         ]
       }
@@ -323,6 +344,36 @@ const showDialogForm = async(title,form) =>{
   dialogVisible.value.title = title
   dialogVisible.value.form = form
 }
+const showConfirm = async(message,task)=>{
+  ElMessageBox.confirm(message,'Warning',{
+    confirmButtonText: 'Proceed',
+    cancelButtonText: 'Cancel',
+    type: 'warning',
+    beforeClose: async(action, instance, done) => {
+      if (action === 'confirm') {
+        instance.confirmButtonLoading = true
+        instance.confirmButtonText = 'Loading...'
+        console.log(task)
+        if(task=='compute-list-price')
+          await computePricebookListPrice()
+        if(task=='apply-temp-price')
+          await applyPricebookListPrice()
+        if(task=='cancel-temp-price')
+          await cancelPricebookListPrice()
+        instance.confirmButtonLoading = false
+      } else {
+        done()
+      }
+    },
+  }).then(() => {
+    ElMessage({
+      type: 'success',
+      message: 'Delete completed',
+    })
+  })
+
+}
+
 //Closing Dialog used by other forms depends on module
 const closeDialog = async() =>{
   if(dialogVisible.value.form == "transfer"){
@@ -377,7 +428,7 @@ onMounted(async() => {
   localItemPanels.value = getItemPanels.value(null)
   localRelatedLists.value = getRelatedLists.value
   atIndexRelatedLists.value = localItemPanels.value.filter(ip => ip.controllerMethod.includes('@index'))
-  atShowRelatedLists.value = _getRelatedOrderedLists.value.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit'))
+  atShowRelatedLists.value = (localBaseModule.value.name=='accounts') ? _getRelatedOrderedLists.value.filter(rol => (rol.entityName === 'Contact' || rol.entityName === 'Unit')) :  _getRelatedOrderedLists.value
   salesRelatedLists.value = _getRelatedOrderedLists.value.filter(orl => (orl.entityName === 'SalesOpportunity' || orl.entityName === 'SalesOpportunity'))
   serviceRelatedLists.value = _getRelatedOrderedLists.value.filter(orl => (orl.entityName === 'DefectReport' || orl.entityName === 'ServiceJob' || orl.entityName === 'ServiceSchedule' || orl.entityName === 'BreakdownLog' || orl.entityName === 'ServiceReport'))
   linkedInquiryModule.value = getLinkedModuleData.value
@@ -753,7 +804,8 @@ onMounted(async() => {
     <UploadFileContent :module="localModule" />
     <Dialog v-model:visible="dialogVisible.visible" modal :header="dialogVisible.title" :style="{ width: '40vw'}"  :breakpoints="{ '1199px': '75vw', '575px': '90vw' }">
         <TransferOpportunity v-if="dialogVisible.form=='transfer'" :record="getItem.data" @closeForm="closeDialog"></TransferOpportunity>
-        <UpdatePricelists v-if="dialogVisible.form=='update-pricelists'" :record="getItem.data" @closeForm="closeDialog"></UpdatePricelists>
+        <UpdatePricebookPricelists v-if="dialogVisible.form=='update-pricebook-pricelists'" :record="getItem.data" @closeForm="closeDialog"></UpdatePricebookPricelists>
+        <UpdatePricebookFormula v-if="dialogVisible.form=='update-pricebook-formula'" :record="getItem.data" @closeForm="closeDialog"></UpdatePricebookFormula>
     </Dialog>
   </div>
 </template>
