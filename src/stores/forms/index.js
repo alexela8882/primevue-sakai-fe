@@ -286,7 +286,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         })
         return response
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error computing list price:', error);
         throw error; // Re-throw the error so the caller can handle it if needed
       }
     }
@@ -304,7 +304,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         })
         return response
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error applying computed list price:', error);
         throw error; // Re-throw the error so the caller can handle it if needed
       }
     }
@@ -322,7 +322,7 @@ export const useFormDataStore = defineStore('formDataStore', () => {
         })
         return response
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error deleting computed list price:', error);
         throw error; // Re-throw the error so the caller can handle it if needed
       }
     }

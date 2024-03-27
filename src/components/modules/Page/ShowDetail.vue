@@ -164,17 +164,17 @@ const actionsMenuItems = ref([
           {
               label: 'Compute list price',
               icon: 'pi pi-pencil',
-              command: () => { showConfirm('System will compute list price for all products based on formula. Please confirm to proceed.','compute-list-price') }
+              command: () => { showConfirm('System will compute list price for all products based on formula. Please confirm to proceed.','compute-list-price','pricebooks','Price') }
           },
           {
               label: 'Apply computed list price',
               icon: 'pi pi-pencil',
-              command: () => { showConfirm('System will apply computed list price for all products. Please confirm to proceed.','apply-temp-price') }
+              command: () => { showConfirm('System will apply computed list price for all products. Please confirm to proceed.','apply-temp-price','pricebooks','Price') }
           },
           {
               label: 'Delete temporary price',
               icon: 'pi pi-pencil',
-              command: () => { showConfirm('System will delete computed list price. Please confirm to proceed.','cancel-temp-price') }
+              command: () => { showConfirm('System will delete computed list price. Please confirm to proceed.','cancel-temp-price','pricebooks','Price') }
           },
         ]
       }
@@ -344,7 +344,7 @@ const showDialogForm = async(title,form) =>{
   dialogVisible.value.title = title
   dialogVisible.value.form = form
 }
-const showConfirm = async(message,task)=>{
+const showConfirm = async(message,task,moduleName,panelEntity)=>{
   ElMessageBox.confirm(message,'Warning',{
     confirmButtonText: 'Proceed',
     cancelButtonText: 'Cancel',
@@ -354,12 +354,24 @@ const showConfirm = async(message,task)=>{
         instance.confirmButtonLoading = true
         instance.confirmButtonText = 'Loading...'
         console.log(task)
-        if(task=='compute-list-price')
+        if(task=='compute-list-price'){}
           await computePricebookListPrice()
         if(task=='apply-temp-price')
           await applyPricebookListPrice()
         if(task=='cancel-temp-price')
           await cancelPricebookListPrice()
+        
+         let params = {
+          moduleName: moduleName,
+          base: route.params.pageid,
+          panelName: null
+        }
+        let relatedPanels = _.filter(atShowRelatedLists.value,{'entityName':panelEntity})
+        _.forEach(relatedPanels, async(p) =>{
+          params['panelName'] = p._id
+          await fetchItemRelatedList(params)
+        })
+
         instance.confirmButtonLoading = false
       } else {
         done()
